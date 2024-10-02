@@ -12,113 +12,116 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import bearIcon from '../assets/bearIcon.svg';
 import boarIcon from '../assets/boarIcon.svg';
 import deerIcon from '../assets/deerIcon.svg';
-import craftingIcon from '../assets/craftingIcon.svg';
-import mineIcon from '../assets/minerIcon.svg';
+import craftIcon from '../assets/sidebarIcons/craftIcon.svg';
+import minesIcon from '../assets/sidebarIcons/minesIcon.svg';
+import animalsIcon from '../assets/sidebarIcons/animalsIcon.svg';
+
 
 const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) => {
 
   return (
-    <FormControl>
-      <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-          aria-controls="panel1a-content"
-          id="panel2a-header"
-          sx={{
-            color: "white",
-            padding: 0,
-            "& .MuiAccordionSummary-content": {
-              margin: 0,
-            },
-          }}
-        >
-          {/* Wrapper to prevent label click from toggling checkbox */}
-          <span style={{ marginLeft: 8 }}>{parent}</span>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Accordion >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-              aria-controls={`animals-content`}
-              id={`animals-header`}
-            >
-            <div className="d-flex align-items-center gap-2">
-              <img src={bearIcon} width={24} height={24} alt="" />
-            <span className='text-white'>Animals</span>
-            </div>
-            </AccordionSummary>
-            <AccordionDetails>
-            <div className="d-flex flex-column gap-3">
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  bear: !switches.bear,
-                }))}
-                style={{opacity: switches.bear ? "1" : "0.6"}}
-                >
-            <img src={bearIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Bears
-            </h6>
-          </div>
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  deer: !switches.deer,
-                }))}
-                style={{opacity: switches.deer ? "1" : "0.6"}}
-                >
-            <img src={deerIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Deer
-            </h6>
-          </div>
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  boar: !switches.boar,
-                }))}
-                style={{opacity: switches.boar ? "1" : "0.6"}}
-                >
-            <img src={boarIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Boars
-            </h6>
-          </div>
-         </div>
-          
-            </AccordionDetails>
-          </Accordion>
-          <div className="d-flex flex-column gap-3">
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  craftingTables: !switches.craftingTables,
-                }))}
-                style={{opacity: switches.craftingTables ? "1" : "0.6"}}
-                >
-            <img src={craftingIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Crafting Table
-            </h6>
-          </div>
-          <div className="map-sidebar-btn p-2 d-flex align-items-center gap-2" onClick={() =>
-                setSwitches((prevState) => ({
-                  ...prevState,
-                  mines: !switches.mines,
-                }))}
-                style={{opacity: switches.mines ? "1" : "0.6"}}
-                >
-            <img src={mineIcon} alt="" width={24} height={24} />
-            <h6 className="chain-sidebar-title mb-0 text-white">
-              Mines
-            </h6>
-          </div>
-         
-         </div>
-        </AccordionDetails>
-      </Accordion>
-    </FormControl>
+    <div className="d-flex px-3 flex-column gap-2">
+    <div
+      className="d-flex py-1 w-100 align-items-center"
+      style={{ borderBottom: "1px solid #828FBB" }}
+    >
+      <h6 className="sidebar-section-title mb-0">Island Zero</h6>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.craftingTables && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          craftingTables: !switches.craftingTables,
+        }))
+      }
+    >
+      <img src={craftIcon} alt="" />
+      <span>Crafting Table</span>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.mines && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          mines: !switches.mines,
+        }))
+      }
+    >
+      <img src={minesIcon} alt="" />
+      <span>Mines</span>
+    </div>
+
+    <Accordion >
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+        aria-controls={`areas-content`}
+        id={`areas-header`}
+        sx={{
+          background: "rgba(73, 71, 115, 0.70)",
+          border: "1px solid #828FBB",
+          borderRadius: "10px",
+          paddingLeft: "0.5rem",
+          paddingRight: "0.5rem",
+        }}
+      >
+       <div className="d-flex align-items-center gap-2">
+        <img src={animalsIcon} alt="" />
+         <span className="accordion-side-text">Animals</span>
+       </div>
+      </AccordionSummary>
+      <AccordionDetails sx={{padding: 0, marginTop: "12px"}}>
+        <div className="animals-dropdown-grid">
+        <div
+      className={`section-switch-btn ${
+        switches.bear && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          bear: !switches.bear,
+        }))
+      }
+    >
+      <img src={bearIcon} width={24} height={24} alt="" />
+      <span>Bears</span>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.deer && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          deer: !switches.deer,
+        }))
+      }
+    >
+      <img src={deerIcon} width={24} height={24} alt="" />
+      <span>Deer</span>
+    </div>
+    <div
+      className={`section-switch-btn ${
+        switches.boar && "section-switch-btn-active"
+      } d-flex align-items-center gap-2 p-2 w-100`}
+      onClick={() =>
+        setSwitches((prev) => ({
+          ...prev,
+          boar: !switches.boar,
+        }))
+      }
+    >
+      <img src={boarIcon} width={24} height={24} alt="" />
+      <span>Boars</span>
+    </div>
+        </div>
+      </AccordionDetails>
+    </Accordion>
+  </div>
   );
 };
 
