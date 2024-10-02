@@ -30,8 +30,9 @@
       line-height: 24px;
       color: #ffffff;
       text-decoration: none;
-      text-transform: uppercase;
+      // text-transform: uppercase;
       transition: all 0.25s;
+      font-family: "Poppins";
     }
   
     .nav-anchor:hover {
@@ -280,12 +281,12 @@
   .select-gray-txt {
     color: #8b8ca2;
     text-align: center;
-    // font-size: 12px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 600;
     line-height: 24px; /* 240% */
 
-    font-size: 18px;
+    // font-size: 18px;
     // color: #ffffff;
     text-decoration: none;
     // text-transform: uppercase;
