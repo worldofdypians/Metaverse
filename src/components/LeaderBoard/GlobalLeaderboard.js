@@ -168,16 +168,7 @@ const GlobalLeaderboard = ({
           </div>
         </div>
       )}
-      {availableTime !== "0" && availableTime && (
-        <Countdown
-          date={availableTime}
-          renderer={renderer}
-          onComplete={() => {
-            setcountdown();
-            setisActive(false);
-          }}
-        />
-      )}
+  
 
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div
@@ -207,7 +198,7 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, Manta, Taiko and Viction to earn STARS that will boost your
+                    SKALE, Core, Manta, Base, Taiko and Viction to earn STARS that will boost your
                     global ranking.
                     <br />
                     <br />

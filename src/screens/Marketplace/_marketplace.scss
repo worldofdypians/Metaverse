@@ -2285,6 +2285,20 @@ backdrop-filter: blur(5.5px);
 }
 
 
+.past-taiko-mint {
+  background-image: url("./assets/taikoPastMint.webp");
+  width: 100%;
+  aspect-ratio: 2.22/1;
+  background-size: 100% 100%;
+  position: relative;
+
+  @media screen and (max-width: 786px) {
+    background-image: url("./assets/taikoPastMintMobile.webp");
+    aspect-ratio: 1/1;
+  }
+}
+
+
 .past-bnb-mint {
   background-image: url("./assets/bnbMintDesktop.webp");
   width: 100%;
@@ -2413,6 +2427,18 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.past-taiko-mint-amount {
+  color: #b61994;
+  text-align: center;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 800;
+  margin: 0;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
 .past-core-mint-amount {
   color: #FC9210;
   text-align: center;
@@ -2486,6 +2512,20 @@ backdrop-filter: blur(5.5px);
   color: #fff;
   text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
   font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+  @media screen and (max-width: 400px) {
+    font-size: 26px;
+  }
+}
+
+
+.past-taiko-mint-desc {
+  color: #fff;
+  text-shadow: 0px 3px 4px rgba(155, 67, 255, 0.7);
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -4232,6 +4272,10 @@ text-transform: uppercase;
 .upcoming-manta-event {
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #BE2CB0 168.67%) !important;
+}
+.upcoming-base-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(9, 41, 144, 1) 168.67%) !important;
 }
 
 .upcoming-immutable-event {

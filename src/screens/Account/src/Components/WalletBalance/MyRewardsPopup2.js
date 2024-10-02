@@ -51,7 +51,6 @@ const MyRewardsPopupNew = ({
   coreEarnUsd,
   victionEarnUsd,
   allSkaleChests,
-  kittyDashRecords,
   userRankRewards,
   cawsPremiumRewards,
   allCoreChests,
@@ -66,9 +65,12 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountSkale,
   multiversEarnUsd,
   userDataStar,
-  weeklyDataAmountManta,
+  weeklyDataAmountManta, 
+  weeklyDataAmountBase,
   monthlyDataAmountManta,
+  monthlyDataAmountBase,
   allMantaChests,
+  allBaseChests,
   mantaEarnUsd,
   weeklyDataAmountTaiko,
   monthlyDataAmountTaiko,
@@ -100,8 +102,9 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyCore, setTreasureRewardMoneyCore] = useState(0);
   const [treasureRewardMoneyViction, setTreasureRewardMoneyViction] =
     useState(0);
+    const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] = useState(0);
+  const [treasureRewardMoneyBase, setTreasureRewardMoneyBase] = useState(0);
 
-  const [treasureRewardMoneyManta, setTreasureRewardMoneyManta] = useState(0);
   const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
@@ -397,6 +400,8 @@ const MyRewardsPopupNew = ({
     var moneyResultCore = 0;
     var moneyResultViction = 0;
     var moneyResultManta = 0;
+    var moneyResultBase = 0;
+
     var moneyResultTaiko = 0;
 
     var moneyResultSei = 0;
@@ -495,6 +500,26 @@ const MyRewardsPopupNew = ({
         }
       });
     }
+
+    if (allBaseChests && allBaseChests.length > 0) {
+      allBaseChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultBase += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
     if (allTaikoChests && allTaikoChests.length > 0) {
       allTaikoChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -519,6 +544,7 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyCore(moneyResultCore);
     setTreasureRewardMoneyViction(moneyResultViction);
     setTreasureRewardMoneyManta(moneyResultManta);
+    setTreasureRewardMoneyBase(moneyResultBase);
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
   };
 
@@ -585,6 +611,7 @@ const MyRewardsPopupNew = ({
     allCoreChests,
     allVictionChests,
     allMantaChests,
+    allBaseChests,
   ]);
 
   useEffect(() => {
@@ -618,8 +645,7 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
-
-  const kittyDashRewards = [30, 20, 10, 10, 5, 5, 5, 5, 5, 5];
+ 
 
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
@@ -643,7 +669,8 @@ const MyRewardsPopupNew = ({
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
                 Number(cmcRewardsUSD) +
-                Number(dypPremiumUSD),
+                Number(dypPremiumUSD) +
+                Number(bnbEarnUsd),
               2
             )}
           </span>
@@ -674,7 +701,7 @@ const MyRewardsPopupNew = ({
         </div>
         <div className="small-separator"></div>
       </div>
-      <div className="reward-category-items-wrapper">
+      <div className="reward-category-items-wrapper p-1">
         <div
           className={` ${
             rewardCategory === "all"
@@ -728,7 +755,10 @@ const MyRewardsPopupNew = ({
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
-                      Number(dypPremiumUSD),
+                      Number(dypPremiumUSD) +
+                      Number(bnbEarnUsd) +
+                      Number(coreEarnUsd) +
+                      Number(victionEarnUsd) ,
                     2
                   )
                 : getFormattedNumber(
@@ -736,23 +766,16 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySei) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
+                      Number(treasureRewardMoneyBase) +
                       Number(treasureRewardMoney) +
                       Number(treasureRewardMoneySkale) +
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
-                      Number(immutableEarnUsd) +
-                      Number(coreEarnUsd) +
+                      Number(immutableEarnUsd)+
                       Number(taikoEarnUsd) +
                       Number(cookieEarnUsd) +
-                      Number(victionEarnUsd) +
                       Number(mantaEarnUsd) +
-                      (kittyDashRecords[0]
-                        ? kittyDashRecords[0]?.position + 1 > 10
-                          ? 0
-                          : kittyDashRewards[kittyDashRecords[0]?.position]
-                        : 0) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       Number(weeklyDataAmountCore) +
@@ -764,8 +787,12 @@ const MyRewardsPopupNew = ({
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyDataAmountManta) +
+                      Number(weeklyDataAmountBase) +
+
                       Number(weeklyDataAmountTaiko) +
                       Number(monthlyDataAmountManta) +
+                      Number(monthlyDataAmountBase) +
+
                       Number(monthlyDataAmountTaiko) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
@@ -883,6 +910,7 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySei) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
+                      Number(treasureRewardMoneyBase) +
                       Number(treasureRewardMoneySkale),
                     2
                   )}
@@ -944,11 +972,6 @@ const MyRewardsPopupNew = ({
                     // Number(dailyplayerData) +
                     // Number(dailyDataAmountCore) +
                     Number(weeklyDataAmountCore) +
-                      (kittyDashRecords[0]
-                        ? kittyDashRecords[0]?.position + 1 > 10
-                          ? 0
-                          : kittyDashRewards[kittyDashRecords[0]?.position]
-                        : 0) +
                       +Number(monthlyDataAmountCore) +
                       // Number(dailyDataAmountSkale) +
                       Number(weeklyDataAmountSkale) +
@@ -957,8 +980,12 @@ const MyRewardsPopupNew = ({
                       Number(weeklyDataAmountViction) +
                       Number(monthlyDataAmountViction) +
                       Number(weeklyDataAmountManta) +
+                      Number(weeklyDataAmountBase) +
+
                       Number(weeklyDataAmountTaiko) +
                       Number(monthlyDataAmountManta) +
+                      Number(monthlyDataAmountBase) +
+
                       Number(monthlyDataAmountTaiko) +
                       Number(weeklyplayerData) +
                       Number(userRank2) +
@@ -1023,17 +1050,17 @@ const MyRewardsPopupNew = ({
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
-                      Number(dypPremiumUSD),
+                      Number(dypPremiumUSD) +
+                      Number(bnbEarnUsd)  +
+                      Number(coreEarnUsd) +
+                      Number(victionEarnUsd) ,
                     2
                   )
                 : getFormattedNumber(
                     Number(skaleEarnUsd) +
-                      Number(coreEarnUsd) +
-                      Number(seiEarnUsd) +
-                      Number(bnbEarnUsd) +
+                      Number(seiEarnUsd)+
                       Number(immutableEarnUsd) +
-                      Number(multiversEarnUsd) +
-                      Number(victionEarnUsd) +
+                      Number(multiversEarnUsd)+
                       Number(mantaEarnUsd) +
                       Number(taikoEarnUsd) + Number(cookieEarnUsd),
                     2
@@ -1240,6 +1267,15 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneyViction, 2)}
                 </span>
               </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">CORE</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
+                </span>
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1253,6 +1289,15 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
               <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Base</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyBase, 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Taiko</span>
                 <span className="item-name-right">
                   $
@@ -1261,15 +1306,7 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneyTaiko, 2)}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">CORE</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(treasureRewardMoneyCore, 2)}
-                </span>
-              </div>
+            
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
@@ -1348,15 +1385,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Global</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(Number(userDataStar), 2)}
-                </span>
-              </div>
+              
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Manta</span>
                 <span className="item-name-right">
@@ -1366,6 +1395,18 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(
                         Number(weeklyDataAmountManta) +
                           Number(monthlyDataAmountManta)
+                      )}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Base</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(
+                        Number(weeklyDataAmountBase) +
+                          Number(monthlyDataAmountBase)
                       )}
                 </span>
               </div>
@@ -1393,7 +1434,15 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(genesisRank2, 2)}
                 </span>
               </div>
-
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Global</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(Number(userDataStar), 2)}
+                </span>
+              </div>
               <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Viction</span>
                 <span className="item-name-right">
@@ -1408,22 +1457,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Kitty Dash</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : kittyDashRecords[0]
-                    ? kittyDashRecords[0]?.position + 1 > 10
-                      ? getFormattedNumber(0, 2)
-                      : getFormattedNumber(
-                          kittyDashRewards[kittyDashRecords[0]?.position],
-                          2
-                        )
-                    : getFormattedNumber(0, 2)}
-                </span>
-              </div>
+                
               {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
@@ -1458,35 +1492,8 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               {/* <div className="d-flex justify-content-between gap-4 align-items-start"> */}
                 <div className="d-flex flex-column gap-2">
-                  <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={
-                          require("../../../../Marketplace/assets/bnbLogo.svg")
-                            .default
-                        }
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      BNB Chain
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(bnbEarnUsd, 2)}
-                    </span>
-                  </div>
-                  <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={coreIcon}
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      CORE
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(coreEarnUsd, 2)}
-                    </span>
-                  </div>
+                  
+               
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
@@ -1500,22 +1507,26 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(cookieEarnUsd, 2)}
                     </span>
                   </div>
-                </div>
-
-                <div className="d-flex flex-column gap-2">
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
-                        src={victionIcon}
+                        src={
+                          require("../../../../../components/Header/assets/taiko.svg")
+                            .default
+                        }
                         alt=""
                         style={{ width: 16, height: 16 }}
                       />
-                      Viction
+                      Taiko
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(victionEarnUsd, 2)}
+                      ${getFormattedNumber(taikoEarnUsd, 2)}
                     </span>
                   </div>
+                </div>
+
+                <div className="d-flex flex-column gap-2">
+                 
                   <div className="d-flex w-100 justify-content-between gap-2">
                     <span className="d-flex align-items-center gap-2 item-name-left">
                       <img
@@ -1544,22 +1555,7 @@ const MyRewardsPopupNew = ({
                       ${getFormattedNumber(mantaEarnUsd, 2)}
                     </span>
                   </div>
-                  <div className="d-flex w-100 justify-content-between gap-2">
-                    <span className="d-flex align-items-center gap-2 item-name-left">
-                      <img
-                        src={
-                          require("../../../../../components/Header/assets/taiko.svg")
-                            .default
-                        }
-                        alt=""
-                        style={{ width: 16, height: 16 }}
-                      />
-                      Taiko
-                    </span>
-                    <span className="item-name-right">
-                      ${getFormattedNumber(taikoEarnUsd, 2)}
-                    </span>
-                  </div>
+                
                 </div>
               {/* </div> */}
             </div>
@@ -1584,7 +1580,37 @@ const MyRewardsPopupNew = ({
             }
           >
             <div className="treasure-hunt-item-wrapper">
+
               <div className="d-flex flex-column gap-2">
+              <div className="d-flex gap-2 align-items-center justify-content-between">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={
+                          require("../../../../Marketplace/assets/bnbLogo.svg")
+                            .default
+                        }
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      BNB Chain
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(bnbEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={coreIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      CORE
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(coreEarnUsd, 2)}
+                    </span>
+                  </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={dypiusPremium} alt="" />
@@ -1605,15 +1631,7 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
 
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={coingecko} alt="" />
-                    CoinGecko
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(coingeckoRewardsUSD, 2)}
-                  </span>
-                </div>
+               
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1627,6 +1645,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dypiusRewardsUSD, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={victionIcon}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Viction
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(victionEarnUsd, 2)}
+                    </span>
+                  </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={gate} alt="" />
@@ -1646,6 +1677,9 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
+                
+
+
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1675,6 +1709,15 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(skaleEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={coingecko} alt="" />
+                    CoinGecko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coingeckoRewardsUSD, 2)}
                   </span>
                 </div>
               </div>

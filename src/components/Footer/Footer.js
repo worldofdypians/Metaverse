@@ -183,7 +183,12 @@ const Footer = () => {
             <NavLink to="/team" className="new-footer-link">
               Team
             </NavLink>
-            <a href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing" className="new-footer-link" target="_blank" rel="noreferrer">
+            <a
+              href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
+              className="new-footer-link"
+              target="_blank"
+              rel="noreferrer"
+            >
               Brand
             </a>
             <NavLink to="/join-beta" className="new-footer-link">
@@ -204,14 +209,21 @@ const Footer = () => {
           <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5">
             <img src={metaverse} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
-              <span className="copyright-text">©{year} World of Dypians Ltd</span>
+              <span className="copyright-text">
+                ©{year} World of Dypians Ltd
+              </span>
               <span className="trademark-text">
                 All trademarks referenced herein are the properties of their
                 respective owners.
               </span>
               <div className="d-flex align-items-center gap-5">
-                <NavLink to="/terms-conditions" className="gray-footer-link">
-                  Terms
+                <NavLink
+                  to="/terms-of-service"
+                  onClick={() => scrollToTop("terms")}
+                  style={{ textDecoration: "none" }}
+                  className="gray-footer-link"
+                >
+                  Terms of Service
                 </NavLink>
                 <NavLink to="/privacy-policy" className="gray-footer-link">
                   Privacy

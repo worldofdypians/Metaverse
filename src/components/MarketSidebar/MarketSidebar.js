@@ -11,11 +11,24 @@ import supportIcon from "./assets/supportIcon.svg";
 
 
 import { useEffect } from "react";
+import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
+import { useQuery } from "@apollo/client";
+import { GET_PLAYER } from "../../screens/Account/src/Containers/Dashboard/Dashboard.schema";
 
 const MarketSidebar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("collections");
   const [isSticky, setIsSticky] = useState(false);
+
+  const { email } = useAuth();
+
+  const {
+    data,
+    refetch: refetchPlayer,
+    loading: loadingPlayer,
+  } = useQuery(GET_PLAYER, {
+    fetchPolicy: "network-only",
+  });
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -105,7 +118,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/cookie3"
+                      to="/marketplace/beta-pass/base"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -235,7 +248,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/mint/taiko"
+            to="/marketplace/mint/timepiece"
             end
             className={({ isActive }) =>
               isActive
@@ -278,6 +291,39 @@ const MarketSidebar = () => {
               );
             }}
           />
+           {email
+          //  &&
+          //   data &&
+          //   data.getPlayer &&
+          //   data.getPlayer.displayName &&
+          //   data.getPlayer.playerId &&
+          //   data.getPlayer.wallet &&
+          //   data.getPlayer.wallet.publicAddress
+             && (
+              <NavLink
+                to="/loyalty-program"
+                end
+                className={({ isActive }) =>
+                  isActive
+                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                }
+                children={({ isActive }) => {
+                  const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
+                  return (
+                    <>
+                      <img
+                        src={require(`./assets/${icon}.svg`)}
+                        // style={{ width: "20px", height: "20px" }}
+                        alt=""
+                      />
+                      <span className={`sidebar-title`}>Loyalty Program</span>
+                    </>
+                  );
+                }}
+              />
+            )}
+
           <div className="sidebar-separator my-2"></div>
           <a
             href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"

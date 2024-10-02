@@ -12,8 +12,11 @@ import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
 import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
-import bnblogo from "../Account/src/Components/WalletBalance/assets/bnblogo.svg";
+import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
+import cookieLogo from "../Marketplace/assets/cookie3Logo.svg";
+import taikoLogo from "../Account/src/Components/WalletBalance/assets/taikoLogo.svg";
+import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
 
 
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
@@ -128,104 +131,38 @@ const Community = ({socials}) => {
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
-  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
-
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
 
 
   let activeDay = new Date("2024-05-01T11:35:00.000+02:00");
 
   const dummyBetaPassData2 = [
+
     {
-      title: "CORE",
-      logo: coreLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in CORE Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      backgroundImage: coreBg,
-      eventDate: "Jul 01, 2024",
-      date: "Jul 01, 2024",
-      eventDuration: coreLastDay,
-
-      popupInfo: {
-        title: "CORE",
-        chain: "CORE Chain",
-        linkState: "core",
-        rewards: "CORE",
-        status: "Live",
-        backgroundImage: coreBg,
-        logo: coreLogo,
-        date: "Jul 01, 2024",
-
-        id: "event12",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in CORE Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      date: "Jul 01, 2024",
-      backgroundImage: victionBg,
-      eventDuration: coreLastDay,
-
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Live",
-        logo: victionLogo,
-        backgroundImage: victionBg,
-        date: "Jul 01, 2024",
-
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
-    {
-      title: "BNB Chain",
+      title: "Manta",
       logo: bnblogo,
       eventStatus: "Live",
-      totalRewards: "$20,000 in BNB Rewards",
+      totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
       eventDuration: bnbLastDay,
       eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
-      date: "Apr 15, 2024",
+      eventDate: "Aug 01, 2024",
+      date: "Aug 01, 2024",
       // backgroundImage: upcomingSkale,
       popupInfo: {
-        title: "BNB Chain",
-        chain: "BNB Chain",
+        title: "Manta",
+        chain: "Manta Chain",
         linkState: "chain",
-        rewards: "BNB",
+        rewards: "MANTA",
         status: "Live",
         id: "event14",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
+        totalRewards: "$20,000 in Manta Rewards",
         eventDuration: bnbLastDay,
         minRewards: "0.5",
         maxRewards: "20",
@@ -233,7 +170,7 @@ const Community = ({socials}) => {
         maxPoints: "30,000",
         learnMore:
           "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Apr 15, 2024",
+        eventDate: "Aug 01, 2024",
       },
     },
     {
@@ -266,7 +203,104 @@ const Community = ({socials}) => {
         eventDate: "Aug 15, 2024",
       },
     },
+
     {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      date: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      eventDuration: taikoLastDay,
+
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        date: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Cookie3",
+      logo: cookieLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      date: "Aug 26, 2024",
+      eventDuration: cookieLastDay,
+
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "COOKIE",
+        status: "Live",
+        logo: cookieLogo,
+        date: "Aug 26, 2024",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: cookieLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        date: "Aug 26, 2024",
+      },
+    },
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      backgroundImage: coreBg,
+      eventDate: "Jul 01, 2024",
+      date: "Jul 01, 2024",
+      eventDuration: coreLastDay,
+
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        backgroundImage: coreBg,
+        logo: coreLogo,
+        date: "Jul 01, 2024",
+
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    }, 
+       {
       title: "SKALE",
       logo: skaleLogo,
       eventStatus: "Expired",
@@ -296,7 +330,40 @@ const Community = ({socials}) => {
         eventDate: "Apr 15, 2024",
       },
     },
-   
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      date: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      eventDuration: coreLastDay,
+
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        logo: victionLogo,
+        backgroundImage: victionBg,
+        date: "Jul 01, 2024",
+
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
     {
       title: "Dypius Premium",
       logo: dypius,
@@ -600,7 +667,7 @@ const Community = ({socials}) => {
   };
   const dummyBanner =  {
     title: "Festive 4YA Celebration",
-    status: "Live",
+    status: "Expired",
     start_date: "August 26, 2024",
     end_date: "September 08, 2024",
     image: wodFestive,

@@ -35,6 +35,8 @@ import infoIcon from "./assets/infoIcon.svg";
 import skaleIcon from "./assets/skaleIcon.svg";
 import manta from "./assets/manta.png";
 import taiko from "./assets/taikoIcon.svg";
+import baseLogo from "./assets/base.svg";
+
 import seiIcon from "./assets/seiIcon.svg";
 import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
@@ -58,6 +60,21 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "150px !important",
+    fontSize: theme.typography.pxToRem(12),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
+
+
+const HtmlTooltipGift = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    background: "linear-gradient(135deg, #222448 0%, #2c3867 34.54%, #2c3867 66.84%, #1d2040 100%) !important",
     color: "rgba(0, 0, 0, 0.87)",
     maxWidth: "150px !important",
     minWidth: "150px !important",
@@ -139,13 +156,19 @@ const NewDailyBonus = ({
   victionImages,
   coreImages,
   mantaImages,
+  baseImages,
   standardMantaChests,
   premiumMantaChests,
   claimedMantaChests,
   claimedMantaPremiumChests,
+  claimedBaseChests,
+  claimedBasePremiumChests,
   openedMantaChests,
+  openedBaseChests,
   allMantaChests,
+  allBaseChests,
   onMantaChestClaimed,
+  onBaseChestClaimed,
   taikoImages,
   standardTaikoChests,
   premiumTaikoChests,
@@ -186,6 +209,9 @@ const NewDailyBonus = ({
 
   const mantaClaimed = claimedMantaChests + claimedMantaPremiumChests;
   const mantaPercentage = (mantaClaimed / 20) * 100;
+
+  const baseClaimed = claimedBaseChests + claimedBasePremiumChests;
+  const basePercentage = (baseClaimed / 20) * 100;
 
   const taikoClaimed = claimedTaikoChests + claimedTaikoPremiumChests;
   const taikoPercentage = (taikoClaimed / 20) * 100;
@@ -410,6 +436,8 @@ const NewDailyBonus = ({
   const [totalVictionUsd, settotalVictionUsd] = useState(0);
   const [totalMantaPoints, settotalMantaPoints] = useState(0);
   const [totalMantaUsd, settotalMantaUsd] = useState(0);
+  const [totalBasePoints, settotalBasePoints] = useState(0);
+  const [totalBaseUsd, settotalBaseUsd] = useState(0);
   const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
   const [totalTaikoUsd, settotalTaikoUsd] = useState(0);
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
@@ -589,6 +617,41 @@ const NewDailyBonus = ({
       settotalMantaUsd(resultMantaUsd);
     }
 
+    
+    if (allBaseChests && allBaseChests.length > 0) {
+      let resultBasePoints = 0;
+      let resultBaseUsd = 0;
+
+      allBaseChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultBasePoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultBaseUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultBasePoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalBasePoints(resultBasePoints);
+      settotalBaseUsd(resultBaseUsd);
+    }
+
     if (allTaikoChests && allTaikoChests.length > 0) {
       let resultTaikoPoints = 0;
       let resultTaikoUsd = 0;
@@ -711,6 +774,8 @@ const NewDailyBonus = ({
         showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "manta") {
         showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
+      }  else if (chain === "base") {
+        showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
       }
@@ -766,9 +831,30 @@ const NewDailyBonus = ({
     }
   };
 
-  const handleTaikoPool = async () => {
- 
+  const handleBasePool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook("0x2105")
+          .then(() => {
+            handleSwitchNetwork(8453);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(8453);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(8453);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
 
+
+  const handleTaikoPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
@@ -779,8 +865,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -793,13 +878,15 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
-
   };
-  
+
   const handleSkalePool = async () => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance"  && !window.ethereum?.isBinance) {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         await handleSwitchNetworkhook("0x585eb4b1")
           .then(() => {
             handleSwitchNetwork(1482601649);
@@ -807,9 +894,16 @@ const NewDailyBonus = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        !window.ethereum?.isBinance
+      ) {
         handleSwitchChainGateWallet(1482601649);
-      } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
+      } else if (
+        window.ethereum?.isBinance ||
+        window.WALLET_TYPE === "binance"
+      ) {
         window.alertify.error(
           "This network is not available on Binance Web3 Wallet"
         );
@@ -824,7 +918,6 @@ const NewDailyBonus = ({
   };
 
   const handleCorePool = async () => {
- 
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
@@ -835,8 +928,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -849,7 +941,6 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
   };
   const handleVictionPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
@@ -862,8 +953,7 @@ const NewDailyBonus = ({
             .catch((e) => {
               console.log(e);
             });
-        }
-        else if(window.ethereum?.isBinance) {
+        } else if (window.ethereum?.isBinance) {
           window.alertify.error(
             "This network is not available on Binance Web3 Wallet"
           );
@@ -876,8 +966,6 @@ const NewDailyBonus = ({
         "This network is not available on Binance Web3 Wallet"
       );
     }
-
-
   };
 
   const handleSeiPool = async () => {
@@ -1743,6 +1831,122 @@ const NewDailyBonus = ({
     }
   };
 
+  const showSingleRewardDataBase = (chestID, chestIndex) => {
+    const filteredResult = openedBaseChests.find(
+      (el) =>
+        el.chestId === chestID && allBaseChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
   const showSingleRewardDataTaiko = (chestID, chestIndex) => {
     const filteredResult = openedTaikoChests.find(
       (el) =>
@@ -1981,6 +2185,7 @@ const NewDailyBonus = ({
     allSkaleChests,
     allVictionChests,
     allMantaChests,
+    allBaseChests,
     allTaikoChests,
     allCoreChests,
   ]);
@@ -2121,7 +2326,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "core") {
@@ -2187,7 +2395,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
@@ -2253,7 +2464,10 @@ const NewDailyBonus = ({
           setMessage("login");
           setDisable(true);
         }
-      } else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
@@ -2318,56 +2532,55 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
-    } else if (chain === "taiko") {
-      if(window.WALLET_TYPE !=='binance')
-     { if (email && coinbase && address) {
+    }  else if (chain === "base") {
+      if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
-              claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
+              claimedBaseChests + claimedBasePremiumChests === 20 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase()
             ) {
               setMessage("complete");
             } else if (
-              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+              claimedBaseChests + claimedBasePremiumChests < 20 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
+              chainId === 8453
             ) {
               setMessage("");
               setDisable(false);
             } else if (
-              claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+              claimedBaseChests + claimedBasePremiumChests < 20 &&
               // rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 167000
+              chainId !== 8453
             ) {
               setMessage("switch");
               setDisable(true);
             }
           } else if (!isPremium) {
             if (
-              claimedTaikoChests === 10 &&
+              claimedBaseChests === 10 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
+              chainId === 8453
             ) {
               setMessage("premium");
               setDisable(true);
             } else if (
-              claimedTaikoChests < 10 &&
+              claimedBaseChests < 10 &&
               rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 167000
+              chainId === 8453
             ) {
               setMessage("");
               setDisable(false);
             } else if (
-              claimedTaikoChests < 10 &&
+              claimedBaseChests < 10 &&
               // rewardData.length === 0 &&
               address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 167000
+              chainId !== 8453
             ) {
               setMessage("switch");
               setDisable(true);
@@ -2380,7 +2593,74 @@ const NewDailyBonus = ({
       } else {
         setMessage("login");
         setDisable(true);
-      }} else if (window.WALLET_TYPE === "binance" || window.ethereum?.isBinance) {
+      }
+    } else if (chain === "taiko") {
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaikoChests + claimedTaikoPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 167000
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedTaikoChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedTaikoChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 167000
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedTaikoChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 167000
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("login");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
         setMessage("notsupported");
       }
     }
@@ -2401,6 +2681,8 @@ const NewDailyBonus = ({
     claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
+    claimedBaseChests,
+    claimedBasePremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
     rewardData,
@@ -2529,6 +2811,8 @@ const NewDailyBonus = ({
                       ? totalVictionPoints
                       : chain === "manta"
                       ? totalMantaPoints
+                      : chain === "base"
+                      ? totalBasePoints
                       : chain === "taiko"
                       ? totalTaikoPoints
                       : chain === "sei"
@@ -2553,6 +2837,8 @@ const NewDailyBonus = ({
                       ? totalVictionUsd
                       : chain === "manta"
                       ? totalMantaUsd
+                      : chain === "base"
+                      ? totalBaseUsd
                       : chain === "taiko"
                       ? totalTaikoUsd
                       : chain === "sei"
@@ -2694,6 +2980,23 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                              
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
+
                           <img
                             src={mantaBg}
                             className={`chain-img ${
@@ -2712,9 +3015,6 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                            {/* <h6 className="chain-title-position mb-0">
-                              BNB CHAIN
-                            </h6> */}
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
@@ -2790,6 +3090,10 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
+
+                     
+
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
@@ -3004,6 +3308,106 @@ const NewDailyBonus = ({
                         </div>
                         <div
                           className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          } w-100`}
+                        >
+                           
+
+                          <img
+                            src={comingSoon4}
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img src={baseLogo} alt="" /> Base
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    basePercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(basePercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-100`}
                         >
@@ -3102,7 +3506,6 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                      
 
                         <div
                           className={`position-relative chain-item ${
@@ -3235,7 +3638,7 @@ const NewDailyBonus = ({
                           <div
                             className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
                           >
-                             <div className="d-flex align-items-center gap-2">
+                            <div className="d-flex align-items-center gap-2">
                               <span className="percentage-span">
                                 Coming Soon
                               </span>
@@ -3258,22 +3661,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div className={`position-relative chain-item w-100`}>
-                          <img
-                            src={comingSoon4}
-                            className={`chain-img`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
-                          >
-                            <div className="d-flex align-items-center gap-2">
-                              <span className="percentage-span">
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                      
                       </div>
                     ) : (
                       <Slider {...settings}>
@@ -3337,6 +3725,21 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
+
                           <img
                             src={mantaBg}
                             className={`chain-img ${
@@ -3510,6 +3913,53 @@ const NewDailyBonus = ({
                                   alt=""
                                 />{" "}
                                 CORE
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "base" && "chain-item-active"
+                          } w-100`}
+                        >
+                       
+
+                          <img
+                            src={comingSoon4}
+                            className={`chain-img ${
+                              chain === "base" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "base" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center justify-content-between`}
+                            onClick={() => {
+                              setChain("base");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 8453
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleBasePool}
+                              >
+                                {" "}
+                                <img src={baseLogo} alt="" /> Base
                               </button>
                             </div>
                           </div>
@@ -3870,16 +4320,16 @@ const NewDailyBonus = ({
                                   binanceW3WProvider={binanceW3WProvider}
                                 />
                               ))
-                          : chain === "manta"
-                          ? allMantaChests && allMantaChests.length > 0
-                            ? allMantaChests.map((item, index) => (
+                          : chain === "base"
+                          ? allBaseChests && allBaseChests.length > 0
+                            ? allBaseChests.map((item, index) => (
                                 <NewChestItem
                                   coinbase={coinbase}
                                   claimingChest={claimingChest}
                                   setClaimingChest={setClaimingChest}
                                   buyNftPopup={buyNftPopup}
                                   chainId={chainId}
-                                  image={mantaImages[index]}
+                                  image={baseImages[index]}
                                   chain={chain}
                                   key={index}
                                   item={item}
@@ -3889,13 +4339,13 @@ const NewDailyBonus = ({
                                   onClaimRewards={(value) => {
                                     // setRewardData(value);
                                     setLiveRewardData(value);
-                                    onMantaChestClaimed();
+                                    onBaseChestClaimed();
                                     showLiveRewardData(value);
                                     setIsActive(item.chestId);
                                     setIsActiveIndex(index + 1);
                                   }}
                                   handleShowRewards={(value, value2) => {
-                                    showSingleRewardDataManta(value, value2);
+                                    showSingleRewardDataBase(value, value2);
                                     setIsActive(value);
                                     setIsActiveIndex(index + 1);
                                   }}
@@ -4454,6 +4904,22 @@ const NewDailyBonus = ({
                               Viction Network
                             </span>
                           </h6>
+                        )  : chain === "base" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleBasePool}
+                            >
+                              BASE Network
+                            </span>
+                          </h6>
                         ) : (
                           // : chain === "sei" ? (
                           //   <h6
@@ -4487,7 +4953,7 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                       </div>
-                    )  : message === "notsupported" ? (
+                    ) : message === "notsupported" ? (
                       <div
                         className="d-flex align-items-center flex-column justify-content-center p-0 p-lg-2 w-100 chest-progress-wrapper"
                         style={{
@@ -4508,11 +4974,11 @@ const NewDailyBonus = ({
                           <div className="dot" style={{ "--i": 9 }}></div>
                         </div>
                         <h6
-                            className="loader-text mb-0"
-                            style={{ color: "#ce5d1b" }}
-                          >
-                        Not available 
-                       </h6>
+                          className="loader-text mb-0"
+                          style={{ color: "#ce5d1b" }}
+                        >
+                          Not available
+                        </h6>
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>
@@ -6657,7 +7123,7 @@ const NewDailyBonus = ({
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
-
+            onBaseChestClaimed()
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
             setTimeout(() => {
@@ -6680,6 +7146,11 @@ const NewDailyBonus = ({
                   )
                 : chain === "viction"
                 ? showSingleRewardDataViction(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                  : chain === "base"
+                ? showSingleRewardDataBase(
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
