@@ -2044,7 +2044,7 @@ const NFTBridge = ({
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
       <div
-        className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
+        className="container-nft  d-flex  align-items-start px-3  position-relative"
         style={{ backgroundSize: "cover" }}
       >
         <div className="custom-container mt-5 mt-lg-4 mx-0 position-relative">

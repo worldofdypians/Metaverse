@@ -954,7 +954,7 @@ const MarketMint = ({
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
-          className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
+          className="container-nft d-flex align-items-start flex-column gap-2 px-3  my-4 position-relative"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
           <div className="custom-container mx-0 px-0">
