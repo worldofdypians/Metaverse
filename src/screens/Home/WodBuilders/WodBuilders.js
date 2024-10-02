@@ -229,7 +229,6 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Cyborg",
       icon: "cyborg",
@@ -242,7 +241,6 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Hamster Chain",
       icon: "hamsterChain",

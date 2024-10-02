@@ -2227,8 +2227,8 @@ const NewWalletBalance = ({
                           Number(userDataStar) +
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
-                          Number(skaleEarnUsd) +
-                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +
+                          Number(skaleEarnUsd) +  
+                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +  
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
@@ -3621,11 +3621,7 @@ const NewWalletBalance = ({
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
           <div
             className="popup-wrapper popup-active nft-wrapper-popup p-3"
-            style={{
-              width: "fit-content",
-              height: windowSize.width < 500 ? "80%" : "fit-content",
-              overflow: "auto",
-            }}
+            style={{ width: "fit-content", height: windowSize.width < 500 ? '80%' : 'fit-content', overflow: 'auto' }}
           >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>

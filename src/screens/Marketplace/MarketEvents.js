@@ -382,34 +382,7 @@ const MarketEvents = ({
   };
 
   const dummyBetaPassData2 = [
-    // {
-    //   title: "MultiversX",
-    //   logo: multiversLogo,
-    //   eventStatus: "Live",
-    //   totalRewards: "$20,000 in EGLD Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "Jul 01, 2024",
-    //   backgroundImage: multiversBg,
-    //   popupInfo: {
-    //     title: "MultiversX",
-    //     chain: "MultiversX Chain",
-    //     linkState: "multiversx",
-    //     rewards: "EGLD",
-    //     status: "Live",
-    //     id: "event16",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in EGLD Rewards",
-    //     eventDuration: coreLastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "",
-    //     eventDate: "Jul 01, 2024",
-    //   },
-    // },
+ 
 
 
  

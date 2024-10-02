@@ -1,3 +1,387 @@
-.leaflet-container{
-background: #fff !important;
+.leaflet-container {
+  height: calc(-90px + 100vh) !important;
+  // background: black !important;
+  background-image: url("./assets/cloudBg.jpg") !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: linear-gradient(
+    126.67deg,
+    #181636 35.2%,
+    #7133e5 191.04%
+  ) !important;
+}
+
+/* The sidebar menu */
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Stay on top */
+  top: 90px;
+  left: 0;
+  background-color: #080b2a; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 0px 8px 8px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #fff;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  top: 0;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #080b2a;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: 110px;
+  left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left 0.5s; /* If you want a transition effect */
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+
+.MuiAccordionSummary-content > span {
+  display: flex;
+  align-items: center !important;
+  color: white;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+}
+
+.MuiPaper-root {
+  background: none !important;
+}
+
+.chain-popup .leaflet-popup-content-wrapper {
+  width: 100%;
+}
+
+.area-text-marker {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+.city-text-marker {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  font-weight: 800;
+  text-transform: uppercase;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  pointer-events: none;
+}
+
+.area-marker {
+  pointer-events: none !important;
+}
+.sea-text-marker {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  text-align: center;
+  color: #3d6b80 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  /* -webkit-text-stroke-width: 1px; */
+  /* -webkit-text-stroke-color: black; */
+}
+
+.map-search {
+  width: 100%;
+}
+
+.search-box {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+  z-index: 6;
+  background: #080b2a;
+  border-radius: 12px;
+  border: 2px solid #525469;
+}
+
+.search-item {
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.search-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.closebtn-2 {
+  padding: 8px 0px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  position: absolute;
+  right: 5px;
+  top: 0;
+  cursor: pointer;
+}
+
+.land-btn {
+  align-items: center;
+  background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
+  border-radius: 8px;
+  color: #080b2a;
+  display: flex;
+  font-size: 14px;
+  font-style: normal;
+  font-family: "Montserrat";
+  font-weight: 600;
+  line-height: 20px;
+  padding: 10px 15px;
+  border: none;
+}
+
+.land-title {
+  color: #b8b8e0;
+  font-size: 20px;
+  font-style: normal;
+  font-family: "Montserrat";
+  font-weight: 700;
+  line-height: 29px;
+}
+
+.marker-details {
+  position: fixed;
+  right: 0;
+  top: 90px;
+  width: 350px;
+  height: calc(-90px + 100vh);
+  background: #080b2a;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it's on top of the map */
+}
+.marker-details-2 {
+  position: fixed;
+  right: -450px;
+  top: 90px;
+  width: 450px;
+  height: calc(-90px + 100vh);
+  background: #080b2a;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000; /* Ensure it's on top of the map */
+  transition: all 0.25s;
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    top: 59px;
+  }
+
+  .openbtn {
+    top: 74px;
+  }
+
+  .events-arrow {
+    top: 74px !important;
+  }
+
+  .marker-details-2 {
+    width: 100%;
+    right: -100%;
+    height: calc(-59px + 100%);
+    top: 59px;
+  }
+  .leaflet-container {
+    position: absolute !important;
+    bottom: 0 !important;
+    height: calc(-59px + 100%) !important;
+  }
+}
+
+.marker-events-active {
+  right: 0px !important;
+}
+
+.closebtn-3 {
+  text-decoration: none;
+  font-size: 25px;
+  color: #fff;
+  display: block;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.custom-marker-content {
+  color: #b8b8e0;
+  font-size: 12px;
+  font-style: normal;
+  font-family: "Montserrat";
+  font-weight: 500;
+  line-height: 29px;
+}
+
+.events-arrow {
+  background: #080b2a;
+  border-radius: 8px;
+  position: absolute;
+  right: 15px;
+  top: 110px;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all 0.25s;
+  img {
+    transform: rotate(180deg);
+  }
+}
+
+.events-arrow-open {
+  right: 465px;
+  img {
+    transform: rotate(0deg);
+  }
+}
+
+.map-event-item {
+  background: #080b2a;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.map-event-title {
+  font-size: 16px;
+  font-family: "Montserrat" !important;
+  font-weight: 700;
+  color: #fff;
+}
+
+.map-event-type {
+  border: 1px solid;
+  border-color: green;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.map-event-type-span {
+  font-size: 11px;
+  line-height: 14px;
+  font-family: "Montserrat" !important;
+  color: green;
+  font-weight: 500;
+}
+
+.map-event-duration {
+  font-size: 16px;
+  font-family: "Montserrat" !important;
+  font-weight: 700;
+  color: #fff;
+}
+
+.map-event-img {
+  height: 100%;
+  width: 150px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.arrow-pos-2 {
+  position: relative !important;
+  right: 0 !important;
+  top: 0 !important;
+}
+#areas-header {
+  padding: 0 !important;
+}
+#animals-header {
+  padding: 0 !important;
+}
+
+.map-sidebar-btn {
+  cursor: pointer;
+  width: 100%;
+  background: linear-gradient(269.74deg,#ffffff36 -254.09%,#fff0 99.84%);
+  border-radius: 8px;
+}
+
+.switches-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.MuiAccordionSummary-content{
+  margin: 0 !important;
+}
+
+#panel1a-header{
+  min-height: auto !important;
+  padding: 10px;
+  background: linear-gradient(269.74deg, #00ffff36 -254.09%, #00ffff00 99.84%);
+  border-radius: 8px;
+}
+#panel2a-header{
+  min-height: auto !important;
+  padding: 10px;
+  background: linear-gradient(269.74deg, #00a86b36 -254.09%, #00a86b00 99.84%);
+
+  border-radius: 8px;
+}
+
+.genesis-focus-btn{
+  background: linear-gradient(269.74deg, #d8b9ff36 -254.09%, #d8b9ff00 99.84%);
+
+}
+
+.leaflet-control-container{
+  display: none !important;
 }

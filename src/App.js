@@ -90,6 +90,7 @@ import { isMobile } from "react-device-detect";
 import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
+import Map from "./screens/Map/Map.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -4724,7 +4725,7 @@ function App() {
               />
             }
           />
-
+    
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"
@@ -5826,6 +5827,7 @@ function App() {
                 />
               }
             /> */}
+          <Route exact path="/map" element={<Map />} />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
@@ -5836,6 +5838,7 @@ function App() {
       {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
+        !location.pathname.includes("map") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
         )} */}
