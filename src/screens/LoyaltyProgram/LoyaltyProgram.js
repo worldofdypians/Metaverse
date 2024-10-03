@@ -279,10 +279,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                       Loyalty Program
                     </h6>
                     <p className="loyalty-banner-desc mb-0">
-                      This program rewards your interactions within Dypius
-                      ecosystem by offering gas fee rebates on Base. Join us in
-                      exploring the ecosystem with lower costs and great
-                      benefits for loyal participants!
+                    This program rewards your interactions within World of Dypians ecosystem by offering gas fee rebates. Join us in exploring the ecosystem with lower costs and great benefits for loyal participants!
                     </p>
                   </div>
                   <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
@@ -310,10 +307,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         </h6>
                         <div className="d-flex flex-column gap-5 h-100 justify-content-start align-items-center pt-3">
                           <p className="loyalty-desc mb-0 align-items-center  d-flex">
-                            Winners will enjoy 90 days of gas-free transactions
-                            in the Dypius ecosystem on Base, with ETH and DYPv2
-                            reimbursed to cover the gas costs for one
-                            transaction per day.
+                          Winners will enjoy 90 days of gas-free transactions in the World of Dypians ecosystem on every network reimbursed to cover the gas costs for one transaction per day.
                           </p>
                           {step !== 5 && step !== 4 && expired === false && (
                             <button
@@ -451,7 +445,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         <img src={contractIcon} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                        Rewards for consistent engagement and participation
+                      Rewards for consistent engagement and participation
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
@@ -459,7 +453,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         <img src={starIcon} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                        Gas fee rebates for interactions with Dypius products
+                      Gas fee rebates for interactions with the game products
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
@@ -467,7 +461,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         <img src={coinsIcon} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                        Exclusive incentives for Base network users
+                      Exclusive incentives for World of Dypians loyal users
                       </p>
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
@@ -475,7 +469,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                         <img src={moneyIcon} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
-                        Lower costs to explore and engage in the ecosystem
+                      Lower costs to explore and engage in the ecosystem
                       </p>
                     </div>
                   </div>
@@ -504,9 +498,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
         {step <= 3 && (
           <>
             <p className="loyalty-popup-desc mb-0">
-              Submit your application to join the Loyalty Program, tailored
-              specifically for Base users, providing tangible benefits that make
-              participation in the ecosystem more cost-effective.
+            Submit your application to join the Loyalty Program, tailored specifically for all loyal users, providing tangible benefits that make participation in the ecosystem more cost-effective.
             </p>
             <div className="reimbursement-divider"></div>
           </>
@@ -636,9 +628,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
               className="loyalty-popup-desc"
               style={{ textAlign: "center", width: "75%" }}
             >
-              Congratulations! Your application for the Loyalty Program was
-              successful. Please stay tuned to our official social media
-              channels for the winners announcement.
+              Congratulations! Your application for the Loyalty Program was successful. Please stay tuned to our official social media channels for the winners announcement.
             </p>
             <h6 className="loyalty-popup-close" onClick={() => setPopup(false)}>
               Close
