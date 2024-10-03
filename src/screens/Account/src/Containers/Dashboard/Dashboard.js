@@ -9291,7 +9291,7 @@ function Dashboard({
         )}
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      <div className="container-nft2 d-flex flex-column align-items-start px-3 px-lg-5 position-relative">
+      <div className="container-nft2 d-flex flex-column align-items-start px-4 position-relative">
         {location.pathname === "/account" ||
         location.pathname.includes("/account/challenges/") ? (
           <>
@@ -9412,6 +9412,7 @@ function Dashboard({
           <GetPremiumPopup
             chainId={chainId}
             coinbase={coinbase}
+            isPremium={isPremium}
             handleSwitchNetwork={handleSwitchNetwork}
             onSuccessDeposit={() => {
               onSuccessDeposit();

@@ -23,16 +23,17 @@
     background: rgba(8, 11, 42, 0.8);
     backdrop-filter: blur(2px);
     border-radius: 10px;
-  
+    margin-right: 3px;
     .nav-anchor {
       font-weight: 600;
       font-size: 18px;
       line-height: 24px;
       color: #ffffff;
       text-decoration: none;
-      // text-transform: uppercase;
+      text-transform: uppercase;
       transition: all 0.25s;
       font-family: "Poppins";
+
     }
   
     .nav-anchor:hover {
@@ -178,7 +179,7 @@
     height: 32px;
     padding: 8px;
     height: 34px;
-    width: 134px;
+    // width: 150px;
     border: 1px solid #b8b8e0 !important;
     display: flex;
     align-items: center;

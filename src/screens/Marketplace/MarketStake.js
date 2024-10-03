@@ -17,7 +17,7 @@ import newCawsStake from "./assets/newCawsStake.png";
 import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import newWodStake from "./assets/newWodStake.png";
 import newWodStakeMobile from "./assets/newWodStakeMobile.png";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 import { useNavigate } from "react-router-dom";
 import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
@@ -973,15 +973,14 @@ const MarketStake = ({
                           </button>
                         )}
                         {isConnected && !isPremium && (
-                          <button
+                          <NavLink
+                          to={"/account/premium"}
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}
-                            onClick={() => {
-                              setgetPremiumPopup(true);
-                            }}
+                            
                           >
                             Become Premium
-                          </button>
+                          </NavLink>
                         )}
 
                         {isConnected && chainId !== 1 && isPremium && (
@@ -1389,32 +1388,6 @@ const MarketStake = ({
         />
       )}
 
-      {getPremiumPopup && (
-        <OutsideClickHandler
-          onOutsideClick={() => {
-            setgetPremiumPopup(false);
-          }}
-        >
-          <GetPremiumPopup
-            chainId={chainId}
-            coinbase={coinbase}
-            handleSwitchNetwork={handleSwitchNetwork}
-            onSuccessDeposit={() => {
-              onSuccessDeposit();
-              setTimeout(() => {
-                setgetPremiumPopup(false);
-              }, 2000);
-            }}
-            onClose={() => {
-              setgetPremiumPopup(false);
-            }}
-            binanceW3WProvider={binanceW3WProvider}
-            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
-            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-            binanceWallet={binanceWallet}
-          />
-        </OutsideClickHandler>
-      )}
     </>
   );
 };

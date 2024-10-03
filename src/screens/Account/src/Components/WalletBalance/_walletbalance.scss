@@ -1492,14 +1492,7 @@
   transition: all 0.25s ease;
 }
 
-.subscribe-container {
-  border-radius: 12px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  @media screen and (max-width: 991px) {
-    height: 500px;
-  }
-}
+
 
 .purplediv {
   width: 4px;
