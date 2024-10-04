@@ -553,7 +553,7 @@ const Marketplace = ({
           }}
         />
       </OutsideClickHandler> */}
-      <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-5 position-relative">
+      <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-4 position-relative">
         <div className="custom-container mx-0">
           <div className="market-upper-wrapper pb-5">
             <div className="d-flex flex-column gap-5">
@@ -1134,7 +1134,7 @@ const Marketplace = ({
             </div> */}
 
             <div
-              className="row mx-1 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
+              className="row mx-0 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
             >
               <div className="d-flex col-12 flex-column px-3 py-4 nft-outer-wrapper3 flex-lg-row gap-4 justify-content-between w-100 position-relative">
