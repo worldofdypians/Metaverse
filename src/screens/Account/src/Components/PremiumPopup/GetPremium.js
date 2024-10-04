@@ -123,6 +123,34 @@ const GetPremiumPopup = ({
   const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
   const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
 
+  const [discountPercentageTaiko, setdiscountPercentageTaiko] = useState(0);
+  const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
+  const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
+  const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
+
+  const getRankData = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch(async (err) => {
+        if (err.response.status === 404) {
+          await axios
+            .post(`https://api.worldofdypians.com/api/addUserRank`, {
+              walletAddress: coinbase,
+            })
+            .then(async (data) => {
+              const response2 = await axios
+                .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+                .catch((e) => {
+                  console.error(e);
+                });
+            });
+        }
+      });
+  };
+
   const calculatePremiumDiscount = async (wallet) => {
     // if (chainId === 56) {
     const premiumSc = new window.bscWeb3.eth.Contract(
@@ -135,6 +163,11 @@ const GetPremiumPopup = ({
       window.config.subscription_viction_address
     );
 
+    const premiumSc_taiko = new window.taikoWeb3.eth.Contract(
+      window.SUBSCRIPTION_TAIKO_ABI,
+      window.config.subscription_taiko_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -143,6 +176,11 @@ const GetPremiumPopup = ({
     const nftContract_viction = new window.victionWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.taikoWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (wallet) {
@@ -155,6 +193,14 @@ const GetPremiumPopup = ({
         });
 
       const result_viction = await nftContract_viction.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const result_taiko = await nftContract_taiko.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -178,6 +224,14 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_taiko = await premiumSc_taiko.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -187,6 +241,13 @@ const GetPremiumPopup = ({
 
       const nftObject_viction = await premiumSc_viction.methods
         .nftDiscounts(window.config.nft_dypius_premium_viction_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_taiko = await premiumSc_taiko.methods
+        .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -238,15 +299,42 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
+      } else if (result_taiko && parseInt(result_taiko) > 0) {
+        const tokenId = await nftContract_taiko.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_taiko) {
+          setnftDiscountObjectTaiko(nftObject_taiko);
+          if (discount_taiko) {
+            setdiscountPercentageTaiko(
+              Math.max(
+                parseInt(discount_taiko),
+                parseInt(nftObject_taiko.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdTaiko(tokenId);
+        setnftPremium_totalTaiko(parseInt(result_taiko));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
         setnftPremium_tokenIdViction(0);
         setnftPremium_totalViction(0);
+        setnftPremium_tokenIdTaiko(0);
+        setnftPremium_totalTaiko(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
+        } else if (discount_taiko) {
+          setdiscountPercentageTaiko(parseInt(discount_taiko));
         }
       }
     } else {
@@ -254,10 +342,11 @@ const GetPremiumPopup = ({
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
       setnftPremium_totalViction(0);
+      setnftPremium_tokenIdTaiko(0);
+      setnftPremium_totalTaiko(0);
     }
     // } else setdiscountPercentage(0);
   };
-
 
   const handleUpdatePremiumUser = async (wallet) => {
     await axios
@@ -572,7 +661,10 @@ const GetPremiumPopup = ({
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -621,9 +713,14 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_viction_address
     );
 
+    let nftContract_taiko = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
+    );
+
     if (chainId === 56 && nftPremium_total > 0) {
       if (window.WALLET_TYPE !== "binance") {
-        let tokenContract = new  window.web3.eth.Contract(
+        let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
           selectedSubscriptionToken
         );
@@ -717,22 +814,21 @@ const GetPremiumPopup = ({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-          setisApproved(true);
-          if (discountPercentage < 100) {
-            if (
-              selectedSubscriptionToken.toLowerCase() ===
-              "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
-            ) {
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentage < 100) {
+              if (
+                selectedSubscriptionToken.toLowerCase() ===
+                "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c".toLowerCase()
+              ) {
+                setapproveStatus("deposit");
+              } else setapproveStatus("approveAmount");
+            } else {
               setapproveStatus("deposit");
-            } else setapproveStatus("approveAmount");
-          } else {
-            setapproveStatus("deposit");
+            }
           }
-        }
-
         } else if (approveStatus === "approveAmount") {
           const txResponse = await tokenContract_binance
             .approve(bnbsubscribeAddress, price, { from: coinbase })
@@ -748,16 +844,19 @@ const GetPremiumPopup = ({
               }, 5000);
             });
 
-            const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setloadspinner(false);
-              setisApproved(true);
-              setapproveStatus("deposit");
-        }
-
+          const txReceipt = await txResponse.wait();
+          if (txReceipt) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          }
         }
       }
-    } else if (chainId === 88 && nftPremium_totalViction > 0 && window.WALLET_TYPE !== "binance") {
+    } else if (
+      chainId === 88 &&
+      nftPremium_totalViction > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
       if (approveStatus === "initial") {
         await nftContract_viction.methods
           .approve(
@@ -810,7 +909,64 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
-    }  else {
+    } else if (
+      chainId === 167000 &&
+      nftPremium_totalTaiko > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_taiko.methods
+          .approve(
+            window.config.subscription_taiko_address,
+            nftPremium_tokenIdTaiko
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageTaiko < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(taikosubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    } else {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new window.web3.eth.Contract(
           window.ERC20_ABI,
@@ -820,29 +976,29 @@ const GetPremiumPopup = ({
 
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price
           )
           .send({ from: coinbase })
           .then(() => {
@@ -871,29 +1027,29 @@ const GetPremiumPopup = ({
         const txResponse = await tokenContract_binance
           .approve(
             chainId === 1
-            ? ethsubscribeAddress
-            : chainId === 56
-            ? bnbsubscribeAddress
-            : chainId === 1030
-            ? cfxsubscribeAddress
-            : chainId === 8453
-            ? basesubscribeAddress
-            : chainId === 43114
-            ? avaxsubscribeAddress
-            : chainId === 1482601649
-            ? skalesubscribeAddress
-            : chainId === 88
-            ? victionsubscribeAddress
-            : chainId === 169
-            ? mantasubscribeAddress
-            : chainId === 167000
-            ? taikosubscribeAddress
-            : chainId === 1116
-            ? coresubscribeAddress
-            : chainId === 713715
-            ? seisubscribeAddress
-            : cfxsubscribeAddress,
-          price,
+              ? ethsubscribeAddress
+              : chainId === 56
+              ? bnbsubscribeAddress
+              : chainId === 1030
+              ? cfxsubscribeAddress
+              : chainId === 8453
+              ? basesubscribeAddress
+              : chainId === 43114
+              ? avaxsubscribeAddress
+              : chainId === 1482601649
+              ? skalesubscribeAddress
+              : chainId === 88
+              ? victionsubscribeAddress
+              : chainId === 169
+              ? mantasubscribeAddress
+              : chainId === 167000
+              ? taikosubscribeAddress
+              : chainId === 1116
+              ? coresubscribeAddress
+              : chainId === 713715
+              ? seisubscribeAddress
+              : cfxsubscribeAddress,
+            price,
             { from: coinbase }
           )
           .catch((e) => {
@@ -908,13 +1064,12 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
+        const txReceipt = await txResponse.wait();
         if (txReceipt) {
           setloadspinner(false);
           setisApproved(true);
           setapproveStatus("deposit");
         }
-
       }
     }
   };
@@ -1024,7 +1179,10 @@ const GetPremiumPopup = ({
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -1051,20 +1209,6 @@ const GetPremiumPopup = ({
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
-        }
-      } else if (chainId === 167000) {
-        const result = await subscribeTokencontracttaiko.methods
-          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -1201,34 +1345,95 @@ const GetPremiumPopup = ({
               console.error(e);
               return false;
             });
- 
-            if (
-              (approved.toLowerCase() === victionsubscribeAddress.toLowerCase()) ||
-              approvedAll === true
-            ) {
-           
-              if(discountPercentageViction === 100) {
-                setloadspinner(false);
-                setisApproved(true);
-                setapproveStatus("deposit");
-              }
-              // if (discountPercentageViction < 100) {
-              //   setloadspinner(false);
-              //   setisApproved(true);
-              //   setapproveStatus("approveAmount");
-              // } else {
-              //   setloadspinner(false);
-              //   setisApproved(false);
-              //   setapproveStatus("initial");
-              // }
-            } else {
+
+          if (
+            approved.toLowerCase() === victionsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageViction === 100) {
               setloadspinner(false);
-              setisApproved(false);
-              setapproveStatus("initial");
+              setisApproved(true);
+              setapproveStatus("deposit");
             }
+            // if (discountPercentageViction < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
         } else {
           const result = await subscribeTokencontractviction.methods
             .allowance(coinbase, victionsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
+      } else if (chainId === 167000) {
+        if (nftPremium_totalTaiko > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+            window.config.nft_dypius_premium_taiko_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdTaiko)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, taikosubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === taikosubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageTaiko === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageTaiko < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontracttaiko.methods
+            .allowance(coinbase, taikosubscribeAddress)
             .call()
             .then();
 
@@ -1315,6 +1520,7 @@ const GetPremiumPopup = ({
   };
 
   const handleSubscribe = async (e) => {
+    const today = Date.now();
     if (window.WALLET_TYPE !== "binance") {
       let subscriptionContract = await window.getContract({
         key:
@@ -1356,6 +1562,21 @@ const GetPremiumPopup = ({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "bnb subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             onSuccessDeposit();
             setTimeout(() => {
               setloadspinnerSub(false);
@@ -1390,6 +1611,21 @@ const GetPremiumPopup = ({
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "bnb subscribeBNB",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1422,6 +1658,21 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
             onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "viction subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1442,15 +1693,78 @@ const GetPremiumPopup = ({
               setstatus("");
             }, 5000);
           });
-      }  else {
+      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
+        await window
+          .subscribeNFTTaiko(
+            nftDiscountObjectTaiko.nftAddress,
+            nftPremium_tokenIdTaiko,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "taiko subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else {
         await subscriptionContract.methods
           .subscribe(selectedSubscriptionToken, price)
           .send({ from: await window.getCoinbase() })
-          .then((data) => {
+          .then(async (data) => {
             setloadspinnerSub(false);
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1526,20 +1840,35 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setloadspinnerSub(false);
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            onSuccessDeposit();
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          }
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          onSuccessDeposit();
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: "bnb subscribeNFT BinanceWallet",
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
 
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       } else if (
         chainId === 56 &&
         selectedSubscriptionToken.toLowerCase() ===
@@ -1560,19 +1889,35 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: "bnb subscribeBNB BinanceWallet",
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          setTimeout(() => {
             setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          } 
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       } else {
         const txResponse = await subscriptionContract
           .subscribe(selectedSubscriptionToken, price, { from: coinbase })
@@ -1589,20 +1934,35 @@ const GetPremiumPopup = ({
             }, 5000);
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setloadspinnerSub(false);
-            onSuccessDeposit();
-            handleUpdatePremiumUser(coinbase);
-            setapproveStatus("successsubscribe");
-            setTimeout(() => {
-              setloadspinnerSub(false);
-              setloadspinner(false);
-              setapproveStatus("initial");
-              setstatus("");
-            }, 5000);
-          } 
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setloadspinnerSub(false);
+          onSuccessDeposit();
+          handleUpdatePremiumUser(coinbase);
+          setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: chainId.toString(),
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
 
+          setTimeout(() => {
+            setloadspinnerSub(false);
+            setloadspinner(false);
+            setapproveStatus("initial");
+            setstatus("");
+          }, 5000);
+        }
       }
     }
   };
@@ -1716,7 +2076,20 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wethAddress);
       handleCheckIfAlreadyApproved(wethAddress);
     }
-  }, [chainId, nftPremium_total, nftPremium_totalViction, discountPercentage, discountPercentageViction, nftPremium_tokenId, nftPremium_tokenIdViction]);
+  }, [
+    chainId,
+    nftPremium_total,
+    nftPremium_totalViction,
+    nftPremium_totalTaiko,
+
+    discountPercentage,
+    discountPercentageViction,
+    discountPercentageTaiko,
+
+    nftPremium_tokenId,
+    nftPremium_tokenIdViction,
+    nftPremium_tokenIdTaiko,
+  ]);
 
   useEffect(() => {
     if (chainId === 1 && selectedSubscriptionToken !== "") {
@@ -1792,94 +2165,107 @@ const GetPremiumPopup = ({
             style={{ cursor: "pointer" }}
           />
         </div>
-        {(discountPercentage > 0 || discountPercentageViction > 0) || (nftPremium_total > 0 || nftPremium_totalViction > 0) ? (
-           <div className="premium-discount-bg mt-3 p-4 position-relative">
-           <div className="premiumRedTag position-absolute">
-             <div className="position-relative d-flex flex-column">
-               <img src={premiumRedTag} alt="" />
-               <div className="d-flex flex-column position-absolute discountwrap">
-                 <span className="discount-price2 font-oxanium">
-                   {discountPercentage}%
-                 </span>
-                 <span className="discount-price-bottom">
-                   Discount
-                 </span>
-               </div>
-             </div>
-           </div>
-           <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-             <div className="d-flex flex-column">
-               <h6 className="lifetime-plan-text m-0">
-                 Lifetime plan
-               </h6>
-               {nftPremium_total > 0 ||
-                 (nftPremium_totalViction > 0 && (
-                   <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                     Valid until:{" "}
-                     {new Date(
-                       nftPremium_total > 0
-                         ? nftDiscountObject.expiration *
-                           1000
-                         : nftDiscountObjectViction.expiration *
-                           1000
-                     )
-                       .toDateString()
-                       .slice(
-                         3,
-                         new Date(
-                           nftPremium_total > 0
-                             ? nftDiscountObject.expiration *
-                               1000
-                             : nftDiscountObjectViction.expiration *
-                               1000
-                         ).toDateString().length
-                       )}
-                   </h6>
-                 ))}
-             </div>
-             <div className="d-flex align-items-end gap-2">
-               <h6 className="discount-price">
-                 {discountPercentage == 100 ||
-                 discountPercentageViction == 100
-                   ? "FREE"
-                   : "$" +
-                     (100 -
-                       Number(
-                         discountPercentage > 0
-                           ? discountPercentage
-                           : discountPercentageViction > 0
-                           ? discountPercentageViction
-                           : discountPercentage
-                       ))}
-               </h6>
-               <h6 className="old-price-text">$100</h6>
-             </div>
-             {nftPremium_total > 0 ||
-               (nftPremium_totalViction > 0 && (
-                 <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                   Valid until:{" "}
-                   {new Date(
-                     nftPremium_total > 0
-                       ? nftDiscountObject.expiration *
-                         1000
-                       : nftDiscountObjectViction.expiration *
-                         1000
-                   )
-                     .toDateString()
-                     .slice(
-                       3,
-                       new Date(
-                         nftPremium_total > 0
-                           ? nftDiscountObject.expiration *
-                             1000
-                           : nftDiscountObjectViction.expiration *
-                             1000
-                       ).toDateString().length
-                     )}
-                 </h6>
-               ))}
-           </div>
-         </div>
+        {discountPercentage > 0 ||
+        discountPercentageViction > 0 ||
+        discountPercentageTaiko > 0 ||
+        nftPremium_total > 0 ||
+        nftPremium_totalViction ||
+        nftPremium_totalTaiko > 0 ? (
+          <div className="premium-discount-bg mt-3 p-4 position-relative">
+            <div className="premiumRedTag position-absolute">
+              <div className="position-relative d-flex flex-column">
+                <img src={premiumRedTag} alt="" />
+                <div className="d-flex flex-column position-absolute discountwrap">
+                  <span className="discount-price2 font-oxanium">
+                    {discountPercentage > 0
+                      ? discountPercentage
+                      : discountPercentageViction > 0
+                      ? discountPercentageViction
+                      : discountPercentageTaiko > 0
+                      ? discountPercentageTaiko
+                      : discountPercentage}
+                    %
+                  </span>
+                  <span className="discount-price-bottom">Discount</span>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+              <div className="d-flex flex-column">
+                <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                {(nftPremium_total > 0 ||
+                  nftPremium_totalViction > 0 ||
+                  nftPremium_totalTaiko > 0) && (
+                  <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                    Valid until:{" "}
+                    {new Date(
+                      nftPremium_total > 0
+                        ? nftDiscountObject.expiration * 1000
+                        : nftPremium_totalTaiko > 0
+                        ? nftDiscountObjectTaiko.expiration * 1000
+                        : nftDiscountObjectViction.expiration * 1000
+                    )
+                      .toDateString()
+                      .slice(
+                        3,
+                        new Date(
+                          nftPremium_total > 0
+                            ? nftDiscountObject.expiration * 1000
+                            : nftPremium_totalTaiko > 0
+                            ? nftDiscountObjectTaiko.expiration * 1000
+                            : nftDiscountObjectViction.expiration * 1000
+                        ).toDateString().length
+                      )}
+                  </h6>
+                )}
+              </div>
+              <div className="d-flex align-items-end gap-2">
+                <h6 className="discount-price">
+                  {discountPercentage == 100 ||
+                  discountPercentageViction == 100 ||
+                  discountPercentageTaiko == 100
+                    ? "FREE"
+                    : "$" +
+                      (100 -
+                        Number(
+                          discountPercentage > 0
+                            ? discountPercentage
+                            : discountPercentageViction > 0
+                            ? discountPercentageViction
+                            : discountPercentageTaiko > 0
+                            ? discountPercentageTaiko
+                            : discountPercentage
+                        ))}
+                </h6>
+                <h6 className="old-price-text">$100</h6>
+              </div>
+              {(nftPremium_total > 0 ||
+                nftPremium_totalViction > 0 ||
+                nftPremium_totalTaiko > 0) && (
+                <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                  Valid until:{" "}
+                  {new Date(
+                    nftPremium_total > 0
+                      ? nftDiscountObject.expiration * 1000
+                      : nftPremium_totalTaiko > 0
+                      ? nftDiscountObjectTaiko.expiration * 1000
+                      : nftDiscountObjectViction.expiration * 1000
+                  )
+                    .toDateString()
+                    .slice(
+                      3,
+                      new Date(
+                        nftPremium_total > 0
+                          ? nftDiscountObject.expiration * 1000
+                          : nftPremium_totalTaiko > 0
+                          ? nftDiscountObjectTaiko.expiration * 1000
+                          : nftDiscountObjectViction.expiration * 1000
+                      ).toDateString().length
+                    )}
+                </h6>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -2215,254 +2601,275 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {(discountPercentage < 100 && discountPercentageViction  < 100) && (
-            <div className="d-flex flex-column align-items-end gap-3">
-              <span className="my-premium-balance-text mb-0">
-                My balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                {dropdownIcon.toUpperCase()}
-              </span>
-              <div
-                className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                style={{ height: "34px" }}
-              >
-                <span className="subscription-price-text mb-0">
-                  Subscription Price:
+          {discountPercentage < 100 &&
+            discountPercentageViction < 100 &&
+            discountPercentageTaiko < 100 && (
+              <div className="d-flex flex-column align-items-end gap-3">
+                <span className="my-premium-balance-text mb-0">
+                  My balance:{" "}
+                  {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
+                  {dropdownIcon.toUpperCase()}
                 </span>
+                <div
+                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                  style={{ height: "34px" }}
+                >
+                  <span className="subscription-price-text mb-0">
+                    Subscription Price:
+                  </span>
 
-                <div className="d-flex align-items-center gap-2">
-                  <div class="dropdown position relative">
-                    <button
-                      class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <div
-                        className="d-flex align-items-center gap-2"
-                        style={{ color: "#fff" }}
+                  <div className="d-flex align-items-center gap-2">
+                    <div class="dropdown position relative">
+                      <button
+                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                       >
-                        {dropdownIcon !== "" && (
-                          <img
-                            src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                            alt=""
-                            style={{ width: 20, height: 20 }}
-                          />
-                        )}
-                        {/* {dropdownTitle} */}
-                      </div>
-                      <img src={launchpadIndicator} alt="" />
-                    </button>
-                    <ul class="dropdown-menu w-100">
-                      {Object.keys(
-                        chainId === 1
-                          ? window.config.subscriptioneth_tokens
-                          : chainId === 56
-                          ? window.config.subscriptionbnb_tokens
-                          : chainId === 1030
-                          ? window.config.subscriptioncfx_tokens
-                          : chainId === 43114
-                          ? window.config.subscription_tokens
-                          : chainId === 8453
-                          ? window.config.subscriptionbase_tokens
-                          : chainId === 1482601649
-                          ? window.config.subscriptionskale_tokens
-                          : chainId === 88
-                          ? window.config.subscriptionviction_tokens
-                          : chainId === 169
-                          ? window.config.subscriptionmanta_tokens
-                          : chainId === 167000
-                          ? window.config.subscriptiontaiko_tokens
-                          : chainId === 1116
-                          ? window.config.subscriptioncore_tokens
-                          : chainId === 713715
-                          ? window.config.subscriptionsei_tokens
-                          : window.config.subscription_tokens
-                      ).map((t, i) => (
-                        <li
-                          key={i}
-                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                          onClick={() => {
-                            window.cached_contracts = Object.create(null);
-                            setTimeout(() => {
-                              setdropdownIcon(
-                                chainId === 1
-                                  ? window.config.subscriptioneth_tokens[t]
-                                      ?.symbol
-                                  : chainId === 56
-                                  ? window.config.subscriptionbnb_tokens[t]
-                                      ?.symbol
-                                  : chainId === 43114
-                                  ? window.config.subscription_tokens[t]?.symbol
-                                  : chainId === 8453
-                                  ? window.config.subscriptionbase_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1030
-                                  ? window.config.subscriptioncfx_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1482601649
-                                  ? window.config.subscriptionskale_tokens[t]
-                                      ?.symbol
-                                  : chainId === 88
-                                  ? window.config.subscriptionviction_tokens[t]
-                                      ?.symbol
-                                  : chainId === 169
-                                  ? window.config.subscriptionmanta_tokens[t]
-                                      ?.symbol
-                                  : chainId === 167000
-                                  ? window.config.subscriptiontaiko_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1116
-                                  ? window.config.subscriptioncore_tokens[t]
-                                      ?.symbol
-                                  : chainId === 713715
-                                  ? window.config.subscriptionsei_tokens[t]
-                                      ?.symbol
-                                  : window.config.subscription_tokens[t]?.symbol
-                              );
-                              setdropdownTitle(
-                                chainId === 1
-                                  ? window.config.subscriptioneth_tokens[t]
-                                      ?.symbol
-                                  : chainId === 56
-                                  ? window.config.subscriptionbnb_tokens[t]
-                                      ?.symbol
-                                  : chainId === 43114
-                                  ? window.config.subscription_tokens[t]?.symbol
-                                  : chainId === 8453
-                                  ? window.config.subscriptionbase_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1030
-                                  ? window.config.subscriptioncfx_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1482601649
-                                  ? window.config.subscriptionskale_tokens[t]
-                                      ?.symbol
-                                  : chainId === 88
-                                  ? window.config.subscriptionviction_tokens[t]
-                                      ?.symbol
-                                  : chainId === 169
-                                  ? window.config.subscriptionmanta_tokens[t]
-                                      ?.symbol
-                                  : chainId === 167000
-                                  ? window.config.subscriptiontaiko_tokens[t]
-                                      ?.symbol
-                                  : chainId === 713715
-                                  ? window.config.subscriptionsei_tokens[t]
-                                      ?.symbol
-                                  : chainId === 1116
-                                  ? window.config.subscriptionsei_tokens[t]
-                                      ?.symbol
-                                  : window.config.subscription_tokens[t]?.symbol
-                              );
-
-                              // console.log(t);
-                              handleSubscriptionTokenChange(t);
-                              handleCheckIfAlreadyApproved(t);
-                            }, 200);
-                          }}
+                        <div
+                          className="d-flex align-items-center gap-2"
+                          style={{ color: "#fff" }}
                         >
-                          <img
-                            src={
-                              chainId === 1
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 56
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 43114
-                                ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 1030
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 8453
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 1482601649
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 1116
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 88
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 169
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 167000
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : chainId === 713715
-                                ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                                : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                    t
-                                  ]?.symbol.toLowerCase()}Icon.svg`)
-                            }
-                            alt=""
-                            style={{
-                              width: 20,
-                              height: 20,
-                            }}
-                          />
-                          {chainId === 1
-                            ? window.config.subscriptioneth_tokens[t]?.symbol
+                          {dropdownIcon !== "" && (
+                            <img
+                              src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                              alt=""
+                              style={{ width: 20, height: 20 }}
+                            />
+                          )}
+                          {/* {dropdownTitle} */}
+                        </div>
+                        <img src={launchpadIndicator} alt="" />
+                      </button>
+                      <ul class="dropdown-menu w-100">
+                        {Object.keys(
+                          chainId === 1
+                            ? window.config.subscriptioneth_tokens
                             : chainId === 56
-                            ? window.config.subscriptionbnb_tokens[t]?.symbol
-                            : chainId === 43114
-                            ? window.config.subscription_tokens[t]?.symbol
+                            ? window.config.subscriptionbnb_tokens
                             : chainId === 1030
-                            ? window.config.subscriptioncfx_tokens[t]?.symbol
+                            ? window.config.subscriptioncfx_tokens
+                            : chainId === 43114
+                            ? window.config.subscription_tokens
                             : chainId === 8453
-                            ? window.config.subscriptionbase_tokens[t]?.symbol
+                            ? window.config.subscriptionbase_tokens
                             : chainId === 1482601649
-                            ? window.config.subscriptionskale_tokens[t]?.symbol
-                            : chainId === 1116
-                            ? window.config.subscriptioncore_tokens[t]?.symbol
+                            ? window.config.subscriptionskale_tokens
                             : chainId === 88
-                            ? window.config.subscriptionviction_tokens[t]
-                                ?.symbol
+                            ? window.config.subscriptionviction_tokens
                             : chainId === 169
-                            ? window.config.subscriptionmanta_tokens[t]?.symbol
+                            ? window.config.subscriptionmanta_tokens
                             : chainId === 167000
-                            ? window.config.subscriptiontaiko_tokens[t]?.symbol
+                            ? window.config.subscriptiontaiko_tokens
+                            : chainId === 1116
+                            ? window.config.subscriptioncore_tokens
                             : chainId === 713715
-                            ? window.config.subscriptionsei_tokens[t]?.symbol
-                            : window.config.subscription_tokens[t]?.symbol}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  {/* <img
+                            ? window.config.subscriptionsei_tokens
+                            : window.config.subscription_tokens
+                        ).map((t, i) => (
+                          <li
+                            key={i}
+                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                            onClick={() => {
+                              window.cached_contracts = Object.create(null);
+                              setTimeout(() => {
+                                setdropdownIcon(
+                                  chainId === 1
+                                    ? window.config.subscriptioneth_tokens[t]
+                                        ?.symbol
+                                    : chainId === 56
+                                    ? window.config.subscriptionbnb_tokens[t]
+                                        ?.symbol
+                                    : chainId === 43114
+                                    ? window.config.subscription_tokens[t]
+                                        ?.symbol
+                                    : chainId === 8453
+                                    ? window.config.subscriptionbase_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1030
+                                    ? window.config.subscriptioncfx_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1482601649
+                                    ? window.config.subscriptionskale_tokens[t]
+                                        ?.symbol
+                                    : chainId === 88
+                                    ? window.config.subscriptionviction_tokens[
+                                        t
+                                      ]?.symbol
+                                    : chainId === 169
+                                    ? window.config.subscriptionmanta_tokens[t]
+                                        ?.symbol
+                                    : chainId === 167000
+                                    ? window.config.subscriptiontaiko_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1116
+                                    ? window.config.subscriptioncore_tokens[t]
+                                        ?.symbol
+                                    : chainId === 713715
+                                    ? window.config.subscriptionsei_tokens[t]
+                                        ?.symbol
+                                    : window.config.subscription_tokens[t]
+                                        ?.symbol
+                                );
+                                setdropdownTitle(
+                                  chainId === 1
+                                    ? window.config.subscriptioneth_tokens[t]
+                                        ?.symbol
+                                    : chainId === 56
+                                    ? window.config.subscriptionbnb_tokens[t]
+                                        ?.symbol
+                                    : chainId === 43114
+                                    ? window.config.subscription_tokens[t]
+                                        ?.symbol
+                                    : chainId === 8453
+                                    ? window.config.subscriptionbase_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1030
+                                    ? window.config.subscriptioncfx_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1482601649
+                                    ? window.config.subscriptionskale_tokens[t]
+                                        ?.symbol
+                                    : chainId === 88
+                                    ? window.config.subscriptionviction_tokens[
+                                        t
+                                      ]?.symbol
+                                    : chainId === 169
+                                    ? window.config.subscriptionmanta_tokens[t]
+                                        ?.symbol
+                                    : chainId === 167000
+                                    ? window.config.subscriptiontaiko_tokens[t]
+                                        ?.symbol
+                                    : chainId === 713715
+                                    ? window.config.subscriptionsei_tokens[t]
+                                        ?.symbol
+                                    : chainId === 1116
+                                    ? window.config.subscriptionsei_tokens[t]
+                                        ?.symbol
+                                    : window.config.subscription_tokens[t]
+                                        ?.symbol
+                                );
+
+                                // console.log(t);
+                                handleSubscriptionTokenChange(t);
+                                handleCheckIfAlreadyApproved(t);
+                              }, 200);
+                            }}
+                          >
+                            <img
+                              src={
+                                chainId === 1
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 56
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 43114
+                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 1030
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 8453
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 1482601649
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 1116
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 88
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 169
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 167000
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 713715
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                              }
+                              alt=""
+                              style={{
+                                width: 20,
+                                height: 20,
+                              }}
+                            />
+                            {chainId === 1
+                              ? window.config.subscriptioneth_tokens[t]?.symbol
+                              : chainId === 56
+                              ? window.config.subscriptionbnb_tokens[t]?.symbol
+                              : chainId === 43114
+                              ? window.config.subscription_tokens[t]?.symbol
+                              : chainId === 1030
+                              ? window.config.subscriptioncfx_tokens[t]?.symbol
+                              : chainId === 8453
+                              ? window.config.subscriptionbase_tokens[t]?.symbol
+                              : chainId === 1482601649
+                              ? window.config.subscriptionskale_tokens[t]
+                                  ?.symbol
+                              : chainId === 1116
+                              ? window.config.subscriptioncore_tokens[t]?.symbol
+                              : chainId === 88
+                              ? window.config.subscriptionviction_tokens[t]
+                                  ?.symbol
+                              : chainId === 169
+                              ? window.config.subscriptionmanta_tokens[t]
+                                  ?.symbol
+                              : chainId === 167000
+                              ? window.config.subscriptiontaiko_tokens[t]
+                                  ?.symbol
+                              : chainId === 713715
+                              ? window.config.subscriptionsei_tokens[t]?.symbol
+                              : window.config.subscription_tokens[t]?.symbol}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    {/* <img
                     src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                     height={16}
                     width={16}
                     alt="usdt"
                   /> */}
-                  <span className="subscription-price-token mb-0">
-                    {formattedPrice.slice(0, 7)}
+                    <span className="subscription-price-token mb-0">
+                      {formattedPrice.slice(0, 7)}
+                    </span>
+                  </div>
+                  <span className="subscription-price-usd mb-0">
+                    {" "}
+                    $
+                    {100 -
+                      Number(
+                        discountPercentage != 0
+                          ? discountPercentage
+                          : discountPercentageViction != 0
+                          ? discountPercentageViction
+                          : discountPercentageTaiko != 0
+                          ? discountPercentageTaiko
+                          : discountPercentage
+                      )}
                   </span>
                 </div>
-                <span className="subscription-price-usd mb-0">
-                  {" "}
-                  ${100 - Number(discountPercentage!= 0  ? discountPercentage : discountPercentageViction != 0 ? discountPercentageViction : discountPercentage) }
-                </span>
               </div>
-            </div>
-          )}
+            )}
 
           {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
               <span className="token-balance-placeholder">
@@ -2697,7 +3104,8 @@ const GetPremiumPopup = ({
                   approveStatus === "fail" ||
                   approveStatus === "deposit") ? (
                   <>
-                    {discountPercentageViction > 0 || nftPremium_totalViction > 0
+                    {discountPercentageViction > 0 ||
+                    nftPremium_totalViction > 0
                       ? "Redeem"
                       : "Buy"}
                   </>
@@ -2736,6 +3144,118 @@ const GetPremiumPopup = ({
               }}
             >
               Switch to Viction
+            </button>{" "}
+          </div>
+        ) : discountPercentageTaiko > 0 && chainId === 167000 ? (
+          <div className="d-flex align-items-center gap-3 justify-content-center">
+            <div
+              className={` ${
+                approveStatus === "fail" || !coinbase || isApproved
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? "outline-btn-disabled"
+                    : "filled-btn"
+                } px-4`}
+                disabled={
+                  approveStatus === "fail" || !coinbase || isApproved
+                    ? true
+                    : false
+                }
+                onClick={(e) => handleApprove(e)}
+              >
+                {loadspinner === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "deposit" ||
+                  approveStatus === "approveAmount" ||
+                  approveStatus === "failsubscribe" ||
+                  approveStatus === "successsubscribe") ? (
+                  <>
+                    Approve{" "}
+                    {approveStatus === "approveAmount"
+                      ? "token"
+                      : nftPremium_totalTaiko > 0
+                      ? "NFT"
+                      : ""}
+                  </>
+                ) : loadspinner === false && approveStatus === "fail" ? (
+                  "Failed"
+                ) : (
+                  <div className="d-flex align-items-center gap-2">
+                    Processing
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>{" "}
+                  </div>
+                )}
+              </button>
+            </div>
+            <div
+              className={` ${
+                isApproved === false
+                  ? "linear-border-disabled"
+                  : "linear-border"
+              }`}
+            >
+              <button
+                className={`btn ${
+                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
+                } px-4`}
+                onClick={() => handleSubscribe()}
+              >
+                {loadspinnerSub === false &&
+                (approveStatus === "initial" ||
+                  approveStatus === "fail" ||
+                  approveStatus === "deposit") ? (
+                  <>
+                    {discountPercentageTaiko > 0 || nftPremium_totalTaiko > 0
+                      ? "Redeem"
+                      : "Buy"}
+                  </>
+                ) : loadspinnerSub === false &&
+                  approveStatus === "successsubscribe" ? (
+                  "Success"
+                ) : loadspinnerSub === false &&
+                  approveStatus === "failsubscribe" ? (
+                  "Failed"
+                ) : (
+                  <div
+                    className="spinner-border "
+                    role="status"
+                    style={{
+                      height: "1rem",
+                      width: "1rem",
+                    }}
+                  ></div>
+                )}
+              </button>
+            </div>
+          </div>
+        ) : discountPercentageTaiko > 0 && chainId !== 167000 ? (
+          <div
+            className={`d-flex align-items-center justify-content-center mb-2`}
+          >
+            <button
+              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+              onClick={() => {
+                handleTaikoPool();
+              }}
+              style={{
+                width: "fit-content",
+                whiteSpace: "nowrap",
+                fontSize: 14,
+              }}
+            >
+              Switch to Taiko
             </button>{" "}
           </div>
         ) : (

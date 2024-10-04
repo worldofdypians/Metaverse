@@ -262,6 +262,30 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "Poolz",
+      icon: "poolz",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "WeWay",
+      icon: "weway",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Ordify",
+      icon: "ordify",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Finceptor",
+      icon: "finceptor",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
