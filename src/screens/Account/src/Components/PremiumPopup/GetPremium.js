@@ -1786,11 +1786,40 @@ const GetPremiumPopup = ({
     <div className="custom-container mt-5 mt-lg-0">
     {isPremium ? 
    <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
-   <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+   <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between gap-5 gap-lg-0 p-3">
       
        <h6 className="mb-0 already-premium-title">Premium Subscriber</h6>
          <img src={premiumIcon} className="already-preium-badge" alt="" />
      </div>
+     <div className="mt-3 p-3 benefits-title-wrapper">
+          <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+        </div>
+        <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
+          <div className="d-flex flex-column gap-2">
+            <div className="d-flex align-items-center gap-2">
+              <img src={metaverseIcon} alt="" />
+              <h6 className="premium-benefits-title mb-0">Metaverse</h6>
+            </div>
+            {metaverseBenefits.map((item, index) => (
+              <div className="d-flex align-items-center gap-2">
+                <img src={greenCheck} alt="" />
+                <span className="premium-benefits-item mb-0">{item}</span>
+              </div>
+            ))}
+          </div>
+          <div className="d-flex flex-column gap-2">
+            <div className="d-flex align-items-center gap-2">
+              <img src={dappsIcon} alt="" />
+              <h6 className="premium-benefits-title mb-0">Dapps</h6>
+            </div>
+            {dappsBenefits.map((item, index) => (
+              <div className="d-flex align-items-center gap-2">
+                <img src={greenCheck} alt="" />
+                <span className="premium-benefits-item mb-0">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
  </div>
     :  
     <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
@@ -2015,7 +2044,7 @@ const GetPremiumPopup = ({
               </div>
             ))}
           </div>
-        </div>{" "}
+        </div>
         {/* <hr className="form-divider my-4" /> */}
         <div className="d-flex align-items-end justify-content-between mt-3">
           <h6 className="become-premium-new-title mb-0">

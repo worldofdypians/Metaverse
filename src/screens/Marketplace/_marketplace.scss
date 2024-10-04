@@ -1075,7 +1075,7 @@ backdrop-filter: blur(5.5px);
   transition: all 0.2s;
   cursor: pointer;
   @media screen and (max-width: 786px) {
-    right: -3%;
+    right: 0%;
     bottom: 40%;
   }
 }
@@ -1101,7 +1101,7 @@ backdrop-filter: blur(5.5px);
   transform: rotate(180deg);
   cursor: pointer;
   @media screen and (max-width: 786px) {
-    left: -3%;
+    left: 0%;
     bottom: 40%;
   }
 }

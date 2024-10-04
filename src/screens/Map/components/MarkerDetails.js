@@ -6,7 +6,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
       <>
         {type === "chain" ? (
           <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 h-100">
               <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
                 <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
                 <a
@@ -17,7 +17,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   ×
                 </a>
               </div>
-              <div className="marker-details-inner-wrapper d-flex flex-column gap-2">
+              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100">
                 <div
                   className="px-3 w-100 d-flex justify-content-center"
                   style={{ borderRadius: "12px" }}
@@ -28,7 +28,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                     className="w-75"
                   />
                 </div>
-                <div className="d-flex flex-column gap-2 px-3">
+                <div className="d-flex flex-column gap-2 px-3 h-100 mb-3 justify-content-between">
                   <p className="custom-marker-content  mb-0">{marker?.desc}</p>
                   <div className="chain-marker-info-wrapper d-flex align-items-center justify-content-between p-2">
                     <div className="d-flex align-items-center gap-2">
@@ -46,19 +46,19 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                     </div>
                   </div>
                   <div className="chain-marker-info-wrapper chain-marker-info-grid p-2">
-                    <div className="chain-marker-info-item d-flex flex-column align-items-center justify-content-center py-2">
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.city}</h6>
                       <span>City</span>
                     </div>
-                    <div className="chain-marker-info-item d-flex flex-column align-items-center justify-content-center py-2">
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.areaSize} Blocks</h6>
                       <span>Area</span>
                     </div>
-                    <div className="chain-marker-info-item d-flex flex-column align-items-center justify-content-center py-2">
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.size}</h6>
                       <span>Size</span>
                     </div>
-                    <div className="chain-marker-info-item d-flex flex-column align-items-center justify-content-center py-2">
+                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.lookFeel}</h6>
                       <span>Look & Feel</span>
                     </div>

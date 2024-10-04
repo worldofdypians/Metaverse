@@ -699,3 +699,21 @@ bottom: 1%;
   grid-template-columns: repeat(3,1fr);
   gap: 10px;
 }
+
+.custom-chain-icon{
+  width: 36px !important;
+  height: 44px !important;
+  transition: all .35s;
+}
+
+.custom-chain-icon:hover{
+  transform: scale(1.2);
+}
+
+.marker-pin{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -6px;
+  top: -4px;
+}

@@ -43,6 +43,7 @@ import trainIcon from "../assets/trainIcon.svg";
 import magnifier from "../assets/magnifier.svg";
 import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
 import minerIcon from "../assets/sidebarIcons/minesIcon.svg";
+import markerPin from '../assets/markerPin.svg'
 
 // Consolidated icon data array
 const iconData = [
@@ -90,10 +91,22 @@ const iconData = [
 ];
 
 // Function to create markers dynamically
+// const markers = {};
+// iconData.forEach(({ name, url, size }) => {
+//   markers[name] = L.icon({
+//     iconUrl: url,
+//     iconSize: [size, size],
+//     iconAnchor: [size / 2, size],
+//     popupAnchor: [0, -size],
+//   });
+// });
 const markers = {};
 iconData.forEach(({ name, url, size }) => {
-  markers[name] = L.icon({
-    iconUrl: url,
+  markers[name] = L.divIcon({
+    className: `custom-chain-icon`,
+    html: `<div>
+    <img class="marker-pin" src="${markerPin}" alt="marker-pin" />
+    <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size],
     popupAnchor: [0, -size],
