@@ -1,6 +1,15 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const MarkerDetails = ({ show, marker, onClose, type }) => {
+  const [past, setPast] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setPast(false);
+    };
+  }, []);
+
   return (
     <div className={`marker-details-2 ${show && "marker-events-active"}`}>
       <>
@@ -76,14 +85,67 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                     ))}
                   </div>
                   <div className="chain-marker-info-wrapper d-flex align-items-center justify-content-between p-2">
-                    <h6 className="chain-marker-benefits-title mb-0">Events</h6>
-                    <div className="d-flex align-items-center gap-2">
-                      <span className="marker-event-time">Live</span>
-                      <span className="marker-event-time">Past</span>
-                    </div>
+                    <h6 className="chain-marker-benefits-title mb-0">Features</h6>
+                    {marker.pastEvents.length === 0 && marker.events.length === 0 ?
+                  <></>
+                  :
+                  <div className="d-flex align-items-center gap-2">
+                      <span
+                        className={`marker-event-time px-2 ${
+                          !past && "marker-event-time-active"
+                        }`}
+                        onClick={() => setPast(false)}
+                      >
+                        Live
+                      </span>
+                      <span
+                        className={`marker-event-time px-2 ${
+                          past && "marker-event-time-active"
+                        }`}
+                        onClick={() => setPast(true)}
+                      >
+                        Past
+                      </span>
+                    </div>  
+                  }
                   </div>
-                  <div className="chain-marker-info-grid">
-                    {marker.events.map((item, index) => (
+                  {past && marker.pastEvents.length > 0 ? (
+                    <div className="chain-marker-info-grid">
+                      {marker.pastEvents.map((item, index) => (
+                        <NavLink
+                          to={item.link}
+                          className="marker-event-item p-1 d-flex flex-column align-items-center gap-1"
+                          key={index}
+                        >
+                          <img src={item.image} className="w-100" alt="" />
+                          <span>{item.title}</span>
+                        </NavLink>
+                      ))}
+                    </div>
+                  ) : !past && marker.events.length > 0 ? (
+                    <div className="chain-marker-info-grid">
+                      {marker.events.map((item, index) => (
+                        <NavLink
+                          to={item.link}
+                          className="marker-event-item p-1 d-flex flex-column align-items-center gap-1"
+                          key={index}
+                        >
+                          <img src={item.image} className="w-100" alt="" />
+                          <span>{item.title}</span>
+                        </NavLink>
+                      ))}
+                    </div>
+                  ) : (
+                    <div
+                      className="chain-marker-info-wrapper d-flex align-items-center justify-content-center w-100"
+                      style={{ height: "87px" }}
+                    >
+                      <span className="no-features-span">
+                        No Features Available
+                      </span>
+                    </div>
+                  )}
+                  {/* {marker.events.map((item, index) => (
                       <NavLink
                         to={item.link}
                         className="marker-event-item p-1 d-flex flex-column align-items-center gap-1"
@@ -92,8 +154,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                         <img src={item.image} className="w-100" alt="" />
                         <span>{item.title}</span>
                       </NavLink>
-                    ))}
-                  </div>
+                    ))} */}
                 </div>
               </div>
             </div>
@@ -101,7 +162,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
         ) : type === "quest" ? (
           <div className="d-flex flex-column justify-content-between h-100">
             <div className="d-flex flex-column gap-2">
-            <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
                 <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
                 <a
                   href="javascript:void(0)"
@@ -149,29 +210,21 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
           </div>
         ) : type === "area" ? (
           <div className="d-flex flex-column justify-content-between h-100">
-               <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-                <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-                <a
-                  href="javascript:void(0)"
-                  class="closebtn-3"
-                  onClick={onClose}
-                >
-                  ×
-                </a>
-              </div>
+            <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+              <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+              <a href="javascript:void(0)" class="closebtn-3" onClick={onClose}>
+                ×
+              </a>
+            </div>
           </div>
         ) : type === "event" ? (
           <div className="d-flex flex-column justify-content-between h-100">
-              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-                <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-                <a
-                  href="javascript:void(0)"
-                  class="closebtn-3"
-                  onClick={onClose}
-                >
-                  ×
-                </a>
-              </div>
+            <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+              <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+              <a href="javascript:void(0)" class="closebtn-3" onClick={onClose}>
+                ×
+              </a>
+            </div>
           </div>
         ) : (
           <> </>

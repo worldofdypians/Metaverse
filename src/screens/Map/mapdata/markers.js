@@ -17,6 +17,7 @@ import avaxIcon from "../assets/chainIcons/avaxIcon.svg";
 import coin98Icon from "../assets/chainIcons/coin98Icon.svg";
 import gateIcon from "../assets/chainIcons/gateIcon.svg";
 import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
+import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
 import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
 import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
 import seiLogo from "../assets/chainIcons/seiLogo.svg";
@@ -88,6 +89,7 @@ const iconData = [
   { name: "dogecoinMarker", url: dogecoin, size: 24 },
   { name: "cookieMarker", url: cookie3, size: 24 },
   { name: "midleMarker", url: midle, size: 24 },
+  { name: "ordifyMarker", url: ordifyIcon, size: 24 },
 ];
 
 // Function to create markers dynamically

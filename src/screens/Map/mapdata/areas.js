@@ -11,6 +11,7 @@ import baseIcon from "../assets/chainIcons/baseIcon.svg";
 import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
 import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
 import victionIcon from "../assets/chainIcons/victionIcon.svg";
+import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
 import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
 import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
 import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
@@ -43,13 +44,8 @@ const chainAreas = [
     marker: markers.bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
-    banner: "bnbBanner.webp",
+    banner: "bnbBanner.png",
     events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
@@ -63,6 +59,13 @@ const chainAreas = [
       {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
         link: "/account",
       },
     ],
@@ -131,19 +134,17 @@ const chainAreas = [
         image: treasureHuntInfo,
         link: "/account",
       },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
+
       {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
         link: "/account",
       },
     ],
@@ -194,25 +195,11 @@ const chainAreas = [
       ],
     ],
 
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
         link: "/account",
       },
     ],
@@ -253,7 +240,7 @@ const chainAreas = [
     marker: markers.baseMarker,
     icon: baseIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
-    banner: "baseBanner.webp",
+    banner: "baseBanner.png",
     area: [
       [
         [-0.06921170458802975, 0.08680164813995363],
@@ -264,23 +251,20 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account",
       },
       {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
         link: "/account",
       },
     ],
@@ -330,28 +314,8 @@ const chainAreas = [
         [-0.06922779783037905, 0.08672654628753663],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/coin98_wallet",
@@ -404,22 +368,8 @@ const chainAreas = [
         image: treasureHuntInfo,
         link: "/account",
       },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Immutable",
@@ -457,7 +407,7 @@ const chainAreas = [
     marker: markers.skaleMarker,
     icon: skaleIcon,
     location: [-0.0673360036280549, 0.08455395698547363],
-    banner: "skaleBanner.webp",
+    banner: "skaleBanner.png",
     area: [
       [
         [-0.06724296456701524, 0.0847148895263672],
@@ -471,23 +421,21 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account",
       },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
+
       {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
         link: "/account",
       },
     ],
@@ -539,28 +487,8 @@ const chainAreas = [
         [-0.06717859159495908, 0.08407652378082275],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/MEXC_Official",
@@ -598,7 +526,7 @@ const chainAreas = [
     marker: markers.midleMarker,
     icon: midle,
     location: [-0.06773297028649591, 0.08424818515777588],
-    banner: "midleBanner.webp",
+    banner: "midleBanner.png",
     area: [
       [
         [-0.067521914111659, 0.0843501091003418],
@@ -607,28 +535,8 @@ const chainAreas = [
         [-0.06783305014033982, 0.08444130420684816],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/midle_official",
@@ -675,28 +583,8 @@ const chainAreas = [
         [-0.06806908436765445, 0.08490800857543945],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/KuCoinCom",
@@ -743,28 +631,8 @@ const chainAreas = [
         [-0.06880400911347165, 0.08508503437042238],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/avax",
@@ -802,7 +670,7 @@ const chainAreas = [
     marker: markers.gateMarker,
     icon: gateIcon,
     location: [-0.06845180179486188, 0.08445203304290771],
-    banner: "gateBanner.png",
+    banner: "gateioBanner.png",
     area: [
       [
         [-0.06825147445161225, 0.08453786373138428],
@@ -811,25 +679,11 @@ const chainAreas = [
         [-0.06851969516204794, 0.08462369441986085],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
         link: "/account",
       },
     ],
@@ -879,28 +733,8 @@ const chainAreas = [
         [-0.06888983973998769, 0.08470952510833742],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/easy2stake",
@@ -947,28 +781,8 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/chainlink",
@@ -1017,23 +831,21 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account",
       },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
+
       {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
         link: "/account",
       },
     ],
@@ -1074,7 +886,7 @@ const chainAreas = [
     marker: markers.taikoMarker,
     icon: taikoIcon,
     location: [-0.06942812516951939, 0.08510112762451173],
-    banner: "taikoBanner.webp",
+    banner: "taikoBanner.png",
     area: [
       [
         [-0.06921170458802975, 0.08519768714904785],
@@ -1095,16 +907,12 @@ const chainAreas = [
         link: "/account",
       },
       {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/taikoxyz",
@@ -1142,7 +950,7 @@ const chainAreas = [
     marker: markers.cookieMarker,
     icon: cookie3,
     location: [-0.0680959064388685, 0.0843554735183716],
-    banner: "cookie3Banner.webp",
+    banner: "cookie3Banner.png",
     area: [
       [
         [-0.06791888076858607, 0.08444130420684816],
@@ -1157,22 +965,8 @@ const chainAreas = [
         image: treasureHuntInfo,
         link: "/account",
       },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/cookie3_com",
@@ -1219,28 +1013,8 @@ const chainAreas = [
         [-0.0696998662700597, 0.084570050239563],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/MultiversX",
@@ -1287,25 +1061,11 @@ const chainAreas = [
         [-0.07004318876868135, 0.08616864681243896],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
         link: "/account",
       },
     ],
@@ -1346,7 +1106,7 @@ const chainAreas = [
     marker: markers.mantaMarker,
     icon: mantaIcon,
     location: [-0.07001821071588557, 0.08503675460815431],
-    banner: "mantaBanner.webp",
+    banner: "mantaBanner.png",
     area: [
       [
         [-0.06961403564501943, 0.08528888225555421],
@@ -1366,17 +1126,14 @@ const chainAreas = [
         image: dailyBonusInfo,
         link: "/account",
       },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
+
       {
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1414,7 +1171,7 @@ const chainAreas = [
     marker: markers.babydogeMarker,
     icon: babydogeIcon,
     location: [-0.06669579430174531, 0.08574485778808595],
-    banner: "babyDogeBanner.webp",
+    banner: "babyDogeBanner.png",
     area: [
       [
         [-0.06632564970708857, 0.0857287645339966],
@@ -1423,28 +1180,8 @@ const chainAreas = [
         [-0.06687281997648051, 0.08589506149291994],
       ],
     ],
-    events: [
-      {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account",
-      },
-    ],
+    events: [],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/babydogecoin",
@@ -1482,7 +1219,7 @@ const chainAreas = [
     marker: markers.dogecoinMarker,
     icon: dogecoin,
     location: [-0.06900249243705621, 0.08157670497894287],
-    banner: "dogecoinBanner.webp",
+    banner: "dogecoinBanner.png",
     area: [
       [
         [-0.06869672083011669, 0.08172154426574707],
@@ -1491,25 +1228,11 @@ const chainAreas = [
         [-0.06911514513384485, 0.0818610191345215],
       ],
     ],
-    events: [
+    events: [],
+    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
         link: "/account",
       },
     ],
@@ -1561,11 +1284,6 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account",
@@ -1578,6 +1296,13 @@ const chainAreas = [
       {
         title: "Leaderboard",
         image: leaderboardInfo,
+        link: "/account",
+      },
+    ],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
         link: "/account",
       },
     ],
@@ -1604,6 +1329,54 @@ const chainAreas = [
     size: "500x500",
     lookFeel: "Futuristic",
     desc: "CoinMarketCap is the world's most-referenced price-tracking website for cryptoassets in the rapidly growing cryptocurrency space. ",
+    benefits: [
+      "Exclusive quests and events",
+      "Earn rewards by completing daily tasks",
+      "Dedicated BNB Chain Beta Pass NFTs",
+      "Explore a futuristic city landscape",
+      "Interact with AI-powered NPCs for immersive experiences ",
+      "Participate in daily, weekly, and monthly leaderboards",
+    ],
+  },
+  {
+    title: "Ordify Area",
+    marker: markers.ordifyMarker,
+    icon: ordifyIcon,
+    location: [-0.06787060104021504, 0.08728981018066406],
+    banner: "ordifyBanner.png",
+    area: [
+      [
+        [-0.06764529564051838, 0.08725762367248537],
+        [-0.0676774821262475, 0.08715033531188966],
+        [-0.06810127085310366, 0.08725762367248537],
+        [-0.06804226229642768, 0.08736491203308107],
+      ],
+    ],
+    events: [],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/ordifyworld",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/ordifyann",
+        icon: telegram,
+      },
+      // {
+      //   link: "https://discord.com/invite/X3fHfpvpCM",
+      //   icon: discord,
+      // },
+      {
+        link: "https://ordify.world/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    areaSize: 4,
+    size: "500x500",
+    lookFeel: "Futuristic",
+    desc: "Ordify is a curated collection designed to enhance user experience across various blockchains, connecting businesses with the community in the Bitcoin and EVM ecosystems. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
