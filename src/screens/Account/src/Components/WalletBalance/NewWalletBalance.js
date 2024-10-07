@@ -286,7 +286,6 @@ const NewWalletBalance = ({
   weeklyDataAmountBase,
   monthlyDataAmountBase,
   mantaEarnUsd,
-  baseEarnUsd,
   openedMantaChests,
   openedBaseChests,
   mantaPoints,
@@ -933,34 +932,34 @@ const NewWalletBalance = ({
         eventDate: "Dec 22, 2023",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        date: "Nov 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Chain",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     date: "Nov 01, 2023",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -1759,7 +1758,7 @@ const NewWalletBalance = ({
               <ActiveProfileEvent
                 data={dummyBase}
                 event={dummyBase}
-                userEarnedUsd={0}
+                userEarnedUsd={baseEarnUSD}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
@@ -2233,7 +2232,8 @@ const NewWalletBalance = ({
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
-                          Number(cookieEarnUsd),
+                          Number(cookieEarnUsd) +
+                          Number(baseEarnUSD),
                         2
                       )}
                     </h6>
@@ -3371,7 +3371,7 @@ const NewWalletBalance = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -3424,7 +3424,7 @@ const NewWalletBalance = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -3465,7 +3465,7 @@ const NewWalletBalance = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBnb
-                              : dummyEvent.id === "event4"
+                              : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB

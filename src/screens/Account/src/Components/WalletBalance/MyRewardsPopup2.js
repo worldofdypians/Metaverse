@@ -78,7 +78,7 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountTaiko,
   allTaikoChests,
   taikoEarnUsd,
-  immutableEarnUsd,cookieEarnUsd, landPremiumRewards
+  immutableEarnUsd,cookieEarnUsd, landPremiumRewards,baseEarnUSD
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -1552,7 +1552,7 @@ const MyRewardsPopupNew = ({
                       Base
                     </span>
                     <span className="item-name-right">
-                      ${getFormattedNumber(0, 2)}
+                      ${getFormattedNumber(baseEarnUSD, 2)}
                     </span>
                   </div>
                 </div>

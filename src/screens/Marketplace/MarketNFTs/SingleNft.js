@@ -2514,77 +2514,77 @@ const SingleNft = ({
 
   useEffect(() => {
     getNftOwner(
-      nftAddress.toLowerCase() ===
-        window.config.nft_timepiece_address.toLowerCase()
+      nftAddress ===
+        window.config.nft_timepiece_address
         ? "timepiece"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_land_address
         ? "land"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_coingecko_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_coingecko_address
         ? "coingecko"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_opbnb_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_opbnb_address
         ? "opbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_gate_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_gate_address
         ? "gate"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_conflux_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_conflux_address
         ? "conflux"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_manta_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_manta_address
         ? "manta"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_taiko_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_taiko_address
         ? "taiko"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_cookie3_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_cookie3_address
         ? "cookie3"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_doge_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_doge_address
         ? "doge"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_bnb_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_bnb_address
         ? "bnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_skale_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_skale_address
         ? "skale"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_cmc_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_cmc_address
         ? "cmc"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_core_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_core_address
         ? "core"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_viction_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_viction_address
         ? "viction"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_immutable_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_immutable_address
         ? "immutable"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_multivers_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_multivers_address
         ? "multivers"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_base_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_base_address
         ? "base"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_bnb_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_caws_bnb_address
         ? "cawsbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_avax_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_caws_avax_address
         ? "cawsavax"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_caws_base_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_caws_base_address
         ? "cawsbase"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_bnb_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_land_bnb_address
         ? "landbnb"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_avax_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_land_avax_address
         ? "landavax"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_land_base_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_land_base_address
         ? "landbase"
         : "caws",
       nftId
@@ -2629,8 +2629,8 @@ const SingleNft = ({
     ) {
       setType("opbnb");
     } else if (
-      nftAddress.toLowerCase() ===
-      window.config.nft_conflux_address.toLowerCase()
+      nftAddress ===
+      window.config.nft_conflux_address
     ) {
       setType("conflux");
     } else if (
@@ -3038,8 +3038,8 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_gate_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_conflux_address.toLowerCase()
+                        : nftAddress  ===
+                          window.config.nft_conflux_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_manta_address.toLowerCase()
