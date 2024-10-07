@@ -69,10 +69,10 @@ const BridgeContent = () => {
   return (
     <div className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center">
       <div className="custom-container w-100">
-        <div className="row">
+        <div className="row mx-0">
           <div className="col-12 col-lg-6">
             <div className="bridge-token-wrapper p-3">
-              <div className="w-100 d-flex align-items-center justify-content-between">
+              <div className="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-between gap-3 gap-lg-0">
                 <div className="d-flex align-items-center gap-4">
                   <button className="bridge-btn-active d-flex align-items-center gap-2 px-3 py-1">
                     <img src={eth} alt="" />
@@ -88,7 +88,7 @@ const BridgeContent = () => {
                   Connect Wallet
                 </button>
               </div>
-              <div className="bridge-balance-wrapper d-flex p-2 mt-5 align-items-center justify-content-between">
+              <div className="bridge-balance-wrapper d-flex flex-column flex-lg-row p-2 mt-5 align-items-start align-items-lg-center justify-content-between gap-3 gap-lg-0">
                 <span className="user-bridge-balance">Balance: 0.00 WOD</span>
                 <h6 className="pool-bridge-balance mb-0">
                   Ethereum Pool: 2,300,000.00 WOD

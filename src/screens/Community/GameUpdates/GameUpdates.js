@@ -347,7 +347,7 @@ const GameUpdates = () => {
             announcementsNews.map((item, index) => {
               return (
                 <div className="other-news-item py-4" key={index}>
-                  <div className="d-flex align-items-start gap-3">
+                  <div className="d-flex flex-column flex-lg-row align-items-start gap-3">
                     <img src={item.image} height={170} width={300} alt="" />
                     <div className="d-flex flex-column gap-3">
                       <h6 className="other-news-title mb-0">{item.title}</h6>

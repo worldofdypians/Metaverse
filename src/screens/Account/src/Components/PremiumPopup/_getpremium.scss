@@ -33,10 +33,17 @@ text-transform: uppercase;
 .is-premium-gold-bg{
     background-image: url('./assets/isPremiumBg.png');
     border-radius: 10px;
+
+    @media screen and (max-width: 786px) {
+        background-image: url('./assets/isPremiumMobile.png');
+    }
 }
 
 .already-preium-badge{
     position: relative;
     right: 4%;
+    @media screen and (max-width: 786px) {
+        right: 0;
+    }
 }
 

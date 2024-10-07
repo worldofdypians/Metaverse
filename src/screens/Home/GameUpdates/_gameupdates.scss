@@ -46,5 +46,11 @@ font-style: normal;
 font-weight: 600;
 line-height: 27px; /* 135% */
   }
+  @media screen and (max-width: 786px) {
+    img{
+      width: 100%;
+      height: 200px;
+    }
+  }
 }
 

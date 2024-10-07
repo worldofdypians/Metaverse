@@ -7,7 +7,7 @@ const GovernanceHero = ({onCreateProposal}) => {
       <div className="custom-container  my-5 py-5">
         <div className="d-flex flex-column w-100 gap-3">
           <div className="col-lg-5">
-            <div className="d-flex flex-column gap-3">
+            <div className="d-flex flex-column gap-3 px-3 px-lg-0">
               <h2 className="font-montserrat text-start main-hero-title px-0">
                 Get involved and shape The World of Dypians future
               </h2>
@@ -25,7 +25,7 @@ const GovernanceHero = ({onCreateProposal}) => {
           
         </div>
       </div>
-      <div className="container-lg gov-opacitywrapper position-relative bottom-0">
+      <div className="container-lg gov-opacitywrapper position-relative bottom-0 px-3 px-lg-0">
             <div className="d-flex flex-column flex-lg-row justify-content-center gap-5 align-items-center">
               <div className="gov-stat-item px-3 py-5">
                 <div className="d-flex flex-column justify-content-center gap-3">

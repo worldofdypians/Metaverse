@@ -269,7 +269,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
-        <div className="custom-marketplace-container justify-content-center d-flex align-items-start px-3 position-relative flex-column">
+        <div className="custom-marketplace-container justify-content-center d-flex align-items-start px-3 position-relative flex-column mt-5 pt-5 mt-lg-0 pt-lg-0">
           <div className="container-fluid mx-0">
             <div className="row gap-3 gap-lg-0">
               <div className="col-12">

@@ -88,7 +88,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "BNB Chain is a leading blockchain ecosystem designed to support the growing demands of the decentralized web (Web3). ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -169,7 +169,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Core is the first Bitcoin-aligned EVM-compatible Layer-1 blockchain, designed to be Bitcoin's complementary and hyper-scalable smart contract platform. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -238,7 +238,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "CoinGecko offers fundamental analysis of the digital currency market, tracking price, volume, market cap, community growth, open-source development, major events, and on-chain metrics. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -306,7 +306,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "A Layer 2 blockchain solution focusing on delivering scalable, low-cost, and user-friendly decentralized applications, with a commitment to enhancing the Web3 ecosystem. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -374,7 +374,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Coin98 is an open, decentralized crypto wallet offering essential tools and infrastructure for users to access and participate in opportunities on the Open Internet. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -442,7 +442,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Immutable is the leading Layer 2 for NFTs and blockchain gaming, secured by Ethereum. Blockchain game developers - build & scale faster here. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -513,7 +513,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "SKALE is a limitlessly scalable, fast, on-demand blockchain network with zero gas fees, allowing quick deployment of interoperable EVM-compatible chains. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -583,7 +583,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "MEXC is a top-tier crypto exchange offering comprehensive trading features, advanced security, and a wide range of digital assets, catering to both retail and institutional investors. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -651,7 +651,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: " Midle is the web and mobile app that boosts user acquisition, retention and engagement. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -719,7 +719,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "KuCoin is a secure cryptocurrency exchange that allows you to buy, sell, and trade Bitcoin, Ethereum, and 700+ altcoins. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -787,7 +787,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Avalanche is a blockchain platform that aims to address the blockchain trilemma of scalability, security and decentralization. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -855,7 +855,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Gate is a globally recognized cryptocurrency exchange platform, offering a secure and innovative trading experience, supporting a broad array of digital assets.",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -923,7 +923,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Easy2Stake is a trusted staking service provider that enables secure and efficient staking for multiple blockchains, ensuring users can earn rewards while supporting web3 ecosystems. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -991,7 +991,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Chainlink connects existing systems to any public or private blockchain and enables secure cross-chain communication. World-class developer experience. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1059,7 +1059,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Viction is a people-centric layer-1 blockchain that offers zero-gas transactions and enhanced security to make Web3 easy and safe for everyone. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1127,7 +1127,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1195,7 +1195,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Cookie3 Score is a decentralized identity and reputation system for Web3. It allows users to build trust and reputation across applications. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1263,7 +1263,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "MultiversX is a distributed blockchain network for next-gen applications. Decentralized via 3000+ nodes, scalable through sharding, fast, secure & green. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1331,7 +1331,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Conflux Network is a blockchain-based platform that connects creators, communities, and markets across different protocols. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1399,7 +1399,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Manta Network is a multi-modular blockchain ecosystem designed to support the development and deployment of zero-knowledge (ZK) applications. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1467,7 +1467,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Baby Doge was created initially as a joke meme coin with a purpose to help save dogs and spread awareness of animal adoption. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1535,7 +1535,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "Dogecoin was originally created as a meme and evolved into a widely-used cryptocurrency, known for its supportive community and its use in charitable donations across the web. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
@@ -1603,7 +1603,7 @@ const chainAreas = [
     areaSize: 4,
     size: "500x500",
     lookFeel: "Futuristic",
-    desc: "BNB Chain is a high-performance blockchain designed to support the expansive growth of decentralized applications. It offers a robust infrastructure that combines high throughput, low latency, and low fees, making it the ideal platform for DeFi, NFTs, and Gaming. ",
+    desc: "CoinMarketCap is the world's most-referenced price-tracking website for cryptoassets in the rapidly growing cryptocurrency space. ",
     benefits: [
       "Exclusive quests and events",
       "Earn rewards by completing daily tasks",
