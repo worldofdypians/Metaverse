@@ -779,7 +779,7 @@ const Community = ({socials}) => {
                       </a>
                     </div>
  }
-                    <div className="d-flex align-items-center gap-2 mt-2">
+                    <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 mt-2">
                       <span className="community-card-date">Duration:</span>
                       <div className="d-flex align-items-center gap-2">
                         <div className="d-flex align-items-center gap-1">
