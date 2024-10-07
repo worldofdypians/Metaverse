@@ -398,7 +398,7 @@ const NewWalletBalance = ({
   const dummyBase = {
     title: "Base",
     logo: baseLogo,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
@@ -415,7 +415,7 @@ const NewWalletBalance = ({
     chain: "Base",
     linkState: "base",
     rewards: "ETH",
-    status: "Coming Soon",
+    status: "Live",
   };
 
   const dummyManta = {
@@ -629,7 +629,6 @@ const NewWalletBalance = ({
         eventDate: "Aug 20, 2024",
       },
     },
-
     {
       title: "Cookie3",
       logo: cookieLogo,
@@ -661,7 +660,7 @@ const NewWalletBalance = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -671,7 +670,7 @@ const NewWalletBalance = ({
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
@@ -1757,8 +1756,10 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={0}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);

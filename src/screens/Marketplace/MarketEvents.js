@@ -523,7 +523,7 @@ const MarketEvents = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -534,7 +534,7 @@ const MarketEvents = ({
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
