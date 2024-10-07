@@ -1541,11 +1541,11 @@ function App() {
 
   const fetchAllMyNfts = async () => {
     if (coinbase) {
-      getMyNFTS(coinbase, "caws").then((NFTS) => setMyNFTSCaws(NFTS));
+      getMyNFTS(coinbase, "caws").then((NFTS) => {setMyNFTSCaws(NFTS); setMyNFTSCaws2(NFTS);setMyCAWNFTs(NFTS)})
 
       getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
 
-      getMyNFTS(coinbase, "land").then((NFTS) => setMyNFTSLand(NFTS));
+      getMyNFTS(coinbase, "land").then((NFTS) => {setMyNFTSLand(NFTS);setMyLandNFTs(NFTS);setMyNFTs(NFTS)});
       getMyNFTS(coinbase, "coingecko").then((NFTS) => {
         setMyNFTSCoingecko(NFTS);
         setTotalCoingeckoNft(NFTS.length);
@@ -3142,12 +3142,12 @@ function App() {
       myCAWStakes();
       myLandStakes();
       getmyCawsWodStakes();
-      myNft2();
-      myLandNft();
+      // myNft2();
+      // myLandNft();
     }
     if (isConnected === true && coinbase) {
-      myNft();
-      myCAWNft();
+      // myNft();
+      // myCAWNft();
       fetchAllMyNfts();
     }
 
@@ -4107,6 +4107,8 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 latest20BoughtNFTS={latest20BoughtNFTS}
+                myNFTSCaws={MyNFTSCaws}
+                myNFTSTimepiece={MyNFTSTimepiece}
               />
             }
           />
