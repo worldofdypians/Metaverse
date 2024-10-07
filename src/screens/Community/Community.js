@@ -91,6 +91,22 @@ const Community = ({socials}) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [monthlyPlayers, setMonthlyPlayers] = useState(0);
+  const [percent, setPercent] = useState(0);
+
+ const fetchMonthlyPlayers = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/get-wod-uaw`)
+      .then((data) => {
+        setMonthlyPlayers(data.data.uaw);
+        setPercent(data.data.percent);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -692,6 +708,7 @@ const Community = ({socials}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Community";
+    fetchMonthlyPlayers();
   }, []);
 
   return (
@@ -922,8 +939,9 @@ const Community = ({socials}) => {
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    565,251
+                    {getFormattedNumber(monthlyPlayers, 0)}
                   </h6>
+                  <span className="monthly-players-percent position-relative" style={{top: "auto", right: "auto", bottom: "auto", fontSize: "14px"}}>+{getFormattedNumber(percent, 2)}%</span>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
                   <a
