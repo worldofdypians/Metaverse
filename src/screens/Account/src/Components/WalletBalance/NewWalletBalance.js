@@ -3207,7 +3207,7 @@ const NewWalletBalance = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps.Base is an easy way
+                and scalability you need to power your dapps. Base is an easy way
                 for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
