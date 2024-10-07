@@ -8950,7 +8950,6 @@ function Dashboard({
                         coreEarnUsd={coreEarnUsd}
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
-                        baseEarnUsd={baseEarnUSD}
                         taikoEarnUsd={taikoEarnUsd}
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
@@ -9567,6 +9566,7 @@ function Dashboard({
                             landPremiumRewards={landPremiumRewards}
                             genesisRank2={genesisRank2}
                             cookieEarnUsd={cookieEarnUsd}
+                            baseEarnUSD={baseEarnUSD}
                           />
                         </div>
                       </OutsideClickHandler>

@@ -202,11 +202,6 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
   const dummyBetaPassData2 = [
-  
-
-
-
-
     {
       title: "Taiko",
       chain: "Taiko Chain",
@@ -285,8 +280,6 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         eventDate: "December 22, 2023",
       },
     },
-   
-
     {
       title: "Manta",
       chain: "Manta Chain",
@@ -326,7 +319,6 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         eventDate: "December 22, 2023",
       },
     },
-  
     {
       title: "Cookie3",
       chain: "BNB Chain",
@@ -369,7 +361,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
     {
       title: "Base",
       logo: coinbaseimg,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       rewardsAmount: "$20,000",
       rewardsCurrency: "ETH Rewards",
@@ -382,7 +374,7 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         date: "Oct 07, 2024",
         totalRewards: "$20,000 in ETH Rewards",
