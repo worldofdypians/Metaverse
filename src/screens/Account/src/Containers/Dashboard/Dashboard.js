@@ -64,6 +64,7 @@ import { NavLink } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
+import Countdown from "react-countdown";
 
 function Dashboard({
   account,
@@ -230,6 +231,20 @@ function Dashboard({
     "10",
   ];
   const chestImagesTaiko = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+
+  const chestImagesBase = [
     "0",
     "1",
     "2",
@@ -441,6 +456,9 @@ function Dashboard({
   const [standardSeiChests, setStandardSeiChests] = useState([]);
   const [premiumSeiChests, setPremiumSeiChests] = useState([]);
 
+  const [standardBaseChests, setStandardBaseChests] = useState([]);
+  const [premiumBaseChests, setPremiumBaseChests] = useState([]);
+
   const [standardMantaChests, setStandardMantaChests] = useState([]);
   const [premiumMantaChests, setPremiumMantaChests] = useState([]);
 
@@ -456,8 +474,8 @@ function Dashboard({
   const [openedSeiChests, setOpenedSeiChests] = useState([]);
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
+  const [openedBaseChests, setOpenedBaseChests] = useState([]);
 
-  const [kittyDashRecords, setkittyDashRecords] = useState([]);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -503,6 +521,9 @@ function Dashboard({
   const [claimedCoreChests, setclaimedCoreChests] = useState(0);
   const [claimedCorePremiumChests, setclaimedCorePremiumChests] = useState(0);
 
+  const [claimedBaseChests, setclaimedBaseChests] = useState(0);
+  const [claimedBasePremiumChests, setclaimedBasePremiumChests] = useState(0);
+
   const [claimedVictionChests, setclaimedVictionChests] = useState(0);
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
@@ -525,15 +546,16 @@ function Dashboard({
   const [allTaikoChests, setallTaikoChests] = useState([]);
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
+  const [allBaseChests, setallBaseChests] = useState([]);
 
   const [countdown700, setcountdown700] = useState();
-  const [bundlesBought, setbundlesBought] = useState(0);
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
   const [vicitoncount, setvicitoncount] = useState(0);
   const [corecount, setcorecount] = useState(0);
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
+  const [basecount, setbasecount] = useState(0);
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -560,6 +582,8 @@ function Dashboard({
   );
   const [taikoImages, setTaikoImages] = useState(shuffle(chestImagesTaiko));
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
+  const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
+
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
@@ -608,6 +632,11 @@ function Dashboard({
   const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
   const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
   const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
+
+  const [discountPercentageTaiko, setdiscountPercentageTaiko] = useState(0);
+  const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
+  const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
+  const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -1079,6 +1108,56 @@ function Dashboard({
     "15",
     "15",
   ];
+
+  const updatedSkalePrizesWeekly = [
+    "10",
+    "10",
+    "5",
+    "4",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+    "2",
+  ];
+  const updatedSkalePrizesWeeklyGolden = [
+    "20",
+    "10",
+    "10",
+    "10",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+    "3",
+  ];
+  const updatedSkalePrizesMonthly = [
+    "30",
+    "20",
+    "15",
+    "10",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+    "5",
+  ];
+  const updatedSkalePrizesMonthlyGolden = [
+    "80",
+    "40",
+    "20",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+  ];
+
   const genesisPrizes = [
     "100",
     "100",
@@ -1108,6 +1187,7 @@ function Dashboard({
   const [allVictionData, setAllVictionData] = useState([]);
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
+  const [allBaseData, setAllBaseData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1203,6 +1283,27 @@ function Dashboard({
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
+
+  const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
+  const [weeklyRecordsBase, setWeeklyRecordsBase] = useState([]);
+  const [monthlyRecordsBase, setMonthlyRecordsBase] = useState([]);
+  const [activePlayerBase, setActivePlayerBase] = useState(false);
+  const [activePlayerBaseWeekly, setActivePlayerBaseWeekly] = useState(false);
+  const [activePlayerBaseMonthly, setActivePlayerBaseMonthly] = useState(false);
+  const [userDataBase, setUserDataBase] = useState({});
+  const [userDataBaseWeekly, setUserDataBaseWeekly] = useState({});
+  const [userDataBaseMonthly, setUserDataBaseMonthly] = useState({});
+  const [prevDataBase, setPrevDataBase] = useState([]);
+  const [prevDataBaseWeekly, setPrevDataBaseWeekly] = useState([]);
+  const [prevDataBaseMonthly, setPrevDataBaseMonthly] = useState([]);
+  const [prevVersionBase, setPrevVersionBase] = useState(0);
+  const [prevVersionBaseWeekly, setPrevVersionBaseWeekly] = useState(0);
+  const [prevVersionBaseMonthly, setPrevVersionBaseMonthly] = useState(0);
+  const [dailyDataAmountBase, setDailyDataAmountBase] = useState([]);
+  const [weeklyDataAmountBase, setWeeklyDataAmountBase] = useState([]);
+  const [monthlyDataAmountBase, setMonthlyDataAmountBase] = useState([]);
+  const [userRankBase, setUserRankBase] = useState("");
+  const [userBaseScore, setUserBaseScore] = useState(0);
 
   const [dailyRecordsTaiko, setDailyRecordsTaiko] = useState([]);
   const [weeklyRecordsTaiko, setWeeklyRecordsTaiko] = useState([]);
@@ -2298,6 +2399,355 @@ function Dashboard({
     }
   };
 
+  const fillRecordsBase = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsBase(finalData);
+    }
+  };
+  const fillRecordsWeeklyBase = (itemData) => {
+    if (itemData.length === 0) {
+      setWeeklyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setWeeklyRecordsBase(finalData);
+    }
+  };
+  const fillRecordsMonthlyBase = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsBase(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsBase(finalData);
+    }
+  };
+  const fetchPreviousWinnersBase = async () => {
+    if (prevVersionBase != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseDaily",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBase - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataBase(result.data.data.leaderboard);
+    } else {
+      setPrevDataBase(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchPreviousWeeklyWinnersBase = async () => {
+    if (prevVersionBaseWeekly != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseWeekly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBaseWeekly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataBaseWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataBaseWeekly(placeholderplayerData);
+    }
+  };
+  const fetchPreviousMonthlyWinnersBase = async () => {
+    if (prevVersionBaseMonthly != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: prevVersionBaseMonthly - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataBaseMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataBaseMonthly(placeholderplayerData);
+    }
+  };
+  const fetchDailyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsBase([]);
+      });
+    setPrevVersionBase(parseInt(result.data.data.version));
+    setDailyRecordsBase(result.data.data.leaderboard);
+    fillRecordsBase(result.data.data.leaderboard);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerBase(true);
+      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    } else if (testArray.length === 0) {
+      setActivePlayerBase(false);
+      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchWeeklyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseWeekly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsWeeklyBase([]);
+      });
+    setWeeklyRecordsBase(result.data.data.leaderboard);
+    setPrevVersionBaseWeekly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    fillRecordsWeeklyBase(result.data.data.leaderboard);
+
+    if (testArray.length > 0) {
+      setActivePlayerBaseWeekly(true);
+      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+    if (testArray.length === 0) {
+      setActivePlayerBaseWeekly(false);
+      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchMonthlyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 10,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyBase([]);
+      });
+    setMonthlyRecordsBase(result.data.data.leaderboard);
+    setPrevVersionBaseMonthly(result.data.data.version);
+    var testArray = result.data.data.leaderboard.filter(
+      (item) => item.displayName === username
+    );
+    if (testArray.length > 0) {
+      setActivePlayerBaseMonthly(true);
+      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+    fillRecordsMonthlyBase(result.data.data.leaderboard);
+
+    if (testArray.length === 0) {
+      setActivePlayerBaseMonthly(false);
+      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    }
+  };
+  const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountBase(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBase(true);
+          setUserDataBase([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBase(false);
+          setUserDataBase(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBase(false);
+        setUserDataBase(...testArray);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseWeekly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9]) +
+                Number(skalePrizesWeeklyGolden[9])
+              : Number(skalePrizesWeekly[userPosition]) +
+                Number(skalePrizesWeeklyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setWeeklyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesWeekly[9])
+              : Number(skalePrizesWeekly[userPosition])
+            : 0
+        );
+      } else setWeeklyDataAmountBase(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBaseWeekly(true);
+          setUserDataBaseWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBaseWeekly(false);
+          setUserDataBaseWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBaseWeekly(false);
+        setUserDataBaseWeekly(...testArray);
+      }
+    }
+  };
+
+  const fetchMonthlyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankBase(testArray[0].position);
+      setUserBaseScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBaseMonthly(true);
+          setUserDataBaseMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBaseMonthly(false);
+          setUserDataBaseMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBaseMonthly(false);
+        setUserDataBaseMonthly(...testArray);
+      }
+    }
+  };
+
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsTaiko(placeholderplayerData);
@@ -2878,10 +3328,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9]) +
-                Number(skalePrizesWeeklyGolden[9])
-              : Number(skalePrizesWeekly[userPosition]) +
-                Number(skalePrizesWeeklyGolden[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9]) +
+                Number(updatedSkalePrizesWeeklyGolden[9])
+              : Number(updatedSkalePrizesWeekly[userPosition]) +
+                Number(updatedSkalePrizesWeeklyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2890,8 +3340,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesWeekly[9])
-              : Number(skalePrizesWeekly[userPosition])
+              ? Number(updatedSkalePrizesWeekly[9])
+              : Number(updatedSkalePrizesWeekly[userPosition])
             : 0
         );
       }
@@ -2939,10 +3389,10 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9]) +
-                Number(skalePrizesMonthlyGolden[9])
-              : Number(skalePrizesMonthly[userPosition]) +
-                Number(skalePrizesMonthlyGolden[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9]) +
+                Number(updatedSkalePrizesMonthlyGolden[9])
+              : Number(updatedSkalePrizesMonthly[userPosition]) +
+                Number(updatedSkalePrizesMonthlyGolden[userPosition])
             : 0
         );
       } else if (!goldenPassRemainingTime) {
@@ -2951,8 +3401,8 @@ function Dashboard({
             ? userPosition > 10
               ? 0
               : userPosition === 10
-              ? Number(skalePrizesMonthly[9])
-              : Number(skalePrizesMonthly[userPosition])
+              ? Number(updatedSkalePrizesMonthly[9])
+              : Number(updatedSkalePrizesMonthly[userPosition])
             : 0
         );
       }
@@ -3131,16 +3581,6 @@ function Dashboard({
       const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
       const finalData = [...testArray, ...placeholderArray];
       setgenesisData(finalData);
-    }
-  };
-
-  const getBundles = async (address) => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
     }
   };
 
@@ -3379,6 +3819,11 @@ function Dashboard({
     fetchDailyRecordsManta();
     fetchWeeklyRecordsManta();
     fetchMonthlyRecordsManta();
+
+    fetchDailyRecordsBase();
+    fetchWeeklyRecordsBase();
+    fetchMonthlyRecordsBase();
+
     fetchDailyRecordsTaiko();
     fetchWeeklyRecordsTaiko();
     fetchMonthlyRecordsTaiko();
@@ -3386,7 +3831,6 @@ function Dashboard({
     fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
-    fetchKittyDashAroundPlayer(userId, username);
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
@@ -3415,6 +3859,11 @@ function Dashboard({
   }, [mantacount]);
 
   useEffect(() => {
+    fetchDailyRecordsBase();
+    getAllBaseChests(email);
+  }, [basecount]);
+
+  useEffect(() => {
     fetchDailyRecordsTaiko();
     getAllTaikoChests(email);
   }, [taikocount]);
@@ -3433,6 +3882,11 @@ function Dashboard({
     fetchPreviousWinnersManta();
     fetchPreviousWeeklyWinnersManta();
     fetchPreviousMonthlyWinnersManta();
+
+    fetchPreviousWinnersBase();
+    fetchPreviousWeeklyWinnersBase();
+    fetchPreviousMonthlyWinnersBase();
+
     fetchPreviousWinnersTaiko();
     fetchPreviousWeeklyWinnersTaiko();
     fetchPreviousMonthlyWinnersTaiko();
@@ -3452,12 +3906,15 @@ function Dashboard({
     prevVersionSkaleMonthly,
     prevVersionCore,
     prevVersionManta,
+    prevVersionBase,
     prevVersionTaiko,
     prevVersionVictionMonthly,
     prevVersionCoreWeekly,
     prevVersionCoreMonthly,
     prevVersionMantaWeekly,
     prevVersionMantaMonthly,
+    prevVersionBaseWeekly,
+    prevVersionBaseMonthly,
     prevVersionTaikoWeekly,
     prevVersionTaikoMonthly,
     prevVersionViction,
@@ -3575,8 +4032,11 @@ function Dashboard({
         title: "WEEKLY",
         reset: "Monday (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        rewards: updatedSkalePrizesWeekly,
+        past_rewards: skalePrizesWeekly,
+        premium_rewards: updatedSkalePrizesWeeklyGolden,
+        past_premium_rewards: skalePrizesWeeklyGolden,
+
         activeData: weeklyRecordsSkale,
         previousData: prevDataSkaleWeekly,
         player_data: userDataSkaleWeekly,
@@ -3586,8 +4046,10 @@ function Dashboard({
         title: "MONTHLY",
         reset: "Monthly (00:00 UTC)",
         type: "cash",
-        rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        rewards: updatedSkalePrizesMonthly,
+        past_rewards: skalePrizesMonthly,
+        premium_rewards: updatedSkalePrizesMonthlyGolden,
+        past_premium_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsSkale,
         previousData: prevDataSkaleMonthly,
         player_data: userDataSkaleMonthly,
@@ -3755,6 +4217,57 @@ function Dashboard({
   ]);
 
   useEffect(() => {
+    setAllBaseData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: skaleStars,
+        premium_rewards: skaleStarsPremium,
+        activeData: dailyRecordsBase,
+        previousData: prevDataBase,
+        player_data: userDataBase,
+        is_active: activePlayerBase, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        premium_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsBase,
+        previousData: prevDataBaseWeekly,
+        player_data: userDataBaseWeekly,
+        is_active: activePlayerBaseWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        premium_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsBase,
+        previousData: prevDataBaseMonthly,
+        player_data: userDataBaseMonthly,
+        is_active: activePlayerBaseMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsBase,
+    weeklyRecordsBase,
+    monthlyRecordsBase,
+    prevDataBase,
+    prevDataBaseWeekly,
+    prevDataBaseMonthly,
+    userDataBase,
+    userDataBaseWeekly,
+    userDataBaseMonthly,
+    activePlayerBase,
+    activePlayerBaseMonthly,
+    activePlayerBaseWeekly,
+  ]);
+
+  useEffect(() => {
     setAllTaikoData([
       {
         title: "DAILY",
@@ -3810,14 +4323,93 @@ function Dashboard({
   };
 
   const handleRefreshCountdown700 = async () => {
-    if (bundlesBought === 0) {
-      setcountdown700();
-      handleSetAvailableTime();
-    } else if (bundlesBought > 0) {
-      setcountdown700(firstOfNextMonth.getTime());
-      handleSetAvailableTime(firstOfNextMonth.getTime());
-   
-    }
+    const dypv1 = new window.infuraWeb3.eth.Contract(
+      DYP_700V1_ABI,
+      dyp700v1Address
+    );
+
+    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
+
+    const remainingTimev1 = await dypv1.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const remainingTimev2 = await dypv2.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
+
+    // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
+    // const timeofDepositv1 = await dypv1.methods
+    //   .getTimeOfDeposit(coinbase)
+    //   .call();
+
+    // const timeofDepositv2 = await dypv2.methods
+    //   .getTimeOfDeposit(coinbase)
+    //   .call();
+
+    // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
+    //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
+    //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
+
+    //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //     second: "2-digit",
+    //   }).format(remainingTime_milisecondsv1);
+
+    //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
+
+    //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
+    //   const timeofDeposit_Minutesv1 =
+    //     timeofDeposit_Date_formattedv1.getMinutes();
+    //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
+
+    //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
+
+    //   const resultv1 =
+    //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
+
+    //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //     second: "2-digit",
+    //   }).format(remainingTime_milisecondsv2);
+
+    //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
+    //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
+    //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
+    //   const timeofDeposit_Minutesv2 =
+    //     timeofDeposit_Date_formattedv2.getMinutes();
+    //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
+
+    //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
+
+    //   const resultv2 =
+    //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
+    setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
+    handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
+    // setcountdown700(result * 1000);
+    //}
+    // } else {
+    //   setcountdown700();
+    //   handleSetAvailableTime();
+    // }
   };
 
   const fetchSkalePrice = async () => {
@@ -4190,7 +4782,6 @@ function Dashboard({
     return myStakes;
   };
 
-
   const calculateAllRewardsCawsPremium = async () => {
     const address = coinbase;
 
@@ -4540,6 +5131,11 @@ function Dashboard({
       window.config.subscription_viction_address
     );
 
+    const premiumSc_taiko = new window.taikoWeb3.eth.Contract(
+      window.SUBSCRIPTION_TAIKO_ABI,
+      window.config.subscription_taiko_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -4548,6 +5144,11 @@ function Dashboard({
     const nftContract_viction = new window.victionWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.taikoWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (wallet) {
@@ -4566,6 +5167,15 @@ function Dashboard({
           console.error(e);
           return 0;
         });
+
+      const result_taiko = await nftContract_taiko.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const discount = await premiumSc.methods
         .discountPercentageGlobal()
         .call()
@@ -4582,6 +5192,14 @@ function Dashboard({
           return 0;
         });
 
+      const discount_taiko = await premiumSc_taiko.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -4591,6 +5209,13 @@ function Dashboard({
 
       const nftObject_viction = await premiumSc_viction.methods
         .nftDiscounts(window.config.nft_dypius_premium_viction_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_taiko = await premiumSc_taiko.methods
+        .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -4642,15 +5267,42 @@ function Dashboard({
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
+      } else if (result_taiko && parseInt(result_taiko) > 0) {
+        const tokenId = await nftContract_taiko.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_taiko) {
+          setnftDiscountObjectTaiko(nftObject_taiko);
+          if (discount_taiko) {
+            setdiscountPercentageTaiko(
+              Math.max(
+                parseInt(discount_taiko),
+                parseInt(nftObject_taiko.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdTaiko(tokenId);
+        setnftPremium_totalTaiko(parseInt(result_taiko));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
         setnftPremium_tokenIdViction(0);
         setnftPremium_totalViction(0);
+        setnftPremium_tokenIdTaiko(0);
+        setnftPremium_totalTaiko(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
+        } else if (discount_taiko) {
+          setdiscountPercentageTaiko(parseInt(discount_taiko));
         }
       }
     } else {
@@ -4658,6 +5310,8 @@ function Dashboard({
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
       setnftPremium_totalViction(0);
+      setnftPremium_tokenIdTaiko(0);
+      setnftPremium_totalTaiko(0);
     }
 
     // } else setdiscountPercentage(0);
@@ -4680,25 +5334,6 @@ function Dashboard({
 
     setGenesisRank(testArray[0].position);
     setGenesisRank2(testArray[0].statValue);
-  };
-
-  const fetchKittyDashAroundPlayer = async (userId, userName) => {
-    const data = {
-      StatisticName: "MobileGameDailyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    const result = await axios.post(
-      `https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/GetLeaderboardAroundPlayer`,
-      data
-    );
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === userName
-    );
-    setkittyDashRecords(testArray);
-    // setGenesisRank(testArray[0].position);
-    // setGenesisRank2(testArray[0].statValue);
   };
 
   const fetchDailyRecordsAroundPlayer = async (itemData) => {
@@ -4828,6 +5463,7 @@ function Dashboard({
           claimedCoreChests + claimedCorePremiumChests < 20 ||
           claimedVictionChests + claimedVictionPremiumChests < 20 ||
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
+          claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20
         ) {
           setCanBuy(true);
@@ -4837,6 +5473,7 @@ function Dashboard({
           claimedCoreChests + claimedCorePremiumChests === 20 &&
           claimedVictionChests + claimedVictionPremiumChests === 20 &&
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
+          claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20
         ) {
           setCanBuy(false);
@@ -4848,6 +5485,7 @@ function Dashboard({
           claimedCoreChests < 10 ||
           claimedVictionChests < 10 ||
           claimedMantaChests < 10 ||
+          claimedBaseChests < 10 ||
           claimedTaikoChests < 10
         ) {
           setCanBuy(true);
@@ -4857,6 +5495,7 @@ function Dashboard({
           claimedCoreChests === 10 &&
           claimedVictionChests === 10 &&
           claimedMantaChests === 10 &&
+          claimedBaseChests === 10 &&
           claimedTaikoChests === 10
         ) {
           setCanBuy(false);
@@ -5108,6 +5747,53 @@ function Dashboard({
       }
     }
   }
+  };
+
+  const getAllBaseChests = async (userEmail) => {
+    const emailData = { emailAddress: userEmail, chainId: "base" };
+
+    const result = await axios.post(
+      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+      emailData
+    );
+    if (result.status === 200 && result.data) {
+      const chestOrder = result.data.chestOrder;
+
+      let standardChestsArray = [];
+      let premiumChestsArray = [];
+      let openedChests = [];
+      let openedStandardChests = [];
+      let openedPremiumChests = [];
+
+      if (chestOrder.length > 0) {
+        for (let item = 0; item < chestOrder.length; item++) {
+          if (chestOrder[item].chestType === "Standard") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedStandardChests.push(chestOrder[item]);
+              }
+            }
+            standardChestsArray.push(chestOrder[item]);
+          } else if (chestOrder[item].chestType === "Premium") {
+            if (chestOrder[item].isOpened === true) {
+              {
+                openedChests.push(chestOrder[item]);
+                openedPremiumChests.push(chestOrder[item]);
+              }
+            }
+            premiumChestsArray.push(chestOrder[item]);
+          }
+        }
+        setOpenedBaseChests(openedChests);
+        setStandardBaseChests(standardChestsArray);
+        setPremiumBaseChests(premiumChestsArray);
+
+        setclaimedBaseChests(openedStandardChests.length);
+        setclaimedBasePremiumChests(openedPremiumChests.length);
+        setallBaseChests(chestOrder);
+      }
+    }
   };
 
   const getAllTaikoChests = async (userEmail) => {
@@ -5629,7 +6315,10 @@ function Dashboard({
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -5676,6 +6365,11 @@ function Dashboard({
     const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -5851,6 +6545,63 @@ function Dashboard({
         );
         await tokenContract.methods
           .approve(victionsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    } else if (
+      chainId === 167000 &&
+      nftPremium_totalTaiko > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_taiko.methods
+          .approve(
+            window.config.subscription_taiko_address,
+            nftPremium_tokenIdTaiko
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageTaiko < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(taikosubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -6090,7 +6841,10 @@ function Dashboard({
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -6117,20 +6871,6 @@ function Dashboard({
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
-        }
-      } else if (chainId === 167000) {
-        const result = await subscribeTokencontracttaiko.methods
-          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -6307,6 +7047,68 @@ function Dashboard({
             setapproveStatus("initial");
           }
         }
+      } else if (chainId === 167000) {
+        if (nftPremium_totalTaiko > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+            window.config.nft_dypius_premium_taiko_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdTaiko)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, taikosubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === taikosubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageTaiko === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageTaiko < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontracttaiko.methods
+            .allowance(coinbase, taikosubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -6460,7 +7262,7 @@ function Dashboard({
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -6534,7 +7336,7 @@ function Dashboard({
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -6613,7 +7415,81 @@ function Dashboard({
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "viction subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+              onSubscribeSuccess();
+            }, 2000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
+        await window
+          .subscribeNFTTaiko(
+            nftDiscountObjectTaiko.nftAddress,
+            nftPremium_tokenIdTaiko,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -6815,7 +7691,7 @@ function Dashboard({
               `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
               {
                 multiplier: "yes",
-                chain: chainId.toString(),
+                chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
               }
             )
@@ -6875,7 +7751,7 @@ function Dashboard({
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeBNB BinanceWallet",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -7287,17 +8163,24 @@ function Dashboard({
       userCoreScore +
       userVictionScore +
       userMantaScore +
+      userBaseScore +
       userTaikoScore;
-      
-      const totalScore_multiplied = (rankData && rankData.multiplier === "yes") ? totalScore * 4 : totalScore
-    if (totalScore_multiplied > 11999999 && totalScore_multiplied < 24000000) {
- 
+
+    const totalScore_multiplied =
+      rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
+    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
       setUserRankRewards(5);
-    } else if (totalScore_multiplied >= 24000000 && totalScore_multiplied < 37000000) {
+    } else if (
+      totalScore_multiplied >= 26000000 &&
+      totalScore_multiplied < 39000000
+    ) {
       setUserRankRewards(10);
-    } else if (totalScore_multiplied >= 37000000 && totalScore_multiplied < 62000000) {
+    } else if (
+      totalScore_multiplied >= 39000000 &&
+      totalScore_multiplied < 64000000
+    ) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 62000000) {
+    } else if (totalScore_multiplied >= 64000000) {
       setUserRankRewards(100);
     }
   };
@@ -7310,16 +8193,16 @@ function Dashboard({
     userCoreScore,
     userVictionScore,
     userMantaScore,
+    userBaseScore,
     userTaikoScore,
-    rankData
+    rankData,
   ]);
 
   useEffect(() => {
     if (coinbase) {
       getRankData();
-      getBundles(coinbase);
     }
-  }, [coinbase, bundlesBought]);
+  }, [coinbase]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -7352,7 +8235,7 @@ function Dashboard({
       window.WALLET_TYPE !== ""
     ) {
       calculateAllRewardsCawsPremium(data.getPlayer.wallet.publicAddress);
-      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress)
+      calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
 
@@ -7473,10 +8356,15 @@ function Dashboard({
     chainId,
     nftPremium_total,
     nftPremium_totalViction,
+    nftPremium_totalTaiko,
+
     discountPercentage,
     discountPercentageViction,
+    discountPercentageTaiko,
+
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
+    nftPremium_tokenIdTaiko,
   ]);
 
   useEffect(() => {
@@ -7567,10 +8455,6 @@ function Dashboard({
   //     );
   //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
   //     fetchDailyRecordsAroundPlayer(dailyrecords);
-  //     fetchKittyDashAroundPlayer(
-  //       data.getPlayer.playerId,
-  //       data.getPlayer.displayName
-  //     );
   //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
   //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
   //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
@@ -7701,16 +8585,15 @@ function Dashboard({
       getAllCoreChests(email);
       getAllVictionChests(email);
       getAllMantaChests(email);
+      getAllBaseChests(email);
       getAllTaikoChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
 
   useEffect(() => {
-    if (bundlesBought === 1) {
-      handleRefreshCountdown700();
-    }
-  }, [bundlesBought]);
+    handleRefreshCountdown700();
+  }, [coinbase]);
 
   useEffect(() => {
     if (success === true) {
@@ -7737,6 +8620,17 @@ function Dashboard({
       className="container-fluid d-flex justify-content-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
+      <div className="d-none">
+        {goldenPassRemainingTime !== "0" && goldenPassRemainingTime && (
+          <Countdown
+            date={Number(goldenPassRemainingTime) * 1000}
+            onComplete={() => {
+              setcountdown700();
+              setGoldenPassRemainingTime();
+            }}
+          />
+        )}
+      </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
         <div className="container-lg mx-0">
@@ -7780,6 +8674,7 @@ function Dashboard({
                       <ProfileCard
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
+                        discountPercentageTaiko={discountPercentageTaiko}
                         getRankData={getRankData}
                         setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
@@ -7792,6 +8687,8 @@ function Dashboard({
                         userVictionScore={userVictionScore}
                         userRankManta={userRankManta}
                         userMantaScore={userMantaScore}
+                        userRankBase={userRankBase}
+                        userBaseScore={userBaseScore}
                         userRankTaiko={userRankTaiko}
                         userTaikoScore={userTaikoScore}
                         userSkaleScore={userSkaleScore}
@@ -7858,6 +8755,7 @@ function Dashboard({
                           setgetPremiumPopup(true);
                         }}
                         handleSetAvailableTime={(value) => {
+                          console.log(value, "yes");
                           setGoldenPassRemainingTime(value);
                         }}
                         handleOpenDomains={handleOpenDomains}
@@ -7980,6 +8878,8 @@ function Dashboard({
                         monthlyDataAmountViction={monthlyDataAmountViction}
                         weeklyDataAmountManta={weeklyDataAmountManta}
                         monthlyDataAmountManta={monthlyDataAmountManta}
+                        weeklyDataAmountBase={weeklyDataAmountBase}
+                        monthlyDataAmountBase={monthlyDataAmountBase}
                         weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                         monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                         dailyDataAmountSkale={dailyDataAmountSkale}
@@ -7991,6 +8891,7 @@ function Dashboard({
                         coreEarnUsd={coreEarnUsd}
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
+                        baseEarnUsd={baseEarnUSD}
                         taikoEarnUsd={taikoEarnUsd}
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
@@ -8031,7 +8932,6 @@ function Dashboard({
                         claimedMantaPremiumChests={claimedMantaPremiumChests}
                         claimedTaikoChests={claimedTaikoChests}
                         claimedTaikoPremiumChests={claimedTaikoPremiumChests}
-                        kittyDashRecords={kittyDashRecords}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -8068,6 +8968,7 @@ function Dashboard({
                         openedSeiChests={openedSeiChests}
                         openedVictionChests={openedVictionChests}
                         openedMantaChests={openedMantaChests}
+                        openedBaseChests={openedBaseChests}
                         openedTaikoChests={openedTaikoChests}
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
@@ -8441,6 +9342,7 @@ function Dashboard({
                             allCoreData={allCoreData}
                             allVictionData={allVictionData}
                             allMantaData={allMantaData}
+                            allBaseData={allBaseData}
                             allTaikoData={allTaikoData}
                             dailyplayerData={dailyplayerData}
                             weeklyplayerData={weeklyplayerData}
@@ -8543,6 +9445,8 @@ function Dashboard({
                             width: "fit-content",
                             pointerEvents: "auto",
                             overflowX: "auto",
+                            maxWidth: "fit-content",
+                            background: "#1a1c39",
                           }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
@@ -8568,6 +9472,8 @@ function Dashboard({
                             monthlyDataAmountViction={monthlyDataAmountViction}
                             weeklyDataAmountManta={weeklyDataAmountManta}
                             monthlyDataAmountManta={monthlyDataAmountManta}
+                            weeklyDataAmountBase={weeklyDataAmountBase}
+                            monthlyDataAmountBase={monthlyDataAmountBase}
                             weeklyDataAmountTaiko={weeklyDataAmountTaiko}
                             monthlyDataAmountTaiko={monthlyDataAmountTaiko}
                             weeklyDataAmountSkale={weeklyDataAmountSkale}
@@ -8580,6 +9486,7 @@ function Dashboard({
                             allCoreChests={allCoreChests}
                             allVictionChests={allVictionChests}
                             allMantaChests={allMantaChests}
+                            allBaseChests={allBaseChests}
                             allTaikoChests={allTaikoChests}
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
@@ -8593,7 +9500,6 @@ function Dashboard({
                             taikoEarnUsd={taikoEarnUsd}
                             immutableEarnUsd={immutableEarnUsd}
                             coreEarnUsd={coreEarnUsd}
-                            kittyDashRecords={kittyDashRecords}
                             userRankRewards={userRankRewards}
                             cawsPremiumRewards={cawsPremiumRewards}
                             landPremiumRewards={landPremiumRewards}
@@ -8652,15 +9558,23 @@ function Dashboard({
                             </div>
                             {discountPercentage > 0 ||
                             discountPercentageViction > 0 ||
+                            discountPercentageTaiko > 0 ||
                             nftPremium_total > 0 ||
-                            nftPremium_totalViction > 0 ? (
+                            nftPremium_totalViction ||
+                            nftPremium_totalTaiko > 0 ? (
                               <div className="premium-discount-bg mt-3 p-4 position-relative">
                                 <div className="premiumRedTag position-absolute">
                                   <div className="position-relative d-flex flex-column">
                                     <img src={premiumRedTag} alt="" />
                                     <div className="d-flex flex-column position-absolute discountwrap">
                                       <span className="discount-price2 font-oxanium">
-                                        {discountPercentage}%
+                                        {discountPercentage > 0
+                                                ? discountPercentage
+                                                : discountPercentageViction > 0
+                                                ? discountPercentageViction
+                                                : discountPercentageTaiko > 0
+                                                ? discountPercentageTaiko
+                                                : discountPercentage}%
                                       </span>
                                       <span className="discount-price-bottom">
                                         Discount
@@ -8673,35 +9587,43 @@ function Dashboard({
                                     <h6 className="lifetime-plan-text m-0">
                                       Lifetime plan
                                     </h6>
-                                    {nftPremium_total > 0 ||
-                                      (nftPremium_totalViction > 0 && (
-                                        <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                                          Valid until:{" "}
-                                          {new Date(
-                                            nftPremium_total > 0
-                                              ? nftDiscountObject.expiration *
-                                                1000
-                                              : nftDiscountObjectViction.expiration *
-                                                1000
-                                          )
-                                            .toDateString()
-                                            .slice(
-                                              3,
-                                              new Date(
-                                                nftPremium_total > 0
-                                                  ? nftDiscountObject.expiration *
-                                                    1000
-                                                  : nftDiscountObjectViction.expiration *
-                                                    1000
-                                              ).toDateString().length
-                                            )}
-                                        </h6>
-                                      ))}
+                                    {(nftPremium_total > 0 ||
+                                      nftPremium_totalViction > 0 ||
+                                      nftPremium_totalTaiko > 0) && (
+                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                                        Valid until:{" "}
+                                        {new Date(
+                                          nftPremium_total > 0
+                                            ? nftDiscountObject.expiration *
+                                              1000
+                                            : nftPremium_totalTaiko > 0
+                                            ? nftDiscountObjectTaiko.expiration *
+                                              1000
+                                            : nftDiscountObjectViction.expiration *
+                                              1000
+                                        )
+                                          .toDateString()
+                                          .slice(
+                                            3,
+                                            new Date(
+                                              nftPremium_total > 0
+                                                ? nftDiscountObject.expiration *
+                                                  1000
+                                                : nftPremium_totalTaiko > 0
+                                                ? nftDiscountObjectTaiko.expiration *
+                                                  1000
+                                                : nftDiscountObjectViction.expiration *
+                                                  1000
+                                            ).toDateString().length
+                                          )}
+                                      </h6>
+                                    )}
                                   </div>
                                   <div className="d-flex align-items-end gap-2">
                                     <h6 className="discount-price">
                                       {discountPercentage == 100 ||
-                                      discountPercentageViction == 100
+                                      discountPercentageViction == 100 ||
+                                      discountPercentageTaiko == 100
                                         ? "FREE"
                                         : "$" +
                                           (100 -
@@ -8710,18 +9632,24 @@ function Dashboard({
                                                 ? discountPercentage
                                                 : discountPercentageViction > 0
                                                 ? discountPercentageViction
+                                                : discountPercentageTaiko > 0
+                                                ? discountPercentageTaiko
                                                 : discountPercentage
                                             ))}
                                     </h6>
                                     <h6 className="old-price-text">$100</h6>
                                   </div>
                                   {(nftPremium_total > 0 ||
-                                    nftPremium_totalViction > 0) && (
+                                    nftPremium_totalViction > 0 ||
+                                    nftPremium_totalTaiko > 0) && (
                                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
                                       Valid until:{" "}
                                       {new Date(
                                         nftPremium_total > 0
                                           ? nftDiscountObject.expiration * 1000
+                                          : nftPremium_totalTaiko > 0
+                                          ? nftDiscountObjectTaiko.expiration *
+                                            1000
                                           : nftDiscountObjectViction.expiration *
                                             1000
                                       )
@@ -8731,6 +9659,9 @@ function Dashboard({
                                           new Date(
                                             nftPremium_total > 0
                                               ? nftDiscountObject.expiration *
+                                                1000
+                                              : nftPremium_totalTaiko > 0
+                                              ? nftDiscountObjectTaiko.expiration *
                                                 1000
                                               : nftDiscountObjectViction.expiration *
                                                 1000
@@ -9119,373 +10050,380 @@ function Dashboard({
                                   </div>
 
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                                  {(discountPercentage < 100 &&
-                                    discountPercentageViction < 100) && (
-                                    <div className="d-flex flex-column align-items-end gap-3">
-                                      <span className="my-premium-balance-text mb-0">
-                                        My balance:{" "}
-                                        {getFormattedNumber(
-                                          tokenBalance / 10 ** tokenDecimals,
-                                          5
-                                        )}{" "}
-                                        {dropdownIcon.toUpperCase()}
-                                      </span>
-                                      <div
-                                        className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                                        style={{ height: "34px" }}
-                                      >
-                                        <span className="subscription-price-text mb-0">
-                                          Subscription Price:
+                                  {discountPercentage < 100 &&
+                                    discountPercentageViction < 100 &&
+                                    discountPercentageTaiko < 100 && (
+                                      <div className="d-flex flex-column align-items-end gap-3">
+                                        <span className="my-premium-balance-text mb-0">
+                                          My balance:{" "}
+                                          {getFormattedNumber(
+                                            tokenBalance / 10 ** tokenDecimals,
+                                            5
+                                          )}{" "}
+                                          {dropdownIcon.toUpperCase()}
                                         </span>
+                                        <div
+                                          className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                          style={{ height: "34px" }}
+                                        >
+                                          <span className="subscription-price-text mb-0">
+                                            Subscription Price:
+                                          </span>
 
-                                        <div className="d-flex align-items-center gap-2">
-                                          <div className="dropdown position relative">
-                                            <button
-                                              class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
-                                              type="button"
-                                              data-bs-toggle="dropdown"
-                                              aria-expanded="false"
-                                            >
-                                              <div
-                                                className="d-flex align-items-center gap-2"
-                                                style={{ color: "#fff" }}
+                                          <div className="d-flex align-items-center gap-2">
+                                            <div className="dropdown position relative">
+                                              <button
+                                                class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
                                               >
-                                                <img
-                                                  src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                                                  alt=""
-                                                  style={{
-                                                    width: 18,
-                                                    height: 18,
-                                                  }}
-                                                />
-                                                {/* {dropdownTitle} */}
-                                              </div>
-                                              <img
-                                                src={launchpadIndicator}
-                                                alt=""
-                                              />
-                                            </button>
-                                            <ul className="dropdown-menu w-100">
-                                              {Object.keys(
-                                                chainId === 1
-                                                  ? window.config
-                                                      .subscriptioneth_tokens
-                                                  : chainId === 56
-                                                  ? window.config
-                                                      .subscriptionbnb_tokens
-                                                  : chainId === 1030
-                                                  ? window.config
-                                                      .subscriptioncfx_tokens
-                                                  : chainId === 43114
-                                                  ? window.config
-                                                      .subscription_tokens
-                                                  : chainId === 8453
-                                                  ? window.config
-                                                      .subscriptionbase_tokens
-                                                  : chainId === 1482601649
-                                                  ? window.config
-                                                      .subscriptionskale_tokens
-                                                  : chainId === 88
-                                                  ? window.config
-                                                      .subscriptionviction_tokens
-                                                  : chainId === 169
-                                                  ? window.config
-                                                      .subscriptionmanta_tokens
-                                                  : chainId === 167000
-                                                  ? window.config
-                                                      .subscriptiontaiko_tokens
-                                                  : chainId === 1116
-                                                  ? window.config
-                                                      .subscriptioncore_tokens
-                                                  : chainId === 713715
-                                                  ? window.config
-                                                      .subscriptionsei_tokens
-                                                  : window.config
-                                                      .subscription_tokens
-                                              ).map((t, i) => (
-                                                <li
-                                                  key={i}
-                                                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                                  onClick={() => {
-                                                    window.cached_contracts =
-                                                      Object.create(null);
-                                                    setTimeout(() => {
-                                                      setdropdownIcon(
-                                                        chainId === 1
-                                                          ? window.config
-                                                              .subscriptioneth_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 56
-                                                          ? window.config
-                                                              .subscriptionbnb_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 43114
-                                                          ? window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 8453
-                                                          ? window.config
-                                                              .subscriptionbase_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1030
-                                                          ? window.config
-                                                              .subscriptioncfx_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId ===
-                                                            1482601649
-                                                          ? window.config
-                                                              .subscriptionskale_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 88
-                                                          ? window.config
-                                                              .subscriptionviction_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 169
-                                                          ? window.config
-                                                              .subscriptionmanta_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 167000
-                                                          ? window.config
-                                                              .subscriptiontaiko_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1116
-                                                          ? window.config
-                                                              .subscriptioncore_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 713715
-                                                          ? window.config
-                                                              .subscriptionsei_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                      );
-                                                      setdropdownTitle(
-                                                        chainId === 1
-                                                          ? window.config
-                                                              .subscriptioneth_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 56
-                                                          ? window.config
-                                                              .subscriptionbnb_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 43114
-                                                          ? window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 8453
-                                                          ? window.config
-                                                              .subscriptionbase_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1030
-                                                          ? window.config
-                                                              .subscriptioncfx_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId ===
-                                                            1482601649
-                                                          ? window.config
-                                                              .subscriptionskale_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 88
-                                                          ? window.config
-                                                              .subscriptionviction_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 169
-                                                          ? window.config
-                                                              .subscriptionmanta_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 167000
-                                                          ? window.config
-                                                              .subscriptiontaiko_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 713715
-                                                          ? window.config
-                                                              .subscriptionsei_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : chainId === 1116
-                                                          ? window.config
-                                                              .subscriptioncore_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                          : window.config
-                                                              .subscription_tokens[
-                                                              t
-                                                            ]?.symbol
-                                                      );
-
-                                                      // console.log(t);
-                                                      handleSubscriptionTokenChange(
-                                                        t
-                                                      );
-                                                      handleCheckIfAlreadyApproved(
-                                                        t
-                                                      );
-                                                    }, 200);
-                                                  }}
+                                                <div
+                                                  className="d-flex align-items-center gap-2"
+                                                  style={{ color: "#fff" }}
                                                 >
                                                   <img
-                                                    src={
-                                                      chainId === 1
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 56
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 43114
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1030
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 8453
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1482601649
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 1116
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 88
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 169
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 167000
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : chainId === 713715
-                                                        ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                        : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                            t
-                                                          ]?.symbol.toLowerCase()}Icon.svg`)
-                                                    }
+                                                    src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                                     alt=""
                                                     style={{
                                                       width: 18,
                                                       height: 18,
                                                     }}
                                                   />
-                                                  {chainId === 1
+                                                  {/* {dropdownTitle} */}
+                                                </div>
+                                                <img
+                                                  src={launchpadIndicator}
+                                                  alt=""
+                                                />
+                                              </button>
+                                              <ul className="dropdown-menu w-100">
+                                                {Object.keys(
+                                                  chainId === 1
                                                     ? window.config
-                                                        .subscriptioneth_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptioneth_tokens
                                                     : chainId === 56
                                                     ? window.config
-                                                        .subscriptionbnb_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 43114
-                                                    ? window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
+                                                        .subscriptionbnb_tokens
                                                     : chainId === 1030
                                                     ? window.config
-                                                        .subscriptioncfx_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptioncfx_tokens
+                                                    : chainId === 43114
+                                                    ? window.config
+                                                        .subscription_tokens
                                                     : chainId === 8453
                                                     ? window.config
-                                                        .subscriptionbase_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionbase_tokens
                                                     : chainId === 1482601649
                                                     ? window.config
-                                                        .subscriptionskale_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1116
-                                                    ? window.config
-                                                        .subscriptioncore_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionskale_tokens
                                                     : chainId === 88
                                                     ? window.config
-                                                        .subscriptionviction_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionviction_tokens
                                                     : chainId === 169
                                                     ? window.config
-                                                        .subscriptionmanta_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionmanta_tokens
                                                     : chainId === 167000
                                                     ? window.config
-                                                        .subscriptiontaiko_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptiontaiko_tokens
+                                                    : chainId === 1116
+                                                    ? window.config
+                                                        .subscriptioncore_tokens
                                                     : chainId === 713715
                                                     ? window.config
-                                                        .subscriptionsei_tokens[
-                                                        t
-                                                      ]?.symbol
+                                                        .subscriptionsei_tokens
                                                     : window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol}
-                                                </li>
-                                              ))}
-                                            </ul>
-                                          </div>
-                                          {/* <img
+                                                        .subscription_tokens
+                                                ).map((t, i) => (
+                                                  <li
+                                                    key={i}
+                                                    className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                                    onClick={() => {
+                                                      window.cached_contracts =
+                                                        Object.create(null);
+                                                      setTimeout(() => {
+                                                        setdropdownIcon(
+                                                          chainId === 1
+                                                            ? window.config
+                                                                .subscriptioneth_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 56
+                                                            ? window.config
+                                                                .subscriptionbnb_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 43114
+                                                            ? window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 8453
+                                                            ? window.config
+                                                                .subscriptionbase_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1030
+                                                            ? window.config
+                                                                .subscriptioncfx_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId ===
+                                                              1482601649
+                                                            ? window.config
+                                                                .subscriptionskale_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 169
+                                                            ? window.config
+                                                                .subscriptionmanta_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 167000
+                                                            ? window.config
+                                                                .subscriptiontaiko_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1116
+                                                            ? window.config
+                                                                .subscriptioncore_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 713715
+                                                            ? window.config
+                                                                .subscriptionsei_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                        );
+                                                        setdropdownTitle(
+                                                          chainId === 1
+                                                            ? window.config
+                                                                .subscriptioneth_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 56
+                                                            ? window.config
+                                                                .subscriptionbnb_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 43114
+                                                            ? window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 8453
+                                                            ? window.config
+                                                                .subscriptionbase_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1030
+                                                            ? window.config
+                                                                .subscriptioncfx_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId ===
+                                                              1482601649
+                                                            ? window.config
+                                                                .subscriptionskale_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 88
+                                                            ? window.config
+                                                                .subscriptionviction_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 169
+                                                            ? window.config
+                                                                .subscriptionmanta_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 167000
+                                                            ? window.config
+                                                                .subscriptiontaiko_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 713715
+                                                            ? window.config
+                                                                .subscriptionsei_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : chainId === 1116
+                                                            ? window.config
+                                                                .subscriptioncore_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                            : window.config
+                                                                .subscription_tokens[
+                                                                t
+                                                              ]?.symbol
+                                                        );
+
+                                                        // console.log(t);
+                                                        handleSubscriptionTokenChange(
+                                                          t
+                                                        );
+                                                        handleCheckIfAlreadyApproved(
+                                                          t
+                                                        );
+                                                      }, 200);
+                                                    }}
+                                                  >
+                                                    <img
+                                                      src={
+                                                        chainId === 1
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 56
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 43114
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 1030
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 8453
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId ===
+                                                            1482601649
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 1116
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 88
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 169
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 167000
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : chainId === 713715
+                                                          ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                          : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                              t
+                                                            ]?.symbol.toLowerCase()}Icon.svg`)
+                                                      }
+                                                      alt=""
+                                                      style={{
+                                                        width: 18,
+                                                        height: 18,
+                                                      }}
+                                                    />
+                                                    {chainId === 1
+                                                      ? window.config
+                                                          .subscriptioneth_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 56
+                                                      ? window.config
+                                                          .subscriptionbnb_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                      ? window.config
+                                                          .subscriptioncfx_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1482601649
+                                                      ? window.config
+                                                          .subscriptionskale_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 169
+                                                      ? window.config
+                                                          .subscriptionmanta_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 167000
+                                                      ? window.config
+                                                          .subscriptiontaiko_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 713715
+                                                      ? window.config
+                                                          .subscriptionsei_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol}
+                                                  </li>
+                                                ))}
+                                              </ul>
+                                            </div>
+                                            {/* <img
                                       src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                       height={16}
                                       width={16}
                                       alt="usdt"
                                     /> */}
-                                          <span className="subscription-price-token mb-0">
-                                            {formattedPrice.slice(0, 7)}
+                                            <span className="subscription-price-token mb-0">
+                                              {formattedPrice.slice(0, 7)}
+                                            </span>
+                                          </div>
+                                          <span className="subscription-price-usd mb-0">
+                                            $
+                                            {100 -
+                                              Number(
+                                                discountPercentage != 0
+                                                  ? discountPercentage
+                                                  : discountPercentageViction !=
+                                                    0
+                                                  ? discountPercentageViction
+                                                  : discountPercentageTaiko != 0
+                                                  ? discountPercentageTaiko
+                                                  : discountPercentage
+                                              )}
                                           </span>
                                         </div>
-                                        <span className="subscription-price-usd mb-0">
-                                          $
-                                          {100 -
-                                            Number(
-                                              discountPercentage != 0
-                                                ? discountPercentage
-                                                : discountPercentageViction != 0
-                                                ? discountPercentageViction
-                                                : discountPercentage
-                                            )}
-                                        </span>
                                       </div>
-                                    </div>
-                                  )}
+                                    )}
 
                                   {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                                 <span className="token-balance-placeholder">
@@ -9758,8 +10696,8 @@ function Dashboard({
                                 </div>
                               </div>
                             ) : isConnected &&
-                              discountPercentage === 0 &&
-                              discountPercentageViction === 0 ? (
+                              discountPercentageTaiko > 0 &&
+                              chainId === 167000 ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
@@ -9797,7 +10735,7 @@ function Dashboard({
                                         Approve{" "}
                                         {approveStatus === "approveAmount"
                                           ? "token"
-                                          : nftPremium_total > 0
+                                          : nftPremium_totalTaiko > 0
                                           ? "NFT"
                                           : ""}
                                       </>
@@ -9839,8 +10777,8 @@ function Dashboard({
                                       approveStatus === "fail" ||
                                       approveStatus === "deposit") ? (
                                       <>
-                                        {discountPercentage > 0 ||
-                                        nftPremium_total > 0
+                                        {discountPercentageTaiko > 0 ||
+                                        nftPremium_totalTaiko > 0
                                           ? "Redeem"
                                           : "Buy"}
                                       </>
@@ -9851,19 +10789,22 @@ function Dashboard({
                                       approveStatus === "failsubscribe" ? (
                                       "Failed"
                                     ) : (
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>
+                                      <div className="d-flex align-items-center gap-2">
+                                        Processing
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>{" "}
+                                      </div>
                                     )}
                                   </button>
                                 </div>
                               </div>
-                            ) : isConnected &&
+                            ): isConnected &&
                               discountPercentage > 0 &&
                               chainId !== 56 ? (
                               <div
@@ -9901,6 +10842,26 @@ function Dashboard({
                                   }}
                                 >
                                   Switch to Viction
+                                </button>
+                              </div>
+                            ) : isConnected &&
+                              discountPercentageTaiko > 0 &&
+                              chainId !== 167000 ? (
+                              <div
+                                className={`d-flex align-items-center justify-content-center mb-2`}
+                              >
+                                <button
+                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                                  onClick={() => {
+                                    handleTaikoPool();
+                                  }}
+                                  style={{
+                                    width: "fit-content",
+                                    whiteSpace: "nowrap",
+                                    fontSize: 14,
+                                  }}
+                                >
+                                  Switch to Taiko
                                 </button>
                               </div>
                             ) : (
@@ -10087,6 +11048,7 @@ function Dashboard({
                 seiImages={seiImages}
                 victionImages={victionImages}
                 mantaImages={mantaImages}
+                baseImages={baseImages}
                 taikoImages={taikoImages}
                 coreImages={coreImages}
                 chainId={chainId}
@@ -10126,6 +11088,8 @@ function Dashboard({
                 claimedVictionPremiumChests={claimedVictionPremiumChests}
                 claimedMantaChests={claimedMantaChests}
                 claimedMantaPremiumChests={claimedMantaPremiumChests}
+                claimedBaseChests={claimedBaseChests}
+                claimedBasePremiumChests={claimedBasePremiumChests}
                 claimedTaikoChests={claimedTaikoChests}
                 claimedTaikoPremiumChests={claimedTaikoPremiumChests}
                 claimedSeiChests={claimedSeiChests}
@@ -10136,6 +11100,7 @@ function Dashboard({
                 openedCoreChests={openedCoreChests}
                 openedVictionChests={openedVictionChests}
                 openedMantaChests={openedMantaChests}
+                openedBaseChests={openedBaseChests}
                 openedTaikoChests={openedTaikoChests}
                 openedSeiChests={openedSeiChests}
                 canBuy={canBuy}
@@ -10145,6 +11110,7 @@ function Dashboard({
                 allCoreChests={allCoreChests}
                 allVictionChests={allVictionChests}
                 allMantaChests={allMantaChests}
+                allBaseChests={allBaseChests}
                 allTaikoChests={allTaikoChests}
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
@@ -10161,6 +11127,9 @@ function Dashboard({
                 }}
                 onMantaChestClaimed={() => {
                   setmantacount(mantacount + 1);
+                }}
+                onBaseChestClaimed={() => {
+                  setbasecount(basecount + 1);
                 }}
                 onTaikoChestClaimed={() => {
                   settaikocount(taikocount + 1);

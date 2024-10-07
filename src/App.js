@@ -82,6 +82,7 @@ import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
 import { isMobile } from "react-device-detect";
+import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -3054,6 +3055,7 @@ function App() {
   };
 
   const { ethereum } = window;
+  const {email} = useAuth()
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
@@ -3317,6 +3319,11 @@ function App() {
       window.config.daily_bonus_taiko_address
     );
 
+    const daily_bonus_contract_base = new window.baseWeb3.eth.Contract(
+      window.DAILY_BONUS_BASE_ABI,
+      window.config.daily_bonus_base_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -3389,7 +3396,19 @@ function App() {
                   if (isPremium_taiko === true) {
                     setIsPremium(true);
                   } else {
-                    setIsPremium(false);
+                    const isPremium_base =
+                      await daily_bonus_contract_base.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_base === true) {
+                      setIsPremium(true);
+                    } else {
+                      setIsPremium(false);
+                    }
                   }
                 }
               }
@@ -4028,7 +4047,7 @@ function App() {
           <Route
             exact
             path="/auth"
-            element={<Auth isConnected={isConnected} coinbase={coinbase} />}
+            element={<Auth isConnected={isConnected} coinbase={coinbase} onSuccessLogin={refetchPlayer} />}
           />
 
           <Route exact path="/redirect" element={<Redirect />} />
@@ -4392,6 +4411,25 @@ function App() {
             }
           />
 
+          {email && data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+
+          <Route
+            exact
+            path="/loyalty-program"
+            element={
+              <LoyaltyProgram
+                coinbase={coinbase}
+                isConnected={isConnected}
+                handleConnection={handleConnectWallet}
+              />
+            }
+          />
+ }
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -5623,9 +5661,10 @@ function App() {
         <ScrollTop />
         {location.pathname.includes("marketplace") ||
         location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ? (
+        location.pathname.includes("account") ||
+          location.pathname.includes("loyalty-program") ? (
           location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
+          location.pathname.includes("land")  ? null : (
             <MarketplaceFooter />
           )
         ) : (
