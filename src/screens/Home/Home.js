@@ -63,6 +63,9 @@ const Home = ({
   allStarData,
   idyptokenDatabnb,
   dyptokenDatabnb_old,
+  cawsListed,
+  wodListed,
+  timepieceListed
 }) => {
   const avaxPopupInfo = {
     title: "Avalanche",
@@ -191,6 +194,9 @@ const Home = ({
             ethTokenData={ethTokenData}
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
+            timepieceListed={timepieceListed}
+            cawsListed={cawsListed}
+            wodListed={wodListed}
           />
           <ExplorerGrid />
           <LandNft />

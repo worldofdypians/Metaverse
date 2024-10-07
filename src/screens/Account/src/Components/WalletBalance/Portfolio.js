@@ -86,7 +86,6 @@ const Portfolio = ({
   myCawsOldCollected,
   myLandCollected,
   myTimepieceCollected,
-  myBoughtNfts,
   isConnected,
   handleConnect,
   ethTokenData,
