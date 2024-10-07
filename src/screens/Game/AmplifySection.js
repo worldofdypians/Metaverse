@@ -109,7 +109,7 @@ const AmplifySection = () => {
       <div className="new-amplify-wrapper d-flex align-items-center justify-content-center">
         <div className="custom-container">
           <div className="d-flex align-items-center justify-content-center justify-content-lg-end">
-            <div className="d-flex flex-column col-lg-3 gap-4">
+            <div className="d-flex flex-column col-lg-3 gap-4 px-4 px-lg-0">
               <span className="amp-benefits-desc">BENEFITS</span>
               <span className="ways-to-amplify-title">
                 WAYS TO AMPLIFY REWARDS

@@ -63,7 +63,7 @@ const Campaigns = () => {
 
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-0">
-      <div className="custom-container px-2 px-lg-0 my-5 py-5">
+      <div className="custom-container px-2 px-lg-0 my-5 py-0 py-lg-5">
         <div className="row">
           <div className="col-12 col-lg-6">
             <img
@@ -74,7 +74,7 @@ const Campaigns = () => {
           </div>
           <div className="col-12 col-lg-6">
             <div className="d-flex flex-column justify-content-between h-100">
-              <div className="d-flex align-items-center justify-content-between">
+              <div className="d-flex align-items-center justify-content-between mt-3 mt-lg-0">
                 <h6 className="campaign-banner-title mb-0">
                   Dypians Global Challenge
                 </h6>

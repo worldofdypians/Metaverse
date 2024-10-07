@@ -24,6 +24,9 @@ width: 50%;
     left: 0;
     right: 0;
     margin: auto;
+    @media screen and (max-width: 786px) {
+        position: relative;
+    }
 }
 
 .anchor-title{

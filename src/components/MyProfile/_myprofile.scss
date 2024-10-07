@@ -348,13 +348,17 @@ text-transform: uppercase;
     358.71% 141.42% at 100% 100%,
     #092e4b 0%,
     #18193c 100%
-  );
-
-  height: 160px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.25s ease;
-
+    );
+    
+    height: 160px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+    
+    
+        .slick-slider{
+         width: 100%; 
+        }
   @media screen and (max-width: 786px) {
     height: auto;
   }

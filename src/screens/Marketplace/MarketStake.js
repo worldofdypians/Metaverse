@@ -747,7 +747,7 @@ const MarketStake = ({
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
-          className="container-nft d-flex align-items-start flex-column gap-2 px-3 my-4 position-relative"
+          className="container-nft d-flex align-items-start flex-column gap-2 px-3 position-relative my-5 my-lg-4 pt-4 pt-lg-0"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
           <div className="custom-container mx-0">
