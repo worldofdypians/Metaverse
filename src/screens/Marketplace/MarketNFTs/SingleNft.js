@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
@@ -115,6 +115,7 @@ const SingleNft = ({
   const windowSize = useWindowSize();
   const location = useLocation();
   const { BigNumber } = window;
+  const dataFetchedRef = useRef(false);
 
   const [nft, setNft] = useState(
     location.state?.nft ? location.state?.nft : []
@@ -1432,7 +1433,7 @@ const SingleNft = ({
             setTimeout(() => {
               setPurchaseStatus("");
               setPurchaseColor("#00FECF");
-              setbuyStatus("");
+              setbuyStatus("buy");
             }, 3000);
             console.error(e);
           });
@@ -2448,7 +2449,7 @@ const SingleNft = ({
       }
     }
     // }
-  }, [isConnected, coinbase, nftCount]);
+  }, [isConnected, coinbase, nftCount,IsListed]);
 
   useEffect(() => {
     if (isConnected === true && nft && nft.payment_priceType === 1) {
@@ -2491,6 +2492,8 @@ const SingleNft = ({
   }, [isConnected, coinbase, nft, owner, nftCount]);
 
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     window.scrollTo(0, 0);
     getFavoritesCount(nftId, nftAddress);
     getLatest20BoughtNFTS(nftAddress, nftId);

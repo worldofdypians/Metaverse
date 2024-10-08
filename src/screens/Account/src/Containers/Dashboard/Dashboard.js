@@ -96,7 +96,7 @@ function Dashboard({
   binanceWallet,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
-  latest20BoughtNFTS
+  latest20BoughtNFTS,
 }) {
   const { email, logout } = useAuth();
 
@@ -443,7 +443,7 @@ function Dashboard({
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
-  const [listedNFTS, setListedNFTS] = useState([]); 
+  const [listedNFTS, setListedNFTS] = useState([]);
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
@@ -1178,7 +1178,6 @@ function Dashboard({
   const username = data?.getPlayer?.displayName;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
   const dataFetchedRef = useRef(false);
-
 
   const [allData, setAllData] = useState([]);
   const [allBnbData, setAllBnbData] = useState([]);
@@ -5507,246 +5506,247 @@ function Dashboard({
   };
 
   const getAllChests = async (userEmail) => {
-    if(userEmail)
- {   const emailData = { emailAddress: userEmail, chainId: "bnb" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
+          setOpenedChests(openedChests);
+          setStandardChests(standardChestsArray);
+          setPremiumChests(premiumChestsArray);
+          setclaimedChests(openedStandardChests.length);
+          setclaimedPremiumChests(openedPremiumChests.length);
+          setallChests(chestOrder);
         }
-        setOpenedChests(openedChests);
-        setStandardChests(standardChestsArray);
-        setPremiumChests(premiumChestsArray);
-        setclaimedChests(openedStandardChests.length);
-        setclaimedPremiumChests(openedPremiumChests.length);
-        setallChests(chestOrder);
       }
-    
-    }}
+    }
   };
 
   const getAllSkaleChests = async (userEmail) => {
-    if(userEmail){
-    const emailData = { emailAddress: userEmail, chainId: "skale" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "skale" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedSkaleChests(openedChests);
-        setStandardSkaleChests(standardChestsArray);
-        setPremiumSkaleChests(premiumChestsArray);
+          setOpenedSkaleChests(openedChests);
+          setStandardSkaleChests(standardChestsArray);
+          setPremiumSkaleChests(premiumChestsArray);
 
-        setclaimedSkaleChests(openedStandardChests.length);
-        setclaimedSkalePremiumChests(openedPremiumChests.length);
-        setallSkaleChests(chestOrder);
+          setclaimedSkaleChests(openedStandardChests.length);
+          setclaimedSkalePremiumChests(openedPremiumChests.length);
+          setallSkaleChests(chestOrder);
+        }
       }
-    }}
+    }
   };
 
   const getAllCoreChests = async (userEmail) => {
-    if(userEmail){
-    const emailData = { emailAddress: userEmail, chainId: "core" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "core" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedCoreChests(openedChests);
-        setStandardCoreChests(standardChestsArray);
-        setPremiumCoreChests(premiumChestsArray);
+          setOpenedCoreChests(openedChests);
+          setStandardCoreChests(standardChestsArray);
+          setPremiumCoreChests(premiumChestsArray);
 
-        setclaimedCoreChests(openedStandardChests.length);
-        setclaimedCorePremiumChests(openedPremiumChests.length);
-        setallCoreChests(chestOrder);
+          setclaimedCoreChests(openedStandardChests.length);
+          setclaimedCorePremiumChests(openedPremiumChests.length);
+          setallCoreChests(chestOrder);
+        }
       }
     }
-  }
   };
 
   const getAllVictionChests = async (userEmail) => {
-    if(userEmail){
-    const emailData = { emailAddress: userEmail, chainId: "viction" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "viction" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedVictionChests(openedChests);
-        setStandardVictionChests(standardChestsArray);
-        setPremiumVictionChests(premiumChestsArray);
+          setOpenedVictionChests(openedChests);
+          setStandardVictionChests(standardChestsArray);
+          setPremiumVictionChests(premiumChestsArray);
 
-        setclaimedVictionChests(openedStandardChests.length);
-        setclaimedVictionPremiumChests(openedPremiumChests.length);
-        setallVictionChests(chestOrder);
+          setclaimedVictionChests(openedStandardChests.length);
+          setclaimedVictionPremiumChests(openedPremiumChests.length);
+          setallVictionChests(chestOrder);
+        }
       }
     }
-  }
   };
 
   const getAllMantaChests = async (userEmail) => {
-    if(userEmail){
-    const emailData = { emailAddress: userEmail, chainId: "manta" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "manta" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedMantaChests(openedChests);
-        setStandardMantaChests(standardChestsArray);
-        setPremiumMantaChests(premiumChestsArray);
+          setOpenedMantaChests(openedChests);
+          setStandardMantaChests(standardChestsArray);
+          setPremiumMantaChests(premiumChestsArray);
 
-        setclaimedMantaChests(openedStandardChests.length);
-        setclaimedMantaPremiumChests(openedPremiumChests.length);
-        setallMantaChests(chestOrder);
+          setclaimedMantaChests(openedStandardChests.length);
+          setclaimedMantaPremiumChests(openedPremiumChests.length);
+          setallMantaChests(chestOrder);
+        }
       }
     }
-  }
   };
 
   const getAllBaseChests = async (userEmail) => {
@@ -5797,52 +5797,52 @@ function Dashboard({
   };
 
   const getAllTaikoChests = async (userEmail) => {
-    if(userEmail){
-    const emailData = { emailAddress: userEmail, chainId: "taiko" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "taiko" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedTaikoChests(openedChests);
-        setStandardTaikoChests(standardChestsArray);
-        setPremiumTaikoChests(premiumChestsArray);
+          setOpenedTaikoChests(openedChests);
+          setStandardTaikoChests(standardChestsArray);
+          setPremiumTaikoChests(premiumChestsArray);
 
-        setclaimedTaikoChests(openedStandardChests.length);
-        setclaimedTaikoPremiumChests(openedPremiumChests.length);
-        setallTaikoChests(chestOrder);
+          setclaimedTaikoChests(openedStandardChests.length);
+          setclaimedTaikoPremiumChests(openedPremiumChests.length);
+          setallTaikoChests(chestOrder);
+        }
       }
     }
-  }
   };
 
   const getAllSeiChests = async (userEmail) => {
@@ -5916,27 +5916,29 @@ function Dashboard({
   };
 
   const getMyNFTS = async (coinbase, type) => {
-    return await window.getMyNFTs(coinbase, type);
+    if (coinbase !== undefined) {
+      return await window.getMyNFTs(coinbase, type);
+    }
   };
 
   //todo
   const fetchAllMyNfts = async () => {
-    getMyNFTS(userWallet  ? userWallet : coinbase, "caws").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbnb").then(
-      (NFTS) => setMyNFTSCawsBNB(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbnb").then((NFTS) =>
+      setMyNFTSCawsBNB(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbase").then(
-      (NFTS) => setMyNFTSCawsBase(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbase").then((NFTS) =>
+      setMyNFTSCawsBase(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "cawsavax").then(
-      (NFTS) => setMyNFTSCawsAvax(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsavax").then((NFTS) =>
+      setMyNFTSCawsAvax(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "timepiece").then(
-      (NFTS) => setMyNFTSTimepiece(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "timepiece").then((NFTS) =>
+      setMyNFTSTimepiece(NFTS)
     );
 
     getMyNFTS(userWallet ? userWallet : coinbase, "land").then((NFTS) =>
@@ -5951,23 +5953,23 @@ function Dashboard({
       setMyNFTSopBNB(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "landbnb").then(
-      (NFTS) => setMyNFTSLandBNB(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbnb").then((NFTS) =>
+      setMyNFTSLandBNB(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "landbase").then(
-      (NFTS) => setMyNFTSLandBase(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbase").then((NFTS) =>
+      setMyNFTSLandBase(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "landavax").then(
-      (NFTS) => setMyNFTSLandAvax(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landavax").then((NFTS) =>
+      setMyNFTSLandAvax(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "coingecko").then(
-      (NFTS) => setMyNFTSCoingecko(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "coingecko").then((NFTS) =>
+      setMyNFTSCoingecko(NFTS)
     );
     getMyNFTS(userWallet ? userWallet : coinbase, "gate").then((NFTS) =>
       setmyGateNfts(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "conflux").then(
-      (NFTS) => setmyConfluxNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "conflux").then((NFTS) =>
+      setmyConfluxNfts(NFTS)
     );
     getMyNFTS(userWallet ? userWallet : coinbase, "base").then((NFTS) =>
       setmyBaseNfts(NFTS)
@@ -5984,15 +5986,15 @@ function Dashboard({
       setmyCoreNfts(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "viction").then(
-      (NFTS) => setmyVictionNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "viction").then((NFTS) =>
+      setmyVictionNfts(NFTS)
     );
-    getMyNFTS(userWallet ? userWallet : coinbase, "immutable").then(
-      (NFTS) => setmyImmutableNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "immutable").then((NFTS) =>
+      setmyImmutableNfts(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "multivers").then(
-      (NFTS) => setmyMultiversNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "multivers").then((NFTS) =>
+      setmyMultiversNfts(NFTS)
     );
 
     getMyNFTS(userWallet ? userWallet : coinbase, "skale").then((NFTS) =>
@@ -6006,8 +6008,8 @@ function Dashboard({
       setmyTaikoNfts(NFTS)
     );
 
-    getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then(
-      (NFTS) => setmyCookieNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then((NFTS) =>
+      setmyCookieNfts(NFTS)
     );
   };
 
@@ -6031,7 +6033,7 @@ function Dashboard({
           nft.chain = 1;
           finalboughtItems1.push(nft);
         }
-      }); 
+      });
     setListedNFTS(finalboughtItems1);
   };
 
@@ -6148,8 +6150,6 @@ function Dashboard({
       setFavorites([]);
     }
   }
-
-
 
   const getUserRewardData = async (addr) => {
     const result = await axios
@@ -8239,10 +8239,6 @@ function Dashboard({
     }
   }, [data, chainId]);
 
- 
-
-
-
   useEffect(() => {
     if (chainId === 1) {
       setChainDropdown(chainDropdowns[0]);
@@ -8518,8 +8514,7 @@ function Dashboard({
     claimedMantaChests,
     claimedMantaPremiumChests,
     claimedTaikoChests,
-    claimedTaikoPremiumChests
-
+    claimedTaikoPremiumChests,
   ]);
 
   useEffect(() => {
@@ -8543,19 +8538,13 @@ function Dashboard({
       // getmyCawsWodStakes();
       // getmyWodStakes();
     }
-  }, [
-    userWallet,
-    isConnected,
-    coinbase,
-  ]);
+  }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
     getOtherNfts();
     getDypBalance();
     fetchUserFavorites(coinbase);
   }, [account, userWallet, isConnected]);
-
- 
 
   useEffect(() => {
     refetchPlayer();
@@ -8574,8 +8563,6 @@ function Dashboard({
     }
   }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
 
-
-
   const logoutItem = localStorage.getItem("logout");
 
   useEffect(() => {
@@ -8592,7 +8579,9 @@ function Dashboard({
   }, [email]);
 
   useEffect(() => {
-    handleRefreshCountdown700();
+    if (coinbase && isConnected) {
+      handleRefreshCountdown700();
+    }
   }, [coinbase]);
 
   useEffect(() => {
@@ -8790,7 +8779,7 @@ function Dashboard({
                               ethTokenData={ethTokenData}
                               dypTokenData={dypTokenData}
                               onOpenNfts={onOpenNfts}
-                              listedNFTS={listedNFTS} 
+                              listedNFTS={listedNFTS}
                               address={data?.getPlayer?.wallet?.publicAddress}
                               coinbase={account}
                               isVerified={data?.getPlayer?.wallet}
@@ -8906,7 +8895,7 @@ function Dashboard({
                         ethTokenData={ethTokenData}
                         dypTokenData={dypTokenData}
                         onOpenNfts={onOpenNfts}
-                        listedNFTS={listedNFTS} 
+                        listedNFTS={listedNFTS}
                         address={data?.getPlayer?.wallet?.publicAddress}
                         coinbase={account}
                         isVerified={data?.getPlayer?.wallet}
@@ -9026,7 +9015,7 @@ function Dashboard({
                       ethTokenData={ethTokenData}
                       dypTokenData={dypTokenData}
                       onOpenNfts={onOpenNfts}
-                      listedNFTS={listedNFTS} 
+                      listedNFTS={listedNFTS}
                       address={data?.getPlayer?.wallet?.publicAddress}
                       coinbase={account}
                       isVerified={data?.getPlayer?.wallet}
@@ -9569,12 +9558,13 @@ function Dashboard({
                                     <div className="d-flex flex-column position-absolute discountwrap">
                                       <span className="discount-price2 font-oxanium">
                                         {discountPercentage > 0
-                                                ? discountPercentage
-                                                : discountPercentageViction > 0
-                                                ? discountPercentageViction
-                                                : discountPercentageTaiko > 0
-                                                ? discountPercentageTaiko
-                                                : discountPercentage}%
+                                          ? discountPercentage
+                                          : discountPercentageViction > 0
+                                          ? discountPercentageViction
+                                          : discountPercentageTaiko > 0
+                                          ? discountPercentageTaiko
+                                          : discountPercentage}
+                                        %
                                       </span>
                                       <span className="discount-price-bottom">
                                         Discount
@@ -10804,7 +10794,7 @@ function Dashboard({
                                   </button>
                                 </div>
                               </div>
-                            ): isConnected &&
+                            ) : isConnected &&
                               discountPercentage > 0 &&
                               chainId !== 56 ? (
                               <div

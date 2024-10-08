@@ -57,7 +57,7 @@ const convertToUSD = async (price, payment_priceType) => {
   return null;
 };
 
-//   const a = await getListedNFTS(0, "", "", "", "");
+
 
 const filterNFTsByAddress = (nfts, address) => {
   return nfts.filter(
