@@ -46,8 +46,8 @@ const CreateProposal = ({ open, onClose }) => {
                 onClose();
               }}
               style={{
-                bottom: "17px",
-                alignSelf: "end",
+                bottom: "0",
+                alignSelf: "center",
                 width: 16,
                 height: 16,
               }}
@@ -56,7 +56,7 @@ const CreateProposal = ({ open, onClose }) => {
           <span className="create-proposal-desc">
             Select a proposal category to get started
           </span>
-          <div className="d-flex category-wrapper">
+          <div className="d-flex category-wrapper flex-column flex-lg-row">
             <button
               className={`${
                 selectedCategory === "aor"
