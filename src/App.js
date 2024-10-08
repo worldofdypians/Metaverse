@@ -3973,6 +3973,9 @@ function App() {
                 favorites={favorites}
                 dyptokenData_old={dypTokenData_old}
                 binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
               />
             }
           />
