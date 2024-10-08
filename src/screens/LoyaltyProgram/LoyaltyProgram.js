@@ -285,14 +285,21 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
                   <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
                     <img src={clock} alt="" className="loyalty-clock" />
                     <div className="d-flex flex-column align-items-center ">
+                     {!expired &&
                       <Countdown
-                        renderer={renderer}
-                        date={loyaltyCd}
-                        onComplete={() => {
-                          setisExpired(true);
-                        }}
-                      />
-                      <span className="loyalty-time-left">Time left</span>
+                      renderer={renderer}
+                      date={loyaltyCd}
+                      onComplete={() => {
+                        setisExpired(true);
+                      }}
+                    />
+                     }
+                      {expired &&
+                        <h6 className="loyalty-timer mb-0">
+                        Season two
+                      </h6>
+                      }
+                      <span className="loyalty-time-left">{expired ? "Coming soon" : "Time left"}</span>
                     </div>
                   </div>
                 </div>
