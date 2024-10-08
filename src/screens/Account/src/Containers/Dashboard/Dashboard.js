@@ -212,8 +212,7 @@ function Dashboard({
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
   const { email, logout } = useAuth();
-  const { eventId } = useParams();
-  console.log(eventId);
+  const { eventId } = useParams(); 
   const override = {
     display: "block",
     margin: "auto",
@@ -9545,8 +9544,8 @@ function Dashboard({
           />
           // </OutsideClickHandler>
         )}
-        {leaderboard && (
-          <OutsideClickHandler onOutsideClick={() => setLeaderboard(false)}>
+        {(leaderboard || hashValue === "#leaderboard") && (
+          <OutsideClickHandler onOutsideClick={() => {setLeaderboard(false);window.location.hash = "";}}>
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
               id="leaderboard"
@@ -9591,7 +9590,7 @@ function Dashboard({
                     )} */}
                 <img
                   src={xMark}
-                  onClick={() => setLeaderboard(false)}
+                  onClick={() => {setLeaderboard(false);window.location.hash = "";}}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />

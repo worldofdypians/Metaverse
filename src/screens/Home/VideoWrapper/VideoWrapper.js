@@ -216,13 +216,13 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
       class: "earnClass",
     },
     {
-      link: "/marketplace/events/treasure-hunt",
+      link: "/account/challenges/treasure-hunt",
       title: "EVENTS",
       desc: "Join exciting in-game events",
       class: "eventClass",
     },
     {
-      link: "/",
+      link: "/account#leaderboard",
       title: "LEADERBOARD",
       desc: "Compete for top player rankings",
       class: "leaderboardClass",
@@ -411,59 +411,20 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
         {windowSize.width > 992 && (
           <div className="opacitywrapper custom-container">
             <Slider {...settings} ref={betaSlider}>
-              {/* {dummyBetaPassData2.map((item, index) => {
-                return ( */}
-                  {/* <NavLink
-                    to={`${dummyBetaPassData2[0].link}`}
+            {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                  <NavLink
+                    to={`${item.link}`}
                     onClick={() => {
-                      dummyBetaPassData2[0].link === "/" && setModal(true);
+                      item.link === "/" && setModal(true);
                     }}
-                  > */}
+                  >
                     <BetaEventCardHome
-                      data={dummyBetaPassData2[0]}
-                      // key={index}
+                      data={item}
+                      key={index}
                       isFrontPage={true}
                     />
-                  {/* </NavLink> */}
-                  {/* <NavLink
-                    to={`${dummyBetaPassData2[1].link}`}
-                    onClick={() => {
-                      dummyBetaPassData2[1].link === "/" && setModal(true);
-                    }}
-                  > */}
-                    <BetaEventCardHome
-                      data={dummyBetaPassData2[1]}
-                      // key={index}
-                      isFrontPage={true}
-                    />
-                  {/* </NavLink> */}
-                  {/* <NavLink
-                    to={`${dummyBetaPassData2[2].link}`}
-                    onClick={() => {
-                      dummyBetaPassData2[2].link === "/" && setModal(true);
-                    }}
-                  > */}
-                    <BetaEventCardHome
-                      data={dummyBetaPassData2[2]}
-                      // key={index}
-                      isFrontPage={true}
-                    />
-                  {/* </NavLink> */}
-                  {/* <NavLink
-                    to={`${dummyBetaPassData2[3].link}`}
-                    onClick={() => {
-                      dummyBetaPassData2[3].link === "/" && setModal(true);
-                    }}
-                  > */}
-                    <BetaEventCardHome
-                      data={dummyBetaPassData2[3]}
-                      // key={index}
-                      isFrontPage={true}
-                    />
-                  {/* </NavLink> */}
-
-                {/* );
-              })} */}
+                  </NavLink>
+                ))}
             </Slider>
           </div>
         )}
