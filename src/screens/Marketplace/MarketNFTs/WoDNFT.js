@@ -38,7 +38,9 @@ const WoDNFT = ({
   wodBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId
+  binanceW3WProvider,
+  chainId,
+  wod,
 }) => {
   const override = {
     display: "block",
@@ -574,16 +576,13 @@ const WoDNFT = ({
   };
 
   const getListedWod = async () => {
-    const wod = await getWodNfts().catch((e) => {
-      console.error(e);
-    });
-
     const wodArray = [...wod, ...wodBought];
     const wodArray2 = [...wod];
 
     let uniquewod = wodArray.filter(
       (v, i, a) => a.findIndex((v2) => v2.tokenId === v.tokenId) === i
     );
+    console.log("uniquewod", uniquewod);
 
     if (uniquewod && uniquewod.length > 0) {
       let datedNfts = uniquewod.map((nft, index) => {
@@ -600,6 +599,7 @@ const WoDNFT = ({
             isLatestSale: false,
             LastSold: wodArray2[index]?.price,
             soldPriceType: wodArray2[index]?.payment_priceType,
+            type: "land",
           };
         } else if (
           nft.tokenId == wodArray2[index]?.tokenId &&
@@ -617,6 +617,7 @@ const WoDNFT = ({
             LastSold: result?.price,
             lastSoldTimeStamp: result?.blockTimestamp,
             soldPriceType: result?.payment_priceType,
+            type: "land",
           };
         } else if (nft.tokenId != wodArray2[index]?.tokenId && nft?.buyer) {
           let date = new Date(nft?.blockTimestamp * 1000);
@@ -629,6 +630,7 @@ const WoDNFT = ({
             lastSoldTimeStamp: nft?.blockTimestamp,
             LastSold: nft?.price,
             soldPriceType: nft.payment_priceType,
+            type: "land",
           };
         }
       });
@@ -674,7 +676,7 @@ const WoDNFT = ({
           const owner = await window.landnft.ownerOf(i).catch((e) => {
             console.log(e);
           });
-          const attributes = await window.getLandNft(i);
+          // const attributes = await window.getLandNft(i);
 
           return {
             nftAddress: window.config.landnft_address,
@@ -682,7 +684,7 @@ const WoDNFT = ({
             tokenId: i.toString(),
             type: "land",
             chain: 1,
-            attributes: attributes.attributes,
+            // attributes: attributes.attributes,
           };
         })
       );
@@ -769,10 +771,10 @@ const WoDNFT = ({
   }, []);
 
   useEffect(() => {
-    if (wodBought && wodBought.length > 0) {
+    if (wodBought && wodBought.length > 0 && wod && wod.length>0) {
       getListedWod();
     }
-  }, [wodBought, nftCount, allwodNfts.length]);
+  }, [wodBought, nftCount, allwodNfts.length, wod]);
 
   useEffect(() => {
     loadMore2();
@@ -807,7 +809,7 @@ const WoDNFT = ({
     }
     sortNfts("lth");
   }, [landNfts]);
-
+  console.log(wod);
   return (
     <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div
@@ -1017,7 +1019,6 @@ const WoDNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}
@@ -1202,7 +1203,6 @@ const WoDNFT = ({
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       );
@@ -1257,8 +1257,7 @@ const WoDNFT = ({
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
                               binanceW3WProvider={binanceW3WProvider}
-                            chainId={chainId}
-
+                              chainId={chainId}
                             />
                           </NavLink>
                         ))}

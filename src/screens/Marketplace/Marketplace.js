@@ -39,11 +39,8 @@ const Marketplace = ({
   isConnected,
   handleConnect,
   totalListed,
-  totalBoughtNFTSinETH,
-  totalBoughtNFTSinDYP,
   latest20RecentListedNFTS,
   totalBoughtNFTSCount,
-  topSales,
   coinbase,
   recentSales,
   nftCount,
@@ -67,7 +64,7 @@ const Marketplace = ({
   const [activeSlide2, setActiveSlide2] = useState(0);
   const [recentListed, setRecentListed] = useState(latest20RecentListedNFTS);
   const [recentSold, setRecentSold] = useState(recentSales);
-  const [topSold, setTopSold] = useState(topSales);
+  const [topSold, setTopSold] = useState(recentSales);
   const [topSalesFilter, setTopSalesFilter] = useState("all");
   const [recentListingsFilter, setRecentListingsFilter] = useState("all");
   const [recentSalesFilter, setRecentSalesFilter] = useState("all");
@@ -300,12 +297,7 @@ const Marketplace = ({
     initialSales();
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
-    if (topSales && topSales.length === 0) {
-      setLoadingTopSales(true);
-    }
-    if (topSales && topSales.length > 0) {
-      setLoadingTopSales(false);
-    }
+  
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length === 0) {
       setLoadingRecentListings(true);
     }
@@ -318,7 +310,7 @@ const Marketplace = ({
     if (recentSales && recentSales.length > 0) {
       setLoadingRecentSales(false);
     }
-  }, [listedNFTS, nftCount, topSales, latest20RecentListedNFTS]);
+  }, [listedNFTS, nftCount, latest20RecentListedNFTS]);
 
   useEffect(() => {
     getAllData();
@@ -342,7 +334,7 @@ const Marketplace = ({
   const [topSalesDate, setTopSalesDate] = useState("week");
 
   const initialSales = () => {
-    let datedSales = topSales.map((item) => {
+    let datedSales = recentSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
     });
 
@@ -355,7 +347,7 @@ const Marketplace = ({
 
   const filterTopSales = () => {
     setLoadingTopSales(true);
-    let datedSales = topSales.map((item) => {
+    let datedSales = recentSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
     });
 

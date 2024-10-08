@@ -41,7 +41,7 @@ const TimepieceNFT = ({
   timepieceBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId
+  binanceW3WProvider,chainId,timepiece
 }) => {
   const override = {
     display: "block",
@@ -568,10 +568,7 @@ const TimepieceNFT = ({
   };
 
   const getListedTimepiece = async () => {
-    const timepiece = await getTimepieceNfts().catch((e) => {
-      console.error(e);
-    });
-
+ 
     const timepieceArray = [...timepiece, ...timepieceBought];
     const timepieceArray2 = [...timepiece];
 
@@ -591,6 +588,8 @@ const TimepieceNFT = ({
             ...nft,
             date: date,
             isListed: true,
+            type: "timepiece",
+
             isLatestSale: false,
             LastSold: timepieceArray2[index]?.price,
             soldPriceType: timepieceArray2[index]?.payment_priceType,
@@ -611,6 +610,8 @@ const TimepieceNFT = ({
             date: date,
             isListed: true,
             isLatestSale: true,
+            type: "timepiece",
+
             LastSold: result?.price,
             soldPriceType: result?.payment_priceType,
           };
@@ -625,6 +626,8 @@ const TimepieceNFT = ({
             date: date,
             isListed: false,
             isLatestSale: true,
+            type: "timepiece",
+
             LastSold: nft?.price,
             soldPriceType: nft.payment_priceType,
           };
@@ -673,7 +676,7 @@ const TimepieceNFT = ({
         const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
           console.log(e);
         });
-        const attributes = await window.getTimepieceNft(i);
+        // const attributes = await window.getTimepieceNft(i);
 
         return {
           nftAddress: window.config.timepiecenft_address,
@@ -681,7 +684,7 @@ const TimepieceNFT = ({
           tokenId: i.toString(),
           type: "timepiece",
           chain: 1,
-          attributes: attributes.attributes,
+          // attributes: attributes.attributes,
         };
       })
     );
