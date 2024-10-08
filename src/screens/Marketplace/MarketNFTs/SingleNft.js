@@ -50,6 +50,7 @@ import chart from "./assets/chart.svg";
 import users from "./assets/users.svg";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import { ethers } from "ethers";
+import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -109,6 +110,9 @@ const SingleNft = ({
   favorites,
   dyptokenData_old,
   binanceW3WProvider,
+  handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
+  binanceWallet,
   dyptokenData,
   ethTokenData,
 }) => {
@@ -184,6 +188,28 @@ const SingleNft = ({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
+  };
+
+  const switchNetwork = async (hexChainId, chain) => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook(hexChainId)
+          .then(() => {
+            handleSwitchChain(chain);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(chain);
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
+      }
+    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
   };
 
   const getListedNtsAsc = async () => {
@@ -3825,7 +3851,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain(1)
+                                ? switchNetwork("0x1", 1)
                                 : handleBuy(nft);
                             }}
                           >
@@ -3886,7 +3912,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain(1)
+                                ? switchNetwork("0x1", 1)
                                 : updateListing(
                                     nft.tokenId,
                                     nftPrice,
@@ -3935,7 +3961,7 @@ const SingleNft = ({
                             className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain(1)
+                                ? switchNetwork("0x1", 1)
                                 : cancelNFT(
                                     nft.nftAddress,
                                     nft.tokenId,
@@ -4018,7 +4044,7 @@ const SingleNft = ({
                             } d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
                               chainId !== 1 && chainId !== 5
-                                ? handleSwitchChain(1)
+                                ? switchNetwork("0x1", 1)
                                 : handleSell(
                                     nft.tokenId,
                                     nftPrice,

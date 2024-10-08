@@ -3044,6 +3044,9 @@ function App() {
                 dyptokenData_old={dypTokenData_old}
                 dyptokenData={dypTokenData}
                 binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 ethTokenData={ethTokenData}
               />
             }
