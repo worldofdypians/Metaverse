@@ -54,22 +54,19 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                       ))}
                     </div>
                   </div>
-                  <div className="chain-marker-info-wrapper chain-marker-info-grid p-2">
+                  <div className="chain-marker-info-wrapper chain-marker-info-grid-2 p-2">
                     <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.city}</h6>
                       <span>City</span>
                     </div>
-                    <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
-                      <h6 className="mb-0">{marker?.areaSize} Blocks</h6>
-                      <span>Area</span>
-                    </div>
+                  
                     <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
                       <h6 className="mb-0">{marker?.size}</h6>
                       <span>Size</span>
                     </div>
                     <div className="chain-marker-info-item gap-2 d-flex flex-column align-items-center justify-content-center py-2">
-                      <h6 className="mb-0">{marker?.lookFeel}</h6>
-                      <span>Look & Feel</span>
+                      <h6 className="mb-0">{marker?.rewards}</h6>
+                      <span>Rewards</span>
                     </div>
                   </div>
                   <h6 className="chain-marker-benefits-title">Benefits</h6>

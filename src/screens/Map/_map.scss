@@ -593,6 +593,13 @@
   height: 87px;
 }
 
+.chain-marker-info-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  height: 87px;
+}
+
 .chain-marker-info-item {
   border-radius: 4px;
   background: #2d314f;
