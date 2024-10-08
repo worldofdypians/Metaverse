@@ -809,7 +809,7 @@ const WoDNFT = ({
     }
     sortNfts("lth");
   }, [landNfts]);
-  console.log(wod);
+  
   return (
     <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div

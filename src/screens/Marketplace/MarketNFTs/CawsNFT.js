@@ -520,7 +520,8 @@ const CawsNFT = ({
       });
       setCawsNFTS(lso);
     } else if (sortValue === "lto") {
-      let otl = initialNfts.sort((a, b) => {
+       
+      let otl = allCawsNfts.sort((a, b) => {
         return b.date - a.date;
       });
       setCawsNFTS(otl);
@@ -746,10 +747,10 @@ const CawsNFT = ({
   }, [count]);
 
   useEffect(() => {
-    if (cawsBought) {
+    if (cawsBought && caws && caws.length>0) {
       getListedCaws();
     }
-  }, [cawsBought, nftCount, allCawsNfts.length]);
+  }, [cawsBought, nftCount, allCawsNfts.length,caws]);
 
   useEffect(() => {
     getCawsCollection();
@@ -771,7 +772,6 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
-  // console.log(cawsNFTS2)
 
   return (
     <div

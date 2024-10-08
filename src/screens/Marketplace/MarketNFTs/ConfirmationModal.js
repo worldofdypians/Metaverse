@@ -39,7 +39,7 @@ const ConfirmationModal = ({
   };
 
   return (
-    <OutsideClickHandler onOutsideClick={onclose}>
+    // <OutsideClickHandler onOutsideClick={onclose}>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -245,7 +245,7 @@ const ConfirmationModal = ({
           )}
         </Box>
       </Modal>
-    </OutsideClickHandler>
+    // </OutsideClickHandler>
   );
 };
 

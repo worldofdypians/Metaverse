@@ -1410,13 +1410,13 @@ function Dashboard({
       setMonthlyRecordsCore(finalData);
     }
   };
-  const fetchPreviousWinnersCore = async () => {
-    if (prevVersionCore != 0) {
+  const fetchPreviousWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCore - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1429,13 +1429,13 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersCore = async () => {
-    if (prevVersionCoreWeekly != 0) {
+  const fetchPreviousWeeklyWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCoreWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1447,13 +1447,13 @@ function Dashboard({
       setPrevDataCoreWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersCore = async () => {
-    if (prevVersionCoreMonthly != 0) {
+  const fetchPreviousMonthlyWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCoreMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1473,6 +1473,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionCore(parseInt(result.data.data.version));
+    fetchPreviousWinnersCore(parseInt(result.data.data.version));
     setDailyRecordsCore(result.data.data.leaderboard);
     fillRecordsCore(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -1495,6 +1496,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.leaderboard));
 
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
@@ -1519,6 +1521,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersCore(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -1745,13 +1748,13 @@ function Dashboard({
       setMonthlyRecordsViction(finalData);
     }
   };
-  const fetchPreviousWinnersViction = async () => {
-    if (prevVersionViction != 0) {
+  const fetchPreviousWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionViction - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1764,13 +1767,13 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersViction = async () => {
-    if (prevVersionVictionWeekly != 0) {
+  const fetchPreviousWeeklyWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionVictionWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1782,13 +1785,13 @@ function Dashboard({
       setPrevDataVictionWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersViction = async () => {
-    if (prevVersionVictionMonthly != 0) {
+  const fetchPreviousMonthlyWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionVictionMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1808,6 +1811,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionViction(parseInt(result.data.data.version));
+    fetchPreviousWinnersViction(parseInt(result.data.data.version));
     setDailyRecordsViction(result.data.data.leaderboard);
     fillRecordsViction(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -1830,6 +1834,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsViction(result.data.data.leaderboard);
     setPrevVersionVictionWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersViction(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -1853,6 +1858,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsViction(result.data.data.leaderboard);
     setPrevVersionVictionMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersViction(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2079,13 +2085,13 @@ function Dashboard({
       setMonthlyRecordsManta(finalData);
     }
   };
-  const fetchPreviousWinnersManta = async () => {
-    if (prevVersionManta != 0) {
+  const fetchPreviousWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionManta - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2098,13 +2104,13 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersManta = async () => {
-    if (prevVersionMantaWeekly != 0) {
+  const fetchPreviousWeeklyWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionMantaWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2116,13 +2122,13 @@ function Dashboard({
       setPrevDataMantaWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersManta = async () => {
-    if (prevVersionMantaMonthly != 0) {
+  const fetchPreviousMonthlyWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionMantaMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2147,6 +2153,7 @@ function Dashboard({
         fillRecordsManta([]);
       });
     setPrevVersionManta(parseInt(result.data.data.version));
+    fetchPreviousWinnersManta(parseInt(result.data.data.version));
     setDailyRecordsManta(result.data.data.leaderboard);
     fillRecordsManta(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -2174,6 +2181,7 @@ function Dashboard({
       });
     setWeeklyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersManta(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2202,6 +2210,7 @@ function Dashboard({
       });
     setMonthlyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersManta(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2428,13 +2437,13 @@ function Dashboard({
       setMonthlyRecordsBase(finalData);
     }
   };
-  const fetchPreviousWinnersBase = async () => {
-    if (prevVersionBase != 0) {
+  const fetchPreviousWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBase - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2447,13 +2456,13 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersBase = async () => {
-    if (prevVersionBaseWeekly != 0) {
+  const fetchPreviousWeeklyWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBaseWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2465,13 +2474,13 @@ function Dashboard({
       setPrevDataBaseWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersBase = async () => {
-    if (prevVersionBaseMonthly != 0) {
+  const fetchPreviousMonthlyWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBaseMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2496,6 +2505,7 @@ function Dashboard({
         fillRecordsBase([]);
       });
     setPrevVersionBase(parseInt(result.data.data.version));
+    fetchPreviousWinnersBase(parseInt(result.data.data.version));
     setDailyRecordsBase(result.data.data.leaderboard);
     fillRecordsBase(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -2523,6 +2533,7 @@ function Dashboard({
       });
     setWeeklyRecordsBase(result.data.data.leaderboard);
     setPrevVersionBaseWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersBase(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2551,6 +2562,7 @@ function Dashboard({
       });
     setMonthlyRecordsBase(result.data.data.leaderboard);
     setPrevVersionBaseMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersBase(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2777,13 +2789,13 @@ function Dashboard({
       setMonthlyRecordsTaiko(finalData);
     }
   };
-  const fetchPreviousWinnersTaiko = async () => {
-    if (prevVersionTaiko != 0) {
+  const fetchPreviousWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaiko - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2796,13 +2808,13 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersTaiko = async () => {
-    if (prevVersionTaikoWeekly != 0) {
+  const fetchPreviousWeeklyWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaikoWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2814,13 +2826,13 @@ function Dashboard({
       setPrevDataTaikoWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersTaiko = async () => {
-    if (prevVersionTaikoMonthly != 0) {
+  const fetchPreviousMonthlyWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaikoMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2845,6 +2857,7 @@ function Dashboard({
         fillRecordsTaiko([]);
       });
     setPrevVersionTaiko(parseInt(result.data.data.version));
+    fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
     setDailyRecordsTaiko(result.data.data.leaderboard);
     fillRecordsTaiko(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -2872,6 +2885,7 @@ function Dashboard({
       });
     setWeeklyRecordsTaiko(result.data.data.leaderboard);
     setPrevVersionTaikoWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersTaiko(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -2900,6 +2914,7 @@ function Dashboard({
       });
     setMonthlyRecordsTaiko(result.data.data.leaderboard);
     setPrevVersionTaikoMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersTaiko(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -3126,13 +3141,13 @@ function Dashboard({
       setMonthlyRecordsSkale(finalData);
     }
   };
-  const fetchPreviousWinnersSkale = async () => {
-    if (prevVersionSkale != 0) {
+  const fetchPreviousWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkale - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3144,13 +3159,13 @@ function Dashboard({
     }
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersSkale = async () => {
-    if (prevVersionSkaleWeekly != 0) {
+  const fetchPreviousWeeklyWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkaleWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3162,13 +3177,13 @@ function Dashboard({
       setPrevDataSkaleWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersSkale = async () => {
-    if (prevVersionSkaleMonthly != 0) {
+  const fetchPreviousMonthlyWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkaleMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3188,6 +3203,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionSkale(parseInt(result.data.data.version));
+    fetchPreviousWinnersSkale(parseInt(result.data.data.version));
     setDailyRecordsSkale(result.data.data.leaderboard);
     fillRecordsSkale(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -3210,6 +3226,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsSkale(result.data.data.leaderboard);
     setPrevVersionSkaleWeekly(result.data.data.version);
+    fetchPreviousWeeklyWinnersSkale(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -3233,6 +3250,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsSkale(result.data.data.leaderboard);
     setPrevVersionSkaleMonthly(result.data.data.version);
+    fetchPreviousMonthlyWinnersSkale(parseInt(result.data.data.version));
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
@@ -3438,13 +3456,13 @@ function Dashboard({
       setStarRecords(finalData);
     }
   };
-  const fetchPreviousWinnersStar = async () => {
-    if (prevVersionStar != 0) {
+  const fetchPreviousWinnersStar = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionStar - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3465,6 +3483,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
+    fetchPreviousWinnersStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
     var testArray = result.data.data.leaderboard.filter(
@@ -3583,13 +3602,13 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWinners = async () => {
-    if (previousVersion != 0) {
+  const fetchPreviousWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3601,13 +3620,13 @@ function Dashboard({
     // setdailyplayerData(result.data.data.leaderboard);
   };
 
-  const fetchGenesisPreviousWinners = async () => {
-    if (previousGenesisVersion != 0) {
+  const fetchGenesisPreviousWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "GenesisLandRewards",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousGenesisVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3619,13 +3638,13 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousWeeklyWinners = async () => {
-    if (previousWeeklyVersion != 0) {
+  const fetchPreviousWeeklyWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "WeeklyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousWeeklyVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3636,13 +3655,13 @@ function Dashboard({
     }
   };
 
-  const fetchPreviousMonthlyWinners = async () => {
-    if (previousMonthlyVersion != 0) {
+  const fetchPreviousMonthlyWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "MonthlyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousMonthlyVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3674,6 +3693,7 @@ function Dashboard({
       setActivePlayer(false);
       fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
     }
+    fetchPreviousWinners(parseInt(result.data.data.version));
   };
 
   const fetchWeeklyRecords = async () => {
@@ -3689,7 +3709,7 @@ function Dashboard({
       (item) => item.displayName === username
     );
     fillRecordsWeekly(result.data.data.leaderboard);
-
+    fetchPreviousWeeklyWinners(parseInt(result.data.data.version));
     if (testArray.length > 0) {
       setActivePlayerWeekly(true);
       fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
@@ -3711,6 +3731,7 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === username
     );
+    fetchPreviousMonthlyWinners(parseInt(result.data.data.version));
     if (testArray.length > 0) {
       setActivePlayerMonthly(true);
       fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
@@ -3743,6 +3764,7 @@ function Dashboard({
     }
 
     fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
+    fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
   };
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
@@ -3805,120 +3827,81 @@ function Dashboard({
   }, [logoutCount]);
 
   useEffect(() => {
-    fetchDailyRecords();
-    fetchWeeklyRecords();
-    fetchMonthlyRecords();
-    fetchGenesisRecords();
-    fetchDailyRecordsCore();
-    fetchWeeklyRecordsCore();
-    fetchMonthlyRecordsCore();
-    fetchDailyRecordsViction();
-    fetchWeeklyRecordsViction();
-    fetchMonthlyRecordsViction();
-    fetchDailyRecordsManta();
-    fetchWeeklyRecordsManta();
-    fetchMonthlyRecordsManta();
-
-    fetchDailyRecordsBase();
-    fetchWeeklyRecordsBase();
-    fetchMonthlyRecordsBase();
-
-    fetchDailyRecordsTaiko();
-    fetchWeeklyRecordsTaiko();
-    fetchMonthlyRecordsTaiko();
-    fetchDailyRecordsSkale();
-    fetchWeeklyRecordsSkale();
-    fetchMonthlyRecordsSkale();
-    fetchRecordsStar();
+    if (username !== undefined && userId !== undefined) {
+      fetchDailyRecords();
+      fetchWeeklyRecords();
+      fetchMonthlyRecords();
+      fetchGenesisRecords();
+      fetchDailyRecordsCore();
+      fetchWeeklyRecordsCore();
+      fetchMonthlyRecordsCore();
+      fetchDailyRecordsViction();
+      fetchWeeklyRecordsViction();
+      fetchMonthlyRecordsViction();
+      fetchDailyRecordsManta();
+      fetchWeeklyRecordsManta();
+      fetchMonthlyRecordsManta();
+      fetchDailyRecordsBase();
+      fetchWeeklyRecordsBase();
+      fetchMonthlyRecordsBase();
+      fetchDailyRecordsTaiko();
+      fetchWeeklyRecordsTaiko();
+      fetchMonthlyRecordsTaiko();
+      fetchDailyRecordsSkale();
+      fetchWeeklyRecordsSkale();
+      fetchMonthlyRecordsSkale();
+      fetchRecordsStar();
+    }
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    fetchDailyRecords();
-    getAllChests(email);
+    if (count !== 0) {
+      fetchDailyRecords();
+      getAllChests(email);
+    }
   }, [count]);
 
   useEffect(() => {
-    fetchDailyRecordsCore();
-    getAllCoreChests(email);
+    if (corecount !== 0) {
+      fetchDailyRecordsCore();
+      getAllCoreChests(email);
+    }
   }, [corecount]);
 
   useEffect(() => {
-    fetchDailyRecordsSkale();
-    getAllSkaleChests(email);
+    if (skalecount !== 0) {
+      fetchDailyRecordsSkale();
+      getAllSkaleChests(email);
+    }
   }, [skalecount]);
 
   useEffect(() => {
-    fetchDailyRecordsViction();
-    getAllVictionChests(email);
+    if (vicitoncount !== 0) {
+      fetchDailyRecordsViction();
+      getAllVictionChests(email);
+    }
   }, [vicitoncount]);
 
   useEffect(() => {
-    fetchDailyRecordsManta();
-    getAllMantaChests(email);
+    if (mantacount !== 0) {
+      fetchDailyRecordsManta();
+      getAllMantaChests(email);
+    }
   }, [mantacount]);
 
   useEffect(() => {
-    fetchDailyRecordsBase();
-    getAllBaseChests(email);
+    if (basecount !== 0) {
+      fetchDailyRecordsBase();
+      getAllBaseChests(email);
+    }
   }, [basecount]);
 
   useEffect(() => {
-    fetchDailyRecordsTaiko();
-    getAllTaikoChests(email);
+    if (taikocount !== 0) {
+      fetchDailyRecordsTaiko();
+      getAllTaikoChests(email);
+    }
   }, [taikocount]);
-
-  useEffect(() => {
-    fetchGenesisPreviousWinners();
-    fetchPreviousWinners();
-    fetchPreviousWeeklyWinners();
-    fetchPreviousMonthlyWinners();
-    fetchPreviousWinnersCore();
-    fetchPreviousWeeklyWinnersCore();
-    fetchPreviousMonthlyWinnersCore();
-    fetchPreviousWinnersViction();
-    fetchPreviousWeeklyWinnersViction();
-    fetchPreviousMonthlyWinnersViction();
-    fetchPreviousWinnersManta();
-    fetchPreviousWeeklyWinnersManta();
-    fetchPreviousMonthlyWinnersManta();
-
-    fetchPreviousWinnersBase();
-    fetchPreviousWeeklyWinnersBase();
-    fetchPreviousMonthlyWinnersBase();
-
-    fetchPreviousWinnersTaiko();
-    fetchPreviousWeeklyWinnersTaiko();
-    fetchPreviousMonthlyWinnersTaiko();
-    fetchPreviousWinnersSkale();
-    fetchPreviousWeeklyWinnersSkale();
-    fetchPreviousMonthlyWinnersSkale();
-    fetchPreviousWinnersStar();
-  }, [
-    previousGenesisVersion,
-    previousMonthlyVersion,
-    previousVersion,
-    previousWeeklyVersion,
-    userId,
-    prevVersionSkale,
-    prevVersionSkaleWeekly,
-    prevVersionStar,
-    prevVersionSkaleMonthly,
-    prevVersionCore,
-    prevVersionManta,
-    prevVersionBase,
-    prevVersionTaiko,
-    prevVersionVictionMonthly,
-    prevVersionCoreWeekly,
-    prevVersionCoreMonthly,
-    prevVersionMantaWeekly,
-    prevVersionMantaMonthly,
-    prevVersionBaseWeekly,
-    prevVersionBaseMonthly,
-    prevVersionTaikoWeekly,
-    prevVersionTaikoMonthly,
-    prevVersionViction,
-    prevVersionVictionWeekly,
-  ]);
 
   useEffect(() => {
     setAllStarData({
@@ -4345,70 +4328,8 @@ function Dashboard({
         return 0;
       });
 
-    // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
-
-    // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-    // const timeofDepositv1 = await dypv1.methods
-    //   .getTimeOfDeposit(coinbase)
-    //   .call();
-
-    // const timeofDepositv2 = await dypv2.methods
-    //   .getTimeOfDeposit(coinbase)
-    //   .call();
-
-    // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-    //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-    //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
-
-    //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     second: "2-digit",
-    //   }).format(remainingTime_milisecondsv1);
-
-    //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
-
-    //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-    //   const timeofDeposit_Minutesv1 =
-    //     timeofDeposit_Date_formattedv1.getMinutes();
-    //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
-
-    //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
-
-    //   const resultv1 =
-    //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
-
-    //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     second: "2-digit",
-    //   }).format(remainingTime_milisecondsv2);
-
-    //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-    //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-    //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-    //   const timeofDeposit_Minutesv2 =
-    //     timeofDeposit_Date_formattedv2.getMinutes();
-    //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
-
-    //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
-
-    //   const resultv2 =
-    //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
     setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
     handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
-    // setcountdown700(result * 1000);
-    //}
-    // } else {
-    //   setcountdown700();
-    //   handleSetAvailableTime();
-    // }
   };
 
   const fetchSkalePrice = async () => {

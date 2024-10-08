@@ -7,7 +7,6 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
-import { getTimepieceNfts } from "../../../actions/convertUsd";
 import "./_filters.scss";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
@@ -785,10 +784,10 @@ const TimepieceNFT = ({
   }, [timepieceNFTS, totalSupply]);
 
   useEffect(() => {
-    if (timepieceBought) {
+    if (timepieceBought && timepiece && timepiece.length>0) {
       getListedTimepiece();
     }
-  }, [timepieceBought, nftCount, alltimepieceNfts.length]);
+  }, [timepieceBought, nftCount, alltimepieceNfts.length, timepiece]);
 
   useEffect(() => {
     if (
