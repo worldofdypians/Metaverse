@@ -32,36 +32,55 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const EventsBar = ({ onClose, show, handleMarkerClick }) => {
+const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, liveTreasureHunts }) => {
+ 
+  const allChallenges = [...challenges, ...liveTreasureHunts]
 
+ 
   return (
     <div
-      className={`marker-details-2 ${show && "marker-events-active"} ps-2 py-0 pe-0`}
-      style={{ background: "none", boxShadow: "none", border: "none", backdropFilter: "none" }}
+      className={`marker-details-2 ${
+        show && "marker-events-active"
+      } ps-2 py-0 pe-0`}
+      style={{
+        background: "none",
+        boxShadow: "none",
+        border: "none",
+        backdropFilter: "none",
+      }}
     >
       <div className="d-flex flex-column justify-content-between h-100 ">
         <div className="d-flex align-items-center justify-content-end">
-        <div
-        className={`events-arrow arrow-pos-2 mb-3 align-items-center justify-content-center d-flex d-lg-none p-3`}
-        onClick={onClose}
-      >
-        <img
-          src={require("../assets/rightArrow.svg").default}
-          width={24}
-          height={24}
-          alt=""
-        />
-      </div>
+          <div
+            className={`events-arrow arrow-pos-2 mb-3 align-items-center justify-content-center d-flex d-lg-none p-3`}
+            onClick={onClose}
+          >
+            <img
+              src={require("../assets/rightArrow.svg").default}
+              width={24}
+              height={24}
+              alt=""
+            />
+          </div>
         </div>
-        <div className="d-flex flex-column gap-3 mb-3 pe-3" style={{height: "100%", overflowY: "scroll"}}>
-          {challenges.map((item, index) => (
+        <div
+          className="d-flex flex-column gap-3 mb-3 pe-3"
+          style={{ height: "100%", overflowY: "scroll" }}
+        >
+          {allChallenges.map((item, index) => (
             <div
               key={index}
-              onClick={() => handleMarkerClick(item, 18, "event")}
+              onClick={() => {
+                handleMarkerClick(item, 18, item.type);
+                setSwitches((prev) => ({
+                  ...prev,
+                  challenges: true,
+                }));
+              }}
               className="d-flex align-items-center justify-content-between w-100 map-event-item"
             >
               <div className="d-flex p-3 flex-column gap-5">
-                <h6 className="map-event-title mb-0">{item.title}</h6>
+                <h6 className="map-event-title mb-0">{item.title}{" "}{item.type === "Treasure Hunt" && "Treasure Hunt"}</h6>
                 <div className="d-flex align-items-center gap-3">
                   <div
                     className="map-event-type p-1 d-flex align-items-center justify-content-center"
@@ -88,15 +107,15 @@ const EventsBar = ({ onClose, show, handleMarkerClick }) => {
                       {item.type}
                     </span>
                   </div>
-                  {item.duration === "--" ? (
+                  {item?.popupInfo?.eventDuration === "--" ? (
                     <></>
                   ) : (
-                    <Countdown renderer={renderer} date={item.duration} />
+                    <Countdown renderer={renderer} date={item?.popupInfo?.eventDuration} />
                   )}
                 </div>
               </div>
               <img
-                src={require(`../assets/eventImages/${item.image}`)}
+                src={require(`../assets/chainImages/${item.image}`)}
                 alt=""
                 className="map-event-img"
               />

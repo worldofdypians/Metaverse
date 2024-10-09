@@ -55,7 +55,9 @@ const MapSidebar = React.lazy(() => import("./components/MapSidebar"));
 const MarkerDetails = React.lazy(() => import("./components/MarkerDetails"));
 const EventsBar = React.lazy(() => import("./components/EventsBar"));
 
-const Map = () => {
+const Map = ({
+  dummyBetaPassData2
+}) => {
   const mapRef = useRef();
   const [center, setCenter] = useState([
     -0.06862161903162572, 0.08585214614868165,
@@ -85,12 +87,18 @@ const Map = () => {
   const [markerType, setMarkerType] = useState(null);
   const [events, setEvents] = useState(false);
 
+  const liveTreasureHunts = dummyBetaPassData2.filter((item) => {
+    return item.eventStatus === "Live"
+  })
+
+  
+
+
   // Memoize large data to avoid re-renders
   const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
   const memoizedRegions = useMemo(() => regions, [regions]);
   const memoizedQuests = useMemo(() => quests, [quests]);
   const memoizedSeas = useMemo(() => seas, [seas]);
-  const memoizedChallenges = useMemo(() => challenges, [challenges]);
   const memoizedAreas = useMemo(() => areas, [areas]);
   const memoizedTeleports = useMemo(() => teleports, [teleports]);
   const memoizedLeaderboards = useMemo(() => leaderboards, [leaderboards]);
@@ -101,6 +109,10 @@ const Map = () => {
   const memoizedDeerAreas = useMemo(() => deerAreas, [deerAreas]);
   const memoizedFirstParcel = useMemo(() => firstParcel, [firstParcel]);
   const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
+
+
+
+  const allChallenges = [...challenges, ...liveTreasureHunts]
 
   // Custom marker click handler with memoization
   const handleMarkerClick = useCallback((marker, zoom, type) => {
@@ -233,11 +245,11 @@ const Map = () => {
             />
           ))}
         {switches.challenges &&
-          memoizedChallenges.map((item) => (
+          allChallenges.map((item) => (
             <CustomMarker
               key={item.title}
               icon={item.marker}
-              type={"event"}
+              type={item.type}
               item={item}
               handleMarkerClick={handleMarkerClick}
             />
@@ -380,7 +392,10 @@ const Map = () => {
         <EventsBar
           show={events}
           handleMarkerClick={handleMarkerClick}
+          setSwitches={setSwitches}
+          switches={switches}
           onClose={() => setEvents(false)}
+          liveTreasureHunts={liveTreasureHunts}
         />
       </Suspense>
     </div>

@@ -30,6 +30,9 @@ const NewEvents = ({
   const [challenge, setChallenge] = useState("treasure-hunt");
   const [eventDuration, seteventDuration] = useState("Live");
 
+
+
+
   useEffect(() => {
     if (selectedEvent) {
       setChallenge(selectedEvent);
