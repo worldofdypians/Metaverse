@@ -2556,8 +2556,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_conflux_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_conflux_address
         ? "conflux"
         : nftAddress.toLowerCase() ===
           window.config.nft_manta_address.toLowerCase()
@@ -2592,8 +2592,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_multivers_address.toLowerCase()
         ? "multivers"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_base_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_base_address
         ? "base"
         : nftAddress.toLowerCase() ===
           window.config.nft_caws_bnb_address.toLowerCase()
@@ -2656,8 +2656,8 @@ const SingleNft = ({
     ) {
       setType("opbnb");
     } else if (
-      nftAddress.toLowerCase() ===
-      window.config.nft_conflux_address.toLowerCase()
+      nftAddress ===
+      window.config.nft_conflux_address
     ) {
       setType("conflux");
     } else if (
@@ -2709,7 +2709,7 @@ const SingleNft = ({
     ) {
       setType("multivers");
     } else if (
-      nftAddress.toLowerCase() === window.config.nft_base_address.toLowerCase()
+      nftAddress === window.config.nft_base_address
     ) {
       setType("base");
     } else if (
@@ -3065,8 +3065,8 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_gate_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_conflux_address.toLowerCase()
+                        : nftAddress ===
+                          window.config.nft_conflux_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_manta_address.toLowerCase()
@@ -3092,8 +3092,8 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_multivers_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_base_address.toLowerCase()
+                        : nftAddress ===
+                          window.config.nft_base_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_skale_address.toLowerCase()
