@@ -4068,9 +4068,9 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: updatedSkalePrizesWeekly,
-        past_rewards: skalePrizesWeekly,
+        past_rewards: updatedSkalePrizesWeekly,
         premium_rewards: updatedSkalePrizesWeeklyGolden,
-        past_premium_rewards: skalePrizesWeeklyGolden,
+        past_premium_rewards: updatedSkalePrizesWeeklyGolden,
 
         activeData: weeklyRecordsSkale,
         previousData: prevDataSkaleWeekly,
