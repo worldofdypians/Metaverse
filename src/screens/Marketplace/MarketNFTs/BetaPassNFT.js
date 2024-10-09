@@ -1330,6 +1330,24 @@ const BetaPassNFT = ({
                   </>
                 ) : (
                   <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
+                         <NavLink
+                      to={"/marketplace/beta-pass/base"}
+                      className={`${
+                        location.pathname.includes("base") &&
+                        "selected-beta-pass-item"
+                      } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
+                      onClick={() => {
+                        setSelectedMint(baseData);
+                        setMintTitle("base");
+                      }}
+                    >
+                      <img
+                        src={baseLogo}
+                        className="beta-pass-chain-img"
+                        alt=""
+                      />
+                      <span>Base</span>
+                    </NavLink>
                     <NavLink
                       to={"/marketplace/beta-pass/cookie3"}
                       className={`${
@@ -1526,24 +1544,7 @@ const BetaPassNFT = ({
                       <span>Dogecoin</span>
                     </NavLink>
 
-                    <NavLink
-                      to={"/marketplace/beta-pass/base"}
-                      className={`${
-                        location.pathname.includes("base") &&
-                        "selected-beta-pass-item"
-                      } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
-                      onClick={() => {
-                        setSelectedMint(baseData);
-                        setMintTitle("base");
-                      }}
-                    >
-                      <img
-                        src={coinbaseimg}
-                        className="beta-pass-chain-img"
-                        alt=""
-                      />
-                      <span>Base</span>
-                    </NavLink>
+               
                     <NavLink
                       to={"/marketplace/beta-pass/coingecko"}
                       className={`${
