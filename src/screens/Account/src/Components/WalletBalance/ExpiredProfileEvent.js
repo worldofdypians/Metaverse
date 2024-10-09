@@ -46,7 +46,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
                 ? cmc
                 : event.title === "SKALE"
                 ? skale
-                : gate
+                : event.logo
             }
             height={16}
             width={16}
