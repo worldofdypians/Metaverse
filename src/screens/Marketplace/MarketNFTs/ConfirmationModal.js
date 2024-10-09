@@ -18,9 +18,9 @@ const ConfirmationModal = ({
   state,
   nft,
   ethTokenData,
-  dypTokenData,dypTokenData_old
+  dypTokenData,
+  dypTokenData_old,
 }) => {
-
   const windowSize = useWindowSize();
 
   const style = {
@@ -28,7 +28,14 @@ const ConfirmationModal = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+    width:
+      windowSize.width && windowSize.width > 1400
+        ? "30%"
+        : windowSize.width && windowSize.width > 786
+        ? "50%"
+        : windowSize.width && windowSize.width < 786
+        ? "90%"
+        : "30%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -39,7 +46,7 @@ const ConfirmationModal = ({
   };
 
   return (
-    // <OutsideClickHandler onOutsideClick={onclose}>
+    <OutsideClickHandler onOutsideClick={onclose}>
       <Modal
         open={open}
         aria-labelledby="modal-modal-title"
@@ -73,7 +80,21 @@ const ConfirmationModal = ({
                           : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
                       }
                       alt=""
-                      style={{ width: windowSize.width > 500 ? 80 : '100%', height: windowSize.width > 500 ? 80 : '150', borderRadius: 20 }}
+                      style={{
+                        width:
+                          windowSize.width && windowSize.width > 500
+                            ? 80
+                            : windowSize.width && windowSize.width < 500
+                            ? "100%"
+                            : 80,
+                        height:
+                          windowSize.width && windowSize.width > 500
+                            ? 80
+                            : windowSize.width && windowSize.width < 500
+                            ? 150
+                            : 80,
+                        borderRadius: 20,
+                      }}
                     />
                     <div className="d-flex flex-column justify-content-between">
                       <div className="d-flex flex-column align-items-center">
@@ -93,20 +114,29 @@ const ConfirmationModal = ({
                     </div>
                   </div>
                   <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
-                    <span className="itemname" style={{whiteSpace: 'nowrap'}}>
+                    <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                      {nft.payment_priceType === 0 ? "ETH" :nft?.payment_tokenAddress === window.config.dyp_token_address ? 'DYPv1' : "DYPv2"}
+                      {nft.payment_priceType === 0
+                        ? "ETH"
+                        : nft?.payment_tokenAddress ===
+                          window.config.dyp_token_address
+                        ? "DYPv1"
+                        : "DYPv2"}
                     </span>
-                    {nft.payment_priceType === 0 &&
-                    <span className="itemcollectionName">
-                      $
-                      {getFormattedNumber(
-                        nft.payment_priceType === 0
-                          ? ethTokenData * (nft.price / 1e18)
-                          : nft?.payment_tokenAddress === window.config.dyp_token_address ? dypTokenData_old * (nft.price / 1e18) :  dypTokenData * (nft.price / 1e18),
-                        nft.payment_priceType === 0 ? 3 : 0
-                      )}
-                    </span> }
+                    {nft.payment_priceType === 0 && (
+                      <span className="itemcollectionName">
+                        $
+                        {getFormattedNumber(
+                          nft.payment_priceType === 0
+                            ? ethTokenData * (nft.price / 1e18)
+                            : nft?.payment_tokenAddress ===
+                              window.config.dyp_token_address
+                            ? dypTokenData_old * (nft.price / 1e18)
+                            : dypTokenData * (nft.price / 1e18),
+                          nft.payment_priceType === 0 ? 3 : 0
+                        )}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -150,7 +180,21 @@ const ConfirmationModal = ({
                           : `https://timepiece.worldofdypians.com/thumbs150/${nft.tokenId}.png`
                       }
                       alt=""
-                      style={{ width: windowSize.width > 500 ? 80 : '100%', height: windowSize.width > 500 ? 80 : '150', borderRadius: 20 }}
+                      style={{
+                        width:
+                          windowSize.width && windowSize.width > 500
+                            ? 80
+                            : windowSize.width && windowSize.width < 500
+                            ? "100%"
+                            : 80,
+                        height:
+                          windowSize.width && windowSize.width > 500
+                            ? 80
+                            : windowSize.width && windowSize.width < 500
+                            ? 150
+                            : 80,
+                        borderRadius: 20,
+                      }}
                     />
                     <div className="d-flex flex-column align-items-center">
                       <div className="d-flex flex-column">
@@ -167,20 +211,29 @@ const ConfirmationModal = ({
                     </div>
                   </div>
                   <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-center">
-                    <span className="itemname" style={{whiteSpace: 'nowrap'}}>
+                    <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                       {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                      {nft.payment_priceType === 0 ? "ETH" :nft?.payment_tokenAddress === window.config.dyp_token_address ? 'DYPv1' : "DYPv2"}
+                      {nft.payment_priceType === 0
+                        ? "ETH"
+                        : nft?.payment_tokenAddress ===
+                          window.config.dyp_token_address
+                        ? "DYPv1"
+                        : "DYPv2"}
                     </span>
-                    {nft.payment_priceType === 0 &&
-                    <span className="itemcollectionName">
-                      $
-                      {getFormattedNumber(
-                        nft.payment_priceType === 0
-                          ? ethTokenData * (nft.price / 1e18)
-                          : nft?.payment_tokenAddress === window.config.dyp_token_address ? dypTokenData_old * (nft.price / 1e18) :  dypTokenData * (nft.price / 1e18),
-                        nft.payment_priceType === 0 ? 3 : 0
-                      )}
-                    </span> }
+                    {nft.payment_priceType === 0 && (
+                      <span className="itemcollectionName">
+                        $
+                        {getFormattedNumber(
+                          nft.payment_priceType === 0
+                            ? ethTokenData * (nft.price / 1e18)
+                            : nft?.payment_tokenAddress ===
+                              window.config.dyp_token_address
+                            ? dypTokenData_old * (nft.price / 1e18)
+                            : dypTokenData * (nft.price / 1e18),
+                          nft.payment_priceType === 0 ? 3 : 0
+                        )}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -215,7 +268,7 @@ const ConfirmationModal = ({
                 <img src={successImg} alt="" />
               </div>
               <div className="summaryseparator"></div>
-              <span className="footertext" style={{textAlign: 'center'}}>
+              <span className="footertext" style={{ textAlign: "center" }}>
                 {state === "successappr"
                   ? "The NFT purchase approval was successful"
                   : "The NFT purchase was successful"}
@@ -245,7 +298,7 @@ const ConfirmationModal = ({
           )}
         </Box>
       </Modal>
-    // </OutsideClickHandler>
+    </OutsideClickHandler>
   );
 };
 

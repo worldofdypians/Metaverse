@@ -67,7 +67,7 @@ const filterNFTsByAddress = (nfts, address) => {
 
 const getAllNfts = async () => {
   const result = await getListedNftResult();
-  console.log('result',result.filter((item)=>{return item.nftAddress === window.config.nft_caws_address}))
+  // console.log('result',result.filter((item)=>{return item.nftAddress === window.config.nft_caws_address}))
 
   const convertedNFTs = [];
   if (result) {
@@ -162,7 +162,7 @@ const getCawsNfts = async () => {
     ""
   );
 
-  console.log('listed_caws_nfts', listed_caws_nfts)
+  // console.log('listed_caws_nfts', listed_caws_nfts)
   const cawsNFTs = await convertAndFilterNFTs(
     listed_caws_nfts,
     window.config.nft_caws_address

@@ -1504,7 +1504,6 @@ function Dashboard({
       var testArray = result.data.data.leaderboard.filter(
         (item) => item.displayName === username
       );
-      
 
       if (testArray.length > 0) {
         setActivePlayerCoreWeekly(true);
@@ -5889,6 +5888,7 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
+    
     getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
@@ -6005,7 +6005,7 @@ function Dashboard({
 
   const windowSize = useWindowSize();
 
-  const getDypBalance = async () => {
+  const getDypBalance = async (account) => {
     const web3eth = new Web3(
       "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
     );
@@ -6038,7 +6038,7 @@ function Dashboard({
       );
 
       const bal1 = await contract1.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -6046,7 +6046,7 @@ function Dashboard({
       setDypBalance(bal1);
 
       const bal2 = await contract2.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -6054,7 +6054,7 @@ function Dashboard({
       setDypBalanceBnb(bal2);
 
       const bal3 = await contract3.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -6070,7 +6070,7 @@ function Dashboard({
       setiDypBalance(bal1_idyp);
 
       const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -6078,7 +6078,7 @@ function Dashboard({
       setiDypBalanceBnb(bal2_idyp);
 
       const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -8523,7 +8523,7 @@ function Dashboard({
   }, [data, email]);
 
   useEffect(() => {
-    if (coinbase && isConnected) {
+    if ((coinbase && isConnected) || userWallet !== undefined) {
       setsyncStatus("initial");
       fetchAllMyNfts();
       // getmyCawsWodStakes();
@@ -8533,8 +8533,8 @@ function Dashboard({
 
   useEffect(() => {
     getOtherNfts();
-    getDypBalance();
-    fetchUserFavorites(coinbase);
+    getDypBalance(userWallet ? userWallet : coinbase);
+    fetchUserFavorites(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
 
   useEffect(() => {

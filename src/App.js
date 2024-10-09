@@ -1606,11 +1606,13 @@ function App() {
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address
     );
-
+    
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
+        let cawsName = await window.getNft(cawsArray[i]);
+        
         const cawsId = parseInt(
-          cawsArray[i].name.slice(6, cawsArray[i].name.length)
+          cawsName.name.slice(6, cawsName.name.length)
         );
 
         const result = await nft_contract.methods.cawsUsed(cawsId).call();
