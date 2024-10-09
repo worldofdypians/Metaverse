@@ -120,7 +120,7 @@ const GovernanceInner = () => {
                           <span className="gov-gray-text">Author</span>
                           <span className="gov-white-text">0x253...acb3</span>
                         </div>
-                        <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+                        <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 justify-content-between w-100">
                           <div className="d-flex align-items-center gap-2">
                             <span className="gov-gray-text">Start</span>
                             <span className="gov-white-text">

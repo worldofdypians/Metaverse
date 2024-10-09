@@ -590,6 +590,14 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  height: 87px;
+}
+
+.chain-marker-info-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  height: 87px;
 }
 
 .chain-marker-info-item {
@@ -664,6 +672,24 @@ font-weight: 500;
 line-height: normal;
 letter-spacing: -0.144px;
 cursor: pointer;
+}
+
+
+.marker-event-time-active{
+  border-radius: 4px;
+border: 0.5px solid #FFC808;
+background: rgba(255, 200, 8, 0.20);
+color: #FFC808;
+}
+
+.no-features-span{
+  color: #828FBB;
+text-align: center;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 300% */
 }
 
 @media screen and (max-height: 900px) {
