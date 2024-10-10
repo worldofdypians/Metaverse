@@ -6,12 +6,12 @@ import eth from "./assets/eth.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
 import { NavLink } from "react-router-dom";
 
-const CriticalHit = () => {
+const CriticalHit = ({onPopupClick}) => {
   return (
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
-          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" />
+          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" onClick={onPopupClick} />
           <img src={criticalHitBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Critical Hit</h6>
         </div>

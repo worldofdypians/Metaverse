@@ -368,8 +368,7 @@ bnbEarnUsd,
     "10",
   ];
 
-
-  console.log(dummyBetaPassData2, "Eventss");
+ 
 
 
   function shuffle(array) {

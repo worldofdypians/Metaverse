@@ -36,10 +36,10 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
+const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupClick }) => {
   let dummyDate = new Date("2024-10-01T14:00:00.000+02:00");
   const [status, setStatus] = useState(
-    "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile."
   );
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [bundleState, setbundleState] = useState("initial");
@@ -48,7 +48,7 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
   const [showApproval, setshowApproval] = useState(true);
   const [checkWallet, setcheckWallet] = useState(true);
   const [dragonRuinsDypAmount, setDragonRuinsDypAmount] = useState(0);
-
+  console.log("status", status);
   const handleRefreshCountdown = async () => {
     const remainingTime = await wod_abi.methods
       .getTimeOfExpireBuff(coinbase)
@@ -219,7 +219,7 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
-          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" />
+          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" onClick={onPopupClick}/>
           <img src={dragonRuinsBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Dragon Ruins</h6>
         </div>
@@ -287,6 +287,15 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
           </button>
         </div>
       </div>
+      <span
+        className="statusText"
+        style={{
+          color: statusColor,
+          width: "fit-content",
+        }}
+      >
+        {status}
+      </span>
       {countdown !== 0 && countdown && (
         <div className="new-event-wrapper mt-5 p-3">
           <div className="d-flex flex-column gap-2">
@@ -318,15 +327,6 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
                 }}
               />
             </div>
-            <span
-              className="statusText"
-              style={{
-                color: statusColor,
-                width: "fit-content",
-              }}
-            >
-              {status}
-            </span>
           </div>
         </div>
       )}

@@ -1935,7 +1935,15 @@ backdrop-filter: blur(5.5px);
 }
 
 .package-popup-wrapper {
-  box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  // box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+}
+
+.bgtable {
+  border-radius: 4px;
+  background: #1c2243;
+  tr {
+    border-color: rgba(130, 143, 187, 0.50);
+  }
 }
 
 .package-popup-wrapper2 {
@@ -1966,8 +1974,8 @@ backdrop-filter: blur(5.5px);
 .package-popup {
   pointer-events: auto !important;
   z-index: 9999;
-  width: 750px;
-  height: 80%;
+  width: fit-content;
+  height: 75%;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -1979,9 +1987,10 @@ backdrop-filter: blur(5.5px);
   z-index: 99;
   box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
   background: rgba(26, 28, 57, 1);
+  border-radius: 10px;
 
   @media screen and (max-width: 800px) {
-    width: 95%;
+    width: 90%;
     height: 80%;
   }
 }
@@ -2055,7 +2064,7 @@ backdrop-filter: blur(5.5px);
 // }
 .package-popup-content {
   max-height: 60%;
-  overflow-y: scroll;
+  overflow-y: auto;
   @media screen and (max-width: 800px) {
     max-height: 75%;
   }
@@ -2071,6 +2080,11 @@ backdrop-filter: blur(5.5px);
   color: #c0cbf7;
   font-size: 14px;
   font-weight: 300;
+
+}
+
+.package-popup-desc::marker {
+    color: #00C6C3;
 }
 
 .popup-secondary-title {
@@ -2615,9 +2629,10 @@ backdrop-filter: blur(5.5px);
 
 .popup-closer {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: -10px;
+  right: 0px;
   cursor: pointer;
+  width: 22px;
 }
 
 .expired-caws-tag {

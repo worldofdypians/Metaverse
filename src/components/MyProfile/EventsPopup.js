@@ -172,7 +172,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 </div>
                 <div className="d-flex">
                   <span className="event-popup-chain mb-0">
-                    Chain: {dummyEvent?.chain}
+                    Chain: {dummyEvent?.popupInfo.chain}
                   </span>
                 </div>
               </div>
@@ -866,13 +866,15 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             <img
               alt=""
               src={
-                dummyEvent.popupInfo.id !== "event4" &&dummyEvent.popupInfo.id !== "event24" &&
+                dummyEvent.popupInfo.id !== "event4" &&
+                dummyEvent.popupInfo.id !== "event24" &&
                 dummyEvent.popupInfo.id !== "event7"
                   ? telegram
                   : discord
               }
             />
-            {dummyEvent.popupInfo.id !== "event4" &&dummyEvent.popupInfo.id !== "event24" &&
+            {dummyEvent.popupInfo.id !== "event4" &&
+            dummyEvent.popupInfo.id !== "event24" &&
             dummyEvent.popupInfo.id !== "event7"
               ? "Telegram"
               : "Discord"}
