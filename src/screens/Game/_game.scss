@@ -9,6 +9,15 @@ align-items: center;
 }
 }
 
+.custom-wrapper {
+    position: absolute;
+
+    @media screen and (max-width: 991px){
+        position: relative;
+        margin: 26px 0;
+    }
+}
+
 .new-amplify-wrapper{
     position: relative;
         background-size: 100%;
