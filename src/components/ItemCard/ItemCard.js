@@ -275,23 +275,21 @@ const ItemCard = ({
             setStatus("fail");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setShowToast(true);
-            setpurchasestate("success");
-            setStatus("done");
-            handleRefreshListing();
-            setTimeout(() => {
-              checkapprove(nft);
-              setShowModal(false);
-            }, 2000);
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setShowToast(true);
+          setpurchasestate("success");
+          setStatus("done");
+          handleRefreshListing();
+          setTimeout(() => {
+            checkapprove(nft);
+            setShowModal(false);
+          }, 2000);
 
-            setToastTitle("Successfully purchased!");
-          }
-
-
+          setToastTitle("Successfully purchased!");
+        }
       } else if (nft.payment_priceType === 0) {
-      const txResponse = await marketplace
+        const txResponse = await marketplace
           .buyItem(
             nft.nftAddress,
             nft.tokenId,
@@ -313,23 +311,31 @@ const ItemCard = ({
             setStatus("fail");
           });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setShowToast(true);
-            setpurchasestate("success");
-            setStatus("done");
-            handleRefreshListing();
-            setTimeout(() => {
-              checkapprove(nft);
-              setShowModal(false);
-            }, 2000);
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setShowToast(true);
+          setpurchasestate("success");
+          setStatus("done");
+          handleRefreshListing();
+          setTimeout(() => {
+            checkapprove(nft);
+            setShowModal(false);
+          }, 2000);
 
-            setToastTitle("Successfully purchased!");
-          }
-
+          setToastTitle("Successfully purchased!");
+        }
       }
     }
   }
+
+  const handleManageState = (e, nft) => {
+    e.preventDefault();
+    if (isConnected) {
+      handleBuyState(nft);
+    } else {
+      handleConnectState();
+    }
+  };
 
   const handleBuyState = async (nft) => {
     if (chainId === 1) {
@@ -444,21 +450,20 @@ const ItemCard = ({
                   setStatus("fail");
                 });
 
-                const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setShowToast(true);
-            setpurchasestate("success");
-            setStatus("done");
-            handleRefreshListing();
-            setTimeout(() => {
-              checkapprove(nft);
-              setShowModal(false);
-            }, 2000);
-            setToastTitle("Successfully purchased!");
-          }
-
+              const txReceipt = await txResponse.wait();
+              if (txReceipt) {
+                setShowToast(true);
+                setpurchasestate("success");
+                setStatus("done");
+                handleRefreshListing();
+                setTimeout(() => {
+                  checkapprove(nft);
+                  setShowModal(false);
+                }, 2000);
+                setToastTitle("Successfully purchased!");
+              }
             } else if (nft.payment_priceType === 0) {
-             const txResponse =  await marketplace
+              const txResponse = await marketplace
                 .buyItem(
                   nft.nftAddress,
                   nft.tokenId,
@@ -480,19 +485,18 @@ const ItemCard = ({
                   setStatus("fail");
                 });
 
-                const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-                  setShowToast(true);
-                  setpurchasestate("success");
-                  setStatus("done");
-                  handleRefreshListing();
-                  setTimeout(() => {
-                    checkapprove(nft);
-                    setShowModal(false);
-                  }, 2000);
-                  setToastTitle("Successfully purchased!");
-          }
-
+              const txReceipt = await txResponse.wait();
+              if (txReceipt) {
+                setShowToast(true);
+                setpurchasestate("success");
+                setStatus("done");
+                handleRefreshListing();
+                setTimeout(() => {
+                  checkapprove(nft);
+                  setShowModal(false);
+                }, 2000);
+                setToastTitle("Successfully purchased!");
+              }
             }
           }
         } else {
@@ -542,19 +546,18 @@ const ItemCard = ({
                   setpurchasestate("fail");
                 });
 
-                const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setbuttonTxt("Buy");
-            setpurchasestate("buy");
-            setStatus("approve");
-            setIsApprove(true);
-            setTimeout(() => {
-              handleBuy(nft);
-            }, 2000);
-          }
-
+              const txReceipt = await txResponse.wait();
+              if (txReceipt) {
+                setbuttonTxt("Buy");
+                setpurchasestate("buy");
+                setStatus("approve");
+                setIsApprove(true);
+                setTimeout(() => {
+                  handleBuy(nft);
+                }, 2000);
+              }
             } else if (tokenType === "dypv1") {
-             const txResponse = await contract_old
+              const txResponse = await contract_old
                 .approve(window.config.nft_marketplace_address, nft.price, {
                   from: coinbase,
                 })
@@ -564,24 +567,24 @@ const ItemCard = ({
                   setpurchasestate("fail");
                 });
 
-                const txReceipt = await txResponse.wait();
-                if (txReceipt) {
-                  setbuttonTxt("Buy");
-                  setpurchasestate("buy");
-                  setStatus("approve");
-                  setIsApprove(true);
-                  setTimeout(() => {
-                    handleBuy(nft);
-                  }, 2000);
-                }
-      
-
+              const txReceipt = await txResponse.wait();
+              if (txReceipt) {
+                setbuttonTxt("Buy");
+                setpurchasestate("buy");
+                setStatus("approve");
+                setIsApprove(true);
+                setTimeout(() => {
+                  handleBuy(nft);
+                }, 2000);
+              }
             }
           }
         }
       }
     } else {
-      window.alertify.error("Invalid network! Switch into Ethereum Network to purchase NFTs");
+      window.alertify.error(
+        "Invalid network! Switch into Ethereum Network to purchase NFTs"
+      );
     }
   };
 
@@ -604,13 +607,13 @@ const ItemCard = ({
 
   const html = document.querySelector("html");
 
-  useEffect(() => {
-    if (showModal) {
-      html.classList.add("hidescroll");
-    } else {
-      html.classList.remove("hidescroll");
-    }
-  }, [showModal]);
+  // useEffect(() => {
+  //   if (showModal) {
+  //     html.classList.add("hidescroll");
+  //   } else {
+  //     html.classList.remove("hidescroll");
+  //   }
+  // }, [showModal]);
 
   useEffect(() => {
     if (isConnected && status === "clicked") {
@@ -824,9 +827,8 @@ const ItemCard = ({
                 className="buy-nft-btn w-100"
                 style={{ paddingLeft: "20px", paddingRight: "20px" }}
                 onClick={(e) => {
-                  isConnected ? handleBuyState(nft) : handleConnectState();
-                  e.preventDefault();
-                  e.stopPropagation();
+                  // e.stopPropagation();
+                  handleManageState(e, nft);
                 }}
               >
                 {" "}

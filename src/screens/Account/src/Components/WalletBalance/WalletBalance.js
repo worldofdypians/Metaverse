@@ -118,7 +118,10 @@ const WalletBalance = ({
   MyNFTSLandBase,
   myNFTSopBNB,
   MyNFTSCawsBase,
-  myMultiversNfts,myMantaNfts, myTaikoNfts, myCookieNfts
+  myMultiversNfts,
+  myMantaNfts,
+  myTaikoNfts,
+  myCookieNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -174,7 +177,7 @@ const WalletBalance = ({
   const [sliderCut, setSliderCut] = useState();
   const [showFirstNext, setShowFirstNext] = useState(false);
   const [icon, setIcon] = useState(false);
-
+  
   const cutLength = () => {
     if (windowSize.width > 1600) {
       setSliderCut(4);
@@ -280,7 +283,7 @@ const WalletBalance = ({
   };
 
   const getAllnftsListed = async () => {
-    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
+    const listedNFTS = await getListedNFTS(0, "", "seller", address ? address : coinbase, "");
 
     setAllListed(listedNFTS);
   };
@@ -475,15 +478,13 @@ const WalletBalance = ({
     let taikoNftsArray = [];
     let cookieNftsArray = [];
 
-
-
     // console.log(allListed, "allListed");
 
     //bought [latestBoughtNFTS]
     //listed [listedItems]
     //staked [myWodWodStakes,myCawsWodStakes,landStaked]
     //final [listed, to list, staked]
-    if (coinbase) {
+    if (coinbase || address) {
       if (myTimepieceCollected && myTimepieceCollected.length > 0) {
         await Promise.all(
           myTimepieceCollected.map(async (i) => {
@@ -1062,7 +1063,7 @@ const WalletBalance = ({
         ...landBnbArray,
         ...landBaseArray,
       ];
-
+      
       setcollectedItems(finalCollection);
       setcollectedItemsFiltered(finalCollection);
     } else {
@@ -1866,7 +1867,7 @@ const WalletBalance = ({
                         </div>
                       </NavLink>
                     ))}
-                  {favoriteItems.length === 0 && coinbase && (
+                  {favoriteItems.length === 0 && (coinbase || address) && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -1874,7 +1875,7 @@ const WalletBalance = ({
                       You do not have any favorite NFTs
                     </span>
                   )}
-                  {favoriteItems.length === 0 && !coinbase && (
+                  {favoriteItems.length === 0 && !coinbase && !address && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -1972,7 +1973,7 @@ const WalletBalance = ({
                         </div>
                       </NavLink>
                     ))}
-                  {myOffers.length === 0 && coinbase && (
+                  {myOffers.length === 0 && (coinbase || address) && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -1980,7 +1981,7 @@ const WalletBalance = ({
                       You have not made any offers
                     </span>
                   )}
-                  {myOffers.length === 0 && !coinbase && (
+                  {myOffers.length === 0 && !coinbase && !address && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -2140,9 +2141,10 @@ const WalletBalance = ({
                                   : item.type === "opbnb"
                                   ? "opBNBBP"
                                   : "Timepiece"}
-                                  
-                                  { item.type === "immutable" ? '' : `#${item.tokenId}`}
-                                
+
+                                {item.type === "immutable"
+                                  ? ""
+                                  : `#${item.tokenId}`}
                               </h6>
                               {/* <span className="account-nft-type">
                               {item.type === "caws"
@@ -2156,7 +2158,7 @@ const WalletBalance = ({
                         </div>
                       </NavLink>
                     ))}
-                  {collectedItems.length === 0 && coinbase && (
+                  {collectedItems.length === 0 && (coinbase || address) && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -2165,7 +2167,7 @@ const WalletBalance = ({
                     </span>
                   )}
 
-                  {collectedItems.length === 0 && !coinbase && (
+                  {collectedItems.length === 0 && !coinbase && !address && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -2293,7 +2295,7 @@ const WalletBalance = ({
                       </NavLink>
                     ))}
                   {myCawsWodStakes.length === 0 &&
-                    coinbase &&
+                    (coinbase || address) &&
                     landStaked.length === 0 && (
                       <span
                         className="seller-addr"
@@ -2302,7 +2304,7 @@ const WalletBalance = ({
                         You do not have any NFTs in stake
                       </span>
                     )}
-                  {myCawsWodStakes.length === 0 && !coinbase && (
+                  {myCawsWodStakes.length === 0 && !coinbase && !address && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -2410,7 +2412,7 @@ const WalletBalance = ({
                         </div>
                       </NavLink>
                     ))}
-                  {listedItems.length === 0 && coinbase && (
+                  {listedItems.length === 0 && (coinbase || address) && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -2418,7 +2420,7 @@ const WalletBalance = ({
                       You do not have any listed NFTs
                     </span>
                   )}
-                  {listedItems.length === 0 && !coinbase && (
+                  {listedItems.length === 0 && !coinbase && !address && (
                     <span
                       className="seller-addr"
                       style={{ textAlign: "center" }}
@@ -3206,8 +3208,8 @@ const WalletBalance = ({
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_immutable_address
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
+                                      window.config.nft_immutable_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_multivers_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
@@ -3285,11 +3287,13 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? "TKBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_cookie3_address
-                                  ? "CKBP"
+                                      window.config.nft_cookie3_address
+                                    ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
-                                   { nft.nftAddress ===
-                                      window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
+                                  {nft.nftAddress ===
+                                  window.config.nft_immutable_address
+                                    ? ""
+                                    : `#${nft.tokenId}`}
                                 </h6>
                                 {/* <span className="account-nft-type">
                             {nft.nftAddress ===
@@ -3458,8 +3462,8 @@ const WalletBalance = ({
                                   window.config.nft_viction_address
                                 ? "viction"
                                 : nft.nftAddress ===
-                                window.config.nft_immutable_address
-                              ? "immutable"
+                                  window.config.nft_immutable_address
+                                ? "immutable"
                                 : nft.nftAddress ===
                                   window.config.nft_multivers_address
                                 ? "multivers"
@@ -3631,8 +3635,8 @@ const WalletBalance = ({
                                       window.config.nft_viction_address
                                     ? "VCBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_immutable_address
-                                  ? "IMXBP"
+                                      window.config.nft_immutable_address
+                                    ? "IMXBP"
                                     : nft.nftAddress ===
                                       window.config.nft_multivers_address
                                     ? "MXBP"
@@ -3646,8 +3650,10 @@ const WalletBalance = ({
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
-                                    { nft.nftAddress ===
-                                      window.config.nft_immutable_address ? '' : `#${nft.tokenId}`}
+                                  {nft.nftAddress ===
+                                  window.config.nft_immutable_address
+                                    ? ""
+                                    : `#${nft.tokenId}`}
                                 </h6>
                                 {/* <span className="account-nft-type">
                             {nft.nftAddress ===
