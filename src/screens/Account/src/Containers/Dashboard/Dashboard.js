@@ -5883,6 +5883,8 @@ function Dashboard({
   const getMyNFTS = async (coinbase, type) => {
     if (coinbase !== undefined) {
       return await window.getMyNFTs(coinbase, type);
+    } else {
+      return []
     }
   };
 
