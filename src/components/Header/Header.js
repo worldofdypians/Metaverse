@@ -10,7 +10,7 @@ import personNoCoinbase from "./assets/personNoCoinbase.png";
 import copy from "./assets/copy.svg";
 import check from "./assets/check.svg";
 import user from "./assets/user.svg";
-import logout from "./assets/logout.svg";
+import logoutLogo from "./assets/logout.svg";
 import Clipboard from "react-clipboard.js";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useLocation } from "react-router-dom";
@@ -982,7 +982,7 @@ const Header = ({
                           manageDisconnect();
                         }}
                       >
-                        <img src={logout} alt="" /> Disconnect{" "}
+                        <img src={logoutLogo} alt="" /> Disconnect{" "}
                       </span>
                     </div>
                   </div>
