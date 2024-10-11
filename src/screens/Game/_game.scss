@@ -9,6 +9,15 @@ align-items: center;
 }
 }
 
+.custom-wrapper {
+    position: absolute;
+
+    @media screen and (max-width: 991px){
+        position: relative;
+        margin: 26px 0;
+    }
+}
+
 .new-amplify-wrapper{
     position: relative;
         background-size: 100%;
@@ -86,13 +95,13 @@ background: transparent;
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 75%;
+    // width: 75%;
 }
 .aliens-img{
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 75%;
+    // width: 75%;
 }
 
 .humans-class-text{

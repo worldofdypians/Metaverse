@@ -47,13 +47,13 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider }) => {
+const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider,onPopupClick }) => {
   const [dropdown, setDropdown] = useState(false);
   const [eventPrice, setEventPrice] = useState("DYP v2");
   const [goldenPassDypAmountV1, setGoldenPassDypAmountV1] = useState(0);
   const [goldenPassDypAmountV2, setGoldenPassDypAmountV2] = useState(0);
   const [status700, setStatus700] = useState(
-    "Please make sure you're on BNB Chain and using the wallet address associated to your profile."
+    "Please make sure you're on BNB Chain and using the wallet address associated to your game profile."
   );
   const [statusColor700, setStatusColor700] = useState("#FE7A00");
   const [bundleState700, setbundleState700] = useState("initial");
@@ -440,7 +440,7 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider }) => {
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
-          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" />
+          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" onClick={onPopupClick}/>
           <img src={goldenPassBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Golden Pass</h6>
         </div>
@@ -596,6 +596,16 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider }) => {
           </button>
         </div>
       </div>
+      <span
+              className="statusText"
+              style={{
+                color: statusColor700,
+                width: "fit-content",
+              }}
+            >
+              {status700}
+            </span>
+
       {countdown700 !== 0 && countdown700 && (
         <div className="new-event-wrapper mt-5 p-3">
           <div className="d-flex flex-column gap-2">
@@ -628,15 +638,7 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider }) => {
                 }}
               />
             </div>
-            <span
-              className="statusText"
-              style={{
-                color: statusColor700,
-                width: "fit-content",
-              }}
-            >
-              {status700}
-            </span>
+           
           </div>
         </div>
       )}

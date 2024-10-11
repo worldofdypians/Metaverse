@@ -241,7 +241,7 @@ const NewLeaderBoard = ({
   const sliderRef = useRef(null);
   const windowSize = useWindowSize();
   const label = { inputProps: { "aria-label": "Switch demo" } };
-
+console.log(allData)
   const handleMouseEnter = (chain) => {
     setHoverState(chain);
   };

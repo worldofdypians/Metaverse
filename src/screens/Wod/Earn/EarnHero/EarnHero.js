@@ -3,23 +3,24 @@ import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
 import dropdownIcon from "../assets/dropdownIcon.svg";
+import '../../../Wod/Token/MainHero/_mainhero.scss'
 
 const EarnHero = ({ onSelectFilter }) => {
   const dypProducts = [
     {
-      link: "/earn",
+      // link: "/earn",
       title: "TOKEN",
       desc: "Boost rewards with WOD tokens",
       class: "tokenEarnClass",
     },
     {
-      link: "/bridge",
+      // link: "/bridge",
       title: "NFT",
       desc: "Utilize your NFTs for unique benefits",
       class: "tokenBridgeClass",
     },
     {
-      link: "/governance",
+      // link: "/governance",
       title: "TOKEN & NFT",
       desc: "Combine tokens and NFTs for maximum rewards",
       class: "tokenGovernanceClass",
@@ -79,7 +80,7 @@ const EarnHero = ({ onSelectFilter }) => {
     ],
   };
 
-  const [filterTitle, setFilterTitle] = useState("All pools");
+  const [filterTitle, setFilterTitle] = useState("All Staking Pools");
 
   const betaSlider = useRef(null);
 
@@ -107,13 +108,13 @@ const EarnHero = ({ onSelectFilter }) => {
           <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 4).map((item, index) => (
-                <NavLink to={`${item.link}`}>
+                // <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}
                     key={index}
                     isFrontPage={true}
                   />
-                </NavLink>
+                // </NavLink>
               ))}
             </Slider>
           </div>
@@ -122,14 +123,14 @@ const EarnHero = ({ onSelectFilter }) => {
       <div className="opacitywrapper position-relative bottom-0">
         <div className="d-flex flex-column gap-4 position-relative">
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
-            <div className="container-fluid py-4 buy-wod-bg">
+            <div className="container-fluid py-4 staking-pools-bg">
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
                   <div className="d-flex flex-column flex-lg-row flex-md-row gap-3 w-100 mx-0 align-items-center justify-content-between">
-                    <div className="dropdown filters-dropdown">
+                    <div className="dropdown filters-dropdown w-auto">
                       <button
                         className="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
+                 d-flex align-items-center justify-content-center gap-3 px-3 dropdown-toggle"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -145,11 +146,11 @@ const EarnHero = ({ onSelectFilter }) => {
                         <li
                           className="nft-dropdown-item"
                           onClick={() => {
-                            setFilterTitle("All pools");
-                            onSelectFilter("All pools");
+                            setFilterTitle("All Staking Pools");
+                            onSelectFilter("All Staking Pools");
                           }}
                         >
-                          <span>All pools</span>
+                          <span>All Staking Pools</span>
                         </li>
                         <li
                           className="nft-dropdown-item"
@@ -180,7 +181,7 @@ const EarnHero = ({ onSelectFilter }) => {
                         </li>
                       </ul>
                     </div>
-                    <div className="tvl-earn-wrapper p-2">
+                    <div className="tvl-earn-wrapper py-2 px-4">
                       <div className="d-flex align-items-center gap-2">
                         <span className="tvl-earn-title">TVL</span>
                         <span className="tvl-earn-amount">$1,6000,000+</span>

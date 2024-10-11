@@ -13,6 +13,12 @@
   height: 32px;
 }
 
+.staking-pools-bg {
+  background: #1D1445;
+  display: flex;
+  justify-content: center;
+}
+
 .buy-item-title {
   font-style: normal;
   font-weight: 700;
@@ -60,7 +66,7 @@ background: linear-gradient(to bottom, #15BFFDB2, #9C37FDB2);
 }
 .stake-wod-btn-inactive, .stake-wod-btn-inactive:hover {
   border-radius: 10px;
-  background: #CFC6DD;
+  background: #CFC6DD !important;
   border: none;
   color: #464555;
   text-align: center;

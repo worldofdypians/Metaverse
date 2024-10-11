@@ -209,8 +209,7 @@ bnbEarnUsd,
 
 
   const { email, logout } = useAuth();
-  const { eventId } = useParams();
-  console.log(eventId);
+  const { eventId } = useParams(); 
   const override = {
     display: "block",
     margin: "auto",
@@ -369,8 +368,7 @@ bnbEarnUsd,
     "10",
   ];
 
-
-  console.log(dummyBetaPassData2, "Eventss");
+ 
 
 
   function shuffle(array) {
@@ -8477,8 +8475,8 @@ bnbEarnUsd,
           />
           // </OutsideClickHandler>
         )}
-        {leaderboard && (
-          <OutsideClickHandler onOutsideClick={() => setLeaderboard(false)}>
+        {(leaderboard || hashValue === "#leaderboard") && (
+          <OutsideClickHandler onOutsideClick={() => {setLeaderboard(false);window.location.hash = "";}}>
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
               id="leaderboard"
@@ -8523,7 +8521,7 @@ bnbEarnUsd,
                     )} */}
                 <img
                   src={xMark}
-                  onClick={() => setLeaderboard(false)}
+                  onClick={() => {setLeaderboard(false);window.location.hash = "";}}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />

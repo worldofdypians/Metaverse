@@ -34,7 +34,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
+const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupClick }) => {
   const [puzzleMadnessDypAmount, setPuzzleMadnessDypAmount] = useState(0);
   const [statusColor3500, setStatusColor3500] = useState("#FE7A00");
   const [bundleState3500, setbundleState3500] = useState("initial");
@@ -192,7 +192,7 @@ const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider }) => {
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
-          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" />
+          <img src={tooltipIcon} className="new-event-banner-tooltip" alt="" onClick={onPopupClick}/>
           <img src={puzzleMadnessBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Puzzle Madness</h6>
         </div>

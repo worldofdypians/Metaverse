@@ -248,7 +248,7 @@ const MyProfile = ({
     speed: 1000,
     autoplay: false,
     autoplaySpeed: 5000,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
     // beforeChange: (current, next) => {
@@ -257,38 +257,38 @@ const MyProfile = ({
     // },
     // afterChange: (current) => setActiveSlide(current),
     responsive: [
-      // {
-      //   breakpoint: 1600,
-      //   settings: {
-      //     slidesToShow: 1,
-      //     slidesToScroll: 1,
-      //     initialSlide: 0,
-      //   },
-      // },
-      // {
-      //   breakpoint: 1500,
-      //   settings: {
-      //     slidesToShow: 1,
-      //     slidesToScroll: 1,
-      //     initialSlide: 0,
-      //   },
-      // },
-      // {
-      //   breakpoint: 1400,
-      //   settings: {
-      //     slidesToShow: 1,
-      //     slidesToScroll: 1,
-      //     initialSlide: 0,
-      //   },
-      // },
-      // {
-      //   breakpoint: 1050,
-      //   settings: {
-      //     slidesToShow: 1,
-      //     slidesToScroll: 1,
-      //     initialSlide: 0,
-      //   },
-      // },
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
       {
         breakpoint: 500,
         settings: {
@@ -297,8 +297,8 @@ const MyProfile = ({
           dots: false,
           fade: false,
           initialSlide: 0,
-          autoplay: true,
-          infinite: true,
+          autoplay: false,
+          infinite: false,
         },
       },
     ],
@@ -362,7 +362,7 @@ const MyProfile = ({
                 </div>
               </div>
               <div className="d-flex flex-column gap-2 w-100">
-                <div className="d-flex align-items-center gap-0 gap-lg-1">
+                <div className="d-flex align-items-center gap-1">
                   <div
                     className={`d-flex flex-column flex-lg-row align-items-lg-center ${
                       !email
@@ -425,12 +425,14 @@ const MyProfile = ({
                             : "--"}
                         </span>
                       </div>
-                      { isConnected &&
+                      {isConnected &&
                         address &&
                         email &&
                         coinbase &&
                         syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase() && <img src={errorChain} alt="" />}
+                        address.toLowerCase() !== coinbase.toLowerCase() && (
+                          <img src={errorChain} alt="" />
+                        )}
                       {!domainName &&
                         isConnected &&
                         address &&
@@ -512,7 +514,7 @@ const MyProfile = ({
             <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="progress-line"></div>
-                <span className="daily-progress-span">Daily Progress</span>
+                <span className="daily-progress-span mx-2">Daily Progress</span>
                 <div className="progress-line-2"></div>
               </div>
               <div className="daily-progress-grid">
@@ -794,191 +796,194 @@ const MyProfile = ({
                     Offers
                   </h6>
                 </div>
-                {windowSize.width > 991 ?
-                <div
-                  className="d-flex align-items-center justify-content-between gap-4"
-                  style={{ height: "140px" }}
-                >
-                   {/* <Slider {...settings} ref={sliderRef}> */}
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        200 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={premiumDummy}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">
-                          Get Premium
+                {windowSize.width && windowSize.width > 991 ? (
+                  <div
+                    className="d-flex align-items-center justify-content-between gap-4"
+                    style={{ height: "140px" }}
+                  >
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          200 Stars
                         </span>
                       </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={premiumDummy}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get Premium
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                      </div>
                     </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
-                    </div>
-                  </div>
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        700 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={dummyDragon}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">
-                          Get Dragon Ruins
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          700 Stars
                         </span>
                       </div>
-                    </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
-                    </div>
-                  </div>
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        1,200 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={dummyCaws}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">Get CAWS</span>
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={dummyDragon}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get Dragon Ruins
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
                       </div>
                     </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
-                    </div>
-                  </div>
-                  {/* </Slider> */}
-                </div> : 
-                // <div
-                //   className="d-flex align-items-center justify-content-between gap-4"
-                //   style={{ height: "140px" }}
-                // >
-                  <Slider {...settings} ref={sliderRef}> 
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        200 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={premiumDummy}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">
-                          Get Premium
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          1,200 Stars
                         </span>
                       </div>
-                    </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={dummyCaws}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get CAWS
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                      </div>
                     </div>
                   </div>
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        700 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={dummyDragon}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">
-                          Get Dragon Ruins
+                ) : windowSize.width && windowSize.width <= 991 ? (
+                  // <div
+                  //   className="d-flex align-items-center justify-content-between gap-4"
+                  //   style={{ height: "140px" }}
+                  // >
+                  <Slider {...settings} ref={sliderRef}>
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          200 Stars
                         </span>
                       </div>
-                    </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
-                    </div>
-                  </div>
-                  <div className="limited-offer-card d-flex flex-column justify-content-between">
-                    <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
-                      <span className="limited-offer-reward">Extra</span>
-                      <span
-                        className="limited-offer-reward"
-                        style={{ color: "#F3C009" }}
-                      >
-                        1,200 Stars
-                      </span>
-                    </div>
-                    <div className="d-flex flex-column align-items-center">
-                      <img
-                        src={dummyCaws}
-                        className="limited-offer-img"
-                        alt=""
-                      />
-                      <div
-                        className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
-                        style={{ background: "#061F33" }}
-                      >
-                        <span className="limited-offer-purchase">Get CAWS</span>
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={premiumDummy}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get Premium
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
                       </div>
                     </div>
-                    <div className="d-flex w-100 justify-content-center">
-                      {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          700 Stars
+                        </span>
+                      </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={dummyDragon}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get Dragon Ruins
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                      </div>
                     </div>
-                  </div>
+                    <div className="limited-offer-card d-flex flex-column justify-content-between">
+                      <div className="d-flex w-100 py-1 align-items-center justify-content-center gap-1">
+                        <span className="limited-offer-reward">Extra</span>
+                        <span
+                          className="limited-offer-reward"
+                          style={{ color: "#F3C009" }}
+                        >
+                          1,200 Stars
+                        </span>
+                      </div>
+                      <div className="d-flex flex-column align-items-center">
+                        <img
+                          src={dummyCaws}
+                          className="limited-offer-img"
+                          alt=""
+                        />
+                        <div
+                          className="d-flex w-100 py-1 align-items-center justify-content-center gap-1"
+                          style={{ background: "#061F33" }}
+                        >
+                          <span className="limited-offer-purchase">
+                            Get CAWS
+                          </span>
+                        </div>
+                      </div>
+                      <div className="d-flex w-100 justify-content-center">
+                        {/* <Countdown renderer={renderer} date={bnbLastDay} /> */}
+                      </div>
+                    </div>
                   </Slider>
-                 }
+                ) : <></>}
               </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
