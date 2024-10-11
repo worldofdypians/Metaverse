@@ -65,7 +65,12 @@ const Home = ({
   dyptokenDatabnb_old,
   cawsListed,
   wodListed,
-  timepieceListed
+  timepieceListed,
+  totalSupply,
+  monthlyPlayers,
+  percent,
+  socials,
+  totalTx
 }) => {
  
   const basePopupInfo = {
@@ -137,10 +142,13 @@ const Home = ({
             handleRegister={handleRegister}
             handleDownload={handleDownload}
             allStarData={allStarData}
+            monthlyPlayers={monthlyPlayers}
+            percent={percent}
           />
           <LiveEvents />
           <WodBuilders page={"home"} />
-          <Utilities />
+           
+          <Utilities socials={socials} monthlyPlayers={monthlyPlayers} totalSupply={totalSupply} totalTx={totalTx} />
           <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}

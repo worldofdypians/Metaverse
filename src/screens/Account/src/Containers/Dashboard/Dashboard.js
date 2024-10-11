@@ -97,6 +97,8 @@ function Dashboard({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   latest20BoughtNFTS,
+  monthlyPlayers,
+  percent,
 }) {
   const { email, logout } = useAuth();
 
@@ -5884,13 +5886,12 @@ function Dashboard({
     if (coinbase !== undefined) {
       return await window.getMyNFTs(coinbase, type);
     } else {
-      return []
+      return [];
     }
   };
 
   //todo
   const fetchAllMyNfts = async () => {
-    
     getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
@@ -9411,6 +9412,8 @@ function Dashboard({
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             userDataStar={userDataStar}
+                            monthlyPlayers={monthlyPlayers}
+                            percent={percent}
                           />
                         </div>
                       </OutsideClickHandler>

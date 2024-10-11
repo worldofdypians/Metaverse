@@ -255,6 +255,9 @@ function App() {
     fetchPolicy: "network-only",
   });
 
+  const [monthlyPlayers, setMonthlyPlayers] = useState(0);
+  const [percent, setPercent] = useState(0);
+
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
   const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
@@ -2807,6 +2810,19 @@ function App() {
     }
   }
 
+  const fetchMonthlyPlayers = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/get-wod-uaw`)
+      .then((data) => {
+        setMonthlyPlayers(data.data.uaw);
+        setPercent(data.data.percent);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
   const getDomains = async () => {
     if (coinbase) {
       const name = await web3Name.getDomainName({
@@ -2967,6 +2983,7 @@ function App() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
+    fetchMonthlyPlayers();
     getTotalSupply();
     checkBinanceData();
     getTokenData();
@@ -3070,6 +3087,12 @@ function App() {
                 cawsListed={cawsListed}
                 wodListed={wodListed}
                 timepieceListed={timepieceListed}
+                totalSupply={totalSupply}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent} 
+                socials={socials}
+                totalTx={totalTx}
+
               />
             }
           />
@@ -3091,7 +3114,7 @@ function App() {
           <Route
             exact
             path="/community"
-            element={<Community socials={socials} />}
+            element={<Community socials={socials} monthlyPlayers={monthlyPlayers} percent={percent} />}
           />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
@@ -3250,6 +3273,8 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 latest20BoughtNFTS={latest20BoughtNFTS}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent} 
               />
             }
           />
