@@ -40,7 +40,7 @@ const NewEvents = ({
       setChallenge(selectedEvent);
     }
   }, [selectedEvent]);
-  console.log(showPopup);
+  
   return (
     <>
       <div

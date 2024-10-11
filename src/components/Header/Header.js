@@ -1346,7 +1346,7 @@ const Header = ({
                           </div>
                           <hr className="header-divider my-0" />
                           <button
-                            className="sign-out-btn pt-2 pb-3  d-flex align-items-center gap-2 justify-content-start"
+                            className="sign-out-btn pt-2 pb-3  d-flex align-items-center gap-2 ms-2 justify-content-start"
                             onClick={() => {
                               manageDisconnect();
                             }}

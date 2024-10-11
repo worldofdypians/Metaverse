@@ -26,12 +26,14 @@ const Brand = () => {
                   textDecoration: "none",
                 }}
               >
-                <button
+                <a
                   className="btn multiplayer-btn py-1 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
-               
+                  href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing" 
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Download
-                </button>
+                </a>
               </div>
         </div>
       </div>

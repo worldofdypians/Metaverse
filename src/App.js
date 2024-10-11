@@ -91,43 +91,40 @@ import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
-import coreLogo from './screens/Account/src/Components/WalletBalance/assets/coreLogo.svg'
-import bnbLogo from './screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg'
-import taikoLogo from './screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg'
-import victionLogo from './screens/Account/src/Components/WalletBalance/assets/victionLogo.svg'
-import baseLogo from './screens/Account/src/Components/WalletBalance/assets/baseLogo.svg'
-import dypius from './screens/Account/src/Components/WalletBalance/assets/dypIcon.svg'
-import skaleLogo from './screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg'
-import coingecko from './screens/Account/src/Components/WalletBalance/assets/coingecko.svg'
-import immutableLogo from './screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg'
-import mantaLogo from './screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png'
-import coreBg from './screens/Account/src/Components/WalletBalance/assets/coreBg.webp'
-import victionBg from './screens/Account/src/Components/WalletBalance/assets/victionBg.webp'
-import immutableBg from './screens/Account/src/Components/WalletBalance/assets/immutableBg.webp'
-import dypiusPremium from './screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg'
-import baseUpcoming from './screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp'
-import upcomingDyp from './screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp'
-import upcomingBase2 from './screens/Marketplace/assets/upcomingBase2.webp'
-import upcomingBnb from './screens/Marketplace/assets/upcomingBnb.png'
-import coingeckoUpcoming from './screens/Marketplace/assets/coingeckoUpcoming.png'
-import upcomingCookie from './screens/Marketplace/assets/cookieBg.webp'
-import upcomingDoge from './screens/Marketplace/assets/upcomingDoge.webp'
-import upcomingSkale from './screens/Marketplace/assets/upcomingSkale.webp'
-import upcomingDyp2 from './screens/Marketplace/assets/dypiusBgPic2.webp'
-import cmcUpcoming from './screens/Marketplace/assets/upcomingCmc.webp'
-import taikoBg from './screens/Marketplace/assets/taikoBg.webp'
-import mantaBg from './screens/Marketplace/assets/mantaBg.webp'
-import cookie3Logo from './screens/Marketplace/assets/cookie3Logo.svg'
-import cmc from './screens/Marketplace/MarketNFTs/assets/cmc.svg'
-import doge from './screens/Marketplace/MarketNFTs/assets/dogeLogo.svg'
+import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
+import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
+import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
+import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
+import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
+import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
+import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
+import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
+import immutableLogo from "./screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg";
+import mantaLogo from "./screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png";
+import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
+import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
+import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
+import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
+import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
+import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
+import upcomingBase2 from "./screens/Marketplace/assets/upcomingBase2.webp";
+import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
+import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
+import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
+import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
+import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
+import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
+import cmcUpcoming from "./screens/Marketplace/assets/upcomingCmc.webp";
+import taikoBg from "./screens/Marketplace/assets/taikoBg.webp";
+import mantaBg from "./screens/Marketplace/assets/mantaBg.webp";
+import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg";
+import cmc from "./screens/Marketplace/MarketNFTs/assets/cmc.svg";
+import doge from "./screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
 import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
 import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
-
-
-
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -500,8 +497,6 @@ function App() {
   useEagerlyConnect();
   const { activate, deactivate, library, provider } = useWeb3React();
 
-
-
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
@@ -517,7 +512,6 @@ function App() {
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
-
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -673,16 +667,14 @@ function App() {
   const [multiversPoints, setmultiversPoints] = useState(0);
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
-  const [seiEarnUsd, setSeiEarnUsd] = useState(0)
+  const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
   const [skalePrice, setSkalePrice] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
 
-
   const userId = data?.getPlayer?.playerId;
-
 
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
@@ -975,8 +967,6 @@ function App() {
       console.log("Error:", error);
     }
   };
-
-
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -1287,9 +1277,6 @@ function App() {
     );
   };
 
-
-
-  
   useEffect(() => {
     fetchRecordsStar();
   }, [username, userId]);
@@ -3580,7 +3567,7 @@ function App() {
   };
 
   const { ethereum } = window;
-  const {email} = useAuth()
+  const { email } = useAuth();
 
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
@@ -3765,8 +3752,6 @@ function App() {
     }
   }
 
-
-
   const fetchEgldPrice = async () => {
     await axios
       .get(
@@ -3856,8 +3841,6 @@ function App() {
       });
   };
 
-
-
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
@@ -3870,8 +3853,6 @@ function App() {
     fetchImmutablePrice();
   }, []);
 
-
-  
   useEffect(() => {
     if (
       email &&
@@ -3895,7 +3876,6 @@ function App() {
     mantaPrice,
     victionPrice,
   ]);
-
 
   const dummyBetaPassData2 = [
     // {
@@ -4054,9 +4034,9 @@ function App() {
       rewardType: "IMX",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
-    image: "immutableBanner.png",
-    type: "Treasure Hunt",
-    marker: markers.treasureMarker,
+      image: "immutableBanner.png",
+      type: "Treasure Hunt",
+      marker: markers.treasureMarker,
       totalRewards: "$20,000 in IMX Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -4508,7 +4488,6 @@ function App() {
       },
     },
   ];
-
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
@@ -5102,7 +5081,11 @@ function App() {
 
   return (
     <>
-      <div className={`container-fluid ${location.pathname.includes("map") && "px-0"} main-wrapper2 px-0 position-relative`}>
+      <div
+        className={`container-fluid ${
+          location.pathname.includes("map") && "px-0"
+        } main-wrapper2 px-0 position-relative`}
+      >
         <Header
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -5126,7 +5109,7 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
-          gameAccount = {data?.getPlayer?.wallet?.publicAddress}
+          gameAccount={data?.getPlayer?.wallet?.publicAddress}
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
@@ -5301,7 +5284,16 @@ function App() {
           <Route
             exact
             path="/auth"
-            element={<Auth isConnected={isConnected} coinbase={coinbase} onSuccessLogin={()=>{setloginListener(loginListener+1); refetchPlayer()}}/>}
+            element={
+              <Auth
+                isConnected={isConnected}
+                coinbase={coinbase}
+                onSuccessLogin={() => {
+                  setloginListener(loginListener + 1);
+                  refetchPlayer();
+                }}
+              />
+            }
           />
 
           <Route exact path="/redirect" element={<Redirect />} />
@@ -5333,17 +5325,17 @@ function App() {
             path="/account"
             element={
               <Dashboard
-              dummyBetaPassData2={dummyBetaPassData2}
-              bnbEarnUsd={bnbEarnUsd}
-skaleEarnUsd={skaleEarnUsd}
-seiEarnUsd={seiEarnUsd}
-coreEarnUsd={coreEarnUsd}
-victionEarnUsd={victionEarnUsd}
-taikoEarnUsd={taikoEarnUsd}
-cookieEarnUsd={cookieEarnUsd}
-immutableEarnUsd={immutableEarnUsd}
-mantaEarnUsd={mantaEarnUsd}
-multiversEarnUsd={multiversEarnUsd}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -5408,20 +5400,20 @@ multiversEarnUsd={multiversEarnUsd}
             path="/account/premium"
             element={
               <Dashboard
-              onSuccessDeposit={() => {
-                setCount55(count55 + 1);
-              }}
-              dummyBetaPassData2={dummyBetaPassData2}
-              bnbEarnUsd={bnbEarnUsd}
-skaleEarnUsd={skaleEarnUsd}
-seiEarnUsd={seiEarnUsd}
-coreEarnUsd={coreEarnUsd}
-victionEarnUsd={victionEarnUsd}
-taikoEarnUsd={taikoEarnUsd}
-cookieEarnUsd={cookieEarnUsd}
-immutableEarnUsd={immutableEarnUsd}
-mantaEarnUsd={mantaEarnUsd}
-multiversEarnUsd={multiversEarnUsd}
+                onSuccessDeposit={() => {
+                  setCount55(count55 + 1);
+                }}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -5472,17 +5464,17 @@ multiversEarnUsd={multiversEarnUsd}
             path="/marketplace"
             element={
               <Marketplace
-              dummyBetaPassData2={dummyBetaPassData2}
-              bnbEarnUsd={bnbEarnUsd}
-skaleEarnUsd={skaleEarnUsd}
-seiEarnUsd={seiEarnUsd}
-coreEarnUsd={coreEarnUsd}
-victionEarnUsd={victionEarnUsd}
-taikoEarnUsd={taikoEarnUsd}
-cookieEarnUsd={cookieEarnUsd}
-immutableEarnUsd={immutableEarnUsd}
-mantaEarnUsd={mantaEarnUsd}
-multiversEarnUsd={multiversEarnUsd}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 totalSupply={totalSupply}
                 count={count2}
                 setCount={setCount2}
@@ -5760,25 +5752,25 @@ multiversEarnUsd={multiversEarnUsd}
             }
           />
 
-          {email && data &&
-      data.getPlayer &&
-      data.getPlayer.displayName &&
-      data.getPlayer.playerId &&
-      data.getPlayer.wallet &&
-      data.getPlayer.wallet.publicAddress &&
-
-          <Route
-            exact
-            path="/loyalty-program"
-            element={
-              <LoyaltyProgram
-                coinbase={coinbase}
-                isConnected={isConnected}
-                handleConnection={handleConnectWallet}
+          {email &&
+            data &&
+            data.getPlayer &&
+            data.getPlayer.displayName &&
+            data.getPlayer.playerId &&
+            data.getPlayer.wallet &&
+            data.getPlayer.wallet.publicAddress && (
+              <Route
+                exact
+                path="/loyalty-program"
+                element={
+                  <LoyaltyProgram
+                    coinbase={coinbase}
+                    isConnected={isConnected}
+                    handleConnection={handleConnectWallet}
+                  />
+                }
               />
-            }
-          />
- }
+            )}
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -5935,7 +5927,7 @@ multiversEarnUsd={multiversEarnUsd}
               />
             }
           />
-    
+
           <Route
             exact
             path="/marketplace/beta-pass/multiversx"
@@ -6388,45 +6380,45 @@ multiversEarnUsd={multiversEarnUsd}
             path="/account/challenges/:eventId"
             element={
               <Dashboard
-              dummyBetaPassData2={dummyBetaPassData2}
-              bnbEarnUsd={bnbEarnUsd}
-skaleEarnUsd={skaleEarnUsd}
-seiEarnUsd={seiEarnUsd}
-coreEarnUsd={coreEarnUsd}
-victionEarnUsd={victionEarnUsd}
-taikoEarnUsd={taikoEarnUsd}
-cookieEarnUsd={cookieEarnUsd}
-immutableEarnUsd={immutableEarnUsd}
-mantaEarnUsd={mantaEarnUsd}
-multiversEarnUsd={multiversEarnUsd}
-              ethTokenData={ethTokenData}
-              dyptokenDatabnb={dyptokenDatabnb}
-              dypTokenData={dypTokenData}
-              handleSwitchChain={handleSwitchChain}
-              dypTokenData_old={dypTokenData_old}
-              coinbase={coinbase}
-              account={coinbase}
-              binanceW3WProvider={library}
-              binanceWallet={coinbase}
-              isConnected={isConnected}
-              chainId={networkId}
-              handleConnect={handleConnectWallet}
-              onSigninClick={checkData}
-              success={success}
-              availableTime={availTime}
-              handleSwitchNetwork={handleSwitchNetwork}
-              handleOpenDomains={() => setDomainPopup(true)}
-              domainName={domainName}
-              dogePrice={dogePrice}
-              onSubscribeSuccess={() => {
-                setCount55(count55 + 1);
-              }}
-              isPremium={isPremium}
-              handleConnectionPassport={handleConnectPassport}
-              handleConnectBinance={handleConnectBinance}
-              handleSwitchChainGateWallet={handleSwitchNetwork}
-              handleSwitchChainBinanceWallet={handleSwitchNetwork}
-            />
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectBinance={handleConnectBinance}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+              />
             }
           />
           {/* <Route
@@ -7059,9 +7051,11 @@ multiversEarnUsd={multiversEarnUsd}
                 />
               }
             /> */}
-          <Route exact path="/map" element={<Map
-          dummyBetaPassData2={dummyBetaPassData2}
-          />} />
+          <Route
+            exact
+            path="/map"
+            element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
+          />
         </Routes>
 
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
