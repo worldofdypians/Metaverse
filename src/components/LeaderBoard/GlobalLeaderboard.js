@@ -64,7 +64,7 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  userDataStar,
+  userDataStar, monthlyPlayers, percent
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -104,8 +104,7 @@ const GlobalLeaderboard = ({
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-  const [monthlyPlayers, setMonthlyPlayers] = useState(0);
-  const [percent, setPercent] = useState(0);
+   
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -114,17 +113,7 @@ const GlobalLeaderboard = ({
   //   handleOption(optionText);
   // }, [inactiveBoard]);
 
-  const fetchMonthlyPlayers = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/get-wod-uaw`)
-      .then((data) => {
-        setMonthlyPlayers(data.data.uaw);
-        setPercent(data.data.percent);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+ 
 
   useEffect(() => {
     if (
@@ -137,8 +126,7 @@ const GlobalLeaderboard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    setOptionText2("bnb");
-    fetchMonthlyPlayers();
+    setOptionText2("bnb"); 
   }, []);
 
   return (
