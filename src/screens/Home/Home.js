@@ -64,16 +64,7 @@ const Home = ({
   percent,
   allStarData
 })  => {
-  const cmcPopupInfo = {
-    title: "Treasure Hunt",
-    img: cmcTreasureHuntPopup,
-    state: "cmc",
-  };
-  const bnbInfo = {
-    title: "opBNB",
-    img: festivecampaign,
-    state: "opbnb",
-  };
+  
   const mantaInfo = {
     title: "Manta",
     img: mantaPopup,

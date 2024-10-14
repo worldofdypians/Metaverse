@@ -7967,15 +7967,6 @@ function Dashboard({
   useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
-    fetchSkalePrice();
-    fetchSeiPrice();
-    fetchMantaPrice();
-    fetchTaikoPrice();
-    fetchCookiePrice();
-    fetchCorePrice();
-    fetchVictionPrice();
-    fetchEgldPrice();
-    fetchImmutablePrice();
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
     window.scrollTo(0, 0);
@@ -8956,7 +8947,6 @@ function Dashboard({
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
                 listedNFTS={listedNFTS}
-                myBoughtNfts={myBoughtNfts}
                 address={data?.getPlayer?.wallet?.publicAddress}
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
