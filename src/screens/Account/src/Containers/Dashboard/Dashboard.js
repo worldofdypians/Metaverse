@@ -1501,7 +1501,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
-    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.leaderboard));
+    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.version));
     fillRecordsWeeklyCore(result.data.data.leaderboard);
     if (userId && username) {
       var testArray = result.data.data.leaderboard.filter(
