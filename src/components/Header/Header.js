@@ -76,6 +76,8 @@ import linkedIcon from "./assets/dropdownAssets/linkedIcon.svg";
 import logoutIcon from "./assets/dropdownAssets/logoutIcon.svg";
 import registerIcon from "./assets/dropdownAssets/registerIcon.svg";
 import supportIcon from "./assets/dropdownAssets/supportIcon.svg";
+import premiumIcon from "./assets/dropdownAssets/premiumIcon.svg";
+
 import unlinkedIcon from "./assets/dropdownAssets/unlinkedIcon.svg";
 import userIcon from "./assets/dropdownAssets/userIcon.svg";
 import walletIcon from "./assets/dropdownAssets/walletIcon.svg";
@@ -839,6 +841,17 @@ const Header = ({
                 ) : (
                   <></>
                 )}
+                   <NavLink
+                  to={"/account/premium"}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                  }
+                >
+                  <img width={20} height={20} src={premiumIcon} alt="" />
+                  Premium
+                </NavLink>
                 <NavLink
                   to={"/contact-us"}
                   className={({ isActive }) =>
