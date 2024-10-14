@@ -67,6 +67,7 @@ import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 
 function Dashboard({
+  dailyBonuslistedNFTS,
   account,
   isConnected,
   chainId,
@@ -1500,7 +1501,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
-    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.leaderboard));
+    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.version));
     fillRecordsWeeklyCore(result.data.data.leaderboard);
     if (userId && username) {
       var testArray = result.data.data.leaderboard.filter(
@@ -11043,7 +11044,7 @@ function Dashboard({
                 dyptokenData_old={dyptokenData_old}
                 handleSwitchChain={handleSwitchChain}
                 handleSwitchNetwork={handleSwitchNetwork}
-                listedNFTS={listedNFTS}
+                listedNFTS={dailyBonuslistedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
                   window.location.hash = "";

@@ -3245,6 +3245,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+              dailyBonuslistedNFTS={listedNFTS}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
