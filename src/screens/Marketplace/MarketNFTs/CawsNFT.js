@@ -39,7 +39,9 @@ const CawsNFT = ({
   cawsBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId
+  binanceW3WProvider,
+  chainId,
+  caws,
 }) => {
   const override = {
     display: "block",
@@ -518,7 +520,8 @@ const CawsNFT = ({
       });
       setCawsNFTS(lso);
     } else if (sortValue === "lto") {
-      let otl = initialNfts.sort((a, b) => {
+       
+      let otl = allCawsNfts.sort((a, b) => {
         return b.date - a.date;
       });
       setCawsNFTS(otl);
@@ -526,10 +529,6 @@ const CawsNFT = ({
   };
 
   const getListedCaws = async () => {
-    const caws = await getCawsNfts().catch((e) => {
-      console.error(e);
-    });
-
     const cawsArray = [...caws, ...cawsBought];
     const cawsArray2 = [...caws];
 
@@ -550,6 +549,8 @@ const CawsNFT = ({
             date: date,
             isListed: true,
             isLatestSale: false,
+            type: "caws",
+            
             LastSold: cawsArray2[index]?.price,
             soldPriceType: cawsArray2[index]?.payment_priceType,
           };
@@ -566,6 +567,8 @@ const CawsNFT = ({
             date: date,
             isListed: true,
             isLatestSale: true,
+            type: "caws",
+
             LastSold: result?.price,
             lastSoldTimeStamp: result?.blockTimestamp,
             soldPriceType: result?.payment_priceType,
@@ -577,6 +580,8 @@ const CawsNFT = ({
             ...nft,
             date: date,
             isListed: false,
+            type: "caws",
+
             isLatestSale: true,
             lastSoldTimeStamp: nft?.blockTimestamp,
             LastSold: nft?.price,
@@ -601,7 +606,7 @@ const CawsNFT = ({
       const owner = await window.nft.ownerOf(i).catch((e) => {
         console.log(e);
       });
-      const attributes = await window.getNft(i);
+      // const attributes = await window.getNft(i);
 
       finalArray.push({
         nftAddress: window.config.nft_address,
@@ -609,7 +614,7 @@ const CawsNFT = ({
         tokenId: i.toString(),
         type: "caws",
         chain: 1,
-        attributes: attributes.attributes,
+        // attributes: attributes.attributes,
       });
     }
 
@@ -629,7 +634,7 @@ const CawsNFT = ({
           const owner = await window.nft.ownerOf(i).catch((e) => {
             console.log(e);
           });
-          const attributes = await window.getNft(i);
+          // const attributes = await window.getNft(i);
 
           return {
             nftAddress: window.config.nft_address,
@@ -637,7 +642,7 @@ const CawsNFT = ({
             tokenId: i.toString(),
             type: "caws",
             chain: 1,
-            attributes: attributes.attributes,
+            // attributes: attributes.attributes,
           };
         })
       );
@@ -742,10 +747,10 @@ const CawsNFT = ({
   }, [count]);
 
   useEffect(() => {
-    if (cawsBought) {
+    if (cawsBought && caws && caws.length>0) {
       getListedCaws();
     }
-  }, [cawsBought, nftCount, allCawsNfts.length]);
+  }, [cawsBought, nftCount, allCawsNfts.length,caws]);
 
   useEffect(() => {
     getCawsCollection();
@@ -767,7 +772,6 @@ const CawsNFT = ({
     sortNfts("lth");
   }, [cawsNFTS]);
 
-  // console.log(cawsNFTS2)
 
   return (
     <div
@@ -983,7 +987,6 @@ const CawsNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}
@@ -1171,7 +1174,6 @@ const CawsNFT = ({
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       );
@@ -1222,7 +1224,6 @@ const CawsNFT = ({
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}

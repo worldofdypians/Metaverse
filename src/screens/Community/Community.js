@@ -85,12 +85,16 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Community = ({socials}) => {
+const Community = ({socials, monthlyPlayers, percent}) => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+
+
+
 
   const subscribe = async (e) => {
     e.preventDefault();
@@ -691,7 +695,7 @@ const Community = ({socials}) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Community";
+    document.title = "Community"; 
   }, []);
 
   return (
@@ -762,7 +766,7 @@ const Community = ({socials}) => {
                       </a>
                     </div>
  }
-                    <div className="d-flex align-items-center gap-2 mt-2">
+                    <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-2 mt-2">
                       <span className="community-card-date">Duration:</span>
                       <div className="d-flex align-items-center gap-2">
                         <div className="d-flex align-items-center gap-1">
@@ -922,8 +926,9 @@ const Community = ({socials}) => {
                     className="community-active-title mb-0"
                     style={{ color: "#d9fa86" }}
                   >
-                    565,251
+                    {getFormattedNumber(monthlyPlayers, 0)}
                   </h6>
+                  <span className="monthly-players-percent position-relative" style={{top: "auto", right: "auto", bottom: "auto", fontSize: "14px"}}>+{getFormattedNumber(percent, 2)}%</span>
                 </div>
                 <div className="row w-100 mt-5 mt-lg-0">
                   <a

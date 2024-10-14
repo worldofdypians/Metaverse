@@ -37,7 +37,13 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import axios from "axios";
 import wodToken from "../../../assets/wodAssets/wodToken.svg";
 
-const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
+const VideoWrapper = ({
+  handleRegister,
+  handleDownload,
+  allStarData,
+  monthlyPlayers,
+  percent,
+}) => {
   const [modal, setModal] = useState(false);
   const [multiplayerModal, setmultiplayerModal] = useState(false);
 

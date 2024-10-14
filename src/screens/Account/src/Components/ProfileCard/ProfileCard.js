@@ -101,7 +101,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const ProfileCard = ({
-  email,discountPercentageViction,
+  email,discountPercentageViction,discountPercentageTaiko,
   discountPercentage,
   username,
   balance,
@@ -779,7 +779,7 @@ const ProfileCard = ({
                       placeItems: "flex-end",
                     }}
                   >
-                    {!isPremium && (discountPercentage == 0 && discountPercentageViction === 0) && (
+                    {!isPremium && (discountPercentage == 0 && discountPercentageViction === 0 && discountPercentageTaiko === 0) && (
                       <div
                         className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -798,7 +798,7 @@ const ProfileCard = ({
                       </div>
                     )}
 
-                    {!isPremium && (discountPercentage > 0 || discountPercentageViction>0) && (
+                    {!isPremium && (discountPercentage > 0 || discountPercentageViction>0 || discountPercentageTaiko>0) && (
                       <div
                         className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -813,7 +813,9 @@ const ProfileCard = ({
                             />
                             <div className="d-flex flex-column position-absolute discountwrap-profile">
                               <span className="discount-price2-profile font-oxanium">
-                                {discountPercentage > 0 ? discountPercentage : discountPercentageViction > 0 ? discountPercentageViction : discountPercentage}%
+                                {discountPercentage > 0 ? discountPercentage : discountPercentageViction > 0 ? discountPercentageViction
+                                : discountPercentageTaiko > 0 ? discountPercentageTaiko
+                                 : discountPercentage}%
                               </span>
                               <span className="discount-price-bottom">
                                 Discount
@@ -829,7 +831,8 @@ const ProfileCard = ({
                           <div className="d-flex align-items-center gap-2">
                             <h6 className="discount-price-profile m-0">
                             {discountPercentage == 100 ||
-                                      discountPercentageViction == 100
+                                      discountPercentageViction == 100||
+                                      discountPercentageTaiko == 100
                                         ? "FREE"
                                         : "$" +
                                           (100 -
@@ -838,6 +841,8 @@ const ProfileCard = ({
                                                 ? discountPercentage
                                                 : discountPercentageViction > 0
                                                 ? discountPercentageViction
+                                                : discountPercentageTaiko > 0
+                                                ? discountPercentageTaiko
                                                 : discountPercentage
                                             ))}
                             </h6>

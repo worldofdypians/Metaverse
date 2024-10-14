@@ -7,7 +7,6 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import dropdownIcon from "../assets/dropdownIcon.svg";
 import searchIcon from "../assets/search.svg";
 import { NavLink } from "react-router-dom";
-import { getTimepieceNfts } from "../../../actions/convertUsd";
 import "./_filters.scss";
 import filtersXmark from "./assets/filtersXmark.svg";
 import axios from "axios";
@@ -41,7 +40,7 @@ const TimepieceNFT = ({
   timepieceBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId
+  binanceW3WProvider,chainId,timepiece
 }) => {
   const override = {
     display: "block",
@@ -568,10 +567,7 @@ const TimepieceNFT = ({
   };
 
   const getListedTimepiece = async () => {
-    const timepiece = await getTimepieceNfts().catch((e) => {
-      console.error(e);
-    });
-
+ 
     const timepieceArray = [...timepiece, ...timepieceBought];
     const timepieceArray2 = [...timepiece];
 
@@ -591,6 +587,8 @@ const TimepieceNFT = ({
             ...nft,
             date: date,
             isListed: true,
+            type: "timepiece",
+
             isLatestSale: false,
             LastSold: timepieceArray2[index]?.price,
             soldPriceType: timepieceArray2[index]?.payment_priceType,
@@ -611,6 +609,8 @@ const TimepieceNFT = ({
             date: date,
             isListed: true,
             isLatestSale: true,
+            type: "timepiece",
+
             LastSold: result?.price,
             soldPriceType: result?.payment_priceType,
           };
@@ -625,6 +625,8 @@ const TimepieceNFT = ({
             date: date,
             isListed: false,
             isLatestSale: true,
+            type: "timepiece",
+
             LastSold: nft?.price,
             soldPriceType: nft.payment_priceType,
           };
@@ -673,7 +675,7 @@ const TimepieceNFT = ({
         const owner = await window.caws_timepiece.ownerOf(i).catch((e) => {
           console.log(e);
         });
-        const attributes = await window.getTimepieceNft(i);
+        // const attributes = await window.getTimepieceNft(i);
 
         return {
           nftAddress: window.config.timepiecenft_address,
@@ -681,7 +683,7 @@ const TimepieceNFT = ({
           tokenId: i.toString(),
           type: "timepiece",
           chain: 1,
-          attributes: attributes.attributes,
+          // attributes: attributes.attributes,
         };
       })
     );
@@ -782,10 +784,10 @@ const TimepieceNFT = ({
   }, [timepieceNFTS, totalSupply]);
 
   useEffect(() => {
-    if (timepieceBought) {
+    if (timepieceBought && timepiece && timepiece.length>0) {
       getListedTimepiece();
     }
-  }, [timepieceBought, nftCount, alltimepieceNfts.length]);
+  }, [timepieceBought, nftCount, alltimepieceNfts.length, timepiece]);
 
   useEffect(() => {
     if (

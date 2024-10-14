@@ -22,7 +22,7 @@ import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
-import taikoLogo from '../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg'
+import taikoLogo from "../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
@@ -64,7 +64,7 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  userDataStar,
+  userDataStar, monthlyPlayers, percent
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -104,6 +104,7 @@ const GlobalLeaderboard = ({
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
+   
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -111,6 +112,8 @@ const GlobalLeaderboard = ({
   // useEffect(() => {
   //   handleOption(optionText);
   // }, [inactiveBoard]);
+
+ 
 
   useEffect(() => {
     if (
@@ -123,7 +126,7 @@ const GlobalLeaderboard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    setOptionText2("bnb");
+    setOptionText2("bnb"); 
   }, []);
 
   return (
@@ -162,13 +165,19 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-              <h6 className="global-total-players mb-0">565,251</h6>
+              <div className="position-relative">
+                <h6 className="global-total-players mb-0">
+                  {getFormattedNumber(monthlyPlayers, 0)}
+                </h6>
+                <span className="monthly-players-percent">
+                  +{getFormattedNumber(percent, 2)}%
+                </span>
+              </div>
               <span className="global-total-span">Monthly Players</span>
             </div>
           </div>
         </div>
       )}
-  
 
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div
@@ -198,8 +207,8 @@ const GlobalLeaderboard = ({
                     <br />
                     <br />
                     Participate in Daily Chain Leaderboards from BNB Chain,
-                    SKALE, Core, Manta, Base, Taiko and Viction to earn STARS that will boost your
-                    global ranking.
+                    SKALE, Core, Manta, Base, Taiko and Viction to earn STARS
+                    that will boost your global ranking.
                     <br />
                     <br />
                     Premium Subscribers earn extra STARS from Daily
@@ -287,18 +296,19 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <div className="playerName-inner">
-                        <img
-                          src={require(`./assets/globalRanks/globalRank${
-                            index + 1
-                          }.png`)}
-                          alt=""
-                          className="playerAvatar me-2"
-                        />
-                        <span>
-                        {" "}
-                          {item.displayName?.slice(0, 13)}
-                          {item.displayName?.length > 13 && "..."}
-                        </span></div>
+                          <img
+                            src={require(`./assets/globalRanks/globalRank${
+                              index + 1
+                            }.png`)}
+                            alt=""
+                            className="playerAvatar me-2"
+                          />
+                          <span>
+                            {" "}
+                            {item.displayName?.slice(0, 13)}
+                            {item.displayName?.length > 13 && "..."}
+                          </span>
+                        </div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -441,14 +451,17 @@ const GlobalLeaderboard = ({
         </div>
       </div>
 
-      {screen === "dash" && allStarData && allStarData.is_active === false && allStarData.player_data.displayName
+      {screen === "dash" &&
+      allStarData &&
+      allStarData.is_active === false &&
+      allStarData.player_data.displayName
         ? [allStarData.player_data].map((item, index) => {
             return (
               <div
                 className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
                 key={index}
               >
-                <div className="d-flex flex-column"> 
+                <div className="d-flex flex-column">
                   <div className="playerName d-flex align-items-center font-montserrat">
                     <img
                       src={inactiveUserPfp}
