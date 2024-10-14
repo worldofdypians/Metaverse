@@ -992,6 +992,7 @@ const NewDailyBonus = ({
           window.config.nftSeller_address.toLowerCase()
       );
     });
+    console.log('filteredCaws',filteredCaws)
     setCawsNfts(filteredCaws);
   };
 
@@ -1003,6 +1004,8 @@ const NewDailyBonus = ({
           window.config.nftSeller_address.toLowerCase()
       );
     });
+    console.log('filteredLands',filteredLands)
+
     setLandNfts(filteredLands);
   };
 

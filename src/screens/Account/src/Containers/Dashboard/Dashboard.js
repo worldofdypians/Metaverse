@@ -67,6 +67,7 @@ import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 
 function Dashboard({
+  dailyBonuslistedNFTS,
   account,
   isConnected,
   chainId,
@@ -11043,7 +11044,7 @@ function Dashboard({
                 dyptokenData_old={dyptokenData_old}
                 handleSwitchChain={handleSwitchChain}
                 handleSwitchNetwork={handleSwitchNetwork}
-                listedNFTS={listedNFTS}
+                listedNFTS={dailyBonuslistedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
                   window.location.hash = "";

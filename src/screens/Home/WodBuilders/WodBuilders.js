@@ -292,6 +292,12 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "IBC Group",
+      icon: "ibc",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
