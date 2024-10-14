@@ -14,11 +14,11 @@ const MarketSection = ({
   ethTokenData,
   dyptokenDatabnb,
   idyptokenDatabnb,
+  cawsListed,
+  wodListed,
+  timepieceListed
 }) => {
   const [activebtn, setActiveBtn] = useState("land");
-  const [cawsListed, setcawsListed] = useState([]);
-  const [wodListed, setwodListed] = useState([]);
-  const [timepieceListed, settimepieceListed] = useState([]);
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(false);
 
@@ -133,44 +133,6 @@ const MarketSection = ({
     },
   ];
 
-  const fetchCawsNfts = async () => {
-    const cawsNft = await getCawsNfts();
-    let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
-    let latestCaws = cawsNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
-      );
-    });
-    setcawsListed(latestCaws);
-  };
-
-  const fetchLandNfts = async () => {
-    const wodNft = await getWodNfts();
-    let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
-    let latestWod = wodNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
-      );
-    });
-    setwodListed(latestWod);
-  };
-
-  const fetchTimepieceNfts = async () => {
-    const timepieceNft = await getTimepieceNfts();
-    let timepieceNft_ETH = timepieceNft.filter(
-      (item) => item.payment_priceType === 0
-    );
-    let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
-      );
-    });
-
-    settimepieceListed(latestTimepiece);
-  };
 
   async function updateViewCount(tokenId, nftAddress) {
     try {
@@ -191,10 +153,6 @@ const MarketSection = ({
   }
 
   useEffect(() => {
-    fetchCawsNfts();
-    fetchLandNfts();
-    fetchTimepieceNfts();
-
     firstSlider?.current?.innerSlider?.slickGoTo(0);
   }, [activebtn]);
 

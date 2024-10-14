@@ -125,6 +125,34 @@ const GetPremiumPopup = ({
   const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
   const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
 
+  const [discountPercentageTaiko, setdiscountPercentageTaiko] = useState(0);
+  const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
+  const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
+  const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
+
+  const getRankData = async () => {
+    await axios
+      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch(async (err) => {
+        if (err.response.status === 404) {
+          await axios
+            .post(`https://api.worldofdypians.com/api/addUserRank`, {
+              walletAddress: coinbase,
+            })
+            .then(async (data) => {
+              const response2 = await axios
+                .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+                .catch((e) => {
+                  console.error(e);
+                });
+            });
+        }
+      });
+  };
+
   const calculatePremiumDiscount = async (wallet) => {
     // if (chainId === 56) {
     const premiumSc = new window.bscWeb3.eth.Contract(
@@ -137,6 +165,11 @@ const GetPremiumPopup = ({
       window.config.subscription_viction_address
     );
 
+    const premiumSc_taiko = new window.taikoWeb3.eth.Contract(
+      window.SUBSCRIPTION_TAIKO_ABI,
+      window.config.subscription_taiko_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -145,6 +178,11 @@ const GetPremiumPopup = ({
     const nftContract_viction = new window.victionWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.taikoWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (wallet) {
@@ -157,6 +195,14 @@ const GetPremiumPopup = ({
         });
 
       const result_viction = await nftContract_viction.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const result_taiko = await nftContract_taiko.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -180,6 +226,14 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_taiko = await premiumSc_taiko.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -189,6 +243,13 @@ const GetPremiumPopup = ({
 
       const nftObject_viction = await premiumSc_viction.methods
         .nftDiscounts(window.config.nft_dypius_premium_viction_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_taiko = await premiumSc_taiko.methods
+        .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -240,15 +301,42 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
+      } else if (result_taiko && parseInt(result_taiko) > 0) {
+        const tokenId = await nftContract_taiko.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_taiko) {
+          setnftDiscountObjectTaiko(nftObject_taiko);
+          if (discount_taiko) {
+            setdiscountPercentageTaiko(
+              Math.max(
+                parseInt(discount_taiko),
+                parseInt(nftObject_taiko.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdTaiko(tokenId);
+        setnftPremium_totalTaiko(parseInt(result_taiko));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
         setnftPremium_tokenIdViction(0);
         setnftPremium_totalViction(0);
+        setnftPremium_tokenIdTaiko(0);
+        setnftPremium_totalTaiko(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
+        } else if (discount_taiko) {
+          setdiscountPercentageTaiko(parseInt(discount_taiko));
         }
       }
     } else {
@@ -256,6 +344,8 @@ const GetPremiumPopup = ({
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
       setnftPremium_totalViction(0);
+      setnftPremium_tokenIdTaiko(0);
+      setnftPremium_totalTaiko(0);
     }
     // } else setdiscountPercentage(0);
   };
@@ -575,7 +665,10 @@ const GetPremiumPopup = ({
       : chainId === 169
       ? await window.getEstimatedTokenSubscriptionAmountManta(token)
       : chainId === 167000
-      ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+      ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+        token,
+        discountPercentageTaiko
+      )
       : chainId === 713715
       ? await window.getEstimatedTokenSubscriptionAmountSei(token)
       : await window.getEstimatedTokenSubscriptionAmountETH(token);
@@ -624,6 +717,11 @@ const GetPremiumPopup = ({
     let nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    let nftContract_taiko = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -799,6 +897,63 @@ const GetPremiumPopup = ({
         );
         await tokenContract.methods
           .approve(victionsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    } else if (
+      chainId === 167000 &&
+      nftPremium_totalTaiko > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_taiko.methods
+          .approve(
+            window.config.subscription_taiko_address,
+            nftPremium_tokenIdTaiko
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageTaiko < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(taikosubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -1030,7 +1185,10 @@ const GetPremiumPopup = ({
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -1057,20 +1215,6 @@ const GetPremiumPopup = ({
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
-        }
-      } else if (chainId === 167000) {
-        const result = await subscribeTokencontracttaiko.methods
-          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -1247,6 +1391,68 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
           }
         }
+      } else if (chainId === 167000) {
+        if (nftPremium_totalTaiko > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+            window.config.nft_dypius_premium_taiko_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdTaiko)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, taikosubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === taikosubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageTaiko === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageTaiko < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontracttaiko.methods
+            .allowance(coinbase, taikosubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -1324,6 +1530,7 @@ const GetPremiumPopup = ({
   };
 
   const handleSubscribe = async (e) => {
+    const today = Date.now();
     if (window.WALLET_TYPE !== "binance") {
       let subscriptionContract = await window.getContract({
         key:
@@ -1365,6 +1572,21 @@ const GetPremiumPopup = ({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "bnb subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             onSuccessDeposit();
             setTimeout(() => {
               setloadspinnerSub(false);
@@ -1399,6 +1621,21 @@ const GetPremiumPopup = ({
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "bnb subscribeBNB",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1431,6 +1668,69 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
             onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "viction subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
+        await window
+          .subscribeNFTTaiko(
+            nftDiscountObjectTaiko.nftAddress,
+            nftPremium_tokenIdTaiko,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "taiko subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1455,11 +1755,26 @@ const GetPremiumPopup = ({
         await subscriptionContract.methods
           .subscribe(selectedSubscriptionToken, price)
           .send({ from: await window.getCoinbase() })
-          .then((data) => {
+          .then(async (data) => {
             setloadspinnerSub(false);
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: chainId.toString(),
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1541,6 +1856,22 @@ const GetPremiumPopup = ({
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
           onSuccessDeposit();
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: "bnb subscribeNFT BinanceWallet",
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
@@ -1574,6 +1905,22 @@ const GetPremiumPopup = ({
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: "bnb subscribeBNB BinanceWallet",
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
@@ -1603,6 +1950,22 @@ const GetPremiumPopup = ({
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
+          await axios
+            .patch(
+              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+              {
+                multiplier: "yes",
+                chain: chainId.toString(),
+                premiumTimestamp: today.toString(),
+              }
+            )
+            .then(() => {
+              getRankData();
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
           setTimeout(() => {
             setloadspinnerSub(false);
             setloadspinner(false);
@@ -1727,10 +2090,15 @@ const GetPremiumPopup = ({
     chainId,
     nftPremium_total,
     nftPremium_totalViction,
+    nftPremium_totalTaiko,
+
     discountPercentage,
     discountPercentageViction,
+    discountPercentageTaiko,
+
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
+    nftPremium_tokenIdTaiko,
   ]);
 
   useEffect(() => {
@@ -1839,14 +2207,23 @@ const GetPremiumPopup = ({
           {discountPercentage > 0 ||
           discountPercentageViction > 0 ||
           nftPremium_total > 0 ||
-          nftPremium_totalViction > 0 ? (
+          nftPremium_totalViction > 0 ||
+          nftPremium_totalTaiko > 0 ||
+          nftPremium_totalTaiko > 0 ? (
             <div className="premium-discount-bg mt-3 p-4 position-relative">
               <div className="premiumRedTag position-absolute">
                 <div className="position-relative d-flex flex-column">
                   <img src={premiumRedTag} alt="" />
                   <div className="d-flex flex-column position-absolute discountwrap">
                     <span className="discount-price2 font-oxanium">
-                      {discountPercentage}%
+                    {discountPercentage > 0
+                      ? discountPercentage
+                      : discountPercentageViction > 0
+                      ? discountPercentageViction
+                      : discountPercentageTaiko > 0
+                      ? discountPercentageTaiko
+                      : discountPercentage}
+                    %
                     </span>
                     <span className="discount-price-bottom">Discount</span>
                   </div>
@@ -1855,64 +2232,77 @@ const GetPremiumPopup = ({
               <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
                 <div className="d-flex flex-column">
                   <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
-                  {nftPremium_total > 0 ||
-                    (nftPremium_totalViction > 0 && (
+                  {(nftPremium_total > 0 ||
+                  nftPremium_totalViction > 0 ||
+                  nftPremium_totalTaiko > 0) && (
                       <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                         Valid until:{" "}
                         {new Date(
+                      nftPremium_total > 0
+                        ? nftDiscountObject.expiration * 1000
+                        : nftPremium_totalTaiko > 0
+                        ? nftDiscountObjectTaiko.expiration * 1000
+                        : nftDiscountObjectViction.expiration * 1000
+                    )
+                      .toDateString()
+                      .slice(
+                        3,
+                        new Date(
                           nftPremium_total > 0
                             ? nftDiscountObject.expiration * 1000
+                            : nftPremium_totalTaiko > 0
+                            ? nftDiscountObjectTaiko.expiration * 1000
                             : nftDiscountObjectViction.expiration * 1000
-                        )
-                          .toDateString()
-                          .slice(
-                            3,
-                            new Date(
-                              nftPremium_total > 0
-                                ? nftDiscountObject.expiration * 1000
-                                : nftDiscountObjectViction.expiration * 1000
-                            ).toDateString().length
-                          )}
+                        ).toDateString().length
+                      )}
                       </h6>
-                    ))}
+                    )}
                 </div>
                 <div className="d-flex align-items-end gap-2">
                   <h6 className="discount-price">
-                    {discountPercentage == 100 ||
-                    discountPercentageViction == 100
-                      ? "FREE"
-                      : "$" +
-                        (100 -
-                          Number(
-                            discountPercentage > 0
-                              ? discountPercentage
-                              : discountPercentageViction > 0
-                              ? discountPercentageViction
-                              : discountPercentage
-                          ))}
+                  {discountPercentage == 100 ||
+                  discountPercentageViction == 100 ||
+                  discountPercentageTaiko == 100
+                    ? "FREE"
+                    : "$" +
+                      (100 -
+                        Number(
+                          discountPercentage > 0
+                            ? discountPercentage
+                            : discountPercentageViction > 0
+                            ? discountPercentageViction
+                            : discountPercentageTaiko > 0
+                            ? discountPercentageTaiko
+                            : discountPercentage
+                        ))}
                   </h6>
                   <h6 className="old-price-text">$100</h6>
                 </div>
-                {nftPremium_total > 0 ||
-                  (nftPremium_totalViction > 0 && (
+                {(nftPremium_total > 0 ||
+                nftPremium_totalViction > 0 ||
+                nftPremium_totalTaiko > 0) && (
                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
                       Valid until:{" "}
                       {new Date(
+                    nftPremium_total > 0
+                      ? nftDiscountObject.expiration * 1000
+                      : nftPremium_totalTaiko > 0
+                      ? nftDiscountObjectTaiko.expiration * 1000
+                      : nftDiscountObjectViction.expiration * 1000
+                  )
+                    .toDateString()
+                    .slice(
+                      3,
+                      new Date(
                         nftPremium_total > 0
                           ? nftDiscountObject.expiration * 1000
+                          : nftPremium_totalTaiko > 0
+                          ? nftDiscountObjectTaiko.expiration * 1000
                           : nftDiscountObjectViction.expiration * 1000
-                      )
-                        .toDateString()
-                        .slice(
-                          3,
-                          new Date(
-                            nftPremium_total > 0
-                              ? nftDiscountObject.expiration * 1000
-                              : nftDiscountObjectViction.expiration * 1000
-                          ).toDateString().length
-                        )}
+                      ).toDateString().length
+                    )}
                     </h6>
-                  ))}
+                  )}
               </div>
             </div>
           ) : (
@@ -2513,6 +2903,8 @@ const GetPremiumPopup = ({
                           ? discountPercentage
                           : discountPercentageViction != 0
                           ? discountPercentageViction
+                          : discountPercentageTaiko != 0
+                          ? discountPercentageTaiko
                           : discountPercentage
                       )}
                   </span>

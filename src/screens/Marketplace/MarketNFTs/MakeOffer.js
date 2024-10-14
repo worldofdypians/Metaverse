@@ -34,7 +34,8 @@ const MakeOffer = ({
   nftAddr,
   nftId,
   deletestatus,
-  updatestatus,binanceW3WProvider
+  updatestatus,
+  binanceW3WProvider,
 }) => {
   const windowSize = useWindowSize();
   const [filter1, setFilter1] = useState("weth");
@@ -92,39 +93,39 @@ const MakeOffer = ({
   const approveMakeOffer = async (price, pricetype, tokenType) => {
     const newPrice = new BigNumber(price * 1e18).toFixed();
     setapprovestatus("loading");
-    if(window.WALLET_TYPE !== 'binance'){
+    if (window.WALLET_TYPE !== "binance") {
       await window
-      .approveOffer(newPrice, pricetype, tokenType)
-      .then(() => {
-        setisApprove(true);
-        setapprovestatus("success");
+        .approveOffer(newPrice, pricetype, tokenType)
+        .then(() => {
+          setisApprove(true);
+          setapprovestatus("success");
 
-        setTimeout(() => {
-          setapprovestatus("initial");
-        }, 3000);
-      })
-      .catch((e) => {
-        console.error(e);
-        setapprovestatus("fail");
+          setTimeout(() => {
+            setapprovestatus("initial");
+          }, 3000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setapprovestatus("fail");
 
-        setTimeout(() => {
-          setapprovestatus("initial");
-        }, 3000);
-      });
-    } else if(window.WALLET_TYPE === 'binance') {
+          setTimeout(() => {
+            setapprovestatus("initial");
+          }, 3000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
       if (pricetype === 1) {
         const contract = new ethers.Contract(
-         
           tokenType === "dypv2"
             ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address, window.DYP_ABI, binanceW3WProvider.getSigner()
+            : window.config.dyp_token_address,
+          window.DYP_ABI,
+          binanceW3WProvider.getSigner()
         );
-    
-        
-      
-    
+
         await contract
-          .approve(window.config.nft_marketplace_address, newPrice,{ from: coinbase })
+          .approve(window.config.nft_marketplace_address, newPrice, {
+            from: coinbase,
+          })
           .then(() => {
             setisApprove(true);
             setapprovestatus("success");
@@ -141,12 +142,15 @@ const MakeOffer = ({
           });
       } else if (pricetype === 0) {
         const contract = new ethers.Contract(
-          window.config.weth2_address, window.TOKEN_ABI, binanceW3WProvider.getSigner()
+          window.config.weth2_address,
+          window.TOKEN_ABI,
+          binanceW3WProvider.getSigner()
         );
-    
 
         await contract
-          .approve(window.config.nft_marketplace_address, newPrice,{ from: coinbase })
+          .approve(window.config.nft_marketplace_address, newPrice, {
+            from: coinbase,
+          })
           .then(() => {
             setisApprove(true);
             setapprovestatus("success");
@@ -230,7 +234,13 @@ const MakeOffer = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width:
-      windowSize.width > 1400 ? "30%" : windowSize.width > 786 ? "50%" : "90%",
+      windowSize.width && windowSize.width > 1400
+        ? "30%"
+        : windowSize.width && windowSize.width > 786
+        ? "50%"
+        : windowSize.width && windowSize.width < 786
+        ? "90%"
+        : "30%",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -292,7 +302,7 @@ const MakeOffer = ({
                   }
                   alt=""
                   loading="lazy"
-                  style={{width: 80, height: 80}}
+                  style={{ width: 80, height: 80 }}
                 />
                 <div className="d-flex flex-column justify-content-between">
                   <div className="d-flex flex-column align-items-center">

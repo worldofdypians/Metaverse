@@ -1,7 +1,9 @@
 import React from "react";
+import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import "./_utilities.scss";
 
-const Utilities = () => {
+const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
+  const totalMembers = Number(socials?.discordMembers) + Number(socials?.youtubeSubscribers)+Number(socials?.telegramMembers) + Number(socials?.twitterFollowers)
   const utilities = [
     {
       title: "Live on Mainnet",
@@ -17,7 +19,7 @@ const Utilities = () => {
       image: "idyp.svg",
       desc: `
       <p class="utility-desc">
-     World of Dypians boasts over 492,000 daily active users (DAU) and 582,000 monthly active users (MAU). The platform has achieved over 90 million on-chain transactions and sold 140,000 NFTs. Our community has grown to over 600,000 members.
+     World of Dypians boasts over 492,000 daily active users (DAU) and ${getFormattedNumber(monthlyPlayers,0)} monthly active users (MAU). The platform has achieved over ${getFormattedNumber(totalTx,0)} on-chain transactions and sold ${getFormattedNumber(totalSupply,0)} NFTs. Our community has grown to over ${getFormattedNumber(totalMembers, 0)} members.
       </p>`,
       class: "stats-card",
     },

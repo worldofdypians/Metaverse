@@ -164,6 +164,7 @@ const StyledTextField = styled(TextField)({
 });
 
 function Dashboard({
+  dailyBonuslistedNFTS,
   account,
   isConnected,
   chainId,
@@ -193,23 +194,24 @@ function Dashboard({
   binanceWallet,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
+  latest20BoughtNFTS,
+  monthlyPlayers,
+  percent,
   onSuccessDeposit,
   dummyBetaPassData2,
   skaleEarnUsd,
-seiEarnUsd,
-coreEarnUsd,
-victionEarnUsd,
-taikoEarnUsd,
-cookieEarnUsd,
-immutableEarnUsd,
-mantaEarnUsd,
-multiversEarnUsd,
-bnbEarnUsd,
+  seiEarnUsd,
+  coreEarnUsd,
+  victionEarnUsd,
+  taikoEarnUsd,
+  cookieEarnUsd,
+  immutableEarnUsd,
+  mantaEarnUsd,
+  multiversEarnUsd,
+  bnbEarnUsd,
 }) {
-
-
   const { email, logout } = useAuth();
-  const { eventId } = useParams(); 
+  const { eventId } = useParams();
   const override = {
     display: "block",
     margin: "auto",
@@ -368,9 +370,6 @@ bnbEarnUsd,
     "10",
   ];
 
- 
-
-
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -526,8 +525,6 @@ bnbEarnUsd,
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [myBoughtNfts, setmyBoughtNfts] = useState([]);
-  const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
   const [standardChests, setStandardChests] = useState([]);
   const [premiumChests, setPremiumChests] = useState([]);
   const [openedChests, setOpenedChests] = useState([]);
@@ -591,7 +588,6 @@ bnbEarnUsd,
     Object.keys(window.config.subscription_tokens)[0]
   );
   const [tokenDecimals, settokenDecimals] = useState(1);
-  const [userWallet, setuserWallet] = useState("");
   const [dummypremiumChests, setDummyPremiumChests] = useState([]);
 
   const [claimedChests, setclaimedChests] = useState(0);
@@ -664,7 +660,7 @@ bnbEarnUsd,
   const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
 
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
-  
+
   const [mediaUrl, setMediaUrl] = useState("");
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
   const [discountPercentage, setdiscountPercentage] = useState(0);
@@ -685,6 +681,11 @@ bnbEarnUsd,
   const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
   const [nftPremium_totalViction, setnftPremium_totalViction] = useState(0);
   const [nftDiscountObjectViction, setnftDiscountObjectViction] = useState([]);
+
+  const [discountPercentageTaiko, setdiscountPercentageTaiko] = useState(0);
+  const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
+  const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
+  const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
 
   const sliderRef = useRef(null);
 
@@ -751,13 +752,6 @@ bnbEarnUsd,
   };
 
   //leaderboard calls
-
-
-
-
- 
-
-  
 
   const bnbStars = ["50", "40", "30", "20", "20", "20", "20", "20", "20", "20"];
   const bnbStarsPremium = [
@@ -950,6 +944,8 @@ bnbEarnUsd,
 
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
+  const userWallet = data?.getPlayer?.wallet?.publicAddress;
+  const dataFetchedRef = useRef(false);
 
   const [allData, setAllData] = useState([]);
   const [allBnbData, setAllBnbData] = useState([]);
@@ -1183,13 +1179,13 @@ bnbEarnUsd,
       setMonthlyRecordsCore(finalData);
     }
   };
-  const fetchPreviousWinnersCore = async () => {
-    if (prevVersionCore != 0) {
+  const fetchPreviousWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCore - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1202,13 +1198,13 @@ bnbEarnUsd,
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersCore = async () => {
-    if (prevVersionCoreWeekly != 0) {
+  const fetchPreviousWeeklyWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCoreWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1220,13 +1216,13 @@ bnbEarnUsd,
       setPrevDataCoreWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersCore = async () => {
-    if (prevVersionCoreMonthly != 0) {
+  const fetchPreviousMonthlyWinnersCore = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardCoreMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionCoreMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1246,17 +1242,20 @@ bnbEarnUsd,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionCore(parseInt(result.data.data.version));
+    fetchPreviousWinnersCore(parseInt(result.data.data.version));
     setDailyRecordsCore(result.data.data.leaderboard);
     fillRecordsCore(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerCore(true);
-      fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerCore(false);
-      fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerCore(true);
+        fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerCore(false);
+        fetchDailyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsCore = async () => {
@@ -1268,19 +1267,21 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
-
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.version));
     fillRecordsWeeklyCore(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (testArray.length > 0) {
-      setActivePlayerCoreWeekly(true);
-      fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerCoreWeekly(false);
-      fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerCoreWeekly(true);
+        fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerCoreWeekly(false);
+        fetchWeeklyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsCore = async () => {
@@ -1292,18 +1293,22 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerCoreMonthly(true);
-      fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
-    }
+    fetchPreviousMonthlyWinnersCore(parseInt(result.data.data.version));
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
-    if (testArray.length === 0) {
-      setActivePlayerCoreMonthly(false);
-      fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerCoreMonthly(true);
+        fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerCoreMonthly(false);
+        fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
@@ -1518,13 +1523,13 @@ bnbEarnUsd,
       setMonthlyRecordsViction(finalData);
     }
   };
-  const fetchPreviousWinnersViction = async () => {
-    if (prevVersionViction != 0) {
+  const fetchPreviousWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionViction - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1537,13 +1542,13 @@ bnbEarnUsd,
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersViction = async () => {
-    if (prevVersionVictionWeekly != 0) {
+  const fetchPreviousWeeklyWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionVictionWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1555,13 +1560,13 @@ bnbEarnUsd,
       setPrevDataVictionWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersViction = async () => {
-    if (prevVersionVictionMonthly != 0) {
+  const fetchPreviousMonthlyWinnersViction = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardVictionMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionVictionMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1581,17 +1586,20 @@ bnbEarnUsd,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionViction(parseInt(result.data.data.version));
+    fetchPreviousWinnersViction(parseInt(result.data.data.version));
     setDailyRecordsViction(result.data.data.leaderboard);
     fillRecordsViction(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerViction(true);
-      fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerViction(false);
-      fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerViction(true);
+        fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerViction(false);
+        fetchDailyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsViction = async () => {
@@ -1603,18 +1611,21 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsViction(result.data.data.leaderboard);
     setPrevVersionVictionWeekly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    fetchPreviousWeeklyWinnersViction(parseInt(result.data.data.version));
     fillRecordsWeeklyViction(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (testArray.length > 0) {
-      setActivePlayerVictionWeekly(true);
-      fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerVictionWeekly(false);
-      fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerVictionWeekly(true);
+        fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerVictionWeekly(false);
+        fetchWeeklyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsViction = async () => {
@@ -1626,18 +1637,21 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsViction(result.data.data.leaderboard);
     setPrevVersionVictionMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerVictionMonthly(true);
-      fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
-    }
+    fetchPreviousMonthlyWinnersViction(parseInt(result.data.data.version));
     fillRecordsMonthlyViction(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerVictionMonthly(true);
+        fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
 
-    if (testArray.length === 0) {
-      setActivePlayerVictionMonthly(false);
-      fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      if (testArray.length === 0) {
+        setActivePlayerVictionMonthly(false);
+        fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
@@ -1852,13 +1866,13 @@ bnbEarnUsd,
       setMonthlyRecordsManta(finalData);
     }
   };
-  const fetchPreviousWinnersManta = async () => {
-    if (prevVersionManta != 0) {
+  const fetchPreviousWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionManta - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1871,13 +1885,13 @@ bnbEarnUsd,
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersManta = async () => {
-    if (prevVersionMantaWeekly != 0) {
+  const fetchPreviousWeeklyWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionMantaWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1889,13 +1903,13 @@ bnbEarnUsd,
       setPrevDataMantaWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersManta = async () => {
-    if (prevVersionMantaMonthly != 0) {
+  const fetchPreviousMonthlyWinnersManta = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardMantaMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionMantaMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -1920,17 +1934,20 @@ bnbEarnUsd,
         fillRecordsManta([]);
       });
     setPrevVersionManta(parseInt(result.data.data.version));
+    fetchPreviousWinnersManta(parseInt(result.data.data.version));
     setDailyRecordsManta(result.data.data.leaderboard);
     fillRecordsManta(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerManta(true);
-      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerManta(false);
-      fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerManta(true);
+        fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerManta(false);
+        fetchDailyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsManta = async () => {
@@ -1947,18 +1964,21 @@ bnbEarnUsd,
       });
     setWeeklyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaWeekly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    fetchPreviousWeeklyWinnersManta(parseInt(result.data.data.version));
     fillRecordsWeeklyManta(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (testArray.length > 0) {
-      setActivePlayerMantaWeekly(true);
-      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerMantaWeekly(false);
-      fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerMantaWeekly(true);
+        fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerMantaWeekly(false);
+        fetchWeeklyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsManta = async () => {
@@ -1975,18 +1995,22 @@ bnbEarnUsd,
       });
     setMonthlyRecordsManta(result.data.data.leaderboard);
     setPrevVersionMantaMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerMantaMonthly(true);
-      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
-    }
-    fillRecordsMonthlyManta(result.data.data.leaderboard);
+    fetchPreviousMonthlyWinnersManta(parseInt(result.data.data.version));
 
-    if (testArray.length === 0) {
-      setActivePlayerMantaMonthly(false);
-      fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+    fillRecordsMonthlyManta(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerMantaMonthly(true);
+        fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerMantaMonthly(false);
+        fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
@@ -2201,13 +2225,13 @@ bnbEarnUsd,
       setMonthlyRecordsBase(finalData);
     }
   };
-  const fetchPreviousWinnersBase = async () => {
-    if (prevVersionBase != 0) {
+  const fetchPreviousWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBase - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2220,13 +2244,13 @@ bnbEarnUsd,
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersBase = async () => {
-    if (prevVersionBaseWeekly != 0) {
+  const fetchPreviousWeeklyWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBaseWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2238,13 +2262,13 @@ bnbEarnUsd,
       setPrevDataBaseWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersBase = async () => {
-    if (prevVersionBaseMonthly != 0) {
+  const fetchPreviousMonthlyWinnersBase = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardBaseMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionBaseMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2269,17 +2293,20 @@ bnbEarnUsd,
         fillRecordsBase([]);
       });
     setPrevVersionBase(parseInt(result.data.data.version));
+    fetchPreviousWinnersBase(parseInt(result.data.data.version));
     setDailyRecordsBase(result.data.data.leaderboard);
     fillRecordsBase(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerBase(true);
-      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerBase(false);
-      fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerBase(true);
+        fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerBase(false);
+        fetchDailyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsBase = async () => {
@@ -2296,18 +2323,22 @@ bnbEarnUsd,
       });
     setWeeklyRecordsBase(result.data.data.leaderboard);
     setPrevVersionBaseWeekly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    fillRecordsWeeklyBase(result.data.data.leaderboard);
+    fetchPreviousWeeklyWinnersBase(parseInt(result.data.data.version));
 
-    if (testArray.length > 0) {
-      setActivePlayerBaseWeekly(true);
-      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerBaseWeekly(false);
-      fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    fillRecordsWeeklyBase(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      if (testArray.length > 0) {
+        setActivePlayerBaseWeekly(true);
+        fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerBaseWeekly(false);
+        fetchWeeklyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsBase = async () => {
@@ -2324,18 +2355,22 @@ bnbEarnUsd,
       });
     setMonthlyRecordsBase(result.data.data.leaderboard);
     setPrevVersionBaseMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerBaseMonthly(true);
-      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
-    }
-    fillRecordsMonthlyBase(result.data.data.leaderboard);
+    fetchPreviousMonthlyWinnersBase(parseInt(result.data.data.version));
 
-    if (testArray.length === 0) {
-      setActivePlayerBaseMonthly(false);
-      fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+    fillRecordsMonthlyBase(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerBaseMonthly(true);
+        fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerBaseMonthly(false);
+        fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
@@ -2550,13 +2585,13 @@ bnbEarnUsd,
       setMonthlyRecordsTaiko(finalData);
     }
   };
-  const fetchPreviousWinnersTaiko = async () => {
-    if (prevVersionTaiko != 0) {
+  const fetchPreviousWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaiko - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2569,13 +2604,13 @@ bnbEarnUsd,
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersTaiko = async () => {
-    if (prevVersionTaikoWeekly != 0) {
+  const fetchPreviousWeeklyWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaikoWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2587,13 +2622,13 @@ bnbEarnUsd,
       setPrevDataTaikoWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersTaiko = async () => {
-    if (prevVersionTaikoMonthly != 0) {
+  const fetchPreviousMonthlyWinnersTaiko = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardTaikoMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionTaikoMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2618,17 +2653,20 @@ bnbEarnUsd,
         fillRecordsTaiko([]);
       });
     setPrevVersionTaiko(parseInt(result.data.data.version));
+    fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
     setDailyRecordsTaiko(result.data.data.leaderboard);
     fillRecordsTaiko(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerTaiko(true);
-      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerTaiko(false);
-      fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerTaiko(true);
+        fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerTaiko(false);
+        fetchDailyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsTaiko = async () => {
@@ -2645,18 +2683,21 @@ bnbEarnUsd,
       });
     setWeeklyRecordsTaiko(result.data.data.leaderboard);
     setPrevVersionTaikoWeekly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
+    fetchPreviousWeeklyWinnersTaiko(parseInt(result.data.data.version));
     fillRecordsWeeklyTaiko(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (testArray.length > 0) {
-      setActivePlayerTaikoWeekly(true);
-      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerTaikoWeekly(false);
-      fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerTaikoWeekly(true);
+        fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerTaikoWeekly(false);
+        fetchWeeklyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsTaiko = async () => {
@@ -2673,18 +2714,22 @@ bnbEarnUsd,
       });
     setMonthlyRecordsTaiko(result.data.data.leaderboard);
     setPrevVersionTaikoMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerTaikoMonthly(true);
-      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-    }
-    fillRecordsMonthlyTaiko(result.data.data.leaderboard);
+    fetchPreviousMonthlyWinnersTaiko(parseInt(result.data.data.version));
 
-    if (testArray.length === 0) {
-      setActivePlayerTaikoMonthly(false);
-      fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+    fillRecordsMonthlyTaiko(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerTaikoMonthly(true);
+        fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerTaikoMonthly(false);
+        fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
@@ -2899,13 +2944,13 @@ bnbEarnUsd,
       setMonthlyRecordsSkale(finalData);
     }
   };
-  const fetchPreviousWinnersSkale = async () => {
-    if (prevVersionSkale != 0) {
+  const fetchPreviousWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkale - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2917,13 +2962,13 @@ bnbEarnUsd,
     }
     // setdailyplayerData(result.data.data.leaderboard);
   };
-  const fetchPreviousWeeklyWinnersSkale = async () => {
-    if (prevVersionSkaleWeekly != 0) {
+  const fetchPreviousWeeklyWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleWeekly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkaleWeekly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2935,13 +2980,13 @@ bnbEarnUsd,
       setPrevDataSkaleWeekly(placeholderplayerData);
     }
   };
-  const fetchPreviousMonthlyWinnersSkale = async () => {
-    if (prevVersionSkaleMonthly != 0) {
+  const fetchPreviousMonthlyWinnersSkale = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "LeaderboardSkaleMonthly",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionSkaleMonthly - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -2961,17 +3006,20 @@ bnbEarnUsd,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionSkale(parseInt(result.data.data.version));
+    fetchPreviousWinnersSkale(parseInt(result.data.data.version));
     setDailyRecordsSkale(result.data.data.leaderboard);
     fillRecordsSkale(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerSkale(true);
-      fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayerSkale(false);
-      fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSkale(true);
+        fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerSkale(false);
+        fetchDailyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
     }
   };
   const fetchWeeklyRecordsSkale = async () => {
@@ -2983,18 +3031,22 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsSkale(result.data.data.leaderboard);
     setPrevVersionSkaleWeekly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    fillRecordsWeeklySkale(result.data.data.leaderboard);
+    fetchPreviousWeeklyWinnersSkale(parseInt(result.data.data.version));
 
-    if (testArray.length > 0) {
-      setActivePlayerSkaleWeekly(true);
-      fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerSkaleWeekly(false);
-      fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+    fillRecordsWeeklySkale(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      if (testArray.length > 0) {
+        setActivePlayerSkaleWeekly(true);
+        fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerSkaleWeekly(false);
+        fetchWeeklyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecordsSkale = async () => {
@@ -3006,18 +3058,22 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsSkale(result.data.data.leaderboard);
     setPrevVersionSkaleMonthly(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerSkaleMonthly(true);
-      fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-    }
-    fillRecordsMonthlySkale(result.data.data.leaderboard);
+    fetchPreviousMonthlyWinnersSkale(parseInt(result.data.data.version));
 
-    if (testArray.length === 0) {
-      setActivePlayerSkaleMonthly(false);
-      fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+    fillRecordsMonthlySkale(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSkaleMonthly(true);
+        fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerSkaleMonthly(false);
+        fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
     }
   };
   const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
@@ -3211,13 +3267,13 @@ bnbEarnUsd,
       setStarRecords(finalData);
     }
   };
-  const fetchPreviousWinnersStar = async () => {
-    if (prevVersionStar != 0) {
+  const fetchPreviousWinnersStar = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: prevVersionStar - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3238,41 +3294,44 @@ bnbEarnUsd,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
+    fetchPreviousWinnersStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerStar(true);
-      const userPosition = testArray[0].position;
-      setuserCollectedStars(testArray[0].statValue);
-      setUserDataStar(...testArray);
-      if (goldenPassRemainingTime) {
-        setDataAmountStar(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
-              : Number(starPrizes[userPosition]) +
-                Number(starPrizesGolden[userPosition])
-            : 0
-        );
-      } else if (!goldenPassRemainingTime) {
-        setDataAmountStar(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(starPrizes[9])
-              : Number(starPrizes[userPosition])
-            : 0
-        );
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerStar(true);
+        const userPosition = testArray[0].position;
+        setuserCollectedStars(testArray[0].statValue);
+        setUserDataStar(...testArray);
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 10
+                ? 0
+                : userPosition === 10
+                ? Number(starPrizes[9]) + Number(starPrizesGolden[9])
+                : Number(starPrizes[userPosition]) +
+                  Number(starPrizesGolden[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 10
+                ? 0
+                : userPosition === 10
+                ? Number(starPrizes[9])
+                : Number(starPrizes[userPosition])
+              : 0
+          );
+        }
+      } else if (testArray.length === 0) {
+        setActivePlayerStar(false);
+        fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
       }
-    } else if (testArray.length === 0) {
-      setActivePlayerStar(false);
-      fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
     }
   };
   const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
@@ -3356,13 +3415,13 @@ bnbEarnUsd,
     }
   };
 
-  const fetchPreviousWinners = async () => {
-    if (previousVersion != 0) {
+  const fetchPreviousWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3374,13 +3433,13 @@ bnbEarnUsd,
     // setdailyplayerData(result.data.data.leaderboard);
   };
 
-  const fetchGenesisPreviousWinners = async () => {
-    if (previousGenesisVersion != 0) {
+  const fetchGenesisPreviousWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "GenesisLandRewards",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousGenesisVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3392,13 +3451,13 @@ bnbEarnUsd,
     }
   };
 
-  const fetchPreviousWeeklyWinners = async () => {
-    if (previousWeeklyVersion != 0) {
+  const fetchPreviousWeeklyWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "WeeklyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousWeeklyVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3409,13 +3468,13 @@ bnbEarnUsd,
     }
   };
 
-  const fetchPreviousMonthlyWinners = async () => {
-    if (previousMonthlyVersion != 0) {
+  const fetchPreviousMonthlyWinners = async (version) => {
+    if (version != 0) {
       const data = {
         StatisticName: "MonthlyLeaderboard",
         StartPosition: 0,
         MaxResultsCount: 10,
-        Version: previousMonthlyVersion - 1,
+        Version: version - 1,
       };
       const result = await axios.post(
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
@@ -3437,15 +3496,18 @@ bnbEarnUsd,
     setpreviousVersion(parseInt(result.data.data.version));
     setRecords(result.data.data.leaderboard);
     fillRecords(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayer(true);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
-    } else if (testArray.length === 0) {
-      setActivePlayer(false);
-      fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+    fetchPreviousWinners(parseInt(result.data.data.version));
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayer(true);
+        fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayer(false);
+        fetchDailyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
     }
   };
 
@@ -3458,18 +3520,21 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecords(result.data.data.leaderboard);
     setpreviousWeeklyVersion(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    fillRecordsWeekly(result.data.data.leaderboard);
 
-    if (testArray.length > 0) {
-      setActivePlayerWeekly(true);
-      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
-    if (testArray.length === 0) {
-      setActivePlayerWeekly(false);
-      fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
+    fillRecordsWeekly(result.data.data.leaderboard);
+    fetchPreviousWeeklyWinners(parseInt(result.data.data.version));
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerWeekly(true);
+        fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
+      if (testArray.length === 0) {
+        setActivePlayerWeekly(false);
+        fetchWeeklyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
     }
   };
   const fetchMonthlyRecords = async () => {
@@ -3481,18 +3546,22 @@ bnbEarnUsd,
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecords(result.data.data.leaderboard);
     setpreviousMonthlyVersion(result.data.data.version);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerMonthly(true);
-      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
-    }
+    fetchPreviousMonthlyWinners(parseInt(result.data.data.version));
     fillRecordsMonthly(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-    if (testArray.length === 0) {
-      setActivePlayerMonthly(false);
-      fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      if (testArray.length > 0) {
+        setActivePlayerMonthly(true);
+        fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerMonthly(false);
+        fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
     }
   };
 
@@ -3510,12 +3579,13 @@ bnbEarnUsd,
       });
     if (result2) {
       setpreviousGenesisVersion(result2.data.data.version);
-
       setgenesisData(result2.data.data.leaderboard);
       fillRecordsGenesis(result2.data.data.leaderboard);
     }
-
-    fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
+    if (userId && username) {
+      fetchMonthlyGenesisRecordsAroundPlayer(result2.data.data.leaderboard);
+    }
+    fetchGenesisPreviousWinners(parseInt(result2.data.data.version));
   };
 
   const fetchMonthlyGenesisRecordsAroundPlayer = async (itemData) => {
@@ -3578,120 +3648,81 @@ bnbEarnUsd,
   }, [logoutCount]);
 
   useEffect(() => {
-    fetchDailyRecords();
-    fetchWeeklyRecords();
-    fetchMonthlyRecords();
-    fetchGenesisRecords();
-    fetchDailyRecordsCore();
-    fetchWeeklyRecordsCore();
-    fetchMonthlyRecordsCore();
-    fetchDailyRecordsViction();
-    fetchWeeklyRecordsViction();
-    fetchMonthlyRecordsViction();
-    fetchDailyRecordsManta();
-    fetchWeeklyRecordsManta();
-    fetchMonthlyRecordsManta();
-
-    fetchDailyRecordsBase();
-    fetchWeeklyRecordsBase();
-    fetchMonthlyRecordsBase();
-
-    fetchDailyRecordsTaiko();
-    fetchWeeklyRecordsTaiko();
-    fetchMonthlyRecordsTaiko();
-    fetchDailyRecordsSkale();
-    fetchWeeklyRecordsSkale();
-    fetchMonthlyRecordsSkale();
-    fetchRecordsStar();
+    if (username !== undefined && userId !== undefined) {
+      fetchDailyRecords();
+      fetchWeeklyRecords();
+      fetchMonthlyRecords();
+      fetchGenesisRecords();
+      fetchDailyRecordsCore();
+      fetchWeeklyRecordsCore();
+      fetchMonthlyRecordsCore();
+      fetchDailyRecordsViction();
+      fetchWeeklyRecordsViction();
+      fetchMonthlyRecordsViction();
+      fetchDailyRecordsManta();
+      fetchWeeklyRecordsManta();
+      fetchMonthlyRecordsManta();
+      fetchDailyRecordsBase();
+      fetchWeeklyRecordsBase();
+      fetchMonthlyRecordsBase();
+      fetchDailyRecordsTaiko();
+      fetchWeeklyRecordsTaiko();
+      fetchMonthlyRecordsTaiko();
+      fetchDailyRecordsSkale();
+      fetchWeeklyRecordsSkale();
+      fetchMonthlyRecordsSkale();
+      fetchRecordsStar();
+    }
   }, [username, userId, goldenPassRemainingTime]);
 
   useEffect(() => {
-    fetchDailyRecords();
-    getAllChests(email);
+    if (count !== 0) {
+      fetchDailyRecords();
+      getAllChests(email);
+    }
   }, [count]);
 
   useEffect(() => {
-    fetchDailyRecordsCore();
-    getAllCoreChests(email);
+    if (corecount !== 0) {
+      fetchDailyRecordsCore();
+      getAllCoreChests(email);
+    }
   }, [corecount]);
 
   useEffect(() => {
-    fetchDailyRecordsSkale();
-    getAllSkaleChests(email);
+    if (skalecount !== 0) {
+      fetchDailyRecordsSkale();
+      getAllSkaleChests(email);
+    }
   }, [skalecount]);
 
   useEffect(() => {
-    fetchDailyRecordsViction();
-    getAllVictionChests(email);
+    if (vicitoncount !== 0) {
+      fetchDailyRecordsViction();
+      getAllVictionChests(email);
+    }
   }, [vicitoncount]);
 
   useEffect(() => {
-    fetchDailyRecordsManta();
-    getAllMantaChests(email);
+    if (mantacount !== 0) {
+      fetchDailyRecordsManta();
+      getAllMantaChests(email);
+    }
   }, [mantacount]);
 
   useEffect(() => {
-    fetchDailyRecordsBase();
-    getAllBaseChests(email);
+    if (basecount !== 0) {
+      fetchDailyRecordsBase();
+      getAllBaseChests(email);
+    }
   }, [basecount]);
 
   useEffect(() => {
-    fetchDailyRecordsTaiko();
-    getAllTaikoChests(email);
+    if (taikocount !== 0) {
+      fetchDailyRecordsTaiko();
+      getAllTaikoChests(email);
+    }
   }, [taikocount]);
-
-  useEffect(() => {
-    fetchGenesisPreviousWinners();
-    fetchPreviousWinners();
-    fetchPreviousWeeklyWinners();
-    fetchPreviousMonthlyWinners();
-    fetchPreviousWinnersCore();
-    fetchPreviousWeeklyWinnersCore();
-    fetchPreviousMonthlyWinnersCore();
-    fetchPreviousWinnersViction();
-    fetchPreviousWeeklyWinnersViction();
-    fetchPreviousMonthlyWinnersViction();
-    fetchPreviousWinnersManta();
-    fetchPreviousWeeklyWinnersManta();
-    fetchPreviousMonthlyWinnersManta();
-
-    fetchPreviousWinnersBase();
-    fetchPreviousWeeklyWinnersBase();
-    fetchPreviousMonthlyWinnersBase();
-
-    fetchPreviousWinnersTaiko();
-    fetchPreviousWeeklyWinnersTaiko();
-    fetchPreviousMonthlyWinnersTaiko();
-    fetchPreviousWinnersSkale();
-    fetchPreviousWeeklyWinnersSkale();
-    fetchPreviousMonthlyWinnersSkale();
-    fetchPreviousWinnersStar();
-  }, [
-    previousGenesisVersion,
-    previousMonthlyVersion,
-    previousVersion,
-    previousWeeklyVersion,
-    userId,
-    prevVersionSkale,
-    prevVersionSkaleWeekly,
-    prevVersionStar,
-    prevVersionSkaleMonthly,
-    prevVersionCore,
-    prevVersionManta,
-    prevVersionBase,
-    prevVersionTaiko,
-    prevVersionVictionMonthly,
-    prevVersionCoreWeekly,
-    prevVersionCoreMonthly,
-    prevVersionMantaWeekly,
-    prevVersionMantaMonthly,
-    prevVersionBaseWeekly,
-    prevVersionBaseMonthly,
-    prevVersionTaikoWeekly,
-    prevVersionTaikoMonthly,
-    prevVersionViction,
-    prevVersionVictionWeekly,
-  ]);
 
   useEffect(() => {
     setAllStarData({
@@ -3805,9 +3836,9 @@ bnbEarnUsd,
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: updatedSkalePrizesWeekly,
-        past_rewards: skalePrizesWeekly,
+        past_rewards: updatedSkalePrizesWeekly,
         premium_rewards: updatedSkalePrizesWeeklyGolden,
-        past_premium_rewards: skalePrizesWeeklyGolden,
+        past_premium_rewards: updatedSkalePrizesWeeklyGolden,
 
         activeData: weeklyRecordsSkale,
         previousData: prevDataSkaleWeekly,
@@ -4118,72 +4149,9 @@ bnbEarnUsd,
         return 0;
       });
 
-    // var remainingTime_milisecondsv2 = remainingTimev2 * 1000;
-
-    // var remainingTime_milisecondsv1 = remainingTimev1 * 1000;
-    // const timeofDepositv1 = await dypv1.methods
-    //   .getTimeOfDeposit(coinbase)
-    //   .call();
-
-    // const timeofDepositv2 = await dypv2.methods
-    //   .getTimeOfDeposit(coinbase)
-    //   .call();
-
-    // if (timeofDepositv1 !== 0 || timeofDepositv2 !== 0) {
-    //   remainingTime_milisecondsv1 = timeofDepositv1 * 1000;
-    //   remainingTime_milisecondsv2 = timeofDepositv2 * 1000;
-
-    //   const timeofDeposit_Datev1 = new Intl.DateTimeFormat("en-US", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     second: "2-digit",
-    //   }).format(remainingTime_milisecondsv1);
-
-    //   const timeofDeposit_Date_formattedv1 = new Date(timeofDeposit_Datev1);
-
-    //   const timeofDeposit_Hoursv1 = timeofDeposit_Date_formattedv1.getHours();
-    //   const timeofDeposit_Minutesv1 =
-    //     timeofDeposit_Date_formattedv1.getMinutes();
-    //   const finalHoursv1 = timeofDeposit_Hoursv1 - 11;
-
-    //   const finalMinutesv1 = timeofDeposit_Minutesv1 - 11;
-
-    //   const resultv1 =
-    //     remainingTimev1 - finalHoursv1 * 60 * 60 - finalMinutesv1 * 60;
-
-    //   const timeofDeposit_Datev2 = new Intl.DateTimeFormat("en-US", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //     hour: "2-digit",
-    //     minute: "2-digit",
-    //     second: "2-digit",
-    //   }).format(remainingTime_milisecondsv2);
-
-    //   const timeofDeposit_Date_formattedv2 = new Date(timeofDeposit_Datev2);
-    //   const timeofDeposit_day = timeofDeposit_Date_formattedv2.getDate();
-    //   const timeofDeposit_Hoursv2 = timeofDeposit_Date_formattedv2.getHours();
-    //   const timeofDeposit_Minutesv2 =
-    //     timeofDeposit_Date_formattedv2.getMinutes();
-    //   const finalHoursv2 = timeofDeposit_Hoursv2 - 11;
-
-    //   const finalMinutesv2 = timeofDeposit_Minutesv2 - 11;
-
-    //   const resultv2 =
-    //     remainingTimev2 - finalHoursv2 * 60 * 60 - finalMinutesv2 * 60;
     setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
     handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
-    // setcountdown700(result * 1000);
-    //}
-    // } else {
-    //   setcountdown700();
-    //   handleSetAvailableTime();
-    // }
   };
-
 
   const dailyBonusData = {
     eventType: "6 Available Rewards",
@@ -4444,9 +4412,7 @@ bnbEarnUsd,
     return myStakes;
   };
 
-  const getCawsStakesIds = async () => {
-    const address = coinbase;
-
+  const getCawsStakesIds = async (address) => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
@@ -4465,9 +4431,7 @@ bnbEarnUsd,
     return myStakes;
   };
 
-  const getLandPremiumStakesIds = async () => {
-    const address = coinbase;
-
+  const getLandPremiumStakesIds = async (address) => {
     let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.LANDPREMIUM_ABI,
       window.config.nft_land_premiumstake_address
@@ -4486,9 +4450,7 @@ bnbEarnUsd,
     return myStakes;
   };
 
-  const calculateAllRewardsCawsPremium = async () => {
-    const address = coinbase;
-
+  const calculateAllRewardsCawsPremium = async (address) => {
     let myStakes = await getCawsStakesIds(address);
     let result = 0;
     let calculateRewards = [];
@@ -4516,9 +4478,7 @@ bnbEarnUsd,
     setcawsPremiumRewards(result);
   };
 
-  const calculateAllRewardsLandPremium = async () => {
-    const address = coinbase;
-
+  const calculateAllRewardsLandPremium = async (address) => {
     let myStakes = await getLandPremiumStakesIds(address);
     let result = 0;
     let calculateRewards = [];
@@ -4835,6 +4795,11 @@ bnbEarnUsd,
       window.config.subscription_viction_address
     );
 
+    const premiumSc_taiko = new window.taikoWeb3.eth.Contract(
+      window.SUBSCRIPTION_TAIKO_ABI,
+      window.config.subscription_taiko_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -4843,6 +4808,11 @@ bnbEarnUsd,
     const nftContract_viction = new window.victionWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.taikoWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (wallet) {
@@ -4861,6 +4831,15 @@ bnbEarnUsd,
           console.error(e);
           return 0;
         });
+
+      const result_taiko = await nftContract_taiko.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const discount = await premiumSc.methods
         .discountPercentageGlobal()
         .call()
@@ -4877,6 +4856,14 @@ bnbEarnUsd,
           return 0;
         });
 
+      const discount_taiko = await premiumSc_taiko.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -4886,6 +4873,13 @@ bnbEarnUsd,
 
       const nftObject_viction = await premiumSc_viction.methods
         .nftDiscounts(window.config.nft_dypius_premium_viction_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_taiko = await premiumSc_taiko.methods
+        .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -4937,15 +4931,42 @@ bnbEarnUsd,
 
         setnftPremium_tokenIdViction(tokenId);
         setnftPremium_totalViction(parseInt(result_viction));
+      } else if (result_taiko && parseInt(result_taiko) > 0) {
+        const tokenId = await nftContract_taiko.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_taiko) {
+          setnftDiscountObjectTaiko(nftObject_taiko);
+          if (discount_taiko) {
+            setdiscountPercentageTaiko(
+              Math.max(
+                parseInt(discount_taiko),
+                parseInt(nftObject_taiko.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdTaiko(tokenId);
+        setnftPremium_totalTaiko(parseInt(result_taiko));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
         setnftPremium_tokenIdViction(0);
         setnftPremium_totalViction(0);
+        setnftPremium_tokenIdTaiko(0);
+        setnftPremium_totalTaiko(0);
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
+        } else if (discount_taiko) {
+          setdiscountPercentageTaiko(parseInt(discount_taiko));
         }
       }
     } else {
@@ -4953,6 +4974,8 @@ bnbEarnUsd,
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
       setnftPremium_totalViction(0);
+      setnftPremium_tokenIdTaiko(0);
+      setnftPremium_totalTaiko(0);
     }
 
     // } else setdiscountPercentage(0);
@@ -5148,235 +5171,245 @@ bnbEarnUsd,
   };
 
   const getAllChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "bnb" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "bnb" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
+          setOpenedChests(openedChests);
+          setStandardChests(standardChestsArray);
+          setPremiumChests(premiumChestsArray);
+          setclaimedChests(openedStandardChests.length);
+          setclaimedPremiumChests(openedPremiumChests.length);
+          setallChests(chestOrder);
         }
-        setOpenedChests(openedChests);
-        setStandardChests(standardChestsArray);
-        setPremiumChests(premiumChestsArray);
-        setclaimedChests(openedStandardChests.length);
-        setclaimedPremiumChests(openedPremiumChests.length);
-        setallChests(chestOrder);
       }
     }
   };
 
   const getAllSkaleChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "skale" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "skale" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedSkaleChests(openedChests);
-        setStandardSkaleChests(standardChestsArray);
-        setPremiumSkaleChests(premiumChestsArray);
+          setOpenedSkaleChests(openedChests);
+          setStandardSkaleChests(standardChestsArray);
+          setPremiumSkaleChests(premiumChestsArray);
 
-        setclaimedSkaleChests(openedStandardChests.length);
-        setclaimedSkalePremiumChests(openedPremiumChests.length);
-        setallSkaleChests(chestOrder);
+          setclaimedSkaleChests(openedStandardChests.length);
+          setclaimedSkalePremiumChests(openedPremiumChests.length);
+          setallSkaleChests(chestOrder);
+        }
       }
     }
   };
 
   const getAllCoreChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "core" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "core" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedCoreChests(openedChests);
-        setStandardCoreChests(standardChestsArray);
-        setPremiumCoreChests(premiumChestsArray);
+          setOpenedCoreChests(openedChests);
+          setStandardCoreChests(standardChestsArray);
+          setPremiumCoreChests(premiumChestsArray);
 
-        setclaimedCoreChests(openedStandardChests.length);
-        setclaimedCorePremiumChests(openedPremiumChests.length);
-        setallCoreChests(chestOrder);
+          setclaimedCoreChests(openedStandardChests.length);
+          setclaimedCorePremiumChests(openedPremiumChests.length);
+          setallCoreChests(chestOrder);
+        }
       }
     }
   };
 
   const getAllVictionChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "viction" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "viction" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedVictionChests(openedChests);
-        setStandardVictionChests(standardChestsArray);
-        setPremiumVictionChests(premiumChestsArray);
+          setOpenedVictionChests(openedChests);
+          setStandardVictionChests(standardChestsArray);
+          setPremiumVictionChests(premiumChestsArray);
 
-        setclaimedVictionChests(openedStandardChests.length);
-        setclaimedVictionPremiumChests(openedPremiumChests.length);
-        setallVictionChests(chestOrder);
+          setclaimedVictionChests(openedStandardChests.length);
+          setclaimedVictionPremiumChests(openedPremiumChests.length);
+          setallVictionChests(chestOrder);
+        }
       }
     }
   };
 
   const getAllMantaChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "manta" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "manta" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedMantaChests(openedChests);
-        setStandardMantaChests(standardChestsArray);
-        setPremiumMantaChests(premiumChestsArray);
+          setOpenedMantaChests(openedChests);
+          setStandardMantaChests(standardChestsArray);
+          setPremiumMantaChests(premiumChestsArray);
 
-        setclaimedMantaChests(openedStandardChests.length);
-        setclaimedMantaPremiumChests(openedPremiumChests.length);
-        setallMantaChests(chestOrder);
+          setclaimedMantaChests(openedStandardChests.length);
+          setclaimedMantaPremiumChests(openedPremiumChests.length);
+          setallMantaChests(chestOrder);
+        }
       }
     }
   };
@@ -5429,48 +5462,50 @@ bnbEarnUsd,
   };
 
   const getAllTaikoChests = async (userEmail) => {
-    const emailData = { emailAddress: userEmail, chainId: "taiko" };
+    if (userEmail) {
+      const emailData = { emailAddress: userEmail, chainId: "taiko" };
 
-    const result = await axios.post(
-      "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
-      emailData
-    );
-    if (result.status === 200 && result.data) {
-      const chestOrder = result.data.chestOrder;
+      const result = await axios.post(
+        "https://worldofdypiansdailybonus.azurewebsites.net/api/GetRewards?=null",
+        emailData
+      );
+      if (result.status === 200 && result.data) {
+        const chestOrder = result.data.chestOrder;
 
-      let standardChestsArray = [];
-      let premiumChestsArray = [];
-      let openedChests = [];
-      let openedStandardChests = [];
-      let openedPremiumChests = [];
+        let standardChestsArray = [];
+        let premiumChestsArray = [];
+        let openedChests = [];
+        let openedStandardChests = [];
+        let openedPremiumChests = [];
 
-      if (chestOrder.length > 0) {
-        for (let item = 0; item < chestOrder.length; item++) {
-          if (chestOrder[item].chestType === "Standard") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedStandardChests.push(chestOrder[item]);
+        if (chestOrder.length > 0) {
+          for (let item = 0; item < chestOrder.length; item++) {
+            if (chestOrder[item].chestType === "Standard") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedStandardChests.push(chestOrder[item]);
+                }
               }
-            }
-            standardChestsArray.push(chestOrder[item]);
-          } else if (chestOrder[item].chestType === "Premium") {
-            if (chestOrder[item].isOpened === true) {
-              {
-                openedChests.push(chestOrder[item]);
-                openedPremiumChests.push(chestOrder[item]);
+              standardChestsArray.push(chestOrder[item]);
+            } else if (chestOrder[item].chestType === "Premium") {
+              if (chestOrder[item].isOpened === true) {
+                {
+                  openedChests.push(chestOrder[item]);
+                  openedPremiumChests.push(chestOrder[item]);
+                }
               }
+              premiumChestsArray.push(chestOrder[item]);
             }
-            premiumChestsArray.push(chestOrder[item]);
           }
-        }
-        setOpenedTaikoChests(openedChests);
-        setStandardTaikoChests(standardChestsArray);
-        setPremiumTaikoChests(premiumChestsArray);
+          setOpenedTaikoChests(openedChests);
+          setStandardTaikoChests(standardChestsArray);
+          setPremiumTaikoChests(premiumChestsArray);
 
-        setclaimedTaikoChests(openedStandardChests.length);
-        setclaimedTaikoPremiumChests(openedPremiumChests.length);
-        setallTaikoChests(chestOrder);
+          setclaimedTaikoChests(openedStandardChests.length);
+          setclaimedTaikoPremiumChests(openedPremiumChests.length);
+          setallTaikoChests(chestOrder);
+        }
       }
     }
   };
@@ -5546,105 +5581,109 @@ bnbEarnUsd,
   };
 
   const getMyNFTS = async (coinbase, type) => {
-    return await window.getMyNFTs(coinbase, type);
+    if (coinbase !== undefined) {
+      return await window.getMyNFTs(coinbase, type);
+    } else {
+      return [];
+    }
   };
 
   //todo
   const fetchAllMyNfts = async () => {
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "caws").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbnb").then(
-      (NFTS) => setMyNFTSCawsBNB(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbnb").then((NFTS) =>
+      setMyNFTSCawsBNB(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsbase").then(
-      (NFTS) => setMyNFTSCawsBase(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsbase").then((NFTS) =>
+      setMyNFTSCawsBase(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cawsavax").then(
-      (NFTS) => setMyNFTSCawsAvax(NFTS)
-    );
-
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "timepiece").then(
-      (NFTS) => setMyNFTSTimepiece(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cawsavax").then((NFTS) =>
+      setMyNFTSCawsAvax(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "land").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "timepiece").then((NFTS) =>
+      setMyNFTSTimepiece(NFTS)
+    );
+
+    getMyNFTS(userWallet ? userWallet : coinbase, "land").then((NFTS) =>
       setMyNFTSLand(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "bnb").then((NFTS) => {
+    getMyNFTS(userWallet ? userWallet : coinbase, "bnb").then((NFTS) => {
       setMyNFTSBNB(NFTS);
     });
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "opbnb").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "opbnb").then((NFTS) =>
       setMyNFTSopBNB(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbnb").then(
-      (NFTS) => setMyNFTSLandBNB(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbnb").then((NFTS) =>
+      setMyNFTSLandBNB(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landbase").then(
-      (NFTS) => setMyNFTSLandBase(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landbase").then((NFTS) =>
+      setMyNFTSLandBase(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "landavax").then(
-      (NFTS) => setMyNFTSLandAvax(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "landavax").then((NFTS) =>
+      setMyNFTSLandAvax(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "coingecko").then(
-      (NFTS) => setMyNFTSCoingecko(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "coingecko").then((NFTS) =>
+      setMyNFTSCoingecko(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "gate").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "gate").then((NFTS) =>
       setmyGateNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "conflux").then(
-      (NFTS) => setmyConfluxNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "conflux").then((NFTS) =>
+      setmyConfluxNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "base").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "base").then((NFTS) =>
       setmyBaseNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "doge").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "doge").then((NFTS) =>
       setmyDogeNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cmc").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "cmc").then((NFTS) =>
       setmyCmcNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "core").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "core").then((NFTS) =>
       setmyCoreNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "viction").then(
-      (NFTS) => setmyVictionNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "viction").then((NFTS) =>
+      setmyVictionNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "immutable").then(
-      (NFTS) => setmyImmutableNfts(NFTS)
-    );
-
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "multivers").then(
-      (NFTS) => setmyMultiversNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "immutable").then((NFTS) =>
+      setmyImmutableNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "skale").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "multivers").then((NFTS) =>
+      setmyMultiversNfts(NFTS)
+    );
+
+    getMyNFTS(userWallet ? userWallet : coinbase, "skale").then((NFTS) =>
       setmySkaleNfts(NFTS)
     );
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "manta").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "manta").then((NFTS) =>
       setmyMantaNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "taiko").then((NFTS) =>
+    getMyNFTS(userWallet ? userWallet : coinbase, "taiko").then((NFTS) =>
       setmyTaikoNfts(NFTS)
     );
 
-    getMyNFTS(userWallet !== "" ? userWallet : coinbase, "cookie3").then(
-      (NFTS) => setmyCookieNfts(NFTS)
+    getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then((NFTS) =>
+      setmyCookieNfts(NFTS)
     );
   };
 
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
 
-    const listedNFTS = await getListedNFTS(0, "", "buyer", coinbase, "");
+    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
     listedNFTS &&
       listedNFTS.length > 0 &&
       listedNFTS.map((nft) => {
@@ -5662,13 +5701,12 @@ bnbEarnUsd,
           finalboughtItems1.push(nft);
         }
       });
-    setmyBoughtNfts(finalboughtItems1);
     setListedNFTS(finalboughtItems1);
   };
 
   const windowSize = useWindowSize();
 
-  const getDypBalance = async () => {
+  const getDypBalance = async (account) => {
     const web3eth = new Web3(
       "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
     );
@@ -5701,7 +5739,7 @@ bnbEarnUsd,
       );
 
       const bal1 = await contract1.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3eth.utils.fromWei(data, "ether");
@@ -5709,7 +5747,7 @@ bnbEarnUsd,
       setDypBalance(bal1);
 
       const bal2 = await contract2.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -5717,7 +5755,7 @@ bnbEarnUsd,
       setDypBalanceBnb(bal2);
 
       const bal3 = await contract3.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -5733,7 +5771,7 @@ bnbEarnUsd,
       setiDypBalance(bal1_idyp);
 
       const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3bsc.utils.fromWei(data, "ether");
@@ -5741,7 +5779,7 @@ bnbEarnUsd,
       setiDypBalanceBnb(bal2_idyp);
 
       const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(coinbase)
+        .balanceOf(account)
         .call()
         .then((data) => {
           return web3avax.utils.fromWei(data, "ether");
@@ -5779,57 +5817,6 @@ bnbEarnUsd,
       setFavorites([]);
     }
   }
-
-  const getLatest20BoughtNFTS = async () => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // console.log("boughtItems", boughtItems);
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-    return finalboughtItems;
-  };
 
   const getUserRewardData = async (addr) => {
     const result = await axios
@@ -5995,7 +5982,10 @@ bnbEarnUsd,
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -6042,6 +6032,11 @@ bnbEarnUsd,
     const nftContract_viction = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_VICTION_ABI,
       window.config.nft_dypius_premium_viction_address
+    );
+
+    const nftContract_taiko = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+      window.config.nft_dypius_premium_taiko_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -6217,6 +6212,63 @@ bnbEarnUsd,
         );
         await tokenContract.methods
           .approve(victionsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
+    } else if (
+      chainId === 167000 &&
+      nftPremium_totalTaiko > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_taiko.methods
+          .approve(
+            window.config.subscription_taiko_address,
+            nftPremium_tokenIdTaiko
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageTaiko < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(taikosubscribeAddress, price)
           .send({ from: coinbase })
           .then(() => {
             setloadspinner(false);
@@ -6456,7 +6508,10 @@ bnbEarnUsd,
         : chainId === 169
         ? await window.getEstimatedTokenSubscriptionAmountManta(token)
         : chainId === 167000
-        ? await window.getEstimatedTokenSubscriptionAmountTaiko(token)
+        ? await window.getEstimatedTokenSubscriptionAmountTaiko(
+            token,
+            discountPercentageTaiko
+          )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
@@ -6483,20 +6538,6 @@ bnbEarnUsd,
       } else if (chainId === 169) {
         const result = await subscribeTokencontractmanta.methods
           .allowance(coinbase, mantasubscribeAddress)
-          .call()
-          .then();
-        if (result != 0 && Number(result) >= Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(true);
-          setapproveStatus("deposit");
-        } else if (result == 0 || Number(result) < Number(tokenprice)) {
-          setloadspinner(false);
-          setisApproved(false);
-          setapproveStatus("initial");
-        }
-      } else if (chainId === 167000) {
-        const result = await subscribeTokencontracttaiko.methods
-          .allowance(coinbase, taikosubscribeAddress)
           .call()
           .then();
         if (result != 0 && Number(result) >= Number(tokenprice)) {
@@ -6673,6 +6714,68 @@ bnbEarnUsd,
             setapproveStatus("initial");
           }
         }
+      } else if (chainId === 167000) {
+        if (nftPremium_totalTaiko > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
+            window.config.nft_dypius_premium_taiko_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdTaiko)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, taikosubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === taikosubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageTaiko === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+            // if (discountPercentageTaiko < 100) {
+            //   setloadspinner(false);
+            //   setisApproved(true);
+            //   setapproveStatus("approveAmount");
+            // } else {
+            //   setloadspinner(false);
+            //   setisApproved(false);
+            //   setapproveStatus("initial");
+            // }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontracttaiko.methods
+            .allowance(coinbase, taikosubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -6826,7 +6929,7 @@ bnbEarnUsd,
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -6900,7 +7003,7 @@ bnbEarnUsd,
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -6979,7 +7082,81 @@ bnbEarnUsd,
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "viction subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setgetPremiumPopup(false);
+              onSubscribeSuccess();
+            }, 2000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 167000 && nftPremium_totalTaiko > 0) {
+        await window
+          .subscribeNFTTaiko(
+            nftDiscountObjectTaiko.nftAddress,
+            nftPremium_tokenIdTaiko,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            if (dailyBonusPopup === true) {
+              setPremiumTxHash(data.transactionHash);
+              const selectedchain =
+                chainId === 1
+                  ? "eth"
+                  : chainId === 56
+                  ? "bnb"
+                  : chainId === 43114
+                  ? "avax"
+                  : chainId === 1030
+                  ? "cfx"
+                  : chainId === 8453
+                  ? "base"
+                  : chainId === 1482601649
+                  ? "skale"
+                  : chainId === 88
+                  ? "viction"
+                  : chainId === 169
+                  ? "manta"
+                  : chainId === 1116
+                  ? "core"
+                  : chainId === 713715
+                  ? "sei"
+                  : "";
+              setselectedChainforPremium(selectedchain);
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -7181,7 +7358,7 @@ bnbEarnUsd,
               `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
               {
                 multiplier: "yes",
-                chain: chainId.toString(),
+                chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
               }
             )
@@ -7241,7 +7418,7 @@ bnbEarnUsd,
                 `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
                 {
                   multiplier: "yes",
-                  chain: chainId.toString(),
+                  chain: "bnb subscribeBNB BinanceWallet",
                   premiumTimestamp: today.toString(),
                 }
               )
@@ -7727,9 +7904,12 @@ bnbEarnUsd,
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-    }
-     else {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    } else {
       window.scrollTo(0, 0);
     }
   };
@@ -7785,6 +7965,50 @@ bnbEarnUsd,
   }, [coinbase]);
 
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    fetchSkalePrice();
+    fetchSeiPrice();
+    fetchMantaPrice();
+    fetchTaikoPrice();
+    fetchCookiePrice();
+    fetchCorePrice();
+    fetchVictionPrice();
+    fetchEgldPrice();
+    fetchImmutablePrice();
+    setDummyPremiumChests(shuffle(dummyPremiums));
+    fetchReleases();
+    window.scrollTo(0, 0);
+    getTokenDatabnb();
+    fetchCFXPrice();
+    // if (username !== undefined && userId !== undefined) {
+    fetchDailyRecords();
+    fetchWeeklyRecords();
+    fetchMonthlyRecords();
+    fetchGenesisRecords();
+    fetchDailyRecordsCore();
+    fetchWeeklyRecordsCore();
+    fetchMonthlyRecordsCore();
+    fetchDailyRecordsViction();
+    fetchWeeklyRecordsViction();
+    fetchMonthlyRecordsViction();
+    fetchDailyRecordsManta();
+    fetchWeeklyRecordsManta();
+    fetchMonthlyRecordsManta();
+    fetchDailyRecordsBase();
+    fetchWeeklyRecordsBase();
+    fetchMonthlyRecordsBase();
+    fetchDailyRecordsTaiko();
+    fetchWeeklyRecordsTaiko();
+    fetchMonthlyRecordsTaiko();
+    fetchDailyRecordsSkale();
+    fetchWeeklyRecordsSkale();
+    fetchMonthlyRecordsSkale();
+    fetchRecordsStar();
+    // }
+  }, []);
+
+  useEffect(() => {
     if (
       data &&
       data.getPlayer &&
@@ -7799,36 +8023,6 @@ bnbEarnUsd,
       calculateAllRewardsLandPremium(data.getPlayer.wallet.publicAddress);
     }
   }, [data, chainId]);
-
-  useEffect(() => {
-    setDummyPremiumChests(shuffle(dummyPremiums));
-    fetchReleases();
-  }, []);
-
-  useEffect(() => {
-    const checkMidnight = () => {
-      const now = new Date();
-      if (
-        now.getHours() === 0 &&
-        now.getMinutes() === 0 &&
-        now.getSeconds() === 0
-      ) {
-        setDummyPremiumChests(shuffle(dummyPremiums));
-        setBnbImages(shuffle(chestImagesBnb));
-        setSkaleImages(shuffle(chestImagesSkale));
-        setVictionImages(shuffle(chestImagesViction));
-        setMantaImages(shuffle(chestImagesViction));
-        setBaseImages(shuffle(chestImagesBase));
-
-        setTaikoImages(shuffle(chestImagesTaiko));
-        setCoreImages(shuffle(chestImagesCore));
-        setSeiImages(shuffle(chestImagesSei));
-        clearInterval(interval);
-      }
-    };
-    const interval = setInterval(checkMidnight, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (chainId === 1) {
@@ -7943,10 +8137,15 @@ bnbEarnUsd,
     chainId,
     nftPremium_total,
     nftPremium_totalViction,
+    nftPremium_totalTaiko,
+
     discountPercentage,
     discountPercentageViction,
+    discountPercentageTaiko,
+
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
+    nftPremium_tokenIdTaiko,
   ]);
 
   useEffect(() => {
@@ -8020,58 +8219,6 @@ bnbEarnUsd,
     }
   }, [dataNonce]);
 
-  // useEffect(() => {
-  //   if (
-  //     data &&
-  //     data.getPlayer &&
-  //     data.getPlayer.displayName &&
-  //     data.getPlayer.playerId &&
-  //     data.getPlayer.wallet &&
-  //     data.getPlayer.wallet.publicAddress &&
-  //     email
-  //   ) {
-  //     fetchMonthlyRecordsAroundPlayer(monthlyrecords);
-  //     fetchGenesisAroundPlayer(
-  //       data.getPlayer.playerId,
-  //       data.getPlayer.displayName
-  //     );
-  //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
-  //     fetchDailyRecordsAroundPlayer(dailyrecords);
-  //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
-  //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
-  //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
-  //     fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
-  //     fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
-  //     fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
-  //     // fetchDailyRecordsAroundPlayerManta(dailyRecordsManta);
-  //     // fetchWeeklyRecordsAroundPlayerManta(weeklyRecordsManta);
-  //     // fetchMonthlyRecordsAroundPlayerManta(monthlyRecordsManta);
-  //     fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
-  //     fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
-  //     fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
-  //   }
-  // }, [
-  //   data,
-  //   email,
-  //   weeklyrecords,
-  //   dailyRecordsSkale,
-  //   goldenPassRemainingTime,
-  //   monthlyrecords,
-  //   dailyrecords,
-  //   userId,
-  //   username,
-  //   isPremium,
-  //   dailyRecordsCore,
-  //   weeklyRecordsCore,
-  //   monthlyRecordsCore,
-  //   dailyRecordsViction,
-  //   weeklyRecordsViction,
-  //   monthlyRecordsViction,
-  //   dailyRecordsManta,
-  //   weeklyRecordsManta,
-  //   monthlyRecordsManta,
-  // ]);
-
   useEffect(() => {
     if (
       data &&
@@ -8093,6 +8240,14 @@ bnbEarnUsd,
     claimedPremiumChests,
     claimedSkaleChests,
     claimedSkalePremiumChests,
+    claimedCoreChests,
+    claimedCorePremiumChests,
+    claimedVictionChests,
+    claimedVictionPremiumChests,
+    claimedMantaChests,
+    claimedMantaPremiumChests,
+    claimedTaikoChests,
+    claimedTaikoPremiumChests,
   ]);
 
   useEffect(() => {
@@ -8110,30 +8265,19 @@ bnbEarnUsd,
   }, [data, email]);
 
   useEffect(() => {
-    if (coinbase && isConnected) {
+    if ((coinbase && isConnected) || userWallet !== undefined) {
       setsyncStatus("initial");
       fetchAllMyNfts();
       // getmyCawsWodStakes();
       // getmyWodStakes();
     }
-  }, [
-    userWallet,
-    isConnected,
-    data?.getPlayer?.wallet?.publicAddress,
-    coinbase,
-  ]);
+  }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
     getOtherNfts();
-    getDypBalance();
-    fetchUserFavorites(coinbase);
-  }, [account, email, data?.getPlayer?.wallet]);
-
-  useEffect(() => {
-    // window.scrollTo(0, 0);
-    getTokenDatabnb();
-    fetchCFXPrice();
-  }, []);
+    getDypBalance(userWallet ? userWallet : coinbase);
+    fetchUserFavorites(userWallet ? userWallet : coinbase);
+  }, [account, userWallet, isConnected]);
 
   useEffect(() => {
     refetchPlayer();
@@ -8156,13 +8300,6 @@ bnbEarnUsd,
     }
   }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
 
-  useEffect(() => {
-    // if (coinbase) {
-    getLatest20BoughtNFTS().then((NFTS) => setLatest20BoughtNFTS(NFTS));
-    // getMyOffers();
-    // }
-  }, [coinbase, isConnected]);
-
   const logoutItem = localStorage.getItem("logout");
 
   useEffect(() => {
@@ -8179,7 +8316,9 @@ bnbEarnUsd,
   }, [email]);
 
   useEffect(() => {
-    handleRefreshCountdown700();
+    if (coinbase && isConnected) {
+      handleRefreshCountdown700();
+    }
   }, [coinbase]);
 
   useEffect(() => {
@@ -8197,7 +8336,7 @@ bnbEarnUsd,
   }, [dailyBonusPopup]);
 
   useEffect(() => {
-    calculatePremiumDiscount(userWallet !== "" ? userWallet : coinbase);
+    calculatePremiumDiscount(userWallet ? userWallet : coinbase);
   }, [userWallet, coinbase, chainId]);
 
   const hashValue = window.location.hash;
@@ -8307,6 +8446,8 @@ bnbEarnUsd,
             monthlyDataAmountViction={monthlyDataAmountViction}
             weeklyDataAmountManta={weeklyDataAmountManta}
             monthlyDataAmountManta={monthlyDataAmountManta}
+            weeklyDataAmountBase={weeklyDataAmountBase}
+            monthlyDataAmountBase={monthlyDataAmountBase}
             weeklyDataAmountTaiko={weeklyDataAmountTaiko}
             monthlyDataAmountTaiko={monthlyDataAmountTaiko}
             weeklyDataAmountSkale={weeklyDataAmountSkale}
@@ -8319,6 +8460,7 @@ bnbEarnUsd,
             allCoreChests={allCoreChests}
             allVictionChests={allVictionChests}
             allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
             allSeiChests={allSeiChests}
             availableTime={goldenPassRemainingTime}
@@ -8379,7 +8521,7 @@ bnbEarnUsd,
             dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
-            listedNFTS={listedNFTS}
+            listedNFTS={dailyBonuslistedNFTS}
             onclose={() => {
               setdailyBonusPopup(false);
               window.location.hash = "";
@@ -8476,7 +8618,12 @@ bnbEarnUsd,
           // </OutsideClickHandler>
         )}
         {(leaderboard || hashValue === "#leaderboard") && (
-          <OutsideClickHandler onOutsideClick={() => {setLeaderboard(false);window.location.hash = "";}}>
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setLeaderboard(false);
+              window.location.hash = "";
+            }}
+          >
             <div
               className="popup-wrapper leaderboard-popup popup-active p-3"
               id="leaderboard"
@@ -8521,7 +8668,10 @@ bnbEarnUsd,
                     )} */}
                 <img
                   src={xMark}
-                  onClick={() => {setLeaderboard(false);window.location.hash = "";}}
+                  onClick={() => {
+                    setLeaderboard(false);
+                    window.location.hash = "";
+                  }}
                   alt=""
                   style={{ cursor: "pointer" }}
                 />
@@ -8702,6 +8852,8 @@ bnbEarnUsd,
                 username={data?.getPlayer?.displayName}
                 userId={data?.getPlayer?.playerId}
                 userDataStar={userDataStar}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
               />
             </div>
           </OutsideClickHandler>
@@ -8899,14 +9051,26 @@ bnbEarnUsd,
                     style={{ cursor: "pointer" }}
                   />
                 </div>
-                {discountPercentage > 0 || nftPremium_total > 0 ? (
+                {discountPercentage > 0 ||
+                discountPercentageViction > 0 ||
+                discountPercentageTaiko > 0 ||
+                nftPremium_total > 0 ||
+                nftPremium_totalViction ||
+                nftPremium_totalTaiko > 0 ? (
                   <div className="premium-discount-bg mt-3 p-4 position-relative">
                     <div className="premiumRedTag position-absolute">
                       <div className="position-relative d-flex flex-column">
                         <img src={premiumRedTag} alt="" />
                         <div className="d-flex flex-column position-absolute discountwrap">
                           <span className="discount-price2 font-oxanium">
-                            {discountPercentage}%
+                            {discountPercentage > 0
+                              ? discountPercentage
+                              : discountPercentageViction > 0
+                              ? discountPercentageViction
+                              : discountPercentageTaiko > 0
+                              ? discountPercentageTaiko
+                              : discountPercentage}
+                            %
                           </span>
                           <span className="discount-price-bottom">
                             Discount
@@ -8919,15 +9083,27 @@ bnbEarnUsd,
                         <h6 className="lifetime-plan-text m-0">
                           Lifetime plan
                         </h6>
-                        {nftPremium_total > 0 && (
+                        {(nftPremium_total > 0 ||
+                          nftPremium_totalViction > 0 ||
+                          nftPremium_totalTaiko > 0) && (
                           <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                             Valid until:{" "}
-                            {new Date(nftDiscountObject.expiration * 1000)
+                            {new Date(
+                              nftPremium_total > 0
+                                ? nftDiscountObject.expiration * 1000
+                                : nftPremium_totalTaiko > 0
+                                ? nftDiscountObjectTaiko.expiration * 1000
+                                : nftDiscountObjectViction.expiration * 1000
+                            )
                               .toDateString()
                               .slice(
                                 3,
                                 new Date(
-                                  nftDiscountObject.expiration * 1000
+                                  nftPremium_total > 0
+                                    ? nftDiscountObject.expiration * 1000
+                                    : nftPremium_totalTaiko > 0
+                                    ? nftDiscountObjectTaiko.expiration * 1000
+                                    : nftDiscountObjectViction.expiration * 1000
                                 ).toDateString().length
                               )}
                           </h6>
@@ -8935,21 +9111,45 @@ bnbEarnUsd,
                       </div>
                       <div className="d-flex align-items-end gap-2">
                         <h6 className="discount-price">
-                          {discountPercentage == 100
+                          {discountPercentage == 100 ||
+                          discountPercentageViction == 100 ||
+                          discountPercentageTaiko == 100
                             ? "FREE"
-                            : "$" + (100 - Number(discountPercentage))}
+                            : "$" +
+                              (100 -
+                                Number(
+                                  discountPercentage > 0
+                                    ? discountPercentage
+                                    : discountPercentageViction > 0
+                                    ? discountPercentageViction
+                                    : discountPercentageTaiko > 0
+                                    ? discountPercentageTaiko
+                                    : discountPercentage
+                                ))}
                         </h6>
                         <h6 className="old-price-text">$100</h6>
                       </div>
-                      {nftPremium_total > 0 && (
+                      {(nftPremium_total > 0 ||
+                        nftPremium_totalViction > 0 ||
+                        nftPremium_totalTaiko > 0) && (
                         <h6 className="token-amount-placeholder m-0 premium-custom-text">
                           Valid until:{" "}
-                          {new Date(nftDiscountObject.expiration * 1000)
+                          {new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftPremium_totalTaiko > 0
+                              ? nftDiscountObjectTaiko.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
+                          )
                             .toDateString()
                             .slice(
                               3,
                               new Date(
-                                nftDiscountObject.expiration * 1000
+                                nftPremium_total > 0
+                                  ? nftDiscountObject.expiration * 1000
+                                  : nftPremium_totalTaiko > 0
+                                  ? nftDiscountObjectTaiko.expiration * 1000
+                                  : nftDiscountObjectViction.expiration * 1000
                               ).toDateString().length
                             )}
                         </h6>
@@ -9123,14 +9323,23 @@ bnbEarnUsd,
                           {discountPercentage > 0 ||
                           discountPercentageViction > 0 ||
                           nftPremium_total > 0 ||
-                          nftPremium_totalViction > 0 ? (
+                          nftPremium_totalViction > 0 ||
+                          nftPremium_totalTaiko > 0 ||
+                          nftPremium_totalTaiko > 0 ? (
                             <div className="premium-discount-bg mt-3 p-4 position-relative">
                               <div className="premiumRedTag position-absolute">
                                 <div className="position-relative d-flex flex-column">
                                   <img src={premiumRedTag} alt="" />
                                   <div className="d-flex flex-column position-absolute discountwrap">
                                     <span className="discount-price2 font-oxanium">
-                                      {discountPercentage}%
+                                      {discountPercentage > 0
+                                        ? discountPercentage
+                                        : discountPercentageViction > 0
+                                        ? discountPercentageViction
+                                        : discountPercentageTaiko > 0
+                                        ? discountPercentageTaiko
+                                        : discountPercentage}
+                                      %
                                     </span>
                                     <span className="discount-price-bottom">
                                       Discount
@@ -9143,35 +9352,42 @@ bnbEarnUsd,
                                   <h6 className="lifetime-plan-text m-0">
                                     Lifetime plan
                                   </h6>
-                                  {nftPremium_total > 0 ||
-                                    (nftPremium_totalViction > 0 && (
-                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                                        Valid until:{" "}
-                                        {new Date(
-                                          nftPremium_total > 0
-                                            ? nftDiscountObject.expiration *
-                                              1000
-                                            : nftDiscountObjectViction.expiration *
-                                              1000
-                                        )
-                                          .toDateString()
-                                          .slice(
-                                            3,
-                                            new Date(
-                                              nftPremium_total > 0
-                                                ? nftDiscountObject.expiration *
-                                                  1000
-                                                : nftDiscountObjectViction.expiration *
-                                                  1000
-                                            ).toDateString().length
-                                          )}
-                                      </h6>
-                                    ))}
+                                  {(nftPremium_total > 0 ||
+                                    nftPremium_totalViction > 0 ||
+                                    nftPremium_totalTaiko > 0) && (
+                                    <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                                      Valid until:{" "}
+                                      {new Date(
+                                        nftPremium_total > 0
+                                          ? nftDiscountObject.expiration * 1000
+                                          : nftPremium_totalTaiko > 0
+                                          ? nftDiscountObjectTaiko.expiration *
+                                            1000
+                                          : nftDiscountObjectViction.expiration *
+                                            1000
+                                      )
+                                        .toDateString()
+                                        .slice(
+                                          3,
+                                          new Date(
+                                            nftPremium_total > 0
+                                              ? nftDiscountObject.expiration *
+                                                1000
+                                              : nftPremium_totalTaiko > 0
+                                              ? nftDiscountObjectTaiko.expiration *
+                                                1000
+                                              : nftDiscountObjectViction.expiration *
+                                                1000
+                                          ).toDateString().length
+                                        )}
+                                    </h6>
+                                  )}
                                 </div>
                                 <div className="d-flex align-items-end gap-2">
                                   <h6 className="discount-price">
                                     {discountPercentage == 100 ||
-                                    discountPercentageViction == 100
+                                    discountPercentageViction == 100 ||
+                                    discountPercentageTaiko == 100
                                       ? "FREE"
                                       : "$" +
                                         (100 -
@@ -9180,18 +9396,24 @@ bnbEarnUsd,
                                               ? discountPercentage
                                               : discountPercentageViction > 0
                                               ? discountPercentageViction
+                                              : discountPercentageTaiko > 0
+                                              ? discountPercentageTaiko
                                               : discountPercentage
                                           ))}
                                   </h6>
                                   <h6 className="old-price-text">$100</h6>
                                 </div>
                                 {(nftPremium_total > 0 ||
-                                  nftPremium_totalViction > 0) && (
+                                  nftPremium_totalViction > 0 ||
+                                  nftPremium_totalTaiko > 0) && (
                                   <h6 className="token-amount-placeholder m-0 premium-custom-text">
                                     Valid until:{" "}
                                     {new Date(
                                       nftPremium_total > 0
                                         ? nftDiscountObject.expiration * 1000
+                                        : nftPremium_totalTaiko > 0
+                                        ? nftDiscountObjectTaiko.expiration *
+                                          1000
                                         : nftDiscountObjectViction.expiration *
                                           1000
                                     )
@@ -9201,6 +9423,9 @@ bnbEarnUsd,
                                         new Date(
                                           nftPremium_total > 0
                                             ? nftDiscountObject.expiration *
+                                              1000
+                                            : nftPremium_totalTaiko > 0
+                                            ? nftDiscountObjectTaiko.expiration *
                                               1000
                                             : nftDiscountObjectViction.expiration *
                                               1000
@@ -9666,345 +9891,360 @@ bnbEarnUsd,
                             </div>
 
                             {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
-                            {(discountPercentage < 100 ||
-                              discountPercentageViction < 100) && (
-                              <div className="d-flex flex-column align-items-end gap-3">
-                                <span className="my-premium-balance-text mb-0">
-                                  My balance:{" "}
-                                  {getFormattedNumber(
-                                    tokenBalance / 10 ** tokenDecimals,
-                                    5
-                                  )}{" "}
-                                  {dropdownIcon.toUpperCase()}
-                                </span>
-                                <div
-                                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                                  style={{ height: "34px" }}
-                                >
-                                  <span className="subscription-price-text mb-0">
-                                    Subscription Price:
+                            {discountPercentage < 100 &&
+                              discountPercentageViction < 100 &&
+                              discountPercentageTaiko < 100 && (
+                                <div className="d-flex flex-column align-items-end gap-3">
+                                  <span className="my-premium-balance-text mb-0">
+                                    My balance:{" "}
+                                    {getFormattedNumber(
+                                      tokenBalance / 10 ** tokenDecimals,
+                                      5
+                                    )}{" "}
+                                    {dropdownIcon.toUpperCase()}
                                   </span>
+                                  <div
+                                    className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                                    style={{ height: "34px" }}
+                                  >
+                                    <span className="subscription-price-text mb-0">
+                                      Subscription Price:
+                                    </span>
 
-                                  <div className="d-flex align-items-center gap-2">
-                                    <div className="dropdown position relative">
-                                      <button
-                                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                      >
-                                        <div
-                                          className="d-flex align-items-center gap-2"
-                                          style={{ color: "#fff" }}
+                                    <div className="d-flex align-items-center gap-2">
+                                      <div className="dropdown position relative">
+                                        <button
+                                          class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                                          type="button"
+                                          data-bs-toggle="dropdown"
+                                          aria-expanded="false"
                                         >
-                                          <img
-                                            src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                                            alt=""
-                                            style={{
-                                              width: 18,
-                                              height: 18,
-                                            }}
-                                          />
-                                          {/* {dropdownTitle} */}
-                                        </div>
-                                        <img src={launchpadIndicator} alt="" />
-                                      </button>
-                                      <ul className="dropdown-menu w-100">
-                                        {Object.keys(
-                                          chainId === 1
-                                            ? window.config
-                                                .subscriptioneth_tokens
-                                            : chainId === 56
-                                            ? window.config
-                                                .subscriptionbnb_tokens
-                                            : chainId === 1030
-                                            ? window.config
-                                                .subscriptioncfx_tokens
-                                            : chainId === 43114
-                                            ? window.config.subscription_tokens
-                                            : chainId === 8453
-                                            ? window.config
-                                                .subscriptionbase_tokens
-                                            : chainId === 1482601649
-                                            ? window.config
-                                                .subscriptionskale_tokens
-                                            : chainId === 88
-                                            ? window.config
-                                                .subscriptionviction_tokens
-                                            : chainId === 169
-                                            ? window.config
-                                                .subscriptionmanta_tokens
-                                            : chainId === 167000
-                                            ? window.config
-                                                .subscriptiontaiko_tokens
-                                            : chainId === 1116
-                                            ? window.config
-                                                .subscriptioncore_tokens
-                                            : chainId === 713715
-                                            ? window.config
-                                                .subscriptionsei_tokens
-                                            : window.config.subscription_tokens
-                                        ).map((t, i) => (
-                                          <li
-                                            key={i}
-                                            className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                            onClick={() => {
-                                              window.cached_contracts =
-                                                Object.create(null);
-                                              setTimeout(() => {
-                                                setdropdownIcon(
-                                                  chainId === 1
-                                                    ? window.config
-                                                        .subscriptioneth_tokens
-                                                    : chainId === 56
-                                                    ? window.config
-                                                        .subscriptionbnb_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 43114
-                                                    ? window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
-                                                    : chainId === 8453
-                                                    ? window.config
-                                                        .subscriptionbase_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1030
-                                                    ? window.config
-                                                        .subscriptioncfx_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1482601649
-                                                    ? window.config
-                                                        .subscriptionskale_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 88
-                                                    ? window.config
-                                                        .subscriptionviction_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 169
-                                                    ? window.config
-                                                        .subscriptionmanta_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 167000
-                                                    ? window.config
-                                                        .subscriptiontaiko_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1116
-                                                    ? window.config
-                                                        .subscriptioncore_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 713715
-                                                    ? window.config
-                                                        .subscriptionsei_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
-                                                );
-                                                setdropdownTitle(
-                                                  chainId === 1
-                                                    ? window.config
-                                                        .subscriptioneth_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 56
-                                                    ? window.config
-                                                        .subscriptionbnb_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 43114
-                                                    ? window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
-                                                    : chainId === 8453
-                                                    ? window.config
-                                                        .subscriptionbase_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1030
-                                                    ? window.config
-                                                        .subscriptioncfx_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1482601649
-                                                    ? window.config
-                                                        .subscriptionskale_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 88
-                                                    ? window.config
-                                                        .subscriptionviction_tokens
-                                                    : chainId === 169
-                                                    ? window.config
-                                                        .subscriptionmanta_tokens
-                                                    : chainId === 167000
-                                                    ? window.config
-                                                        .subscriptiontaiko_tokens
-                                                    : chainId === 1116
-                                                    ? window.config
-                                                        .subscriptioncore_tokens
-                                                    : chainId === 713715
-                                                    ? window.config
-                                                        .subscriptionsei_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : chainId === 1116
-                                                    ? window.config
-                                                        .subscriptioncore_tokens[
-                                                        t
-                                                      ]?.symbol
-                                                    : window.config
-                                                        .subscription_tokens[t]
-                                                        ?.symbol
-                                                );
-
-                                                // console.log(t);
-                                                handleSubscriptionTokenChange(
-                                                  t
-                                                );
-                                                handleCheckIfAlreadyApproved(t);
-                                              }, 200);
-                                            }}
+                                          <div
+                                            className="d-flex align-items-center gap-2"
+                                            style={{ color: "#fff" }}
                                           >
                                             <img
-                                              src={
-                                                chainId === 1
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 56
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 43114
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 1030
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 8453
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 1482601649
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 1116
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 88
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 169
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 167000
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : chainId === 713715
-                                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                                  : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                      t
-                                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                              }
+                                              src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                               alt=""
                                               style={{
                                                 width: 18,
                                                 height: 18,
                                               }}
                                             />
-                                            {chainId === 1
+                                            {/* {dropdownTitle} */}
+                                          </div>
+                                          <img
+                                            src={launchpadIndicator}
+                                            alt=""
+                                          />
+                                        </button>
+                                        <ul className="dropdown-menu w-100">
+                                          {Object.keys(
+                                            chainId === 1
                                               ? window.config
-                                                  .subscriptioneth_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptioneth_tokens
                                               : chainId === 56
                                               ? window.config
-                                                  .subscriptionbnb_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 43114
-                                              ? window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionbnb_tokens
                                               : chainId === 1030
                                               ? window.config
-                                                  .subscriptioncfx_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptioncfx_tokens
+                                              : chainId === 43114
+                                              ? window.config
+                                                  .subscription_tokens
                                               : chainId === 8453
                                               ? window.config
-                                                  .subscriptionbase_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionbase_tokens
                                               : chainId === 1482601649
                                               ? window.config
-                                                  .subscriptionskale_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1116
-                                              ? window.config
-                                                  .subscriptioncore_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionskale_tokens
                                               : chainId === 88
                                               ? window.config
-                                                  .subscriptionviction_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionviction_tokens
                                               : chainId === 169
                                               ? window.config
-                                                  .subscriptionmanta_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionmanta_tokens
                                               : chainId === 167000
                                               ? window.config
-                                                  .subscriptiontaiko_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptiontaiko_tokens
+                                              : chainId === 1116
+                                              ? window.config
+                                                  .subscriptioncore_tokens
                                               : chainId === 713715
                                               ? window.config
-                                                  .subscriptionsei_tokens[t]
-                                                  ?.symbol
+                                                  .subscriptionsei_tokens
                                               : window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol}
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                    {/* <img
+                                                  .subscriptioneth_tokens
+                                          ).map((t, i) => (
+                                            <li
+                                              key={i}
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={() => {
+                                                window.cached_contracts =
+                                                  Object.create(null);
+                                                setTimeout(() => {
+                                                  setdropdownIcon(
+                                                    chainId === 1
+                                                      ? window.config
+                                                          .subscriptioneth_tokens
+                                                      : chainId === 56
+                                                      ? window.config
+                                                          .subscriptionbnb_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                      ? window.config
+                                                          .subscriptioncfx_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1482601649
+                                                      ? window.config
+                                                          .subscriptionskale_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 169
+                                                      ? window.config
+                                                          .subscriptionmanta_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 167000
+                                                      ? window.config
+                                                          .subscriptiontaiko_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 713715
+                                                      ? window.config
+                                                          .subscriptionsei_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : window.config
+                                                          .subscriptioneth_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                  );
+                                                  setdropdownTitle(
+                                                    chainId === 1
+                                                      ? window.config
+                                                          .subscriptioneth_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 56
+                                                      ? window.config
+                                                          .subscriptionbnb_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 43114
+                                                      ? window.config
+                                                          .subscription_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 8453
+                                                      ? window.config
+                                                          .subscriptionbase_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1030
+                                                      ? window.config
+                                                          .subscriptioncfx_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1482601649
+                                                      ? window.config
+                                                          .subscriptionskale_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 88
+                                                      ? window.config
+                                                          .subscriptionviction_tokens
+                                                      : chainId === 169
+                                                      ? window.config
+                                                          .subscriptionmanta_tokens
+                                                      : chainId === 167000
+                                                      ? window.config
+                                                          .subscriptiontaiko_tokens
+                                                      : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens
+                                                      : chainId === 713715
+                                                      ? window.config
+                                                          .subscriptionsei_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : chainId === 1116
+                                                      ? window.config
+                                                          .subscriptioncore_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                      : window.config
+                                                          .subscriptioneth_tokens[
+                                                          t
+                                                        ]?.symbol
+                                                  );
+
+                                                  // console.log(t);
+                                                  handleSubscriptionTokenChange(
+                                                    t
+                                                  );
+                                                  handleCheckIfAlreadyApproved(
+                                                    t
+                                                  );
+                                                }, 200);
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  chainId === 1
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 56
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 43114
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 1030
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 8453
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 1482601649
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 1116
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 88
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 169
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 167000
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : chainId === 713715
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                    : require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
+                                                }
+                                                alt=""
+                                                style={{
+                                                  width: 18,
+                                                  height: 18,
+                                                }}
+                                              />
+                                              {chainId === 1
+                                                ? window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 56
+                                                ? window.config
+                                                    .subscriptionbnb_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 43114
+                                                ? window.config
+                                                    .subscription_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1030
+                                                ? window.config
+                                                    .subscriptioncfx_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 8453
+                                                ? window.config
+                                                    .subscriptionbase_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1482601649
+                                                ? window.config
+                                                    .subscriptionskale_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 1116
+                                                ? window.config
+                                                    .subscriptioncore_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 88
+                                                ? window.config
+                                                    .subscriptionviction_tokens[
+                                                    t
+                                                  ]?.symbol
+                                                : chainId === 169
+                                                ? window.config
+                                                    .subscriptionmanta_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 167000
+                                                ? window.config
+                                                    .subscriptiontaiko_tokens[t]
+                                                    ?.symbol
+                                                : chainId === 713715
+                                                ? window.config
+                                                    .subscriptionsei_tokens[t]
+                                                    ?.symbol
+                                                : window.config
+                                                    .subscriptioneth_tokens[t]
+                                                    ?.symbol}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                      {/* <img
                                       src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
                                       height={16}
                                       width={16}
                                       alt="usdt"
                                     /> */}
-                                    <span className="subscription-price-token mb-0">
-                                      {formattedPrice.slice(0, 7)}
+                                      <span className="subscription-price-token mb-0">
+                                        {formattedPrice.slice(0, 7)}
+                                      </span>
+                                    </div>
+                                    <span className="subscription-price-usd mb-0">
+                                      $
+                                      {100 -
+                                        Number(
+                                          discountPercentage != 0
+                                            ? discountPercentage
+                                            : discountPercentageViction != 0
+                                            ? discountPercentageViction
+                                            : discountPercentageTaiko != 0
+                                            ? discountPercentageTaiko
+                                            : discountPercentage
+                                        )}
                                     </span>
                                   </div>
-                                  <span className="subscription-price-usd mb-0">
-                                    $
-                                    {100 -
-                                      Number(
-                                        discountPercentage != 0
-                                          ? discountPercentage
-                                          : discountPercentageViction != 0
-                                          ? discountPercentageViction
-                                          : discountPercentage
-                                      )}
-                                  </span>
                                 </div>
-                              </div>
-                            )}
+                              )}
 
                             {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                                 <span className="token-balance-placeholder">
@@ -10041,23 +10281,6 @@ bnbEarnUsd,
                                 />
                               </div>
                             </div> */}
-                      {chainId === 1482601649 && (
-                        <div className="gotoNebula-wrapper p-3 mb-3">
-                          <div className="d-flex w-100 justify-content-between gap-2">
-                            <span className="nebula-wrapper-text">
-                              Bridge your USDC to Nebula now!
-                            </span>
-                            <a
-                              className="nebula-bridgebtn"
-                              href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Nebula Bridge
-                            </a>
-                          </div>
-                        </div>
-                      )}
                       {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
                         <span className="token-balance-placeholder">
                           Token Balance
@@ -10314,8 +10537,8 @@ bnbEarnUsd,
                     </div>
                   </div>
                 ) : isConnected &&
-                  discountPercentage === 0 &&
-                  discountPercentageViction === 0 ? (
+                  discountPercentageTaiko > 0 &&
+                  chainId === 167000 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
                     <div
                       className={` ${
@@ -10347,7 +10570,7 @@ bnbEarnUsd,
                             Approve{" "}
                             {approveStatus === "approveAmount"
                               ? "token"
-                              : nftPremium_total > 0
+                              : nftPremium_totalTaiko > 0
                               ? "NFT"
                               : ""}
                           </>
@@ -10389,7 +10612,8 @@ bnbEarnUsd,
                           approveStatus === "fail" ||
                           approveStatus === "deposit") ? (
                           <>
-                            {discountPercentage > 0 || nftPremium_total > 0
+                            {discountPercentageTaiko > 0 ||
+                            nftPremium_totalTaiko > 0
                               ? "Redeem"
                               : "Buy"}
                           </>
@@ -10400,14 +10624,17 @@ bnbEarnUsd,
                           approveStatus === "failsubscribe" ? (
                           "Failed"
                         ) : (
-                          <div
-                            className="spinner-border "
-                            role="status"
-                            style={{
-                              height: "1rem",
-                              width: "1rem",
-                            }}
-                          ></div>
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
                         )}
                       </button>
                     </div>
@@ -10448,6 +10675,26 @@ bnbEarnUsd,
                       }}
                     >
                       Switch to Viction
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId !== 167000 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleTaikoPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taiko
                     </button>
                   </div>
                 ) : (
