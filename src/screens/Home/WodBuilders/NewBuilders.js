@@ -6,7 +6,7 @@ const NewBuilders = () => {
     {
       name: "BNB Chain",
       icon: "bnbIcon",
-      banner: "bnbChainBanner.webp",
+      banner: "bnbBanner.png",
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
@@ -28,7 +28,7 @@ const NewBuilders = () => {
     {
       name: "MultiversX",
       icon: "multiversx",
-      banner: "multiversBanner.png",
+      banner: "multiversxBanner.png",
       link: "https://x.com/MultiversX/status/1790422563849466280",
       backer: false,
     },
@@ -56,21 +56,21 @@ const NewBuilders = () => {
     {
       name: "SKALE",
       icon: "skaleIcon",
-      banner: "skaleBanner.webp",
+      banner: "skaleBanner.png",
       link: "https://twitter.com/SkaleNetwork/status/1777372050832658644",
       backer: true,
     },
     {
       name: "Manta",
       icon: "manta",
-      banner: "mantaBanner.webp",
+      banner: "mantaBanner.png",
       link: "https://x.com/MantaNetwork/status/1819260085945749903",
       backer: true,
     },
     {
       name: "Taiko",
       icon: "taiko",
-      banner: "taikoBanner.webp",
+      banner: "taikoBanner.png",
       // link: "https://x.com/MantaNetwork/status/1819260085945749903",
       backer: true,
     },
@@ -84,7 +84,7 @@ const NewBuilders = () => {
     {
       name: "BabyDoge",
       icon: "babydogeIcon",
-      banner: "babyDogeBanner.webp",
+      banner: "babydogeBanner.png",
       link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
       backer: false,
     },
@@ -113,7 +113,7 @@ const NewBuilders = () => {
     {
       name: "Gate.io",
       icon: "gateIcon",
-      banner: "gateBanner.png",
+      banner: "gateioBanner.png",
       link: "https://twitter.com/gate_io/status/1628384476496527361?s=20",
       backer: false,
     },
@@ -142,7 +142,7 @@ const NewBuilders = () => {
     {
       name: "SEI",
       icon: "seiLogo",
-      banner: "seiBanner.webp",
+      banner: "seiBanner.png",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
       backer: false,
     },
@@ -156,27 +156,27 @@ const NewBuilders = () => {
     {
       name: "Cookie3",
       icon: "cookie3",
-      banner: "cookie3Banner.webp",
+      banner: "cookie3Banner.png",
       link: 'https://x.com/Cookie3_com/status/1824052238404255889',
       backer: true,
     },
     {
       name: "Midle",
       icon: "midle",
-      banner: "midleBanner.webp",
+      banner: "midleBanner.png",
       link: "https://x.com/midle_official/status/1819705076966940996",
       backer: false,
     },
     {
       name: "DogeCoin",
       icon: "dogecoinIcon",
-      banner: "dogecoinBanner.webp",
+      banner: "dogecoinBanner.png",
       backer: false,
     },
     {
       name: "Binance Web3",
       icon: "binanceWeb3",
-      banner: "bnbChainBanner.webp",
+      banner: "bnbChainBanner.png",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
@@ -224,7 +224,6 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Cyborg",
       icon: "cyborg",
@@ -237,7 +236,6 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Hamster Chain",
       icon: "hamsterChain",

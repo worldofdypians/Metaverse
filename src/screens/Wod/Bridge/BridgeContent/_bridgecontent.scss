@@ -1,0 +1,133 @@
+.bridge-token-wrapper{
+background: linear-gradient(148deg, rgba(170, 20, 240, 0.1) 0%, rgba(170, 20, 240, 0.05) 100%);
+border-radius: 12px;
+}
+
+.bridge-btn-inactive{
+    border-radius: 10px;
+    background: linear-gradient(90deg, #D4CDE3 0.23%, #BCADC7 99.72%);
+    border: none;
+    color: #464555;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    transition: all .25s;
+}
+
+.bridge-btn-inactive:hover{
+    background: linear-gradient(240deg, #7B2EB0 0%, #2647C9 100%);
+    color: #EEEDFF;
+}
+
+
+
+.bridge-btn-active{
+    border-radius: 10px;
+    background: linear-gradient(240deg, #7B2EB0 0%, #2647C9 100%);
+    border: none;
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.bridge-wallet-btn{
+    border-radius: 10px;
+    background: none !important;
+    border: none;
+    color: #EEEDFF;
+    text-align: center;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    border: 2px solid #7B2EB0;
+}
+
+.bridge-balance-wrapper{
+    background: #2f0b5c;
+    border-radius: 10px;
+}
+
+.user-bridge-balance{
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    font-family: "Montserrat";
+    font-weight: 500;
+}
+
+.pool-bridge-balance{
+    color: #fff;
+    font-size: 16px;
+    line-height: 18px;
+    font-family: "Montserrat";
+    font-weight: 600;
+}
+
+.max-deposit-btn{
+    font-size: 14px;
+    font-family: "Montserrat";
+    background: #272450;
+    border-radius: 8px;
+    border:  1px solid #AAA5EB;
+    color: #fff;
+    height: 37px;
+    transition: all .25s;
+}
+
+.max-deposit-btn:hover{
+    background: #AAA5EB;
+}
+
+.bridge-guide-title{
+    color: #f7f7fc;
+    font-size: 20px;
+    font-style: normal;
+    font-family: "Montserrat";
+    font-weight: 500;
+    line-height: 30px;
+}
+
+.bridge-divider{
+    background: #ffffff;
+    border-radius: 50px;
+    height: 1px;
+    opacity: 1 !important;
+}
+
+.bridge-guide-pointer-active{
+    min-width: 30px;
+    min-height: 30px;
+    background: #5615a5!important;
+    border-radius: 50%;
+}
+.bridge-guide-pointer-inactive{
+    min-width: 30px;
+    min-height: 30px;
+    background: #565891!important;
+    border-radius: 50%;
+}
+
+.bridge-guide-item-title{
+    color: #f7f7fc;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    font-family: "Montserrat";
+}
+
+.bridge-guide-desc{
+    color: #c0cbf7;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    font-family: "Montserrat";
+}

@@ -1,0 +1,49 @@
+.become-premium-new-title{
+    color: #FFC808;
+font-family: "Montserrat";
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 200% */
+text-transform: uppercase;
+}
+
+.my-premium-balance{
+    color: #5690FF;
+text-align: right;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.216px;
+}
+
+.already-premium-title{
+    color: #FFF;
+text-align: center;
+font-family: "Montserrat";
+font-size: 26px;
+font-style: normal;
+font-weight: 900;
+line-height: 24px; /* 109.091% */
+text-transform: uppercase;
+}
+
+.is-premium-gold-bg{
+    background-image: url('./assets/isPremiumBg.png');
+    border-radius: 10px;
+
+    @media screen and (max-width: 786px) {
+        background-image: url('./assets/isPremiumMobile.png');
+    }
+}
+
+.already-preium-badge{
+    position: relative;
+    right: 4%;
+    @media screen and (max-width: 786px) {
+        right: 0;
+    }
+}
+

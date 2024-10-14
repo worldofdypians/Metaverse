@@ -8,7 +8,7 @@ const TermsConditions = () => {
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column news-main-wrapper">
         <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
           <div className="update-title font-organetto">Terms of Service</div>

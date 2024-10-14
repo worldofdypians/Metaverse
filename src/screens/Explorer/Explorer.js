@@ -31,7 +31,7 @@ const Explorer = ({ count, setCount }) => {
       className="container-fluid d-flex px-0 align-items-center justify-content-center"
       style={{ overflowX: "hidden" }}
     >
-      <OutsideClickHandler
+      {/* <OutsideClickHandler
         id="popup"
         onOutsideClick={() => {
           setActivePopup(false);
@@ -45,7 +45,7 @@ const Explorer = ({ count, setCount }) => {
             setCount(1);
           }}
         />
-      </OutsideClickHandler>
+      </OutsideClickHandler> */}
       <div className="explorer-main-wrapper px-0 w-100 mt-5 d-flex flex-column">
         <Characters />
         <GameModes />

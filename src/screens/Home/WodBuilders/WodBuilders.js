@@ -11,7 +11,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "BNB Chain",
       icon: "bnbIcon",
-      banner: "bnbChainBanner.webp",
+      banner: "bnbBanner.png",
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
@@ -33,7 +33,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "MultiversX",
       icon: "multiversx",
-      banner: "multiversBanner.png",
+      banner: "multiversxBanner.png",
       link: "https://x.com/MultiversX/status/1790422563849466280",
       backer: false,
     },
@@ -61,21 +61,21 @@ const WodBuilders = ({ page }) => {
     {
       name: "SKALE",
       icon: "skaleIcon",
-      banner: "skaleBanner.webp",
+      banner: "skaleBanner.png",
       link: "https://twitter.com/SkaleNetwork/status/1777372050832658644",
       backer: true,
     },
     {
       name: "Manta",
       icon: "manta",
-      banner: "mantaBanner.webp",
+      banner: "mantaBanner.png",
       link: "https://x.com/MantaNetwork/status/1819260085945749903",
       backer: true,
     },
     {
       name: "Taiko",
       icon: "taiko",
-      banner: "taikoBanner.webp",
+      banner: "taikoBanner.png",
       // link: "https://x.com/MantaNetwork/status/1819260085945749903",
       backer: true,
     },
@@ -89,7 +89,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "BabyDoge",
       icon: "babydogeIcon",
-      banner: "babyDogeBanner.webp",
+      banner: "babydogeBanner.png",
       link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
       backer: false,
     },
@@ -118,7 +118,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "Gate.io",
       icon: "gateIcon",
-      banner: "gateBanner.png",
+      banner: "gateioBanner.png",
       link: "https://twitter.com/gate_io/status/1628384476496527361?s=20",
       backer: false,
     },
@@ -147,7 +147,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "SEI",
       icon: "seiLogo",
-      banner: "seiBanner.webp",
+      banner: "seiBanner.png",
       link: "https://x.com/worldofdypians/status/1795177907821617607",
       backer: false,
     },
@@ -161,27 +161,27 @@ const WodBuilders = ({ page }) => {
     {
       name: "Cookie3",
       icon: "cookie3",
-      banner: "cookie3Banner.webp",
+      banner: "cookie3Banner.png",
       link: 'https://x.com/Cookie3_com/status/1824052238404255889',
       backer: true,
     },
     {
       name: "Midle",
       icon: "midle",
-      banner: "midleBanner.webp",
+      banner: "midleBanner.png",
       link: "https://x.com/midle_official/status/1819705076966940996",
       backer: false,
     },
     {
       name: "DogeCoin",
       icon: "dogecoinIcon",
-      banner: "dogecoinBanner.webp",
+      banner: "dogecoinBanner.png",
       backer: false,
     },
     {
       name: "Binance Web3",
       icon: "binanceWeb3",
-      banner: "bnbChainBanner.webp",
+      banner: "bnbChainBanner.png",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
@@ -229,7 +229,6 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Cyborg",
       icon: "cyborg",
@@ -242,7 +241,6 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
     {
       name: "Hamster Chain",
       icon: "hamsterChain",
@@ -305,18 +303,19 @@ const WodBuilders = ({ page }) => {
   }, [windowSize.width]);
 
   return (
-    <>
-      {page === "home" && (
-        <div
-          className="px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center"
-          id="wodbuilders"
-        >
-          <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
-            <h2 className="font-organetto builders-title explorer-grid-title px-0">
-              <mark className="font-organetto explore-tag pe-2">Pioneers</mark>
-              shaping the World of Dypians{" "}
-            </h2>
-          </div>
+    <div className="extra-margin">
+      <div
+        className={`px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center builders-bg mb-5 ${
+          slice !== 8 && "builders-bg-large"
+        }`}
+        id="wodbuilders"
+      >
+        <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
+          <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+            PIONEERS SHAPING THE WORLD OF DYPIANS
+          </h2>
+        </div>
+        <div className="custom-container">
           <div className="wod-builders-grid">
             {builders.slice(0, slice).map((item, index) => (
               <a
@@ -377,72 +376,8 @@ const WodBuilders = ({ page }) => {
             </div>
           )}
         </div>
-      )}
-      <div className={`w-100  mx-0  ${page === 'home' ? 'px-3 px-lg-5 build-business-wrapper py-4' : 'bg-none'} `}>
-        <div className="d-flex flex-column gap-2">
-        {page === "home" && (
-          <h6 className="builder-title mb-0" style={{ fontWeight: "800" }}>
-            Building In World of Dypians
-          </h6>)}
-          <div className="row mx-0 w-100 gap-4 gap-lg-0 d-flex flex-column flex-lg-row flex-md-column align-items-center justify-content-between">
-            <div className={`builder-item p-3 d-flex flex-column gap-3 gap-lg-0 justify-content-between ${page === 'home' && 'col-lg-7'} `}>
-              <div className="builders-first-half"></div>
-              <div className="builders-second-half">
-                {builders.map((item, index) => (
-                  <div key={index} className={`${page === "wod" && item.backer ? "d-none" : "d-flex"} align-items-center gap-2`}>
-                    {item.icon === "klapai" || item.icon === "manta" || item.icon === "binanceWeb3" || item.icon === "alterverse" || item.icon === "creoengine"  || item.icon === "worldshards"  || item.icon === "hamsterChain" ? (
-                      <img
-                        src={require(`./assets/${item.icon}.png`)}
-                        width={page === "home" ?  24 : 30}
-                        height={page === "home" ?  24 : 30}
-                        alt=""
-                      />
-                    ) : (
-                      <img
-                        src={require(`./assets/${item.icon}.svg`)}
-                        width={page === "home" ?  24 : 30}
-                        height={page === "home" ?  24 : 30}
-                        alt=""
-                      />
-                    )}
-
-                    <span
-                      className={`builder-title mb-0`}
-                      style={{ fontWeight: "400" }}
-                    >
-                      {item.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="d-flex flex-column flex-lg-row gap-2 col-lg-5">
-              {page === "home" && (
-                <div className="build-business-title-wrapper">
-                  <h6
-                    className="mb-0 font-organetto"
-                    style={{ textAlign: page === "home" ? "auto" : "right" }}
-                  >
-                    Bring your business to World of Dypians
-                  </h6>
-                </div>
-              )}
-              {page === "home" && (
-                <div className="d-flex align-items-center justify-content-center">
-                  <a
-                    href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
-                    target="_blank"
-                    className="linear-border"
-                  >
-                    <button className="btn filled-btn px-5">Apply</button>
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
-    </>
+    </div>
   );
 };
 

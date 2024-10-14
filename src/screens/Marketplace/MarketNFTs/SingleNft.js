@@ -2770,7 +2770,7 @@ const SingleNft = ({
 
   return (
     <div
-      className="container-fluid d-flex justify-content-end p-0"
+      className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"
       style={{ minHeight: "72vh" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}

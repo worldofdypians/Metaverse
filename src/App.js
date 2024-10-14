@@ -75,14 +75,62 @@ import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
+// import Token from "./screens/Wod/Token/Token.js";
+import Bridge from "./screens/Wod/Bridge/Bridge.js";
+import Earn from "./screens/Wod/Earn/Earn.js";
+import Buy from "./screens/Wod/Buy/Buy.js";
+import Governance from "./screens/Community/Governance/Governance.js";
+import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
+import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
+import Brand from "./screens/About/Brand/Brand.js";
+import Partners from "./screens/About/Partners/Partners.js";
+import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
-import { isMobile } from "react-device-detect";
 import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
+import { isMobile } from "react-device-detect";
+import About from "./screens/About/About.js";
+import Game from "./screens/Game/Game.js";
+import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
+import Map from "./screens/Map/Map.js";
+import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
+import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
+import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
+import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
+import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
+import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
+import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
+import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
+import immutableLogo from "./screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg";
+import mantaLogo from "./screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png";
+import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
+import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
+import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
+import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
+import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
+import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
+import upcomingBase2 from "./screens/Marketplace/assets/upcomingBase2.webp";
+import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
+import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
+import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
+import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
+import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
+import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
+import cmcUpcoming from "./screens/Marketplace/assets/upcomingCmc.webp";
+import taikoBg from "./screens/Marketplace/assets/taikoBg.webp";
+import mantaBg from "./screens/Marketplace/assets/mantaBg.webp";
+import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg";
+import cmc from "./screens/Marketplace/MarketNFTs/assets/cmc.svg";
+import doge from "./screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
+import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
+import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
+import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
+import { markers } from "./screens/Map/mapdata/markers.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -269,6 +317,8 @@ function App() {
   const [totalSupply, setTotalSupply] = useState(0);
 
   const [isConnected, setIsConnected] = useState(false);
+  const [loginListener, setloginListener] = useState(0);
+
   const [coinbase, setCoinbase] = useState();
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
@@ -399,6 +449,22 @@ function App() {
   useEagerlyConnect();
   const { activate, deactivate, library, provider } = useWeb3React();
 
+  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
+  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
+  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
+  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+  let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
+  let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
+  let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+  let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
+  let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
+  let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
+  let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
+
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
   const placeholderplayerData = [
@@ -483,7 +549,376 @@ function App() {
   const [prevVersionStar, setPrevVersionStar] = useState(0);
   const [dataAmountStar, setDataAmountStar] = useState([]);
 
+  const [userPoints, setuserPoints] = useState(0);
+  const [userEarnUsd, setuserEarnUsd] = useState(0);
+  const [userEarnETH, setuserEarnETH] = useState(0);
+
+  const [cmcuserPoints, setcmcuserPoints] = useState(0);
+  const [cmcuserEarnUsd, setcmcuserEarnUsd] = useState(0);
+  const [cmcuserEarnETH, setcmcuserEarnETH] = useState(0);
+
+  const [confluxUserPoints, setConfluxUserPoints] = useState(0);
+  const [confluxEarnUSD, setConfluxEarnUSD] = useState(0);
+  const [confluxEarnCFX, setConfluxEarnCFX] = useState(0);
+
+  const [gateEarnUSD, setGateEarnUSD] = useState(0);
+  const [gateUserPoints, setGateUserPoints] = useState(0);
+  const [gateEarnBnb, setGateEarnBNB] = useState(0);
+
+  const [dogeUserPoints, setDogeUserPoints] = useState(0);
+  const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
+  const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
+
+  const [baseUserPoints, setBaseUserPoints] = useState(0);
+  const [baseEarnUSD, setBaseEarnUSD] = useState(0);
+  const [baseEarnETH, setBaseEarnETH] = useState(0);
+
+  const [bnbEarnToken, setBnbEarnToken] = useState(0);
+  const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
+  const [bnbPoints, setBnbPoints] = useState(0);
+
+  const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
+  const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
+
+  const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
+  const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
+  const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
+
+  const [coreEarnUsd, setCoreEarnUsd] = useState(0);
+  const [corePrice, setCorePrice] = useState(0);
+  const [coreEarnToken, setCoreEarnToken] = useState(0);
+  const [corePoints, setCorePoints] = useState(0);
+  const [victionEarnUsd, setVictionEarnUsd] = useState(0);
+  const [victionPrice, setVictionPrice] = useState(0);
+  const [victionEarnToken, setVictionEarnToken] = useState(0);
+  const [victionPoints, setVictionPoints] = useState(0);
+
+  const [taikoEarnUsd, setTaikoEarnUsd] = useState(0);
+  const [taikoPrice, setTaikoPrice] = useState(0);
+  const [taikoEarnToken, setTaikoEarnToken] = useState(0);
+  const [taikoPoints, setTaikoPoints] = useState(0);
+
+  const [cookieEarnUsd, setCookieEarnUsd] = useState(0);
+  const [cookiePrice, setCookiePrice] = useState(0);
+  const [cookieEarnToken, setCookieEarnToken] = useState(0);
+  const [cookiePoints, setCookiePoints] = useState(0);
+
+  const [immutableEarnUsd, setImmutableEarnUsd] = useState(0);
+  const [immutablePrice, setImmutablePrice] = useState(0);
+  const [immutableEarnToken, setImmutableEarnToken] = useState(0);
+  const [immutablePoints, setImmutablePoints] = useState(0);
+
+  const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
+  const [mantaPrice, setMantaPrice] = useState(0);
+  const [mantaEarnToken, setMantaEarnToken] = useState(0);
+  const [mantaPoints, setMantaPoints] = useState(0);
+
+  const [multiversEarnUsd, setmultiversEarnUsd] = useState(0);
+  const [multiversPrice, setmultiversPrice] = useState(0);
+  const [multiversEarnToken, setmultiversEarnToken] = useState(0);
+  const [multiversPoints, setmultiversPoints] = useState(0);
+  const [bnbPrice, setBnbPrice] = useState(0);
+  const [cfxPrice, setCfxPrice] = useState(0);
+  const [seiEarnUsd, setSeiEarnUsd] = useState(0);
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [skalePoints, setSkalePoints] = useState(0);
+  const [skalePrice, setSkalePrice] = useState(0);
+  const [seiPrice, setSeiPrice] = useState(0);
+
   const userId = data?.getPlayer?.playerId;
+
+  const fetchTreasureHuntData = async (email, userAddress) => {
+    try {
+      const response = await fetch(
+        "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
+        {
+          body: JSON.stringify(
+            {
+              email: email,
+              publicAddress: userAddress,
+            }
+            // {
+            //   "email": "renato@outerlynx.com",
+            //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
+            // }
+          ),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          redirect: "follow",
+          mode: "cors",
+        }
+      );
+      if (response.status === 200) {
+        const responseData = await response.json();
+        if (responseData.events) {
+          const coingeckoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coingecko";
+          });
+          const confluxEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "conflux";
+          });
+          const skaleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "skale";
+          });
+          const bnbEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "bnb";
+          });
+
+          const coreEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "core";
+          });
+
+          const victionEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "viction";
+          });
+
+          const mantaEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "manta";
+          });
+
+          const taikoEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "taiko";
+          });
+
+          const multiversEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "multivers";
+          });
+
+          const gateEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "gate";
+          });
+
+          const baseEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "base";
+          });
+
+          const dypEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "all";
+          });
+
+          const dogeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "dogecoin";
+          });
+
+          const cmcEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "coinmarketcap";
+          });
+
+          const dypPremiumEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "subscriber";
+          });
+
+          const immutableEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "immutable";
+          });
+
+          const cookieEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "cookie3";
+          });
+
+          if (dypPremiumEvent && dypPremiumEvent[0]) {
+            const userEarnedusd =
+              dypPremiumEvent[0].reward.earn.total /
+              dypPremiumEvent[0].reward.earn.multiplier;
+            const pointsdypius = dypPremiumEvent[0].reward.earn.totalPoints;
+
+            setdypiusPremiumPoints(pointsdypius);
+            setdypiusPremiumEarnUsd(userEarnedusd);
+            setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
+          }
+          if (bnbEvent && bnbEvent[0]) {
+            const userEarnedusd =
+              bnbEvent[0].reward.earn.total /
+              bnbEvent[0].reward.earn.multiplier;
+            const pointsBnb = bnbEvent[0].reward.earn.totalPoints;
+
+            setBnbPoints(pointsBnb);
+            setBnbEarnUsd(userEarnedusd);
+            setBnbEarnToken(userEarnedusd / bnbPrice);
+          }
+
+          if (immutableEvent && immutableEvent[0]) {
+            const userEarnedusd =
+              immutableEvent[0].reward.earn.total /
+              immutableEvent[0].reward.earn.multiplier;
+            const pointsBnb = immutableEvent[0].reward.earn.totalPoints;
+
+            setImmutablePoints(pointsBnb);
+            setImmutableEarnUsd(userEarnedusd);
+            setImmutableEarnToken(userEarnedusd / immutablePrice);
+          }
+
+          if (taikoEvent && taikoEvent[0]) {
+            const userEarnedusd =
+              taikoEvent[0].reward.earn.total /
+              taikoEvent[0].reward.earn.multiplier;
+            const pointsTaiko = taikoEvent[0].reward.earn.totalPoints;
+            setTaikoPoints(pointsTaiko);
+            setTaikoEarnUsd(userEarnedusd);
+            setTaikoEarnToken(userEarnedusd / taikoPrice);
+          }
+
+          if (cookieEvent && cookieEvent[0]) {
+            const userEarnedusd =
+              cookieEvent[0].reward.earn.total /
+              cookieEvent[0].reward.earn.multiplier;
+            const pointsBnb = cookieEvent[0].reward.earn.totalPoints;
+
+            setCookiePoints(pointsBnb);
+            setCookieEarnUsd(userEarnedusd);
+            setCookieEarnToken(userEarnedusd / cookiePrice);
+          }
+
+          if (coreEvent && coreEvent[0]) {
+            const userEarnedusd =
+              coreEvent[0].reward.earn.total /
+              coreEvent[0].reward.earn.multiplier;
+            const pointsCore = coreEvent[0].reward.earn.totalPoints;
+            setCorePoints(pointsCore);
+            setCoreEarnUsd(userEarnedusd);
+            setCoreEarnToken(userEarnedusd / corePrice);
+          }
+
+          if (victionEvent && victionEvent[0]) {
+            const userEarnedusd =
+              victionEvent[0].reward.earn.total /
+              victionEvent[0].reward.earn.multiplier;
+            const pointsViction = victionEvent[0].reward.earn.totalPoints;
+            setVictionPoints(pointsViction);
+            setVictionEarnUsd(userEarnedusd);
+            setVictionEarnToken(userEarnedusd / victionPrice);
+          }
+
+          if (mantaEvent && mantaEvent[0]) {
+            const userEarnedusd =
+              mantaEvent[0].reward.earn.total /
+              mantaEvent[0].reward.earn.multiplier;
+            const pointsManta = mantaEvent[0].reward.earn.totalPoints;
+            setMantaPoints(pointsManta);
+            setMantaEarnUsd(userEarnedusd);
+            setMantaEarnToken(userEarnedusd / mantaPrice);
+          }
+
+          if (multiversEvent && multiversEvent[0]) {
+            const userEarnedusd =
+              multiversEvent[0].reward.earn.total /
+              multiversEvent[0].reward.earn.multiplier;
+            const pointsmultivers = multiversEvent[0].reward.earn.totalPoints;
+            setmultiversPoints(pointsmultivers);
+            setmultiversEarnUsd(userEarnedusd);
+            setmultiversEarnToken(userEarnedusd / multiversPrice);
+          }
+
+          if (dypEvent && dypEvent[0]) {
+            const userEarnedDyp =
+              dypEvent[0].reward.earn.total /
+              dypEvent[0].reward.earn.multiplier;
+            setDypiusEarnUsd(dyptokenDatabnb * userEarnedDyp);
+            setDypiusEarnTokens(userEarnedDyp);
+          }
+
+          if (coingeckoEvent && coingeckoEvent[0]) {
+            const points = coingeckoEvent[0].reward.earn.totalPoints;
+            setuserPoints(points);
+            const usdValue =
+              coingeckoEvent[0].reward.earn.total /
+              coingeckoEvent[0].reward.earn.multiplier;
+            setuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+
+          if (cmcEvent && cmcEvent[0]) {
+            const points = cmcEvent[0].reward.earn.totalPoints;
+            setcmcuserPoints(points);
+            const usdValue =
+              cmcEvent[0].reward.earn.total /
+              cmcEvent[0].reward.earn.multiplier;
+            setcmcuserEarnUsd(usdValue);
+            if (bnbPrice !== 0) {
+              setcmcuserEarnETH(usdValue / bnbPrice);
+            }
+          }
+          if (skaleEvent && skaleEvent[0]) {
+            const points = skaleEvent[0].reward.earn.totalPoints;
+            setSkalePoints(points);
+            const usdValue =
+              skaleEvent[0].reward.earn.total /
+              skaleEvent[0].reward.earn.multiplier;
+            setSkaleEarnUsd(usdValue);
+            if (skalePrice !== 0) {
+              setSkaleEarnToken(usdValue / skalePrice);
+            }
+          }
+
+          if (dogeEvent && dogeEvent[0]) {
+            const points = dogeEvent[0].reward.earn.totalPoints;
+            setDogeUserPoints(points);
+            const usdValue =
+              dogeEvent[0].reward.earn.total /
+              dogeEvent[0].reward.earn.multiplier;
+            setDogeEarnUSD(usdValue);
+            if (dogePrice !== 0) {
+              setDogeEarnBNB(usdValue / dogePrice);
+            }
+          }
+
+          if (confluxEvent && confluxEvent[0]) {
+            const cfxPoints = confluxEvent[0].reward.earn.totalPoints;
+            setConfluxUserPoints(cfxPoints);
+
+            if (confluxEvent[0].reward.earn.multiplier !== 0) {
+              const cfxUsdValue =
+                confluxEvent[0].reward.earn.total /
+                confluxEvent[0].reward.earn.multiplier;
+              setConfluxEarnUSD(cfxUsdValue);
+
+              if (cfxPrice !== 0) {
+                setConfluxEarnCFX(cfxUsdValue / cfxPrice);
+              }
+            }
+          }
+
+          if (gateEvent && gateEvent[0]) {
+            const gatePoints = gateEvent[0].reward.earn.totalPoints;
+            setGateUserPoints(gatePoints);
+            if (gateEvent[0].reward.earn.multiplier !== 0) {
+              const gateUsdValue =
+                gateEvent[0].reward.earn.total /
+                gateEvent[0].reward.earn.multiplier;
+              setGateEarnUSD(gateUsdValue);
+
+              if (bnbPrice !== 0) {
+                setGateEarnBNB(gateUsdValue / bnbPrice);
+              }
+            }
+          }
+
+          if (baseEvent && baseEvent[0]) {
+            const basePoints = baseEvent[0].reward.earn.totalPoints;
+            setBaseUserPoints(basePoints);
+            if (baseEvent[0].reward.earn.multiplier !== 0) {
+              const baseUsdValue =
+                baseEvent[0].reward.earn.total /
+                baseEvent[0].reward.earn.multiplier;
+              setBaseEarnUSD(baseUsdValue);
+              if (ethTokenData !== 0) {
+                setBaseEarnETH(baseUsdValue / ethTokenData);
+              }
+            }
+          }
+        }
+      } else {
+        console.log(`Request failed with status ${response.status}`);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -2349,6 +2784,743 @@ function App() {
     }
   }
 
+  const fetchEgldPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setmultiversPrice(obj.data.tomochain.usd);
+      });
+  };
+
+  const fetchImmutablePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setImmutablePrice(obj.data["immutable-x"].usd);
+      });
+  };
+
+  const fetchSkalePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setSkalePrice(obj.data.skale.usd);
+      });
+  };
+  const fetchSeiPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setSeiPrice(obj.data["sei-network"].usd);
+      });
+  };
+
+  const fetchCorePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCorePrice(obj.data.core.usd);
+      });
+  };
+
+  const fetchMantaPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setMantaPrice(obj.data["manta-network"].usd);
+      });
+  };
+
+  const fetchTaikoPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setTaikoPrice(obj.data["taiko"].usd);
+      });
+  };
+
+  const fetchCookiePrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=cookie&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setCookiePrice(obj.data.cookie.usd);
+      });
+  };
+
+  const fetchVictionPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((obj) => {
+        setVictionPrice(obj.data.tomochain.usd);
+      });
+  };
+
+  useEffect(() => {
+    fetchSkalePrice();
+    fetchSeiPrice();
+    fetchMantaPrice();
+    fetchTaikoPrice();
+    fetchCookiePrice();
+    fetchCorePrice();
+    fetchVictionPrice();
+    fetchEgldPrice();
+    fetchImmutablePrice();
+  }, []);
+
+  useEffect(() => {
+    if (
+      email &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.displayName &&
+      data.getPlayer.playerId &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress
+    ) {
+      fetchTreasureHuntData(email, data.getPlayer.wallet.publicAddress);
+    }
+  }, [
+    email,
+    data,
+    cfxPrice,
+    bnbPrice,
+    skalePrice,
+    dyptokenDatabnb,
+    corePrice,
+    mantaPrice,
+    victionPrice,
+  ]);
+
+  const dummyBetaPassData2 = [
+    // {
+    //   title: "MultiversX",
+    //   logo: multiversLogo,
+    //   eventStatus: "Live",
+    //   totalRewards: "$20,000 in EGLD Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "Jul 01, 2024",
+    //   backgroundImage: multiversBg,
+    //   popupInfo: {
+    //     title: "MultiversX",
+    //     chain: "MultiversX Chain",
+    //     linkState: "multiversx",
+    //     rewards: "EGLD",
+    //     status: "Live",
+    //     id: "event16",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in EGLD Rewards",
+    //     eventDuration: coreLastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "",
+    //     eventDate: "Jul 01, 2024",
+    //   },
+    // },
+
+    {
+      title: "CORE",
+      logo: coreLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in CORE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: coreBg,
+      userEarnUsd: coreEarnUsd,
+      userEarnCrypto: coreEarnToken,
+      userEarnPoints: corePoints,
+      popupInfo: {
+        title: "CORE",
+        chain: "CORE Chain",
+        linkState: "core",
+        rewards: "CORE",
+        status: "Expired",
+        id: "event12",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in CORE Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Jul 01, 2024",
+      backgroundImage: victionBg,
+      userEarnUsd: victionEarnUsd,
+      userEarnCrypto: victionEarnToken,
+      userEarnPoints: victionPoints,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Expired",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: coreLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Jul 01, 2024",
+      },
+    },
+    {
+      title: "Base",
+      logo: baseLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in ETH Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Oct 07, 2024",
+      backgroundImage: upcomingBase2,
+      userEarnUsd: 0,
+      userEarnCrypto: 0,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Base",
+        chain: "Base",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Coming Soon",
+        id: "event24",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Oct 07, 2024",
+      },
+    },
+    {
+      title: "BNB Chain",
+      logo: bnbLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Jun 12, 2024",
+      backgroundImage: upcomingBnb,
+      userEarnUsd: bnbEarnUsd,
+      userEarnCrypto: bnbEarnToken,
+      userEarnPoints: bnbPoints,
+      popupInfo: {
+        title: "BNB Chain",
+        chain: "BNB Chain",
+        linkState: "bnb",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event20",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Jun 12, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      rewardType: "IMX",
+      rewardAmount: "$20,000",
+      location: [-0.05935191046684262, 0.03785133361816407],
+      image: "immutableBanner.png",
+      type: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      userEarnUsd: immutableEarnUsd,
+      userEarnCrypto: immutableEarnToken,
+      userEarnPoints: immutablePoints,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Live",
+      rewardType: "TAIKO",
+      rewardAmount: "$20,000",
+      location: [-0.06124018456762751, 0.11788845062255861],
+      image: "taikoBanner.png",
+      type: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      userEarnUsd: taikoEarnUsd,
+      userEarnCrypto: taikoEarnToken,
+      userEarnPoints: taikoPoints,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Live",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Live",
+      rewardType: "MANTA",
+      rewardAmount: "$20,000",
+      location: [-0.033817289296309505, 0.09595870971679689],
+      image: "mantaBanner.png",
+      type: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      userEarnUsd: mantaEarnUsd,
+      userEarnCrypto: mantaEarnToken,
+      userEarnPoints: mantaPoints,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Live",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
+      },
+    },
+    {
+      title: "Cookie3",
+      logo: cookie3Logo,
+      eventStatus: "Live",
+      rewardType: "COOKIE",
+      rewardAmount: "$20,000",
+      location: [-0.12891758531392564, 0.059008598327636726],
+      image: "cookie3Banner.png",
+      type: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in COOKIE Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 26, 2024",
+      backgroundImage: upcomingCookie,
+      userEarnUsd: cookieEarnUsd,
+      userEarnCrypto: cookieEarnToken,
+      userEarnPoints: cookiePoints,
+      popupInfo: {
+        title: "Cookie3",
+        chain: "BNB Chain",
+        linkState: "cookie3",
+        rewards: "Cookie3",
+        status: "Live",
+        id: "event23",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in COOKIE Rewards",
+        eventDuration: cookieLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 26, 2024",
+      },
+    },
+    // {
+    //   title: "SEI",
+    //   logo: seiLogo,
+    //   eventStatus: "Coming Soon",
+    //   totalRewards: "$20,000 in SEI Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Find",
+    //   eventDate: "XXX XX, XXXX",
+    //   backgroundImage: seiBg,
+    //   popupInfo: {
+    //     title: "SEI",
+    //     chain: "SEI Chain",
+    //     linkState: "sei",
+    //     rewards: "SEI",
+    //     status: "Coming Soon",
+    //     id: "event13",
+    //     eventType: "Explore & Find",
+    //     totalRewards: "$20,000 in SEI Rewards",
+    //     eventDuration: dypius2LastDay,
+    //     minRewards: "1",
+    //     maxRewards: "100",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore:
+    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+    //     eventDate: "XXX XX, XXXX",
+    //   },
+    // },
+    {
+      title: "SKALE",
+      logo: skaleLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in SKL Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Apr 15, 2024",
+      backgroundImage: upcomingSkale,
+      userEarnUsd: skaleEarnUsd,
+      userEarnCrypto: skaleEarnToken,
+      userEarnPoints: skalePoints,
+      popupInfo: {
+        title: "SKALE",
+        chain: "SKALE Nebula Hub",
+        linkState: "skale",
+        rewards: "SKL",
+        status: "Expired",
+        id: "event11",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SKL Rewards",
+        eventDuration: skaleLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        eventDate: "Apr 15, 2024",
+      },
+    },
+    {
+      title: "Dypius Premium",
+      logo: dypiusPremium,
+      eventStatus: "Expired",
+      totalRewards: "$50,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Feb 26, 2024",
+      backgroundImage: upcomingDyp2,
+      activeTab: "dypiusv2",
+      userEarnUsd: dypiusPremiumEarnUsd,
+      userEarnCrypto: dypiusPremiumEarnTokens,
+      userEarnPoints: dypiusPremiumPoints,
+      popupInfo: {
+        title: "Dypius Premium",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event9",
+        eventType: "Explore & Find",
+        totalRewards: "$50,000 in BNB Rewards",
+        eventDuration: dypius2LastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
+        eventDate: "Feb 26, 2024",
+        activeTab: "dypiusv2",
+      },
+    },
+    {
+      title: "CMC",
+      logo: cmc,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 26, 2023",
+      userEarnUsd: cmcuserEarnUsd,
+      userEarnCrypto: cmcuserEarnETH,
+      userEarnPoints: cmcuserPoints,
+      backgroundImage: cmcUpcoming,
+      popupInfo: {
+        title: "CoinMarketCap",
+        chain: "BNB Chain",
+        linkState: "coinmarketcap",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event8",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: cmcLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        eventDate: "Dec 26, 2023",
+        learnMore:
+          "/news/658ae3cc148c5ffee9c4ffa7/CoinMarketCap-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dogecoin",
+      chain: "BNB Chain",
+      linkState: "doge",
+      rewards: "DOGE",
+      status: "Expired",
+      eventStatus: "Expired",
+      id: "event7",
+      eventType: "Explore & Mine",
+      date: "Dec 22, 2023",
+      eventDate: "Dec 22, 2023",
+      logo: doge,
+      totalRewards: "$10,000 in DOGE Rewards",
+      eventDuration: dogeLastDay,
+      userEarnCrypto: dogeEarnBNB,
+      userEarnPoints: dogeUserPoints,
+      backgroundImage: upcomingDoge,
+      minRewards: "1",
+      maxRewards: "100",
+      minPoints: "5,000",
+      maxPoints: "50,000",
+      learnMore: "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+      userEarnUsd: dogeEarnUSD,
+      popupInfo: {
+        title: "Dogecoin",
+        chain: "BNB Chain",
+        linkState: "doge",
+        rewards: "DOGE",
+        status: "Expired",
+        id: "event7",
+        eventStatus: "Expired",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in DOGE Rewards",
+        eventDuration: dogeLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/65857c6b148c5ffee9c203ec/Dogecoin-Treasure-Hunt-Event",
+        eventDate: "Dec 22, 2023",
+      },
+    },
+    {
+      title: "Base",
+      logo: baseLogo,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in ETH Rewards",
+      myEarnings: 126.45,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 01, 2023",
+      backgroundImage: baseUpcoming,
+      userEarnUsd: baseEarnUSD,
+      userEarnCrypto: baseEarnETH,
+      userEarnPoints: baseUserPoints,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Base",
+        chain: "Base Chain",
+        linkState: "base",
+        rewards: "ETH",
+        status: "Expired",
+        id: "event4",
+        date: "Nov 01, 2023",
+        totalRewards: "$10,000 in ETH Rewards",
+        eventDuration: baseLastDay,
+        eventDate: "Nov 01, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "30,000",
+        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "CoinGecko",
+      logo: coingecko,
+      eventStatus: "Expired",
+      totalRewards: "$10,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: coingeckoUpcoming,
+      userEarnUsd: userEarnUsd,
+      userEarnCrypto: userEarnETH,
+      userEarnPoints: userPoints,
+      popupInfo: {
+        title: "CoinGecko",
+        chain: "BNB Chain",
+        linkState: "coingecko",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event3",
+        eventType: "Explore & Mine",
+        totalRewards: "$10,000 in BNB Rewards",
+        eventDuration: coingeckoLastDay,
+        minRewards: "1",
+        maxRewards: "100",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore:
+          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Dypius",
+      logo: dypius,
+      eventStatus: "Expired",
+      totalRewards: "300,000 in DYPv2 Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Ended",
+      backgroundImage: upcomingDyp,
+      userEarnUsd: dypiusEarnUsd,
+      userEarnCrypto: dypiusEarnTokens,
+      userEarnPoints: 0,
+      popupInfo: {
+        title: "Dypius",
+        chain: "BNB Chain",
+        linkState: "dypius",
+        rewards: "DYP",
+        status: "Expired",
+        id: "event5",
+        eventType: "Explore & Find",
+        totalRewards: "300,000 in DYPv2 Rewards",
+        eventDuration: dypiusLastDay,
+        minRewards: "25",
+        maxRewards: "50",
+        learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
+        eventDate: "Ended",
+      },
+    },
+    {
+      title: "Gate.io",
+      logo: gate,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in BNB Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: gateUpcoming,
+      userEarnUsd: gateEarnUSD,
+      userEarnCrypto: gateEarnBnb,
+      userEarnPoints: gateUserPoints,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Gate.io",
+        chain: "BNB Chain",
+        linkState: "gate",
+        rewards: "BNB",
+        status: "Expired",
+        id: "event6",
+        totalRewards: "$2,000 in BNB Rewards",
+        eventDuration: gateLastDay,
+        eventDate: "Ended",
+        date: "Oct 20, 2023",
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/653290f5b3f3545e9500f557/Gate-Treasure-Hunt-Event",
+      },
+    },
+    {
+      title: "Conflux",
+      logo: conflux,
+      eventStatus: "Expired",
+      totalRewards: "$2,000 in CFX Rewards",
+      myEarnings: 0,
+      eventType: "Explore & Mine",
+      eventDate: "Ended",
+      backgroundImage: confluxUpcoming,
+      userEarnUsd: confluxEarnUSD,
+      userEarnCrypto: confluxEarnCFX,
+      userEarnPoints: confluxUserPoints,
+      popupInfo: {
+        eventType: "Explore & Mine",
+        title: "Conflux",
+        chain: "Conflux Network",
+        linkState: "conflux",
+        rewards: "CFX",
+        status: "Expired",
+        id: "event1",
+        totalRewards: "$2,000 in CFX Rewards",
+        eventDuration: confluxLastDay,
+        eventDate: "Ended",
+        minRewards: "1",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "20,000",
+        learnMore: "/news/65200e247531f3d1a8fce737/Conflux-Treasure-Hunt-Event",
+      },
+    },
+  ];
+
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
     if (allSold && allSold.length > 0) {
@@ -2998,7 +4170,11 @@ function App() {
   
   return (
     <>
-      <div className="container-fluid p-0 main-wrapper2 position-relative">
+      <div
+        className={`container-fluid ${
+          location.pathname.includes("map") && "px-0"
+        } main-wrapper2 px-0 position-relative`}
+      >
         <Header
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -3022,6 +4198,10 @@ function App() {
             setCount55(count55 + 1);
           }}
           onSigninClick={checkData}
+          gameAccount={data?.getPlayer?.wallet?.publicAddress}
+          email={email}
+          username={data?.getPlayer?.displayName}
+          loginListener={loginListener}
         />
         <MobileNavbar
           handleSignUp={handleShowWalletModal}
@@ -3211,7 +4391,10 @@ function App() {
               <Auth
                 isConnected={isConnected}
                 coinbase={coinbase}
-                onSuccessLogin={refetchPlayer}
+                onSuccessLogin={() => {
+                  setloginListener(loginListener + 1);
+                  refetchPlayer();
+                }}
               />
             }
           />
@@ -3246,6 +4429,17 @@ function App() {
             element={
               <Dashboard
               dailyBonuslistedNFTS={listedNFTS}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -3279,6 +4473,78 @@ function App() {
               />
             }
           />
+          {/* <Route
+            exact
+            path="/account/my-rewards"
+            element={
+              <Dashboard
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+              />
+            }
+          /> */}
+          <Route
+            exact
+            path="/account/premium"
+            element={
+              <Dashboard
+                onSuccessDeposit={() => {
+                  setCount55(count55 + 1);
+                }}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                isConnected={isConnected}
+                chainId={chainId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+              />
+            }
+          />
 
           <Route
             exact
@@ -3305,6 +4571,17 @@ function App() {
             path="/marketplace"
             element={
               <Marketplace
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 totalSupply={totalSupply}
                 count={count2}
                 setCount={setCount2}
@@ -3889,29 +5166,51 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/events/:eventId"
+            path="/account/challenges/:eventId"
             element={
-              <MarketEvents
-                tabState={"live"}
-                isConnected={isConnected}
-                handleConnect={handleShowWalletModal}
-                listedNFTS={listedNFTS}
-                account={coinbase?.toLowerCase()}
-                chainId={networkId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
-                idyptokenDatabnb={idyptokenDatabnb}
-                handleAvailableTime={(value) => {
-                  setavailTime(value);
-                }}
+              <Dashboard
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
                 ethTokenData={ethTokenData}
-                dyptokenData_old={dypTokenData_old}
-                dogePrice={dogePrice}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
                 binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectBinance={handleConnectBinance}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/marketplace/events/upcoming"
             element={
@@ -3934,8 +5233,8 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             exact
             path="/marketplace/events/past"
             element={
@@ -3958,7 +5257,7 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          />
+          /> */}
           <Route
             exact
             path="/marketplace/stake"
@@ -4016,6 +5315,38 @@ function App() {
               />
             }
           />
+          <Route exact path="/token" element={<Token />} />
+          <Route exact path="/bridge" element={<Bridge />} />
+          <Route
+            exact
+            path="/earn"
+            element={
+              <Earn
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={chainId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                onConnectWallet={() => {
+                  setwalletModal(true);
+                }}
+              />
+            }
+          />
+          <Route exact path="/buy" element={<Buy />} />
+          <Route exact path="/governance" element={<Governance />} />
+          <Route exact path="/campaigns" element={<Campaigns />} />
+          <Route
+            exact
+            path="/governance/proposal/:proposalId"
+            element={<GovernanceInner />}
+          />
+
+          <Route exact path="/game" element={<Game />} />
+          <Route exact path="/game-updates" element={<GameUpdates />} />
+          {/* <Route exact path="/brand" element={<Brand />} /> */}
+          {/* <Route exact path="/partners" element={<Partners />} />
+            <Route exact path="/tokenomics" element={<Tokenomics />} /> */}
+          <Route exact path="/about" element={<About />} />
 
           {/* <Route
             exact
@@ -4482,28 +5813,25 @@ function App() {
                 />
               }
             /> */}
+          <Route
+            exact
+            path="/map"
+            element={<Map dummyBetaPassData2={dummyBetaPassData2} />}
+          />
         </Routes>
+
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-        {location.pathname.includes("marketplace") ||
-        location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ||
-        location.pathname.includes("loyalty-program") ? (
-          location.pathname.includes("caws") ||
-          location.pathname.includes("land") ? null : (
-            <MarketplaceFooter />
-          )
-        ) : (
-          <Footer />
-        )}
+        <Footer />
       </div>
 
-      {!location.pathname.includes("account") &&
+      {/* {!location.pathname.includes("account") &&
         !location.pathname.includes("auth") &&
         !location.pathname.includes("explorer") &&
+        !location.pathname.includes("map") &&
         !location.pathname.includes("bnbchain-alliance-program") && (
           <ChestFlyout />
-        )}
+        )} */}
       {domainPopup && (
         <DomainModal
           onClose={() => setDomainPopup(false)}

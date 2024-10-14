@@ -701,7 +701,7 @@ const MyRewardsPopupNew = ({
         </div>
         <div className="small-separator"></div>
       </div>
-      <div className="reward-category-items-wrapper">
+      <div className="reward-category-items-wrapper p-1">
         <div
           className={` ${
             rewardCategory === "all"
@@ -1398,7 +1398,18 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-           
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Base</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(
+                        Number(weeklyDataAmountBase) +
+                          Number(monthlyDataAmountBase)
+                      )}
+                </span>
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1446,18 +1457,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-                 <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Base</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(
-                        Number(weeklyDataAmountBase) +
-                          Number(monthlyDataAmountBase)
-                      )}
-                </span>
-              </div>
+                
               {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">

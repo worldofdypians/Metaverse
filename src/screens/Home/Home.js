@@ -53,46 +53,27 @@ import festivecampaign from "../../components/TimepieceMint/assets/festiveCampai
 // import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
+import GameUpdates from "./GameUpdates/GameUpdates";
+import WodPartners from "./WodBuilders/WodPartners";
+import GameStats from "./GameStats/GameStats";
 
 const Home = ({
   handleRegister,
   handleDownload,
-  coinbase,
-  ethTokenData,
-  dyptokenDatabnb,
-  allStarData,
-  idyptokenDatabnb,
-  dyptokenDatabnb_old,
-  cawsListed,
-  wodListed,
-  timepieceListed,
-  totalSupply,
   monthlyPlayers,
   percent,
-  socials,
-  totalTx
-}) => {
- 
-  const basePopupInfo = {
-    title: "Base ",
-    img: basePopup,
-    state: "base",
-  };
- 
-
-  const entryCampaignPopup = {
-    title: "SKALE",
-    img: dypiansDiscoveryQuest,
-    state: "skale",
-  };
-
-  const treasureHuntPopupInfo = {
+  allStarData
+})  => {
+  const cmcPopupInfo = {
     title: "Treasure Hunt",
-    img: dypiusPopup,
-    state: "dypius",
+    img: cmcTreasureHuntPopup,
+    state: "cmc",
   };
- 
-
+  const bnbInfo = {
+    title: "opBNB",
+    img: festivecampaign,
+    state: "opbnb",
+  };
   const mantaInfo = {
     title: "Manta",
     img: mantaPopup,
@@ -122,6 +103,7 @@ const Home = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "World of Dypians";
+    // randomPopup();
   }, []);
 
   return (
@@ -130,11 +112,11 @@ const Home = ({
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
       >
-        <MintPopup
+        {/* <MintPopup
           active={activePopup}
           data={mantaInfo}
           onClose={() => setActivePopup(false)}
-        />
+        /> */}
       </OutsideClickHandler>
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
@@ -145,30 +127,29 @@ const Home = ({
             monthlyPlayers={monthlyPlayers}
             percent={percent}
           />
-          <LiveEvents />
-          <WodBuilders page={"home"} />
-           
-          <Utilities socials={socials} monthlyPlayers={monthlyPlayers} totalSupply={totalSupply} totalTx={totalTx} />
-          <MarketSection
+          {/* <LiveEvents /> */}
+          <WodPartners full={false} />
+          <GameStats />
+          <WodBuilders />
+          {/* <Utilities /> */}
+          {/* <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
-            timepieceListed={timepieceListed}
-            cawsListed={cawsListed}
-            wodListed={wodListed}
-          />
+          /> */}
           <ExplorerGrid />
-          <LandNft />
-          <CawsSociety
+          <GameUpdates />
+          {/* <LandNft /> */}
+          {/* <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
             utility NFTs developed by Dypius. Owners of these NFTs will be able
             to adventure with their CAT companion enhancing the player's
             abilities and increasing rewards."
-          />
-          <CawsWorld />
+          /> */}
+          {/* <CawsWorld /> */}
           <MarketPlace />
-          <Discord />
+          {/* <Discord /> */}
           {/* <Partners /> */}
         </div>
       </div>
