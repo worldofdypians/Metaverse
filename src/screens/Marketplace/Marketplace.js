@@ -565,7 +565,7 @@ const Marketplace = ({
                     </mark>
                   </h6>
 
-                  <div className="my-4 d-flex flex-column align-items-center gap-2">
+                  {/* <div className="my-4 d-flex flex-column align-items-center gap-2">
                     <span className="market-banner-desc">Available on</span>
                     <span className="d-flex gap-2 align-items-center">
                       <img
@@ -604,7 +604,7 @@ const Marketplace = ({
                         style={{ width: 24, height: 24 }}
                       />
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="row gap-4 mx-0 gap-lg-0 align-items-center">

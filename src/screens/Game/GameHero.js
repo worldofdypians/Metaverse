@@ -6,11 +6,13 @@ import MapPopup from "../../components/PackagePopups/MapPopup";
 import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
+import { useNavigate } from "react-router-dom";
 
 const GameHero = () => {
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
   const [showPopup, setshowPopup] = useState("");
+  const navigate = useNavigate();
 
   var settings = {
     dots: false,
@@ -129,7 +131,9 @@ const GameHero = () => {
               {dummyBetaPassData2.map((item, index) => (
                 <div
                   onClick={() => {
-                    setshowPopup(item.state);
+                    item.state === "map"
+                      ? navigate("/map")
+                      : setshowPopup(item.state);
                   }}
                 >
                   <BetaEventCardHome
