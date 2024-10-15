@@ -95,13 +95,17 @@ background: transparent;
     position: absolute;
     bottom: 0;
     right: 0;
-    // width: 75%;
+    @media screen and (max-width: 991px) {
+        width: 90%;
+    }
 }
 .aliens-img{
     position: absolute;
     bottom: 0;
     left: 0;
-    // width: 75%;
+    @media screen and (max-width: 991px) {
+        width: 90%;
+    }
 }
 
 .humans-class-text{

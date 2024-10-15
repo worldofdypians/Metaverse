@@ -487,19 +487,27 @@ const Header = ({
   //   account: "account",
   // });
   // }, []);
-
+  console.log(location.pathname);
   return (
     <div className="d-flex flex-column">
-      <div className="d-none d-lg-flex navbar-wrapper p-3 " style={{zIndex: location.pathname.includes("map") ? "1000" : "7"}}>
+      <div
+        className="d-none d-lg-flex navbar-wrapper p-3 "
+        style={{ zIndex: location.pathname.includes("map") ? "1000" : "7" }}
+      >
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-start gap-5 ps-0">
             <NavLink to="/">
               <img src={metaverse} alt="metaverse" height={32} />
             </NavLink>
             <div
-              className={
-                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
-              }
+              className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 ${
+                location.pathname === "/token" ||
+                location.pathname === "/earn" ||
+                location.pathname === "/bridge" ||
+                location.pathname === "/buy"
+                  ? "nav-anchor activenavlink"
+                  : ""
+              }`}
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("wod")}
               onMouseLeave={() => handleDropdown(null)}
@@ -573,9 +581,15 @@ const Header = ({
               Marketplace
             </NavLink>
             <div
-              className={
-                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
-              }
+              className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2
+               ${
+                 location.pathname === "/governance" ||
+                 location.pathname === "/campaigns" ||
+                 location.pathname === "/game-updates"
+                   ? "nav-anchor activenavlink"
+                   : ""
+               }
+               `}
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("community")}
               onMouseLeave={() => handleDropdown(null)}
@@ -669,14 +683,17 @@ const Header = ({
               </div>
             </div>
             <div
-              className={
-                "nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2"
-              }
+              className={`nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 `}
               style={{ cursor: "pointer" }}
               onMouseEnter={() => handleDropdown("about")}
               onMouseLeave={() => handleDropdown(null)}
             >
-              <NavLink to="/about" className="text-white">
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                 isActive ? "nav-anchor activenavlink" : "nav-anchor"
+                }
+              >
                 About
               </NavLink>
               <img src={headerArrow} alt="" />
@@ -841,7 +858,7 @@ const Header = ({
                 ) : (
                   <></>
                 )}
-                   <NavLink
+                <NavLink
                   to={"/account/premium"}
                   className={({ isActive }) =>
                     isActive
