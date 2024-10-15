@@ -206,7 +206,7 @@ const NewEvents = ({
                             setChallenge("maze-garden");
                           }}
                         >
-                          <img src={mazeGardenIcon} alt="" />
+                          <img src={mazeGardenIcon} alt="" style={{width: 32, height: 34}}/>
                           <h6 className="mb-0">Maze Garden</h6>
                         </div>
                       </NavLink>

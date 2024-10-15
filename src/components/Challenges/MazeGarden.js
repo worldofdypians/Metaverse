@@ -1,6 +1,6 @@
 import React from "react";
 import "./_challenges.scss";
-import mazeGardenBanner from "./assets/mazeGardenBanner.png";
+import mazeGardenBanner from "./assets/mazeGardenBanner.webp";
 
 const MazeGarden = () => {
   return (

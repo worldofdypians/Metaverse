@@ -306,6 +306,8 @@ const NewWalletBalance = ({
   cookieEarnUsd,
   cookieEarnToken,
   cookiePoints,
+  treasureRewardMoney,
+  allClaimedChests
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1095,8 +1097,7 @@ const NewWalletBalance = ({
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
-  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
-  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0); 
 
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -1128,15 +1129,7 @@ const NewWalletBalance = ({
   // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
-  const totalClaimedChests =
-    claimedChests +
-    claimedPremiumChests +
-    openedSkaleChests.length +
-    openedCoreChests.length +
-    openedVictionChests.length +
-    openedTaikoChests.length +
-    openedMantaChests.length +
-    openedBaseChests.length;
+  const totalClaimedChests =allClaimedChests
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
 
@@ -1213,144 +1206,7 @@ const NewWalletBalance = ({
     return errors;
   };
 
-  const getTreasureChestsInfo = async () => {
-    var moneyResult = 0;
 
-    if (openedChests && openedChests.length > 0) {
-      openedChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedSkaleChests && openedSkaleChests.length > 0) {
-      openedSkaleChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedCoreChests && openedCoreChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedVictionChests && openedVictionChests.length > 0) {
-      openedVictionChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedMantaChests && openedMantaChests.length > 0) {
-      openedMantaChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedBaseChests && openedBaseChests.length > 0) {
-      openedBaseChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedTaikoChests && openedTaikoChests.length > 0) {
-      openedTaikoChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    setTreasureRewardMoney(moneyResult);
-  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -1693,19 +1549,7 @@ const NewWalletBalance = ({
     }
   }, [address]);
 
-  useEffect(() => {
-    getTreasureChestsInfo();
-  }, [
-    openedChests,
-    address,
-    openedCoreChests,
-    openedVictionChests,
-    openedSkaleChests,
-    openedMantaChests,
-    ,
-    openedBaseChests,
-    openedTaikoChests,
-  ]);
+
 
   useEffect(() => {
     fetchUsersocialRewards();
