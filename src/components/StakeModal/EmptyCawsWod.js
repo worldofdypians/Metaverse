@@ -1,5 +1,5 @@
 import React from "react";
-import emptyCawsWod from "./assets/emptycawswod.svg";
+import emptyCawsWod from "./assets/emptycawswod.png";
 
 const EmptyCawsWodCard = () => {
   return (
