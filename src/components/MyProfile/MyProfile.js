@@ -144,7 +144,8 @@ const MyProfile = ({
   allClaimedChests,
   treasureRewardMoney,
   userDailyBundles,
-  puzzleMadnessCountdown
+  puzzleMadnessCountdown,
+  userActiveEvents,
 }) => {
   const totalClaimedChests = allClaimedChests;
 
@@ -458,11 +459,24 @@ const MyProfile = ({
                   )}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={treasureHuntActive} alt="" />
+                  <img
+                    src={
+                      userActiveEvents > 0
+                        ? treasureHuntActive
+                        : treasureHuntInactive
+                    }
+                    alt=""
+                  />
                   <div className="daily-progress-value">
-                    <span>4</span>
+                    <span>{userActiveEvents}</span>
                   </div>
-                  <img src={doneTag} alt="" className="daily-progress-status" />
+                  {userActiveEvents > 0 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )}
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img
@@ -496,12 +510,24 @@ const MyProfile = ({
                   /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={ puzzleMadnessCountdown ?  puzzleMadnessActive : puzzleMadnessInactive} alt="" />
+                  <img
+                    src={
+                      puzzleMadnessCountdown
+                        ? puzzleMadnessActive
+                        : puzzleMadnessInactive
+                    }
+                    alt=""
+                  />
                   <div className="daily-progress-value">
                     <span>{userDailyBundles?.puzzleMadnessCount}</span>
                   </div>
-                  {userDailyBundles?.puzzleMadnessCount > 0 &&
-                  <img src={doneTag} alt="" className="daily-progress-status" /> }
+                  {userDailyBundles?.puzzleMadnessCount > 0 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )}
                 </div>
 
                 <div className="daily-progress-item position-relative">

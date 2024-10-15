@@ -209,6 +209,7 @@ function Dashboard({
   mantaEarnUsd,
   multiversEarnUsd,
   bnbEarnUsd,
+  userActiveEvents
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -8566,7 +8567,7 @@ function Dashboard({
               isgoldenPassActive={goldenPassRemainingTime}
               dragonRuinsCountdown={countdown}
               puzzleMadnessCountdown={countdown3500}
-
+              userActiveEvents={userActiveEvents}
               allClaimedChests={
                 openedBaseChests.length +
                 openedChests.length +

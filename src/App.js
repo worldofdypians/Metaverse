@@ -625,6 +625,8 @@ function App() {
   const [skalePoints, setSkalePoints] = useState(0);
   const [skalePrice, setSkalePrice] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
+  const [userEvents, setuserEvents] = useState(0);
+
 
   const userId = data?.getPlayer?.playerId;
 
@@ -638,10 +640,6 @@ function App() {
               email: email,
               publicAddress: userAddress,
             }
-            // {
-            //   "email": "renato@outerlynx.com",
-            //   "publicAddress": "0x09e62eB71e29e11a21E1f541750580E45d3Ab7e0"
-            // }
           ),
           headers: {
             "Content-Type": "application/json",
@@ -652,6 +650,7 @@ function App() {
         }
       );
       if (response.status === 200) {
+        let userActiveEvents = 0;
         const responseData = await response.json();
         if (responseData.events) {
           const coingeckoEvent = responseData.events.filter((obj) => {
@@ -741,6 +740,7 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
+            userActiveEvents = userActiveEvents +1;
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
               immutableEvent[0].reward.earn.multiplier;
@@ -752,6 +752,8 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
+            userActiveEvents = userActiveEvents +1;
+
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
               taikoEvent[0].reward.earn.multiplier;
@@ -762,6 +764,8 @@ function App() {
           }
 
           if (cookieEvent && cookieEvent[0]) {
+            userActiveEvents = userActiveEvents +1;
+
             const userEarnedusd =
               cookieEvent[0].reward.earn.total /
               cookieEvent[0].reward.earn.multiplier;
@@ -793,6 +797,8 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
+            userActiveEvents = userActiveEvents +1;
+
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
               mantaEvent[0].reward.earn.multiplier;
@@ -911,6 +917,7 @@ function App() {
               }
             }
           }
+          setuserEvents(userActiveEvents)
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -4423,6 +4430,7 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                userActiveEvents={userEvents}
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -4477,6 +4485,8 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                userActiveEvents={userEvents}
+
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5149,6 +5159,8 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                userActiveEvents={userEvents}
+
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
