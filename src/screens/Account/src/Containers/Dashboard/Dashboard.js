@@ -8698,9 +8698,6 @@ function Dashboard({
                   )} */}
               <NewLeaderBoard
                 username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
                 availableTime={goldenPassRemainingTime}
                 email={email}
                 isPremium={isPremium}

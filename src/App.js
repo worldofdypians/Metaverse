@@ -1782,8 +1782,6 @@ function App() {
     }
   };
 
-
-
   const myLandNftBNB = async () => {
     let myNft = await window.myNftLandListContractCCIP(
       coinbase,
@@ -1900,7 +1898,6 @@ function App() {
         setMyNFTs(NFTS);
       });
 
-     
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
@@ -1908,15 +1905,12 @@ function App() {
         setmybaseNFTsCreated(NFTS);
       });
 
-    
       getMyNFTS(coinbase, "manta").then((NFTS) => {
         setTotalMantaNft(NFTS.length);
         setMyMantaNfts(NFTS);
         setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyMantaNFTsCreated(NFTS);
       });
-
-    
 
       //setmyBaseNFTs
     } else {
@@ -1941,8 +1935,6 @@ function App() {
       setSocials(socialsData);
     }
   };
-
-
 
   const getStakesIdsCawsWod = async () => {
     const address = coinbase;
@@ -2044,14 +2036,12 @@ function App() {
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address
     );
-    
+
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
         let cawsName = await window.getNft(cawsArray[i]);
-        
-        const cawsId = parseInt(
-          cawsName.name.slice(6, cawsName.name.length)
-        );
+
+        const cawsId = parseInt(cawsName.name.slice(6, cawsName.name.length));
 
         const result = await nft_contract.methods.cawsUsed(cawsId).call();
 
@@ -2191,8 +2181,6 @@ function App() {
       }
     }
   };
-
-
 
   const handleBaseNftMint = async () => {
     if (isConnected && coinbase) {
@@ -3994,7 +3982,6 @@ function App() {
       });
   };
 
-
   const getDomains = async () => {
     if (coinbase) {
       const name = await web3Name.getDomainName({
@@ -4167,7 +4154,7 @@ function App() {
     fetchTimepieceNfts();
     checkNetworkId();
   }, []);
-  
+
   return (
     <>
       <div
@@ -4269,10 +4256,9 @@ function App() {
                 timepieceListed={timepieceListed}
                 totalSupply={totalSupply}
                 monthlyPlayers={monthlyPlayers}
-                percent={percent} 
+                percent={percent}
                 socials={socials}
                 totalTx={totalTx}
-
               />
             }
           />
@@ -4294,7 +4280,13 @@ function App() {
           <Route
             exact
             path="/community"
-            element={<Community socials={socials} monthlyPlayers={monthlyPlayers} percent={percent} />}
+            element={
+              <Community
+                socials={socials}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
+              />
+            }
           />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
@@ -4428,7 +4420,10 @@ function App() {
             path="/account"
             element={
               <Dashboard
-              dailyBonuslistedNFTS={listedNFTS}
+                onSuccessDeposit={() => {
+                  setCount55(count55 + 1);
+                }}
+                dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
@@ -4469,39 +4464,11 @@ function App() {
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 latest20BoughtNFTS={latest20BoughtNFTS}
                 monthlyPlayers={monthlyPlayers}
-                percent={percent} 
+                percent={percent}
               />
             }
           />
-          {/* <Route
-            exact
-            path="/account/my-rewards"
-            element={
-              <Dashboard
-                ethTokenData={ethTokenData}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dypTokenData={dypTokenData}
-                handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
-                coinbase={coinbase}
-                account={coinbase}
-                isConnected={isConnected}
-                chainId={chainId}
-                handleConnect={handleConnectWallet}
-                onSigninClick={checkData}
-                success={success}
-                availableTime={availTime}
-                handleSwitchNetwork={handleSwitchNetwork}
-                handleOpenDomains={() => setDomainPopup(true)}
-                domainName={domainName}
-                dogePrice={dogePrice}
-                onSubscribeSuccess={() => {
-                  setCount55(count55 + 1);
-                }}
-                isPremium={isPremium}
-              />
-            }
-          /> */}
+
           <Route
             exact
             path="/account/premium"
@@ -4510,6 +4477,7 @@ function App() {
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
+                dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
@@ -4528,8 +4496,10 @@ function App() {
                 dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 account={coinbase}
+                binanceW3WProvider={library}
+                binanceWallet={coinbase}
                 isConnected={isConnected}
-                chainId={chainId}
+                chainId={networkId}
                 handleConnect={handleConnectWallet}
                 onSigninClick={checkData}
                 success={success}
@@ -4542,6 +4512,13 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 isPremium={isPremium}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectBinance={handleConnectBinance}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                latest20BoughtNFTS={latest20BoughtNFTS}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
               />
             }
           />
@@ -5169,6 +5146,10 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+                onSuccessDeposit={() => {
+                  setCount55(count55 + 1);
+                }}
+                dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
                 skaleEarnUsd={skaleEarnUsd}
@@ -5207,6 +5188,9 @@ function App() {
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                latest20BoughtNFTS={latest20BoughtNFTS}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
               />
             }
           />
