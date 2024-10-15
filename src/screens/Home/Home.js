@@ -17,40 +17,40 @@ import avalanchePopup from "../../components/TimepieceMint/assets/avalanchePopup
 import coin98Popup from "../../components/TimepieceMint/assets/coin98Popup.png";
 import basePopup from "../../components/TimepieceMint/assets/basePopup.png";
 import confluxPopup from "../../components/TimepieceMint/assets/confluxPopup.png";
-import entryCampaignBanner from "../../components/TimepieceMint/assets/entryCampaignBanner.png";
-import dailyGameDelightBanner from "../../components/TimepieceMint/assets/dailyGameDelightBanner.png";
+// import entryCampaignBanner from "../../components/TimepieceMint/assets/entryCampaignBanner.png";
+// import dailyGameDelightBanner from "../../components/TimepieceMint/assets/dailyGameDelightBanner.png";
 import dypiansDiscoveryQuest from "../../components/TimepieceMint/assets/dypiansDiscoveryQuest.webp";
 
-import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
+// import dogePopup from "../../components/TimepieceMint/assets/dogePopup.png";
 import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 import gatePopup from "../../components/TimepieceMint/assets/gatePopup.webp";
-import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
+// import cmcPopup from "../../components/TimepieceMint/assets/cmcPopup.webp";
 
 import dypiusPopup from "../../components/TimepieceMint/assets/dypiuspremiumPopup.webp";
-import opbnbPopup from "../../components/TimepieceMint/assets/opbnbPopup.webp";
+// import opbnbPopup from "../../components/TimepieceMint/assets/opbnbPopup.webp";
 
 import coingeckoPopup from "../../components/TimepieceMint/assets/coingeckoPopup.png";
-import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
-import treasureHuntGate from "../../components/TimepieceMint/assets/treasureHuntGate.webp";
-import baseTreasureHuntPopup from "../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp";
-import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTreasureHunt.webp";
+// import treasureHuntPopup from "../../components/TimepieceMint/assets/treasureHuntPopup.png";
+// import treasureHuntGate from "../../components/TimepieceMint/assets/treasureHuntGate.webp";
+// import baseTreasureHuntPopup from "../../components/TimepieceMint/assets/baseTreasureHuntPopup.webp";
+// import dogeTreasureHuntPopup from "../../components/TimepieceMint/assets/dogeTreasureHunt.webp";
 import skalePopup from "../../components/TimepieceMint/assets/skalePopup.webp";
 
-import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
+// import cmcTreasureHuntPopup from "../../components/TimepieceMint/assets/cmcTreasureHunt.webp";
 import corePopupBg from "../../components/TimepieceMint/assets/corePopupBg.webp";
-import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
+// import victionPopupBg from "../../components/TimepieceMint/assets/victionPopupBg.webp";
 import immutablePopup from "../../components/TimepieceMint/assets/immutablePopup.webp";
-import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
+// import taikoPopup from "../../components/TimepieceMint/assets/taikoPopup.png";
 import taikoTreasureHunt from "../../components/TimepieceMint/assets/taikoTreasureHunt.png";
-import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
+// import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
 import festivecampaign from "../../components/TimepieceMint/assets/festiveCampaign.webp";
 
 
 
-import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
-import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
+// import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
+// import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
-import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
+// import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 import LiveEvents from "./LiveEvents/LiveEvents";
 import WodBuilders from "./WodBuilders/WodBuilders";
 
@@ -63,45 +63,23 @@ const Home = ({
   allStarData,
   idyptokenDatabnb,
   dyptokenDatabnb_old,
+  cawsListed,
+  wodListed,
+  timepieceListed,
+  totalSupply,
+  monthlyPlayers,
+  percent,
+  socials,
+  totalTx
 }) => {
-  const avaxPopupInfo = {
-    title: "Avalanche",
-    img: avalanchePopup,
-    state: "avax",
-  };
-  const confluxPopupInfo = {
-    title: "Conflux",
-    img: confluxPopup,
-    state: "conflux",
-  };
-
-  const gatePopupInfo = {
-    title: "Gate",
-    img: gatePopup,
-    state: "gate",
-  };
-
-  const coin98PopupInfo = {
-    title: "Coin98",
-    img: coin98Popup,
-    state: "coin98",
-  };
+ 
   const basePopupInfo = {
     title: "Base",
     img: basePopup,
     state: "base",
   };
-  const coingeckoPopupInfo = {
-    title: "CoinGecko",
-    img: coingeckoPopup,
-    state: "coingecko",
-  };
+ 
 
-  const skalePopupInfo = {
-    title: "SKALE",
-    img: skalePopup,
-    state: "skale",
-  };
   const entryCampaignPopup = {
     title: "SKALE",
     img: dypiansDiscoveryQuest,
@@ -113,32 +91,14 @@ const Home = ({
     img: dypiusPopup,
     state: "dypius",
   };
-  const immutablePopupInfo = {
-    title: "Immutable",
-    img: immutablePopup,
-    state: "immutable",
-  };
+ 
 
-  const corePopupInfo = {
-    title: "CORE",
-    img: corePopupBg,
-    state: "core",
-  };
-  const bnbInfo = {
-    title: "opBNB",
-    img: festivecampaign,
-    state: "opbnb",
-  };
   const mantaInfo = {
     title: "Manta",
     img: mantaPopup,
     state: "manta",
   };
-  const taikoInfo = {
-    title: "Taiko",
-    img: taikoTreasureHunt,
-    state: "taiko",
-  };
+
 
   const [activePopup, setActivePopup] = useState(false);
 
@@ -182,15 +142,21 @@ const Home = ({
             handleRegister={handleRegister}
             handleDownload={handleDownload}
             allStarData={allStarData}
+            monthlyPlayers={monthlyPlayers}
+            percent={percent}
           />
           <LiveEvents />
           <WodBuilders page={"home"} />
-          <Utilities />
+           
+          <Utilities socials={socials} monthlyPlayers={monthlyPlayers} totalSupply={totalSupply} totalTx={totalTx} />
           <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
+            timepieceListed={timepieceListed}
+            cawsListed={cawsListed}
+            wodListed={wodListed}
           />
           <ExplorerGrid />
           <LandNft />

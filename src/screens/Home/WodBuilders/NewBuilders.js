@@ -257,6 +257,35 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "Finceptor",
+      icon: "finceptor",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Creo Engine",
+      icon: "creoengine",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "IBC Group",
+      icon: "ibc",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },    {
+      name: "UQUID",
+      icon: "uquid",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Saving DAO",
+      icon: "savingDao",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -276,13 +305,14 @@ const NewBuilders = () => {
                   item.icon === "manta" ||
                   item.icon === "alterverse" ||
                   item.icon === "worldshards" ||
-                  item.icon === "binanceWeb3" ||
-                  item.icon === "hamsterChain" ? (
+                  item.icon === "binanceWeb3" || item.icon === "savingDao"|| 
+                  item.icon === "hamsterChain" || item.icon === "creoengine"  ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={45}
                       height={45}
                       alt=""
+                      style={{scale:item.icon === "hamsterChain" ? '2' : '' }}
                     />
                   ) : (
                     <img

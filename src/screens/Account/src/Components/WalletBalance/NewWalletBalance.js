@@ -401,8 +401,8 @@ const NewWalletBalance = ({
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
-    eventDate: "Oct 07, 2024",
-    date: "Oct 07, 2024",
+    eventDate: "Coming Soon",
+    date: "Coming Soon",
     id: "event24",
     eventType: "Explore & Mine",
     eventDuration: baseLastDay2,
@@ -663,7 +663,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Oct 07, 2024",
+      eventDate: "Coming Soon",
       popupInfo: {
         title: "Base",
         chain: "Base",
@@ -679,7 +679,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Oct 07, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {

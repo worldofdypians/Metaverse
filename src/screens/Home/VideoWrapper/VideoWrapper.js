@@ -25,7 +25,6 @@ import taikoLogo from "./assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo.png";
 import cookieLogo from "./assets/cookie3Logo.svg";
 
-
 import coreBg from "./assets/coreBg.webp";
 import immutableLogo from "./assets/immutableLogo.svg";
 import immutableBg from "./assets/immutableBg.webp";
@@ -37,7 +36,13 @@ import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboa
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
 import axios from "axios";
 
-const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
+const VideoWrapper = ({
+  handleRegister,
+  handleDownload,
+  allStarData,
+  monthlyPlayers,
+  percent,
+}) => {
   const [modal, setModal] = useState(false);
   const [multiplayerModal, setmultiplayerModal] = useState(false);
 
@@ -952,6 +957,8 @@ const VideoWrapper = ({ handleRegister, handleDownload, allStarData }) => {
               previousGenesisVersion={previousGenesisVersion}
               screen={"home"}
               allStarData={allStarData}
+              monthlyPlayers={monthlyPlayers}
+              percent={percent}
             />
             {/* <NewHomeLeaderboard /> */}
           </div>

@@ -527,7 +527,7 @@ const MarketEvents = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Oct 07, 2024",
+      eventDate: "Coming Soon",
       backgroundImage: upcomingBase2,
       popupInfo: {
         title: "Base",
@@ -544,7 +544,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Oct 07, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {

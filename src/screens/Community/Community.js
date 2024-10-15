@@ -85,26 +85,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Community = ({socials}) => {
+const Community = ({socials, monthlyPlayers, percent}) => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [monthlyPlayers, setMonthlyPlayers] = useState(0);
-  const [percent, setPercent] = useState(0);
 
- const fetchMonthlyPlayers = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/get-wod-uaw`)
-      .then((data) => {
-        setMonthlyPlayers(data.data.uaw);
-        setPercent(data.data.percent);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
 
 
 
@@ -707,8 +695,7 @@ const Community = ({socials}) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Community";
-    fetchMonthlyPlayers();
+    document.title = "Community"; 
   }, []);
 
   return (
