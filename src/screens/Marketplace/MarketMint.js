@@ -1091,18 +1091,18 @@ const MarketMint = ({
                               }
                             >
                               <button
-                                className={`btn ${
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  totalCreated === 0
-                                    ? "outline-btn-disabled"
-                                    : "outline-btn"
-                                } px-5 w-100`}
-                                disabled={
-                                  isConnected === false ||
-                                  activeButton === false ||
-                                  totalCreated === 0
-                                }
+                                // className={`btn ${
+                                //   isConnected === false ||
+                                //   activeButton === false ||
+                                //   totalCreated === 0
+                                //     ? "outline-btn-disabled"
+                                //     : "outline-btn"
+                                // } px-5 w-100`}
+                                // disabled={
+                                //   isConnected === false ||
+                                //   activeButton === false ||
+                                //   totalCreated === 0
+                                // }
                                 onClick={handleViewCollection}
                               >
                                 View collection
