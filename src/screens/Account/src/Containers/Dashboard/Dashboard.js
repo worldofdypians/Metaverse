@@ -20,7 +20,7 @@ import ChecklistModal from "../../Components/ChecklistModal/ChecklistModal";
 import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLandNftModal";
 import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard";
 import Web3 from "web3";
-import { ERC20_ABI } from "../../web3/abis";
+import { ERC20_ABI, iDYP_3500_ABI, WOD_ABI } from "../../web3/abis";
 import _, { chain } from "lodash";
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
@@ -102,7 +102,7 @@ import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
-import { dyp700Address, dyp700v1Address } from "../../web3";
+import { dyp700Address, dyp700v1Address, idyp3500Address, wodAddress } from "../../web3";
 import { NavLink, useLocation } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
@@ -627,6 +627,12 @@ function Dashboard({
   const [allBaseChests, setallBaseChests] = useState([]);
 
   const [countdown700, setcountdown700] = useState();
+  const [countdown, setcountdown] = useState();
+  const [countdown3500, setcountdown3500] = useState();
+
+  const [userDailyBundles, setuserDailyBundles] = useState([]);
+
+
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
   const [vicitoncount, setvicitoncount] = useState(0);
@@ -1118,6 +1124,7 @@ function Dashboard({
   const [genesisData, setgenesisData] = useState([]);
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
+  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -3871,6 +3878,7 @@ function Dashboard({
     userDataSkaleMonthly,
     userDataSkaleWeekly,
   ]);
+
   useEffect(() => {
     setAllCoreData([
       {
@@ -3919,6 +3927,7 @@ function Dashboard({
     userDataCoreMonthly,
     userDataCoreWeekly,
   ]);
+
   useEffect(() => {
     setAllVictionData([
       {
@@ -4130,9 +4139,25 @@ function Dashboard({
       DYP_700V1_ABI,
       dyp700v1Address
     );
+    const dragonsc = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const remainingTime = await dragonsc.methods
+      .getTimeOfExpireBuff(coinbase)
+      .call();
+    if (remainingTime > 0) {
+      setcountdown(remainingTime);
+    }
+
+    const puzzlemaddnessContract = new window.bscWeb3.eth.Contract(iDYP_3500_ABI,
+      idyp3500Address);
+
+    const remainingTime_puzzlemaddness = await puzzlemaddnessContract.methods
+    .getTimeOfExpireBuff(coinbase)
+    .call();
+    if (remainingTime_puzzlemaddness > 0) {
+      setcountdown3500(remainingTime_puzzlemaddness);
+    }
 
     const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-
     const remainingTimev1 = await dypv1.methods
       .getTimeOfExpireBuff(coinbase)
       .call()
@@ -4153,6 +4178,19 @@ function Dashboard({
     handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
   };
 
+  const countUserDailyBundles = async (address) => {
+    const result = await axios
+      .get(
+        `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result && result.status === 200) {
+      setuserDailyBundles(result.data) 
+    }
+  };
+  
   const dailyBonusData = {
     eventType: "6 Available Rewards",
     title: "Daily Bonus",
@@ -5590,6 +5628,7 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
+    countUserDailyBundles(userWallet ? userWallet : coinbase)
     getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
@@ -7941,6 +7980,145 @@ function Dashboard({
     }
   };
 
+  const getTreasureChestsInfo = async () => {
+    var moneyResult = 0;
+
+    if (openedChests && openedChests.length > 0) {
+      openedChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedSkaleChests && openedSkaleChests.length > 0) {
+      openedSkaleChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedCoreChests && openedCoreChests.length > 0) {
+      openedCoreChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedVictionChests && openedVictionChests.length > 0) {
+      openedVictionChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedMantaChests && openedMantaChests.length > 0) {
+      openedMantaChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedBaseChests && openedBaseChests.length > 0) {
+      openedBaseChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    if (openedTaikoChests && openedTaikoChests.length > 0) {
+      openedTaikoChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
+    setTreasureRewardMoney(moneyResult);
+  };
+
   useEffect(() => {
     handleRankRewards();
   }, [
@@ -8334,6 +8512,19 @@ function Dashboard({
 
   const location = useLocation();
 
+  useEffect(() => {
+    getTreasureChestsInfo();
+  }, [
+    openedChests,
+    userWallet,
+    openedCoreChests,
+    openedVictionChests,
+    openedSkaleChests,
+    openedMantaChests,
+    openedBaseChests,
+    openedTaikoChests,
+  ]);
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -8349,6 +8540,22 @@ function Dashboard({
             }}
           />
         )}
+        {countdown !== undefined && (
+          <Countdown
+            date={Number(countdown) * 1000}
+            onComplete={() => {
+              setcountdown();
+            }}
+          />
+        )}
+         {countdown3500 !== undefined && (
+          <Countdown
+            date={Number(countdown3500) * 1000}
+            onComplete={() => {
+              setcountdown3500();
+            }}
+          />
+        )}
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-4 position-relative">
@@ -8356,11 +8563,21 @@ function Dashboard({
         location.pathname.includes("/account/challenges/") ? (
           <>
             <MyProfile
-              claimedChests={claimedChests}
-              claimedPremiumChests={claimedPremiumChests}
-              openedSkaleChests={openedSkaleChests}
-              openedCoreChests={openedCoreChests}
-              openedVictionChests={openedVictionChests}
+              isgoldenPassActive={goldenPassRemainingTime}
+              dragonRuinsCountdown={countdown}
+              puzzleMadnessCountdown={countdown3500}
+
+              allClaimedChests={
+                openedBaseChests.length +
+                openedChests.length +
+                openedCoreChests.length +
+                openedMantaChests.length +
+                openedSkaleChests.length +
+                openedTaikoChests.length +
+                openedVictionChests.length
+              }
+              userDailyBundles={userDailyBundles}
+              treasureRewardMoney={treasureRewardMoney}
               canBuy={canBuy}
               email={email}
               username={username}
@@ -8384,7 +8601,6 @@ function Dashboard({
                 setRankPopup(true);
               }}
               domainName={domainName}
-              openedChests={openedChests}
               onDomainClick={() => {
                 handleOpenDomains();
               }}

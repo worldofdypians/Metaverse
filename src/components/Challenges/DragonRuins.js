@@ -48,7 +48,7 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
   const [showApproval, setshowApproval] = useState(true);
   const [checkWallet, setcheckWallet] = useState(true);
   const [dragonRuinsDypAmount, setDragonRuinsDypAmount] = useState(0);
-  console.log("status", status);
+
   const handleRefreshCountdown = async () => {
     const remainingTime = await wod_abi.methods
       .getTimeOfExpireBuff(coinbase)

@@ -106,12 +106,15 @@ const renderer2 = ({ hours, minutes }) => {
   );
 };
 
+const renderer3 = ({ days, hours }) => {
+  return (
+    <span>
+      {days}d {hours}h
+    </span>
+  );
+};
+
 const MyProfile = ({
-  claimedChests,
-  claimedPremiumChests,
-  openedSkaleChests,
-  openedCoreChests,
-  openedVictionChests,
   canBuy,
   email,
   isPremium,
@@ -133,112 +136,29 @@ const MyProfile = ({
   onDomainClick,
   domainName,
   liveRewards,
-  openedChests,
   specialRewards,
   syncStatus,
   onSyncClick,
+  isgoldenPassActive,
+  dragonRuinsCountdown,
+  allClaimedChests,
+  treasureRewardMoney,
+  userDailyBundles,
+  puzzleMadnessCountdown
 }) => {
-  const totalClaimedChests =
-    claimedChests +
-    claimedPremiumChests +
-    openedSkaleChests.length +
-    openedCoreChests.length +
-    openedVictionChests.length;
+  const totalClaimedChests = allClaimedChests;
 
-  const chestPercentage = (totalClaimedChests / 80) * 100;
+  const chestPercentage = (totalClaimedChests / 140) * 100;
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
   const [allEvents, setAllEvents] = useState(false);
   const [finished, setFinished] = useState(false);
-  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
   const sliderRef = useRef(null);
   const windowSize = useWindowSize();
-
-  const getTreasureChestsInfo = async () => {
-    var moneyResult = 0;
-
-    if (openedChests && openedChests.length > 0) {
-      openedChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedSkaleChests && openedSkaleChests.length > 0) {
-      openedSkaleChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedCoreChests && openedCoreChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedVictionChests && openedVictionChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    setTreasureRewardMoney(moneyResult);
-  };
 
   var settings = {
     dots: false,
@@ -312,11 +232,7 @@ const MyProfile = ({
     } else if (!email) {
       setFinished(false);
     }
-  }, [claimedChests, claimedPremiumChests, isPremium, canBuy, email]);
-
-  useEffect(() => {
-    getTreasureChestsInfo();
-  }, [openedChests, openedSkaleChests, openedCoreChests, openedVictionChests]);
+  }, [totalClaimedChests, isPremium, canBuy, email]);
 
   return (
     <div className="custom-container mt-5">
@@ -519,11 +435,27 @@ const MyProfile = ({
               </div>
               <div className="daily-progress-grid">
                 <div className="daily-progress-item position-relative">
-                  <img src={goldenPassActive} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>25d:12h</span>
-                  </div>
-                  <img src={doneTag} alt="" className="daily-progress-status" />
+                  <img
+                    src={
+                      isgoldenPassActive ? goldenPassActive : goldenPassInactive
+                    }
+                    alt=""
+                  />
+                  {isgoldenPassActive && (
+                    <div className="daily-progress-value-golden">
+                      <Countdown
+                        date={isgoldenPassActive}
+                        renderer={renderer3}
+                      />
+                    </div>
+                  )}
+                  {isgoldenPassActive && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )}
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={treasureHuntActive} alt="" />
@@ -533,59 +465,87 @@ const MyProfile = ({
                   <img src={doneTag} alt="" className="daily-progress-status" />
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={dragonRuinsActive} alt="" />
+                  <img
+                    src={
+                      dragonRuinsCountdown
+                        ? dragonRuinsActive
+                        : dragonRuinsInactive
+                    }
+                    alt=""
+                  />
                   <div className="daily-progress-value">
-                    <span>22</span>
+                    <span>{userDailyBundles?.dragonRuinsCount}</span>
                   </div>
-                  <img src={doneTag} alt="" className="daily-progress-status" />
+                  {userDailyBundles?.dragonRuinsCount > 0 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )}
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={scorpionKingInactive} alt="" />
                   <div className="daily-progress-value">
                     <span>0</span>
                   </div>
-                  <img
+                  {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
-                  />
+                  /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={puzzleMadnessActive} alt="" />
+                  <img src={ puzzleMadnessCountdown ?  puzzleMadnessActive : puzzleMadnessInactive} alt="" />
                   <div className="daily-progress-value">
-                    <span>13</span>
+                    <span>{userDailyBundles?.puzzleMadnessCount}</span>
                   </div>
-                  <img src={doneTag} alt="" className="daily-progress-status" />
+                  {userDailyBundles?.puzzleMadnessCount > 0 &&
+                  <img src={doneTag} alt="" className="daily-progress-status" /> }
                 </div>
 
                 <div className="daily-progress-item position-relative">
-                  <img src={dailyBonusActive} alt="" />
+                  <img
+                    src={
+                      totalClaimedChests === 0
+                        ? dailyBonusInactive
+                        : dailyBonusActive
+                    }
+                    alt=""
+                  />
+
                   <div className="daily-progress-value">
-                    <span>54</span>
+                    <span>{totalClaimedChests}</span>
                   </div>
-                  <img src={doneTag} alt="" className="daily-progress-status" />
+                  {totalClaimedChests === 140 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )}
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={criticalHitInactive} alt="" />
                   <div className="daily-progress-value">
                     <span>0</span>
                   </div>
-                  <img
+                  {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
-                  />
+                  /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={mazeGardenInactive} alt="" />
                   <div className="daily-progress-value-golden">
                     <span>Sunday</span>
                   </div>
-                  <img
+                  {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -983,7 +943,9 @@ const MyProfile = ({
                       </div>
                     </div>
                   </Slider>
-                ) : <></>}
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <div className="col-12 col-lg-4 mt-3">
