@@ -648,6 +648,15 @@
   line-height: 24px; /* 200% */
 }
 
+.sidebar-title2 {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 200% */
+}
+
 .sidebar-title-active {
   font-weight: 600;
   font-size: 16.3366px;
@@ -722,6 +731,16 @@
     color: #5690ff;
   }
 }
+
+.sidebar-item-active2 {
+  background: rgba(182, 86, 255, 0.1);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #9756ff;
+  .sidebar-title {
+    color: #9756ff !important;
+  }
+}
+
 
 .packages-grid {
   display: grid;

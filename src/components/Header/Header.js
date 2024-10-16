@@ -486,8 +486,8 @@ const Header = ({
   //   collections: null,
   //   account: "account",
   // });
-  // }, []);
-  console.log(location.pathname);
+  // }, []); 
+  
   return (
     <div className="d-flex flex-column">
       <div

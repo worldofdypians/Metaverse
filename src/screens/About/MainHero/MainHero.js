@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 const MainHero = () => {
   return (
     <div className="about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center gap-5 position-relative">
-      <div className="custom-container  mt-5 mt-lg-0">
+      <div className="custom-container  mt-5 mt-lg-0 pt-5 pt-lg-0">
         <div className="d-flex w-100 flex-column align-items-center gap-2">
           <h2 className="font-montserrat main-hero-title px-0">
             The Biggest metaverse ever built
@@ -35,7 +35,7 @@ const MainHero = () => {
             <NavLink to="/join-beta" className="buy-wod-btn px-4 py-2">Join Beta</NavLink>
           </div>
         </div>
-        <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-5">
+        <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
           <NavLink
             to={"/about#partners"}
             className="d-flex align-items-center gap-2"

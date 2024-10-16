@@ -179,8 +179,23 @@ white-space: nowrap;
   display: grid;
   grid-template-columns: repeat(14, 1fr);
   gap: 10px;
-  @media screen and (max-width: 786px) {
-    grid-template-columns: repeat(2, 1fr);
-    place-items: center;
-  }
+  overflow-x: auto;
+  // @media screen and (max-width: 1439px) {
+  //   grid-template-columns: repeat(10, 1fr);
+  //   place-items: center;
+  // }
+
+  // @media screen and (max-width: 1039px) {
+  //   grid-template-columns: repeat(8, 1fr);
+  //   place-items: center;
+  // }
+
+  // @media screen and (max-width: 991px) {
+  //   grid-template-columns: repeat(4, 1fr);
+  //   place-items: center;
+  // }
+  // @media screen and (max-width: 786px) {
+  //   grid-template-columns: repeat(2, 1fr);
+  //   place-items: center;
+  // }
 }
