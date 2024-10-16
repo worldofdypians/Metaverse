@@ -274,6 +274,17 @@ const NewBuilders = () => {
       icon: "ibc",
       banner: "kucoinBanner.png",
       backer: false,
+    },    {
+      name: "UQUID",
+      icon: "uquid",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Saving DAO",
+      icon: "savingDao",
+      banner: "kucoinBanner.png",
+      backer: false,
     },
   ];
   return (
@@ -294,7 +305,7 @@ const NewBuilders = () => {
                   item.icon === "manta" ||
                   item.icon === "alterverse" ||
                   item.icon === "worldshards" ||
-                  item.icon === "binanceWeb3" ||
+                  item.icon === "binanceWeb3" || item.icon === "savingDao"|| 
                   item.icon === "hamsterChain" || item.icon === "creoengine"  ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
