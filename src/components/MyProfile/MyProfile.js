@@ -235,6 +235,9 @@ const MyProfile = ({
     }
   }, [totalClaimedChests, isPremium, canBuy, email]);
 
+
+
+
   return (
     <div className="custom-container mt-5">
       <div className="row mt-4 mt-lg-0">

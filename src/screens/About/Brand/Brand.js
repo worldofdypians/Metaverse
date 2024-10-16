@@ -1,6 +1,6 @@
 import React from "react";
 import "./_brand.scss";
-import brandBanner from '../../../assets/brandBanner.webp'
+import brandBanner from "../../../assets/brandBanner.webp";
 
 const Brand = () => {
   return (
@@ -17,24 +17,24 @@ const Brand = () => {
           communications.
         </div>
         <div className="position-relative">
-        <img src={brandBanner} className="w-100" alt="" />
-        <div
-                className="multiplayer-linear-border download-brand"
-                style={{
-                  zIndex: 5,
-                  position: "relative",
-                  textDecoration: "none",
-                }}
-              >
-                <a
-                  className="btn multiplayer-btn py-1 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
-                  href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing" 
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Download
-                </a>
-              </div>
+          <img src={brandBanner} className="w-100 brandBanner" alt=""/>
+          <div
+            className="multiplayer-linear-border download-brand"
+            style={{
+              zIndex: 5,
+              position: "relative",
+              textDecoration: "none",
+            }}
+          >
+            <a
+              className="btn multiplayer-btn py-1 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
+              href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Download
+            </a>
+          </div>
         </div>
       </div>
     </div>

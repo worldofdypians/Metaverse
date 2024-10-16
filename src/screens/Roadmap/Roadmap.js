@@ -40,47 +40,7 @@ const Roadmap = () => {
     document.title = "Roadmap";
   }, []);
 
-  var settings = {
-    dots: true,
-    arrows: false,
-    fade: true,
-    infinite: false,
-    dotsClass: "button__bar",
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-          infinite: true,
-          autoplay: true,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          autoplay: true,
-        },
-      },
-    ],
-  };
+ 
 
   const [title, setTitle] = useState("2024");
   const [tooltip, setTooltip] = useState(false);
@@ -732,9 +692,68 @@ const Roadmap = () => {
     slider.current.slickPrev();
   };
 
-  // useEffect(() => {
-  //   slider.current.innerSlider.slickGoTo(0);
-  // }, []);
+  useEffect(() => {
+    slider?.current?.innerSlider?.slickGoTo(0);
+  }, []);
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: false,
+    initialSlide: 0,
+    draggable: false, 
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+          dots: false,
+          arrows: true
+        },
+      },
+    ],
+  };
+
+
 
   return (
     <div
@@ -742,7 +761,7 @@ const Roadmap = () => {
       id="roadmap"
     >
       <div className="roadmap-main-wrapper px-0 w-100 d-flex align-items-center justify-content-center flex-column">
-        <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
+        <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5">
           <h6 className="roadmap-title font-montserrat  text-uppercase d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
             Game{" "}
             <span
@@ -833,7 +852,7 @@ const Roadmap = () => {
               <p className="tooltip-content m-0">Early Access Game</p>
             </div>
           </div> */}
-          <div className="roadmap-grid px-3 px-lg-0">
+          <div className="">
             {/* <div
               className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3"
               style={{ height: "fit-content" }}
@@ -1026,7 +1045,7 @@ const Roadmap = () => {
               />
               <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
             </div> */}
-
+<Slider ref={(c) => (slider.current = c)} {...settings}>
             {roadmapItems.map((item, index) => (
               <RoadmapCard
                 quarter={item.quarter}
@@ -1035,7 +1054,7 @@ const Roadmap = () => {
                 index={index}
                 image={item.image}
               />
-            ))}
+            ))}</Slider>
           </div>
         </div>
       </div>

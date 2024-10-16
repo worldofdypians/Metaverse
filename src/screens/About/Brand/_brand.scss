@@ -12,6 +12,13 @@ width: 50%;
 }
 }
 
+.brandBanner {
+    @media screen and (max-width: 586px) {
+        height: 130px;
+        object-fit: inherit;
+    } 
+}
+
 .download-brand{
     width: fit-content;
     position: relative !important;
