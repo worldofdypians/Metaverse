@@ -569,7 +569,7 @@ const MobileNavbar = ({
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div className="accordion-body p-0">
+                <div className="accordion-body mt-2 p-0">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
                       to="/token"
@@ -696,7 +696,7 @@ const MobileNavbar = ({
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div className="accordion-body p-0">
+                <div className="accordion-body mt-2 p-0">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
                       to="/governance"
@@ -778,22 +778,9 @@ const MobileNavbar = ({
                 aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample"
               >
-                <div className="accordion-body p-0">
+                <div className="accordion-body mt-2 p-0">
                   <div className="d-flex flex-column gap-2">
-                    <NavLink
-                      to="/about"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`sidebar-title`}>About</span>
-                      </div>
-                    </NavLink>
+                  
                     <NavLink
                       to="/about#partners"
                       end

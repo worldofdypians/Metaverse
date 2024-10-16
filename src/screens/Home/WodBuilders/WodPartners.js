@@ -121,7 +121,7 @@ const WodPartners = ({full}) => {
           {/* <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark> */}
         </h2>
         {!full &&
-            <NavLink to={"/partners"} className="d-flex align-items-center gap-2">
+            <NavLink to={"/about#partners"} className="d-flex align-items-center gap-2">
             <span className="view-all-partners">View All</span>
             <img src={partnersRight} alt="" />
           </NavLink>
