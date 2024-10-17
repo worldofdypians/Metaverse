@@ -30,6 +30,7 @@ align-items: center;
      }
      @media screen and (max-width: 786px) {
         background-image: none;
+        aspect-ratio: auto;
      }
 }
 
