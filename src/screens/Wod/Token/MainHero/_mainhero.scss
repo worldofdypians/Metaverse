@@ -8,6 +8,20 @@
 }
 }
 
+
+.mainhero-wrapper2 {
+  min-height: 85vh !important;
+  background-image: url("../../../../assets/wodAssets/newTokenBg.webp") !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  @media only screen and (max-width: 991px) {
+    min-height: auto !important;
+   
+}
+}
+
 .buy-item-logo {
   // width: 47px;
   height: 32px;

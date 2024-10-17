@@ -626,6 +626,7 @@ function App() {
   const [skalePrice, setSkalePrice] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
   const [userEvents, setuserEvents] = useState(0);
+  const [wodBalance, setwodBalance] = useState(0);
 
 
   const userId = data?.getPlayer?.playerId;
@@ -635,12 +636,10 @@ function App() {
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
-          body: JSON.stringify(
-            {
-              email: email,
-              publicAddress: userAddress,
-            }
-          ),
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -740,7 +739,7 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
               immutableEvent[0].reward.earn.multiplier;
@@ -752,7 +751,7 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -764,7 +763,7 @@ function App() {
           }
 
           if (cookieEvent && cookieEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               cookieEvent[0].reward.earn.total /
@@ -797,7 +796,7 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -917,7 +916,7 @@ function App() {
               }
             }
           }
-          setuserEvents(userActiveEvents)
+          setuserEvents(userActiveEvents);
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -2868,6 +2867,32 @@ function App() {
       });
   };
 
+  const getWodBalance = async (address) => {
+    if (address) {
+      const tokenContract = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        window.config.wod_token_address
+      );
+      const tokenBalance = await tokenContract.methods
+        .balanceOf(address)
+        .call()
+        .then((data) => {
+          let depositedTokens = new window.BigNumber(data)
+            .div(1e18)
+            .toString(10);
+          return depositedTokens;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+        if(tokenBalance !== undefined) {
+          setwodBalance(tokenBalance)
+        }
+     
+    }
+  };
+
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
@@ -4091,6 +4116,7 @@ function App() {
 
   useEffect(() => {
     fetchSkaleBalance();
+    getWodBalance(coinbase)
   }, [coinbase, isConnected, networkId]);
 
   useEffect(() => {
@@ -4486,7 +4512,6 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 userActiveEvents={userEvents}
-
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5160,7 +5185,6 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 userActiveEvents={userEvents}
-
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5312,7 +5336,22 @@ function App() {
             }
           />
           <Route exact path="/token" element={<Token />} />
-          <Route exact path="/bridge" element={<Bridge />} />
+          <Route
+            exact
+            path="/bridge"
+            element={
+              <Bridge
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                onConnect={() => {
+                  setwalletModal(true);
+                }}
+                wodBalance={wodBalance}
+              />
+            }
+          />
           <Route
             exact
             path="/earn"
@@ -5320,7 +5359,7 @@ function App() {
               <Earn
                 isConnected={isConnected}
                 coinbase={coinbase}
-                chainId={chainId}
+                chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
                 onConnectWallet={() => {
                   setwalletModal(true);

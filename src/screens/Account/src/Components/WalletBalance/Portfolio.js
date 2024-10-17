@@ -143,7 +143,7 @@ const Portfolio = ({
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("Collected");
+  const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
 
   const [collectedItems, setcollectedItems] = useState([]);

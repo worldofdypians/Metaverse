@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import epicblack from "../../assets/epicblack.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
@@ -93,6 +93,15 @@ const GameHero = () => {
       class: "eventClass",
     },
   ];
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (showPopup !== "") {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [showPopup]);
 
   return (
     <>

@@ -286,6 +286,15 @@ const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupC
           </button>
         </div>
       </div>
+      <span
+              className="statusText"
+              style={{
+                color: statusColor3500,
+                width: "fit-content",
+              }}
+            >
+              {status3500}
+            </span>
       {countdown3500 && (
         <div className="new-event-wrapper mt-5 p-3">
           <div className="d-flex flex-column gap-2">
@@ -317,15 +326,7 @@ const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupC
                 }}
               />
             </div>
-            <span
-              className="statusText"
-              style={{
-                color: statusColor3500,
-                width: "fit-content",
-              }}
-            >
-              {status3500}
-            </span>
+         
           </div>
         </div>
       )}

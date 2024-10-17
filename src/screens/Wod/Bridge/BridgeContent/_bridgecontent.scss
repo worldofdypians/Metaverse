@@ -106,8 +106,9 @@ border-radius: 12px;
 .bridge-guide-pointer-active{
     min-width: 30px;
     min-height: 30px;
-    background: #5615a5!important;
+    background-color: #48b4bd!important;
     border-radius: 50%;
+    background: url("../../../../assets/bridgeAssets/greendot.svg");
 }
 .bridge-guide-pointer-inactive{
     min-width: 30px;

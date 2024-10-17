@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_bridgecontent.scss";
 import eth from "../../../../components/Header/assets/eth.svg";
 import bnb from "../../../../components/Header/assets/bnb.svg";
@@ -9,6 +9,8 @@ import bridgeGuide from "../../../../assets/wodAssets/bridgeGuide.svg";
 import copy from "../../../../assets/wodAssets/copy.svg";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
+import { shortAddress } from "../../../Caws/functions/shortAddress";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -65,31 +67,75 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const BridgeContent = () => {
+const BridgeContent = ({
+  isConnected,
+  chainId,
+  coinbase,
+  onConnect,
+  handleSwitchChain,
+  wodBalance,
+}) => {
+  const [sourceChainButton, setsourceChainButton] = useState("");
+  const [depositAmount, setdepositAmount] = useState("");
+  const [status, setstatus] = useState("");
+  const [txHash, settxHash] = useState("");
+
   return (
-    <div className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center">
+    <div
+      className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center"
+      id="bridge"
+    >
       <div className="custom-container w-100">
         <div className="row mx-0">
           <div className="col-12 col-lg-6">
             <div className="bridge-token-wrapper p-3">
               <div className="w-100 d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-between gap-3 gap-lg-0">
                 <div className="d-flex align-items-center gap-4">
-                  <button className="bridge-btn-active d-flex align-items-center gap-2 px-3 py-1">
+                  <button
+                    className={`${
+                      sourceChainButton === "eth"
+                        ? "bridge-btn-active"
+                        : "bridge-btn-inactive"
+                    } d-flex align-items-center gap-2 px-3 py-2`}
+                    onClick={() => {
+                      setsourceChainButton("eth");
+                    }}
+                  >
                     <img src={eth} alt="" />
                     Ethereum
                   </button>
-                  <button className="bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-1">
+                  <button
+                    className={`${
+                      sourceChainButton === "bnb"
+                        ? "bridge-btn-active"
+                        : "bridge-btn-inactive"
+                    } d-flex align-items-center gap-2 px-3 py-2`}
+                    onClick={() => {
+                      setsourceChainButton("bnb");
+                    }}
+                  >
                     <img src={bnb} alt="" />
                     BNB Chain
                   </button>
                 </div>
-                <button className="bridge-wallet-btn d-flex align-items-center gap-2 px-3 py-1">
-                  <img src={wallet} width={20} height={20} alt="" />
-                  Connect Wallet
-                </button>
+                {!isConnected ? (
+                  <button
+                    className="bridge-wallet-btn d-flex align-items-center gap-2 px-3 py-2"
+                    onClick={onConnect}
+                  >
+                    <img src={wallet} width={20} height={20} alt="" />
+                    Connect Wallet
+                  </button>
+                ) : (
+                  <span className="pool-bridge-balance mb-0">
+                    {shortAddress(coinbase)}
+                  </span>
+                )}
               </div>
               <div className="bridge-balance-wrapper d-flex flex-column flex-lg-row p-2 mt-5 align-items-start align-items-lg-center justify-content-between gap-3 gap-lg-0">
-                <span className="user-bridge-balance">Balance: 0.00 WOD</span>
+                <span className="user-bridge-balance">
+                  Balance: {getFormattedNumber(wodBalance, 2)} WOD
+                </span>
                 <h6 className="pool-bridge-balance mb-0">
                   Ethereum Pool: 2,300,000.00 WOD
                 </h6>
@@ -107,18 +153,18 @@ const BridgeContent = () => {
                       label="Amount"
                       id="business_name"
                       name="business_name"
-                      // value={businessValues.business_name}
+                      value={depositAmount}
                       // helperText={businessErrors.business_name}
                       // required
-                      // onChange={(e) => {
-                      //   handleBusinessChange(e);
-                      // }}
+                      onChange={(e) => {
+                        setdepositAmount(e.target.value);
+                      }}
                       sx={{ width: "100%" }}
                     />
                     <button className="max-deposit-btn px-2">Max</button>
                   </div>
                   <button
-                    className="bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-1"
+                    className="bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-2"
                     style={{ height: "37px" }}
                   >
                     Approve
@@ -136,11 +182,23 @@ const BridgeContent = () => {
               <div className="mt-5 d-flex flex-column gap-2">
                 <span className="user-bridge-balance">Withdraw</span>
                 <div className="d-flex align-items-center gap-4">
-                  <button className="bridge-btn-active d-flex align-items-center gap-2 px-3 py-1">
+                  <button
+                    className={`${
+                      sourceChainButton === "bnb"
+                        ? "bridge-btn-active"
+                        : "bridge-btn-inactive"
+                    } d-flex align-items-center gap-2 px-3 py-2`}
+                  >
                     <img src={eth} alt="" />
                     Ethereum
                   </button>
-                  <button className="bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-1">
+                  <button
+                    className={`${
+                      sourceChainButton === "eth"
+                        ? "bridge-btn-active"
+                        : "bridge-btn-inactive"
+                    } d-flex align-items-center gap-2 px-3 py-2`}
+                  >
                     <img src={bnb} alt="" />
                     BNB Chain
                   </button>
@@ -159,17 +217,19 @@ const BridgeContent = () => {
                       label="Enter Deposit TX Hash"
                       id="business_name"
                       name="business_name"
-                      // value={businessValues.business_name}
+                      value={txHash}
                       // helperText={businessErrors.business_name}
                       // required
-                      // onChange={(e) => {
-                      //   handleBusinessChange(e);
-                      // }}
+                      onChange={(e) => {
+                        settxHash(e.target.value);
+                      }}
                       sx={{ width: "100%" }}
                     />
                   </div>
                   <button
-                    className="bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-1"
+                    className={
+                      "bridge-btn-inactive d-flex align-items-center gap-2 px-3 py-2"
+                    }
                     style={{ height: "37px" }}
                   >
                     Withdraw
@@ -189,7 +249,13 @@ const BridgeContent = () => {
               <hr className="bridge-divider my-4" />
               <div className="d-flex flex-column justify-content-between gap-3">
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-active"></div>
+                  <div
+                    className={
+                      isConnected
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Connect wallet
@@ -201,7 +267,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      sourceChainButton !== ""
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Select chains
@@ -214,7 +286,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      depositAmount !== "" && depositAmount > 0
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Fill in amount
@@ -227,7 +305,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      status === "successApprove"
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Approve deposit
@@ -239,7 +323,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      status === "successDeposit"
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Deposit tokens
@@ -252,7 +342,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      txHash !== ""
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Fill in transaction hash
@@ -264,7 +360,13 @@ const BridgeContent = () => {
                   </div>
                 </div>
                 <div className="bridge-guide-item d-flex align-items-center gap-2">
-                  <div className="bridge-guide-pointer-inactive"></div>
+                  <div
+                    className={
+                      status === "successWithdraw"
+                        ? "bridge-guide-pointer-active"
+                        : "bridge-guide-pointer-inactive"
+                    }
+                  ></div>
                   <div className="d-flex flex-column">
                     <h6 className="bridge-guide-item-title mb-0">
                       Switch to destination chain. Wait timer & withdraw
