@@ -401,7 +401,7 @@ const WodBuilders = ({ page }) => {
       <div
         className={`w-100  mx-0  ${
           page === "home"
-            ? "px-3 px-lg-5 build-business-wrapper py-4"
+            ? "px-3 px-lg-5 build-business-wrapper investors-bg py-4"
             : "bg-none"
         } `}
       >
@@ -411,11 +411,9 @@ const WodBuilders = ({ page }) => {
               Building In World of Dypians
             </h6>
           )}
-          <div className="row mx-0 w-100 gap-4 gap-lg-0 d-flex flex-column flex-lg-row flex-md-column align-items-center justify-content-between">
+          <div className="row mx-0 w-100 gap-4 d-flex flex-column align-items-center justify-content-between">
             <div
-              className={`builder-item p-3 d-flex flex-column gap-3 gap-lg-0 justify-content-between ${
-                page === "home" && "col-lg-7"
-              } `}
+              className={`builder-item p-3 d-flex flex-column gap-3 gap-lg-0 justify-content-between `}
             >
               <div className="builders-first-half"></div>
               <div className="builders-second-half">
@@ -460,11 +458,11 @@ const WodBuilders = ({ page }) => {
                 ))}
               </div>
             </div>
-            <div className="d-flex flex-column flex-lg-row gap-2 col-lg-5">
+            <div className="d-flex align-items-center flex-column px-0 py-3 flex-lg-row gap-2 builders-bottom-wrapper">
               {page === "home" && (
                 <div className="build-business-title-wrapper">
                   <h6
-                    className="mb-0 font-organetto"
+                    className="mb-0"
                     style={{ textAlign: page === "home" ? "auto" : "right" }}
                   >
                     Bring your business to World of Dypians
