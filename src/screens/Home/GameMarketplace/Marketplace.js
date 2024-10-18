@@ -111,9 +111,8 @@ const MarketPlace = () => {
               {shuffledMedia
                 .slice(0, shuffledMedia.length / 2)
                 .map((item, index) => (
-                  <div className="px-4">
+                  <div className="px-4" key={index}>
                     <img
-                      key={index}
                       src={require(`../../../assets/mediaAssets/${item}`)}
                       alt=""
                     />
@@ -124,9 +123,9 @@ const MarketPlace = () => {
               {shuffledMedia
                 .slice(shuffledMedia.length / 2, shuffledMedia.length)
                 .map((item, index) => (
-                  <div className="px-4">
+                  <div className="px-4" key={index}>
                     <img
-                      key={index}
+                     
                       src={require(`../../../assets/mediaAssets/${item}`)}
                       alt=""
                     />

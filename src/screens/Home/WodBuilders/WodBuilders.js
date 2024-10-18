@@ -89,7 +89,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "BabyDoge",
       icon: "babydogeIcon",
-      banner: "babydogeBanner.png",
+      banner: "babyDogeBanner.png",
       link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
       backer: false,
     },

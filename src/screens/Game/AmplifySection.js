@@ -93,11 +93,11 @@ const AmplifySection = () => {
               </h2>
             </div>
             {dummyBetaPassData2.map((item, index) => (
-              <div className="col-12 col-lg-3">
+              <div className="col-12 col-lg-3" key={index}>
                 <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}
-                    key={index}
+                   
                     isFrontPage={true}
                   />
                 </NavLink>

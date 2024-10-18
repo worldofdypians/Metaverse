@@ -357,9 +357,10 @@ const News = (props) => {
                               " col-xxl-7 col-lg-7 col-12 main-news-wrapper"
                             }
                             style={{ textDecoration: "none" }}
+                             key={index}
                           >
                             <MainNewsCard
-                              key={index}
+                             
                               title={item.title}
                               newsImage={item.image_second}
                               date={item.date}
