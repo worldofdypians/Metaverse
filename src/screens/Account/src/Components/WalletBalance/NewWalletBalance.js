@@ -404,8 +404,8 @@ const NewWalletBalance = ({
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
-    eventDate: "Oct 07, 2024",
-    date: "Oct 07, 2024",
+    eventDate: "Coming Soon",
+    date: "Coming Soon",
     id: "event24",
     eventType: "Explore & Mine",
     eventDuration: baseLastDay2,
@@ -667,7 +667,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Oct 07, 2024",
+      eventDate: "Coming Soon",
       popupInfo: {
         title: "Base",
         chain: "Base",
@@ -683,7 +683,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Oct 07, 2024",
+        eventDate: "Coming Soon",
       },
     },
     {
@@ -3050,7 +3050,7 @@ const NewWalletBalance = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps.Base is an easy way
+                and scalability you need to power your dapps. Base is an easy way
                 for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
