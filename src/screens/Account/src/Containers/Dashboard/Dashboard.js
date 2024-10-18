@@ -8934,11 +8934,12 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {rankPopup && (
+        {(rankPopup || hashValue === "#my-rank") && (
           <RankPopup
             isPremium={isPremium}
             onClose={() => {
               setRankPopup(false);
+              window.location.hash = "";
             }}
             rankData={rankData}
             onPremiumClick={() => {
