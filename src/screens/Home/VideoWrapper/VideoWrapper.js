@@ -235,16 +235,15 @@ const VideoWrapper = ({
     },
   ];
 
-
   var settings = {
     dots: false,
     arrows: false,
     dotsClass: "button__bar",
-    infinite: true,
+    infinite: false,
     speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     initialSlide: 0,
     beforeChange: (current, next) => {
       setActiveSlide(next);
@@ -274,6 +273,8 @@ const VideoWrapper = ({
           slidesToShow: 3,
           slidesToScroll: 1,
           initialSlide: 0,
+          infinite: true,
+          autoplay: true,
         },
       },
       {
@@ -282,6 +283,8 @@ const VideoWrapper = ({
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
+          infinite: true,
+          autoplay: true,
         },
       },
       {
@@ -291,6 +294,8 @@ const VideoWrapper = ({
           slidesToScroll: 1,
           initialSlide: 0,
           dots: false,
+          infinite: true,
+          autoplay: true,
         },
       },
     ],
@@ -381,10 +386,11 @@ const VideoWrapper = ({
                     onClick={() => {
                       item.link === "/" && setModal(true);
                     }}
+                      key={index}
                   >
                     <BetaEventCardHome
                       data={item}
-                      key={index}
+                    
                       isFrontPage={true}
                     />
                   </NavLink>
@@ -417,20 +423,21 @@ const VideoWrapper = ({
         {windowSize.width > 992 && (
           <div className="opacitywrapper custom-container">
             <Slider {...settings} ref={betaSlider}>
-            {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                  <NavLink
-                    to={`${item.link}`}
-                    onClick={() => {
-                      item.link === "/" && setModal(true);
-                    }}
-                  >
-                    <BetaEventCardHome
-                      data={item}
-                      key={index}
-                      isFrontPage={true}
-                    />
-                  </NavLink>
-                ))}
+              {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                <NavLink
+                  to={`${item.link}`}
+                  onClick={() => {
+                    item.link === "/" && setModal(true);
+                  }}
+                   key={index}
+                >
+                  <BetaEventCardHome
+                    data={item}
+                   
+                    isFrontPage={true}
+                  />
+                </NavLink>
+              ))}
             </Slider>
           </div>
         )}

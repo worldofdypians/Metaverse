@@ -152,10 +152,11 @@ const GameHero = () => {
                       ? navigate("/map")
                       : setshowPopup(item.state);
                   }}
+                   key={index}
                 >
                   <BetaEventCardHome
                     data={item}
-                    key={index}
+                   
                     isFrontPage={true}
                   />
                 </div>
