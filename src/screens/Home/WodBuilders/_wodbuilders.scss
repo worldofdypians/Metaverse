@@ -62,7 +62,7 @@ line-height: 24px; /* 171.429% */
 
 @media screen and (max-width: 450px) {
   .builders-title {
-    font-size: 18px !important;
+    font-size: 17px !important;
   }
 }
 
@@ -130,22 +130,7 @@ line-height: 24px; /* 171.429% */
   }
 }
 
-.build-business-wrapper::before {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  content: "";
-  // background-image: url("./assets/businessLines.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-
-  @media screen and (max-width: 786px) {
-    background-size: 100% 100%;
-  }
-}
+ 
 
 .builders-bottom-wrapper {
   position: absolute;

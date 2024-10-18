@@ -329,7 +329,7 @@ const MobileNavbar = ({
         className="mobile-navbar d-flex d-lg-none p-3 align-items-center justify-content-between"
         id="mobileNavbar"
       >
-        <NavLink to="/">
+        <NavLink to="/" onClick={()=>{window.scrollTo(0,0)}}>
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
         <div className="d-flex align-items-center gap-3 justify-content-between">
