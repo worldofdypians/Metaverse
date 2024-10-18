@@ -100,7 +100,7 @@ const Utilities = ({monthlyPlayers, totalSupply, socials, totalTx}) => {
   ];
 
   return (
-    <div className="px-3 px-lg-5" id="utilities">
+    <div className="px-3 px-lg-5 mt-5" id="utilities">
       <div className="w-100">
         <h2 className="font-organetto explorer-grid-title px-0 w-50">
           Features
