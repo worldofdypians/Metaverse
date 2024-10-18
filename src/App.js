@@ -74,17 +74,13 @@ import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
-import OurTeam from "./screens/OurTeam/OurTeam.js";
-// import Token from "./screens/Wod/Token/Token.js";
+import OurTeam from "./screens/OurTeam/OurTeam.js"; 
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Buy from "./screens/Wod/Buy/Buy.js";
 import Governance from "./screens/Community/Governance/Governance.js";
 import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
 import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
-import Brand from "./screens/About/Brand/Brand.js";
-import Partners from "./screens/About/Partners/Partners.js";
-import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
@@ -5377,10 +5373,7 @@ function App() {
           />
 
           <Route exact path="/game" element={<Game />} />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
-          {/* <Route exact path="/brand" element={<Brand />} /> */}
-          {/* <Route exact path="/partners" element={<Partners />} />
-            <Route exact path="/tokenomics" element={<Tokenomics />} /> */}
+          <Route exact path="/game-updates" element={<GameUpdates />} /> 
           <Route exact path="/about" element={<About />} />
 
           {/* <Route
