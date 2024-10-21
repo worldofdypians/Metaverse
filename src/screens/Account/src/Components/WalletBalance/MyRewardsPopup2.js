@@ -29,6 +29,8 @@ import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
+import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.svg";
+
 
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 
@@ -76,7 +78,7 @@ const MyRewardsPopupNew = ({
   monthlyDataAmountTaiko,
   allTaikoChests,
   taikoEarnUsd,
-  immutableEarnUsd,cookieEarnUsd, landPremiumRewards
+  immutableEarnUsd,cookieEarnUsd, landPremiumRewards,baseEarnUSD
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -1398,7 +1400,18 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-           
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Base</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(
+                        Number(weeklyDataAmountBase) +
+                          Number(monthlyDataAmountBase)
+                      )}
+                </span>
+              </div>
             </div>
 
             <div className="d-flex flex-column gap-2 w-50">
@@ -1446,18 +1459,7 @@ const MyRewardsPopupNew = ({
                       )}
                 </span>
               </div>
-                 <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Base</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(
-                        Number(weeklyDataAmountBase) +
-                          Number(monthlyDataAmountBase)
-                      )}
-                </span>
-              </div>
+                
               {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
@@ -1538,6 +1540,19 @@ const MyRewardsPopupNew = ({
                     </span>
                     <span className="item-name-right">
                       ${getFormattedNumber(immutableEarnUsd, 2)}
+                    </span>
+                  </div>
+                  <div className="d-flex w-100 justify-content-between gap-2">
+                    <span className="d-flex align-items-center gap-2 item-name-left">
+                      <img
+                        src={baseLogo}
+                        alt=""
+                        style={{ width: 16, height: 16 }}
+                      />
+                      Base
+                    </span>
+                    <span className="item-name-right">
+                      ${getFormattedNumber(baseEarnUSD, 2)}
                     </span>
                   </div>
                 </div>
