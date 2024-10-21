@@ -56,8 +56,8 @@ const Investors = () => {
       link: "https://taiko.xyz/",
     },
     {
-      title: "VICTION",
-      logo: "victionBackers.svg",
+      title: "IBC Group",
+      logo: "ibcBacker.svg",
       link: "https://www.viction.xyz/",
     },
     {
