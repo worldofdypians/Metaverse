@@ -523,7 +523,7 @@ const MarketEvents = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
@@ -534,7 +534,7 @@ const MarketEvents = ({
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
@@ -771,33 +771,33 @@ const MarketEvents = ({
       },
     },
 
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Network",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Network",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -2884,7 +2884,7 @@ const MarketEvents = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -2939,7 +2939,7 @@ const MarketEvents = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -2980,7 +2980,7 @@ const MarketEvents = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBNB
-                              : dummyEvent.id === "event4"
+                              : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB

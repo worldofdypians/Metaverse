@@ -74,7 +74,7 @@ const Home = ({
 }) => {
  
   const basePopupInfo = {
-    title: "Base ",
+    title: "Base",
     img: basePopup,
     state: "base",
   };
@@ -132,7 +132,7 @@ const Home = ({
       >
         <MintPopup
           active={activePopup}
-          data={mantaInfo}
+          data={basePopupInfo}
           onClose={() => setActivePopup(false)}
         />
       </OutsideClickHandler>

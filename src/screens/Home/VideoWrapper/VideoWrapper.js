@@ -285,7 +285,6 @@ const VideoWrapper = ({
         eventDate: "December 22, 2023",
       },
     },
-
     {
       title: "Manta",
       chain: "Manta Chain",
@@ -325,7 +324,6 @@ const VideoWrapper = ({
         eventDate: "December 22, 2023",
       },
     },
-
     {
       title: "Cookie3",
       chain: "BNB Chain",
@@ -368,7 +366,7 @@ const VideoWrapper = ({
     {
       title: "Base",
       logo: coinbaseimg,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       rewardsAmount: "$20,000",
       rewardsCurrency: "ETH Rewards",
@@ -381,7 +379,7 @@ const VideoWrapper = ({
         chain: "Base Chain",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event4",
         date: "Oct 07, 2024",
         totalRewards: "$20,000 in ETH Rewards",

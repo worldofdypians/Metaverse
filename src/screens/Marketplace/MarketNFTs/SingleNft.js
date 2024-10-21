@@ -3041,7 +3041,7 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_gate_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress ===
+                        : nftAddress  ===
                           window.config.nft_conflux_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress.toLowerCase() ===
