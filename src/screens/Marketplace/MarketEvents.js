@@ -359,7 +359,7 @@ const MarketEvents = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-02-18T16:00:00.000+02:00");
 
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
@@ -527,7 +527,7 @@ const MarketEvents = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Oct 21, 2024",
       backgroundImage: upcomingBase2,
       popupInfo: {
         title: "Base",
@@ -544,7 +544,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Oct 21, 2024",
       },
     },
     {
@@ -907,31 +907,7 @@ const MarketEvents = ({
     },
   ];
 
-  const newBetaEvent = {
-    title: "Dypius",
-    logo: dypius,
-    eventStatus: "Coming Soon",
-    totalRewards: "$50,000 in BNB Rewards",
-    myEarnings: 0.0,
-    eventType: "Explore & Mine",
-    eventDate: "Coming Soon",
-    backgroundImage: upcomingDyp,
-    popupInfo: {
-      title: "Dypius",
-      chain: "BNB Chain",
-      linkState: "dypius",
-      rewards: "BNB",
-      status: "Coming Soon",
-      id: "event5",
-      eventType: "Explore & Mine",
-      totalRewards: "$50,000 in BNB Rewards",
-      eventDuration: dypiusLastDay,
-      minRewards: "25",
-      maxRewards: "50",
-      learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-      eventDate: "Coming Soon",
-    },
-  };
+
 
   // if (dypEvent && dypEvent[0]) {
   //   const userEarnedDyp =

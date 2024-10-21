@@ -310,7 +310,7 @@ const NewWalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-02-18T16:00:00.000+02:00");
 
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
@@ -401,8 +401,8 @@ const NewWalletBalance = ({
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
-    eventDate: "Coming Soon",
-    date: "Coming Soon",
+    eventDate: "Oct 21, 2024",
+    date: "Oct 21, 2024",
     id: "event24",
     eventType: "Explore & Mine",
     eventDuration: baseLastDay2,
@@ -663,7 +663,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate:"Oct 21, 2024",
       popupInfo: {
         title: "Base",
         chain: "Base",
@@ -679,7 +679,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Oct 21, 2024",
       },
     },
     {

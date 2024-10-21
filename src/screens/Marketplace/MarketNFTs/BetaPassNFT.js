@@ -3202,7 +3202,7 @@ const BetaPassNFT = ({
                                       <div className="d-flex gap-1 align-items-center">
                                         <img src={whiteCalendar} alt="" />
                                         <span className="white-events-text mb-0">
-                                          End: Jan. 25, 2025
+                                          End: Feb. 18, 2025
                                         </span>
                                       </div>
                                     </div>
