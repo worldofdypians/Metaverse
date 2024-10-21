@@ -8,7 +8,7 @@ const TimepiecePlaceHolder = ({ onMintClick }) => {
     >
       <div className="landplaceholder-content">
         <img
-          src={require("./assets/timepieceplaceholder2.svg").default}
+          src={require("./assets/timepieceplaceholder2.png")}
           alt=""
           className="landplaceholder-content-img"
         />

@@ -85,6 +85,7 @@ const CatsTimeLine = () => {
             height={4}
             percent={0.8}
             status={"In Progress"}
+            background={'#fff'}
           />
         </li>
         <li className="d-flex align-items-center">

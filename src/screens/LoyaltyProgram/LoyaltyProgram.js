@@ -264,13 +264,13 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-end p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
-        <div className="container-nft justify-content-center d-flex align-items-start px-3 px-lg-5 position-relative flex-column">
-          <div className="container-lg mx-0">
+        <div className="custom-marketplace-container justify-content-center d-flex align-items-start px-3 position-relative flex-column mt-5 pt-5 mt-lg-0 pt-lg-0">
+          <div className="container-fluid mx-0">
             <div className="row gap-3 gap-lg-0">
               <div className="col-12">
                 <div className="loyalty-banner loyalty-container d-flex flex-column flex-lg-row p-4 gap-3 gap-lg-5 align-items-center mb-4">

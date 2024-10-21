@@ -1,0 +1,56 @@
+.announcement-side-wrapper-2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.game-update-card {
+  height: 290px;
+  backdrop-filter: blur(12.5px);
+  border-radius: 12px;
+
+  border: 1px solid gray;
+  overflow: hidden;
+  img{
+    border-radius: 12px;
+    transition: all .25s;
+  }
+}
+
+.game-update-card:hover{
+  img{
+    transform: scale(1.2);
+  }
+}
+
+.updates-text-wrapper{
+ position: absolute;
+ bottom: 0;
+}
+
+.other-news-item{
+  border-top: 2px solid gray;
+  img{
+    min-width: 300px;
+    min-height: 170px;
+  }
+
+  .other-news-title{
+    color: #EEEDFF;
+font-family: "Montserrat";
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 27px; /* 135% */
+  }
+  @media screen and (max-width: 786px) {
+    img{
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+

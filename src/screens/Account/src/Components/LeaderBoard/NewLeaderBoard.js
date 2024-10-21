@@ -104,12 +104,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const NewLeaderBoard = ({
   username,
-  userId,
-  dypBalancebnb,
-  address,
   availableTime,
   email,
-  coinbase,
   isPremium,
   dailyplayerData,
   weeklyplayerData,
@@ -139,8 +135,8 @@ const NewLeaderBoard = ({
       title: "Taiko",
       id: 2,
       image: taikoActive,
-    }, 
-       {
+    },
+    {
       title: "Base",
       id: 3,
       image: baseActive,
@@ -235,7 +231,6 @@ const NewLeaderBoard = ({
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
-  const [bundlesBought, setbundlesBought] = useState(0);
   const [allData, setAllData] = useState([]);
   const [selectedChain, setSelectedChain] = useState(chainItems[0]);
   const sliderRef = useRef(null);
@@ -254,18 +249,6 @@ const NewLeaderBoard = ({
     setOptionText2(item);
   };
 
-  const getBundles = async () => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
-
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const handlePrevChain = () => {
     if (selectedChain.id === 0) {
@@ -328,7 +311,7 @@ const NewLeaderBoard = ({
       setSelectedChain(chainItems[selectedChain.id + 1]);
     }
   };
-  
+
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
@@ -343,12 +326,11 @@ const NewLeaderBoard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    getBundles();
-  }, [address]);
-
-  useEffect(() => {
-    setOptionText2("bnb");
-  }, []);
+    if (allBnbData && allBnbData.length > 0) {
+      setOptionText2("bnb");
+      setAllData(allBnbData);
+    }
+  }, [allBnbData]);
 
   // useEffect(() => {
   //   if (countdown === null || countdown === undefined || countdown === "0") {
@@ -363,10 +345,7 @@ const NewLeaderBoard = ({
     sliderRef.current.slickPrev();
   };
 
-  const today1 = new Date();
-
   useEffect(() => {
-    setAllData(allBnbData);
     setTimeout(() => {
       prevSlide();
     }, 500);
@@ -384,7 +363,7 @@ const NewLeaderBoard = ({
             <div className="d-none">
               {availableTime !== "0" && availableTime && (
                 <Countdown
-                  date={Number(availableTime)*1000}
+                  date={Number(availableTime) * 1000}
                   renderer={renderer}
                   onComplete={() => {
                     setcountdown();
@@ -491,7 +470,7 @@ const NewLeaderBoard = ({
                         ? "Manta"
                         : ""}
                     </span>
-                 
+          
                     <span
                       onMouseEnter={() => handleMouseEnter("taiko")}
                       onMouseLeave={handleMouseLeave}
@@ -567,7 +546,6 @@ const NewLeaderBoard = ({
                         ? "Base"
                         : ""}
                     </span>
-
 
                     <span
                       onMouseEnter={() => handleMouseEnter("skale")}
@@ -1103,13 +1081,12 @@ const NewLeaderBoard = ({
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
                                                   >
-                                                    { getFormattedNumber(
-                                                          leaderboard.rewards[
-                                                            index
-                                                          ],
-                                                          0
-                                                        )
-                                                      }
+                                                    {getFormattedNumber(
+                                                      leaderboard.rewards[
+                                                        index
+                                                      ],
+                                                      0
+                                                    )}
                                                   </span>
                                                 </div>
                                               </td>
@@ -1127,16 +1104,14 @@ const NewLeaderBoard = ({
                                                     style={{ color: "#fff" }}
                                                   >
                                                     $
-                                                    {
-                                                    optionText2 !== "skale"
+                                                    {optionText2 !== "skale"
                                                       ? getFormattedNumber(
                                                           leaderboard.rewards[
                                                             index
                                                           ],
                                                           0
                                                         )
-                                                      : 
-                                                      getFormattedNumber(
+                                                      : getFormattedNumber(
                                                           leaderboard
                                                             .past_rewards[
                                                             index
@@ -1178,13 +1153,10 @@ const NewLeaderBoard = ({
                                                       alt=""
                                                     />
                                                     {getFormattedNumber(
-                                                          leaderboard
-                                                            .premium_rewards[
-                                                            index
-                                                          ],
-                                                          0
-                                                        )
-                                                     }
+                                                      leaderboard
+                                                        .premium_rewards[index],
+                                                      0
+                                                    )}
                                                   </span>
                                                   <HtmlTooltip
                                                     placement="top"

@@ -703,7 +703,7 @@ const MyRewardsPopupNew = ({
         </div>
         <div className="small-separator"></div>
       </div>
-      <div className="reward-category-items-wrapper">
+      <div className="reward-category-items-wrapper p-1">
         <div
           className={` ${
             rewardCategory === "all"

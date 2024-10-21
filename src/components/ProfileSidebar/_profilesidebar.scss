@@ -1,0 +1,45 @@
+.profile-sidebar-item {
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  border-left: 4px solid transparent;
+}
+
+.profile-sidebar-item:hover {
+  background: rgba(190, 190, 190, 0.1);
+
+}
+
+.profile-sidebar-item-active {
+  background: rgba(255, 200, 8, 0.1);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #ffc808;
+}
+.events-sidebar-item-active {
+  background: rgba(250, 0, 68, 0.1);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #FA0044;
+}
+.rewards-sidebar-item-active {
+  background: rgba(255, 72, 219, 0.10);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #FF48DB;
+}
+.premium-sidebar-item-active {
+  background: rgba(255, 154, 0, 0.10);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #FF9A00;
+}
+.profile-sidebar-item-active {
+  background: rgba(255, 200, 8, 0.1);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #ffc808;
+}
+.profile-sidebar-item-active {
+  background: rgba(255, 200, 8, 0.1);
+  border-radius: 4px 0px 0px 4px;
+  border-left: 4px solid #ffc808;
+}
