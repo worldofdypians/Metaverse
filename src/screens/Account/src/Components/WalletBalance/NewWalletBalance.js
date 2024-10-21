@@ -286,7 +286,6 @@ const NewWalletBalance = ({
   weeklyDataAmountBase,
   monthlyDataAmountBase,
   mantaEarnUsd,
-  baseEarnUsd,
   openedMantaChests,
   openedBaseChests,
   mantaPoints,
@@ -313,7 +312,7 @@ const NewWalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-02-18T16:00:00.000+02:00");
 
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
@@ -400,12 +399,12 @@ const NewWalletBalance = ({
   const dummyBase = {
     title: "Base",
     logo: baseLogo,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
-    eventDate: "Coming Soon",
-    date: "Coming Soon",
+    eventDate: "Oct 21, 2024",
+    date: "Oct 21, 2024",
     id: "event24",
     eventType: "Explore & Mine",
     eventDuration: baseLastDay2,
@@ -417,7 +416,7 @@ const NewWalletBalance = ({
     chain: "Base",
     linkState: "base",
     rewards: "ETH",
-    status: "Coming Soon",
+    status: "Live",
   };
 
   const dummyManta = {
@@ -631,7 +630,6 @@ const NewWalletBalance = ({
         eventDate: "Aug 20, 2024",
       },
     },
-
     {
       title: "Cookie3",
       logo: cookieLogo,
@@ -663,17 +661,17 @@ const NewWalletBalance = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate:"Oct 21, 2024",
       popupInfo: {
         title: "Base",
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
@@ -683,7 +681,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Oct 21, 2024",
       },
     },
     {
@@ -936,34 +934,34 @@ const NewWalletBalance = ({
         eventDate: "Dec 22, 2023",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        date: "Nov 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Chain",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     date: "Nov 01, 2023",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -1601,8 +1599,10 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={baseEarnUSD}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
@@ -2076,7 +2076,8 @@ const NewWalletBalance = ({
                           Number(taikoEarnUsd) + 
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
-                          Number(cookieEarnUsd),
+                          Number(cookieEarnUsd) +
+                          Number(baseEarnUSD),
                         2
                       )}
                     </h6>
@@ -3214,7 +3215,7 @@ const NewWalletBalance = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -3267,7 +3268,7 @@ const NewWalletBalance = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -3308,7 +3309,7 @@ const NewWalletBalance = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBnb
-                              : dummyEvent.id === "event4"
+                              : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB

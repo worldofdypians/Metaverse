@@ -214,7 +214,6 @@ const VideoWrapper = ({
       desc: "Power your gameplay with WOD",
       class: "tokenClass",
     },
-
     {
       link: "/earn",
       title: "Stake",

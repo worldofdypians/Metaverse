@@ -102,7 +102,12 @@ import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
-import { dyp700Address, dyp700v1Address, idyp3500Address, wodAddress } from "../../web3";
+import {
+  dyp700Address,
+  dyp700v1Address,
+  idyp3500Address,
+  wodAddress,
+} from "../../web3";
 import { NavLink, useLocation } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
@@ -187,6 +192,7 @@ function Dashboard({
   onSubscribeSuccess,
   isPremium,
   dyptokenDatabnb,
+  baseEarnUSD,
   logoutCount,
   handleConnectBinance,
   handleConnectionPassport,
@@ -209,7 +215,7 @@ function Dashboard({
   mantaEarnUsd,
   multiversEarnUsd,
   bnbEarnUsd,
-  userActiveEvents
+  userActiveEvents,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -632,7 +638,6 @@ function Dashboard({
   const [countdown3500, setcountdown3500] = useState();
 
   const [userDailyBundles, setuserDailyBundles] = useState([]);
-
 
   const [count, setCount] = useState(0);
   const [skalecount, setskalecount] = useState(0);
@@ -4148,12 +4153,14 @@ function Dashboard({
       setcountdown(remainingTime);
     }
 
-    const puzzlemaddnessContract = new window.bscWeb3.eth.Contract(iDYP_3500_ABI,
-      idyp3500Address);
+    const puzzlemaddnessContract = new window.bscWeb3.eth.Contract(
+      iDYP_3500_ABI,
+      idyp3500Address
+    );
 
     const remainingTime_puzzlemaddness = await puzzlemaddnessContract.methods
-    .getTimeOfExpireBuff(coinbase)
-    .call();
+      .getTimeOfExpireBuff(coinbase)
+      .call();
     if (remainingTime_puzzlemaddness > 0) {
       setcountdown3500(remainingTime_puzzlemaddness);
     }
@@ -4188,10 +4195,10 @@ function Dashboard({
         console.error(e);
       });
     if (result && result.status === 200) {
-      setuserDailyBundles(result.data) 
+      setuserDailyBundles(result.data);
     }
   };
-  
+
   const dailyBonusData = {
     eventType: "6 Available Rewards",
     title: "Daily Bonus",
@@ -5629,7 +5636,7 @@ function Dashboard({
 
   //todo
   const fetchAllMyNfts = async () => {
-    countUserDailyBundles(userWallet ? userWallet : coinbase)
+    countUserDailyBundles(userWallet ? userWallet : coinbase);
     getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
@@ -8549,7 +8556,7 @@ function Dashboard({
             }}
           />
         )}
-         {countdown3500 !== undefined && (
+        {countdown3500 !== undefined && (
           <Countdown
             date={Number(countdown3500) * 1000}
             onComplete={() => {
@@ -8687,6 +8694,7 @@ function Dashboard({
             landPremiumRewards={landPremiumRewards}
             genesisRank2={genesisRank2}
             cookieEarnUsd={cookieEarnUsd}
+            baseEarnUSD={baseEarnUSD}
           />
         ) : location.pathname === "/account/premium" ? (
           <GetPremiumPopup
@@ -9131,6 +9139,7 @@ function Dashboard({
                 landPremiumRewards={landPremiumRewards}
                 genesisRank2={genesisRank2}
                 cookieEarnUsd={cookieEarnUsd}
+                baseEarnUSD={baseEarnUSD}
               />
             </div>
           </OutsideClickHandler>
