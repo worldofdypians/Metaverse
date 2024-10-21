@@ -8631,7 +8631,12 @@ function Dashboard({
                 Number(weeklyDataAmountTaiko) +
                 Number(monthlyDataAmountTaiko) +
                 Number(cawsPremiumRewards) +
-                Number(landPremiumRewards)
+                Number(landPremiumRewards)+
+                Number(mantaEarnUsd)+
+                Number(taikoEarnUsd)+
+                Number(immutableEarnUsd)+
+                Number(cookieEarnUsd)+
+                Number(baseEarnUSD)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}

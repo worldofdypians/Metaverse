@@ -4495,6 +4495,7 @@ function App() {
                 latest20BoughtNFTS={latest20BoughtNFTS}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
+                baseEarnUSD={baseEarnUSD}
               />
             }
           />
@@ -4517,6 +4518,7 @@ function App() {
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
+                baseEarnUSD={baseEarnUSD}
                 immutableEarnUsd={immutableEarnUsd}
                 mantaEarnUsd={mantaEarnUsd}
                 multiversEarnUsd={multiversEarnUsd}
@@ -5181,6 +5183,7 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 userActiveEvents={userEvents}
+                baseEarnUSD={baseEarnUSD}
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
