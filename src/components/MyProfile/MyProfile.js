@@ -430,7 +430,7 @@ const MyProfile = ({
                 </div>
               </div>
             </div>
-            <hr className="sidebar-separator my-2" />
+            <div className="sidebar-separator2 my-2"></div>
             <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="progress-line"></div>

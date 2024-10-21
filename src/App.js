@@ -98,6 +98,8 @@ import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIc
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
 import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
+import baseLogo2 from "./screens/Home/VideoWrapper/assets/baseLogo.svg";
+
 import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
 import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
@@ -448,7 +450,7 @@ function App() {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
-  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
+  let baseLastDay = new Date("2025-02-18T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
@@ -3017,12 +3019,12 @@ function App() {
     },
     {
       title: "Base",
-      logo: baseLogo,
-      eventStatus: "Coming Soon",
+      logo: baseLogo2,
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "Oct 07, 2024",
+      eventDate: "Oct 21, 2024",
       backgroundImage: upcomingBase2,
       userEarnUsd: 0,
       userEarnCrypto: 0,
@@ -3032,7 +3034,7 @@ function App() {
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in ETH Rewards",
@@ -3042,7 +3044,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Oct 07, 2024",
+        eventDate: "Oct 21, 2024",
       },
     },
     {
