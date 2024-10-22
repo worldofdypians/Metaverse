@@ -2746,14 +2746,14 @@ const SingleNft = ({
   useEffect(() => {
     if (favorites && favorites.length > 0) {
       const favobj = favorites.find(
-        (obj) => obj.nftAddress === nftAddress && obj.tokenId === nftId
+        (obj) => obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() && obj.tokenId === nftId
       );
 
       if (favobj !== undefined) {
         setIsFavorite(true);
       } else setIsFavorite(false);
     }
-  }, [nft, favorites]);
+  }, [nftAddress, favorites, nftId]);
 
   useEffect(() => {
     if (
