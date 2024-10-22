@@ -305,6 +305,7 @@ const NewWalletBalance = ({
   cookieEarnUsd,
   cookieEarnToken,
   cookiePoints,
+  authToken,
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -538,8 +539,6 @@ const NewWalletBalance = ({
     //   },
     // },
 
-
-
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -663,7 +662,7 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate:"Oct 21, 2024",
+      eventDate: "Oct 21, 2024",
       popupInfo: {
         title: "Base",
         chain: "Base",
@@ -1365,7 +1364,9 @@ const NewWalletBalance = ({
 
       if (email !== "" && mediaUrl !== "" && address !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/submissions", data)
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
           .then(function (result) {
             console.log(result.data);
             setSuccess("Email sent successfully");
@@ -1723,7 +1724,7 @@ const NewWalletBalance = ({
   }, [adClicked]);
 
   const recaptchaRef = useRef(null);
-  
+
   return (
     <>
       <div className="container px-0">
@@ -2228,8 +2229,9 @@ const NewWalletBalance = ({
                           Number(weeklyDataAmountViction) +
                           Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
-                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +
-                          Number(taikoEarnUsd) + 
+                          Number(cawsPremiumRewards) +
+                          Number(landPremiumRewards) +
+                          Number(taikoEarnUsd) +
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
                           Number(cookieEarnUsd) +
@@ -3207,8 +3209,8 @@ const NewWalletBalance = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps. Base is an easy way
-                for decentralized apps to leverage Coinbase's products and
+                and scalability you need to power your dapps. Base is an easy
+                way for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
                 ecosystem.
@@ -3302,12 +3304,16 @@ const NewWalletBalance = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" &&
+                    dummyEvent.id !== "event24" &&
+                    dummyEvent.id !== "event7"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" &&
+                dummyEvent.id !== "event24" &&
+                dummyEvent.id !== "event7"
                   ? "Telegram"
                   : "Discord"}
               </a>
@@ -3371,7 +3377,8 @@ const NewWalletBalance = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -3424,7 +3431,8 @@ const NewWalletBalance = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -3465,7 +3473,8 @@ const NewWalletBalance = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBnb
-                              : (dummyEvent.id === "event4" || dummyEvent.id === 'event24')
+                              : dummyEvent.id === "event4" ||
+                                dummyEvent.id === "event24"
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB
