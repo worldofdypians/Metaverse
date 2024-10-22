@@ -81,6 +81,7 @@ const Header = ({
   onSigninClick,
   onLogout,
   binanceWallet,
+  authToken
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -338,7 +339,9 @@ const Header = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}/${notificationId}`
+        )}/${notificationId}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       console.log("Notification marked as read", notificationId);
       handleRefreshList();

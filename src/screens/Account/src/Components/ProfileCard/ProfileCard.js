@@ -148,6 +148,7 @@ const ProfileCard = ({
   userBaseScore,
   userRankTaiko,
   userTaikoScore,
+  authToken
 }) => {
   let id = Math.random().toString(36);
   const windowSize = useWindowSize();
@@ -236,6 +237,8 @@ const ProfileCard = ({
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
             {
               rank: userRankName.id,
+            }, {
+              headers: { Authorization: `Bearer ${authToken}` },
             }
           )
           .then(async () => {
