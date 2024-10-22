@@ -2465,7 +2465,9 @@ function App() {
     if (userId !== undefined && userId !== null) {
       try {
         const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
+          `https://api.worldofdypians.com/user-favorites/${userId}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
         );
         if (!response.ok) {
           throw new Error("Error fetching user favorites");
@@ -2897,7 +2899,9 @@ function App() {
       const response = await axios.get(
         `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}`
+        )}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
 
       if (response.data.length === 0) {
@@ -2921,6 +2925,8 @@ function App() {
             description:
               "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
             redirect_link: "",
+          }, {
+            headers: { Authorization: `Bearer ${authToken}` },
           }
         );
 
@@ -3133,6 +3139,7 @@ function App() {
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
         <Header
+        authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
           avatar={avatar}
@@ -3157,6 +3164,7 @@ function App() {
           onSigninClick={checkData}
         />
         <MobileNavbar
+        authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
           avatar={avatar}
@@ -3187,6 +3195,7 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+                authToken={authToken} 
                 isConnected={isConnected}
                 chainId={networkId}
                 handleSwitchChain={handleSwitchNetwork}
@@ -3240,6 +3249,7 @@ function App() {
                 coinbase={coinbase}
                 nftCount={nftCount}
                 isConnected={isConnected}
+                authToken={authToken}
               />
             }
           />
@@ -4105,6 +4115,7 @@ function App() {
             path="/marketplace/stake"
             element={
               <MarketStake
+              authToken={authToken}
                 isConnected={isConnected}
                 handleConnect={() => {
                   setwalletModal(true);

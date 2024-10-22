@@ -27,6 +27,7 @@ const GetPremiumPopup = ({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   binanceWallet,
+  authToken
 }) => {
   const chainDropdowns = [
     {
@@ -130,7 +131,9 @@ const GetPremiumPopup = ({
 
   const getRankData = async () => {
     await axios
-      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((data) => {
         console.log(data.data);
       })
@@ -139,6 +142,8 @@ const GetPremiumPopup = ({
           await axios
             .post(`https://api.worldofdypians.com/api/addUserRank`, {
               walletAddress: coinbase,
+            }, {
+              headers: { Authorization: `Bearer ${authToken}` },
             })
             .then(async (data) => {
               const response2 = await axios
@@ -1569,6 +1574,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -1618,6 +1625,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -1665,6 +1674,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "viction subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -1713,6 +1724,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -1757,6 +1770,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -1853,6 +1868,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
+              }, {
+                headers: { Authorization: `Bearer ${authToken}` },
               }
             )
             .then(() => {
@@ -1902,6 +1919,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: "bnb subscribeBNB BinanceWallet",
                 premiumTimestamp: today.toString(),
+              }, {
+                headers: { Authorization: `Bearer ${authToken}` },
               }
             )
             .then(() => {
@@ -1947,6 +1966,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: chainId.toString(),
                 premiumTimestamp: today.toString(),
+              }, {
+                headers: { Authorization: `Bearer ${authToken}` },
               }
             )
             .then(() => {

@@ -4545,7 +4545,9 @@ function Dashboard({
 
   const getRankData = async () => {
     await axios
-      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
+      .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .then((data) => {
         setRankData(data.data);
       })
@@ -4554,6 +4556,8 @@ function Dashboard({
           await axios
             .post(`https://api.worldofdypians.com/api/addUserRank`, {
               walletAddress: coinbase,
+            }, {
+              headers: { Authorization: `Bearer ${authToken}` },
             })
             .then(async (data) => {
               const response2 = await axios.get(
@@ -4564,15 +4568,7 @@ function Dashboard({
         }
       });
 
-    // if(response.status === 404){
-    //    await axios.post(`https://api.worldofdypians.com/api/addUserRank/0xbf8bc0660f96b1068e21e0f28614148dfa758cec`,
-    // {
-    //   walletAddress: "0xbf8bc0660f96b1068e21e0f28614148dfa758cec"
-    // }).then(async() => {
-    //   const response2 = await axios.get(`https://api.worldofdypians.com/api/userRanks/0xbf8bc0660f96b1068e21e0f28614148dfa758cec`)
-    //   console.log(response2.data, "data");
-    // })
-    // }
+ 
   };
 
   const metaverseBenefits = [
@@ -6111,7 +6107,9 @@ function Dashboard({
     if (userId !== undefined && userId !== null) {
       try {
         const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`
+          `https://api.worldofdypians.com/user-favorites/${userId}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
         );
         if (!response.ok) {
           throw new Error("Error fetching user favorites");
@@ -6132,7 +6130,9 @@ function Dashboard({
 
   const getUserRewardData = async (addr) => {
     const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`)
+      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      })
       .catch((e) => {
         console.error(e);
       });
@@ -7243,6 +7243,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7317,6 +7319,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7396,6 +7400,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "viction subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7470,6 +7476,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7543,6 +7551,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7672,6 +7682,8 @@ function Dashboard({
                 multiplier: "yes",
                 chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
+              }, {
+                headers: { Authorization: `Bearer ${authToken}` },
               }
             )
             .then(() => {
@@ -7732,6 +7744,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB BinanceWallet",
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -7809,6 +7823,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
               .then(() => {
@@ -8665,6 +8681,7 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
+                      authToken={authToken}
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
                         discountPercentageTaiko={discountPercentageTaiko}
