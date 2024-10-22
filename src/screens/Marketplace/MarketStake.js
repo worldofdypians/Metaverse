@@ -32,7 +32,7 @@ const MarketStake = ({
   isConnected,
   isPremium,
   onSuccessDeposit,
-  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet
+  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet,authToken
 }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
@@ -1396,6 +1396,7 @@ const MarketStake = ({
           }}
         >
           <GetPremiumPopup
+          authToken={authToken}
             chainId={chainId}
             coinbase={coinbase}
             handleSwitchNetwork={handleSwitchNetwork}
