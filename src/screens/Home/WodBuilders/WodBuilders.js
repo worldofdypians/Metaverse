@@ -27,7 +27,7 @@ const WodBuilders = ({ page }) => {
       name: "Base",
       icon: "base",
       banner: "baseBanner.png",
-      // link: "https://x.com/Coredao_Org/status/1790336632823910804",
+      link: "https://x.com/worldofdypians/status/1841111979928273225",
       backer: false,
     },
     {
@@ -76,7 +76,7 @@ const WodBuilders = ({ page }) => {
       name: "Taiko",
       icon: "taiko",
       banner: "taikoBanner.webp",
-      // link: "https://x.com/MantaNetwork/status/1819260085945749903",
+      link: "https://x.com/taikoxyz/status/1823751443121135746",
       backer: true,
     },
     {
