@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./fonts/Organetto.ttf";
 import { Amplify } from "aws-amplify";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, useMutation } from "@apollo/client";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./screens/Account/src/aws-exports";
 import "./screens/Account/src/App.css";
@@ -76,7 +76,11 @@ import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import OurTeam from "./screens/OurTeam/OurTeam.js";
 import { useQuery } from "@apollo/client";
-import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
+import {
+  GENERATE_NONCE,
+  GET_PLAYER,
+  VERIFY_WALLET,
+} from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
 import WalletModal2 from "./components/WalletModal/WalletModal2";
@@ -257,6 +261,7 @@ function App() {
 
   const [monthlyPlayers, setMonthlyPlayers] = useState(0);
   const [percent, setPercent] = useState(0);
+  const authToken = localStorage.getItem("authToken");
 
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
@@ -389,6 +394,12 @@ function App() {
   const [totalvolume, setTotalVolume] = useState(0);
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
+  const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
+
+  const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
+    useMutation(GENERATE_NONCE);
+  const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
+    useMutation(VERIFY_WALLET);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -1347,8 +1358,6 @@ function App() {
     }
   };
 
-
-
   const myLandNftBNB = async () => {
     let myNft = await window.myNftLandListContractCCIP(
       coinbase,
@@ -1465,7 +1474,6 @@ function App() {
         setMyNFTs(NFTS);
       });
 
-     
       getMyNFTS(coinbase, "base").then((NFTS) => {
         settotalBaseNft(NFTS.length);
         setmyBaseNFTs(NFTS);
@@ -1473,15 +1481,12 @@ function App() {
         setmybaseNFTsCreated(NFTS);
       });
 
-    
       getMyNFTS(coinbase, "manta").then((NFTS) => {
         setTotalMantaNft(NFTS.length);
         setMyMantaNfts(NFTS);
         setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyMantaNFTsCreated(NFTS);
       });
-
-    
 
       //setmyBaseNFTs
     } else {
@@ -1506,8 +1511,6 @@ function App() {
       setSocials(socialsData);
     }
   };
-
-
 
   const getStakesIdsCawsWod = async () => {
     const address = coinbase;
@@ -1609,14 +1612,12 @@ function App() {
       window.CAWS_TIMEPIECE_ABI,
       window.config.caws_timepiece_address
     );
-    
+
     if (cawsArray.length > 0) {
       for (let i = 0; i < cawsArray.length; i++) {
         let cawsName = await window.getNft(cawsArray[i]);
-        
-        const cawsId = parseInt(
-          cawsName.name.slice(6, cawsName.name.length)
-        );
+
+        const cawsId = parseInt(cawsName.name.slice(6, cawsName.name.length));
 
         const result = await nft_contract.methods.cawsUsed(cawsId).call();
 
@@ -1756,8 +1757,6 @@ function App() {
       }
     }
   };
-
-
 
   const handleBaseNftMint = async () => {
     if (isConnected && coinbase) {
@@ -1899,6 +1898,23 @@ function App() {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
     }
   }, [data, coinbase, isConnected, count55]);
+
+  useEffect(() => {
+    if (
+      authToken !== undefined &&
+      isTokenExpired(authToken) &&
+      data &&
+      data.getPlayer &&
+      data.getPlayer.wallet &&
+      data.getPlayer.wallet.publicAddress &&
+      isConnected &&
+      coinbase &&
+      coinbase.toLowerCase() ===
+        data.getPlayer.wallet.publicAddress.toLowerCase()
+    ) {
+      onSuccessLogin();
+    }
+  }, [authToken, data, isConnected, coinbase]);
 
   const getBoughtNFTS = async () => {
     let boughtItems = [];
@@ -2193,10 +2209,127 @@ function App() {
   const { ethereum } = window;
   const { email } = useAuth();
 
+  const handleAddUserToNewsLetter = async (token) => {
+    const data2 = {
+      email: email,
+      walletAddress: data?.getPlayer?.wallet?.publicAddress ?? coinbase,
+    };
+
+    await axios
+      .post(`https://api.worldofdypians.com/api/newsletter/add`, data2, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const handleManageLogin = async (signature, message) => {
+    const data2 = {
+      email: email,
+      walletAddress: data?.getPlayer?.wallet?.publicAddress ?? coinbase,
+      signature: signature,
+      message: message,
+    };
+
+    await axios
+      .post(`https://api.worldofdypians.com/api/login`, data2)
+      .then((data) => {
+        const authToken = data.data.token;
+        localStorage.setItem("authToken", authToken);
+        if (isCheckedNewsLetter === true) {
+          handleAddUserToNewsLetter(authToken);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+  
+  const isTokenExpired = (token) => {
+    if (!token) {
+      return true;
+    }
+
+    const payloadBase64 = token.split(".")[1];
+
+    const decodedPayload = JSON.parse(atob(payloadBase64));
+
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    return decodedPayload.exp < currentTime;
+  };
+
+  const signWalletPublicAddress = async () => {
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(coinbase);
+        let signatureData = "";
+        await signer
+          .signMessage(
+            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+          )
+          .then((data) => {
+            signatureData = data;
+
+            handleManageLogin(
+              signatureData,
+              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+            );
+          });
+      } catch (error) {
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else if (coinbase && library) {
+      try {
+        const provider = library;
+        const signer = provider.getSigner();
+        const signature = await signer.signMessage(
+          `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+        );
+        verifyWallet({
+          variables: {
+            publicAddress: coinbase,
+            signature: signature,
+          },
+        }).then(() => {
+          // if (isonlink) {
+          //   handleFirstTask(binanceWallet);
+          // }
+        });
+      } catch (error) {
+        console.log("🚀 ~ file: App.js:2248 ~ getTokens ~ error", error);
+      }
+    }
+  };
+
+  const onSuccessLogin = async () => {
+    if (
+      isConnected &&
+      coinbase !== undefined &&
+      data?.getPlayer?.wallet?.publicAddress !== undefined &&
+      coinbase.toLowerCase() ===
+        data?.getPlayer?.wallet?.publicAddress.toLowerCase()
+    ) {
+      await generateNonce({
+        variables: {
+          publicAddress: coinbase,
+        },
+      });
+    }
+  };
+
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
   ethereum?.on("accountsChanged", checkConnection2);
   // ethereum?.on("accountsChanged", fetchAllMyNfts);
+
+  useEffect(() => {
+    if (dataNonce?.generateWalletNonce) {
+      signWalletPublicAddress();
+    }
+  }, [dataNonce]);
 
   useEffect(() => {
     if (ethereum && !window.gatewallet) {
@@ -2995,7 +3128,7 @@ function App() {
     fetchTimepieceNfts();
     checkNetworkId();
   }, []);
-  
+
   return (
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
@@ -3212,6 +3345,9 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 onSuccessLogin={refetchPlayer}
+                onNewsLetterClick={(value) => {
+                  setisCheckedNewsLetter(value);
+                }}
               />
             }
           />
@@ -3266,6 +3402,7 @@ function App() {
                 domainName={domainName}
                 dogePrice={dogePrice}
                 onSubscribeSuccess={() => {
+                  refetchPlayer();
                   setCount55(count55 + 1);
                 }}
                 isPremium={isPremium}
@@ -3276,6 +3413,9 @@ function App() {
                 latest20BoughtNFTS={latest20BoughtNFTS}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent} 
+                onManageLogin={(value1, value2) => {
+                  handleManageLogin(value1, value2);
+                }}
               />
             }
           />

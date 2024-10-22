@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginCard } from "../../Components/LoginCard";
 import LoginWrapper from "../../Components/LoginWrapper/LoginWrapper";
 import { styled } from "@mui/material/styles";
@@ -48,8 +48,9 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-function Auth({ isConnected, coinbase, onSuccessLogin }) {
+function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
   const { isAuthenticated, loginError, setLoginValues, playerId } = useAuth();
+  const [checked, setIschecked] = useState(false);
 
   const [value, setValue] = React.useState(0);
 
@@ -76,11 +77,8 @@ function Auth({ isConnected, coinbase, onSuccessLogin }) {
   // }
 
   const handleFirstTask = async (wallet) => {
-     
-      const result2 = await axios
-      .get(
-        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
-      )
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -90,8 +88,11 @@ function Auth({ isConnected, coinbase, onSuccessLogin }) {
   };
 
   return (
-    <>
-      <LoginWrapper style={{ margin: "6rem 0rem" }}>
+    <div
+      className="d-flex flex-column gap-1 align-items-center"
+      style={{ margin: "6rem 0rem" }}
+    >
+      <LoginWrapper>
         <LoginCard
           containerStyles={{
             height: 500,
@@ -113,8 +114,8 @@ function Auth({ isConnected, coinbase, onSuccessLogin }) {
             <Login
               onSuccessLogin={() => {
                 // handleFirstTask(coinbase);
-                console.log('success')
-                onSuccessLogin()
+                console.log("success");
+                onSuccessLogin();
               }}
             />
           )}
@@ -122,7 +123,20 @@ function Auth({ isConnected, coinbase, onSuccessLogin }) {
         </LoginCard>
         <ErrorAlert error={loginError} />
       </LoginWrapper>
-    </>
+      {value === 1 && (
+        <div className="d-flex align-items-center gap-2">
+          <span className="text-secondary">Subscribe to newsletter</span>
+          <input
+            type="checkbox"
+            onChange={() => {
+              setIschecked(!checked);
+              onNewsLetterClick(!checked);
+            }}
+            checked={checked}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 

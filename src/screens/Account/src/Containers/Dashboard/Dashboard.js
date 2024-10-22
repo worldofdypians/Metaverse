@@ -100,6 +100,7 @@ function Dashboard({
   latest20BoughtNFTS,
   monthlyPlayers,
   percent,
+  onManageLogin
 }) {
   const { email, logout } = useAuth();
 
@@ -4899,15 +4900,22 @@ function Dashboard({
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
+     
         const signature = await signer.signMessage(
           `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-        );
+        ) 
+
         verifyWallet({
           variables: {
             publicAddress: account,
             signature: signature,
           },
         }).then(() => {
+            onManageLogin(
+              signature,
+              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+            );
+          
           setsyncStatus("success");
           setTimeout(() => {
             setshowSyncModal(false);
