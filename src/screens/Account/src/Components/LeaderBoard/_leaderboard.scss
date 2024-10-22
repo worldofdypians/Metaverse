@@ -446,6 +446,16 @@
   }
 }
 
+.leaderboard-item2 {
+  width: fit-content !important;
+  background: rgba(151, 89, 192, 0.3);
+  border-radius: 12px;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
 .optionswrapper-bg {
   position: absolute;
   width: 14%;
@@ -459,6 +469,14 @@
   bottom: 0;
   left: 0;
   margin: auto;
+}
+
+
+.optionswrapper-bg-new { 
+  border-radius: 12px;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out; 
 }
 
 .optionswrapper-bg-home {

@@ -101,7 +101,7 @@ function Dashboard({
   monthlyPlayers,
   percent,
   onManageLogin,
-  authToken
+  authToken,
 }) {
   const { email, logout } = useAuth();
 
@@ -642,6 +642,7 @@ function Dashboard({
   const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
   const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
   const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
+  const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
   const html = document.querySelector("html");
@@ -4554,11 +4555,15 @@ function Dashboard({
       .catch(async (err) => {
         if (err.response.status === 404) {
           await axios
-            .post(`https://api.worldofdypians.com/api/addUserRank`, {
-              walletAddress: coinbase,
-            }, {
-              headers: { Authorization: `Bearer ${authToken}` },
-            })
+            .post(
+              `https://api.worldofdypians.com/api/addUserRank`,
+              {
+                walletAddress: coinbase,
+              },
+              {
+                headers: { Authorization: `Bearer ${authToken}` },
+              }
+            )
             .then(async (data) => {
               const response2 = await axios.get(
                 `https://api.worldofdypians.com/api/userRanks/${coinbase}`
@@ -4567,8 +4572,6 @@ function Dashboard({
             });
         }
       });
-
- 
   };
 
   const metaverseBenefits = [
@@ -4897,10 +4900,10 @@ function Dashboard({
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
-     
+
         const signature = await signer.signMessage(
           `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-        ) 
+        );
 
         verifyWallet({
           variables: {
@@ -4908,11 +4911,11 @@ function Dashboard({
             signature: signature,
           },
         }).then(() => {
-            onManageLogin(
-              signature,
-              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-            );
-          
+          onManageLogin(
+            signature,
+            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+          );
+
           setsyncStatus("success");
           setTimeout(() => {
             setshowSyncModal(false);
@@ -6107,7 +6110,8 @@ function Dashboard({
     if (userId !== undefined && userId !== null) {
       try {
         const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`, {
+          `https://api.worldofdypians.com/user-favorites/${userId}`,
+          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
@@ -7245,7 +7249,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7321,7 +7326,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7402,7 +7408,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "viction subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7478,7 +7485,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7553,7 +7561,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7684,7 +7693,8 @@ function Dashboard({
                 multiplier: "yes",
                 chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
-              }, {
+              },
+              {
                 headers: { Authorization: `Bearer ${authToken}` },
               }
             )
@@ -7746,7 +7756,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB BinanceWallet",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7825,7 +7836,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -8683,7 +8695,7 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
-                      authToken={authToken}
+                        authToken={authToken}
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
                         discountPercentageTaiko={discountPercentageTaiko}
@@ -9264,16 +9276,16 @@ function Dashboard({
                         <div
                           className="popup-wrapper leaderboard-popup popup-active p-3"
                           id="leaderboard"
-                          style={{ width: "80%", pointerEvents: "auto" }}
+                          style={{ width: "50%", pointerEvents: "auto" }}
                         >
                           <div className="d-flex align-items-center justify-content-between">
                             <h2
                               className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
                             >
                               <mark className={`font-organetto bundletag`}>
-                                WOD
+                              CHAIN 
                               </mark>{" "}
-                              Leaderboard
+                              LEADERBOARDS
                             </h2>
                             {/* {windowSize.width > 786 && (
                               <div className="d-flex align-items-center gap-2">
@@ -9430,7 +9442,32 @@ function Dashboard({
                               style={{ cursor: "pointer" }}
                             />
                           </div>
-
+                          <div className="d-flex align-items-center gap-2 mt-3 ">
+                            <button
+                              className={` ${
+                                leaderboardBtn === "weekly"
+                                  ? "leaderboard-active-btn"
+                                  : "leaderboard-inactive-btn"
+                              }  w-100 py-2`}
+                              onClick={() => {
+                                setleaderboardBtn("weekly");
+                              }}
+                            >
+                              Weekly
+                            </button>
+                            <button
+                              className={` ${
+                                leaderboardBtn === "monthly"
+                                  ? "leaderboard-active-btn"
+                                  : "leaderboard-inactive-btn"
+                              }  w-100 py-2`}
+                              onClick={() => {
+                                setleaderboardBtn("monthly");
+                              }}
+                            >
+                              Monthly
+                            </button>
+                          </div>
                           <GlobalLeaderboard
                             genesisData={genesisData}
                             previousgenesisData={previousgenesisData}
