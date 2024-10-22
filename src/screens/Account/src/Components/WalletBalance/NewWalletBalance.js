@@ -305,6 +305,7 @@ const NewWalletBalance = ({
   cookieEarnUsd,
   cookieEarnToken,
   cookiePoints,
+  authToken
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1365,7 +1366,9 @@ const NewWalletBalance = ({
 
       if (email !== "" && mediaUrl !== "" && address !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/submissions", data)
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
           .then(function (result) {
             console.log(result.data);
             setSuccess("Email sent successfully");

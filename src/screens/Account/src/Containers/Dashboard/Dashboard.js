@@ -100,7 +100,8 @@ function Dashboard({
   latest20BoughtNFTS,
   monthlyPlayers,
   percent,
-  onManageLogin
+  onManageLogin,
+  authToken
 }) {
   const { email, logout } = useAuth();
 
@@ -8857,6 +8858,7 @@ function Dashboard({
                         onOpenGenesisLeaderboard={() => {
                           setGenesisLeaderboard(true);
                         }}
+                        authToken={authToken}
                         userDataStar={dataAmountStar}
                         bnbEarnUsd={bnbEarnUsd}
                         dogePrice={dogePrice}

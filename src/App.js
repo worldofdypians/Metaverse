@@ -3381,6 +3381,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
+              authToken={authToken}
               dailyBonuslistedNFTS={listedNFTS}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
