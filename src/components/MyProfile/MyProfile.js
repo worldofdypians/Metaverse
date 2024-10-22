@@ -211,15 +211,15 @@ const MyProfile = ({
         },
       },
       {
-        breakpoint: 500,
+        breakpoint: 767,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           dots: false,
           fade: false,
           initialSlide: 0,
-          autoplay: false,
-          infinite: false,
+          autoplay: true,
+          infinite: true,
         },
       },
     ],
@@ -234,6 +234,9 @@ const MyProfile = ({
       setFinished(false);
     }
   }, [totalClaimedChests, isPremium, canBuy, email]);
+
+
+
 
   return (
     <div className="custom-container mt-5">

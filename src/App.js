@@ -74,17 +74,13 @@ import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
-import OurTeam from "./screens/OurTeam/OurTeam.js";
-// import Token from "./screens/Wod/Token/Token.js";
+import OurTeam from "./screens/OurTeam/OurTeam.js"; 
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Buy from "./screens/Wod/Buy/Buy.js";
 import Governance from "./screens/Community/Governance/Governance.js";
 import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
 import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
-import Brand from "./screens/About/Brand/Brand.js";
-import Partners from "./screens/About/Partners/Partners.js";
-import Tokenomics from "./screens/About/Tokenomics/Tokenomics.js";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
@@ -626,6 +622,7 @@ function App() {
   const [skalePrice, setSkalePrice] = useState(0);
   const [seiPrice, setSeiPrice] = useState(0);
   const [userEvents, setuserEvents] = useState(0);
+  const [wodBalance, setwodBalance] = useState(0);
 
 
   const userId = data?.getPlayer?.playerId;
@@ -635,12 +632,10 @@ function App() {
       const response = await fetch(
         "https://worldofdypiansutilities.azurewebsites.net/api/GetTreasureHuntData",
         {
-          body: JSON.stringify(
-            {
-              email: email,
-              publicAddress: userAddress,
-            }
-          ),
+          body: JSON.stringify({
+            email: email,
+            publicAddress: userAddress,
+          }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -740,7 +735,7 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
               immutableEvent[0].reward.earn.multiplier;
@@ -752,7 +747,7 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -764,7 +759,7 @@ function App() {
           }
 
           if (cookieEvent && cookieEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               cookieEvent[0].reward.earn.total /
@@ -797,7 +792,7 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            userActiveEvents = userActiveEvents +1;
+            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -917,7 +912,7 @@ function App() {
               }
             }
           }
-          setuserEvents(userActiveEvents)
+          setuserEvents(userActiveEvents);
         }
       } else {
         console.log(`Request failed with status ${response.status}`);
@@ -2868,6 +2863,32 @@ function App() {
       });
   };
 
+  const getWodBalance = async (address) => {
+    if (address) {
+      const tokenContract = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        window.config.wod_token_address
+      );
+      const tokenBalance = await tokenContract.methods
+        .balanceOf(address)
+        .call()
+        .then((data) => {
+          let depositedTokens = new window.BigNumber(data)
+            .div(1e18)
+            .toString(10);
+          return depositedTokens;
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+
+        if(tokenBalance !== undefined) {
+          setwodBalance(tokenBalance)
+        }
+     
+    }
+  };
+
   useEffect(() => {
     fetchSkalePrice();
     fetchSeiPrice();
@@ -4091,6 +4112,7 @@ function App() {
 
   useEffect(() => {
     fetchSkaleBalance();
+    getWodBalance(coinbase)
   }, [coinbase, isConnected, networkId]);
 
   useEffect(() => {
@@ -4486,7 +4508,6 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 userActiveEvents={userEvents}
-
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5160,7 +5181,6 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 userActiveEvents={userEvents}
-
                 dailyBonuslistedNFTS={listedNFTS}
                 dummyBetaPassData2={dummyBetaPassData2}
                 bnbEarnUsd={bnbEarnUsd}
@@ -5312,7 +5332,22 @@ function App() {
             }
           />
           <Route exact path="/token" element={<Token />} />
-          <Route exact path="/bridge" element={<Bridge />} />
+          <Route
+            exact
+            path="/bridge"
+            element={
+              <Bridge
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                onConnect={() => {
+                  setwalletModal(true);
+                }}
+                wodBalance={wodBalance}
+              />
+            }
+          />
           <Route
             exact
             path="/earn"
@@ -5320,7 +5355,7 @@ function App() {
               <Earn
                 isConnected={isConnected}
                 coinbase={coinbase}
-                chainId={chainId}
+                chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
                 onConnectWallet={() => {
                   setwalletModal(true);
@@ -5338,10 +5373,7 @@ function App() {
           />
 
           <Route exact path="/game" element={<Game />} />
-          <Route exact path="/game-updates" element={<GameUpdates />} />
-          {/* <Route exact path="/brand" element={<Brand />} /> */}
-          {/* <Route exact path="/partners" element={<Partners />} />
-            <Route exact path="/tokenomics" element={<Tokenomics />} /> */}
+          <Route exact path="/game-updates" element={<GameUpdates />} /> 
           <Route exact path="/about" element={<About />} />
 
           {/* <Route

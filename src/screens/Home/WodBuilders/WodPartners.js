@@ -115,13 +115,13 @@ const WodPartners = ({full}) => {
     <div className="w-100 px-3 px-lg-5 mx-0 build-business-wrapper py-4 d-flex justify-content-center" id='partners'>
       <div className="custom-container">
       <div className="d-flex flex-column gap-2">
-       <div className="d-flex align-items-center justify-content-between">
-       <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+       <div className="d-flex align-items-center justify-content-between gap-2">
+       <h2 className="font-montserrat builders-title explorer-grid-title px-0 m-0">
           PARTNERS AND INVESTORS
           {/* <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark> */}
         </h2>
         {!full &&
-            <NavLink to={"/partners"} className="d-flex align-items-center gap-2">
+            <NavLink to={"/about#partners"} className="d-flex align-items-center gap-2">
             <span className="view-all-partners">View All</span>
             <img src={partnersRight} alt="" />
           </NavLink>

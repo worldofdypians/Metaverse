@@ -12,6 +12,7 @@ function getTokenContract(address) {
 window.config = {
   beta_test: "WorldOfDypians Beta Tester Application",
   dyp_token_address: "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
+  wod_token_address: '0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8',
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
   nft_marketplace_address: "0xF55D96735Fa22ba1C119bA37aF76C2c4E3BeC224",
   nft_caws_address: "0xd06cf9e1189feab09c844c597abc3767bc12608c",

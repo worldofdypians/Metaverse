@@ -486,8 +486,8 @@ const Header = ({
   //   collections: null,
   //   account: "account",
   // });
-  // }, []);
-  console.log(location.pathname);
+  // }, []); 
+  
   return (
     <div className="d-flex flex-column">
       <div
@@ -496,7 +496,7 @@ const Header = ({
       >
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-start gap-5 ps-0">
-            <NavLink to="/">
+            <NavLink to="/" onClick={()=>{window.scrollTo(0,0)}}>
               <img src={metaverse} alt="metaverse" height={32} />
             </NavLink>
             <div

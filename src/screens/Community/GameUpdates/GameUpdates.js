@@ -259,6 +259,7 @@ const GameUpdates = () => {
                   <NavLink
                     to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                     style={{ textDecoration: "none" }}
+                    key={index}
                   >
                     <div
                       className="game-update-card position-relative"
@@ -291,6 +292,7 @@ const GameUpdates = () => {
                     <NavLink
                       to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                       style={{ textDecoration: "none" }}
+                      key={index}
                     >
                       <div className="game-update-card position-relative">
                         <img
@@ -321,6 +323,7 @@ const GameUpdates = () => {
                 <NavLink
                   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                   style={{ textDecoration: "none" }}
+                  key={index}
                 >
                   <div className="game-update-card position-relative">
                     <img

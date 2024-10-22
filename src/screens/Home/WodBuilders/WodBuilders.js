@@ -89,7 +89,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "BabyDoge",
       icon: "babydogeIcon",
-      banner: "babydogeBanner.png",
+      banner: "babyDogeBanner.png",
       link: "https://twitter.com/BabyDogeCoin/status/1777714397667893544",
       backer: false,
     },
@@ -161,8 +161,8 @@ const WodBuilders = ({ page }) => {
     {
       name: "Cookie3",
       icon: "cookie3",
-      banner: "cookie3Banner.png",
-      link: 'https://x.com/Cookie3_com/status/1824052238404255889',
+      banner: "cookie3Banner.webp",
+      link: "https://x.com/Cookie3_com/status/1824052238404255889",
       backer: true,
     },
     {
@@ -185,7 +185,7 @@ const WodBuilders = ({ page }) => {
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
-  
+
     {
       name: "Playground",
       icon: "playground",
@@ -296,6 +296,18 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "UQUID",
+      icon: "uquid",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Saving DAO",
+      icon: "savingDao",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
@@ -330,13 +342,20 @@ const WodBuilders = ({ page }) => {
                   alt=""
                 />
                 <div className="d-flex align-items-center gap-2">
-                  {item.icon === "klapai" || item.icon === "manta" || item.icon === "alterverse" || item.icon === "worldshards" || item.icon === "creoengine" || item.icon === "binanceWeb3" || item.icon === "hamsterChain" ? (
+                  {item.icon === "klapai" ||
+                  item.icon === "manta" ||
+                  item.icon === "savingDao" ||
+                  item.icon === "alterverse" ||
+                  item.icon === "worldshards" ||
+                  item.icon === "creoengine" ||
+                  item.icon === "binanceWeb3" ||
+                  item.icon === "hamsterChain" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
                       height={24}
                       alt=""
-                      style={{scale:item.icon === "hamsterChain" ? '2' : '' }}
+                      style={{ scale: item.icon === "hamsterChain" ? "2" : "" }}
                     />
                   ) : (
                     <img
@@ -344,6 +363,7 @@ const WodBuilders = ({ page }) => {
                       width={24}
                       height={24}
                       alt=""
+                      
                     />
                   )}
 

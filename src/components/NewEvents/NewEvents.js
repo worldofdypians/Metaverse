@@ -40,7 +40,17 @@ const NewEvents = ({
       setChallenge(selectedEvent);
     }
   }, [selectedEvent]);
-  
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (showPopup !== "") {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [showPopup]);
+
   return (
     <>
       <div
@@ -206,7 +216,11 @@ const NewEvents = ({
                             setChallenge("maze-garden");
                           }}
                         >
-                          <img src={mazeGardenIcon} alt="" style={{width: 32, height: 34}}/>
+                          <img
+                            src={mazeGardenIcon}
+                            alt=""
+                            style={{ width: 32, height: 34 }}
+                          />
                           <h6 className="mb-0">Maze Garden</h6>
                         </div>
                       </NavLink>

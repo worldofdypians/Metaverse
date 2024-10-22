@@ -6,19 +6,19 @@ import amplifyCheck from "../../assets/gameAssets/amplifyCheck.svg";
 const AmplifySection = () => {
   const dummyBetaPassData2 = [
     {
-      link: "/account",
+      link: "/account#leaderboard",
       title: "LEADERBOARDS",
       desc: "Compete for the top rank",
       class: "tokenClass",
     },
     {
-      link: "/account",
+      link: "/account#my-rank",
       title: "MY RANK",
       desc: "Elevate your player status",
       class: "earnClass",
     },
     {
-      link: "/account",
+      link: "/account#dailybonus",
       title: "DAILY BONUS",
       desc: "Daily rewards for active players",
       class: "eventClass",
@@ -93,11 +93,11 @@ const AmplifySection = () => {
               </h2>
             </div>
             {dummyBetaPassData2.map((item, index) => (
-              <div className="col-12 col-lg-3">
+              <div className="col-12 col-lg-3" key={index}>
                 <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}
-                    key={index}
+                   
                     isFrontPage={true}
                   />
                 </NavLink>

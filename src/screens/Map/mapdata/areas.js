@@ -49,24 +49,24 @@ const chainAreas = [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
       {
         title: "Maze Garden",
         image: mazeGardenInfo,
-        link: "/account",
+        link: "/account/challenges/maze-garden",
       },
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -130,20 +130,20 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
 
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
     ],
     socials: [
@@ -196,7 +196,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -247,19 +247,19 @@ const chainAreas = [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -356,7 +356,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     pastEvents: [],
@@ -411,20 +411,20 @@ const chainAreas = [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -663,7 +663,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -806,20 +806,20 @@ const chainAreas = [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
       },
     ],
     socials: [
@@ -870,17 +870,17 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [],
@@ -932,7 +932,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     pastEvents: [],
@@ -1031,7 +1031,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -1082,18 +1082,18 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [],
@@ -1192,7 +1192,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -1243,24 +1243,24 @@ const chainAreas = [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
-        link: "/account",
+        link: "/account#dailybonus",
       },
       {
         title: "Maze Garden",
         image: mazeGardenInfo,
-        link: "/account",
+        link: "/account/challenges/maze-garden",
       },
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account",
+        link: "/account#leaderboard",
       },
     ],
     pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/account",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [

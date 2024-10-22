@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import epicblack from "../../assets/epicblack.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
@@ -59,6 +59,10 @@ const GameHero = () => {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
+          infinite: true,
+          speed: 1000,
+          autoplay: true,
+          autoplaySpeed: 5000,
         },
       },
       {
@@ -67,6 +71,10 @@ const GameHero = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
+          infinite: true,
+          speed: 1000,
+          autoplay: true,
+          autoplaySpeed: 5000,
         },
       },
     ],
@@ -93,6 +101,15 @@ const GameHero = () => {
       class: "eventClass",
     },
   ];
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (showPopup !== "") {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [showPopup]);
 
   return (
     <>
@@ -135,10 +152,11 @@ const GameHero = () => {
                       ? navigate("/map")
                       : setshowPopup(item.state);
                   }}
+                   key={index}
                 >
                   <BetaEventCardHome
                     data={item}
-                    key={index}
+                   
                     isFrontPage={true}
                   />
                 </div>
