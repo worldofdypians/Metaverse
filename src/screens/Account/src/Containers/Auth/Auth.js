@@ -123,7 +123,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
         </LoginCard>
         <ErrorAlert error={loginError} />
       </LoginWrapper>
-      {value === 1 && (
+      {/* {value === 1 && (
         <div className="d-flex align-items-center gap-2">
           <span className="text-secondary">Subscribe to newsletter</span>
           <input
@@ -135,7 +135,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
             checked={checked}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
