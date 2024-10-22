@@ -67,6 +67,7 @@ import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 
 function Dashboard({
+  dailyBonuslistedNFTS,
   account,
   isConnected,
   chainId,
@@ -96,7 +97,10 @@ function Dashboard({
   binanceWallet,
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
-  latest20BoughtNFTS,onManageLogin
+  latest20BoughtNFTS,
+  monthlyPlayers,
+  percent,
+  onManageLogin
 }) {
   const { email, logout } = useAuth();
 
@@ -1498,7 +1502,7 @@ function Dashboard({
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
     setPrevVersionCoreWeekly(result.data.data.version);
-    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.leaderboard));
+    fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.version));
     fillRecordsWeeklyCore(result.data.data.leaderboard);
     if (userId && username) {
       var testArray = result.data.data.leaderboard.filter(
@@ -5891,13 +5895,12 @@ function Dashboard({
     if (coinbase !== undefined) {
       return await window.getMyNFTs(coinbase, type);
     } else {
-      return []
+      return [];
     }
   };
 
   //todo
   const fetchAllMyNfts = async () => {
-    
     getMyNFTS(userWallet ? userWallet : coinbase, "caws").then((NFTS) =>
       setMyNFTSCaws(NFTS)
     );
@@ -8880,7 +8883,6 @@ function Dashboard({
                         coreEarnUsd={coreEarnUsd}
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
-                        baseEarnUsd={baseEarnUSD}
                         taikoEarnUsd={taikoEarnUsd}
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
@@ -9418,6 +9420,8 @@ function Dashboard({
                             username={data?.getPlayer?.displayName}
                             userId={data?.getPlayer?.playerId}
                             userDataStar={userDataStar}
+                            monthlyPlayers={monthlyPlayers}
+                            percent={percent}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -9494,6 +9498,7 @@ function Dashboard({
                             landPremiumRewards={landPremiumRewards}
                             genesisRank2={genesisRank2}
                             cookieEarnUsd={cookieEarnUsd}
+                            baseEarnUSD={baseEarnUSD}
                           />
                         </div>
                       </OutsideClickHandler>
@@ -11047,7 +11052,7 @@ function Dashboard({
                 dyptokenData_old={dyptokenData_old}
                 handleSwitchChain={handleSwitchChain}
                 handleSwitchNetwork={handleSwitchNetwork}
-                listedNFTS={listedNFTS}
+                listedNFTS={dailyBonuslistedNFTS}
                 onclose={() => {
                   setdailyBonusPopup(false);
                   window.location.hash = "";

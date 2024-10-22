@@ -85,26 +85,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const Community = ({socials}) => {
+const Community = ({socials, monthlyPlayers, percent}) => {
   const [active, setActive] = useState(true);
   const [popup, setPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [monthlyPlayers, setMonthlyPlayers] = useState(0);
-  const [percent, setPercent] = useState(0);
 
- const fetchMonthlyPlayers = async () => {
-    await axios
-      .get(`https://api.worldofdypians.com/api/get-wod-uaw`)
-      .then((data) => {
-        setMonthlyPlayers(data.data.uaw);
-        setPercent(data.data.percent);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
 
 
 
@@ -481,36 +469,36 @@ const Community = ({socials}) => {
         eventDate: "Dec 22, 2023",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      eventDuration: baseLastDay,
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   eventDuration: baseLastDay,
 
-      // backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        date: "Nov 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    //   // backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Chain",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     date: "Nov 01, 2023",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -707,8 +695,7 @@ const Community = ({socials}) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Community";
-    fetchMonthlyPlayers();
+    document.title = "Community"; 
   }, []);
 
   return (

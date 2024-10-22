@@ -359,7 +359,7 @@ const MarketEvents = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-02-18T16:00:00.000+02:00");
 
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
@@ -523,18 +523,18 @@ const MarketEvents = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Oct 07, 2024",
+      eventDate: "Oct 21, 2024",
       backgroundImage: upcomingBase2,
       popupInfo: {
         title: "Base",
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
@@ -544,7 +544,7 @@ const MarketEvents = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Oct 07, 2024",
+        eventDate: "Oct 21, 2024",
       },
     },
     {
@@ -771,33 +771,33 @@ const MarketEvents = ({
       },
     },
 
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Network",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Network",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -907,31 +907,7 @@ const MarketEvents = ({
     },
   ];
 
-  const newBetaEvent = {
-    title: "Dypius",
-    logo: dypius,
-    eventStatus: "Coming Soon",
-    totalRewards: "$50,000 in BNB Rewards",
-    myEarnings: 0.0,
-    eventType: "Explore & Mine",
-    eventDate: "Coming Soon",
-    backgroundImage: upcomingDyp,
-    popupInfo: {
-      title: "Dypius",
-      chain: "BNB Chain",
-      linkState: "dypius",
-      rewards: "BNB",
-      status: "Coming Soon",
-      id: "event5",
-      eventType: "Explore & Mine",
-      totalRewards: "$50,000 in BNB Rewards",
-      eventDuration: dypiusLastDay,
-      minRewards: "25",
-      maxRewards: "50",
-      learnMore: "/news/655b40db87aee535424a5915/Dypius-Treasure-Hunt-Event",
-      eventDate: "Coming Soon",
-    },
-  };
+
 
   // if (dypEvent && dypEvent[0]) {
   //   const userEarnedDyp =
@@ -2720,7 +2696,7 @@ const MarketEvents = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps.Base is an easy way
+                and scalability you need to power your dapps. Base is an easy way
                 for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
@@ -2884,7 +2860,7 @@ const MarketEvents = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -2939,7 +2915,7 @@ const MarketEvents = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : dummyEvent.id === "event4"
+                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -2980,7 +2956,7 @@ const MarketEvents = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBNB
-                              : dummyEvent.id === "event4"
+                              : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB

@@ -157,7 +157,7 @@ const NewBuilders = () => {
       name: "Cookie3",
       icon: "cookie3",
       banner: "cookie3Banner.webp",
-      link: 'https://x.com/Cookie3_com/status/1824052238404255889',
+      link: "https://x.com/Cookie3_com/status/1824052238404255889",
       backer: true,
     },
     {
@@ -180,7 +180,7 @@ const NewBuilders = () => {
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
     },
-  
+
     {
       name: "Playground",
       icon: "playground",
@@ -269,6 +269,24 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "IBC Group",
+      icon: "ibc",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "UQUID",
+      icon: "uquid",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Saving DAO",
+      icon: "savingDao",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
@@ -289,13 +307,15 @@ const NewBuilders = () => {
                   item.icon === "alterverse" ||
                   item.icon === "worldshards" ||
                   item.icon === "binanceWeb3" ||
-                  item.icon === "hamsterChain" || item.icon === "creoengine"  ? (
+                  item.icon === "savingDao" ||
+                  item.icon === "hamsterChain" ||
+                  item.icon === "creoengine" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={45}
                       height={45}
                       alt=""
-                      style={{scale:item.icon === "hamsterChain" ? '2' : '' }}
+                      style={{ scale: item.icon === "hamsterChain" ? "2" : "" }}
                     />
                   ) : (
                     <img

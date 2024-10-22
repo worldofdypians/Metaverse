@@ -11,7 +11,7 @@ const Token = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "WoD Token";
+    document.title = "WOD Token";
   }, []);
 
   const scrollToView = (viewId) => {
