@@ -53,8 +53,8 @@
 }
 
 .leaderboard-popup {
-  background-image: url("./newLeaderboardBg.jpg") !important;
-  background-size: 100% !important;
+  background-image: url("./newLeaderboardBg.webp") !important;
+  background-size: cover !important;
   background-repeat: no-repeat !important;
   @media screen and (max-width: 1525px) {
     width: 95% !important;
@@ -64,6 +64,26 @@
     background-size: cover;
   }
 }
+
+.table-outer-margin {
+  margin-top: -31px;
+  height: 360px;
+  overflow: auto;
+}
+
+.top100-text {
+  color: #09F3D2;
+  text-align: center; 
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.18px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 .rank-popup {
   @media screen and (max-width: 1455px) {
     width: 95% !important;
@@ -143,7 +163,6 @@
   }
 }
 
-
 @keyframes premium {
   0% {
   }
@@ -153,7 +172,6 @@
   }
 
   100% {
-
   }
 }
 @keyframes golden {
@@ -165,7 +183,6 @@
   }
 
   100% {
-
   }
 }
 
@@ -257,5 +274,3 @@
   position: absolute;
   bottom: -10px;
 }
-
-

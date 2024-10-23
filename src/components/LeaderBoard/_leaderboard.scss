@@ -13,7 +13,7 @@
   }
 }
 
-.leaderboard-active-btn, .leaderboard-inactive-btn:hover {
+.leaderboard-active-btn {
   border-radius: 8px;
   border: 1px solid #386fc8;
   background: linear-gradient(to bottom right, #386fc8 0%, #032c6c 50%) bottom
@@ -35,8 +35,7 @@
 }
 
 .table-btns-wrapper {
-  grid-template-columns: repeat(2,1fr);
-  
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .leaderboard-inactive-btn {
@@ -50,6 +49,23 @@
   line-height: normal;
   background: transparent;
 }
+
+
+.leaderboard-inactive-btn2 {
+  border-radius: 8px;
+  border: 1px solid #757086;
+  color: #757086;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 
 .leaderboard-title {
   font-size: 20px;
@@ -194,9 +210,25 @@
   }
 }
 
-.optionText:hover,
+.optionText:hover, .leaderboard-inactive-btn2:hover,
 .activeoption {
   color: #fff;
+}
+
+.new-leaderboard-desc-title {
+  color: #F4E07B;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.new-leaderboard-desc {
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px;
 }
 
 .optionTextGolden {
@@ -570,6 +602,18 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+}
+
+.new-leaderboard-green-btn {
+  border-radius: 8px;
+background: linear-gradient(90deg, #7BD8B0 0%, #DCFB85 100%);
+color: #333;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+border: none;
 }
 
 .view-chains-wrapper {

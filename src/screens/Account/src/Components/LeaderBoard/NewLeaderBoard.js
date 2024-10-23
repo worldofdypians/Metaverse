@@ -66,6 +66,8 @@ import baseWhite from "./assets/baseWhite.svg";
 import skaleWhite from "./assets/skaleWhite.svg";
 import seiWhite from "./assets/seiWhite.svg";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
+import newLeaderboardBg from "./assets/newLeaderboardBg.webp";
+import playerRank from "./assets/playerRank.png";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -165,6 +167,7 @@ const NewLeaderBoard = ({
 
   const [slideIndex, setSlideIndex] = useState(0);
   const [updateCount, setUpdateCount] = useState(0);
+  const [tooltip, setTooltip] = useState(false);
 
   var settings = {
     dots: false,
@@ -394,347 +397,343 @@ const NewLeaderBoard = ({
               )}
             </div>
             <div className="d-flex gap-3 align-items-start">
-              {windowSize && windowSize.width > 991 ? (
-                <div className="d-flex gap-1">
-                  <div className="optionsWrapper position-relative col-12">
-                    {/* <div
-                      className={`optionswrapper-bg ${
-                        optionText2 === "manta"
-                          ? "move-1"
-                          : optionText2 === "base"
-                          ? "move-2"
-                          : optionText2 === "taiko"
-                          ? "move-6"
-                          : optionText2 === "skale"
-                          ? "move-3"
-                          : optionText2 === "core"
-                          ? "move-4"
-                          : optionText2 === "viction"
-                          ? "move-5"
-                          : ""
-                      }`}
-                    ></div> */}
-                    <div
-                      className="d-grid table-btns-wrapper gap-1 align-items-center justify-content-between position-relative"
-                      // style={{ height: 38 }}
-                    >
-                      <span
-                        onMouseEnter={() => handleMouseEnter("bnb")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
+              <div className="d-flex flex-column gap-2 col-12 col-lg-5 h-100">
+                <span className="leaderboard-inner-title2">Select Chain</span>
+                <div className="new-leaderboard-btns-wrapper">
+                  <div className="chains-container mt-5 mt-lg-0 gap-2">
+                    <button
+                      onMouseEnter={() => handleMouseEnter("bnb")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
                      d-flex align-items-center gap-2
                      ${
                        optionText2 === "bnb" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("bnb");
-                          setAllData(allBnbData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "bnb"
-                              ? bnbActive
-                              : optionText2 !== "bnb" && hoverState === "bnb"
-                              ? bnbWhite
-                              : bnbInactive
-                          }
-                          className={`${
-                            optionText2 === "bnb"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "BNB Chain"
-                          : windowSize.width < 786 && optionText2 === "bnb"
-                          ? "BNB Chain"
-                          : ""}
-                      </span>
-                      <span
-                        onMouseEnter={() => handleMouseEnter("manta")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("bnb");
+                        setAllData(allBnbData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "bnb"
+                            ? bnbActive
+                            : optionText2 !== "bnb" && hoverState === "bnb"
+                            ? bnbWhite
+                            : bnbInactive
+                        }
+                        className={`${
+                          optionText2 === "bnb"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "BNB Chain"
+                        : windowSize.width < 786 && optionText2 === "bnb"
+                        ? "BNB Chain"
+                        : ""}
+                    </button>
+                    <button
+                      onMouseEnter={() => handleMouseEnter("manta")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
                      d-flex align-items-center gap-2
                      ${
                        optionText2 === "manta" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("manta");
-                          setAllData(allMantaData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "manta"
-                              ? mantaActive
-                              : optionText2 !== "manta" &&
-                                hoverState === "manta"
-                              ? mantaWhite
-                              : mantaInactive
-                          }
-                          className={`${
-                            optionText2 === "manta"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Manta"
-                          : windowSize.width < 786 && optionText2 === "manta"
-                          ? "Manta"
-                          : ""}
-                      </span>
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("manta");
+                        setAllData(allMantaData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "manta"
+                            ? mantaActive
+                            : optionText2 !== "manta" && hoverState === "manta"
+                            ? mantaWhite
+                            : mantaInactive
+                        }
+                        className={`${
+                          optionText2 === "manta"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Manta"
+                        : windowSize.width < 786 && optionText2 === "manta"
+                        ? "Manta"
+                        : ""}
+                    </button>
 
-                      <span
-                        onMouseEnter={() => handleMouseEnter("taiko")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
+                    <button
+                      onMouseEnter={() => handleMouseEnter("taiko")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
                      d-flex align-items-center gap-2
                      ${
                        optionText2 === "taiko" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("taiko");
-                          setAllData(allTaikoData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "taiko"
-                              ? taikoActive
-                              : optionText2 !== "taiko" &&
-                                hoverState === "taiko"
-                              ? taikoWhite
-                              : taikoInactive
-                          }
-                          className={`${
-                            optionText2 === "taiko"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Taiko"
-                          : windowSize.width < 786 && optionText2 === "taiko"
-                          ? "Taiko"
-                          : ""}
-                      </span>
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("taiko");
+                        setAllData(allTaikoData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "taiko"
+                            ? taikoActive
+                            : optionText2 !== "taiko" && hoverState === "taiko"
+                            ? taikoWhite
+                            : taikoInactive
+                        }
+                        className={`${
+                          optionText2 === "taiko"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Taiko"
+                        : windowSize.width < 786 && optionText2 === "taiko"
+                        ? "Taiko"
+                        : ""}
+                    </button>
 
-                      <span
-                        onMouseEnter={() => handleMouseEnter("base")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
+                    <button
+                      onMouseEnter={() => handleMouseEnter("base")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
                      d-flex align-items-center gap-2
                      ${
                        optionText2 === "base" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("base");
-                          setAllData(allBaseData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "base"
-                              ? baseActive
-                              : optionText2 !== "base" && hoverState === "base"
-                              ? baseWhite
-                              : baseInactive
-                          }
-                          className={`${
-                            optionText2 === "base"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Base"
-                          : windowSize.width < 786 && optionText2 === "base"
-                          ? "Base"
-                          : ""}
-                      </span>
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("base");
+                        setAllData(allBaseData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "base"
+                            ? baseActive
+                            : optionText2 !== "base" && hoverState === "base"
+                            ? baseWhite
+                            : baseInactive
+                        }
+                        className={`${
+                          optionText2 === "base"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "Base"
+                        : windowSize.width < 786 && optionText2 === "base"
+                        ? "Base"
+                        : ""}
+                    </button>
 
-                      <span
-                        onMouseEnter={() => handleMouseEnter("skale")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
+                    <button
+                      onMouseEnter={() => handleMouseEnter("skale")}
+                      onMouseLeave={handleMouseLeave}
+                      className={` 
                      d-flex align-items-center gap-2
                      ${
                        optionText2 === "skale" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("skale");
-                          setAllData(allSkaleData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "skale"
-                              ? skaleActive
-                              : optionText2 !== "skale" &&
-                                hoverState === "skale"
-                              ? skaleWhite
-                              : skaleInactive
-                          }
-                          className={`${
-                            optionText2 === "skale"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "SKALE"
-                          : windowSize.width < 786 && optionText2 === "skale"
-                          ? "SKALE"
-                          : ""}
-                      </span>
-                      <span
-                        onMouseEnter={() => handleMouseEnter("core")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("skale");
+                        setAllData(allSkaleData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "skale"
+                            ? skaleActive
+                            : optionText2 !== "skale" && hoverState === "skale"
+                            ? skaleWhite
+                            : skaleInactive
+                        }
+                        className={`${
+                          optionText2 === "skale"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "SKALE"
+                        : windowSize.width < 786 && optionText2 === "skale"
+                        ? "SKALE"
+                        : ""}
+                    </button>
+                    <button
+                      onMouseEnter={() => handleMouseEnter("core")}
+                      onMouseLeave={handleMouseLeave}
+                      className={` 
                     d-flex align-items-center gap-2
                     ${
                       optionText2 === "core" &&
                       "otheroptionsActive optionswrapper-bg-new"
-                    } optionText w-100`}
-                        onClick={() => {
-                          handleOption("core");
-                          setAllData(allCoreData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "core"
-                              ? coreActive
-                              : optionText2 !== "core" && hoverState === "core"
-                              ? coreWhite
-                              : coreInactive
-                          }
-                          className={`${
-                            optionText2 === "core"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "CORE"
-                          : windowSize.width < 786 && optionText2 === "core"
-                          ? "CORE"
-                          : ""}
-                      </span>
+                    } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("core");
+                        setAllData(allCoreData);
+                      }}
+                    >
+                      <img
+                        src={
+                          optionText2 === "core"
+                            ? coreActive
+                            : optionText2 !== "core" && hoverState === "core"
+                            ? coreWhite
+                            : coreInactive
+                        }
+                        className={`${
+                          optionText2 === "core"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      {windowSize.width > 768
+                        ? "CORE"
+                        : windowSize.width < 786 && optionText2 === "core"
+                        ? "CORE"
+                        : ""}
+                    </button>
 
-                      <span
-                        onMouseEnter={() => handleMouseEnter("viction")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
+                    <button
+                      onMouseEnter={() => handleMouseEnter("viction")}
+                      onMouseLeave={handleMouseLeave}
+                      className={`
                      d-flex align-items-center gap-2
                      
                      ${
                        optionText2 === "viction" &&
                        "otheroptionsActive optionswrapper-bg-new"
-                     } optionText w-100`}
-                        onClick={() => {
-                          handleOption("viction");
-                          setAllData(allVictionData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "viction"
-                              ? victionActive
-                              : optionText2 !== "viction" &&
-                                hoverState === "viction"
-                              ? victionWhite
-                              : victionInactive
-                          }
-                          className={`${
-                            optionText2 === "viction"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          style={{ borderRadius: "50%" }}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Viction"
-                          : windowSize.width < 786 && optionText2 === "viction"
-                          ? "Viction"
-                          : ""}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ) : windowSize && windowSize.width <= 991 ? (
-                <div className="d-flex align-items-center gap-1">
-                  <div className="optionsWrapper position-relative col-12">
-                    <div className={`optionswrapper-bg w-100`}></div>
-                    <div
-                      className="d-flex gap-1 align-items-center justify-content-between position-relative"
-                      style={{ height: 38 }}
+                     } leaderboard-inactive-btn2 w-100`}
+                      onClick={() => {
+                        handleOption("viction");
+                        setAllData(allVictionData);
+                      }}
                     >
                       <img
-                        src={arrowLeft}
-                        className="select-chain-arrow-left p-3"
-                        onClick={handlePrevChain}
+                        src={
+                          optionText2 === "viction"
+                            ? victionActive
+                            : optionText2 !== "viction" &&
+                              hoverState === "viction"
+                            ? victionWhite
+                            : victionInactive
+                        }
+                        className={`${
+                          optionText2 === "viction"
+                            ? "leaderboard-icon leaderboard-icon-active"
+                            : "leaderboard-icon"
+                        }`}
+                        width={20}
+                        height={20}
+                        style={{ borderRadius: "50%" }}
                         alt=""
                       />
-                      <img
-                        src={arrowRight}
-                        className="select-chain-arrow-right p-3"
-                        onClick={handleNextChain}
-                        alt=""
-                      />
-                      <span
-                        className={`
-                   d-flex align-items-center gap-2
-                   otheroptionsActive optionText col-3`}
-                        style={{ width: "100%" }}
-                      >
-                        <img
-                          src={selectedChain.image}
-                          className={`leaderboard-icon leaderboard-icon-active`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {selectedChain.title}
-                      </span>
-                    </div>
+                      {windowSize.width > 768
+                        ? "Viction"
+                        : windowSize.width < 786 && optionText2 === "viction"
+                        ? "Viction"
+                        : ""}
+                    </button>
                   </div>
                 </div>
-              ) : (
-                <></>
-              )}
+                {email && (
+                  <div className="new-leaderboard-btns-wrapper">
+                    <div className="d-flex flex-column gap-2">
+                      <span className="new-leaderboard-desc-title">
+                        Loyalty Program
+                      </span>
+                      <span className="new-leaderboard-desc">
+                        Eenjoy 90 days of gas-free transactions in the World of
+                        Dypians ecosystem on every network reimbursed to cover
+                        the gas costs for one transaction per day.
+                      </span>
+                      <div className="d-flex align-items-center justify-content-center">
+                        <button className="new-leaderboard-green-btn px-4">
+                          Join
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {email && (
+                  <div className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <img
+                        src={playerRank}
+                        alt=""
+                        style={{ width: 48, height: 48 }}
+                      />
+                      <span className="player-inner-username">{username}</span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="d-flex flex-column align-items-center gap-0">
+                        <span className="user-blue-rank">#1,652</span>
+                        <span className="user-rank-text">Rank</span>
+                      </div>
+                      <div className="d-flex flex-column align-items-center gap-0">
+                        <span className="user-blue-rank text-white">#25</span>
+                        <span className="user-rank-text">Global Rank</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {email && (
+                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="player-inner-username">Global Rank</span>
+                    </div>
+                    <div className="d-flex flex-column align-items-center gap-0">
+                      <span className="user-totalstar-text d-flex align-items-center gap-1">
+                        {" "}
+                        <img src={starIcon} alt="" />
+                        200
+                      </span>
+                      <span className="user-rank-text">Extra Stars</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div
                 className="d-flex flex-column gap-2 tablewrapper position-relative w-100"
-                style={{ height: optionText === "genesis" ? "345px" : "384px" }}
+                style={{ height: optionText === "genesis" ? "345px" : "100%" }}
               >
+                <span className="leaderboard-inner-title2 d-flex justify-content-end">
+                  Top 100
+                </span>
                 {/* {optionText2 !==  "taiko" ? (
                 <></>
               ) : (
@@ -742,10 +741,9 @@ const NewLeaderBoard = ({
                   <h6 className="mb-0">Coming Soon</h6>
                 </div>
               )} */}
-
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    <img
+                    {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
                       className="left-arrow-leaderboard d-flex d-lg-none"
@@ -756,849 +754,861 @@ const NewLeaderBoard = ({
                       onClick={nextSlide}
                       className="right-arrow-leaderboard d-flex d-lg-none"
                       alt=""
-                    />
-                    <Slider
+                    /> */}
+                    {/* <Slider
                       {...settings}
-                      // onInit={() => {
-                      //   sliderRef.slickGoTo(0, true);
-                      // }}
+                      onInit={() => {
+                        sliderRef.slickGoTo(0, true);
+                      }}
                       ref={sliderRef}
-                    >
-                      {allData &&
-                        allData.length > 0 &&
-                        allData.slice(0, 1).map((leaderboard, index) => {
-                          return (
-                            <div
-                              key={index}
-                              className={`leaderboard-item2 monthly-skale d-flex flex-column gap-2 p-0`} 
-                            >
-                              <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
-                                <h6 className="leaderboard-title  text-white font-oxanium mb-0">
-                                  {leaderboard.title}
-                                </h6>
-                                <div className="d-flex flex-column px-2 reset-time-wrapper">
-                                  <span className="reset-time-lb">
-                                    Reset time
-                                  </span>
-                                  <span className="reset-time-lb-value">
-                                    {leaderboard.reset}
-                                  </span>
-                                </div>
+                    > */}
+                    {allData &&
+                      allData.length > 0 &&
+                      allData.slice(0, 1).map((leaderboard, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={`leaderboard-item2 monthly-skale d-flex flex-column gap-2 p-0`}
+                          >
+                            {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
+                              <h6 className="leaderboard-title  text-white font-oxanium mb-0">
+                                {leaderboard.title}
+                              </h6>
+                              <div className="d-flex flex-column px-2 reset-time-wrapper">
+                                <span className="reset-time-lb">
+                                  Reset time
+                                </span>
+                                <span className="reset-time-lb-value">
+                                  {leaderboard.reset}
+                                </span>
                               </div>
-                              <div className="p-2">
-                                <table className="playerTable w-100">
-                                  <tbody>
-                                    <tr className="playerRow">
-                                      <th className="playerHeader font-montserrat">
-                                        Rank
-                                      </th>
-                                      <th className="playerHeader font-montserrat">
-                                        Player
-                                      </th>
-                                      <th className="playerHeader text-center font-montserrat">
-                                        Score
-                                      </th>
+                            </div> */}
+                            <div className="position-relative">
+                              <span className="top100-text">
+                                {" "}
+                                <OutsideClickHandler
+                                  onOutsideClick={() => setTooltip(false)}
+                                >
+                                  <div className="d-flex align-items-center gap-2 position-relative">
+                                    <img
+                                      src={tooltipIcon}
+                                      alt=""
+                                      className="tooltip-icon"
+                                      style={{
+                                        cursor: "pointer",
+                                        width: "20px",
+                                        height: "20px",
+                                      }}
+                                      onClick={() => setTooltip(!tooltip)}
+                                    />
+                                    <div
+                                      className={`tooltip-wrapper p-3 ${
+                                        tooltip && "tooltip-active"
+                                      }`}
+                                      style={{
+                                        width: 115,
+                                        height: 45,
+                                        right: "20%",
+                                      }}
+                                    >
+                                      <div className="d-flex flex-column p-2 reset-time-wrapper">
+                                        <span className="reset-time-lb">
+                                          Reset time
+                                        </span>
+                                        <span className="reset-time-lb-value">
+                                          {leaderboard.reset}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </OutsideClickHandler>
+                              </span>
 
-                                      <th className="playerHeader text-center font-montserrat">
-                                        {leaderboard.type === "stars"
-                                          ? "Stars"
-                                          : "Standard"}
-                                      </th>
-                                      <th className="playerHeader text-center font-montserrat">
-                                        {leaderboard.type === "stars"
-                                          ? "Premium"
-                                          : "Golden Pass"}
-                                      </th>
-                                    </tr>
-                                    {allData &&
-                                      allData.length > 0 &&
-                                      inactiveBoard === false &&
-                                      leaderboard.activeData.map(
-                                        (item, index) => {
-                                          return (
-                                            <tr
-                                              key={index}
-                                              className={`playerInnerRow ${
-                                                inactiveBoard ||
-                                                item.displayName === username
-                                                  ? "playerInnerRow-inactive"
-                                                  : null
-                                              }`}
-                                            >
-                                              <td className="playerData col-1 font-montserrat">
-                                                {parseInt(item.position) + 1}
-                                              </td>
-                                              <td className="playerName col-3 font-montserrat">
-                                                {item.displayName ===
-                                                username ? (
-                                                  <div className="position-relative d-flex align-items-center">
-                                                    <img
-                                                      src={premiumAvatar}
-                                                      alt=""
-                                                      className="playerAvatar"
-                                                    />
-                                                    <span>
-                                                      {" "}
-                                                      {item.displayName?.slice(
-                                                        0,
-                                                        10
-                                                      )}
-                                                      {item.displayName
-                                                        ?.length > 10 && "..."}
-                                                    </span>
-                                                  </div>
-                                                ) : (
-                                                  <div className="position-relative d-flex align-items-center">
-                                                    <img
-                                                      src={playerAvatar}
-                                                      alt=""
-                                                      className="playerAvatar"
-                                                    />{" "}
-                                                    {item.displayName?.slice(
-                                                      0,
-                                                      10
-                                                    )}
-                                                    {item.displayName?.length >
-                                                      10 && "..."}
-                                                  </div>
-                                                )}
-                                              </td>
-                                              <td className="playerScore col-2 text-center font-montserrat">
-                                                {getFormattedNumber(
-                                                  item.statValue,
-                                                  0
-                                                )}
-                                              </td>
-                                              {leaderboard.type === "stars" ? (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                    item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <img
-                                                      src={starIcon}
-                                                      alt=""
-                                                    />
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{ color: "#fff" }}
-                                                    >
-                                                      {getFormattedNumber(
-                                                        leaderboard.rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                  </div>
-                                                </td>
-                                              ) : (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                    item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{ color: "#fff" }}
-                                                    >
-                                                      $
-                                                      {getFormattedNumber(
-                                                        leaderboard.rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                  </div>
-                                                </td>
-                                              )}
-                                              {leaderboard.type === "stars" ? (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    isPremium &&
-                                                    username ===
-                                                      item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <span
-                                                      className="leaderboard-text d-flex"
-                                                      style={{
-                                                        color:
-                                                          (isPremium &&
-                                                            username ===
-                                                              item.displayName) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? "rgb(243, 192, 9)"
-                                                            : "gray",
-                                                        whiteSpace: "nowrap",
-                                                      }}
-                                                    >
-                                                      +
-                                                      <img
-                                                        src={starIcon}
-                                                        alt=""
-                                                      />
-                                                      {getFormattedNumber(
-                                                        leaderboard
-                                                          .premium_rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                    <HtmlTooltip
-                                                      placement="top"
-                                                      title={
-                                                        <span className="card-eth-chain-text">
-                                                          Premium
-                                                        </span>
-                                                      }
-                                                    >
-                                                      <img
-                                                        src={
-                                                          (isPremium &&
-                                                            username ===
-                                                              item.displayName) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? premiumIcon
-                                                            : premiumInactive
-                                                        }
-                                                        alt=""
-                                                      />
-                                                    </HtmlTooltip>
-                                                  </div>
-                                                </td>
-                                              ) : (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                      item.displayName &&
-                                                    isactive === true
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{
-                                                        color:
-                                                          (username ===
-                                                            item.displayName &&
-                                                            isactive ===
-                                                              true) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? "rgb(243, 192, 9)"
-                                                            : "gray",
-                                                        // width: 35,
-                                                      }}
-                                                    >
-                                                      +$
-                                                      {getFormattedNumber(
-                                                        leaderboard
-                                                          .premium_rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                    <HtmlTooltip
-                                                      placement="top"
-                                                      title={
-                                                        <span className="card-eth-chain-text">
-                                                          Golden Pass
-                                                        </span>
-                                                      }
-                                                    >
-                                                      <img
-                                                        src={
-                                                          (username ===
-                                                            item.displayName &&
-                                                            isactive ===
-                                                              true) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? goldenActive
-                                                            : goldenInactive
-                                                        }
-                                                        alt=""
-                                                      />
-                                                    </HtmlTooltip>
-                                                  </div>
-                                                </td>
-                                              )}
-                                            </tr>
-                                          );
-                                        }
-                                      )}
+                              <img
+                                src={newLeaderboardBg}
+                                alt=""
+                                className="w-100"
+                              />
+                            </div>
+                            <div className="p-2 table-outer-margin">
+                              <table className="playerTable w-100">
+                                <tbody>
+                                  <tr className="playerRow">
+                                    <th className="playerHeader font-montserrat">
+                                      Rank
+                                    </th>
+                                    <th className="playerHeader font-montserrat">
+                                      Player
+                                    </th>
+                                    <th className="playerHeader text-center font-montserrat">
+                                      Score
+                                    </th>
 
-                                    {allData &&
-                                      inactiveBoard === true &&
-                                      allData.length > 0 &&
-                                      leaderboard.previousData.map(
-                                        (item, index) => {
-                                          return (
-                                            <tr
-                                              key={index}
-                                              className={`playerInnerRow ${
-                                                inactiveBoard ||
-                                                item.displayName === username
-                                                  ? "playerInnerRow-inactive"
-                                                  : null
-                                              }`}
-                                            >
-                                              <td className="playerData col-1 font-montserrat">
-                                                {parseInt(item.position) + 1}
-                                              </td>
-                                              <td className="playerName col-3 font-montserrat">
-                                                {item.displayName ===
-                                                username ? (
-                                                  <div className="position-relative d-flex align-items-center">
-                                                    <img
-                                                      src={premiumAvatar}
-                                                      alt=""
-                                                      className="playerAvatar"
-                                                    />
-                                                    <span>
-                                                      {" "}
-                                                      {item.displayName?.slice(
-                                                        0,
-                                                        10
-                                                      )}
-                                                      {item.displayName
-                                                        ?.length > 10 && "..."}
-                                                    </span>
-                                                  </div>
-                                                ) : (
-                                                  <div className="position-relative d-flex align-items-center">
-                                                    <img
-                                                      src={playerAvatar}
-                                                      alt=""
-                                                      className="playerAvatar"
-                                                    />{" "}
-                                                    {item.displayName?.slice(
-                                                      0,
-                                                      10
-                                                    )}
-                                                    {item.displayName?.length >
-                                                      10 && "..."}
-                                                  </div>
-                                                )}
-                                              </td>
-                                              <td className="playerScore col-2 text-center font-montserrat">
-                                                {getFormattedNumber(
-                                                  item.statValue,
-                                                  0
-                                                )}
-                                              </td>
-                                              {leaderboard.type === "stars" ? (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                    item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <img
-                                                      src={starIcon}
-                                                      alt=""
-                                                    />
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{ color: "#fff" }}
-                                                    >
-                                                      {getFormattedNumber(
-                                                        leaderboard.rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                  </div>
-                                                </td>
-                                              ) : (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                    item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{ color: "#fff" }}
-                                                    >
-                                                      $
-                                                      {optionText2 !== "skale"
-                                                        ? getFormattedNumber(
-                                                            leaderboard.rewards[
-                                                              index
-                                                            ],
-                                                            0
-                                                          )
-                                                        : getFormattedNumber(
-                                                            leaderboard
-                                                              .past_rewards[
-                                                              index
-                                                            ],
-                                                            0
-                                                          )}
-                                                    </span>
-                                                  </div>
-                                                </td>
-                                              )}
-                                              {leaderboard.type === "stars" ? (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                      item.displayName &&
-                                                    isPremium
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                    <span
-                                                      className="leaderboard-text d-flex"
-                                                      style={{
-                                                        color:
-                                                          (username ===
-                                                            item.displayName &&
-                                                            isPremium) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? "rgb(243, 192, 9)"
-                                                            : "gray",
-                                                        whiteSpace: "nowrap",
-                                                      }}
-                                                    >
-                                                      +
-                                                      <img
-                                                        src={starIcon}
-                                                        alt=""
-                                                      />
-                                                      {getFormattedNumber(
-                                                        leaderboard
-                                                          .premium_rewards[
-                                                          index
-                                                        ],
-                                                        0
-                                                      )}
-                                                    </span>
-                                                    <HtmlTooltip
-                                                      placement="top"
-                                                      title={
-                                                        <span className="card-eth-chain-text">
-                                                          Premium
-                                                        </span>
-                                                      }
-                                                    >
-                                                      <img
-                                                        src={
-                                                          (isPremium &&
-                                                            username ===
-                                                              item.displayName) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? premiumIcon
-                                                            : premiumInactive
-                                                        }
-                                                        alt=""
-                                                      />
-                                                    </HtmlTooltip>
-                                                  </div>
-                                                </td>
-                                              ) : (
-                                                <td
-                                                  className={`playerReward text-center col-2 font-montserrat ${
-                                                    username ===
-                                                    item.displayName
-                                                      ? "goldenscore"
-                                                      : "playerReward"
-                                                  }`}
-                                                >
-                                                  <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
-                                                    <span
-                                                      className="leaderboard-text"
-                                                      style={{
-                                                        color:
-                                                          (username ===
-                                                            item.displayName &&
-                                                            isactive ===
-                                                              true) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? "rgb(243, 192, 9)"
-                                                            : "gray",
-                                                        // width: 35,
-                                                      }}
-                                                    >
-                                                      +$
-                                                      {optionText2 !== "skale"
-                                                        ? getFormattedNumber(
-                                                            leaderboard
-                                                              .premium_rewards[
-                                                              index
-                                                            ],
-                                                            0
-                                                          )
-                                                        : getFormattedNumber(
-                                                            leaderboard
-                                                              .past_premium_rewards[
-                                                              index
-                                                            ],
-                                                            0
-                                                          )}
-                                                    </span>
-                                                    <HtmlTooltip
-                                                      placement="top"
-                                                      title={
-                                                        <span className="card-eth-chain-text">
-                                                          Golden Pass
-                                                        </span>
-                                                      }
-                                                    >
-                                                      <img
-                                                        src={
-                                                          (username ===
-                                                            item.displayName &&
-                                                            isactive ===
-                                                              true) ||
-                                                          username !==
-                                                            item.displayName
-                                                            ? goldenActive
-                                                            : goldenInactive
-                                                        }
-                                                        alt=""
-                                                      />
-                                                    </HtmlTooltip>
-                                                  </div>
-                                                </td>
-                                              )}
-                                            </tr>
-                                          );
-                                        }
-                                      )}
-
-                                    {inactiveBoard === true &&
-                                      ((dailyplayerData.length === 0 &&
-                                        optionText === "daily") ||
-                                        (weeklyplayerData.length === 0 &&
-                                          optionText === "weekly") ||
-                                        (monthlyplayerData.length === 0 &&
-                                          optionText === "monthly")) &&
-                                      optionText !== "genesis" && (
-                                        <CircularProgress
-                                          size={20}
-                                          style={{
-                                            alignSelf: "center",
-                                            margin: "auto",
-                                          }}
-                                        />
-                                      )}
-                                  </tbody>
-                                </table>
-                                {leaderboard.is_active === false &&
-                                  email &&
-                                  inactiveBoard === false &&
-                                  optionText !== "genesis" && (
-                                    <table className="playerTable w-100">
-                                      <tbody>
-                                        <tr
-                                          className={`playerInnerRow-inactive`}
-                                        >
-                                          <td
-                                            className={`playerData font-montserrat ${
-                                              optionText === "genesis"
-                                                ? "col-2"
-                                                : "col-1"
+                                    <th className="playerHeader text-center font-montserrat">
+                                      {leaderboard.type === "stars"
+                                        ? "Stars"
+                                        : "Standard"}
+                                    </th>
+                                    <th className="playerHeader text-center font-montserrat">
+                                      {leaderboard.type === "stars"
+                                        ? "Premium"
+                                        : "Golden Pass"}
+                                    </th>
+                                  </tr>
+                                  {allData &&
+                                    allData.length > 0 &&
+                                    inactiveBoard === false &&
+                                    leaderboard.activeData.map(
+                                      (item, index) => {
+                                        return (
+                                          <tr
+                                            key={index}
+                                            className={`playerInnerRow ${
+                                              inactiveBoard ||
+                                              item.displayName === username
+                                                ? "playerInnerRow-inactive"
+                                                : null
                                             }`}
                                           >
-                                            {parseInt(
-                                              leaderboard.player_data.position
-                                            ) + 1}
-                                          </td>
-                                          <td className="playerName col-3 font-montserrat">
-                                            <div className="position-relative  d-flex align-items-center">
-                                              {availableTime !== "0" &&
-                                              availableTime &&
-                                              availableTime !== undefined ? (
+                                            <td className="playerData col-1 font-montserrat">
+                                              {parseInt(item.position) + 1}
+                                            </td>
+                                            <td className="playerName col-3 font-montserrat">
+                                              {item.displayName === username ? (
                                                 <div className="position-relative d-flex align-items-center">
                                                   <img
                                                     src={premiumAvatar}
                                                     alt=""
                                                     className="playerAvatar"
                                                   />
-                                                  <img
-                                                    src={premiumStar}
-                                                    alt=""
-                                                    className="premium-star"
-                                                  />
                                                   <span>
                                                     {" "}
-                                                    {leaderboard.player_data.displayName?.slice(
+                                                    {item.displayName?.slice(
                                                       0,
-                                                      13
+                                                      10
                                                     )}
-                                                    {leaderboard.player_data
-                                                      .displayName?.length >
-                                                      13 && "..."}
+                                                    {item.displayName?.length >
+                                                      10 && "..."}
                                                   </span>
                                                 </div>
                                               ) : (
-                                                <>
+                                                <div className="position-relative d-flex align-items-center">
+                                                  <img
+                                                    src={require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
+                                                      index + 1
+                                                    }.png`)}
+                                                    alt=""
+                                                    className="playerAvatar me-2"
+                                                  />{" "}
+                                                  {item.displayName?.slice(
+                                                    0,
+                                                    10
+                                                  )}
+                                                  {item.displayName?.length >
+                                                    10 && "..."}
+                                                </div>
+                                              )}
+                                            </td>
+                                            <td className="playerScore col-2 text-center font-montserrat">
+                                              {getFormattedNumber(
+                                                item.statValue,
+                                                0
+                                              )}
+                                            </td>
+                                            {leaderboard.type === "stars" ? (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                                  <img src={starIcon} alt="" />
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{ color: "#fff" }}
+                                                  >
+                                                    {getFormattedNumber(
+                                                      leaderboard.rewards[
+                                                        index
+                                                      ],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                </div>
+                                              </td>
+                                            ) : (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{ color: "#fff" }}
+                                                  >
+                                                    $
+                                                    {getFormattedNumber(
+                                                      leaderboard.rewards[
+                                                        index
+                                                      ],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                </div>
+                                              </td>
+                                            )}
+                                            {leaderboard.type === "stars" ? (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  isPremium &&
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                                  <span
+                                                    className="leaderboard-text d-flex"
+                                                    style={{
+                                                      color:
+                                                        (isPremium &&
+                                                          username ===
+                                                            item.displayName) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? "rgb(243, 192, 9)"
+                                                          : "gray",
+                                                      whiteSpace: "nowrap",
+                                                    }}
+                                                  >
+                                                    +
+                                                    <img
+                                                      src={starIcon}
+                                                      alt=""
+                                                    />
+                                                    {getFormattedNumber(
+                                                      leaderboard
+                                                        .premium_rewards[index],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                  <HtmlTooltip
+                                                    placement="top"
+                                                    title={
+                                                      <span className="card-eth-chain-text">
+                                                        Premium
+                                                      </span>
+                                                    }
+                                                  >
+                                                    <img
+                                                      src={
+                                                        (isPremium &&
+                                                          username ===
+                                                            item.displayName) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  </HtmlTooltip>
+                                                </div>
+                                              </td>
+                                            ) : (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username ===
+                                                    item.displayName &&
+                                                  isactive === true
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{
+                                                      color:
+                                                        (username ===
+                                                          item.displayName &&
+                                                          isactive === true) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? "rgb(243, 192, 9)"
+                                                          : "gray",
+                                                      // width: 35,
+                                                    }}
+                                                  >
+                                                    +$
+                                                    {getFormattedNumber(
+                                                      leaderboard
+                                                        .premium_rewards[index],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                  <HtmlTooltip
+                                                    placement="top"
+                                                    title={
+                                                      <span className="card-eth-chain-text">
+                                                        Golden Pass
+                                                      </span>
+                                                    }
+                                                  >
+                                                    <img
+                                                      src={
+                                                        (username ===
+                                                          item.displayName &&
+                                                          isactive === true) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? goldenActive
+                                                          : goldenInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  </HtmlTooltip>
+                                                </div>
+                                              </td>
+                                            )}
+                                          </tr>
+                                        );
+                                      }
+                                    )}
+
+                                  {allData &&
+                                    inactiveBoard === true &&
+                                    allData.length > 0 &&
+                                    leaderboard.previousData.map(
+                                      (item, index) => {
+                                        return (
+                                          <tr
+                                            key={index}
+                                            className={`playerInnerRow ${
+                                              inactiveBoard ||
+                                              item.displayName === username
+                                                ? "playerInnerRow-inactive"
+                                                : null
+                                            }`}
+                                          >
+                                            <td className="playerData col-1 font-montserrat">
+                                              {parseInt(item.position) + 1}
+                                            </td>
+                                            <td className="playerName col-3 font-montserrat">
+                                              {item.displayName === username ? (
+                                                <div className="position-relative d-flex align-items-center">
+                                                  <img
+                                                    src={premiumAvatar}
+                                                    alt=""
+                                                    className="playerAvatar"
+                                                  />
+                                                  <span>
+                                                    {" "}
+                                                    {item.displayName?.slice(
+                                                      0,
+                                                      10
+                                                    )}
+                                                    {item.displayName?.length >
+                                                      10 && "..."}
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                <div className="position-relative d-flex align-items-center">
                                                   <img
                                                     src={playerAvatar}
                                                     alt=""
                                                     className="playerAvatar"
                                                   />{" "}
-                                                  {leaderboard.player_data.displayName?.slice(
+                                                  {item.displayName?.slice(
                                                     0,
-                                                    13
+                                                    10
                                                   )}
-                                                  {leaderboard.player_data
-                                                    .displayName?.length > 13 &&
-                                                    "..."}
-                                                </>
+                                                  {item.displayName?.length >
+                                                    10 && "..."}
+                                                </div>
                                               )}
-                                            </div>
-                                          </td>
-                                          <td className="playerScore col-2 text-center font-montserrat">
-                                            {getFormattedNumber(
-                                              leaderboard.player_data.statValue,
-                                              0
-                                            )}
-                                          </td>
-                                          {leaderboard.type === "stars" ? (
-                                            <td
-                                              className={`playerReward text-center col-2 font-montserrat ${
-                                                username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                  ? "playerReward"
-                                                  : "playerReward"
-                                              }`}
-                                            >
-                                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                <img src={starIcon} alt="" />
-                                                <span
-                                                  className="leaderboard-text"
-                                                  style={{ color: "#fff" }}
-                                                >
-                                                  {getFormattedNumber(
-                                                    leaderboard.rewards[
-                                                      leaderboard.player_data
-                                                        .position
-                                                    ]
-                                                      ? leaderboard.rewards[
-                                                          leaderboard
-                                                            .player_data
-                                                            .position
-                                                        ]
-                                                      : 0,
-                                                    0
-                                                  )}
-                                                </span>
-                                              </div>
                                             </td>
-                                          ) : (
-                                            <td
-                                              className={`playerReward text-center col-2 font-montserrat ${
-                                                username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                  ? "playerReward"
-                                                  : "playerReward"
-                                              }`}
-                                            >
-                                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                <span
-                                                  className="leaderboard-text"
-                                                  style={{ color: "#fff" }}
-                                                >
-                                                  $
-                                                  {getFormattedNumber(
-                                                    leaderboard.rewards[
-                                                      leaderboard.player_data
-                                                        .position
-                                                    ]
-                                                      ? leaderboard.rewards[
-                                                          leaderboard
-                                                            .player_data
-                                                            .position
-                                                        ]
-                                                      : 0,
-                                                    0
-                                                  )}
-                                                </span>
-                                              </div>
+                                            <td className="playerScore col-2 text-center font-montserrat">
+                                              {getFormattedNumber(
+                                                item.statValue,
+                                                0
+                                              )}
                                             </td>
-                                          )}
-                                          {leaderboard.type === "stars" ? (
-                                            <td
-                                              className={`playerReward text-center col-2 font-montserrat ${
-                                                username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                  ? "playerReward"
-                                                  : "playerReward"
-                                              }`}
-                                            >
-                                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                <span
-                                                  className="leaderboard-text d-flex"
-                                                  style={{
-                                                    color:
-                                                      (isPremium &&
-                                                        username ===
-                                                          leaderboard
-                                                            .player_data
-                                                            .displayName) ||
-                                                      username !==
-                                                        leaderboard.player_data
-                                                          .displayName
-                                                        ? "#fff"
-                                                        : "gray",
-                                                    whiteSpace: "nowrap",
-                                                  }}
-                                                >
-                                                  +{" "}
+                                            {leaderboard.type === "stars" ? (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
                                                   <img src={starIcon} alt="" />
-                                                  {getFormattedNumber(
-                                                    leaderboard.rewards[
-                                                      leaderboard.player_data
-                                                        .position
-                                                    ]
-                                                      ? leaderboard.rewards[
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{ color: "#fff" }}
+                                                  >
+                                                    {getFormattedNumber(
+                                                      leaderboard.rewards[
+                                                        index
+                                                      ],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                </div>
+                                              </td>
+                                            ) : (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{ color: "#fff" }}
+                                                  >
+                                                    $
+                                                    {optionText2 !== "skale"
+                                                      ? getFormattedNumber(
+                                                          leaderboard.rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                      : getFormattedNumber(
                                                           leaderboard
-                                                            .player_data
-                                                            .position
-                                                        ]
-                                                      : 0,
-                                                    0
-                                                  )}
-                                                </span>
-                                                <HtmlTooltip
-                                                  placement="top"
-                                                  title={
-                                                    <span className="card-eth-chain-text">
-                                                      Premium
-                                                    </span>
-                                                  }
-                                                >
-                                                  <img
-                                                    src={
-                                                      (isPremium &&
-                                                        username ===
-                                                          leaderboard
-                                                            .player_data
-                                                            .displayName) ||
-                                                      username !==
-                                                        leaderboard.player_data
-                                                          .displayName
-                                                        ? premiumIcon
-                                                        : premiumInactive
+                                                            .past_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )}
+                                                  </span>
+                                                </div>
+                                              </td>
+                                            )}
+                                            {leaderboard.type === "stars" ? (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username ===
+                                                    item.displayName &&
+                                                  isPremium
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                                  <span
+                                                    className="leaderboard-text d-flex"
+                                                    style={{
+                                                      color:
+                                                        (username ===
+                                                          item.displayName &&
+                                                          isPremium) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? "rgb(243, 192, 9)"
+                                                          : "gray",
+                                                      whiteSpace: "nowrap",
+                                                    }}
+                                                  >
+                                                    +
+                                                    <img
+                                                      src={starIcon}
+                                                      alt=""
+                                                    />
+                                                    {getFormattedNumber(
+                                                      leaderboard
+                                                        .premium_rewards[index],
+                                                      0
+                                                    )}
+                                                  </span>
+                                                  <HtmlTooltip
+                                                    placement="top"
+                                                    title={
+                                                      <span className="card-eth-chain-text">
+                                                        Premium
+                                                      </span>
                                                     }
-                                                    alt=""
-                                                  />
-                                                </HtmlTooltip>
-                                              </div>
-                                            </td>
+                                                  >
+                                                    <img
+                                                      src={
+                                                        (isPremium &&
+                                                          username ===
+                                                            item.displayName) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? premiumIcon
+                                                          : premiumInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  </HtmlTooltip>
+                                                </div>
+                                              </td>
+                                            ) : (
+                                              <td
+                                                className={`playerReward text-center col-2 font-montserrat ${
+                                                  username === item.displayName
+                                                    ? "goldenscore"
+                                                    : "playerReward"
+                                                }`}
+                                              >
+                                                <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1">
+                                                  <span
+                                                    className="leaderboard-text"
+                                                    style={{
+                                                      color:
+                                                        (username ===
+                                                          item.displayName &&
+                                                          isactive === true) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? "rgb(243, 192, 9)"
+                                                          : "gray",
+                                                      // width: 35,
+                                                    }}
+                                                  >
+                                                    +$
+                                                    {optionText2 !== "skale"
+                                                      ? getFormattedNumber(
+                                                          leaderboard
+                                                            .premium_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )
+                                                      : getFormattedNumber(
+                                                          leaderboard
+                                                            .past_premium_rewards[
+                                                            index
+                                                          ],
+                                                          0
+                                                        )}
+                                                  </span>
+                                                  <HtmlTooltip
+                                                    placement="top"
+                                                    title={
+                                                      <span className="card-eth-chain-text">
+                                                        Golden Pass
+                                                      </span>
+                                                    }
+                                                  >
+                                                    <img
+                                                      src={
+                                                        (username ===
+                                                          item.displayName &&
+                                                          isactive === true) ||
+                                                        username !==
+                                                          item.displayName
+                                                          ? goldenActive
+                                                          : goldenInactive
+                                                      }
+                                                      alt=""
+                                                    />
+                                                  </HtmlTooltip>
+                                                </div>
+                                              </td>
+                                            )}
+                                          </tr>
+                                        );
+                                      }
+                                    )}
+
+                                  {inactiveBoard === true &&
+                                    ((dailyplayerData.length === 0 &&
+                                      optionText === "daily") ||
+                                      (weeklyplayerData.length === 0 &&
+                                        optionText === "weekly") ||
+                                      (monthlyplayerData.length === 0 &&
+                                        optionText === "monthly")) &&
+                                    optionText !== "genesis" && (
+                                      <CircularProgress
+                                        size={20}
+                                        style={{
+                                          alignSelf: "center",
+                                          margin: "auto",
+                                        }}
+                                      />
+                                    )}
+                                </tbody>
+                              </table>
+                            </div>{" "}
+                            {leaderboard.is_active === false &&
+                              email &&
+                              inactiveBoard === false &&
+                              optionText !== "genesis" && (
+                                <table className="playerTable w-100">
+                                  <tbody>
+                                    <tr className={`playerInnerRow-inactive`}>
+                                      <td
+                                        className={`playerData font-montserrat ${
+                                          optionText === "genesis"
+                                            ? "col-2"
+                                            : "col-1"
+                                        }`}
+                                      >
+                                        {parseInt(
+                                          leaderboard.player_data.position
+                                        ) + 1}
+                                      </td>
+                                      <td className="playerName col-3 font-montserrat">
+                                        <div className="position-relative  d-flex align-items-center">
+                                          {availableTime !== "0" &&
+                                          availableTime &&
+                                          availableTime !== undefined ? (
+                                            <div className="position-relative d-flex align-items-center">
+                                              <img
+                                                src={premiumAvatar}
+                                                alt=""
+                                                className="playerAvatar"
+                                              />
+                                              <img
+                                                src={premiumStar}
+                                                alt=""
+                                                className="premium-star"
+                                              />
+                                              <span>
+                                                {" "}
+                                                {leaderboard.player_data.displayName?.slice(
+                                                  0,
+                                                  13
+                                                )}
+                                                {leaderboard.player_data
+                                                  .displayName?.length > 13 &&
+                                                  "..."}
+                                              </span>
+                                            </div>
                                           ) : (
-                                            <td
-                                              className={`playerReward text-center col-2 font-montserrat ${
-                                                username ===
-                                                leaderboard.player_data
-                                                  .displayName
-                                                  ? "playerReward"
-                                                  : "playerReward"
-                                              }`}
+                                            <>
+                                              <img
+                                                src={playerAvatar}
+                                                alt=""
+                                                className="playerAvatar"
+                                              />{" "}
+                                              {leaderboard.player_data.displayName?.slice(
+                                                0,
+                                                13
+                                              )}
+                                              {leaderboard.player_data
+                                                .displayName?.length > 13 &&
+                                                "..."}
+                                            </>
+                                          )}
+                                        </div>
+                                      </td>
+                                      <td className="playerScore col-2 text-center font-montserrat">
+                                        {getFormattedNumber(
+                                          leaderboard.player_data.statValue,
+                                          0
+                                        )}
+                                      </td>
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username ===
+                                            leaderboard.player_data.displayName
+                                              ? "playerReward"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <img src={starIcon} alt="" />
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
                                             >
-                                              <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                <span
-                                                  className="leaderboard-text"
-                                                  style={{
-                                                    color:
-                                                      (username ===
-                                                        leaderboard.player_data
-                                                          .displayName &&
-                                                        isactive === true) ||
-                                                      username !==
-                                                        leaderboard.player_data
-                                                          .displayName
-                                                        ? "#fff"
-                                                        : "gray",
-                                                  }}
-                                                >
-                                                  +$
-                                                  {getFormattedNumber(
-                                                    leaderboard.rewards[
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[
+                                                  leaderboard.player_data
+                                                    .position
+                                                ]
+                                                  ? leaderboard.rewards[
                                                       leaderboard.player_data
                                                         .position
                                                     ]
-                                                      ? leaderboard.rewards[
-                                                          leaderboard
-                                                            .player_data
-                                                            .position
-                                                        ]
-                                                      : 0,
-                                                    0
-                                                  )}
+                                                  : 0,
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username ===
+                                            leaderboard.player_data.displayName
+                                              ? "playerReward"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{ color: "#fff" }}
+                                            >
+                                              $
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[
+                                                  leaderboard.player_data
+                                                    .position
+                                                ]
+                                                  ? leaderboard.rewards[
+                                                      leaderboard.player_data
+                                                        .position
+                                                    ]
+                                                  : 0,
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
+                                        </td>
+                                      )}
+                                      {leaderboard.type === "stars" ? (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username ===
+                                            leaderboard.player_data.displayName
+                                              ? "playerReward"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text d-flex"
+                                              style={{
+                                                color:
+                                                  (isPremium &&
+                                                    username ===
+                                                      leaderboard.player_data
+                                                        .displayName) ||
+                                                  username !==
+                                                    leaderboard.player_data
+                                                      .displayName
+                                                    ? "#fff"
+                                                    : "gray",
+                                                whiteSpace: "nowrap",
+                                              }}
+                                            >
+                                              + <img src={starIcon} alt="" />
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[
+                                                  leaderboard.player_data
+                                                    .position
+                                                ]
+                                                  ? leaderboard.rewards[
+                                                      leaderboard.player_data
+                                                        .position
+                                                    ]
+                                                  : 0,
+                                                0
+                                              )}
+                                            </span>
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Premium
                                                 </span>
-                                                <HtmlTooltip
-                                                  placement="top"
-                                                  title={
-                                                    <span className="card-eth-chain-text">
-                                                      Golden Pass
-                                                    </span>
-                                                  }
-                                                >
-                                                  <img
-                                                    src={
-                                                      (username ===
-                                                        leaderboard.player_data
-                                                          .displayName &&
-                                                        isactive === true) ||
-                                                      username !==
-                                                        leaderboard.player_data
-                                                          .displayName
-                                                        ? goldenActive
-                                                        : goldenInactive
-                                                    }
-                                                    alt=""
-                                                  />
-                                                </HtmlTooltip>
-                                              </div>
-                                            </td>
-                                          )}
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                    </Slider>
+                                              }
+                                            >
+                                              <img
+                                                src={
+                                                  (isPremium &&
+                                                    username ===
+                                                      leaderboard.player_data
+                                                        .displayName) ||
+                                                  username !==
+                                                    leaderboard.player_data
+                                                      .displayName
+                                                    ? premiumIcon
+                                                    : premiumInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
+                                          </div>
+                                        </td>
+                                      ) : (
+                                        <td
+                                          className={`playerReward text-center col-2 font-montserrat ${
+                                            username ===
+                                            leaderboard.player_data.displayName
+                                              ? "playerReward"
+                                              : "playerReward"
+                                          }`}
+                                        >
+                                          <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
+                                            <span
+                                              className="leaderboard-text"
+                                              style={{
+                                                color:
+                                                  (username ===
+                                                    leaderboard.player_data
+                                                      .displayName &&
+                                                    isactive === true) ||
+                                                  username !==
+                                                    leaderboard.player_data
+                                                      .displayName
+                                                    ? "#fff"
+                                                    : "gray",
+                                              }}
+                                            >
+                                              +$
+                                              {getFormattedNumber(
+                                                leaderboard.rewards[
+                                                  leaderboard.player_data
+                                                    .position
+                                                ]
+                                                  ? leaderboard.rewards[
+                                                      leaderboard.player_data
+                                                        .position
+                                                    ]
+                                                  : 0,
+                                                0
+                                              )}
+                                            </span>
+                                            <HtmlTooltip
+                                              placement="top"
+                                              title={
+                                                <span className="card-eth-chain-text">
+                                                  Golden Pass
+                                                </span>
+                                              }
+                                            >
+                                              <img
+                                                src={
+                                                  (username ===
+                                                    leaderboard.player_data
+                                                      .displayName &&
+                                                    isactive === true) ||
+                                                  username !==
+                                                    leaderboard.player_data
+                                                      .displayName
+                                                    ? goldenActive
+                                                    : goldenInactive
+                                                }
+                                                alt=""
+                                              />
+                                            </HtmlTooltip>
+                                          </div>
+                                        </td>
+                                      )}
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              )}
+                          </div>
+                        );
+                      })}
+                    {/* </Slider> */}
                   </div>
                 ) : (
                   <ComingSoon
@@ -1607,19 +1617,19 @@ const NewLeaderBoard = ({
                     username={username}
                     inactiveBoard={inactiveBoard}
                   />
-                )}
-              </div>
-            </div>
-            <div className={`optionsWrapper2  p-2`}>
-              <div className="d-flex flex-column">
-                <div className="d-flex justify-content-between gap-2 align-items-center">
-                  <span className="viewWinners">View previous winners</span>
-                  <Switch
-                    {...label}
-                    onChange={() => {
-                      setInactiveBoard(!inactiveBoard);
-                    }}
-                  />
+                )}{" "}
+                <div className={`optionsWrapper2  p-2`}>
+                  <div className="d-flex flex-column">
+                    <div className="d-flex justify-content-between gap-2 align-items-center">
+                      <span className="viewWinners">View previous winners</span>
+                      <Switch
+                        {...label}
+                        onChange={() => {
+                          setInactiveBoard(!inactiveBoard);
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
