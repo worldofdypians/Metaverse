@@ -926,12 +926,32 @@ background-size: 100% 100%;
   background-position: center;
 }
 
+.golden-pass-wrapper2 {
+  background-image: url('./assets/goldenPassbg.svg');
+  border-radius: 12px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .total-stars-premium-wrapper2 {
   background-image: url('./assets/totalStarsPremium.svg');
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.activate-btn, .activate-btn:hover {
+background: #536BBE;
+border-radius: 6px;
+color: #EBEEFF;
+text-align: center; 
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border: none;
 }
 
 .total-stars-span{

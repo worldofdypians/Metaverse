@@ -64,7 +64,9 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  userDataStar, monthlyPlayers, percent
+  userDataStar,
+  monthlyPlayers,
+  percent,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -94,7 +96,7 @@ const GlobalLeaderboard = ({
     "30",
     "30",
   ];
-
+console.log(allStarData)
   const location = useLocation();
 
   const [optionText2, setOptionText2] = useState("bnb");
@@ -104,7 +106,6 @@ const GlobalLeaderboard = ({
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-   
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -112,8 +113,6 @@ const GlobalLeaderboard = ({
   // useEffect(() => {
   //   handleOption(optionText);
   // }, [inactiveBoard]);
-
- 
 
   useEffect(() => {
     if (
@@ -126,7 +125,7 @@ const GlobalLeaderboard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    setOptionText2("bnb"); 
+    setOptionText2("bnb");
   }, []);
 
   return (
@@ -240,40 +239,40 @@ const GlobalLeaderboard = ({
           </div>
           <img src={globalIcon} alt="" />
         </div>
-        <div className="p-0">
+        <div className={` ${screen !== "home" && "table-outer-margin"}  p-0`}>
           <table
             className="playerTable w-100"
-            style={{ position: "relative", top: "-8px" }}
+            style={{ position: "relative" }}
           >
             <tbody>
-              <tr className="playerRow" style={{ background: "#0E111E" }}>
+              <tr className="playerRow">
                 <th
-                  className="playerHeader font-montserrat d-flex ms-1"
-                  style={{ lineHeight: "25px" }}
+                  className="playerHeader font-montserrat"
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Rank
                 </th>
                 <th
                   className="playerHeader font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Player
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Collected Stars
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Reward
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Extra Rewards
                 </th>
@@ -297,9 +296,13 @@ const GlobalLeaderboard = ({
                       <td className="playerName col-5 font-montserrat">
                         <div className="playerName-inner">
                           <img
-                            src={require(`./assets/globalRanks/globalRank${
-                              index + 1
-                            }.png`)}
+                            src={
+                              index + 1 <= 10
+                                ? require(`./assets/globalRanks/globalRank${
+                                    index + 1
+                                  }.png`)
+                                : playerAvatar
+                            }
                             alt=""
                             className="playerAvatar me-2"
                           />
@@ -324,7 +327,7 @@ const GlobalLeaderboard = ({
                         }`}
                         style={{ color: "#09F3D2" }}
                       >
-                        ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                        ${getFormattedNumber(allStarData.rewards[index], 0)}
                       </td>
                       <td
                         className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
@@ -342,8 +345,7 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +$
-                          {getFormattedNumber(goldenRewards[item.position], 0)}
+                        ${getFormattedNumber(allStarData.premium_rewards[index], 0)}
                           {screen === "home" ? (
                             <HtmlTooltip
                               placement="top"
@@ -400,9 +402,13 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <img
-                          src={require(`./assets/globalRanks/globalRank${
-                            index + 1
-                          }.png`)}
+                          src={
+                            index + 1 <= 10
+                              ? require(`./assets/globalRanks/globalRank${
+                                  index + 1
+                                }.png`)
+                              : playerAvatar
+                          }
                           alt=""
                           className="playerAvatar me-2"
                         />

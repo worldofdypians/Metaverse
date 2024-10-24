@@ -10,8 +10,16 @@
   color: #ffffff;
   @media screen and (max-width: 786px) {
     font-size: 18px;
+    line-height: 12px;
   }
 }
+
+// .main-wrapper {
+//   @media screen and (max-width: 786px) {
+//    min-height: 560px;
+//    overflow: auto;
+//   }
+// }
 
 .grandPrices-wrapper {
   background-color: #242240;
@@ -250,8 +258,8 @@
   @media screen and (max-width: 786px) {
     font-size: 12px;
     overflow-x: hidden;
-    width: 100%;
-    max-width: 100px;
+    width: auto;
+    max-width: none;
   }
 }
 
@@ -469,6 +477,7 @@
   background: rgba(96, 87, 137, 0.1);
   backdrop-filter: blur(2px);
   padding: 10px;
+  overflow: auto;
 }
 
 .player-inner-username {
@@ -490,21 +499,21 @@ line-height: normal;
 }
 
 .user-blue-rank {
-  color: #09dcf3;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-}
-
-.user-rank-text {
-  color: #ffefca;
-  text-align: center;
-  font-size: 10px;
+  color: #F7F7FF; 
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.user-rank-text {
+  color: #F3BF09;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.144px;
 }
 
 .optionswrapper-bg {
