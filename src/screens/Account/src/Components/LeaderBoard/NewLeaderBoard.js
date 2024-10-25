@@ -1298,7 +1298,7 @@ const NewLeaderBoard = ({
                               </table>
                               {leaderboard.is_active === false &&
                                 email &&
-                                inactiveBoard === false &&
+                                inactiveBoard === false && leaderboard.player_data.statValue > 0 &&
                                 optionText !== "genesis" && (
                                   <table className="playerTable w-100">
                                     <tbody>

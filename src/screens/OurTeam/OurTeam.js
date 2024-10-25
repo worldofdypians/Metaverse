@@ -20,6 +20,7 @@ import wei from "./assets/team/wei.jpg";
 import alex from "./assets/team/alex.png";
 import yavuz from "./assets/team/yavuz.jpg";
 import navid from "./assets/team/navid.jpg";
+import teja from "./assets/team/teja.jpg";
 
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -206,6 +207,15 @@ const OurTeam = () => {
       content:
         "I discovered Cryptocurrency back in 2017 when bounty campaign from Bitcointalk.org is the crypto marketing trend. I saw that there is a future on digital assets and I believe that it is the future so I decided to learn more and did some trading. I started to work as bounty campaign manager and community manager for several projects since 2019. I offered a bounty campaign to Sir Mihai for DeFi Yield Protocol during the ICO and managed it then He assigned me as a telegram and discord moderator after the campaign ended. My aim as a moderator is to assist the community with every query they bring and ensure to convey the right answer. I believe that a better communication is crucial for building a solid community. I am grateful to be a part and looking forward for DeFi Yield Protocol to achieve a successfully complete DeFi ecosystem.",
     },
+
+    {
+      id: "teja",
+      name: "Teja Charan",
+      position: "Project Coordinator",
+      photo: teja,
+      link: "https://www.linkedin.com/in/gerlie-cabalse-yael07/",
+      content: "",
+    },
     {
       id: "bogdan",
       name: "Constantin Bogdan",
@@ -264,15 +274,13 @@ const OurTeam = () => {
                 />
               ))}
         </div>
-        <div className="row mt-4  justify-content-center">
+        <div
+          className={`row mt-4  justify-content-center ${
+            windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+          }`}
+        >
           <div className="linear-border" onClick={loadMore}>
-            <button
-              className={`btn filled-btn px-5 ${
-                windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
-              }`}
-            >
-              Load More
-            </button>
+            <button className={`btn filled-btn px-5 `}>Load More</button>
           </div>
         </div>
       </div>
