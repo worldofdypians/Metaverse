@@ -649,7 +649,7 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
-
+  
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
