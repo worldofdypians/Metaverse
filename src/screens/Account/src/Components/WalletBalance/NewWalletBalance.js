@@ -207,14 +207,14 @@ const NewWalletBalance = ({
   handleShowWalletPopup,
   userId,
   username,
-  weeklyDataAmountCore,
-  monthlyDataAmountCore,
-  dailyDataAmountViction,
-  weeklyDataAmountViction,
-  monthlyDataAmountViction,
-  dailyDataAmountSkale,
-  weeklyDataAmountSkale,
-  monthlyDataAmountSkale,
+  // weeklyDataAmountCore,
+  // monthlyDataAmountCore,
+  // dailyDataAmountViction,
+  // weeklyDataAmountViction,
+  // monthlyDataAmountViction,
+  // dailyDataAmountSkale,
+  // weeklyDataAmountSkale,
+  // monthlyDataAmountSkale,
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
@@ -281,18 +281,18 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  weeklyDataAmountManta,
-  monthlyDataAmountManta,
-  weeklyDataAmountBase,
-  monthlyDataAmountBase,
+  // weeklyDataAmountManta,
+  // monthlyDataAmountManta,
+  // weeklyDataAmountBase,
+  // monthlyDataAmountBase,
   mantaEarnUsd,
   openedMantaChests,
   openedBaseChests,
   mantaPoints,
   mantaEarnToken,
   userDataStar,
-  weeklyDataAmountTaiko,
-  monthlyDataAmountTaiko,
+  // weeklyDataAmountTaiko,
+  // monthlyDataAmountTaiko,
   taikoEarnUsd,
   claimedTaikoChests,
   claimedTaikoPremiumChests,
@@ -2207,27 +2207,27 @@ const NewWalletBalance = ({
                       $
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
-                          Number(weeklyplayerData) +
+                          // Number(weeklyplayerData) +
                           // Number(dailyplayerData) +
-                          Number(userRank2) +
+                          // Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
                           // Number(dailyDataAmountCore) +
-                          Number(weeklyDataAmountCore) +
-                          Number(monthlyDataAmountCore) +
+                          // Number(weeklyDataAmountCore) +
+                          // Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +
-                          Number(weeklyDataAmountManta) +
-                          Number(monthlyDataAmountManta) +
-                          Number(weeklyDataAmountBase) +
-                          Number(monthlyDataAmountBase) +
-                          Number(weeklyDataAmountTaiko) +
-                          Number(monthlyDataAmountTaiko) +
-                          +Number(monthlyDataAmountSkale) +
+                          // Number(weeklyDataAmountSkale) +
+                          // Number(weeklyDataAmountManta) +
+                          // Number(monthlyDataAmountManta) +
+                          // Number(weeklyDataAmountBase) +
+                          // Number(monthlyDataAmountBase) +
+                          // Number(weeklyDataAmountTaiko) +
+                          // Number(monthlyDataAmountTaiko) +
+                          // +Number(monthlyDataAmountSkale) +
                           Number(userDataStar) +
-                          Number(weeklyDataAmountViction) +
-                          Number(monthlyDataAmountViction) +
+                          // Number(weeklyDataAmountViction) +
+                          // Number(monthlyDataAmountViction) +
                           Number(skaleEarnUsd) +
                           Number(cawsPremiumRewards) +
                           Number(landPremiumRewards) +
