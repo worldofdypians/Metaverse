@@ -213,8 +213,8 @@ const OurTeam = () => {
       name: "Teja Charan",
       position: "Project Coordinator",
       photo: teja,
-      link: "https://www.linkedin.com/in/gerlie-cabalse-yael07/",
-      content: "",
+      link: "",
+      content: "Hey, I'm Teja Charan! I've been into crypto since 2019 and have worked in cool companies dealing with virtual stuff and decentralized finance. I'm always up for learning new things and exploring the crypto world. Come along for the ride!",
     },
     {
       id: "bogdan",
