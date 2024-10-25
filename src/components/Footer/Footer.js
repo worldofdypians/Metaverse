@@ -57,6 +57,10 @@ const Footer = () => {
       icon: "email",
       link: "mailto:contact@worldofdypians.com",
     },
+    {
+      icon: "coingecko",
+      link: "https://www.coingecko.com/en/coins/world-of-dypians",
+    },
   ];
 
   useEffect(() => {
