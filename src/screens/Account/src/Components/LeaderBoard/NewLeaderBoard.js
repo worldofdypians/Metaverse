@@ -385,18 +385,10 @@ const NewLeaderBoard = ({
   //   } else setisActive(true);
   // }, [countdown]);
 
-  const nextSlide = () => {
-    sliderRef.current.slickNext();
-  };
-  const prevSlide = () => {
-    sliderRef.current.slickPrev();
-  };
-
+ 
   useEffect(() => {
     setAllData(allBnbData);
-    setTimeout(() => {
-      prevSlide();
-    }, 500);
+ 
   }, []);
 
   return (

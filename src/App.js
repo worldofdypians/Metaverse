@@ -87,6 +87,7 @@ import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
 import { isMobile } from "react-device-detect";
 import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
+import { monthlyStarPrizes } from "./screens/Account/src/Containers/Dashboard/stars.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -815,8 +816,8 @@ function App() {
 
   useEffect(() => {
     setAllStarData({
-      rewards: starPrizes,
-      premium_rewards: starPrizesGolden,
+      rewards: monthlyStarPrizes,
+      premium_rewards: monthlyStarPrizes,
       activeData: starRecords,
       previousData: prevDataStar,
       player_data: userDataStar,

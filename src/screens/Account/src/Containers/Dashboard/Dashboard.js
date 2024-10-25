@@ -65,7 +65,15 @@ import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
-import { baseStars, bnbStars, mantaStars, monthlyStarPrizes, skaleStars, taikoStars } from "./stars";
+import {
+  baseStars,
+  bnbStars,
+  mantaStars,
+  monthlyStarPrizes,
+  skaleStars,
+  taikoStars,
+  weeklyStarPrizes,
+} from "./stars";
 
 function Dashboard({
   dailyBonuslistedNFTS,
@@ -105,12 +113,6 @@ function Dashboard({
   authToken,
 }) {
   const { email, logout } = useAuth();
-
-  const override = {
-    display: "block",
-    margin: "auto",
-    borderColor: "#554fd8",
-  };
 
   const {
     data,
@@ -361,7 +363,7 @@ function Dashboard({
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [showChecklistLandNftModal, setshowChecklistLandNftModal] =
     useState(false);
-  const firstSlider = useRef();
+
   const [loading, setLoading] = useState(true);
   const [userRankRewards, setUserRankRewards] = useState(0);
   const [dypBalance, setDypBalance] = useState();
@@ -440,7 +442,7 @@ function Dashboard({
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
-  const [playerRank, setPlayerRank] = useState({});
+
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
 
@@ -566,7 +568,6 @@ function Dashboard({
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
-  const [userRank2Skale, setUserRank2Skale] = useState("");
   const [userBnbScore, setUserBnbScore] = useState(0);
   const [genesisRank, setGenesisRank] = useState("");
   const [genesisRank2, setGenesisRank2] = useState("");
@@ -575,11 +576,8 @@ function Dashboard({
   const [cawsPremiumRewards, setcawsPremiumRewards] = useState(0);
   const [landPremiumRewards, setlandPremiumRewards] = useState(0);
 
-  const [dateofBundle, setdateofBundle] = useState(0);
-  const [dateofBundlev1, setdateofBundlev1] = useState(0);
   const [portfolio, setPortfolio] = useState(false);
-  const [datewhenBundleBought, setdatewhenBundleBought] = useState(0);
-  const [datewhenBundleBoughtv1, setdatewhenBundleBoughtv1] = useState(0);
+
   const [bnbImages, setBnbImages] = useState(shuffle(chestImagesBnb));
   const [skaleImages, setSkaleImages] = useState(shuffle(chestImagesSkale));
   const [coreImages, setCoreImages] = useState(shuffle(chestImagesCore));
@@ -992,7 +990,6 @@ function Dashboard({
     victionPrice,
   ]);
 
-
   const bnbStarsPremium = [
     "50",
     "40",
@@ -1195,9 +1192,7 @@ function Dashboard({
   const [prevDataCore, setPrevDataCore] = useState([]);
   const [prevDataCoreWeekly, setPrevDataCoreWeekly] = useState([]);
   const [prevDataCoreMonthly, setPrevDataCoreMonthly] = useState([]);
-  const [prevVersionCore, setPrevVersionCore] = useState(0);
-  const [prevVersionCoreWeekly, setPrevVersionCoreWeekly] = useState(0);
-  const [prevVersionCoreMonthly, setPrevVersionCoreMonthly] = useState(0);
+
   const [dailyDataAmountCore, setDailyDataAmountCore] = useState([]);
   const [weeklyDataAmountCore, setWeeklyDataAmountCore] = useState([]);
   const [monthlyDataAmountCore, setMonthlyDataAmountCore] = useState([]);
@@ -1216,9 +1211,7 @@ function Dashboard({
   const [prevDataSkale, setPrevDataSkale] = useState([]);
   const [prevDataSkaleWeekly, setPrevDataSkaleWeekly] = useState([]);
   const [prevDataSkaleMonthly, setPrevDataSkaleMonthly] = useState([]);
-  const [prevVersionSkale, setPrevVersionSkale] = useState(0);
-  const [prevVersionSkaleWeekly, setPrevVersionSkaleWeekly] = useState(0);
-  const [prevVersionSkaleMonthly, setPrevVersionSkaleMonthly] = useState(0);
+
   const [dailyDataAmountSkale, setDailyDataAmountSkale] = useState([]);
   const [weeklyDataAmountSkale, setWeeklyDataAmountSkale] = useState([]);
   const [monthlyDataAmountSkale, setMonthlyDataAmountSkale] = useState([]);
@@ -1226,12 +1219,22 @@ function Dashboard({
   const [userSkaleScore, setUserSkaleScore] = useState(0);
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
+  const [starRecordsWeekly, setStarRecordsWeekly] = useState([]);
+
   const [activePlayerStar, setActivePlayerStar] = useState([]);
+  const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
+
   const [userDataStar, setUserDataStar] = useState({});
+  const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
+
   const [prevDataStar, setPrevDataStar] = useState([]);
-  const [prevVersionStar, setPrevVersionStar] = useState(0);
+  const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
+
   const [dataAmountStar, setDataAmountStar] = useState([]);
+  const [dataAmountStarWeekly, setDataAmountStarWeekly] = useState([]);
+
   const [userCollectedStars, setuserCollectedStars] = useState(0);
+  const [userCollectedStarsWeekly, setuserCollectedStarsWeekly] = useState(0);
 
   const [dailyRecordsViction, setDailyRecordsViction] = useState([]);
   const [weeklyRecordsViction, setWeeklyRecordsViction] = useState([]);
@@ -1247,9 +1250,7 @@ function Dashboard({
   const [prevDataViction, setPrevDataViction] = useState([]);
   const [prevDataVictionWeekly, setPrevDataVictionWeekly] = useState([]);
   const [prevDataVictionMonthly, setPrevDataVictionMonthly] = useState([]);
-  const [prevVersionViction, setPrevVersionViction] = useState(0);
-  const [prevVersionVictionWeekly, setPrevVersionVictionWeekly] = useState(0);
-  const [prevVersionVictionMonthly, setPrevVersionVictionMonthly] = useState(0);
+
   const [dailyDataAmountViction, setDailyDataAmountViction] = useState([]);
   const [weeklyDataAmountViction, setWeeklyDataAmountViction] = useState([]);
   const [monthlyDataAmountViction, setMonthlyDataAmountViction] = useState([]);
@@ -1269,9 +1270,7 @@ function Dashboard({
   const [prevDataManta, setPrevDataManta] = useState([]);
   const [prevDataMantaWeekly, setPrevDataMantaWeekly] = useState([]);
   const [prevDataMantaMonthly, setPrevDataMantaMonthly] = useState([]);
-  const [prevVersionManta, setPrevVersionManta] = useState(0);
-  const [prevVersionMantaWeekly, setPrevVersionMantaWeekly] = useState(0);
-  const [prevVersionMantaMonthly, setPrevVersionMantaMonthly] = useState(0);
+
   const [dailyDataAmountManta, setDailyDataAmountManta] = useState([]);
   const [weeklyDataAmountManta, setWeeklyDataAmountManta] = useState([]);
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
@@ -1290,9 +1289,7 @@ function Dashboard({
   const [prevDataBase, setPrevDataBase] = useState([]);
   const [prevDataBaseWeekly, setPrevDataBaseWeekly] = useState([]);
   const [prevDataBaseMonthly, setPrevDataBaseMonthly] = useState([]);
-  const [prevVersionBase, setPrevVersionBase] = useState(0);
-  const [prevVersionBaseWeekly, setPrevVersionBaseWeekly] = useState(0);
-  const [prevVersionBaseMonthly, setPrevVersionBaseMonthly] = useState(0);
+
   const [dailyDataAmountBase, setDailyDataAmountBase] = useState([]);
   const [weeklyDataAmountBase, setWeeklyDataAmountBase] = useState([]);
   const [monthlyDataAmountBase, setMonthlyDataAmountBase] = useState([]);
@@ -1312,9 +1309,7 @@ function Dashboard({
   const [prevDataTaiko, setPrevDataTaiko] = useState([]);
   const [prevDataTaikoWeekly, setPrevDataTaikoWeekly] = useState([]);
   const [prevDataTaikoMonthly, setPrevDataTaikoMonthly] = useState([]);
-  const [prevVersionTaiko, setPrevVersionTaiko] = useState(0);
-  const [prevVersionTaikoWeekly, setPrevVersionTaikoWeekly] = useState(0);
-  const [prevVersionTaikoMonthly, setPrevVersionTaikoMonthly] = useState(0);
+
   const [dailyDataAmountTaiko, setDailyDataAmountTaiko] = useState([]);
   const [weeklyDataAmountTaiko, setWeeklyDataAmountTaiko] = useState([]);
   const [monthlyDataAmountTaiko, setMonthlyDataAmountTaiko] = useState([]);
@@ -1410,7 +1405,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1429,7 +1424,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreWeekly",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1447,7 +1442,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreMonthly",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1467,7 +1462,7 @@ function Dashboard({
       MaxResultsCount: 100,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setPrevVersionCore(parseInt(result.data.data.version));
+
     fetchPreviousWinnersCore(parseInt(result.data.data.version));
     setDailyRecordsCore(result.data.data.leaderboard);
     fillRecordsCore(result.data.data.leaderboard);
@@ -1492,7 +1487,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsCore(result.data.data.leaderboard);
-    setPrevVersionCoreWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersCore(parseInt(result.data.data.version));
     fillRecordsWeeklyCore(result.data.data.leaderboard);
     if (userId && username) {
@@ -1518,7 +1513,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsCore(result.data.data.leaderboard);
-    setPrevVersionCoreMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersCore(parseInt(result.data.data.version));
     fillRecordsMonthlyCore(result.data.data.leaderboard);
 
@@ -1754,7 +1749,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1811,7 +1806,7 @@ function Dashboard({
       MaxResultsCount: 100,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setPrevVersionViction(parseInt(result.data.data.version));
+
     fetchPreviousWinnersViction(parseInt(result.data.data.version));
     setDailyRecordsViction(result.data.data.leaderboard);
     fillRecordsViction(result.data.data.leaderboard);
@@ -1836,7 +1831,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsViction(result.data.data.leaderboard);
-    setPrevVersionVictionWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersViction(parseInt(result.data.data.version));
     fillRecordsWeeklyViction(result.data.data.leaderboard);
     if (userId && username) {
@@ -1862,7 +1857,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsViction(result.data.data.leaderboard);
-    setPrevVersionVictionMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersViction(parseInt(result.data.data.version));
     fillRecordsMonthlyViction(result.data.data.leaderboard);
     if (userId && username) {
@@ -2097,7 +2092,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2159,7 +2154,7 @@ function Dashboard({
         console.error(e);
         fillRecordsManta([]);
       });
-    setPrevVersionManta(parseInt(result.data.data.version));
+
     fetchPreviousWinnersManta(parseInt(result.data.data.version));
     setDailyRecordsManta(result.data.data.leaderboard);
     fillRecordsManta(result.data.data.leaderboard);
@@ -2189,7 +2184,7 @@ function Dashboard({
         fillRecordsWeeklyManta([]);
       });
     setWeeklyRecordsManta(result.data.data.leaderboard);
-    setPrevVersionMantaWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersManta(parseInt(result.data.data.version));
     fillRecordsWeeklyManta(result.data.data.leaderboard);
     if (userId && username) {
@@ -2220,7 +2215,7 @@ function Dashboard({
         fillRecordsMonthlyManta([]);
       });
     setMonthlyRecordsManta(result.data.data.leaderboard);
-    setPrevVersionMantaMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersManta(parseInt(result.data.data.version));
 
     fillRecordsMonthlyManta(result.data.data.leaderboard);
@@ -2456,7 +2451,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2518,7 +2513,7 @@ function Dashboard({
         console.error(e);
         fillRecordsBase([]);
       });
-    setPrevVersionBase(parseInt(result.data.data.version));
+
     fetchPreviousWinnersBase(parseInt(result.data.data.version));
     setDailyRecordsBase(result.data.data.leaderboard);
     fillRecordsBase(result.data.data.leaderboard);
@@ -2548,7 +2543,7 @@ function Dashboard({
         fillRecordsWeeklyBase([]);
       });
     setWeeklyRecordsBase(result.data.data.leaderboard);
-    setPrevVersionBaseWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersBase(parseInt(result.data.data.version));
 
     fillRecordsWeeklyBase(result.data.data.leaderboard);
@@ -2580,7 +2575,7 @@ function Dashboard({
         fillRecordsMonthlyBase([]);
       });
     setMonthlyRecordsBase(result.data.data.leaderboard);
-    setPrevVersionBaseMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersBase(parseInt(result.data.data.version));
 
     fillRecordsMonthlyBase(result.data.data.leaderboard);
@@ -2816,7 +2811,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2878,7 +2873,7 @@ function Dashboard({
         console.error(e);
         fillRecordsTaiko([]);
       });
-    setPrevVersionTaiko(parseInt(result.data.data.version));
+
     fetchPreviousWinnersTaiko(parseInt(result.data.data.version));
     setDailyRecordsTaiko(result.data.data.leaderboard);
     fillRecordsTaiko(result.data.data.leaderboard);
@@ -2908,7 +2903,7 @@ function Dashboard({
         fillRecordsWeeklyTaiko([]);
       });
     setWeeklyRecordsTaiko(result.data.data.leaderboard);
-    setPrevVersionTaikoWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersTaiko(parseInt(result.data.data.version));
     fillRecordsWeeklyTaiko(result.data.data.leaderboard);
     if (userId && username) {
@@ -2939,7 +2934,7 @@ function Dashboard({
         fillRecordsMonthlyTaiko([]);
       });
     setMonthlyRecordsTaiko(result.data.data.leaderboard);
-    setPrevVersionTaikoMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersTaiko(parseInt(result.data.data.version));
 
     fillRecordsMonthlyTaiko(result.data.data.leaderboard);
@@ -3175,7 +3170,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3231,7 +3226,7 @@ function Dashboard({
       MaxResultsCount: 100,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setPrevVersionSkale(parseInt(result.data.data.version));
+
     fetchPreviousWinnersSkale(parseInt(result.data.data.version));
     setDailyRecordsSkale(result.data.data.leaderboard);
     fillRecordsSkale(result.data.data.leaderboard);
@@ -3256,7 +3251,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setWeeklyRecordsSkale(result.data.data.leaderboard);
-    setPrevVersionSkaleWeekly(result.data.data.version);
+
     fetchPreviousWeeklyWinnersSkale(parseInt(result.data.data.version));
 
     fillRecordsWeeklySkale(result.data.data.leaderboard);
@@ -3283,7 +3278,7 @@ function Dashboard({
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setMonthlyRecordsSkale(result.data.data.leaderboard);
-    setPrevVersionSkaleMonthly(result.data.data.version);
+
     fetchPreviousMonthlyWinnersSkale(parseInt(result.data.data.version));
 
     fillRecordsMonthlySkale(result.data.data.leaderboard);
@@ -3519,7 +3514,7 @@ function Dashboard({
       MaxResultsCount: 100,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-    setPrevVersionStar(parseInt(result.data.data.version));
+
     fetchPreviousWinnersStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
@@ -3619,6 +3614,142 @@ function Dashboard({
     }
   };
 
+  const fillRecordsStarWeekly = (itemData) => {
+    if (itemData.length === 0) {
+      setStarRecordsWeekly(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setStarRecordsWeekly(finalData);
+    }
+  };
+  const fetchPreviousWinnersStarWeekly = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "GlobalStarWeeklyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataStarWeekly(result.data.data.leaderboard);
+    } else {
+      setPrevDataStarWeekly(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+  const fetchRecordsStarWeekly = async () => {
+    const data = {
+      StatisticName: "GlobalStarWeeklyLeaderboard",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+
+    fetchPreviousWinnersStarWeekly(parseInt(result.data.data.version));
+    setStarRecordsWeekly(result.data.data.leaderboard);
+    fillRecordsStarWeekly(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerStarWeekly(true);
+        const userPosition = testArray[0].position;
+        setuserCollectedStarsWeekly(testArray[0].statValue);
+        setUserDataStarWeekly(...testArray);
+        if (goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(starPrizesGolden[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      } else if (testArray.length === 0) {
+        setActivePlayerStarWeekly(false);
+        fetchWeeklyRecordsAroundPlayerStar(result.data.data.leaderboard);
+      }
+    }
+  };
+  const fetchWeeklyRecordsAroundPlayerStar = async (itemData) => {
+    const data = {
+      StatisticName: "GlobalStarWeeklyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        const userPosition = testArray[0].position;
+        setuserCollectedStarsWeekly(testArray[0].statValue);
+        if (goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStarWeekly(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      }
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerStarWeekly(true);
+          setUserDataStarWeekly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerStarWeekly(false);
+          setUserDataStarWeekly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerStarWeekly(false);
+        setUserDataStarWeekly(...testArray);
+      }
+    }
+  };
+
   const fillRecordsDaily = (itemData) => {
     if (itemData.length === 0) {
       setdailyplayerData(placeholderplayerData);
@@ -3646,7 +3777,7 @@ function Dashboard({
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3682,7 +3813,7 @@ function Dashboard({
       const data = {
         StatisticName: "WeeklyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3699,7 +3830,7 @@ function Dashboard({
       const data = {
         StatisticName: "MonthlyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3898,6 +4029,7 @@ function Dashboard({
       // fetchWeeklyRecordsSkale();
       // fetchMonthlyRecordsSkale();
       fetchRecordsStar();
+      fetchRecordsStarWeekly();
     }
   }, [username, userId, goldenPassRemainingTime]);
 
@@ -3953,13 +4085,84 @@ function Dashboard({
   useEffect(() => {
     setAllStarData({
       rewards: monthlyStarPrizes,
+      rewardsWeekly: weeklyStarPrizes,
       premium_rewards: monthlyStarPrizes,
+      premium_rewards_weekly: monthlyStarPrizes,
       activeData: starRecords,
+      activeDataWeekly: starRecordsWeekly,
       previousData: prevDataStar,
+      previousDataWeekly: prevDataStarWeekly,
       player_data: userDataStar,
-      is_active: activePlayerStar, //change when apis are ready
+      player_data_weekly: userDataStarWeekly,
+      is_active: activePlayerStar,
+      is_active_weekly: activePlayerStarWeekly,
     });
-  }, [starRecords, prevDataStar, userDataStar, activePlayerStar]);
+  }, [
+    starRecords,
+    starRecordsWeekly,
+    prevDataStar,
+    prevDataStarWeekly,
+    userDataStar,
+    userDataStarWeekly,
+    activePlayerStar,
+    activePlayerStarWeekly,
+  ]);
+
+  useEffect(() => {
+    if (allStarData && allStarData.activeData) {
+      const playerActiveArray = [
+        activePlayer,
+        activePlayerBase,
+        activePlayerCore,
+        activePlayerManta,
+        activePlayerSkale,
+        activePlayerViction,
+        true,
+      ];
+      let checker = (arr) => arr.every((v) => v === false);
+      if (!checker(playerActiveArray) && isPremium === true) {
+        const data2 = allStarData.activeData.map((item) => {
+          if (item.playerId === userId) {
+            const newStatValue = item.statValue + 50;
+            setuserCollectedStars(newStatValue);
+
+            return { ...item, statValue: newStatValue };
+          } else return { ...item };
+        });
+        const data2Weekly = allStarData.activeDataWeekly.map((item) => {
+          if (item.playerId === userId) {
+            const newStatValue = item.statValue + 50;
+            setuserCollectedStarsWeekly(newStatValue);
+            return { ...item, statValue: newStatValue };
+          } else return { ...item };
+        });
+        allStarData.activeDataWeekly = data2Weekly.sort((a, b) => {
+          return b.statValue - a.statValue;
+        });
+
+        allStarData.activeData = data2.sort((a, b) => {
+          return b.statValue - a.statValue;
+        });
+
+        let allStarData_sorted = allStarData;
+
+        setAllStarData(allStarData_sorted);
+      }
+    }
+  }, [
+    allStarData,
+    isPremium,
+    activePlayer,
+    activePlayerBase,
+    activePlayerCore,
+    activePlayerManta,
+    activePlayerSkale,
+    activePlayerViction,
+    activePlayerTaiko,
+    activePlayerStar,
+    activePlayerStarWeekly,
+    userId,
+  ]);
 
   useEffect(() => {
     setAllBnbData([
@@ -8243,6 +8446,8 @@ function Dashboard({
     // fetchWeeklyRecordsSkale();
     // fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchRecordsStarWeekly();
+
     // }
   }, []);
 
@@ -8457,58 +8662,6 @@ function Dashboard({
     }
   }, [dataNonce]);
 
-  // useEffect(() => {
-  //   if (
-  //     data &&
-  //     data.getPlayer &&
-  //     data.getPlayer.displayName &&
-  //     data.getPlayer.playerId &&
-  //     data.getPlayer.wallet &&
-  //     data.getPlayer.wallet.publicAddress &&
-  //     email
-  //   ) {
-  //     fetchMonthlyRecordsAroundPlayer(monthlyrecords);
-  //     fetchGenesisAroundPlayer(
-  //       data.getPlayer.playerId,
-  //       data.getPlayer.displayName
-  //     );
-  //     fetchWeeklyRecordsAroundPlayer(weeklyrecords);
-  //     fetchDailyRecordsAroundPlayer(dailyrecords);
-  //     fetchDailyRecordsAroundPlayerCore(dailyRecordsCore);
-  //     fetchWeeklyRecordsAroundPlayerCore(weeklyRecordsCore);
-  //     fetchMonthlyRecordsAroundPlayerCore(monthlyRecordsCore);
-  //     fetchDailyRecordsAroundPlayerViction(dailyRecordsViction);
-  //     fetchWeeklyRecordsAroundPlayerViction(weeklyRecordsViction);
-  //     fetchMonthlyRecordsAroundPlayerViction(monthlyRecordsViction);
-  //     // fetchDailyRecordsAroundPlayerManta(dailyRecordsManta);
-  //     // fetchWeeklyRecordsAroundPlayerManta(weeklyRecordsManta);
-  //     // fetchMonthlyRecordsAroundPlayerManta(monthlyRecordsManta);
-  //     fetchDailyRecordsAroundPlayerSkale(dailyRecordsSkale);
-  //     fetchWeeklyRecordsAroundPlayerSkale(weeklyRecordsSkale);
-  //     fetchMonthlyRecordsAroundPlayerSkale(monthlyRecordsSkale);
-  //   }
-  // }, [
-  //   data,
-  //   email,
-  //   weeklyrecords,
-  //   dailyRecordsSkale,
-  //   goldenPassRemainingTime,
-  //   monthlyrecords,
-  //   dailyrecords,
-  //   userId,
-  //   username,
-  //   isPremium,
-  //   dailyRecordsCore,
-  //   weeklyRecordsCore,
-  //   monthlyRecordsCore,
-  //   dailyRecordsViction,
-  //   weeklyRecordsViction,
-  //   monthlyRecordsViction,
-  //   dailyRecordsManta,
-  //   weeklyRecordsManta,
-  //   monthlyRecordsManta,
-  // ]);
-
   useEffect(() => {
     if (
       data &&
@@ -8626,7 +8779,7 @@ function Dashboard({
   }, [userWallet, coinbase, chainId]);
 
   const hashValue = window.location.hash;
-  // console.log(allSkaleData)
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0"
@@ -9458,6 +9611,7 @@ function Dashboard({
                             </button>
                           </div>
                           <GlobalLeaderboard
+                            leaderboardBtn={leaderboardBtn}
                             genesisData={genesisData}
                             previousgenesisData={previousgenesisData}
                             previousGenesisVersion={previousGenesisVersion}

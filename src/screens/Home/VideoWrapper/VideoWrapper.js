@@ -959,6 +959,7 @@ const VideoWrapper = ({
               allStarData={allStarData}
               monthlyPlayers={monthlyPlayers}
               percent={percent}
+              leaderboardBtn={'monthly'}
             />
             {/* <NewHomeLeaderboard /> */}
           </div>
