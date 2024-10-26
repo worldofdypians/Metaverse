@@ -80,6 +80,7 @@ line-height: 24px; /* 171.429% */
   gap: 10px 16px;
   overflow-x: auto;
   @media screen and (max-width: 786px) {
+    height: 170px;
     // grid-template-columns: repeat(2, 1fr);
     width: 100%;
   }
@@ -124,22 +125,22 @@ line-height: 24px; /* 171.429% */
   }
 }
 
-.build-business-wrapper::before {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  content: "";
-  // background-image: url("./assets/businessLines.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
+// .build-business-wrapper::before {
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   bottom: 0;
+//   content: "";
+//   background-image: url("./assets/businessLines.svg");
+//   background-repeat: no-repeat;
+//   background-position: right;
+//   background-size: cover;
 
-  @media screen and (max-width: 786px) {
-    background-size: 100% 100%;
-  }
-}
+//   @media screen and (max-width: 786px) {
+//     background-size: 100% 100%;
+//   }
+// }
 
 .builders-bottom-wrapper {
   position: absolute;
