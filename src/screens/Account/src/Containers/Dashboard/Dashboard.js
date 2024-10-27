@@ -101,7 +101,7 @@ function Dashboard({
   monthlyPlayers,
   percent,
   onManageLogin,
-  authToken
+  authToken,
 }) {
   const { email, logout } = useAuth();
 
@@ -4554,11 +4554,15 @@ function Dashboard({
       .catch(async (err) => {
         if (err.response.status === 404) {
           await axios
-            .post(`https://api.worldofdypians.com/api/addUserRank`, {
-              walletAddress: coinbase,
-            }, {
-              headers: { Authorization: `Bearer ${authToken}` },
-            })
+            .post(
+              `https://api.worldofdypians.com/api/addUserRank`,
+              {
+                walletAddress: coinbase,
+              },
+              {
+                headers: { Authorization: `Bearer ${authToken}` },
+              }
+            )
             .then(async (data) => {
               const response2 = await axios.get(
                 `https://api.worldofdypians.com/api/userRanks/${coinbase}`
@@ -4567,8 +4571,6 @@ function Dashboard({
             });
         }
       });
-
- 
   };
 
   const metaverseBenefits = [
@@ -4897,10 +4899,10 @@ function Dashboard({
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
-     
+
         const signature = await signer.signMessage(
           `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-        ) 
+        );
 
         verifyWallet({
           variables: {
@@ -4908,11 +4910,11 @@ function Dashboard({
             signature: signature,
           },
         }).then(() => {
-            onManageLogin(
-              signature,
-              `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
-            );
-          
+          onManageLogin(
+            signature,
+            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+          );
+
           setsyncStatus("success");
           setTimeout(() => {
             setshowSyncModal(false);
@@ -6107,7 +6109,8 @@ function Dashboard({
     if (userId !== undefined && userId !== null) {
       try {
         const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`, {
+          `https://api.worldofdypians.com/user-favorites/${userId}`,
+          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
@@ -7245,7 +7248,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7321,7 +7325,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7402,7 +7407,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "viction subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7478,7 +7484,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7553,7 +7560,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7684,7 +7692,8 @@ function Dashboard({
                 multiplier: "yes",
                 chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
-              }, {
+              },
+              {
                 headers: { Authorization: `Bearer ${authToken}` },
               }
             )
@@ -7746,7 +7755,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB BinanceWallet",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -7825,7 +7835,8 @@ function Dashboard({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -8683,7 +8694,7 @@ function Dashboard({
                       className={`col-12 d-flex flex-column gap-3  mt-5 mt-lg-0 ${classes.containerPlayer}`}
                     >
                       <ProfileCard
-                      authToken={authToken}
+                        authToken={authToken}
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
                         discountPercentageTaiko={discountPercentageTaiko}
@@ -10879,6 +10890,110 @@ function Dashboard({
                                 >
                                   Switch to Taiko
                                 </button>
+                              </div>
+                            ) : isConnected && coinbase ? (
+                              <div className="d-flex align-items-center gap-3 justify-content-center">
+                                <div
+                                  className={` ${
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }`}
+                                >
+                                  <button
+                                    className={`btn ${
+                                      approveStatus === "fail" ||
+                                      !coinbase ||
+                                      isApproved
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    } px-4`}
+                                    disabled={
+                                      approveStatus === "fail" ||
+                                      !coinbase ||
+                                      isApproved
+                                        ? true
+                                        : false
+                                    }
+                                    onClick={(e) => handleApprove(e)}
+                                  >
+                                    {loadspinner === false &&
+                                    (approveStatus === "initial" ||
+                                      approveStatus === "deposit" ||
+                                      approveStatus === "approveAmount" ||
+                                      approveStatus === "failsubscribe" ||
+                                      approveStatus === "successsubscribe") ? (
+                                      <>
+                                        Approve{" "}
+                                        {approveStatus === "approveAmount"
+                                          ? "token"
+                                          : nftPremium_total > 0
+                                          ? "NFT"
+                                          : ""}
+                                      </>
+                                    ) : loadspinner === false &&
+                                      approveStatus === "fail" ? (
+                                      "Failed"
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        Processing
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
+                                        ></div>{" "}
+                                      </div>
+                                    )}
+                                  </button>
+                                </div>
+                                <div
+                                  className={` ${
+                                    isApproved === false
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }`}
+                                >
+                                  <button
+                                    className={`btn ${
+                                      isApproved === false
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    } px-4`}
+                                    onClick={() => handleSubscribe()}
+                                  >
+                                    {loadspinnerSub === false &&
+                                    (approveStatus === "initial" ||
+                                      approveStatus === "fail" ||
+                                      approveStatus === "deposit") ? (
+                                      <>
+                                        {discountPercentage > 0 ||
+                                        nftPremium_total > 0
+                                          ? "Redeem"
+                                          : "Buy"}
+                                      </>
+                                    ) : loadspinnerSub === false &&
+                                      approveStatus === "successsubscribe" ? (
+                                      "Success"
+                                    ) : loadspinnerSub === false &&
+                                      approveStatus === "failsubscribe" ? (
+                                      "Failed"
+                                    ) : (
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
+                                      ></div>
+                                    )}
+                                  </button>
+                                </div>
                               </div>
                             ) : (
                               <div
