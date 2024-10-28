@@ -68,6 +68,7 @@ const GlobalLeaderboard = ({
   monthlyPlayers,
   percent,
   leaderboardBtn,
+  userDataStarWeekly
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -128,7 +129,7 @@ const GlobalLeaderboard = ({
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
-
+ 
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -229,16 +230,22 @@ const GlobalLeaderboard = ({
               </div>
             </OutsideClickHandler>
           </div>
-          <div className="d-flex flex-column">
-            <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
-            <h6
-              className="global-leaderboard-title d-flex algin-items-center"
-              style={{ color: "#F4E27B" }}
-            >
-              LEADERBOARD
-            </h6>
-          </div>
-          <img src={globalIcon} alt="" />
+          {screen !== "dash" && (
+            <div className="d-flex flex-column">
+              <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
+              <h6
+                className="global-leaderboard-title d-flex algin-items-center"
+                style={{ color: "#F4E27B" }}
+              >
+                LEADERBOARD
+              </h6>
+            </div>
+          )}
+          <img
+            src={globalIcon}
+            alt=""
+            className={screen === "dash" && "invisible"}
+          />
         </div>
         <div className={` ${screen !== "home" && "table-outer-margin"}  p-0`}>
           <table className="playerTable w-100" style={{ position: "relative" }}>
@@ -290,7 +297,7 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {Number(item.position) + 1}
+                        {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <div className="playerName-inner">
@@ -472,7 +479,7 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {Number(item.position) + 1}
+                        {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <div className="playerName-inner">
@@ -588,7 +595,7 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {Number(item.position) + 1}
+                        {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <img
@@ -648,8 +655,7 @@ const GlobalLeaderboard = ({
 
       {screen === "dash" &&
         allStarData &&
-        leaderboardBtn === "monthly" &&
-        allStarData.is_active === false &&
+        leaderboardBtn === "monthly"  &&
         allStarData.player_data.displayName &&
         [allStarData.player_data].map((item, index) => {
           return (
@@ -679,7 +685,7 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img src={star} alt="" style={{ width: 30, height: 30 }} />
-                    {getFormattedNumber(item.statValue, 0)}
+                    {getFormattedNumber(userDataStar, 0)}
                   </div>
                 </div>
               </div>
@@ -689,8 +695,7 @@ const GlobalLeaderboard = ({
 
       {screen === "dash" &&
         allStarData &&
-        leaderboardBtn === "weekly" &&
-        allStarData.is_active_weekly === false &&
+        leaderboardBtn === "weekly"  &&
         allStarData.player_data_weekly.displayName &&
         [allStarData.is_active_weekly].map((item, index) => {
           return (
@@ -720,7 +725,7 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img src={star} alt="" style={{ width: 30, height: 30 }} />
-                    {getFormattedNumber(item.statValue, 0)}
+                    {getFormattedNumber(userDataStarWeekly, 0)}
                   </div>
                 </div>
               </div>

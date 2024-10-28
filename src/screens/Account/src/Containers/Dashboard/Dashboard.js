@@ -125,7 +125,7 @@ function Dashboard({
   const userId = data?.getPlayer?.playerId;
   const username = data?.getPlayer?.displayName;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
-  
+
   const chainDropdowns = [
     {
       name: "Ethereum",
@@ -1162,10 +1162,12 @@ function Dashboard({
 
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
 
-
   const dataFetchedRef = useRef(false);
 
   const [allData, setAllData] = useState([]);
+  const [extraStars, setExtraStars] = useState(false);
+  const [addedUser, setaddedUser] = useState(false);
+
   const [allBnbData, setAllBnbData] = useState([]);
   const [allSkaleData, setAllSkaleData] = useState([]);
   const [allCoreData, setAllCoreData] = useState([]);
@@ -2091,7 +2093,6 @@ function Dashboard({
     }
   };
 
-
   const fetchPreviousWinnersManta = async (version) => {
     if (version != 0) {
       const data = {
@@ -2884,7 +2885,6 @@ function Dashboard({
   //   }
   // };
 
-
   const fetchDailyRecordsTaiko = async () => {
     const data = {
       StatisticName: "LeaderboardTaikoDaily",
@@ -2914,7 +2914,6 @@ function Dashboard({
       }
     }
   };
-
 
   // const fetchWeeklyRecordsTaiko = async () => {
   //   const data = {
@@ -2980,7 +2979,6 @@ function Dashboard({
   //   }
   // };
 
-
   const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardTaikoDaily",
@@ -3039,7 +3037,6 @@ function Dashboard({
       }
     }
   };
-
 
   // const fetchWeeklyRecordsAroundPlayerTaiko = async (itemData) => {
   //   const data = {
@@ -3279,7 +3276,6 @@ function Dashboard({
     }
   };
 
-
   // const fetchWeeklyRecordsSkale = async () => {
   //   const data = {
   //     StatisticName: "LeaderboardSkaleWeekly",
@@ -3393,7 +3389,6 @@ function Dashboard({
       }
     }
   };
-
 
   // const fetchWeeklyRecordsAroundPlayerSkale = async (itemData) => {
   //   const data = {
@@ -3528,6 +3523,67 @@ function Dashboard({
       setStarRecords(finalData);
     }
   };
+
+  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
+    const data = {
+      StatisticName: "GlobalStarMonthlyLeaderboard",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        const userPosition = testArray[0].position;
+        // setuserCollectedStars(testArray[0].statValue);
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition]) +
+                  Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStar(
+            testArray[0].statValue !== 0
+              ? userPosition > 100
+                ? 0
+                : userPosition === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[userPosition])
+              : 0
+          );
+        }
+      }
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        // if (testArray.length > 0 && testArray2.length > 0) {
+        //   setActivePlayerStar(true);
+        //   setUserDataStar([]);
+        // } else
+        if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerStar(false);
+          setUserDataStar(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerStar(false);
+        setUserDataStar(...testArray);
+      }
+    }
+  };
+
   const fetchPreviousWinnersStar = async (version) => {
     if (version != 0) {
       const data = {
@@ -3566,8 +3622,8 @@ function Dashboard({
       if (testArray.length > 0) {
         setActivePlayerStar(true);
         const userPosition = testArray[0].position;
-        
-        setuserCollectedStars(testArray[0].statValue);
+
+        // setuserCollectedStars(testArray[0].statValue);
         setUserDataStar(...testArray);
         if (goldenPassRemainingTime) {
           setDataAmountStar(
@@ -3594,65 +3650,6 @@ function Dashboard({
       } else if (testArray.length === 0) {
         setActivePlayerStar(false);
         fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
-      }
-    }
-  };
-
-  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-      if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-        setuserCollectedStars(testArray[0].statValue);
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
-      }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStar(true);
-          setUserDataStar([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStar(false);
-          setUserDataStar(...testArray);
-        }
-      } else if (testArray.length > 0) {
-        setActivePlayerStar(false);
-        setUserDataStar(...testArray);
       }
     }
   };
@@ -4156,7 +4153,7 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (allStarData && allStarData.activeData) {
+    if (allStarData && allStarData.activeData && allStarData.activeDataWeekly) {
       const playerActiveArray = [
         activePlayer,
         activePlayerBase,
@@ -4168,32 +4165,93 @@ function Dashboard({
       ];
       let checker = (arr) => arr.every((v) => v === false);
       if (!checker(playerActiveArray) && isPremium === true) {
-        const data2 = allStarData.activeData.map((item) => {
-          if (item.playerId === userId) {
-            const newStatValue = item.statValue + 50;
+        setExtraStars(true);
+        if (
+          (activePlayerStar || activePlayerStarWeekly) &&
+          addedUser === false
+        ) {
+          
+          const data2 = allStarData.activeData.map((item) => {
+            if (item.playerId === userId) {
+              const newStatValue = userCollectedStars + 50;
+              setuserCollectedStars(newStatValue);
+
+              return { ...item, statValue: newStatValue };
+            } else return { ...item };
+          });
+          const data2Weekly = allStarData.activeDataWeekly.map((item) => {
+            if (item.playerId === userId) {
+              const newStatValue = item.statValue + 50;
+              setuserCollectedStarsWeekly(newStatValue);
+              return { ...item, statValue: newStatValue };
+            } else return { ...item };
+          });
+          allStarData.activeDataWeekly = data2Weekly.sort((a, b) => {
+            return b.statValue - a.statValue;
+          });
+          allStarData.activeData = data2.sort((a, b) => {
+            return b.statValue - a.statValue;
+          });
+
+          let allStarData_sorted = allStarData;
+
+          setAllStarData(allStarData_sorted);
+        } else {
+ 
+          if (
+            !isNaN(allStarData.player_data.statValue) &&
+            !allStarData.activeData.find((item) => {
+              return item.playerId === userId;
+            }) &&
+            !addedUser
+          ) {
+            setaddedUser(true);
+            const newStatValue = allStarData.player_data.statValue+ 50
+           
+            allStarData.player_data.statValue = newStatValue;
+           
             setuserCollectedStars(newStatValue);
+            allStarData.activeData.push(allStarData.player_data);
+            const data2 = allStarData;
 
-            return { ...item, statValue: newStatValue };
-          } else return { ...item };
-        });
-        const data2Weekly = allStarData.activeDataWeekly.map((item) => {
-          if (item.playerId === userId) {
-            const newStatValue = item.statValue + 50;
-            setuserCollectedStarsWeekly(newStatValue);
-            return { ...item, statValue: newStatValue };
-          } else return { ...item };
-        });
-        allStarData.activeDataWeekly = data2Weekly.sort((a, b) => {
-          return b.statValue - a.statValue;
-        });
+            // console.log(data2);
 
-        allStarData.activeData = data2.sort((a, b) => {
-          return b.statValue - a.statValue;
-        });
+            allStarData.activeData = data2.activeData.sort((a, b) => {
+              return b.statValue - a.statValue;
+            });
 
-        let allStarData_sorted = allStarData;
+            // let allStarData_sorted = allStarData;
 
-        setAllStarData(allStarData_sorted);
+            setAllStarData(allStarData);
+          }
+          if (
+            !isNaN(allStarData.player_data_weekly.statValue) &&
+            !allStarData.activeDataWeekly.find((item) => {
+              return item.playerId === userId;
+            }) &&
+            !addedUser
+          ) {
+            // setaddedUser(true);
+            allStarData.player_data_weekly.statValue =
+              userCollectedStarsWeekly + 50;
+
+            setuserCollectedStarsWeekly(userCollectedStarsWeekly + 50);
+            allStarData.activeDataWeekly.push(allStarData.player_data_weekly);
+            const data2 = allStarData;
+
+            // console.log(data2);
+
+            allStarData.activeDataWeekly = data2.activeDataWeekly.sort(
+              (a, b) => {
+                return b.statValue - a.statValue;
+              }
+            );
+
+            // let allStarData_sorted = allStarData;
+
+            setAllStarData(allStarData);
+          }
+        }
       }
     }
   }, [
@@ -4210,7 +4268,7 @@ function Dashboard({
     activePlayerStarWeekly,
     userId,
   ]);
-
+  // console.log(allStarData, userCollectedStars);
   useEffect(() => {
     setAllBnbData([
       {
@@ -8780,7 +8838,7 @@ function Dashboard({
     if (coinbase && isConnected) {
       handleRefreshCountdown700();
     }
-  }, [coinbase]);
+  }, [coinbase, isConnected]);
 
   useEffect(() => {
     if (success === true) {
@@ -9598,7 +9656,16 @@ function Dashboard({
                             backgroundSize: "auto",
                           }}
                         >
-                          <div className="d-flex align-items-center justify-content-end">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <h2
+                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitleGlobal gap-2`}
+                            >
+                              <mark className={`font-organetto bundletag`}>
+                                GLOBAL
+                              </mark>{" "}
+                              LEADERBOARDS
+                            </h2>
+
                             <img
                               src={xMark}
                               onClick={() => setGlobalLeaderboard(false)}
@@ -9642,7 +9709,8 @@ function Dashboard({
                             availableTime={goldenPassRemainingTime}
                             username={username}
                             userId={userId}
-                            userDataStar={userDataStar}
+                            userDataStar={userCollectedStars}
+                            userDataStarWeekly={userCollectedStarsWeekly}
                             monthlyPlayers={monthlyPlayers}
                             percent={percent}
                           />

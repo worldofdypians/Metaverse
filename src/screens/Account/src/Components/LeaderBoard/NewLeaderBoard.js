@@ -955,7 +955,7 @@ const NewLeaderBoard = ({
                                             }`}
                                           >
                                             <td className="playerData col-1 font-montserrat">
-                                              {parseInt(item.position) + 1}
+                                              {parseInt(index) + 1}
                                             </td>
                                             <td className="playerName col-3 font-montserrat">
                                               {item.displayName === username ? (
