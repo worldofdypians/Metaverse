@@ -74,6 +74,63 @@
   }
 }
 
+.dashboard-stars-wrapper {
+  background: url(./assets/dashboardStarsWrapper.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+
+.dashboard-goldenpass-wrapper {
+  background: url(./assets/dashboardGoldenBg.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  position: relative;
+}
+
+.dashboard-premium-wrapper {
+  background: url(./assets/dashboardPremiumBg.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 8px;
+  position: relative;
+}
+
+.dashboard-main-white-text {
+  color: #f7f7ff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.dashboard-collected-stars-text {
+  color: #ffefca;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.144px;
+}
+
+ 
+
+.dashboardimg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 54px;
+height: 54px;
+}
+
 .advertisment-img {
   height: 120px;
   border-radius: 10px;
@@ -131,8 +188,6 @@
   filter: drop-shadow(0px 5px 10px rgba(1, 152, 47, 1));
 }
 
-
-
 .flag-content {
   position: absolute;
   left: 0;
@@ -155,38 +210,46 @@
 
 @-webkit-keyframes glowText {
   from {
-    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3), 0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
+    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3),
+      0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3),
+      0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3), 0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3), 0 0 20px rgba(20, 197, 205, 0.3);
+    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3),
+      0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3),
+      0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3),
+      0 0 20px rgba(20, 197, 205, 0.3);
   }
 }
 @keyframes glowText {
   from {
-    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3), 0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
+    text-shadow: 0 0 20 #fff, 0 0 20 #fff, 0 0 20 rgba(20, 197, 205, 0.3),
+      0 0 20 rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3),
+      0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3);
   }
   to {
-    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3), 0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3), 0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3), 0 0 20px rgba(20, 197, 205, 0.3);
+    text-shadow: 0 0 20px #fff, 0 0 7.5px rgba(20, 197, 205, 0.3),
+      0 0 10px rgba(20, 197, 205, 0.3), 0 0 12.5px rgba(20, 197, 205, 0.3),
+      0 0 15px rgba(20, 197, 205, 0.3), 0 0 17.5px rgba(20, 197, 205, 0.3),
+      0 0 20px rgba(20, 197, 205, 0.3);
   }
 }
 
-.leaderboard-inner-title{
+.leaderboard-inner-title {
   color: #fff;
-text-align: center;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-position: absolute;
-width: fit-content;
-left: 0;
-right: 0;
-bottom: 0px;
-margin: auto;
-text-shadow: 0 0 15px;
--webkit-animation: glowText 2s ease-in-out infinite alternate;
--moz-animation: glowText 2s ease-in-out infinite alternate;
-animation: glowText 2s ease-in-out infinite alternate;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  width: fit-content;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  margin: auto;
+  text-shadow: 0 0 15px;
+  -webkit-animation: glowText 2s ease-in-out infinite alternate;
+  -moz-animation: glowText 2s ease-in-out infinite alternate;
+  animation: glowText 2s ease-in-out infinite alternate;
 }
-
-

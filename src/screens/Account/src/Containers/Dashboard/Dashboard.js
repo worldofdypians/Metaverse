@@ -3613,7 +3613,6 @@ function Dashboard({
 
         // setuserCollectedStars(testArray[0].statValue);
         setUserDataStar(...testArray);
-        
       } else if (testArray.length === 0) {
         setActivePlayerStar(false);
         fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
@@ -3997,7 +3996,7 @@ function Dashboard({
   };
 
   const addPointsForPremium = (user, points) => {
-    if (user && user.statValue !== undefined && user.statValue !=="---") {
+    if (user && user.statValue !== undefined && user.statValue !== "---") {
       return { ...user, statValue: user.statValue + points };
     }
   };
@@ -4016,9 +4015,8 @@ function Dashboard({
         if (b.statValue === "---" || b.playerId === undefined) return -1;
         return b.statValue - a.statValue;
       })
-      .slice(0, 100); 
+      .slice(0, 100);
   };
-  
 
   useEffect(() => {
     if (logoutCount > 0) {
@@ -4123,21 +4121,21 @@ function Dashboard({
 
   useEffect(() => {
     if (!lastUpdated.current) {
-    setAllStarData({
-      rewards: monthlyStarPrizes,
-      rewardsWeekly: weeklyStarPrizes,
-      premium_rewards: monthlyStarPrizes,
-      premium_rewards_weekly: monthlyStarPrizes,
-      activeData: starRecords,
-      activeDataWeekly: starRecordsWeekly,
-      previousData: prevDataStar,
-      previousDataWeekly: prevDataStarWeekly,
-      player_data: userDataStar,
-      player_data_weekly: userDataStarWeekly,
-      is_active: activePlayerStar,
-      is_active_weekly: activePlayerStarWeekly,
-    });
-  }
+      setAllStarData({
+        rewards: monthlyStarPrizes,
+        rewardsWeekly: weeklyStarPrizes,
+        premium_rewards: monthlyStarPrizes,
+        premium_rewards_weekly: monthlyStarPrizes,
+        activeData: starRecords,
+        activeDataWeekly: starRecordsWeekly,
+        previousData: prevDataStar,
+        previousDataWeekly: prevDataStarWeekly,
+        player_data: userDataStar,
+        player_data_weekly: userDataStarWeekly,
+        is_active: activePlayerStar,
+        is_active_weekly: activePlayerStarWeekly,
+      });
+    }
   }, [
     lastUpdated,
     starRecords,
@@ -4269,7 +4267,6 @@ function Dashboard({
   //   userId,
   // ]);
 
-
   useEffect(() => {
     const playerActiveArray = [
       activePlayer,
@@ -4278,10 +4275,10 @@ function Dashboard({
       activePlayerManta,
       activePlayerSkale,
       activePlayerViction,
-      true,
+      activePlayerTaiko,
     ];
     const allFalse = playerActiveArray.every((v) => v === false);
-
+ 
     // Exit if critical dependencies aren't available
     if (
       !allStarData.activeData ||
@@ -4298,131 +4295,259 @@ function Dashboard({
 
       let userUpdated = false;
       let userUpdatedWeekly = false;
-
-      // Check if user is in top 100 and adjust points if premium
-      if (isUserInTop100(updatedActiveData, userId)) {
-        const userIndex = updatedActiveData.findIndex(
-          (item) => item.playerId === userId
-        );
-        updatedActiveData[userIndex] = addPointsForPremium(
-          updatedActiveData[userIndex],
-          50
-        );
-        userUpdated = true;
-      } else if (
-        isPremium &&
-        !allFalse &&
-        userDataStar.statValue !== undefined &&
-        userDataStarWeekly.statValue !== undefined
-      ) {
-        // User not in top 100, add points and check ranking again
-        const updatedUser = addPointsForPremium(userDataStar, 50);
-        updatedActiveData.push(updatedUser);
-        userUpdated = true;
-      }
-
-      if (isUserInTop100(updatedActiveDataWeekly, userId)) {
-        const userIndex = updatedActiveDataWeekly.findIndex(
-          (item) => item.playerId === userId
-        );
-        updatedActiveDataWeekly[userIndex] = addPointsForPremium(
-          updatedActiveDataWeekly[userIndex],
-          50
-        );
-        userUpdatedWeekly = true;
-      } else if (isPremium && !allFalse && userDataStarWeekly.statValue !== undefined) {
-        const updatedWeeklyUser = addPointsForPremium(userDataStarWeekly, 50);
-        updatedActiveDataWeekly.push(updatedWeeklyUser);
-        userUpdatedWeekly = true;
-      }
-
-
-      if (userUpdated || userUpdatedWeekly) { 
-        const sortedActiveData = updateLeaderboard2(updatedActiveData);
-        const playerIndex = sortedActiveData.findIndex(
-          (item) => item.playerId === userId
-        );
-const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
-          if (index === playerIndex) {
-            return { ...item, position: playerIndex };
-          } else return { ...item };
-        });
-
+      if (!allFalse) {
+        // Check if user is in top 100 and adjust points if premium
+        if (isUserInTop100(updatedActiveData, userId)) {
+          const userIndex = updatedActiveData.findIndex(
+            (item) => item.playerId === userId
+          );
+          updatedActiveData[userIndex] = addPointsForPremium(
+            updatedActiveData[userIndex],
+            50
+          );
+          userUpdated = true;
+        } else if (
+          isPremium &&
+          !allFalse &&
+          userDataStar.statValue !== undefined &&
+          userDataStarWeekly.statValue !== undefined
+        ) {
+          // User not in top 100, add points and check ranking again
         
-        const sortedActiveDataWeekly = updateLeaderboard2(updatedActiveDataWeekly);
-        
-
-        const playerIndexWeekly = sortedActiveDataWeekly.findIndex(
-          (item) => item.playerId === userId
-        );
-
-        const sortedActiveDataFinalWeekly = sortedActiveDataWeekly.map((item, index) => {
-          if (index === playerIndexWeekly) {
-            return { ...item, position: playerIndexWeekly };
-          } else return { ...item };
-        });
-
-        
-        setUserDataStar(sortedActiveDataFinal[playerIndex])
-        setUserDataStarWeekly(sortedActiveDataFinalWeekly[playerIndexWeekly])
-
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            sortedActiveDataFinal[playerIndex].statValue !== 0
-              ? playerIndex > 100
-                ? 0
-                : playerIndex === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[playerIndex]) +
-                  Number(monthlyStarPrizes[playerIndex])
-              : 0
-          );
-          setDataAmountStarWeekly(
-            sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
-              ? playerIndexWeekly > 100
-                ? 0
-                : playerIndexWeekly === 100
-                ? Number(weeklyStarPrizes[99]) + Number(weeklyStarPrizes[99])
-                : Number(weeklyStarPrizes[playerIndexWeekly]) +
-                  Number(weeklyStarPrizes[playerIndexWeekly])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            sortedActiveDataFinal[playerIndex].statValue !== 0
-              ? playerIndex > 100
-                ? 0
-                : playerIndex === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[playerIndex])
-              : 0
-          );
-          setDataAmountStarWeekly(
-            sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
-              ? playerIndexWeekly > 100
-                ? 0
-                : playerIndexWeekly === 100
-                ? Number(weeklyStarPrizes[99])
-                : Number(weeklyStarPrizes[playerIndexWeekly])
-              : 0
-          );
+          const updatedUser = addPointsForPremium(userDataStar, 50);
+          updatedActiveData.push(updatedUser);
+          userUpdated = true;
         }
 
-        setAllStarData((prevData) => ({
-          ...prevData,
-          activeData: sortedActiveDataFinal,
-          activeDataWeekly: sortedActiveDataFinalWeekly,
+        if (isUserInTop100(updatedActiveDataWeekly, userId)) {
+          const userIndex = updatedActiveDataWeekly.findIndex(
+            (item) => item.playerId === userId
+          );
+          updatedActiveDataWeekly[userIndex] = addPointsForPremium(
+            updatedActiveDataWeekly[userIndex],
+            50
+          );
+          userUpdatedWeekly = true;
+        } else if (
+          isPremium &&
+          !allFalse &&
+          userDataStarWeekly.statValue !== undefined
+        ) {
+          const updatedWeeklyUser = addPointsForPremium(userDataStarWeekly, 50);
+          updatedActiveDataWeekly.push(updatedWeeklyUser);
+          userUpdatedWeekly = true;
+        }
 
-          player_data: sortedActiveDataFinal[playerIndex],
-          player_data_weekly: sortedActiveDataFinalWeekly[playerIndexWeekly],
+        if (userUpdated || userUpdatedWeekly) {
+          const sortedActiveData = updateLeaderboard2(updatedActiveData);
+          const playerIndex = sortedActiveData.findIndex(
+            (item) => item.playerId === userId
+          );
+          const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
+            if (index === playerIndex) {
+              return { ...item, position: playerIndex };
+            } else return { ...item };
+          });
 
-        }));
-        lastUpdated.current = true; // Mark as updated to avoid repeated updates
+          const sortedActiveDataWeekly = updateLeaderboard2(
+            updatedActiveDataWeekly
+          );
+
+          const playerIndexWeekly = sortedActiveDataWeekly.findIndex(
+            (item) => item.playerId === userId
+          );
+
+          const sortedActiveDataFinalWeekly = sortedActiveDataWeekly.map(
+            (item, index) => {
+              if (index === playerIndexWeekly) {
+                return { ...item, position: playerIndexWeekly };
+              } else return { ...item };
+            }
+          );
+
+          setUserDataStar(sortedActiveDataFinal[playerIndex]);
+          setUserDataStarWeekly(sortedActiveDataFinalWeekly[playerIndexWeekly]);
+
+          if (goldenPassRemainingTime) {
+            setDataAmountStar(
+              sortedActiveDataFinal[playerIndex].statValue !== 0
+                ? playerIndex > 100
+                  ? 0
+                  : playerIndex === 100
+                  ? Number(monthlyStarPrizes[99]) +
+                    Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[playerIndex]) +
+                    Number(monthlyStarPrizes[playerIndex])
+                : 0
+            );
+            setDataAmountStarWeekly(
+              sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+                ? playerIndexWeekly > 100
+                  ? 0
+                  : playerIndexWeekly === 100
+                  ? Number(weeklyStarPrizes[99]) + Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[playerIndexWeekly]) +
+                    Number(weeklyStarPrizes[playerIndexWeekly])
+                : 0
+            );
+          } else if (!goldenPassRemainingTime) {
+            setDataAmountStar(
+              sortedActiveDataFinal[playerIndex].statValue !== 0
+                ? playerIndex > 100
+                  ? 0
+                  : playerIndex === 100
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[playerIndex])
+                : 0
+            );
+            setDataAmountStarWeekly(
+              sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+                ? playerIndexWeekly > 100
+                  ? 0
+                  : playerIndexWeekly === 100
+                  ? Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[playerIndexWeekly])
+                : 0
+            );
+          }
+
+          setAllStarData((prevData) => ({
+            ...prevData,
+            activeData: sortedActiveDataFinal,
+            activeDataWeekly: sortedActiveDataFinalWeekly,
+
+            player_data: sortedActiveDataFinal[playerIndex],
+            player_data_weekly: sortedActiveDataFinalWeekly[playerIndexWeekly],
+          }));
+          lastUpdated.current = true; // Mark as updated to avoid repeated updates
+        }
+      } else {
+        
+        if (isUserInTop100(updatedActiveData, userId)) {
+          const userIndex = updatedActiveData.findIndex(
+            (item) => item.playerId === userId
+          );
+          updatedActiveData[userIndex] = addPointsForPremium(
+            updatedActiveData[userIndex],
+            0
+          );
+          userUpdated = true;
+        } else if (
+          userDataStar.statValue !== undefined &&
+          userDataStarWeekly.statValue !== undefined
+        ) {
+          // User not in top 100, add points and check ranking again
+         
+          const updatedUser = addPointsForPremium(userDataStar, 0);
+          updatedActiveData.push(updatedUser);
+          userUpdated = true;
+        }
+ 
+        if (isUserInTop100(updatedActiveDataWeekly, userId)) {
+          const userIndex = updatedActiveDataWeekly.findIndex(
+            (item) => item.playerId === userId
+          );
+          updatedActiveDataWeekly[userIndex] = addPointsForPremium(
+            updatedActiveDataWeekly[userIndex],
+            0
+          );
+          userUpdatedWeekly = true;
+        } else if (userDataStarWeekly.statValue !== undefined) {
+          const updatedWeeklyUser = addPointsForPremium(userDataStarWeekly, 0);
+          updatedActiveDataWeekly.push(updatedWeeklyUser);
+          userUpdatedWeekly = true;
+        }
+
+        if (userUpdated || userUpdatedWeekly) {
+          const sortedActiveData = updateLeaderboard2(updatedActiveData);
+          const playerIndex = sortedActiveData.findIndex(
+            (item) => item.playerId === userId
+          );
+          const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
+            if (index === playerIndex) {
+              return { ...item, position: playerIndex };
+            } else return { ...item };
+          });
+
+          const sortedActiveDataWeekly = updateLeaderboard2(
+            updatedActiveDataWeekly
+          );
+
+          const playerIndexWeekly = sortedActiveDataWeekly.findIndex(
+            (item) => item.playerId === userId
+          );
+
+          const sortedActiveDataFinalWeekly = sortedActiveDataWeekly.map(
+            (item, index) => {
+              if (index === playerIndexWeekly) {
+                return { ...item, position: playerIndexWeekly };
+              } else return { ...item };
+            }
+          );
+
+          setUserDataStar(sortedActiveDataFinal[playerIndex]);
+          setUserDataStarWeekly(sortedActiveDataFinalWeekly[playerIndexWeekly]);
+
+          if (goldenPassRemainingTime) {
+            setDataAmountStar(
+              sortedActiveDataFinal[playerIndex].statValue !== 0
+                ? playerIndex > 100
+                  ? 0
+                  : playerIndex === 100
+                  ? Number(monthlyStarPrizes[99]) +
+                    Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[playerIndex]) +
+                    Number(monthlyStarPrizes[playerIndex])
+                : 0
+            );
+            setDataAmountStarWeekly(
+              sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+                ? playerIndexWeekly > 100
+                  ? 0
+                  : playerIndexWeekly === 100
+                  ? Number(weeklyStarPrizes[99]) + Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[playerIndexWeekly]) +
+                    Number(weeklyStarPrizes[playerIndexWeekly])
+                : 0
+            );
+          } else if (!goldenPassRemainingTime) {
+            setDataAmountStar(
+              sortedActiveDataFinal[playerIndex].statValue !== 0
+                ? playerIndex > 100
+                  ? 0
+                  : playerIndex === 100
+                  ? Number(monthlyStarPrizes[99])
+                  : Number(monthlyStarPrizes[playerIndex])
+                : 0
+            );
+            setDataAmountStarWeekly(
+              sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+                ? playerIndexWeekly > 100
+                  ? 0
+                  : playerIndexWeekly === 100
+                  ? Number(weeklyStarPrizes[99])
+                  : Number(weeklyStarPrizes[playerIndexWeekly])
+                : 0
+            );
+          }
+
+          setAllStarData((prevData) => ({
+            ...prevData,
+            activeData: sortedActiveDataFinal.filter((item)=>{return item.statValue!==0}),
+            activeDataWeekly: sortedActiveDataFinalWeekly.filter((item)=>{return item.statValue!==0}),
+
+            player_data: sortedActiveDataFinal[playerIndex],
+            player_data_weekly: sortedActiveDataFinalWeekly[playerIndexWeekly],
+          }));
+          lastUpdated.current = true; // Mark as updated to avoid repeated updates
+        }
       }
     }
   }, [
-    allStarData.activeData,allStarData.activeDataWeekly, // Avoid passing all `allStarData` if only activeData is crucial
-    userDataStar,userDataStarWeekly,
+    allStarData.activeData,
+    allStarData.activeDataWeekly, // Avoid passing all `allStarData` if only activeData is crucial
+    userDataStar,
+    userDataStarWeekly,
     userId,
     isPremium,
     activePlayer,
@@ -4431,8 +4556,9 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
     activePlayerManta,
     activePlayerSkale,
     activePlayerViction,
+    activePlayerTaiko,
   ]);
-  
+
   useEffect(() => {
     setAllBnbData([
       {
@@ -9115,7 +9241,7 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
-                        userDataStar={ allStarData.player_data?.statValue}
+                        userDataStar={allStarData.player_data?.statValue}
                         userDataPosition={allStarData.player_data?.position}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
@@ -9150,12 +9276,10 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
                           refetchPlayer();
-                          setuserCollectedStars(0)
-                          setuserCollectedStarsWeekly(0)
-                          setDataAmountStar(0)
-                          setDataAmountStarWeekly(0)
-
-
+                          setuserCollectedStars(0);
+                          setuserCollectedStarsWeekly(0);
+                          setDataAmountStar(0);
+                          setDataAmountStarWeekly(0);
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
@@ -9273,6 +9397,8 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                         handleShowPopup={(value) => {
                           setadClicked(value);
                         }}
+                        availableTime={goldenPassRemainingTime}
+                        userDataStar={allStarData.player_data?.statValue}
                       />
                       <NewWalletBalance
                         onDailyRewardsPopupOpen={() => {
@@ -9282,7 +9408,7 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                           setGenesisLeaderboard(true);
                         }}
                         authToken={authToken}
-                        userDataStar={dataAmountStar}
+                        userDataStar={dataAmountStar + dataAmountStarWeekly}
                         bnbEarnUsd={bnbEarnUsd}
                         dogePrice={dogePrice}
                         // weeklyplayerData={weeklyplayerDataAmount}
@@ -9878,9 +10004,7 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                             screen={"dash"}
                             availableTime={goldenPassRemainingTime}
                             username={username}
-                            userId={userId}
-                            userDataStar={userCollectedStars}
-                            userDataStarWeekly={userCollectedStarsWeekly}
+                            userId={userId} 
                             monthlyPlayers={monthlyPlayers}
                             percent={percent}
                           />
@@ -9934,7 +10058,7 @@ const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
                             // monthlyDataAmountSkale={monthlyDataAmountSkale}
                             userRank2={userRank2}
                             email={email}
-                            userDataStar={dataAmountStar}
+                            userDataStar={dataAmountStar + dataAmountStarWeekly}
                             allChests={allChests}
                             allSkaleChests={allSkaleChests}
                             allCoreChests={allCoreChests}

@@ -16,23 +16,29 @@ import landIcon from "./assets/landIcon.svg";
 import Slider from "react-slick";
 import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";
-import criticalHit from "./assets/criticalHit.jpg";
-import genesisLand from "./assets/genesisLand.jpg";
+import criticalHit from "./assets/criticalHit.webp";
+import genesisLand from "./assets/genesisLand.webp";
 import multiversAdMobile from "./assets/multiversAdMobile.png";
 import premiumAdMobile from "./assets/premiumAdMobile.png";
 import criticalHitMobile from "./assets/criticalHitMobile.jpg";
-import genesisLandMobile from "./assets/genesisLandMobile.jpg";
-import goldenAd from "./assets/goldenAd.png";
+import genesisLandMobile from "./assets/genesisLandMobile.webp";
+import goldenAd from "./assets/goldenAd.webp";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
-import dragonAd from "./assets/dragonAd.png";
+import dragonAd from "./assets/dragonAd.webp";
 import dragonAdMobile from "./assets/dragonAdMobile.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
+import circleArrow from "./assets/circleArrow.svg";
+import dashboardStar from "./assets/dashboardStar.svg";
+import premiumBadge from "../../../../Components/LeaderBoard/assets/premiumBadge.png";
+import goldenBadge from "../../../../Components/LeaderBoard/assets/goldenPassBadge.png";
+import getFormattedNumber from "../../../../Utils.js/hooks/get-formatted-number";
+
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <span className="livein-timer" style={{ fontSize: "18px" }}>
-      {days}d : {hours}h : {minutes}m
+    <span className="livein-timer2 fw-normal">
+      {days}D : {hours}H : {minutes}M
     </span>
   );
 };
@@ -43,6 +49,8 @@ const TopSection = ({
   onOpenGenesisLeaderboard,
   handleShowPopup,
   isPremium,
+  availableTime,
+  userDataStar,
 }) => {
   let testDay = new Date("2024-05-20T11:00:00.000+02:00");
   const navigate = useNavigate();
@@ -239,7 +247,92 @@ const TopSection = ({
           </div>
         </div>
       </div>
-      <div className="col-12 col-lg-8 ps-lg-0 mt-3 mt-lg-0">
+      <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
+        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
+          <div
+            className="dashboard-stars-wrapper w-100 p-2"
+            style={{ height: "120px" }}
+            onClick={onOpenGlobalLeaderboard}
+          >
+            <div className="d-flex flex-column h-100 justify-content-between">
+              <div className="d-flex flex-column">
+                <span className="dashboard-main-white-text">
+                  {getFormattedNumber(userDataStar ?? 0, 0)}
+                </span>
+                <span className="dashboard-collected-stars-text">
+                  Collected Stars
+                </span>
+              </div>
+              <div className="d-flex justify-content-start">
+                <img src={circleArrow} alt="" />
+              </div>
+            </div>
+            <img src={dashboardStar} alt="" className="dashboardimg" />
+          </div>
+          <div
+            className="dashboard-premium-wrapper w-100 p-2"
+            style={{ height: "120px" }}
+          >
+            <NavLink to='/account#premium'>
+            <div className="d-flex flex-column h-100 justify-content-between">
+              <div className="d-flex flex-column">
+                <span className="dashboard-main-white-text">Extra Stars</span>
+                <span
+                  className="dashboard-collected-stars-text"
+                  style={{ color: "#FFBA4E" }}
+                >
+                  {!isPremium ? "Premium" : "Activated"}
+                </span>
+              </div>
+              <div className="d-flex justify-content-start">
+                {!isPremium ? (
+                  <img src={circleArrow} alt="" />
+                ) : (
+                  <button
+                    className="activate-btn px-2 py-1"
+                    style={{
+                      background: "#AC1186",
+                    }}
+                  >
+                    Lifetime
+                  </button>
+                )}
+              </div>
+            </div>
+            <img src={premiumBadge} alt="" className="dashboardimg" /></NavLink>
+          </div>
+          <div
+            className="dashboard-goldenpass-wrapper w-100 p-2"
+            style={{ height: "120px" }}
+          >
+            <NavLink to='/marketplace/events/golden-pass'>
+            <div className="d-flex flex-column h-100 justify-content-between">
+              <div className="d-flex flex-column">
+                <span className="dashboard-main-white-text">Extra Rewards</span>
+                <span
+                  className="dashboard-collected-stars-text"
+                  style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
+                >
+                  {!availableTime ? "Golden Pass" : "Activated"}
+                </span>
+              </div>
+              <div className="d-flex justify-content-start">
+                {!availableTime ? (
+                  <img src={circleArrow} alt="" />
+                ) : (
+                  <Countdown
+                    date={Number(availableTime) * 1000}
+                    renderer={renderer}
+                  />
+                )}
+              </div>
+            </div>
+            <img src={goldenBadge} alt="" className="dashboardimg" />
+            </NavLink>
+          </div>
+        </div>
+      </div>
+      <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
         <div className="d-flex flex-column">
           <div
             className="promotion-container position-relative p-0"

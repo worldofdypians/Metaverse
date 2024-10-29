@@ -64,11 +64,9 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  userDataStar,
   monthlyPlayers,
   percent,
   leaderboardBtn,
-  userDataStarWeekly,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 

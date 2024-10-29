@@ -1430,7 +1430,6 @@ const NewLeaderBoard = ({
                               </table>
                             </div>{" "}
                             {leaderboard.is_active === false &&
-                              leaderboard.player_data.statValue > 0 &&
                               email &&
                               inactiveBoard === false &&
                               optionText !== "genesis" && (
@@ -1444,11 +1443,20 @@ const NewLeaderBoard = ({
                                             : "col-1"
                                         }`}
                                       >
-                                        {getFormattedNumber(
-                                          parseInt(
-                                            leaderboard.player_data.position
-                                          ) + 1,
-                                          0
+                                        {leaderboard.player_data.statValue >
+                                        0 ? (
+                                          <>
+                                            {getFormattedNumber(
+                                              parseInt(
+                                                leaderboard.player_data.position
+                                              ) + 1,
+                                              0
+                                            )}
+                                          </>
+                                        ) : (
+                                          <span style={{ fontSize: 11 }}>
+                                            No Rank
+                                          </span>
                                         )}
                                       </td>
                                       <td className="playerName col-3 font-montserrat">
