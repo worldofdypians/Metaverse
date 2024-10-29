@@ -385,10 +385,8 @@ const NewLeaderBoard = ({
   //   } else setisActive(true);
   // }, [countdown]);
 
- 
   useEffect(() => {
     setAllData(allBnbData);
- 
   }, []);
 
   return (
@@ -414,7 +412,9 @@ const NewLeaderBoard = ({
             <div className="d-flex flex-column flex-lg-row gap-3 align-items-start">
               <div className="d-flex flex-column gap-3 col-12 col-lg-5 h-auto justify-content-between">
                 <div className="d-flex flex-column gap-2">
-                  <span className="leaderboard-inner-title2 d-lg-block d-none">Select Chain</span>
+                  <span className="leaderboard-inner-title2 d-lg-block d-none">
+                    Select Chain
+                  </span>
                   <div className="new-leaderboard-btns-wrapper">
                     <div className="chains-container mt-0 gap-2 d-lg-grid d-flex">
                       <button
@@ -689,28 +689,27 @@ const NewLeaderBoard = ({
                     </div>
                   </div>
                 </div>
-                {email && (
-                  <div className="new-leaderboard-btns-wrapper d-lg-block d-none">
-                    <div className="d-flex flex-column gap-2">
-                      <span className="new-leaderboard-desc-title">
-                        Loyalty Program
-                      </span>
-                      <span className="new-leaderboard-desc">
-                        Eenjoy 90 days of gas-free transactions in the World of
-                        Dypians ecosystem on every network reimbursed to cover
-                        the gas costs for one transaction per day.
-                      </span>
-                      <div className="d-flex align-items-center justify-content-center">
-                        <NavLink
-                          to="/loyalty-program"
-                          className="new-leaderboard-green-btn px-4 py-1"
-                        >
-                          Join
-                        </NavLink>
-                      </div>
+
+                <div className="new-leaderboard-btns-wrapper d-lg-block d-none">
+                  <div className="d-flex flex-column gap-2">
+                    <span className="new-leaderboard-desc-title">
+                      Loyalty Program
+                    </span>
+                    <span className="new-leaderboard-desc">
+                      Eenjoy 90 days of gas-free transactions in the World of
+                      Dypians ecosystem on every network reimbursed to cover the
+                      gas costs for one transaction per day.
+                    </span>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <NavLink
+                        to="/loyalty-program"
+                        className="new-leaderboard-green-btn px-4 py-1"
+                      >
+                        Join
+                      </NavLink>
                     </div>
                   </div>
-                )}
+                </div>
 
                 <div className="d-lg-flex d-none flex-column gap-2 ">
                   <span className="new-leaderboard-desc-title">

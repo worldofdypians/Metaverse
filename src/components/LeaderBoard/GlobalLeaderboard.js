@@ -68,7 +68,7 @@ const GlobalLeaderboard = ({
   monthlyPlayers,
   percent,
   leaderboardBtn,
-  userDataStarWeekly
+  userDataStarWeekly,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -129,7 +129,7 @@ const GlobalLeaderboard = ({
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
- 
+
   return (
     <div
       className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
@@ -655,16 +655,17 @@ const GlobalLeaderboard = ({
 
       {screen === "dash" &&
         allStarData &&
-        leaderboardBtn === "monthly"  &&
+        leaderboardBtn === "monthly" &&
         allStarData.player_data.displayName &&
         [allStarData.player_data].map((item, index) => {
           return (
             <div
-              className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
+              className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
               key={index}
             >
               <div className="d-flex flex-column">
-                <div className="playerName d-flex align-items-center font-montserrat">
+                <div className="playerName d-flex align-items-center font-montserrat gap-2">
+                  {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
                     src={inactiveUserPfp}
                     alt=""
@@ -685,7 +686,7 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img src={star} alt="" style={{ width: 30, height: 30 }} />
-                    {getFormattedNumber(userDataStar, 0)}
+                    {getFormattedNumber(item.statValue, 0)}
                   </div>
                 </div>
               </div>
@@ -695,16 +696,17 @@ const GlobalLeaderboard = ({
 
       {screen === "dash" &&
         allStarData &&
-        leaderboardBtn === "weekly"  &&
+        leaderboardBtn === "weekly" &&
         allStarData.player_data_weekly.displayName &&
-        [allStarData.is_active_weekly].map((item, index) => {
+        [allStarData.player_data_weekly].map((item, index) => {
           return (
             <div
-              className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
+             className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
               key={index}
             >
               <div className="d-flex flex-column">
-                <div className="playerName d-flex align-items-center font-montserrat">
+                <div className="playerName d-flex align-items-center font-montserrat gap-2">
+                {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
                     src={inactiveUserPfp}
                     alt=""
@@ -725,7 +727,7 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img src={star} alt="" style={{ width: 30, height: 30 }} />
-                    {getFormattedNumber(userDataStarWeekly, 0)}
+                    {getFormattedNumber(item.statValue, 0)}
                   </div>
                 </div>
               </div>

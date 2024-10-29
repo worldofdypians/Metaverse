@@ -1530,7 +1530,6 @@ function Dashboard({
   //   }
   // };
 
-
   const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
     const data = {
       StatisticName: "LeaderboardCoreDaily",
@@ -3536,48 +3535,37 @@ function Dashboard({
         data
       );
       var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
+        (item) => item.playerId === userId
       );
+
       if (testArray.length > 0) {
         const userPosition = testArray[0].position;
-        // setuserCollectedStars(testArray[0].statValue);
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
-      }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
 
-        // if (testArray.length > 0 && testArray2.length > 0) {
-        //   setActivePlayerStar(true);
-        //   setUserDataStar([]);
-        // } else
-        if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStar(false);
-          setUserDataStar(...testArray);
-        }
-      } else if (testArray.length > 0) {
+        // setuserCollectedStars(testArray[0].statValue);
+        // if (goldenPassRemainingTime) {
+        //   setDataAmountStar(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
+        //         : Number(monthlyStarPrizes[userPosition]) +
+        //           Number(monthlyStarPrizes[userPosition])
+        //       : 0
+        //   );
+        // } else if (!goldenPassRemainingTime) {
+        //   setDataAmountStar(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99])
+        //         : Number(monthlyStarPrizes[userPosition])
+        //       : 0
+        //   );
+        // }
+      }
+      if (testArray.length > 0) {
         setActivePlayerStar(false);
         setUserDataStar(...testArray);
       }
@@ -3625,28 +3613,7 @@ function Dashboard({
 
         // setuserCollectedStars(testArray[0].statValue);
         setUserDataStar(...testArray);
-        if (goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStar(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
+        
       } else if (testArray.length === 0) {
         setActivePlayerStar(false);
         fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
@@ -3705,28 +3672,28 @@ function Dashboard({
         const userPosition = testArray[0].position;
         setuserCollectedStarsWeekly(testArray[0].statValue);
         setUserDataStarWeekly(...testArray);
-        if (goldenPassRemainingTime) {
-          setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(starPrizesGolden[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
+        // if (goldenPassRemainingTime) {
+        //   setDataAmountStarWeekly(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
+        //         : Number(monthlyStarPrizes[userPosition]) +
+        //           Number(starPrizesGolden[userPosition])
+        //       : 0
+        //   );
+        // } else if (!goldenPassRemainingTime) {
+        //   setDataAmountStarWeekly(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99])
+        //         : Number(monthlyStarPrizes[userPosition])
+        //       : 0
+        //   );
+        // }
       } else if (testArray.length === 0) {
         setActivePlayerStarWeekly(false);
         fetchWeeklyRecordsAroundPlayerStar(result.data.data.leaderboard);
@@ -3751,28 +3718,28 @@ function Dashboard({
       if (testArray.length > 0) {
         const userPosition = testArray[0].position;
         setuserCollectedStarsWeekly(testArray[0].statValue);
-        if (goldenPassRemainingTime) {
-          setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
-                : Number(monthlyStarPrizes[userPosition]) +
-                  Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        } else if (!goldenPassRemainingTime) {
-          setDataAmountStarWeekly(
-            testArray[0].statValue !== 0
-              ? userPosition > 100
-                ? 0
-                : userPosition === 100
-                ? Number(monthlyStarPrizes[99])
-                : Number(monthlyStarPrizes[userPosition])
-              : 0
-          );
-        }
+        // if (goldenPassRemainingTime) {
+        //   setDataAmountStarWeekly(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99]) + Number(starPrizesGolden[99])
+        //         : Number(monthlyStarPrizes[userPosition]) +
+        //           Number(monthlyStarPrizes[userPosition])
+        //       : 0
+        //   );
+        // } else if (!goldenPassRemainingTime) {
+        //   setDataAmountStarWeekly(
+        //     testArray[0].statValue !== 0
+        //       ? userPosition > 100
+        //         ? 0
+        //         : userPosition === 100
+        //         ? Number(monthlyStarPrizes[99])
+        //         : Number(monthlyStarPrizes[userPosition])
+        //       : 0
+        //   );
+        // }
       }
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -4025,6 +3992,34 @@ function Dashboard({
     }
   };
 
+  const isUserInTop100 = (data, userId) => {
+    return data.findIndex((item) => item.playerId === userId) !== -1;
+  };
+
+  const addPointsForPremium = (user, points) => {
+    if (user && user.statValue !== undefined && user.statValue !=="---") {
+      return { ...user, statValue: user.statValue + points };
+    }
+  };
+
+  const updateLeaderboard = (data, updatedUser) => {
+    const updatedData = data.map((item) =>
+      item.playerId === updatedUser.playerId ? updatedUser : item
+    );
+    return updatedData.sort((a, b) => b.statValue - a.statValue).slice(0, 100);
+  };
+
+  const updateLeaderboard2 = (data) => {
+    return data
+      .sort((a, b) => {
+        if (a.statValue === "---" || a.playerId === undefined) return 1;
+        if (b.statValue === "---" || b.playerId === undefined) return -1;
+        return b.statValue - a.statValue;
+      })
+      .slice(0, 100); 
+  };
+  
+
   useEffect(() => {
     if (logoutCount > 0) {
       onSubscribeSuccess();
@@ -4097,7 +4092,7 @@ function Dashboard({
       getAllSkaleChests(email);
     }
   }, [skalecount]);
-
+  const lastUpdated = useRef(false);
   useEffect(() => {
     if (vicitoncount !== 0) {
       fetchDailyRecordsViction();
@@ -4127,6 +4122,7 @@ function Dashboard({
   }, [taikocount]);
 
   useEffect(() => {
+    if (!lastUpdated.current) {
     setAllStarData({
       rewards: monthlyStarPrizes,
       rewardsWeekly: weeklyStarPrizes,
@@ -4141,7 +4137,9 @@ function Dashboard({
       is_active: activePlayerStar,
       is_active_weekly: activePlayerStarWeekly,
     });
+  }
   }, [
+    lastUpdated,
     starRecords,
     starRecordsWeekly,
     prevDataStar,
@@ -4152,110 +4150,280 @@ function Dashboard({
     activePlayerStarWeekly,
   ]);
 
+  // useEffect(() => {
+  //   if (
+  //     allStarData &&
+  //     allStarData.activeData &&
+  //     allStarData.activeDataWeekly &&
+  //     isPremium === true &&
+  //     userId !== undefined
+  //   ) {
+  //     const playerActiveArray = [
+  //       activePlayer,
+  //       activePlayerBase,
+  //       activePlayerCore,
+  //       activePlayerManta,
+  //       activePlayerSkale,
+  //       activePlayerViction,
+  //       true,
+  //     ];
+  //     const allFalse = playerActiveArray.every((v) => v === false);
+
+  //     if (!allFalse) {
+  //       setExtraStars(true);
+
+  //       if ((activePlayerStar || activePlayerStarWeekly) && !addedUser) {
+  //         const updatedData = allStarData.activeData.map((item) => {
+  //           if (item.playerId === userId) {
+  //             const newStatValue = userCollectedStars + 50;
+  //             setuserCollectedStars((prev) => prev + 50);
+  //             setActivePlayerStar(true);
+  //             setUserDataStar(item);
+  //             return { ...item, statValue: newStatValue };
+  //           } else {
+  //             return { ...item };
+  //           }
+  //         });
+
+  //         const updatedDataWeekly = allStarData.activeDataWeekly.map((item) => {
+  //           if (item.playerId === userId) {
+  //             const newStatValue = item.statValue + 50;
+  //             setuserCollectedStarsWeekly((prev) => prev + 50);
+  //             return { ...item, statValue: newStatValue };
+  //           } else {
+  //             return { ...item };
+  //           }
+  //         });
+
+  //         const sortedDataWeekly = [...updatedDataWeekly].sort((a, b) => b.statValue - a.statValue);
+  //         const sortedData = [...updatedData].sort((a, b) => b.statValue - a.statValue);
+
+  //         setAllStarData({
+  //           ...allStarData,
+  //           activeData: sortedData,
+  //           activeDataWeekly: sortedDataWeekly,
+  //         });
+  //       } else if (
+  //         !isNaN(allStarData.player_data.statValue) &&
+  //         !allStarData.activeData.some((item) => item.playerId === userId) &&
+  //         !addedUser
+  //       ) {
+  //         setaddedUser(true);
+
+  //         const newStatValue = allStarData.player_data.statValue + 50;
+  //         allStarData.player_data = {
+  //           ...allStarData.player_data,
+  //           statValue: newStatValue,
+  //         };
+
+  //         const updatedActiveData = [
+  //           ...allStarData.activeData,
+  //           allStarData.player_data,
+  //         ].sort((a, b) => b.statValue - a.statValue);
+
+  //         const playerIndex = updatedActiveData.findIndex((item) => item.playerId === userId);
+  //         updatedActiveData[playerIndex] = {
+  //           ...updatedActiveData[playerIndex],
+  //           position: playerIndex,
+  //         };
+
+  //         setAllStarData({
+  //           ...allStarData,
+  //           activeData: updatedActiveData,
+  //           player_data: updatedActiveData[playerIndex]
+  //         });
+  //         setUserDataStar(updatedActiveData[playerIndex]);
+  //       }
+
+  //       if (
+  //         !isNaN(allStarData.player_data_weekly.statValue) &&
+  //         !allStarData.activeDataWeekly.some((item) => item.playerId === userId) &&
+  //         !addedUser
+  //       ) {
+  //         const newWeeklyStatValue = userCollectedStarsWeekly + 50;
+
+  //         const updatedActiveDataWeekly = [
+  //           ...allStarData.activeDataWeekly,
+  //           { ...allStarData.player_data_weekly, statValue: newWeeklyStatValue },
+  //         ].sort((a, b) => b.statValue - a.statValue);
+
+  //         setuserCollectedStarsWeekly(newWeeklyStatValue);
+  //         setAllStarData({
+  //           ...allStarData,
+  //           activeDataWeekly: updatedActiveDataWeekly,
+  //         });
+  //       }
+  //     }
+  //   }
+  // }, [
+  //   allStarData,
+  //   isPremium,
+  //   activePlayer,
+  //   activePlayerBase,
+  //   activePlayerCore,
+  //   activePlayerManta,
+  //   activePlayerSkale,
+  //   activePlayerViction,
+  //   activePlayerStar,
+  //   activePlayerStarWeekly,
+  //   userId,
+  // ]);
+
+
   useEffect(() => {
-    if (allStarData && allStarData.activeData && allStarData.activeDataWeekly) {
-      const playerActiveArray = [
-        activePlayer,
-        activePlayerBase,
-        activePlayerCore,
-        activePlayerManta,
-        activePlayerSkale,
-        activePlayerViction,
-        true,
-      ];
-      let checker = (arr) => arr.every((v) => v === false);
-      if (!checker(playerActiveArray) && isPremium === true) {
-        setExtraStars(true);
-        if (
-          (activePlayerStar || activePlayerStarWeekly) &&
-          addedUser === false
-        ) {
-          
-          const data2 = allStarData.activeData.map((item) => {
-            if (item.playerId === userId) {
-              const newStatValue = userCollectedStars + 50;
-              setuserCollectedStars(newStatValue);
+    const playerActiveArray = [
+      activePlayer,
+      activePlayerBase,
+      activePlayerCore,
+      activePlayerManta,
+      activePlayerSkale,
+      activePlayerViction,
+      true,
+    ];
+    const allFalse = playerActiveArray.every((v) => v === false);
 
-              return { ...item, statValue: newStatValue };
-            } else return { ...item };
-          });
-          const data2Weekly = allStarData.activeDataWeekly.map((item) => {
-            if (item.playerId === userId) {
-              const newStatValue = item.statValue + 50;
-              setuserCollectedStarsWeekly(newStatValue);
-              return { ...item, statValue: newStatValue };
-            } else return { ...item };
-          });
-          allStarData.activeDataWeekly = data2Weekly.sort((a, b) => {
-            return b.statValue - a.statValue;
-          });
-          allStarData.activeData = data2.sort((a, b) => {
-            return b.statValue - a.statValue;
-          });
+    // Exit if critical dependencies aren't available
+    if (
+      !allStarData.activeData ||
+      !userId ||
+      !isPremium ||
+      userDataStar.statValue === undefined ||
+      userDataStarWeekly.statValue === undefined
+    )
+      return;
 
-          let allStarData_sorted = allStarData;
+    if (!lastUpdated.current) {
+      let updatedActiveData = [...allStarData.activeData];
+      let updatedActiveDataWeekly = [...allStarData.activeDataWeekly];
 
-          setAllStarData(allStarData_sorted);
-        } else {
- 
-          if (
-            !isNaN(allStarData.player_data.statValue) &&
-            !allStarData.activeData.find((item) => {
-              return item.playerId === userId;
-            }) &&
-            !addedUser
-          ) {
-            setaddedUser(true);
-            const newStatValue = allStarData.player_data.statValue+ 50
-           
-            allStarData.player_data.statValue = newStatValue;
-           
-            setuserCollectedStars(newStatValue);
-            allStarData.activeData.push(allStarData.player_data);
-            const data2 = allStarData;
+      let userUpdated = false;
+      let userUpdatedWeekly = false;
 
-            // console.log(data2);
+      // Check if user is in top 100 and adjust points if premium
+      if (isUserInTop100(updatedActiveData, userId)) {
+        const userIndex = updatedActiveData.findIndex(
+          (item) => item.playerId === userId
+        );
+        updatedActiveData[userIndex] = addPointsForPremium(
+          updatedActiveData[userIndex],
+          50
+        );
+        userUpdated = true;
+      } else if (
+        isPremium &&
+        !allFalse &&
+        userDataStar.statValue !== undefined &&
+        userDataStarWeekly.statValue !== undefined
+      ) {
+        // User not in top 100, add points and check ranking again
+        const updatedUser = addPointsForPremium(userDataStar, 50);
+        updatedActiveData.push(updatedUser);
+        userUpdated = true;
+      }
 
-            allStarData.activeData = data2.activeData.sort((a, b) => {
-              return b.statValue - a.statValue;
-            });
+      if (isUserInTop100(updatedActiveDataWeekly, userId)) {
+        const userIndex = updatedActiveDataWeekly.findIndex(
+          (item) => item.playerId === userId
+        );
+        updatedActiveDataWeekly[userIndex] = addPointsForPremium(
+          updatedActiveDataWeekly[userIndex],
+          50
+        );
+        userUpdatedWeekly = true;
+      } else if (isPremium && !allFalse && userDataStarWeekly.statValue !== undefined) {
+        const updatedWeeklyUser = addPointsForPremium(userDataStarWeekly, 50);
+        updatedActiveDataWeekly.push(updatedWeeklyUser);
+        userUpdatedWeekly = true;
+      }
 
-            // let allStarData_sorted = allStarData;
 
-            setAllStarData(allStarData);
-          }
-          if (
-            !isNaN(allStarData.player_data_weekly.statValue) &&
-            !allStarData.activeDataWeekly.find((item) => {
-              return item.playerId === userId;
-            }) &&
-            !addedUser
-          ) {
-            // setaddedUser(true);
-            allStarData.player_data_weekly.statValue =
-              userCollectedStarsWeekly + 50;
+      if (userUpdated || userUpdatedWeekly) { 
+        const sortedActiveData = updateLeaderboard2(updatedActiveData);
+        const playerIndex = sortedActiveData.findIndex(
+          (item) => item.playerId === userId
+        );
+const sortedActiveDataFinal = sortedActiveData.map((item, index) => {
+          if (index === playerIndex) {
+            return { ...item, position: playerIndex };
+          } else return { ...item };
+        });
 
-            setuserCollectedStarsWeekly(userCollectedStarsWeekly + 50);
-            allStarData.activeDataWeekly.push(allStarData.player_data_weekly);
-            const data2 = allStarData;
+        
+        const sortedActiveDataWeekly = updateLeaderboard2(updatedActiveDataWeekly);
+        
 
-            // console.log(data2);
+        const playerIndexWeekly = sortedActiveDataWeekly.findIndex(
+          (item) => item.playerId === userId
+        );
 
-            allStarData.activeDataWeekly = data2.activeDataWeekly.sort(
-              (a, b) => {
-                return b.statValue - a.statValue;
-              }
-            );
+        const sortedActiveDataFinalWeekly = sortedActiveDataWeekly.map((item, index) => {
+          if (index === playerIndexWeekly) {
+            return { ...item, position: playerIndexWeekly };
+          } else return { ...item };
+        });
 
-            // let allStarData_sorted = allStarData;
+        
+        setUserDataStar(sortedActiveDataFinal[playerIndex])
+        setUserDataStarWeekly(sortedActiveDataFinalWeekly[playerIndexWeekly])
 
-            setAllStarData(allStarData);
-          }
+        if (goldenPassRemainingTime) {
+          setDataAmountStar(
+            sortedActiveDataFinal[playerIndex].statValue !== 0
+              ? playerIndex > 100
+                ? 0
+                : playerIndex === 100
+                ? Number(monthlyStarPrizes[99]) + Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[playerIndex]) +
+                  Number(monthlyStarPrizes[playerIndex])
+              : 0
+          );
+          setDataAmountStarWeekly(
+            sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+              ? playerIndexWeekly > 100
+                ? 0
+                : playerIndexWeekly === 100
+                ? Number(weeklyStarPrizes[99]) + Number(weeklyStarPrizes[99])
+                : Number(weeklyStarPrizes[playerIndexWeekly]) +
+                  Number(weeklyStarPrizes[playerIndexWeekly])
+              : 0
+          );
+        } else if (!goldenPassRemainingTime) {
+          setDataAmountStar(
+            sortedActiveDataFinal[playerIndex].statValue !== 0
+              ? playerIndex > 100
+                ? 0
+                : playerIndex === 100
+                ? Number(monthlyStarPrizes[99])
+                : Number(monthlyStarPrizes[playerIndex])
+              : 0
+          );
+          setDataAmountStarWeekly(
+            sortedActiveDataFinalWeekly[playerIndexWeekly].statValue !== 0
+              ? playerIndexWeekly > 100
+                ? 0
+                : playerIndexWeekly === 100
+                ? Number(weeklyStarPrizes[99])
+                : Number(weeklyStarPrizes[playerIndexWeekly])
+              : 0
+          );
         }
+
+        setAllStarData((prevData) => ({
+          ...prevData,
+          activeData: sortedActiveDataFinal,
+          activeDataWeekly: sortedActiveDataFinalWeekly,
+
+          player_data: sortedActiveDataFinal[playerIndex],
+          player_data_weekly: sortedActiveDataFinalWeekly[playerIndexWeekly],
+
+        }));
+        lastUpdated.current = true; // Mark as updated to avoid repeated updates
       }
     }
   }, [
-    allStarData,
+    allStarData.activeData,allStarData.activeDataWeekly, // Avoid passing all `allStarData` if only activeData is crucial
+    userDataStar,userDataStarWeekly,
+    userId,
     isPremium,
     activePlayer,
     activePlayerBase,
@@ -4263,12 +4431,8 @@ function Dashboard({
     activePlayerManta,
     activePlayerSkale,
     activePlayerViction,
-    activePlayerTaiko,
-    activePlayerStar,
-    activePlayerStarWeekly,
-    userId,
   ]);
-  // console.log(allStarData, userCollectedStars);
+  
   useEffect(() => {
     setAllBnbData([
       {
@@ -8951,8 +9115,8 @@ function Dashboard({
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
-                        userDataStar={userCollectedStars}
-                        userDataPosition={userDataStar?.position}
+                        userDataStar={ allStarData.player_data?.statValue}
+                        userDataPosition={allStarData.player_data?.position}
                         onLinkWallet={connectWallet}
                         onSigninClick={onSigninClick}
                         onLogoutClick={() => {
@@ -8986,6 +9150,12 @@ function Dashboard({
                           setclaimedSkaleChests(0);
                           setclaimedSkalePremiumChests(0);
                           refetchPlayer();
+                          setuserCollectedStars(0)
+                          setuserCollectedStarsWeekly(0)
+                          setDataAmountStar(0)
+                          setDataAmountStarWeekly(0)
+
+
                         }}
                         onSyncClick={handleShowSyncModal}
                         syncStatus={syncStatus}
