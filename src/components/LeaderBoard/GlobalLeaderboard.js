@@ -20,6 +20,8 @@ import bnbIcon from "./assets/bnbIcon.svg";
 import victionActive from "./assets/victionActive.svg";
 import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
+import baseLogo from "../../screens/Home/VideoWrapper/assets/baseLogo.svg";
+
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
 import taikoLogo from "../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg";
@@ -758,6 +760,7 @@ const GlobalLeaderboard = ({
               <img src={bnbIcon} width={20} height={20} alt="" />
               <img src={mantaActive} width={20} height={20} alt="" />
               <img src={taikoLogo} width={20} height={20} alt="" />
+              <img src={baseLogo} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
               <img src={skaleActive} width={20} height={20} alt="" />
               <img src={victionActive} width={20} height={20} alt="" />

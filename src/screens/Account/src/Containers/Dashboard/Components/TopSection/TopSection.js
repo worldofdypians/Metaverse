@@ -175,12 +175,12 @@ const TopSection = ({
       image2: genesisLand2,
       mobileImage: genesisLandMobile,
     },
-    {
-      title: "premium",
-      image: premiumAd,
-      image2: premiumAd,
-      mobileImage: premiumAdMobile,
-    },
+    // {
+    //   title: "premium",
+    //   image: premiumAd,
+    //   image2: premiumAd,
+    //   mobileImage: premiumAdMobile,
+    // },
     {
       title: "dragon",
       image: dragonAd,
@@ -506,7 +506,7 @@ const TopSection = ({
           <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
             <div
               className="dashboard-stars-wrapper w-100 p-2"
-              style={{ height: "120px" }}
+              style={{ height: "100px" }}
               onClick={onOpenGlobalLeaderboard}
             >
               <div className="d-flex flex-column h-100 justify-content-between">
@@ -531,7 +531,7 @@ const TopSection = ({
             </div>
             <div
               className="dashboard-premium-wrapper w-100 p-2"
-              style={{ height: "120px" }}
+              style={{ height: "100px" }}
             >
               <NavLink to="/account#premium">
                 <div className="d-flex flex-column h-100 justify-content-between">
@@ -571,7 +571,7 @@ const TopSection = ({
             </div>
             <div
               className="dashboard-goldenpass-wrapper w-100 p-2"
-              style={{ height: "120px" }}
+              style={{ height: "100px" }}
             >
               <NavLink to="/marketplace/events/golden-pass">
                 <div className="d-flex flex-column h-100 justify-content-between">

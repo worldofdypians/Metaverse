@@ -1566,7 +1566,7 @@ const WalletBalance = ({
     <>
       <div className="main-wrapper py-4 w-100 d-flex flex-column gap-4 mt-4 justify-content-center align-items-center">
         <div className="row w-100 gap-5 gap-lg-0 mx-0">
-          <div className="col-12 col-lg-4 px-0 pe-lg-3 position-relative mt-3 mt-lg-0">
+          <div className={`${windowSize.width && windowSize.width > 1450 ? 'col-lg-4' : windowSize.width && windowSize.width <= 1450 ? 'col-lg-5' : 'col-lg-5'} col-12 px-0 pe-lg-3 position-relative mt-3 mt-lg-0`}>
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}
@@ -1681,7 +1681,7 @@ const WalletBalance = ({
             </div>
           </div>
 
-          <div className="col-12 col-lg-8 px-0 position-relative mt-3 mt-lg-0">
+          <div className={`${windowSize.width && windowSize.width > 1450 ? 'col-lg-8' : windowSize.width && windowSize.width <= 1450 ? 'col-lg-7' : 'col-lg-7'}  col-12 px-0 position-relative mt-3 mt-lg-0`}>
             <h6
               className="new-bundle-title ms-0 ms-lg-4"
               style={{ position: "absolute", top: "-35px" }}

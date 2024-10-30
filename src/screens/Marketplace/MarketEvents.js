@@ -966,7 +966,7 @@ const MarketEvents = ({
       "Unlock unique rewards during the event",
     ],
     price: 2100,
-    usdPrice: 100,
+    usdPrice: 50,
     link: "https://www.worldofdypians.com/news/644e343627cca74b2d4a60b1/Golden-Pass-Event",
     background: "newGoldenBg.webp",
     mobileBackground: "goldenBgMobile.webp",

@@ -802,9 +802,14 @@ const NewLeaderBoard = ({
                 className="d-flex flex-column gap-2 tablewrapper position-relative w-100"
                 style={{ height: optionText === "genesis" ? "345px" : "100%" }}
               >
-                <span className="leaderboard-inner-title2 d-lg-flex d-none justify-content-end">
-                  Top 100
-                </span>
+                <div className="d-lg-flex d-none align-items-center justify-content-between gap-2">
+                  <span className="leaderboard-inner-title2 d-lg-flex d-none justify-content-end">
+                    Daily
+                  </span>
+                  <span className="leaderboard-inner-title2 d-lg-flex d-none justify-content-end">
+                    Top 100
+                  </span>
+                </div>
                 {/* {optionText2 !==  "taiko" ? (
                 <></>
               ) : (
@@ -1454,7 +1459,7 @@ const NewLeaderBoard = ({
                                             )}
                                           </>
                                         ) : (
-                                          <span style={{ fontSize: 11 }}>
+                                          <span style={{ fontSize: 10 }}>
                                             No Rank
                                           </span>
                                         )}

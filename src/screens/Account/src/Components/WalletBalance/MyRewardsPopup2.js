@@ -66,6 +66,7 @@ const MyRewardsPopupNew = ({
   // monthlyDataAmountSkale,
   multiversEarnUsd,
   userDataStar,
+  userDataStarWeekly,
   // weeklyDataAmountManta,
   // weeklyDataAmountBase,
   // monthlyDataAmountManta,
@@ -649,7 +650,7 @@ const MyRewardsPopupNew = ({
       behavior: "smooth",
     });
   };
-  
+
   return (
     <div className="d-grid rewardstable-wrapper2 gap-2 mt-3 px-1">
       <div className="total-earnings-purple-wrapper p-2">
@@ -704,7 +705,7 @@ const MyRewardsPopupNew = ({
         </div>
         <div className="small-separator"></div>
       </div>
-      <div className="reward-category-items-wrapper">
+      <div className="reward-category-items-wrapper mb-3">
         <div
           className={` ${
             rewardCategory === "all"
@@ -802,9 +803,90 @@ const MyRewardsPopupNew = ({
                       Number(genesisRank2) +
                       Number(userRankRewards) +
                       Number(userDataStar) +
+                      Number(userDataStarWeekly) +
                       Number(userSocialRewardsCached) +
                       Number(cawsPremiumRewards) +
                       Number(landPremiumRewards),
+                    2
+                  )}
+            </span>
+          </div>
+        </div>
+        <div
+          className={` ${
+            rewardCategory === "leaderboard"
+              ? "reward-category-item-active"
+              : "reward-category-item"
+          }  p-2`}
+          onClick={() => {
+            setrewardCategory("leaderboard");
+            scrollToView(previousRewards ? "pastleaderboard" : "leaderboard2");
+          }}
+        >
+          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+            <img
+              src={
+                rewardCategory === "leaderboard"
+                  ? leaderboardActive
+                  : leaderboard
+              }
+              alt=""
+            />
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-item-desc-active"
+                  : "reward-item-desc"
+              }
+            >
+              Leaderboard
+            </span>
+            <div
+              className={
+                rewardCategory === "leaderboard"
+                  ? "small-separator-active"
+                  : "small-separator"
+              }
+            ></div>
+            <span
+              className={
+                rewardCategory === "leaderboard"
+                  ? "reward-category-amount-active"
+                  : "reward-category-amount"
+              }
+            >
+              $
+              {previousRewards
+                ? getFormattedNumber(
+                    Number(gemRewards) +
+                      Number(leaderboardTotalData) +
+                      Number(leaderboardSkaleTotalData),
+                    2
+                  )
+                : getFormattedNumber(
+                    // Number(dailyplayerData) +
+                    // Number(dailyDataAmountCore) +
+                    // Number(weeklyDataAmountCore) +
+                    //   +Number(monthlyDataAmountCore) +
+                    // Number(dailyDataAmountSkale) +
+                    // Number(weeklyDataAmountSkale) +
+                    // Number(monthlyDataAmountSkale) +
+                    // Number(dailyDataAmountViction) +
+                    // Number(weeklyDataAmountViction) +
+                    // Number(monthlyDataAmountViction) +
+                    // Number(weeklyDataAmountManta) +
+                    // Number(weeklyDataAmountBase) +
+
+                    // Number(weeklyDataAmountTaiko) +
+                    // Number(monthlyDataAmountManta) +
+                    // Number(monthlyDataAmountBase) +
+
+                    // Number(monthlyDataAmountTaiko) +
+                    // Number(weeklyplayerData) +
+                    // Number(userRank2) +
+                    Number(userDataStar) +
+                      Number(genesisRank2) +
+                      Number(userDataStarWeekly),
                     2
                   )}
             </span>
@@ -921,84 +1003,7 @@ const MyRewardsPopupNew = ({
             </span>
           </div>
         </div>
-        <div
-          className={` ${
-            rewardCategory === "leaderboard"
-              ? "reward-category-item-active"
-              : "reward-category-item"
-          }  p-2`}
-          onClick={() => {
-            setrewardCategory("leaderboard");
-            scrollToView(previousRewards ? "pastleaderboard" : "leaderboard2");
-          }}
-        >
-          <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img
-              src={
-                rewardCategory === "leaderboard"
-                  ? leaderboardActive
-                  : leaderboard
-              }
-              alt=""
-            />
-            <span
-              className={
-                rewardCategory === "leaderboard"
-                  ? "reward-item-desc-active"
-                  : "reward-item-desc"
-              }
-            >
-              Leaderboard
-            </span>
-            <div
-              className={
-                rewardCategory === "leaderboard"
-                  ? "small-separator-active"
-                  : "small-separator"
-              }
-            ></div>
-            <span
-              className={
-                rewardCategory === "leaderboard"
-                  ? "reward-category-amount-active"
-                  : "reward-category-amount"
-              }
-            >
-              $
-              {previousRewards
-                ? getFormattedNumber(
-                    Number(gemRewards) +
-                      Number(leaderboardTotalData) +
-                      Number(leaderboardSkaleTotalData),
-                    2
-                  )
-                : getFormattedNumber(
-                    // Number(dailyplayerData) +
-                    // Number(dailyDataAmountCore) +
-                    // Number(weeklyDataAmountCore) +
-                    //   +Number(monthlyDataAmountCore) +
-                    // Number(dailyDataAmountSkale) +
-                    // Number(weeklyDataAmountSkale) +
-                    // Number(monthlyDataAmountSkale) +
-                    // Number(dailyDataAmountViction) +
-                    // Number(weeklyDataAmountViction) +
-                    // Number(monthlyDataAmountViction) +
-                    // Number(weeklyDataAmountManta) +
-                    // Number(weeklyDataAmountBase) +
 
-                    // Number(weeklyDataAmountTaiko) +
-                    // Number(monthlyDataAmountManta) +
-                    // Number(monthlyDataAmountBase) +
-
-                    // Number(monthlyDataAmountTaiko) +
-                    // Number(weeklyplayerData) +
-                    // Number(userRank2) +
-                    Number(userDataStar) + Number(genesisRank2),
-                    2
-                  )}
-            </span>
-          </div>
-        </div>
         <div
           className={` ${
             rewardCategory === "treasurehunt"
@@ -1129,6 +1134,162 @@ const MyRewardsPopupNew = ({
                   )}
             </span>
           </div>
+        </div>
+      </div>
+      <div
+        className="d-flex flex-column gap-2"
+        id={previousRewards ? "pastleaderboard" : "leaderboard2"}
+      >
+        <span
+          className={
+            rewardCategory === "leaderboard"
+              ? "item-name-title-selected d-flex align-items-center gap-2"
+              : "item-name-title d-flex align-items-center gap-2"
+          }
+        >
+          Global Leaderboards
+          <div
+            className="d-flex align-items-center gap-1 rounded p-1"
+            style={{ background: "#536BBE" }}
+          >
+            <img src={bnbLogo} style={{ width: 16, height: 16 }} alt="" />{" "}
+            <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
+            <img
+              src={require("../../../../../components/Header/assets/manta.png")}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={
+                require("../../../../../components/Header/assets/taiko.svg")
+                  .default
+              }
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
+            <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
+            <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
+          </div>
+        </span>
+        <div
+          className={
+            rewardCategory === "leaderboard"
+              ? "item-name-wrapper-selected p-2"
+              : "item-name-wrapper p-2"
+          }
+        >
+          {!previousRewards ? (
+            <div className="treasure-hunt-item-wrapper-active">
+              {/* <div className="d-flex flex-column gap-2 w-50"> */}
+
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left d-flex align-items-center gap-1">
+                  Global Monthly
+                </span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(Number(userDataStar), 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left d-flex align-items-center gap-1">
+                  Global Weekly
+                </span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(Number(userDataStarWeekly), 2)}
+                </span>
+              </div>
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Genesis</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(gemRewards, 2)
+                    : getFormattedNumber(genesisRank2, 2)}
+                </span>
+              </div>
+              {/* </div> */}
+            </div>
+          ) : (
+            <div className="d-flex justify-content-between gap-4 align-items-start">
+              <div className="d-flex flex-column gap-2 w-50">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">BNB Chain</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(leaderboardTotalData, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">SKALE</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(leaderboardSkaleTotalData, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">CORE</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Manta</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Base</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="d-flex flex-column gap-2 w-50">
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Taiko</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Genesis</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(gemRewards, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Global </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Viction</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">SEI</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(0, 2)}
+                </span>
+              </div> */}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {previousRewards ? (
@@ -1324,126 +1485,6 @@ const MyRewardsPopupNew = ({
         </div>
       </div>
 
-      <div
-        className="d-flex flex-column gap-2"
-        id={previousRewards ? "pastleaderboard" : "leaderboard2"}
-      >
-        <span
-          className={
-            rewardCategory === "leaderboard"
-              ? "item-name-title-selected"
-              : "item-name-title"
-          }
-        >
-          Leaderboard
-        </span>
-        <div
-          className={
-            rewardCategory === "leaderboard"
-              ? "item-name-wrapper-selected p-2"
-              : "item-name-wrapper p-2"
-          }
-        >
-          {!previousRewards ? (
-            <div className="d-flex justify-content-between gap-4 align-items-start">
-              {/* <div className="d-flex flex-column gap-2 w-50"> */}
-
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Global</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(Number(userDataStar), 2)}
-                </span>
-              </div>
-              <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">Genesis</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(gemRewards, 2)
-                    : getFormattedNumber(genesisRank2, 2)}
-                </span>
-              </div>
-              {/* </div> */}
-            </div>
-          ) : (
-            <div className="d-flex justify-content-between gap-4 align-items-start">
-              <div className="d-flex flex-column gap-2 w-50">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">BNB Chain</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(leaderboardTotalData, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">SKALE</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(leaderboardSkaleTotalData, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">CORE</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Manta</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Base</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="d-flex flex-column gap-2 w-50">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Taiko</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Genesis</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(gemRewards, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Global</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="item-name-left">Viction</span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(0, 2)}
-                  </span>
-                </div>
-
-                {/* <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">SEI</span>
-                <span className="item-name-right">
-                  $
-                  {previousRewards
-                    ? getFormattedNumber(0, 2)
-                    : getFormattedNumber(0, 2)}
-                </span>
-              </div> */}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
       {!previousRewards ? (
         <div className="d-flex flex-column gap-2" id="treasurehunt">
           <span

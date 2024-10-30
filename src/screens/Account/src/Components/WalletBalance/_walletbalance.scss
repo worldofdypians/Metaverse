@@ -2408,7 +2408,12 @@
   margin: auto;
   width: fit-content;
   height: fit-content;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 1450px) {
+    margin: 0px;
+    top: 45px;
+    left: 15px;
+  }
+  @media screen and (max-width: 991px) {
     margin: auto 15px;
   }
 }
@@ -2611,7 +2616,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 80%;
+  width: 75%;
   @media screen and (max-width: 991px) {
     width: auto;
   }
