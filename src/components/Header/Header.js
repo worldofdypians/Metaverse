@@ -491,7 +491,7 @@ const Header = ({
   return (
     <div className="d-flex flex-column">
       <div
-        className="d-none d-lg-flex navbar-wrapper p-3 "
+        className="d-none d-lg-flex navbar-wrapper px-3"
         style={{ zIndex: location.pathname.includes("map") ? "1000" : "7" }}
       >
         <div className="row justify-content-between mx-0 w-100">

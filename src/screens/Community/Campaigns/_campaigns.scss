@@ -10,9 +10,19 @@
     }
 }
 
+
+.campaign-banner{
+    border-radius: 16px;
+}
+
 .campaign-banner-divider{
     border-top: 1px solid rgba(255, 255, 255, 0.54);
     width: 100%;
+}
+
+.campaign-item-image{
+    aspect-ratio: 2.15/1;
+    border-radius: 16px;
 }
 
 .campaign-banner-date{
