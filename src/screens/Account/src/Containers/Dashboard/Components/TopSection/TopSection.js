@@ -17,14 +17,22 @@ import Slider from "react-slick";
 import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";
 import criticalHit from "./assets/criticalHit.webp";
+import criticalHit2 from "./assets/criticalHit.jpg";
+
 import genesisLand from "./assets/genesisLand.webp";
+import genesisLand2 from "./assets/genesisLand.jpg";
+
 import multiversAdMobile from "./assets/multiversAdMobile.png";
 import premiumAdMobile from "./assets/premiumAdMobile.png";
 import criticalHitMobile from "./assets/criticalHitMobile.jpg";
 import genesisLandMobile from "./assets/genesisLandMobile.webp";
 import goldenAd from "./assets/goldenAd.webp";
+import goldenAd2 from "./assets/goldenAd.png";
+
 import goldenAdMobile from "./assets/goldenAdMobile.png";
 import dragonAd from "./assets/dragonAd.webp";
+import dragonAd2 from "./assets/dragonAd.png";
+
 import dragonAdMobile from "./assets/dragonAdMobile.png";
 import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
@@ -157,12 +165,34 @@ const TopSection = ({
     {
       title: "critical-hit",
       image: criticalHit,
+      image2: criticalHit2,
+
       mobileImage: criticalHitMobile,
     },
-    { title: "land", image: genesisLand, mobileImage: genesisLandMobile },
-    { title: "premium", image: premiumAd, mobileImage: premiumAdMobile },
-    { title: "dragon", image: dragonAd, mobileImage: dragonAdMobile },
-    { title: "goldenPass", image: goldenAd, mobileImage: goldenAdMobile },
+    {
+      title: "land",
+      image: genesisLand,
+      image2: genesisLand2,
+      mobileImage: genesisLandMobile,
+    },
+    {
+      title: "premium",
+      image: premiumAd,
+      image2: premiumAd,
+      mobileImage: premiumAdMobile,
+    },
+    {
+      title: "dragon",
+      image: dragonAd,
+      image2: dragonAd2,
+      mobileImage: dragonAdMobile,
+    },
+    {
+      title: "goldenPass",
+      image: goldenAd,
+      image2: goldenAd2,
+      mobileImage: goldenAdMobile,
+    },
   ];
 
   const filteredSliderContent = slidercontent.filter((item) => {
@@ -248,111 +278,119 @@ const TopSection = ({
         </div>
       </div>
       {windowSize.width && windowSize.width > 1450 && (
-      <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
-        <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
-          <div
-            className="dashboard-stars-wrapper w-100 p-2"
-            style={{ height: "120px" }}
-            onClick={onOpenGlobalLeaderboard}
-          >
-            <div className="d-flex flex-column h-100 justify-content-between">
-              <div className="d-flex flex-column">
-                <span className="dashboard-main-white-text">
-                  {getFormattedNumber(userDataStar ?? 0, 0)}
-                </span>
-                <span className="dashboard-collected-stars-text">
-                  Collected Stars
-                </span>
-              </div>
-              <div className="d-flex justify-content-start">
-                <img src={circleArrow} alt="" />
-              </div>
-            </div>
-            <img
-              src={dashboardStar}
-              alt=""
-              className="dashboardimg"
-              style={{ width: 41, height: 41 }}
-            />
-          </div>
-          <div
-            className="dashboard-premium-wrapper w-100 p-2"
-            style={{ height: "120px" }}
-          >
-            <NavLink to="/account#premium">
-              <div className="d-flex flex-column h-100 justify-content-between">
-                <div className="d-flex flex-column">
-                  <span className="dashboard-main-white-text">Extra Stars</span>
-                  <span
-                    className="dashboard-collected-stars-text"
-                    style={{ color: "#FFBA4E" }}
-                  >
-                    {!isPremium ? "Premium" : "Activated"}
-                  </span>
-                </div>
-                <div className="d-flex justify-content-start">
-                  {!isPremium ? (
-                    <img src={circleArrow} alt="" />
-                  ) : (
-                    <button
-                      className="activate-btn px-2 py-1"
-                      style={{
-                        background: "#AC1186",
-                      }}
-                    >
-                      Lifetime
-                    </button>
-                  )}
-                </div>
-              </div>
-            </NavLink>
-            <img
-              src={premiumBadge}
-              alt=""
-              className="dashboardimg"
-              style={{ width: 53, height: 50 }}
-            />
-          </div>
-          <div
-            className="dashboard-goldenpass-wrapper w-100 p-2"
-            style={{ height: "120px" }}
-          >
-            <NavLink to="/marketplace/events/golden-pass">
+        <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
+            <div
+              className="dashboard-stars-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+              onClick={onOpenGlobalLeaderboard}
+            >
               <div className="d-flex flex-column h-100 justify-content-between">
                 <div className="d-flex flex-column">
                   <span className="dashboard-main-white-text">
-                    Extra Rewards
+                    {getFormattedNumber(userDataStar ?? 0, 0)}
                   </span>
-                  <span
-                    className="dashboard-collected-stars-text"
-                    style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
-                  >
-                    {!availableTime ? "Golden Pass" : "Activated"}
+                  <span className="dashboard-collected-stars-text">
+                    Collected Stars
                   </span>
                 </div>
                 <div className="d-flex justify-content-start">
-                  {!availableTime ? (
-                    <img src={circleArrow} alt="" />
-                  ) : (
-                    <Countdown
-                      date={Number(availableTime) * 1000}
-                      renderer={renderer}
-                    />
-                  )}
+                  <img src={circleArrow} alt="" />
                 </div>
               </div>
-            </NavLink>{" "}
-            <img
-              src={goldenBadge}
-              alt=""
-              className="dashboardimg"
-              style={{ width: 50, height: 44 }}
-            />
+              <img
+                src={dashboardStar}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 41, height: 41 }}
+              />
+            </div>
+            <div
+              className="dashboard-premium-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+            >
+              <NavLink to="/account#premium">
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="dashboard-main-white-text">
+                      Extra Stars
+                    </span>
+                    <span
+                      className="dashboard-collected-stars-text"
+                      style={{ color: "#FFBA4E" }}
+                    >
+                      {!isPremium ? "Premium" : "Activated"}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-start">
+                    {!isPremium ? (
+                      <img src={circleArrow} alt="" />
+                    ) : (
+                      <button
+                        className="activate-btn px-2 py-1"
+                        style={{
+                          background: "#AC1186",
+                        }}
+                      >
+                        Lifetime
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </NavLink>
+              <img
+                src={premiumBadge}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 53, height: 50 }}
+              />
+            </div>
+            <div
+              className="dashboard-goldenpass-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+            >
+              <NavLink to="/marketplace/events/golden-pass">
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="dashboard-main-white-text">
+                      Extra Rewards
+                    </span>
+                    <span
+                      className="dashboard-collected-stars-text"
+                      style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
+                    >
+                      {!availableTime ? "Golden Pass" : "Activated"}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-start">
+                    {!availableTime ? (
+                      <img src={circleArrow} alt="" />
+                    ) : (
+                      <Countdown
+                        date={Number(availableTime) * 1000}
+                        renderer={renderer}
+                      />
+                    )}
+                  </div>
+                </div>
+              </NavLink>{" "}
+              <img
+                src={goldenBadge}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 50, height: 44 }}
+              />
+            </div>
           </div>
         </div>
-      </div>
       )}
-      <div className={` ${windowSize.width && windowSize.width > 1450 && 'col-lg-4'}  ${windowSize.width && windowSize.width <= 1450 && 'col-lg-8'} col-12  ps-lg-0 pe-lg-0 mt-3 mt-lg-0`}>
+      <div
+        className={` ${
+          windowSize.width && windowSize.width > 1450 && "col-lg-4"
+        }  ${
+          windowSize.width && windowSize.width <= 1450 && "col-lg-8"
+        } col-12  ps-lg-0 pe-lg-0 mt-3 mt-lg-0`}
+      >
         <div className="d-flex flex-column">
           <div
             className="promotion-container position-relative p-0"
@@ -399,7 +437,17 @@ const TopSection = ({
               {filteredSliderContent.map((item, index) => {
                 return (
                   <img
-                    src={windowSize.width > 786 ? item.image : item.mobileImage}
+                    src={
+                      windowSize.width && windowSize.width > 1450
+                        ? item.image
+                        : windowSize.width &&
+                          windowSize.width <= 1450 &&
+                          windowSize.width > 786
+                        ? item.image2
+                        : windowSize.width <= 786
+                        ? item.mobileImage
+                        : item.image2
+                    }
                     className="advertisment-img"
                     alt=""
                     onClick={() => {
