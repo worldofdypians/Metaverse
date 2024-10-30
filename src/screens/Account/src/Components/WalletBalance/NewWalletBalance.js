@@ -1790,8 +1790,8 @@ const NewWalletBalance = ({
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
-                    position: windowSize.width > 650 ? "absolute" : "relative",
-                    bottom: windowSize.width > 992 ? "15px" : "-5px",
+                    position:  "relative",
+                    bottom: 0,
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >

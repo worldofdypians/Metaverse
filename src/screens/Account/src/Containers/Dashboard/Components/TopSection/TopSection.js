@@ -174,8 +174,8 @@ const TopSection = ({
   });
 
   return (
-    <div className="row align-items-end">
-      <div className="col-12 col-lg-4">
+    <div className="row align-items-end mx-0">
+      <div className="col-12 ps-lg-0 col-lg-4 pe-lg-3">
         {/* <div className="diagonal-button-wrapper  d-flex align-items-center">
           <div
             className="first-diagonal-btn purple-container p-2  d-flex align-items-end"
@@ -218,7 +218,7 @@ const TopSection = ({
               className="flag-wrapper global-flag"
               onClick={onOpenGlobalLeaderboard}
             >
-              <img src={globalFlag} className="w-100" alt="" />
+              <img src={globalFlag} className="flag-img" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Global</span>
                 <img src={globalIcon} height={50} width={50} alt="" />
@@ -228,7 +228,7 @@ const TopSection = ({
               className="flag-wrapper chains-flag"
               onClick={onOpenLeaderboard}
             >
-              <img src={chainsFlag} className="w-100" alt="" />
+              <img src={chainsFlag} className="flag-img" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Chains</span>
                 <img src={chainsIcon} height={50} width={50} alt="" />
@@ -238,7 +238,7 @@ const TopSection = ({
               className="flag-wrapper land-flag"
               onClick={onOpenGenesisLeaderboard}
             >
-              <img src={landFlag} className="w-100" alt="" />
+              <img src={landFlag} className="flag-img" alt="" />
               <div className="flag-content d-flex flex-column gap-2 align-items-center">
                 <span className="flag-title">Genesis</span>
                 <img src={landIcon} height={50} width={50} alt="" />
@@ -247,6 +247,7 @@ const TopSection = ({
           </div>
         </div>
       </div>
+      {windowSize.width && windowSize.width > 1450 && (
       <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
         <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
           <div
@@ -267,72 +268,91 @@ const TopSection = ({
                 <img src={circleArrow} alt="" />
               </div>
             </div>
-            <img src={dashboardStar} alt="" className="dashboardimg" />
+            <img
+              src={dashboardStar}
+              alt=""
+              className="dashboardimg"
+              style={{ width: 41, height: 41 }}
+            />
           </div>
           <div
             className="dashboard-premium-wrapper w-100 p-2"
             style={{ height: "120px" }}
           >
-            <NavLink to='/account#premium'>
-            <div className="d-flex flex-column h-100 justify-content-between">
-              <div className="d-flex flex-column">
-                <span className="dashboard-main-white-text">Extra Stars</span>
-                <span
-                  className="dashboard-collected-stars-text"
-                  style={{ color: "#FFBA4E" }}
-                >
-                  {!isPremium ? "Premium" : "Activated"}
-                </span>
-              </div>
-              <div className="d-flex justify-content-start">
-                {!isPremium ? (
-                  <img src={circleArrow} alt="" />
-                ) : (
-                  <button
-                    className="activate-btn px-2 py-1"
-                    style={{
-                      background: "#AC1186",
-                    }}
+            <NavLink to="/account#premium">
+              <div className="d-flex flex-column h-100 justify-content-between">
+                <div className="d-flex flex-column">
+                  <span className="dashboard-main-white-text">Extra Stars</span>
+                  <span
+                    className="dashboard-collected-stars-text"
+                    style={{ color: "#FFBA4E" }}
                   >
-                    Lifetime
-                  </button>
-                )}
+                    {!isPremium ? "Premium" : "Activated"}
+                  </span>
+                </div>
+                <div className="d-flex justify-content-start">
+                  {!isPremium ? (
+                    <img src={circleArrow} alt="" />
+                  ) : (
+                    <button
+                      className="activate-btn px-2 py-1"
+                      style={{
+                        background: "#AC1186",
+                      }}
+                    >
+                      Lifetime
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-            <img src={premiumBadge} alt="" className="dashboardimg" /></NavLink>
+            </NavLink>
+            <img
+              src={premiumBadge}
+              alt=""
+              className="dashboardimg"
+              style={{ width: 53, height: 50 }}
+            />
           </div>
           <div
             className="dashboard-goldenpass-wrapper w-100 p-2"
             style={{ height: "120px" }}
           >
-            <NavLink to='/marketplace/events/golden-pass'>
-            <div className="d-flex flex-column h-100 justify-content-between">
-              <div className="d-flex flex-column">
-                <span className="dashboard-main-white-text">Extra Rewards</span>
-                <span
-                  className="dashboard-collected-stars-text"
-                  style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
-                >
-                  {!availableTime ? "Golden Pass" : "Activated"}
-                </span>
+            <NavLink to="/marketplace/events/golden-pass">
+              <div className="d-flex flex-column h-100 justify-content-between">
+                <div className="d-flex flex-column">
+                  <span className="dashboard-main-white-text">
+                    Extra Rewards
+                  </span>
+                  <span
+                    className="dashboard-collected-stars-text"
+                    style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
+                  >
+                    {!availableTime ? "Golden Pass" : "Activated"}
+                  </span>
+                </div>
+                <div className="d-flex justify-content-start">
+                  {!availableTime ? (
+                    <img src={circleArrow} alt="" />
+                  ) : (
+                    <Countdown
+                      date={Number(availableTime) * 1000}
+                      renderer={renderer}
+                    />
+                  )}
+                </div>
               </div>
-              <div className="d-flex justify-content-start">
-                {!availableTime ? (
-                  <img src={circleArrow} alt="" />
-                ) : (
-                  <Countdown
-                    date={Number(availableTime) * 1000}
-                    renderer={renderer}
-                  />
-                )}
-              </div>
-            </div>
-            <img src={goldenBadge} alt="" className="dashboardimg" />
-            </NavLink>
+            </NavLink>{" "}
+            <img
+              src={goldenBadge}
+              alt=""
+              className="dashboardimg"
+              style={{ width: 50, height: 44 }}
+            />
           </div>
         </div>
       </div>
-      <div className="col-12 col-lg-4 ps-lg-0 mt-3 mt-lg-0">
+      )}
+      <div className={` ${windowSize.width && windowSize.width > 1450 && 'col-lg-4'}  ${windowSize.width && windowSize.width <= 1450 && 'col-lg-8'} col-12  ps-lg-0 pe-lg-0 mt-3 mt-lg-0`}>
         <div className="d-flex flex-column">
           <div
             className="promotion-container position-relative p-0"
@@ -433,6 +453,113 @@ const TopSection = ({
           </div>
         </div>
       </div>
+      {windowSize.width && windowSize.width <= 1450 && (
+        <div className="col-12 px-lg-0 mt-3">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-2">
+            <div
+              className="dashboard-stars-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+              onClick={onOpenGlobalLeaderboard}
+            >
+              <div className="d-flex flex-column h-100 justify-content-between">
+                <div className="d-flex flex-column">
+                  <span className="dashboard-main-white-text">
+                    {getFormattedNumber(userDataStar ?? 0, 0)}
+                  </span>
+                  <span className="dashboard-collected-stars-text">
+                    Collected Stars
+                  </span>
+                </div>
+                <div className="d-flex justify-content-start">
+                  <img src={circleArrow} alt="" />
+                </div>
+              </div>
+              <img
+                src={dashboardStar}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 41, height: 41 }}
+              />
+            </div>
+            <div
+              className="dashboard-premium-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+            >
+              <NavLink to="/account#premium">
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="dashboard-main-white-text">
+                      Extra Stars
+                    </span>
+                    <span
+                      className="dashboard-collected-stars-text"
+                      style={{ color: "#FFBA4E" }}
+                    >
+                      {!isPremium ? "Premium" : "Activated"}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-start">
+                    {!isPremium ? (
+                      <img src={circleArrow} alt="" />
+                    ) : (
+                      <button
+                        className="activate-btn px-2 py-1"
+                        style={{
+                          background: "#AC1186",
+                        }}
+                      >
+                        Lifetime
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </NavLink>
+              <img
+                src={premiumBadge}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 53, height: 50 }}
+              />
+            </div>
+            <div
+              className="dashboard-goldenpass-wrapper w-100 p-2"
+              style={{ height: "120px" }}
+            >
+              <NavLink to="/marketplace/events/golden-pass">
+                <div className="d-flex flex-column h-100 justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="dashboard-main-white-text">
+                      Extra Rewards
+                    </span>
+                    <span
+                      className="dashboard-collected-stars-text"
+                      style={{ color: !availableTime ? "#F3BF09" : "#00D1B5" }}
+                    >
+                      {!availableTime ? "Golden Pass" : "Activated"}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-start">
+                    {!availableTime ? (
+                      <img src={circleArrow} alt="" />
+                    ) : (
+                      <Countdown
+                        date={Number(availableTime) * 1000}
+                        renderer={renderer}
+                      />
+                    )}
+                  </div>
+                </div>
+              </NavLink>{" "}
+              <img
+                src={goldenBadge}
+                alt=""
+                className="dashboardimg"
+                style={{ width: 50, height: 44 }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

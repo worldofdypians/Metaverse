@@ -4295,7 +4295,7 @@ function Dashboard({
 
       let userUpdated = false;
       let userUpdatedWeekly = false;
-      if (!allFalse) {
+      if (!allFalse && isPremium) {
         // Check if user is in top 100 and adjust points if premium
         if (isUserInTop100(updatedActiveData, userId)) {
           const userIndex = updatedActiveData.findIndex(
@@ -4422,7 +4422,6 @@ function Dashboard({
           lastUpdated.current = true; // Mark as updated to avoid repeated updates
         }
       } else {
-        
         if (isUserInTop100(updatedActiveData, userId)) {
           const userIndex = updatedActiveData.findIndex(
             (item) => item.playerId === userId

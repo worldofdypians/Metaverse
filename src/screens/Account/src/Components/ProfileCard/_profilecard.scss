@@ -370,7 +370,7 @@
   width: 250px;
   height: 79px;
   transition: all 0.25s ease-in-out;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -681,7 +681,7 @@
 
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .rank-outer-wrapper {
     width: 100%;
     margin-top: 40px;

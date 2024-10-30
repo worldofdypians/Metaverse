@@ -72,6 +72,13 @@
   @media screen and (max-width: 786px) {
     height: fit-content;
   }
+
+  .slick-list {
+    margin: 0;
+  }
+  .slick-slide > div {
+    padding: 0;
+  }
 }
 
 .dashboard-stars-wrapper {
@@ -127,8 +134,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 54px;
-height: 54px;
+
 }
 
 .advertisment-img {
@@ -154,18 +160,26 @@ height: 54px;
 
 .flag-wrapper {
   position: relative;
-  width: 25%;
+  // width: 25%;
   top: -26px;
   cursor: pointer;
   transition: all 0.25s;
   @media screen and (max-width: 786px) {
-    width: 30%;
+    // width: 30%;
     top: -22px;
   }
   @media screen and (max-width: 400px) {
-    width: 30%;
+    // width: 30%;
     top: -27px;
   }
+}
+
+.dashboard-right-wrapper {
+  
+}
+
+.flag-img {
+  width: 88px;
 }
 
 .flag-wrapper:hover {
