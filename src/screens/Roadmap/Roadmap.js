@@ -759,6 +759,8 @@ const Roadmap = () => {
     <div
       className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg"
       id="roadmap"
+      style={{scrollMarginTop: "100px"}}
+
     >
       <div className="roadmap-main-wrapper px-0 w-100 d-flex align-items-center justify-content-center flex-column">
         <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5">
