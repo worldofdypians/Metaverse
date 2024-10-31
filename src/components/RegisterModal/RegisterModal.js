@@ -569,7 +569,7 @@ const RegisterModal = ({
             </div>
             <img src={waitlistLogo} alt="" />
             <p className="text-white m-0">
-              Thank you for your application as a World of Dypius Beta Tester.
+              Thank you for your application as a World of Dypians Beta Tester.
               Unfortunately, all current reservations are full and your
               application has been added to the next waiting list.
             </p>
@@ -621,7 +621,7 @@ const RegisterModal = ({
             </div>
             <img src={failed} alt="" />
             <p className="text-white m-0">
-              Unable to join the World of Dypius beta tester whitelist. Please
+              Unable to join the World of Dypians beta tester whitelist. Please
               try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
