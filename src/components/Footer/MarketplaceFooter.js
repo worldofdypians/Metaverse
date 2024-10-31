@@ -58,6 +58,10 @@ const Footer = () => {
       link: "mailto:contact@worldofdypians.com",
     },
     {
+      icon: "cmc",
+      link: "https://coinmarketcap.com/currencies/world-of-dypians/",
+    },
+    {
       icon: "coingecko",
       link: "https://www.coingecko.com/en/coins/world-of-dypians",
     },
@@ -179,7 +183,7 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
-               <div
+              <div
                 className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
                 style={{ width: "fit-content" }}
               >
@@ -199,7 +203,7 @@ const Footer = () => {
                   style={{ textDecoration: "none" }}
                 >
                   <span className="footer-link font-poppins">
-                  Terms of Service
+                    Terms of Service
                   </span>
                 </NavLink>
                 <NavLink
@@ -217,7 +221,7 @@ const Footer = () => {
                 <NavLink to="/join-beta" style={{ textDecoration: "none" }}>
                   <span className="footer-link font-poppins">Join Beta</span>
                 </NavLink>
-               
+
                 <a
                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
@@ -233,7 +237,6 @@ const Footer = () => {
                   />
                 </a>
               </div>
-             
             </div>
             <div className="d-flex flex-column align-items-start">
               <span className="footer-link font-poppins">
