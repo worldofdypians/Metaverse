@@ -1732,7 +1732,7 @@
   color: #fcfcf7;
   font-size: 10px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 12px;
 }
 
@@ -2085,9 +2085,9 @@
 
 .daily-rewards-img {
   position: absolute;
-  width: 100%;
+  width: 90%;
   right: -29%;
-  bottom: -9%;
+  bottom: -7%;
   z-index: 1;
   pointer-events: none;
   // animation: pulsate 1.5s ease-out infinite;
@@ -2408,7 +2408,12 @@
   margin: auto;
   width: fit-content;
   height: fit-content;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 1450px) {
+    margin: 0px;
+    top: 45px;
+    left: 15px;
+  }
+  @media screen and (max-width: 991px) {
     margin: auto 15px;
   }
 }
@@ -2611,7 +2616,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 80%;
+  width: 75%;
   @media screen and (max-width: 991px) {
     width: auto;
   }

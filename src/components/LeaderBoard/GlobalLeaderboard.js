@@ -20,6 +20,8 @@ import bnbIcon from "./assets/bnbIcon.svg";
 import victionActive from "./assets/victionActive.svg";
 import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
+import baseLogo from "../../screens/Home/VideoWrapper/assets/baseLogo.svg";
+
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
 import taikoLogo from "../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg";
@@ -64,7 +66,9 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  userDataStar, monthlyPlayers, percent
+  monthlyPlayers,
+  percent,
+  leaderboardBtn,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
@@ -104,7 +108,6 @@ const GlobalLeaderboard = ({
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
   // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-   
 
   const backendApi =
     "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
@@ -112,8 +115,6 @@ const GlobalLeaderboard = ({
   // useEffect(() => {
   //   handleOption(optionText);
   // }, [inactiveBoard]);
-
- 
 
   useEffect(() => {
     if (
@@ -126,7 +127,7 @@ const GlobalLeaderboard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    setOptionText2("bnb"); 
+    setOptionText2("bnb");
   }, []);
 
   return (
@@ -219,7 +220,7 @@ const GlobalLeaderboard = ({
                     global leaderboard ranking.
                     <br />
                     <br />
-                    The leaderboard resets monthly, offering new chances to
+                    The leaderboard resets weekly and monthly, offering new chances to
                     climb and show your skills.
                     <br />
                     <br />
@@ -229,51 +230,54 @@ const GlobalLeaderboard = ({
               </div>
             </OutsideClickHandler>
           </div>
-          <div className="d-flex flex-column">
-            <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
-            <h6
-              className="global-leaderboard-title d-flex algin-items-center"
-              style={{ color: "#F4E27B" }}
-            >
-              LEADERBOARD
-            </h6>
-          </div>
-          <img src={globalIcon} alt="" />
+          {screen !== "dash" && (
+            <div className="d-flex flex-column">
+              <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
+              <h6
+                className="global-leaderboard-title d-flex algin-items-center"
+                style={{ color: "#F4E27B" }}
+              >
+                LEADERBOARD
+              </h6>
+            </div>
+          )}
+          <img
+            src={globalIcon}
+            alt=""
+            className={screen === "dash" && "invisible"}
+          />
         </div>
-        <div className="p-0">
-          <table
-            className="playerTable w-100"
-            style={{ position: "relative", top: "-8px" }}
-          >
+        <div className={` ${screen !== "home" && "table-outer-margin"}  p-0`}>
+          <table className="playerTable w-100" style={{ position: "relative" }}>
             <tbody>
-              <tr className="playerRow" style={{ background: "#0E111E" }}>
+              <tr className="playerRow">
                 <th
-                  className="playerHeader font-montserrat d-flex ms-1"
-                  style={{ lineHeight: "25px" }}
+                  className="playerHeader font-montserrat"
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Rank
                 </th>
                 <th
                   className="playerHeader font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Player
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Collected Stars
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Reward
                 </th>
                 <th
                   className="playerHeader text-center font-montserrat"
-                  style={{ lineHeight: "25px" }}
+                  style={{ lineHeight: "25px", background: "#0E111E" }}
                 >
                   Extra Rewards
                 </th>
@@ -281,6 +285,7 @@ const GlobalLeaderboard = ({
               {allStarData.activeData &&
                 allStarData.activeData.length > 0 &&
                 inactiveBoard === false &&
+                leaderboardBtn === "monthly" &&
                 allStarData.activeData.map((item, index) => {
                   return (
                     <tr
@@ -292,14 +297,18 @@ const GlobalLeaderboard = ({
                       }`}
                     >
                       <td className="playerData col-1 font-montserrat">
-                        {Number(item.position) + 1}
+                        {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <div className="playerName-inner">
                           <img
-                            src={require(`./assets/globalRanks/globalRank${
-                              index + 1
-                            }.png`)}
+                            src={
+                              index + 1 <= 10
+                                ? require(`./assets/globalRanks/globalRank${
+                                    index + 1
+                                  }.png`)
+                                : playerAvatar
+                            }
                             alt=""
                             className="playerAvatar me-2"
                           />
@@ -324,7 +333,7 @@ const GlobalLeaderboard = ({
                         }`}
                         style={{ color: "#09F3D2" }}
                       >
-                        ${getFormattedNumber(dummyPrizes[item.position], 0)}
+                        ${getFormattedNumber(allStarData.rewards[index], 0)}
                       </td>
                       <td
                         className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
@@ -342,8 +351,11 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +$
-                          {getFormattedNumber(goldenRewards[item.position], 0)}
+                          $
+                          {getFormattedNumber(
+                            allStarData.premium_rewards[index],
+                            0
+                          )}
                           {screen === "home" ? (
                             <HtmlTooltip
                               placement="top"
@@ -384,6 +396,7 @@ const GlobalLeaderboard = ({
 
               {allStarData.previousData &&
                 inactiveBoard === true &&
+                leaderboardBtn === "monthly" &&
                 allStarData.previousData.length > 0 &&
                 allStarData.previousData.map((item, index) => {
                   return (
@@ -400,9 +413,13 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerName col-5 font-montserrat">
                         <img
-                          src={require(`./assets/globalRanks/globalRank${
-                            index + 1
-                          }.png`)}
+                          src={
+                            index + 1 <= 10
+                              ? require(`./assets/globalRanks/globalRank${
+                                  index + 1
+                                }.png`)
+                              : playerAvatar
+                          }
                           alt=""
                           className="playerAvatar me-2"
                         />
@@ -446,55 +463,277 @@ const GlobalLeaderboard = ({
                     </tr>
                   );
                 })}
+
+              {allStarData.activeDataWeekly &&
+                allStarData.activeDataWeekly.length > 0 &&
+                inactiveBoard === false &&
+                leaderboardBtn === "weekly" &&
+                allStarData.activeDataWeekly.map((item, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={`playerInnerRow ${
+                        inactiveBoard || item.displayName === username
+                          ? "playerInnerRow-inactive"
+                          : null
+                      }`}
+                    >
+                      <td className="playerData col-1 font-montserrat">
+                        {parseInt(index) + 1}
+                      </td>
+                      <td className="playerName col-5 font-montserrat">
+                        <div className="playerName-inner">
+                          <img
+                            src={
+                              index + 1 <= 10
+                                ? require(`./assets/globalRanks/globalRank${
+                                    index + 1
+                                  }.png`)
+                                : playerAvatar
+                            }
+                            alt=""
+                            className="playerAvatar me-2"
+                          />
+                          <span>
+                            {" "}
+                            {item.displayName?.slice(0, 13)}
+                            {item.displayName?.length > 13 && "..."}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat">
+                        <div className="d-flex align-items-center justify-content-center gap-2">
+                          <img src={star} alt="" />
+                          {getFormattedNumber(item.statValue, 0)}
+                        </div>
+                      </td>
+                      <td
+                        className={`playerScore col-2 text-center font-montserrat  ${
+                          username === item.displayName
+                            ? "goldenscore"
+                            : "playerReward"
+                        }`}
+                        style={{ color: "#09F3D2" }}
+                      >
+                        $
+                        {getFormattedNumber(
+                          allStarData.rewardsWeekly[index],
+                          0
+                        )}
+                      </td>
+                      <td
+                        className={`playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100 ${
+                          username === item.displayName && isactive === true
+                            ? "goldenscore"
+                            : "playerReward"
+                        }`}
+                        style={{
+                          color:
+                            (username === item.displayName &&
+                              isactive === true) ||
+                            username !== item.displayName
+                              ? "#09F3D2"
+                              : "gray",
+                        }}
+                      >
+                        <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
+                          $
+                          {getFormattedNumber(
+                            allStarData.premium_rewards_weekly[index],
+                            0
+                          )}
+                          {screen === "home" ? (
+                            <HtmlTooltip
+                              placement="top"
+                              title={
+                                <span className="card-eth-chain-text">
+                                  Golden Pass
+                                </span>
+                              }
+                            >
+                              <img src={goldenActive} alt="" />
+                            </HtmlTooltip>
+                          ) : (
+                            <HtmlTooltip
+                              placement="top"
+                              title={
+                                <span className="card-eth-chain-text">
+                                  Golden Pass
+                                </span>
+                              }
+                            >
+                              <img
+                                src={
+                                  (username === item.displayName &&
+                                    isactive === true) ||
+                                  username !== item.displayName
+                                    ? goldenActive
+                                    : goldenInactive
+                                }
+                                alt=""
+                              />
+                            </HtmlTooltip>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+
+              {allStarData.previousDataWeekly &&
+                inactiveBoard === true &&
+                leaderboardBtn === "weekly" &&
+                allStarData.previousDataWeekly.length > 0 &&
+                allStarData.previousDataWeekly.map((item, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={`playerInnerRow ${
+                        inactiveBoard || item.displayName === username
+                          ? "playerInnerRow-inactive"
+                          : null
+                      }`}
+                    >
+                      <td className="playerData col-1 font-montserrat">
+                        {parseInt(index) + 1}
+                      </td>
+                      <td className="playerName col-5 font-montserrat">
+                        <img
+                          src={
+                            index + 1 <= 10
+                              ? require(`./assets/globalRanks/globalRank${
+                                  index + 1
+                                }.png`)
+                              : playerAvatar
+                          }
+                          alt=""
+                          className="playerAvatar me-2"
+                        />
+                        <span>
+                          {" "}
+                          {item.displayName?.slice(0, 13)}
+                          {item.displayName?.length > 13 && "..."}
+                        </span>
+                      </td>
+                      <td className="playerScore col-2 text-center font-montserrat">
+                        <div className="d-flex align-items-center justify-content-center gap-2">
+                          <img src={star} alt="" />
+                          {getFormattedNumber(item.statValue, 0)}
+                        </div>
+                      </td>
+                      <td
+                        className="playerScore col-2 text-center font-montserrat"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        $ ---
+                      </td>
+                      <td
+                        className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
+                        style={{ color: "#09F3D2" }}
+                      >
+                        <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
+                          +$ ---
+                          <img
+                            src={
+                              (username === item.displayName &&
+                                isactive === true) ||
+                              username !== item.displayName
+                                ? goldenActive
+                                : goldenInactive
+                            }
+                            alt=""
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
       </div>
 
       {screen === "dash" &&
-      allStarData &&
-      allStarData.is_active === false &&
-      allStarData.player_data.displayName
-        ? [allStarData.player_data].map((item, index) => {
-            return (
-              <div
-                className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-5"
-                key={index}
-              >
-                <div className="d-flex flex-column">
-                  <div className="playerName d-flex align-items-center font-montserrat">
-                    <img
-                      src={inactiveUserPfp}
-                      alt=""
-                      className="playerAvatar me-2"
-                    />
-                    <span>
-                      {" "}
-                      {item.displayName?.slice(0, 13)}
-                      {item.displayName?.length > 13 && "..."}
-                    </span>
-                  </div>
+        allStarData &&
+        leaderboardBtn === "monthly" &&
+        allStarData.player_data.displayName &&
+        [allStarData.player_data].map((item, index) => {
+          return (
+            <div
+              className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
+              key={index}
+            >
+              <div className="d-flex flex-column">
+                <div className="playerName d-flex align-items-center font-montserrat gap-2">
+                  {item.statValue > 0 && <span> #{item.position + 1}</span>}
+                  <img
+                    src={inactiveUserPfp}
+                    alt=""
+                    className="playerAvatar me-2"
+                  />
+                  <span>
+                    {" "}
+                    {item.displayName?.slice(0, 13)}
+                    {item.displayName?.length > 13 && "..."}
+                  </span>
                 </div>
-                <div className="d-flex flex-column">
-                  <span className="total-stars-span">Collected Stars</span>
-                  <div className="playerScore d-flex  text-center font-montserrat">
-                    <div
-                      className="d-flex align-items-center justify-content-center gap-2"
-                      style={{ fontSize: 20 }}
-                    >
-                      <img
-                        src={star}
-                        alt=""
-                        style={{ width: 30, height: 30 }}
-                      />
-                      {getFormattedNumber(item.statValue, 0)}
-                    </div>
+              </div>
+              <div className="d-flex flex-column">
+                <span className="total-stars-span">Collected Stars</span>
+                <div className="playerScore d-flex  text-center font-montserrat">
+                  <div
+                    className="d-flex align-items-center justify-content-center gap-2"
+                    style={{ fontSize: 20 }}
+                  >
+                    <img src={star} alt="" style={{ width: 30, height: 30 }} />
+                    {getFormattedNumber(item.statValue, 0)}
                   </div>
                 </div>
               </div>
-            );
-          })
-        : null}
+            </div>
+          );
+        })}
+
+      {screen === "dash" &&
+        allStarData &&
+        leaderboardBtn === "weekly" &&
+        allStarData.player_data_weekly.displayName &&
+        [allStarData.player_data_weekly].map((item, index) => {
+          return (
+            <div
+             className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
+              key={index}
+            >
+              <div className="d-flex flex-column">
+                <div className="playerName d-flex align-items-center font-montserrat gap-2">
+                {item.statValue > 0 && <span> #{item.position + 1}</span>}
+                  <img
+                    src={inactiveUserPfp}
+                    alt=""
+                    className="playerAvatar me-2"
+                  />
+                  <span>
+                    {" "}
+                    {item.displayName?.slice(0, 13)}
+                    {item.displayName?.length > 13 && "..."}
+                  </span>
+                </div>
+              </div>
+              <div className="d-flex flex-column">
+                <span className="total-stars-span">Collected Stars</span>
+                <div className="playerScore d-flex  text-center font-montserrat">
+                  <div
+                    className="d-flex align-items-center justify-content-center gap-2"
+                    style={{ fontSize: 20 }}
+                  >
+                    <img src={star} alt="" style={{ width: 30, height: 30 }} />
+                    {getFormattedNumber(item.statValue, 0)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
 
       {screen === "dash" ? (
         <div className="optionsWrapper p-2">
@@ -521,6 +760,7 @@ const GlobalLeaderboard = ({
               <img src={bnbIcon} width={20} height={20} alt="" />
               <img src={mantaActive} width={20} height={20} alt="" />
               <img src={taikoLogo} width={20} height={20} alt="" />
+              <img src={baseLogo} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
               <img src={skaleActive} width={20} height={20} alt="" />
               <img src={victionActive} width={20} height={20} alt="" />

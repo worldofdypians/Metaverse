@@ -77,7 +77,6 @@ window.config = {
   daily_bonus_viction_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
   daily_bonus_manta_address: "0x6041dC62b74e28596b4917693f6B0F5baA61A13F",
   daily_bonus_base_address: "0xB3ae054CB8017eCc54B35075f2F4Da8Eb21d214D",
-
   daily_bonus_taiko_address: "0xaf33f679be47733bD3aBb5b0b977B6ba3eD8d01E",
 
   admin_address: "0x910090Ea889B64B4e722ea4b8fF6D5e734dFb38F",

@@ -87,6 +87,7 @@ import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
 import { isMobile } from "react-device-detect";
 import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
+import { monthlyStarPrizes } from "./screens/Account/src/Containers/Dashboard/stars.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -509,23 +510,7 @@ function App() {
       setStarRecords(finalData);
     }
   };
-  const fetchPreviousWinnersStar = async () => {
-    if (prevVersionStar != 0) {
-      const data = {
-        StatisticName: "GlobalStarMonthlyLeaderboard",
-        StartPosition: 0,
-        MaxResultsCount: 10,
-        Version: prevVersionStar - 1,
-      };
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboard?Version=-1`,
-        data
-      );
-      setPrevDataStar(result.data.data.leaderboard);
-    }
-
-    // setdailyplayerData(result.data.data.leaderboard);
-  };
+ 
   const fetchRecordsStar = async () => {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -536,61 +521,9 @@ function App() {
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
-    var testArray = result.data.data.leaderboard.filter(
-      (item) => item.displayName === username
-    );
-    if (testArray.length > 0) {
-      setActivePlayerStar(true);
-    } else if (testArray.length === 0) {
-      setActivePlayerStar(false);
-      fetchDailyRecordsAroundPlayerStar(result.data.data.leaderboard);
-    }
+    
   };
-  const fetchDailyRecordsAroundPlayerStar = async (itemData) => {
-    const data = {
-      StatisticName: "GlobalStarMonthlyLeaderboard",
-      MaxResultsCount: 6,
-      PlayerId: userId,
-    };
-    if (userId) {
-      const result = await axios.post(
-        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-        data
-      );
-      var testArray = result.data.data.leaderboard.filter(
-        (item) => item.displayName === username
-      );
-      if (testArray.length > 0) {
-        const userPosition = testArray[0].position;
-
-        setDataAmountStar(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(starPrizes[9])
-              : Number(starPrizes[userPosition])
-            : 0
-        );
-      }
-      if (itemData.length > 0) {
-        var testArray2 = Object.values(itemData).filter(
-          (item) => item.displayName === username
-        );
-
-        if (testArray.length > 0 && testArray2.length > 0) {
-          setActivePlayerStar(true);
-          setUserDataStar([]);
-        } else if (testArray.length > 0 && testArray2.length === 0) {
-          setActivePlayerStar(false);
-          setUserDataStar(...testArray);
-        }
-      } else if (testArray.length > 0) {
-        setActivePlayerStar(false);
-        setUserDataStar(...testArray);
-      }
-    }
-  };
+ 
 
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
@@ -805,18 +738,13 @@ function App() {
     );
   };
 
-  useEffect(() => {
-    fetchRecordsStar();
-  }, [username, userId]);
+ 
 
-  useEffect(() => {
-    fetchPreviousWinnersStar();
-  }, [prevVersionStar]);
-
+ 
   useEffect(() => {
     setAllStarData({
-      rewards: starPrizes,
-      premium_rewards: starPrizesGolden,
+      rewards: monthlyStarPrizes,
+      premium_rewards: monthlyStarPrizes,
       activeData: starRecords,
       previousData: prevDataStar,
       player_data: userDataStar,
@@ -3124,6 +3052,7 @@ function App() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
+    fetchRecordsStar();
     fetchMonthlyPlayers();
     getTotalSupply();
     checkBinanceData();

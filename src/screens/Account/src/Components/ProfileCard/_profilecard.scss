@@ -370,7 +370,7 @@
   width: 250px;
   height: 79px;
   transition: all 0.25s ease-in-out;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 991px) {
     width: 100%;
   }
 }
@@ -681,7 +681,7 @@
 
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .rank-outer-wrapper {
     width: 100%;
     margin-top: 40px;
@@ -915,7 +915,7 @@ width: fit-content;
 .total-stars-wrapper{
 background-image: url('./assets/totalStarsBg.svg');
 border-radius: 12px;
-background-size: 100% 100%;
+background-size: cover;
 }
 
 .total-stars-wrapper2 {
@@ -924,6 +924,34 @@ background-size: 100% 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.golden-pass-wrapper2 {
+  background-image: url('./assets/goldenPassbg.svg');
+  border-radius: 12px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.total-stars-premium-wrapper2 {
+  background-image: url('./assets/totalStarsPremium.svg');
+  border-radius: 12px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.activate-btn, .activate-btn:hover {
+background: #536BBE;
+border-radius: 6px;
+color: #EBEEFF;
+text-align: center; 
+font-size: 10px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+border: none;
 }
 
 .total-stars-span{
