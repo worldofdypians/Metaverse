@@ -1752,7 +1752,7 @@ background: rgba(142, 151, 205, 0.20) !important;
   color: #fcfcf7;
   font-size: 10px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 12px;
 }
 
@@ -2107,9 +2107,9 @@ background: rgba(142, 151, 205, 0.20) !important;
 
 .daily-rewards-img {
   position: absolute;
-  width: 70%;
-  right: -15%;
-  bottom: -9%;
+  width: 90%;
+  right: -29%;
+  bottom: -7%;
   z-index: 1;
   pointer-events: none;
   // animation: pulsate 1.5s ease-out infinite;
@@ -2435,7 +2435,12 @@ background: rgba(142, 151, 205, 0.20) !important;
   margin: auto;
   width: fit-content;
   height: fit-content;
-  @media screen and (max-width: 786px) {
+  @media screen and (max-width: 1450px) {
+    margin: 0px;
+    top: 45px;
+    left: 15px;
+  }
+  @media screen and (max-width: 991px) {
     margin: auto 15px;
   }
 }
@@ -2638,7 +2643,7 @@ background: rgba(142, 151, 205, 0.20) !important;
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 80%;
+  width: 75%;
   @media screen and (max-width: 991px) {
     width: auto;
   }

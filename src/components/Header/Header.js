@@ -100,6 +100,7 @@ const Header = ({
   onSigninClick,
   onLogout,
   binanceWallet,
+  authToken,
   gameAccount,
   email,
   username,
@@ -385,7 +386,9 @@ const Header = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}/${notificationId}`
+        )}/${notificationId}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       console.log("Notification marked as read", notificationId);
       handleRefreshList();

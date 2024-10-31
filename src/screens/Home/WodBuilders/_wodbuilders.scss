@@ -79,6 +79,7 @@ line-height: 24px; /* 171.429% */
   gap: 10px 16px;
   overflow-x: auto;
   @media screen and (max-width: 786px) {
+    height: 170px;
     // grid-template-columns: repeat(2, 1fr);
     width: 100%;
   }

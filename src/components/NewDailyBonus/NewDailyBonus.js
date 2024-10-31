@@ -69,12 +69,12 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-
 const HtmlTooltipGift = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    background: "linear-gradient(135deg, #222448 0%, #2c3867 34.54%, #2c3867 66.84%, #1d2040 100%) !important",
+    background:
+      "linear-gradient(135deg, #222448 0%, #2c3867 34.54%, #2c3867 66.84%, #1d2040 100%) !important",
     color: "rgba(0, 0, 0, 0.87)",
     maxWidth: "150px !important",
     minWidth: "150px !important",
@@ -617,7 +617,6 @@ const NewDailyBonus = ({
       settotalMantaUsd(resultMantaUsd);
     }
 
-    
     if (allBaseChests && allBaseChests.length > 0) {
       let resultBasePoints = 0;
       let resultBaseUsd = 0;
@@ -774,7 +773,7 @@ const NewDailyBonus = ({
         showSingleRewardDataViction(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "manta") {
         showSingleRewardDataManta(rewardData.chestId, isActiveIndex - 1);
-      }  else if (chain === "base") {
+      } else if (chain === "base") {
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
@@ -852,7 +851,6 @@ const NewDailyBonus = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
 
   const handleTaikoPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
@@ -991,7 +989,7 @@ const NewDailyBonus = ({
         item.seller.toLowerCase() ===
           window.config.nftSeller_address.toLowerCase()
       );
-    }); 
+    });
     setCawsNfts(filteredCaws);
   };
 
@@ -1002,7 +1000,7 @@ const NewDailyBonus = ({
         item.seller.toLowerCase() ===
           window.config.nftSeller_address.toLowerCase()
       );
-    }); 
+    });
 
     setLandNfts(filteredLands);
   };
@@ -1834,8 +1832,7 @@ const NewDailyBonus = ({
 
   const showSingleRewardDataBase = (chestID, chestIndex) => {
     const filteredResult = openedBaseChests.find(
-      (el) =>
-        el.chestId === chestID && allBaseChests.indexOf(el) === chestIndex
+      (el) => el.chestId === chestID && allBaseChests.indexOf(el) === chestIndex
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -2533,7 +2530,7 @@ const NewDailyBonus = ({
         setMessage("login");
         setDisable(true);
       }
-    }  else if (chain === "base") {
+    } else if (chain === "base") {
       if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
@@ -2858,8 +2855,8 @@ const NewDailyBonus = ({
                gap-lg-0 mx-3 mx-lg-2 mt-3 mt-lg-3"
                   style={{ height: "100%", marginTop: "64px" }}
                 >
-                  <div className="col-12 col-lg-5 chains-wrapper mt-5 mt-lg-0">
-                    {windowSize.width > 992 ? (
+                  <div className="col-12 col-lg-5 chains-wrapper mt-5 mt-lg-0 d-flex align-items-center">
+                    {windowSize.width && windowSize.width > 992 ? (
                       <div
                         className=" h-100 chains-container"
                         style={{ gap: "8px" }}
@@ -2981,23 +2978,6 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                              
-                            }
-                          >
-                            <img
-                              src={require("./assets/gift.png")}
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
-
                           <img
                             src={mantaBg}
                             className={`chain-img ${
@@ -3091,9 +3071,6 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-
-                     
-
 
                         <div
                           className={`position-relative chain-item ${
@@ -3201,6 +3178,20 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={coreBg}
                             className={`chain-img ${
@@ -3312,8 +3303,6 @@ const NewDailyBonus = ({
                             chain === "base" && "chain-item-active"
                           } w-100`}
                         >
-                           
-
                           <img
                             src={comingSoon4}
                             className={`chain-img ${
@@ -3662,9 +3651,8 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                      
                       </div>
-                    ) : (
+                    ) : windowSize.width && windowSize.width<= 992 ? (
                       <Slider {...settings}>
                         <div
                           className={`position-relative chain-item ${
@@ -3726,21 +3714,6 @@ const NewDailyBonus = ({
                             chain === "manta" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={require("./assets/gift.png")}
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
-
                           <img
                             src={mantaBg}
                             className={`chain-img ${
@@ -3874,6 +3847,20 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           } w-100`}
                         >
+                          <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={require("./assets/gift.png")}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={coreBg}
                             className={`chain-img ${
@@ -3924,8 +3911,6 @@ const NewDailyBonus = ({
                             chain === "base" && "chain-item-active"
                           } w-100`}
                         >
-                       
-
                           <img
                             src={comingSoon4}
                             className={`chain-img ${
@@ -4010,7 +3995,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                       </Slider>
-                    )}
+                    ) : <></>}
                   </div>
                   <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                     <div className="grid-scroll">
@@ -4905,7 +4890,7 @@ const NewDailyBonus = ({
                               Viction Network
                             </span>
                           </h6>
-                        )  : chain === "base" ? (
+                        ) : chain === "base" ? (
                           <h6
                             className="loader-text mb-0"
                             style={{ color: "#ce5d1b" }}
@@ -7124,7 +7109,7 @@ const NewDailyBonus = ({
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
-            onBaseChestClaimed()
+            onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
             setTimeout(() => {
@@ -7150,7 +7135,7 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "base"
+                : chain === "base"
                 ? showSingleRewardDataBase(
                     rewardData.chestId,
                     isActiveIndex - 1

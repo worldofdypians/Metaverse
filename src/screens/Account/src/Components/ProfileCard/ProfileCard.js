@@ -101,7 +101,9 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 }));
 
 const ProfileCard = ({
-  email,discountPercentageViction,discountPercentageTaiko,
+  email,
+  discountPercentageViction,
+  discountPercentageTaiko,
   discountPercentage,
   username,
   balance,
@@ -137,7 +139,16 @@ const ProfileCard = ({
   domainName,
   rankData,
   setRankData,
-  getRankData,userDataStar, userDataPosition, userRankManta, userMantaScore, userRankBase, userBaseScore,  userRankTaiko, userTaikoScore
+  getRankData,
+  userDataStar,
+  userDataPosition,
+  userRankManta,
+  userMantaScore,
+  userRankBase,
+  userBaseScore,
+  userRankTaiko,
+  userTaikoScore,
+  authToken
 }) => {
   let id = Math.random().toString(36);
   const windowSize = useWindowSize();
@@ -167,7 +178,13 @@ const ProfileCard = ({
   const [rankTooltip, setRankTooltip] = useState(false);
 
   const userTotalScore =
-    userBnbScore + userSkaleScore + userCoreScore + userVictionScore + userMantaScore + userBaseScore + userTaikoScore;
+    userBnbScore +
+    userSkaleScore +
+    userCoreScore +
+    userVictionScore +
+    userMantaScore +
+    userBaseScore +
+    userTaikoScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -220,6 +237,8 @@ const ProfileCard = ({
             `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
             {
               rank: userRankName.id,
+            }, {
+              headers: { Authorization: `Bearer ${authToken}` },
             }
           )
           .then(async () => {
@@ -430,7 +449,7 @@ const ProfileCard = ({
     userMantaScore,
     userBaseScore,
 
-    userTaikoScore
+    userTaikoScore,
   ]);
 
   const html = document.querySelector("html");
@@ -485,6 +504,12 @@ const ProfileCard = ({
                         username &&
                         !isPremium) ||
                       (!address && !isPremium) ? (
+                        <img
+                          src={defaultAvatar}
+                          alt=""
+                          className="userAvatar"
+                        />
+                      ) : email && !address ? (
                         <img
                           src={defaultAvatar}
                           alt=""
@@ -779,79 +804,92 @@ const ProfileCard = ({
                       placeItems: "flex-end",
                     }}
                   >
-                    {!isPremium && (discountPercentage == 0 && discountPercentageViction === 0 && discountPercentageTaiko === 0) && (
-                      <div
-                        className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
+                    {!isPremium &&
+                      discountPercentage == 0 &&
+                      discountPercentageViction === 0 &&
+                      discountPercentageTaiko === 0 && (
+                        <div
+                          className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
-                        onClick={onPremiumClick}
-                      >
-                        {/* <div className="table-separator position-absolute"></div> */}
-                        <h6 className="become-premium-title mb-0">
-                          Premium Subscription
-                        </h6>
-
-                        <img
-                          src={becomePremium}
-                          alt=""
-                          className="become-premium-img"
-                        />
-                      </div>
-                    )}
-
-                    {!isPremium && (discountPercentage > 0 || discountPercentageViction>0 || discountPercentageTaiko>0) && (
-                      <div
-                        className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
-                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
-                        onClick={onPremiumClick}
-                      >
-                        <div className="premiumRedTag-profile position-absolute">
-                          <div className="position-relative d-flex flex-column">
-                            <img
-                              src={premiumRedTag}
-                              alt=""
-                              className="premiumtag-img"
-                            />
-                            <div className="d-flex flex-column position-absolute discountwrap-profile">
-                              <span className="discount-price2-profile font-oxanium">
-                                {discountPercentage > 0 ? discountPercentage : discountPercentageViction > 0 ? discountPercentageViction
-                                : discountPercentageTaiko > 0 ? discountPercentageTaiko
-                                 : discountPercentage}%
-                              </span>
-                              <span className="discount-price-bottom">
-                                Discount
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="d-flex flex-column">
-                          <h6 className="lifetime-plan-text2 m-0">
-                            Lifetime plan
+                          onClick={onPremiumClick}
+                        >
+                          {/* <div className="table-separator position-absolute"></div> */}
+                          <h6 className="become-premium-title mb-0">
+                            Premium Subscription
                           </h6>
 
-                          <div className="d-flex align-items-center gap-2">
-                            <h6 className="discount-price-profile m-0">
-                            {discountPercentage == 100 ||
-                                      discountPercentageViction == 100||
-                                      discountPercentageTaiko == 100
-                                        ? "FREE"
-                                        : "$" +
-                                          (100 -
-                                            Number(
-                                              discountPercentage > 0
-                                                ? discountPercentage
-                                                : discountPercentageViction > 0
-                                                ? discountPercentageViction
-                                                : discountPercentageTaiko > 0
-                                                ? discountPercentageTaiko
-                                                : discountPercentage
-                                            ))}
-                            </h6>
-                            <h6 className="old-price-text-profile m-0">$100</h6>
-                          </div>
+                          <img
+                            src={becomePremium}
+                            alt=""
+                            className="become-premium-img"
+                          />
                         </div>
-                        <img src={premiumDiscount} alt="" className="" />
-                      </div>
-                    )}
+                      )}
+
+                    {!isPremium &&
+                      (discountPercentage > 0 ||
+                        discountPercentageViction > 0 ||
+                        discountPercentageTaiko > 0) && (
+                        <div
+                          className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
+                    d-flex align-items-center position-relative mt-3 mt-lg-0`}
+                          onClick={onPremiumClick}
+                        >
+                          <div className="premiumRedTag-profile position-absolute">
+                            <div className="position-relative d-flex flex-column">
+                              <img
+                                src={premiumRedTag}
+                                alt=""
+                                className="premiumtag-img"
+                              />
+                              <div className="d-flex flex-column position-absolute discountwrap-profile">
+                                <span className="discount-price2-profile font-oxanium">
+                                  {discountPercentage > 0
+                                    ? discountPercentage
+                                    : discountPercentageViction > 0
+                                    ? discountPercentageViction
+                                    : discountPercentageTaiko > 0
+                                    ? discountPercentageTaiko
+                                    : discountPercentage}
+                                  %
+                                </span>
+                                <span className="discount-price-bottom">
+                                  Discount
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="d-flex flex-column">
+                            <h6 className="lifetime-plan-text2 m-0">
+                              Lifetime plan
+                            </h6>
+
+                            <div className="d-flex align-items-center gap-2">
+                              <h6 className="discount-price-profile m-0">
+                                {discountPercentage == 100 ||
+                                discountPercentageViction == 100 ||
+                                discountPercentageTaiko == 100
+                                  ? "FREE"
+                                  : "$" +
+                                    (100 -
+                                      Number(
+                                        discountPercentage > 0
+                                          ? discountPercentage
+                                          : discountPercentageViction > 0
+                                          ? discountPercentageViction
+                                          : discountPercentageTaiko > 0
+                                          ? discountPercentageTaiko
+                                          : discountPercentage
+                                      ))}
+                              </h6>
+                              <h6 className="old-price-text-profile m-0">
+                                $100
+                              </h6>
+                            </div>
+                          </div>
+                          <img src={premiumDiscount} alt="" className="" />
+                        </div>
+                      )}
 
                     {email && address && (
                       <>
@@ -1334,7 +1372,6 @@ const ProfileCard = ({
                       </>
                     )}
                   </div>
-                  
                 </div>
               </div>
               <div
@@ -1345,7 +1382,8 @@ const ProfileCard = ({
                     address &&
                     address.toLowerCase() !== coinbase.toLowerCase()) ||
                   (!coinbase && email) ||
-                  (!coinbase && !email)
+                  (!coinbase && !email)||
+                  (!address && email)
                     ? "py-2"
                     : "p-0"
                 }`}

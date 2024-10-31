@@ -37,6 +37,7 @@ const Notifications = ({
   handleRefreshList,
   nftCount,
   isConnected,
+  authToken,
 }) => {
   const windowSize = useWindowSize();
   const [activeBar, setActiveBar] = useState("all");
@@ -45,58 +46,77 @@ const Notifications = ({
   const [descSlice, setDescSlice] = useState(100);
   const API_BASE_URL = "https://api.worldofdypians.com";
 
-  async function addNewUserIfNotExists(walletAddress, title, description, redirect_link) {
+  async function addNewUserIfNotExists(
+    walletAddress,
+    title,
+    description,
+    redirect_link
+  ) {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`);
-        
-      
-        if (response.data.length === 0) {
-            const newUserResponse = await axios.post(`${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(walletAddress)}`, {
-                tokenId: '', 
-                nftAddress: '', 
-                timestamp: Date.now(),
-                read: false,
-                offer: 'no',
-                offerAccepted: 'no',
-                buy: 'no',
-                event: 'no',    
-                news: 'no',    
-                welcome: 'yes', 
-                update: 'no',  
-                title: 'Welcome', 
-                description: 'Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!' , 
-                redirect_link: '',
-            });
-
-            console.log('New user added:', newUserResponse.data);
-            let lso = newUserResponse.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-           
-            setNftOffers(lso);
-                setNftOffersAll(lso);
-        } else {
-            console.log('User already exists:', response.data);
-
-            const notifications = response.data[0]?.notifications || [];
-            let lso = notifications.sort((a, b) => {
-              return new Date(b.timestamp) - new Date(a.timestamp);
-            });
-            setNftOffers(lso);
-            setNftOffersAll(lso);
+      const response = await axios.get(
+        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+          walletAddress
+        )}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
         }
+      );
+
+      if (response.data.length === 0) {
+        const newUserResponse = await axios.post(
+          `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+            walletAddress
+          )}`,
+          {
+            tokenId: "",
+            nftAddress: "",
+            timestamp: Date.now(),
+            read: false,
+            offer: "no",
+            offerAccepted: "no",
+            buy: "no",
+            event: "no",
+            news: "no",
+            welcome: "yes",
+            update: "no",
+            title: "Welcome",
+            description:
+              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+            redirect_link: "",
+          }, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          }
+        );
+
+        console.log("New user added:", newUserResponse.data);
+        let lso = newUserResponse.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+
+        setNftOffers(lso);
+        setNftOffersAll(lso);
+      } else {
+        console.log("User already exists:", response.data);
+
+        const notifications = response.data[0]?.notifications || [];
+        let lso = notifications.sort((a, b) => {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+        setNftOffers(lso);
+        setNftOffersAll(lso);
+      }
     } catch (error) {
-        console.error('Error adding new user:', error.message);
+      console.error("Error adding new user:", error.message);
     }
-}
- 
+  }
 
   async function markNotificationAsRead(walletAddress, notificationId) {
     try {
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}/${notificationId}`
+        )}/${notificationId}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       console.log("Notification marked as read");
       handleRefreshList();
@@ -110,7 +130,9 @@ const Notifications = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}`
+        )}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       handleRefreshList();
 
@@ -125,7 +147,9 @@ const Notifications = ({
       await axios.delete(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}/${notificationId}`
+        )}/${notificationId}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       console.log("Notification deleted");
       handleRefreshList();
@@ -139,7 +163,9 @@ const Notifications = ({
       await axios.delete(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}`
+        )}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
       console.log("All notifications deleted");
       handleRefreshList();
@@ -181,7 +207,9 @@ const Notifications = ({
           await axios.delete(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}`
+            )}/${notification._id}`, {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
           );
         }
 
@@ -196,7 +224,9 @@ const Notifications = ({
           await axios.delete(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}`
+            )}/${notification._id}`, {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
           );
         }
 
@@ -221,7 +251,9 @@ const Notifications = ({
           await axios.patch(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}, { read: true }`
+            )}/${notification._id}, { read: true }`, {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
           );
         }
 
@@ -236,7 +268,9 @@ const Notifications = ({
           await axios.patch(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}, { read: true }`
+            )}/${notification._id}, { read: true }`, {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
           );
         }
 
