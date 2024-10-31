@@ -1,4 +1,5 @@
 import React from "react";
+import timepieceplaceholder2 from './assets/timepieceplaceholder2.png'
 
 const TimepiecePlaceHolder = ({ onMintClick }) => {
   return (
@@ -8,7 +9,7 @@ const TimepiecePlaceHolder = ({ onMintClick }) => {
     >
       <div className="landplaceholder-content">
         <img
-          src={require("./assets/timepieceplaceholder2.svg").default}
+          src={timepieceplaceholder2}
           alt=""
           className="landplaceholder-content-img"
         />

@@ -2173,7 +2173,7 @@ function App() {
         console.error(e);
       });
   };
-  
+
   const isTokenExpired = (token) => {
     if (!token) {
       return true;
@@ -2393,7 +2393,8 @@ function App() {
     if (userId !== undefined && userId !== null) {
       try {
         const response = await fetch(
-          `https://api.worldofdypians.com/user-favorites/${userId}`, {
+          `https://api.worldofdypians.com/user-favorites/${userId}`,
+          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
@@ -2827,7 +2828,8 @@ function App() {
       const response = await axios.get(
         `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}`, {
+        )}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -2853,7 +2855,8 @@ function App() {
             description:
               "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
             redirect_link: "",
-          }, {
+          },
+          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
@@ -2888,7 +2891,6 @@ function App() {
         console.log(err);
       });
   };
-
 
   const getDomains = async () => {
     if (coinbase) {
@@ -3068,7 +3070,7 @@ function App() {
     <>
       <div className="container-fluid p-0 main-wrapper2 position-relative">
         <Header
-        authToken={authToken}
+          authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
           avatar={avatar}
@@ -3093,7 +3095,7 @@ function App() {
           onSigninClick={checkData}
         />
         <MobileNavbar
-        authToken={authToken}
+          authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
           avatar={avatar}
@@ -3124,7 +3126,7 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                authToken={authToken} 
+                authToken={authToken}
                 isConnected={isConnected}
                 chainId={networkId}
                 handleSwitchChain={handleSwitchNetwork}
@@ -3160,10 +3162,9 @@ function App() {
                 timepieceListed={timepieceListed}
                 totalSupply={totalSupply}
                 monthlyPlayers={monthlyPlayers}
-                percent={percent} 
+                percent={percent}
                 socials={socials}
                 totalTx={totalTx}
-
               />
             }
           />
@@ -3186,7 +3187,13 @@ function App() {
           <Route
             exact
             path="/community"
-            element={<Community socials={socials} monthlyPlayers={monthlyPlayers} percent={percent} />}
+            element={
+              <Community
+                socials={socials}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
+              />
+            }
           />
           <Route exact path="/team" element={<OurTeam />} />
           <Route
@@ -3320,8 +3327,8 @@ function App() {
             path="/account"
             element={
               <Dashboard
-              authToken={authToken}
-              dailyBonuslistedNFTS={listedNFTS}
+                authToken={authToken}
+                dailyBonuslistedNFTS={listedNFTS}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
@@ -3352,7 +3359,7 @@ function App() {
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 latest20BoughtNFTS={latest20BoughtNFTS}
                 monthlyPlayers={monthlyPlayers}
-                percent={percent} 
+                percent={percent}
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -3581,25 +3588,26 @@ function App() {
             }
           />
 
-          {email &&
+          {/* {email &&
             data &&
             data.getPlayer &&
             data.getPlayer.displayName &&
             data.getPlayer.playerId &&
             data.getPlayer.wallet &&
-            data.getPlayer.wallet.publicAddress && (
-              <Route
-                exact
-                path="/loyalty-program"
-                element={
-                  <LoyaltyProgram
-                    coinbase={coinbase}
-                    isConnected={isConnected}
-                    handleConnection={handleConnectWallet}
-                  />
-                }
+            data.getPlayer.wallet.publicAddress && ( */}
+          <Route
+            exact
+            path="/loyalty-program"
+            element={
+              <LoyaltyProgram
+                coinbase={coinbase}
+                isConnected={isConnected}
+                handleConnection={handleConnectWallet}
+                email={email}
               />
-            )}
+            }
+          />
+          {/* )} */}
           <Route
             exact
             path="/marketplace/beta-pass/conflux"
@@ -4044,7 +4052,7 @@ function App() {
             path="/marketplace/stake"
             element={
               <MarketStake
-              authToken={authToken}
+                authToken={authToken}
                 isConnected={isConnected}
                 handleConnect={() => {
                   setwalletModal(true);
@@ -4566,17 +4574,22 @@ function App() {
         </Routes>
         {/* <img src={scrollToTop} alt="scroll top" onClick={() => window.scrollTo(0, 0)} className="scroll-to-top" /> */}
         <ScrollTop />
-        {location.pathname.includes("marketplace") ||
+        {(location.pathname.includes("marketplace") ||
         location.pathname.includes("notifications") ||
-        location.pathname.includes("account") ||
-        location.pathname.includes("loyalty-program") ? (
+        location.pathname.includes("account")) ? (
           location.pathname.includes("caws") ||
           location.pathname.includes("land") ? null : (
             <MarketplaceFooter />
           )
-        ) : (
+        ) : !location.pathname.includes("loyalty-program") ? (
           <Footer />
-        )}
+        ) : null}
+
+        {window.location.pathname.includes("loyalty-program") && email ? (
+          <MarketplaceFooter />
+        ) : window.location.pathname.includes("loyalty-program") && !email ? (
+          <Footer />
+        ) : null}
       </div>
 
       {!location.pathname.includes("account") &&

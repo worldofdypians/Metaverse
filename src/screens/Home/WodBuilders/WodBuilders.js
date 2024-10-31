@@ -310,6 +310,18 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "GameSwift",
+      icon: "gameswift",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
+      name: "Dyor Exchange",
+      icon: "dyor",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
@@ -413,7 +425,7 @@ const WodBuilders = ({ page }) => {
           )}
           <div className="row mx-0 w-100 gap-4 d-flex flex-column align-items-center justify-content-between">
             <div
-              className={`builder-item p-3 d-flex flex-column gap-3 gap-lg-0 justify-content-between `}
+              className={`builder-item p-3 d-flex flex-column gap-0 justify-content-between `}
             >
               <div className="builders-first-half"></div>
               <div className="builders-second-half">
@@ -449,7 +461,7 @@ const WodBuilders = ({ page }) => {
                     )}
 
                     <span
-                      className={`builder-title mb-0`}
+                      className={`builder-title mb-0 h-auto`}
                       style={{ fontWeight: "400" }}
                     >
                       {item.name}
