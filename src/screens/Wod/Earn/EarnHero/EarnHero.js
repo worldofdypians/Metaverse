@@ -41,7 +41,7 @@ const EarnHero = ({ onSelectFilter }) => {
       {
         breakpoint: 1600,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -49,7 +49,7 @@ const EarnHero = ({ onSelectFilter }) => {
       {
         breakpoint: 1500,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -89,7 +89,7 @@ const EarnHero = ({ onSelectFilter }) => {
     <div className="earn-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100 gap-5">
-          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5">
+          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5 ps-4">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h2 className="font-montserrat main-hero-title px-0 text-center">
@@ -108,7 +108,7 @@ const EarnHero = ({ onSelectFilter }) => {
           </div>
           <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
-              {dypProducts.slice(0, 4).map((item, index) => (
+              {dypProducts.slice(0, 3).map((item, index) => (
                 // <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}

@@ -126,7 +126,7 @@ const Campaigns = () => {
 
   return (
     <div className="container-fluid d-flex flex-column w-100 mt-5 align-items-center justify-content-center px-0">
-      <div className="custom-container px-2 px-lg-0 my-5 py-0 py-lg-5">
+      <div className="custom-container px-2 my-5 py-0 py-lg-5">
         <div className="row">
           <div className="col-12 col-lg-6">
             <img
