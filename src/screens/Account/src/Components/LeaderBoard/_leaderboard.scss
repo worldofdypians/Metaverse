@@ -10,8 +10,16 @@
   color: #ffffff;
   @media screen and (max-width: 786px) {
     font-size: 18px;
+    line-height: 12px;
   }
 }
+
+// .main-wrapper {
+//   @media screen and (max-width: 786px) {
+//    min-height: 560px;
+//    overflow: auto;
+//   }
+// }
 
 .grandPrices-wrapper {
   background-color: #242240;
@@ -93,7 +101,6 @@
   white-space: nowrap;
   @media screen and (max-width: 500px) {
     font-size: 9px;
-
   }
 }
 
@@ -197,7 +204,7 @@
 
   @media screen and (max-width: 500px) {
     width: 25px;
-  height: 25px;
+    height: 25px;
   }
 }
 .premium-star {
@@ -250,14 +257,14 @@
 
   @media screen and (max-width: 786px) {
     font-size: 12px;
-      overflow-x: hidden;
-    width: 100%;
-    max-width: 100px;
+    overflow-x: hidden;
+    width: auto;
+    max-width: none;
   }
 }
 
 .tablewrapper {
-  height: fit-content !important;
+  overflow: auto;
   // overflow-y: auto;
 }
 
@@ -446,6 +453,69 @@
   }
 }
 
+.leaderboard-item2 {
+  width: 100%;
+  background: rgba(69, 74, 149, 0.2);
+  backdrop-filter: blur(12.5px);
+  border-radius: 12px;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.leaderboard-inner-title2 {
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.new-leaderboard-btns-wrapper {
+  border-radius: 12px;
+  background: rgba(96, 87, 137, 0.1);
+  backdrop-filter: blur(2px);
+  padding: 10px;
+  overflow: auto;
+}
+
+.player-inner-username {
+  color: #f7f7ff;
+  font-family: "Montserrat" !important;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.288px;
+}
+
+.user-totalstar-text {
+  color: #F3BF09; 
+font-size: 16px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.user-blue-rank {
+  color: #F7F7FF; 
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.user-rank-text {
+  color: #F3BF09;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.144px;
+}
+
 .optionswrapper-bg {
   position: absolute;
   width: 14%;
@@ -459,6 +529,13 @@
   bottom: 0;
   left: 0;
   margin: auto;
+}
+
+.optionswrapper-bg-new {
+  border-radius: 12px;
+  border: 1px solid #f4e07b;
+  background: #341553;
+  transition: all 0.25s ease-in-out;
 }
 
 .optionswrapper-bg-home {
@@ -511,7 +588,6 @@
   transform: translateX(207%);
 }
 
-
 .move-1-home {
   transform: translateX(100%);
 }
@@ -519,7 +595,6 @@
 .move-2-home {
   transform: translateX(200%);
 }
-
 
 .leaderboard-icon {
   transition: all 0.25s;
@@ -582,7 +657,7 @@
     font-size: 12px;
   }
 }
-.left-arrow-leaderboard{
+.left-arrow-leaderboard {
   position: absolute;
   left: -4%;
   top: 50%;
@@ -590,7 +665,7 @@
   width: 30px;
   cursor: pointer;
 }
-.right-arrow-leaderboard{
+.right-arrow-leaderboard {
   position: absolute;
   right: -4%;
   top: 50%;
@@ -599,16 +674,15 @@
   cursor: pointer;
 }
 
-
-.select-chain-arrow-left{
-position: absolute;
-left: 3%;
-top: 0;
-bottom: 0;
-margin: auto;
+.select-chain-arrow-left {
+  position: absolute;
+  left: 3%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 
-.select-chain-arrow-right{
+.select-chain-arrow-right {
   position: absolute;
   right: 3%;
   top: 0;
@@ -616,11 +690,11 @@ margin: auto;
   margin: auto;
 }
 
-.coming-soon-wrapper{
+.coming-soon-wrapper {
   height: 442px;
   background: rgba(151, 89, 192, 0.3);
   border-radius: 12px;
-  h6{
+  h6 {
     margin-bottom: 0;
     font-family: "Oxanium" !important;
     font-size: 20px;
@@ -629,7 +703,7 @@ margin: auto;
   }
 }
 
-.coming-soon-position{
+.coming-soon-position {
   position: absolute;
   bottom: 0;
   top: 0;
@@ -637,7 +711,7 @@ margin: auto;
   left: 0;
   margin: auto;
   z-index: 5;
-  h6{
+  h6 {
     margin-bottom: 0;
     font-family: "Oxanium" !important;
     font-size: 30px;

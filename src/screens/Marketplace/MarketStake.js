@@ -32,7 +32,7 @@ const MarketStake = ({
   isConnected,
   isPremium,
   onSuccessDeposit,
-  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet
+  handleSwitchNetwork,binanceW3WProvider,handleSwitchChainGateWallet,handleSwitchChainBinanceWallet,binanceWallet,authToken
 }) => {
   const windowSize = useWindowSize();
   const [mystakes, setMystakes] = useState([]);
@@ -1388,6 +1388,33 @@ const MarketStake = ({
         />
       )}
 
+      {getPremiumPopup && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setgetPremiumPopup(false);
+          }}
+        >
+          <GetPremiumPopup
+          authToken={authToken}
+            chainId={chainId}
+            coinbase={coinbase}
+            handleSwitchNetwork={handleSwitchNetwork}
+            onSuccessDeposit={() => {
+              onSuccessDeposit();
+              setTimeout(() => {
+                setgetPremiumPopup(false);
+              }, 2000);
+            }}
+            onClose={() => {
+              setgetPremiumPopup(false);
+            }}
+            binanceW3WProvider={binanceW3WProvider}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
+          />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

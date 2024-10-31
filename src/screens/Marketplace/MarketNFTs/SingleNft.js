@@ -115,6 +115,7 @@ const SingleNft = ({
   binanceWallet,
   dyptokenData,
   ethTokenData,
+  authToken,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -1343,6 +1344,8 @@ const SingleNft = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ tokenId, nftAddress }),
+
+          headers: { Authorization: `Bearer ${authToken}` },
         }
       );
       if (!response.ok) {
@@ -1367,6 +1370,7 @@ const SingleNft = ({
       `https://api.worldofdypians.com/user-favorites/${userId}/${tokenId}/${nftAddress}`,
       {
         method: "DELETE",
+        headers: { Authorization: `Bearer ${authToken}` },
       }
     )
       .then((response) => {
@@ -1998,7 +2002,10 @@ const SingleNft = ({
   async function getFavoritesCount(tokenId, nftAddress) {
     try {
       const data = await axios.get(
-        `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`
+        `https://api.worldofdypians.com/nft-favorite/${tokenId}/${nftAddress}`,
+        {
+          headers: { Authorization: `Bearer ${authToken}` },
+        }
       );
 
       // if (!response.ok) {
@@ -2475,7 +2482,7 @@ const SingleNft = ({
       }
     }
     // }
-  }, [isConnected, coinbase, nftCount,IsListed]);
+  }, [isConnected, coinbase, nftCount, IsListed]);
 
   useEffect(() => {
     if (isConnected === true && nft && nft.payment_priceType === 1) {
@@ -2562,10 +2569,7 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_opbnb_address.toLowerCase()
     ) {
       setType("opbnb");
-    } else if (
-      nftAddress ===
-      window.config.nft_conflux_address
-    ) {
+    } else if (nftAddress === window.config.nft_conflux_address) {
       setType("conflux");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_manta_address.toLowerCase()
@@ -2615,9 +2619,7 @@ const SingleNft = ({
       window.config.nft_multivers_address.toLowerCase()
     ) {
       setType("multivers");
-    } else if (
-      nftAddress === window.config.nft_base_address
-    ) {
+    } else if (nftAddress === window.config.nft_base_address) {
       setType("base");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_gate_address.toLowerCase()
@@ -2671,8 +2673,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
-        : nftAddress ===
-          window.config.nft_conflux_address
+        : nftAddress === window.config.nft_conflux_address
         ? "conflux"
         : nftAddress.toLowerCase() ===
           window.config.nft_manta_address.toLowerCase()
@@ -2707,8 +2708,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_multivers_address.toLowerCase()
         ? "multivers"
-        : nftAddress ===
-          window.config.nft_base_address
+        : nftAddress === window.config.nft_base_address
         ? "base"
         : nftAddress.toLowerCase() ===
           window.config.nft_caws_bnb_address.toLowerCase()
@@ -2746,14 +2746,14 @@ const SingleNft = ({
   useEffect(() => {
     if (favorites && favorites.length > 0) {
       const favobj = favorites.find(
-        (obj) => obj.nftAddress === nftAddress && obj.tokenId === nftId
+        (obj) => obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() && obj.tokenId === nftId
       );
 
       if (favobj !== undefined) {
         setIsFavorite(true);
       } else setIsFavorite(false);
     }
-  }, [nft, favorites]);
+  }, [nftAddress, favorites, nftId]);
 
   useEffect(() => {
     if (
@@ -3041,8 +3041,7 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_gate_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress ===
-                          window.config.nft_conflux_address
+                        : nftAddress === window.config.nft_conflux_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_manta_address.toLowerCase()
@@ -3068,8 +3067,7 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_multivers_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : nftAddress ===
-                          window.config.nft_base_address
+                        : nftAddress === window.config.nft_base_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_skale_address.toLowerCase()

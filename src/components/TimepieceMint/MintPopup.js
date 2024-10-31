@@ -94,6 +94,25 @@ const MintPopup = ({ active, onClose, data }) => {
             </div>
           </div>
         </>
+      ) : data.title === "Base" ? (
+        <>
+          <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
+            <div className="d-flex flex-column align-items-center">
+              <div className="d-flex align-items-center justify-content-center">
+                <div className="pulsatingDot"></div>
+                <h6
+                  className="mint-popup-title  mb-0"
+                  style={{ color: "#18FFFF" }}
+                >
+                  $20,000 ETH Rewards
+                </h6>
+              </div>
+              <h6 className="mint-popup-title m-0">
+              Base Treasure Hunt 
+              </h6>
+            </div>
+          </div>
+        </>
       ) : data.title === "Manta" ? (
         <>
           <div className="d-flex align-items-center gap-2 mt-3 mt-lg-0 mb-4 mb-lg-0">
@@ -254,6 +273,16 @@ const MintPopup = ({ active, onClose, data }) => {
             </span>
           )}
         </div>
+      ) :data.title === "Base" ? (
+        <div className="available-mint-bg d-flex align-items-center justify-content-center px-2 py-1">
+           
+            <span className="popup-available-mint">
+              Explore the Base area and use your{" "}
+              <img src={whiteExplore} className="white-explore" alt="" /> to
+              generate rewards!
+            </span>
+          
+        </div>
       ) : data.title === "DogeCoin" ||
         data.title === "Viction" ||
         data.title === "opBNB" ? (
@@ -330,7 +359,18 @@ const MintPopup = ({ active, onClose, data }) => {
           >
             <button className="btn filled-btn px-4">More</button>
           </Link>
+        ) 
+        : data.title === "Base" ? (
+          <Link
+            onClick={onClose}
+            to={"/marketplace/events/treasure-hunt"}
+            state={{ event: data.state }}
+            className="linear-border"
+          >
+            <button className="btn filled-btn px-4">More</button>
+          </Link>
         )
+
         : data.title === "CORE" ? (
           <Link
             onClick={onClose}

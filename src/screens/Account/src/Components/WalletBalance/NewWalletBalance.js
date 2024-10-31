@@ -207,14 +207,14 @@ const NewWalletBalance = ({
   handleShowWalletPopup,
   userId,
   username,
-  weeklyDataAmountCore,
-  monthlyDataAmountCore,
-  dailyDataAmountViction,
-  weeklyDataAmountViction,
-  monthlyDataAmountViction,
-  dailyDataAmountSkale,
-  weeklyDataAmountSkale,
-  monthlyDataAmountSkale,
+  // weeklyDataAmountCore,
+  // monthlyDataAmountCore,
+  // dailyDataAmountViction,
+  // weeklyDataAmountViction,
+  // monthlyDataAmountViction,
+  // dailyDataAmountSkale,
+  // weeklyDataAmountSkale,
+  // monthlyDataAmountSkale,
   onDailyRewardsPopupOpen,
   onOpenLeaderboard,
   isPremium,
@@ -281,19 +281,18 @@ const NewWalletBalance = ({
   multiversPoints,
   multiversEarnToken,
   multiversEarnUsd,
-  weeklyDataAmountManta,
-  monthlyDataAmountManta,
-  weeklyDataAmountBase,
-  monthlyDataAmountBase,
+  // weeklyDataAmountManta,
+  // monthlyDataAmountManta,
+  // weeklyDataAmountBase,
+  // monthlyDataAmountBase,
   mantaEarnUsd,
-  baseEarnUsd,
   openedMantaChests,
   openedBaseChests,
   mantaPoints,
   mantaEarnToken,
   userDataStar,
-  weeklyDataAmountTaiko,
-  monthlyDataAmountTaiko,
+  // weeklyDataAmountTaiko,
+  // monthlyDataAmountTaiko,
   taikoEarnUsd,
   claimedTaikoChests,
   claimedTaikoPremiumChests,
@@ -306,6 +305,7 @@ const NewWalletBalance = ({
   cookieEarnUsd,
   cookieEarnToken,
   cookiePoints,
+  authToken,
   treasureRewardMoney,
   allClaimedChests
 }) => {
@@ -313,7 +313,7 @@ const NewWalletBalance = ({
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
   let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let baseLastDay2 = new Date("2025-01-25T16:00:00.000+02:00");
+  let baseLastDay2 = new Date("2025-02-18T16:00:00.000+02:00");
 
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
@@ -400,12 +400,12 @@ const NewWalletBalance = ({
   const dummyBase = {
     title: "Base",
     logo: baseLogo,
-    eventStatus: "Coming Soon",
+    eventStatus: "Live",
     totalRewards: "$20,000 in ETH Rewards",
     myEarnings: 0.0,
     backgroundImage: baseUpcomingMobile,
-    eventDate: "Coming Soon",
-    date: "Coming Soon",
+    eventDate: "Oct 21, 2024",
+    date: "Oct 21, 2024",
     id: "event24",
     eventType: "Explore & Mine",
     eventDuration: baseLastDay2,
@@ -417,7 +417,7 @@ const NewWalletBalance = ({
     chain: "Base",
     linkState: "base",
     rewards: "ETH",
-    status: "Coming Soon",
+    status: "Live",
   };
 
   const dummyManta = {
@@ -541,8 +541,6 @@ const NewWalletBalance = ({
     //   },
     // },
 
-
-
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -631,7 +629,6 @@ const NewWalletBalance = ({
         eventDate: "Aug 20, 2024",
       },
     },
-
     {
       title: "Cookie3",
       logo: cookieLogo,
@@ -663,17 +660,17 @@ const NewWalletBalance = ({
     {
       title: "Base",
       logo: baseLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Coming Soon",
+      eventDate: "Oct 21, 2024",
       popupInfo: {
         title: "Base",
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Coming Soon",
+        status: "Live",
         id: "event24",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in ETH Rewards",
@@ -683,7 +680,7 @@ const NewWalletBalance = ({
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Coming Soon",
+        eventDate: "Oct 21, 2024",
       },
     },
     {
@@ -936,34 +933,34 @@ const NewWalletBalance = ({
         eventDate: "Dec 22, 2023",
       },
     },
-    {
-      title: "Base",
-      logo: base,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        date: "Nov 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+    // {
+    //   title: "Base",
+    //   logo: base,
+    //   eventStatus: "Expired",
+    //   totalRewards: "$10,000 in ETH Rewards",
+    //   myEarnings: 126.45,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 01, 2023",
+    //   backgroundImage: baseUpcoming,
+    //   popupInfo: {
+    //     eventType: "Explore & Mine",
+    //     title: "Base",
+    //     chain: "Base Chain",
+    //     linkState: "base",
+    //     rewards: "ETH",
+    //     status: "Expired",
+    //     id: "event4",
+    //     date: "Nov 01, 2023",
+    //     totalRewards: "$10,000 in ETH Rewards",
+    //     eventDuration: baseLastDay,
+    //     eventDate: "Nov 01, 2023",
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "30,000",
+    //     learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
+    //   },
+    // },
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -1223,7 +1220,9 @@ const NewWalletBalance = ({
 
       if (email !== "" && mediaUrl !== "" && address !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/submissions", data)
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
           .then(function (result) {
             console.log(result.data);
             setSuccess("Email sent successfully");
@@ -1569,12 +1568,12 @@ const NewWalletBalance = ({
   }, [adClicked]);
 
   const recaptchaRef = useRef(null);
-  
+
   return (
     <>
-      <div className="container px-0">
+      <div className="px-0">
         <div className="row gap-3 gap-lg-0 mx-0">
-          <div className="col-12 rankings-outer-wrapper px-0 pe-lg-3 col-lg-4 position-relative">
+          <div className={`${windowSize.width && windowSize.width > 1450 ? 'col-lg-4' : windowSize.width && windowSize.width <= 1450 ? 'col-lg-5' : 'col-lg-5'}  col-12 rankings-outer-wrapper px-0 pe-lg-3 position-relative`}>
             <div className="purple-container rankings-wrapper px-3 px-lg-4 py-3  d-flex flex-column gap-2 position-relative custom-height-2">
               <div className="green-div"></div>
               <h6
@@ -1601,8 +1600,10 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               />
-              <UpcomingProfileEvent
+              <ActiveProfileEvent
                 data={dummyBase}
+                event={dummyBase}
+                userEarnedUsd={baseEarnUSD}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
                   setEventPopup(true);
@@ -1633,8 +1634,8 @@ const NewWalletBalance = ({
                   style={{
                     cursor: "pointer",
                     width: "fit-content",
-                    position: windowSize.width > 650 ? "absolute" : "relative",
-                    bottom: windowSize.width > 992 ? "15px" : "-5px",
+                    position:  "relative",
+                    bottom: 0,
                     left: windowSize.width > 650 ? "43%" : "43%",
                   }}
                 >
@@ -1709,205 +1710,7 @@ const NewWalletBalance = ({
               </div>
             </div>
           ) : null}
-
-          {/* <div className="col-12 col-lg-4">
-            <div className="d-flex flex-column gap-2">
-              <div
-                className="purple-container position-relative p-3 d-flex align-items-center justify-content-between"
-                onClick={onOpenLeaderboard}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="green-div"></div>
-                <div
-                  className="d-flex flex-column justify-content-between"
-                  style={{ height: "90px" }}
-                >
-                  <h6 className="profile-div-title mb-0">
-                    Leaderboard Rankings
-                  </h6>
-                  <div className="d-flex align-items-center gap-2 green-link">
-                    <span className="profile-div-link mb-0">View</span>
-                    <img src={rightIcon} alt="" />
-                  </div>
-                </div>
-               
-              </div>
-              <div className="purple-container p-3 position-relative d-flex flex-column gap-3" onClick={onBalanceClick} >
-                <div className="green-div"></div>
-
-                <div className="d-flex align-items-center justify-content-between">
-                  <h6 className="mb-0 profile-div-title">My Balance</h6>
-                  <div className="d-flex align-items-center gap-2">
-                    <span
-                      className="profile-div-chain mb-0"
-                      style={{
-                        color:
-                          activeSlide === 0
-                            ? "#5871D2"
-                            : activeSlide === 1
-                            ? "#D9A908"
-                            : "#DF2C2D",
-                      }}
-                    >
-                      {activeSlide === 0
-                        ? "Ethereum Network"
-                        : activeSlide === 1
-                        ? "BNB Chain"
-                        : "Avalanche Network"}
-                    </span>
-                    <img
-                      src={
-                        activeSlide === 0
-                          ? ethIcon
-                          : activeSlide === 1
-                          ? bnbIcon
-                          : avaxIcon
-                      }
-                      width={12}
-                      height={12}
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <Slider {...settings}>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(dypBalance, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        ${getFormattedNumber(dypBalance * dyptokenData, 2)}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={iDypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(idypBalance, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        ${getFormattedNumber(idypBalance * idyptokenData, 2)}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(dypBalancebnb, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        $
-                        {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={iDypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(idypBalancebnb, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        $
-                        {getFormattedNumber(
-                          idypBalancebnb * idyptokenDatabnb,
-                          2
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(dypBalanceavax, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        ${" "}
-                        {getFormattedNumber(
-                          dypBalanceavax * dyptokenDataAvax,
-                          2
-                        )}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-4">
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={iDypIcon} alt="" />
-                        <span className="profile-div-tokens mb-0">
-                          {getFormattedNumber(idypBalanceavax, 2)}
-                        </span>
-                      </div>
-                      <span className="profile-div-usd mb-0">
-                        $
-                        {getFormattedNumber(
-                          idypBalanceavax * idyptokenDataAvax,
-                          2
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </Slider>
-              </div>
-              {!isPremium ? (
-                <div
-                  className="red-container position-relative p-3 d-flex align-items-center justify-content-between"
-                  onClick={onPremiumClick}
-                >
-                  <div className="green-div"></div>
-                  <div className="d-flex flex-column gap-4">
-                    <h6 className="profile-div-title mb-0">
-                      Upgrade to Premium
-                    </h6>
-                    <div className="d-flex align-items-center gap-2 green-link">
-                      <span className="profile-div-link mb-0">Subscribe</span>
-                      <img src={rightIcon} alt="" />
-                    </div>
-                  </div>
-                  <img src={nonPremium} alt="" />
-                </div>
-              ) : (
-                <div className="premium-active-container position-relative p-3 d-flex align-items-center justify-content-between">
-                  <div className="green-div"></div>
-
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="profile-div-title mb-0">Premium Member</h6>
-                    <div className="d-flex align-items-center gap-2 col-7 ">
-                      <div
-                        className={` 
-                          wallet-wrapper-active-premium d-flex
-                            d-flex wallet-wrapper align-items-center gap-2 position-relative`}
-                      >
-                        <img src={walletIcon} alt="" className="wallet-icon" />
-
-                        <div className="d-flex flex-column">
-                          <span className="wallet-span d-flex align-items-center gap-2">
-                            Wallet address
-                          </span>
-
-                          <div className="d-flex align-items-center gap-2">
-                            <span className="wallet-address">
-                              {shortAddress(address)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <img src={premium} alt="" className="premium-img" />
-                </div>
-              )}
-            </div>
-          </div> */}
-          <div className="col-12 col-lg-8 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5">
+          <div className={`${windowSize.width && windowSize.width > 1450 ? 'col-lg-8' : windowSize.width && windowSize.width <= 1450 ? 'col-lg-7' : 'col-lg-7'} col-12 d-flex flex-column justify-content-between gap-3 px-0 gap-lg-0 mt-lg-0 mt-5`}>
             <div className="row gap-3 gap-lg-0">
               <div
                 className="col-12 col-lg-4"
@@ -2050,33 +1853,35 @@ const NewWalletBalance = ({
                       $
                       {getFormattedNumber(
                         Number(userSocialRewardsCached) +
-                          Number(weeklyplayerData) +
+                          // Number(weeklyplayerData) +
                           // Number(dailyplayerData) +
-                          Number(userRank2) +
+                          // Number(userRank2) +
                           Number(genesisRank2) +
                           Number(treasureRewardMoney) +
                           Number(userRankRewards) +
                           // Number(dailyDataAmountCore) +
-                          Number(weeklyDataAmountCore) +
-                          Number(monthlyDataAmountCore) +
+                          // Number(weeklyDataAmountCore) +
+                          // Number(monthlyDataAmountCore) +
                           // Number(dailyDataAmountSkale) +
-                          Number(weeklyDataAmountSkale) +
-                          Number(weeklyDataAmountManta) +
-                          Number(monthlyDataAmountManta) +
-                          Number(weeklyDataAmountBase) +
-                          Number(monthlyDataAmountBase) +
-                          Number(weeklyDataAmountTaiko) +
-                          Number(monthlyDataAmountTaiko) +
-                          +Number(monthlyDataAmountSkale) +
+                          // Number(weeklyDataAmountSkale) +
+                          // Number(weeklyDataAmountManta) +
+                          // Number(monthlyDataAmountManta) +
+                          // Number(weeklyDataAmountBase) +
+                          // Number(monthlyDataAmountBase) +
+                          // Number(weeklyDataAmountTaiko) +
+                          // Number(monthlyDataAmountTaiko) +
+                          // +Number(monthlyDataAmountSkale) +
                           Number(userDataStar) +
-                          Number(weeklyDataAmountViction) +
-                          Number(monthlyDataAmountViction) +
-                          Number(skaleEarnUsd) +  
-                          Number(cawsPremiumRewards) + Number(landPremiumRewards) +  
-                          Number(taikoEarnUsd) + 
+                          // Number(weeklyDataAmountViction) +
+                          // Number(monthlyDataAmountViction) +
+                          Number(skaleEarnUsd) +
+                          Number(cawsPremiumRewards) +
+                          Number(landPremiumRewards) +
+                          Number(taikoEarnUsd) +
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
-                          Number(cookieEarnUsd),
+                          Number(cookieEarnUsd) +
+                          Number(baseEarnUSD),
                         2
                       )}
                     </h6>
@@ -3050,8 +2855,8 @@ const NewWalletBalance = ({
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps. Base is an easy way
-                for decentralized apps to leverage Coinbase's products and
+                and scalability you need to power your dapps. Base is an easy
+                way for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
                 ecosystem.
@@ -3145,12 +2950,16 @@ const NewWalletBalance = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" &&
+                    dummyEvent.id !== "event24" &&
+                    dummyEvent.id !== "event7"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" &&
+                dummyEvent.id !== "event24" &&
+                dummyEvent.id !== "event7"
                   ? "Telegram"
                   : "Discord"}
               </a>
@@ -3214,7 +3023,8 @@ const NewWalletBalance = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : dummyEvent.id === "event4"
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -3267,7 +3077,8 @@ const NewWalletBalance = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : dummyEvent.id === "event4"
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -3308,7 +3119,8 @@ const NewWalletBalance = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBnb
-                              : dummyEvent.id === "event4"
+                              : dummyEvent.id === "event4" ||
+                                dummyEvent.id === "event24"
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB

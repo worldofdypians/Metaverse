@@ -38,6 +38,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import { Checkbox } from "@mui/material";
+import { Auth } from "../Account/src/Containers";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -47,7 +48,7 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
+const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
   const baseUrl = "https://api.worldofdypians.com/api";
   const windowSize = useWindowSize();
 
@@ -260,6 +261,10 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection }) => {
     // getPriceDYP();
     window.scrollTo(0, 0);
   }, []);
+
+  if(!email) {
+    return(<Auth/>)
+  }
 
   return (
     <>
