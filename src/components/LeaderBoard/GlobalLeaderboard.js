@@ -412,6 +412,7 @@ const GlobalLeaderboard = ({
                         {Number(item.position) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
+                        <div className="playerName-inner">
                         <img
                           src={
                             index + 1 <= 10
@@ -427,7 +428,7 @@ const GlobalLeaderboard = ({
                           {" "}
                           {item.displayName?.slice(0, 13)}
                           {item.displayName?.length > 13 && "..."}
-                        </span>
+                        </span></div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -598,6 +599,7 @@ const GlobalLeaderboard = ({
                         {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
+                      <div className="playerName-inner">
                         <img
                           src={
                             index + 1 <= 10
@@ -614,6 +616,7 @@ const GlobalLeaderboard = ({
                           {item.displayName?.slice(0, 13)}
                           {item.displayName?.length > 13 && "..."}
                         </span>
+                        </div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
