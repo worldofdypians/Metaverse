@@ -6,7 +6,7 @@
     right: 16px;
     max-width: 2500px;
     top: 16px;
-    min-height: 72px;
+    min-height: 74px;
     // left: 50%;
     // transform: translate(-50%, 0);
     // right: 0;
@@ -26,8 +26,12 @@
     margin-right: 3px;
     .nav-anchor {
       font-weight: 600;
+      height: 100%;
       font-size: 18px;
       line-height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: #ffffff;
       text-decoration: none;
       text-transform: uppercase;
@@ -65,7 +69,11 @@
       font-weight: 600;
       font-size: 16px;
       line-height: 24px;
+      height: 100%;
       color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-decoration: none;
       text-transform: uppercase;
       transition: all 0.25s;
@@ -609,7 +617,7 @@
     background: rgba(8, 11, 42, 1);
     width: 225px;
     position: absolute;
-    top: 200%;
+    top: 100%;
     left: 0;
     visibility: hidden;
     opacity: 0;

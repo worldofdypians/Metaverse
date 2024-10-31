@@ -4,7 +4,11 @@ import brandBanner from "../../../assets/brandBanner.webp";
 
 const Brand = () => {
   return (
-    <div className="d-flex justify-content-center w-100" id="brand">
+    <div
+      className="d-flex justify-content-center w-100"
+      id="brand"
+      style={{ scrollMarginTop: "100px" }}
+    >
       <div className="d-flex flex-column align-items-center gap-4">
         <h2 className="font-montserrat builders-title explorer-grid-title px-0">
           Brand Kit{" "}
@@ -17,7 +21,7 @@ const Brand = () => {
           communications.
         </div>
         <div className="position-relative">
-          <img src={brandBanner} className="w-100 brandBanner" alt=""/>
+          <img src={brandBanner} className="w-100 brandBanner" alt="" />
           <div
             className="multiplayer-linear-border download-brand"
             style={{
