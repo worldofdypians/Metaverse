@@ -1,0 +1,207 @@
+.active-proposals-wrapper {
+  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+}
+
+.active-proposals-inner-wrapper {
+  border-radius: 10px;
+  background: #390a4e;
+}
+
+.active-proposals-features {
+  color: #bcadc7;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.gov-gray-text {
+  color: #a5a5a5;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.gov-white-text {
+  color: #eeedff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.poll-tag {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #7b2eb0 0%, #2647c9 100%);
+}
+
+.poll-text {
+  color: #eeedff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+
+.past-proposals-wrapper {
+  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+}
+
+.rejected-tag {
+  border-radius: 12px;
+  border: 1px solid #ff8168;
+}
+
+.rejected-text {
+  color: #ff8168;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+
+.aor-tag {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ff8168 0%, #ea6278 100%);
+}
+
+.aor-text {
+  color: #eeedff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+
+.past-proposals-item {
+  border-radius: 10px;
+  background: #1c0d3e;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.past-proposals-item:hover {
+  border: 1px solid #b8b8e0;
+}
+
+.option-tag {
+  border-radius: 12px;
+  border: 1px solid #7bd8b0;
+}
+
+.option-text {
+  color: #7bd8b0;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: normal;
+}
+
+.gov-navlink {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.proposal-top-wrapper {
+  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+}
+
+.single-proposal-top-title {
+  color: #fff;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.single-proposal-description-green {
+  color: #dcfb85;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.single-proposal-content-txt {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 125% */
+}
+
+.proposal-right-col {
+  border-left: 1px solid rgba(255, 255, 255, 0.24);
+
+  @media screen and (max-width: 786px) {
+    border-left: none;
+  }
+
+}
+
+.proposal-result-wrapper {
+  border-radius: 20px;
+  border: 1px solid #dcfb85;
+  background: rgba(220, 251, 133, 0.04);
+  backdrop-filter: blur(5.5px);
+}
+
+.single-proposal-option-txt {
+  color: #eeedff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.percentage-text {
+  color: #eeedff;
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.prog1 {
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #7bd8b0;
+  height: 8px;
+
+  .progress-bar {
+    border-radius: 12px;
+    background: #7bd8b0;
+  }
+}
+
+.prog2 {
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid #ff8168;
+  height: 8px;
+
+  .progress-bar {
+    border-radius: 12px;
+    background: #ff8168;
+  }
+}
+
+.orange-btn {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff8168 0%, #ea6278 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  border: none;
+}

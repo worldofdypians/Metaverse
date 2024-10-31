@@ -2,7 +2,7 @@ import * as React from "react";
 import { PropTypes } from "prop-types";
 import "./ProgressBar.css";
 
-const ProgressBar = ({ width, percent, status, height }) => {
+const ProgressBar = ({ width, percent, status, height, background }) => {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
@@ -10,7 +10,7 @@ const ProgressBar = ({ width, percent, status, height }) => {
   });
 
   return (
-    <div className={"progressComp"}>
+    <div className={"progressComp"} style={{ background: background }}>
       <span className="percent-number">{status}</span>
       <div className="progress-div" style={{ width: width, height: height }}>
         <div style={{ width: `${value}px` }} className="progress" />
@@ -18,7 +18,6 @@ const ProgressBar = ({ width, percent, status, height }) => {
     </div>
   );
 };
-
 
 ProgressBar.propTypes = {
   width: PropTypes.any,
