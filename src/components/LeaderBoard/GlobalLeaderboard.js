@@ -220,7 +220,7 @@ const GlobalLeaderboard = ({
                     global leaderboard ranking.
                     <br />
                     <br />
-                    The leaderboard resets monthly, offering new chances to
+                    The leaderboard resets weekly and monthly, offering new chances to
                     climb and show your skills.
                     <br />
                     <br />

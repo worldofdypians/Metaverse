@@ -1403,7 +1403,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1750,7 +1750,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2099,7 +2099,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2467,7 +2467,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2834,7 +2834,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3201,7 +3201,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3819,7 +3819,7 @@ function Dashboard({
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 100,
+        MaxResultsCount: 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3827,9 +3827,10 @@ function Dashboard({
         data
       );
       fillRecordsDaily(result.data.data.leaderboard);
-    }
+    
 
-    // setdailyplayerData(result.data.data.leaderboard);
+    setdailyplayerData(result.data.data.leaderboard);
+  }
   };
 
   const fetchGenesisPreviousWinners = async (version) => {
@@ -4597,7 +4598,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: bnbStars,
-        premium_rewards: bnbStarsPremium,
+        previous_rewards: bnbStarsPremium,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
@@ -4608,7 +4609,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: weeklyPrizesBnb,
-        premium_rewards: weeklyPrizesGolden,
+        previous_rewards: weeklyPrizesGolden,
         activeData: weeklyrecords,
         previousData: weeklyplayerData,
         player_data: userDataWeekly,
@@ -4619,7 +4620,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: monthlyPrizesBnb,
-        premium_rewards: monthlyPrizesGolden,
+        previous_rewards: monthlyPrizesGolden,
         activeData: monthlyrecords,
         previousData: monthlyplayerData,
         player_data: userDataMonthly,
@@ -4632,7 +4633,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: bnbStars,
-        premium_rewards: bnbStarsPremium,
+        previous_rewards: bnbStarsPremium,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
@@ -4643,7 +4644,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: weeklyPrizesBnb,
-        premium_rewards: weeklyPrizesGolden,
+        previous_rewards: weeklyPrizesGolden,
         activeData: weeklyrecords,
         previousData: weeklyplayerData,
         player_data: userDataWeekly,
@@ -4654,7 +4655,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: monthlyPrizesBnb,
-        premium_rewards: monthlyPrizesGolden,
+        previous_rewards: monthlyPrizesGolden,
         activeData: monthlyrecords,
         previousData: monthlyplayerData,
         player_data: userDataMonthly,
@@ -4680,7 +4681,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4692,7 +4693,7 @@ function Dashboard({
         type: "cash",
         rewards: updatedSkalePrizesWeekly,
         past_rewards: updatedSkalePrizesWeekly,
-        premium_rewards: updatedSkalePrizesWeeklyGolden,
+        previous_rewards: updatedSkalePrizesWeeklyGolden,
         past_premium_rewards: updatedSkalePrizesWeeklyGolden,
 
         activeData: weeklyRecordsSkale,
@@ -4706,7 +4707,7 @@ function Dashboard({
         type: "cash",
         rewards: updatedSkalePrizesMonthly,
         past_rewards: skalePrizesMonthly,
-        premium_rewards: updatedSkalePrizesMonthlyGolden,
+        previous_rewards: updatedSkalePrizesMonthlyGolden,
         past_premium_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsSkale,
         previousData: prevDataSkaleMonthly,
@@ -4733,7 +4734,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4744,7 +4745,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        previous_rewards: skalePrizesWeeklyGolden,
         activeData: weeklyRecordsCore,
         previousData: prevDataCoreWeekly,
         player_data: userDataCoreWeekly,
@@ -4755,7 +4756,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        previous_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsCore,
         previousData: prevDataCoreMonthly,
         player_data: userDataCoreMonthly,
@@ -4781,7 +4782,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -4792,7 +4793,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        previous_rewards: skalePrizesWeeklyGolden,
         activeData: weeklyRecordsViction,
         previousData: prevDataVictionWeekly,
         player_data: userDataVictionWeekly,
@@ -4803,7 +4804,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        previous_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsViction,
         previousData: prevDataVictionMonthly,
         player_data: userDataVictionMonthly,
@@ -4830,7 +4831,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: mantaStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -4841,7 +4842,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        previous_rewards: skalePrizesWeeklyGolden,
         activeData: weeklyRecordsManta,
         previousData: prevDataMantaWeekly,
         player_data: userDataMantaWeekly,
@@ -4852,7 +4853,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        previous_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsManta,
         previousData: prevDataMantaMonthly,
         player_data: userDataMantaMonthly,
@@ -4881,7 +4882,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -4892,7 +4893,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        previous_rewards: skalePrizesWeeklyGolden,
         activeData: weeklyRecordsBase,
         previousData: prevDataBaseWeekly,
         player_data: userDataBaseWeekly,
@@ -4903,7 +4904,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        previous_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsBase,
         previousData: prevDataBaseMonthly,
         player_data: userDataBaseMonthly,
@@ -4932,7 +4933,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        premium_rewards: skaleStarsPremium,
+        previous_rewards: skaleStarsPremium,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,
@@ -4943,7 +4944,7 @@ function Dashboard({
         reset: "Monday (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesWeekly,
-        premium_rewards: skalePrizesWeeklyGolden,
+        previous_rewards: skalePrizesWeeklyGolden,
         activeData: weeklyRecordsTaiko,
         previousData: prevDataTaikoWeekly,
         player_data: userDataTaikoWeekly,
@@ -4954,7 +4955,7 @@ function Dashboard({
         reset: "Monthly (00:00 UTC)",
         type: "cash",
         rewards: skalePrizesMonthly,
-        premium_rewards: skalePrizesMonthlyGolden,
+        previous_rewards: skalePrizesMonthlyGolden,
         activeData: monthlyRecordsTaiko,
         previousData: prevDataTaikoMonthly,
         player_data: userDataTaikoMonthly,
