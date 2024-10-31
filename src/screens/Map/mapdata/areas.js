@@ -66,7 +66,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -130,7 +130,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
 
       {
@@ -196,7 +196,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -259,7 +259,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -356,7 +356,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     pastEvents: [],
@@ -424,7 +424,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -663,7 +663,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
@@ -819,7 +819,7 @@ const chainAreas = [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
-        link: "/accountaccount/challenges/treasure-huntnges/treasure-hunt",
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [

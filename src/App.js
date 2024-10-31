@@ -3042,6 +3042,8 @@ function App() {
       eventType: "Explore & Mine",
       eventDate: "Jul 01, 2024",
       backgroundImage: coreBg,
+      image: 'coreBanner.png',
+
       userEarnUsd: coreEarnUsd,
       userEarnCrypto: coreEarnToken,
       userEarnPoints: corePoints,
@@ -3072,6 +3074,7 @@ function App() {
       eventType: "Explore & Find",
       eventDate: "Jul 01, 2024",
       backgroundImage: victionBg,
+      image: 'victionBanner.png',
       userEarnUsd: victionEarnUsd,
       userEarnCrypto: victionEarnToken,
       userEarnPoints: victionPoints,
@@ -3102,6 +3105,7 @@ function App() {
       eventType: "Explore & Find",
       eventDate: "Oct 21, 2024",
       backgroundImage: upcomingBase2,
+      image: 'baseBanner.png',
       userEarnUsd: 0,
       userEarnCrypto: 0,
       userEarnPoints: 0,
@@ -3135,6 +3139,8 @@ function App() {
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
       userEarnPoints: bnbPoints,
+      image: 'bnbBanner.png',
+
       popupInfo: {
         title: "BNB Chain",
         chain: "BNB Chain",
@@ -3171,6 +3177,8 @@ function App() {
       userEarnUsd: immutableEarnUsd,
       userEarnCrypto: immutableEarnToken,
       userEarnPoints: immutablePoints,
+      image: 'immutableBanner.png',
+
       popupInfo: {
         title: "Immutable",
         chain: "Immutable",
