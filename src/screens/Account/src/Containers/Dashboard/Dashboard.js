@@ -9200,7 +9200,7 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative">
-        <div className="container-lg mx-0">
+        <div className="container-lg mx-0 px-0">
           <LoginWrapper
             style={{
               backgroundSize: "100% 100%",
