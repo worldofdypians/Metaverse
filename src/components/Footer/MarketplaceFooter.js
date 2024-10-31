@@ -187,14 +187,14 @@ const Footer = () => {
                 className="d-flex footer-wrapper flex-row align-items-start align-items-lg-center gap-5 justify-content-between"
                 style={{ width: "fit-content" }}
               >
-                <a
+                {/* <a
                   href="https://www.dypius.com/"
                   target="_blank"
                   className="footer-link font-poppins"
                   rel="noreferrer"
                 >
                   Dypius
-                </a>
+                </a> */}
                 <NavLink to="/team" style={{ textDecoration: "none" }}>
                   <span className="footer-link font-poppins">Team</span>
                 </NavLink>
@@ -242,9 +242,9 @@ const Footer = () => {
               <span className="footer-link font-poppins">
                 Copyright © World of Dypians {year}. All rights reserved.
               </span>
-              <span className="footer-link font-poppins">
+              {/* <span className="footer-link font-poppins">
                 Powered by Dypius.
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
