@@ -6,6 +6,25 @@ import { CircularProgress, sliderClasses } from "@mui/material";
 import playerAvatar from "../../Images/userProfile/userAvatar2.png";
 import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
 import premiumStar from "../../Images/userProfile/premiumStar.png";
+import playerAvatar1 from "./assets/userImgs/playerAvatar1.png";
+import playerAvatar2 from "./assets/userImgs/playerAvatar2.png";
+import playerAvatar3 from "./assets/userImgs/playerAvatar3.png";
+import playerAvatar4 from "./assets/userImgs/playerAvatar4.png";
+import playerAvatar5 from "./assets/userImgs/playerAvatar5.png";
+import playerAvatar6 from "./assets/userImgs/playerAvatar6.png";
+import playerAvatar7 from "./assets/userImgs/playerAvatar7.png";
+import playerAvatar8 from "./assets/userImgs/playerAvatar8.png";
+import playerAvatar9 from "./assets/userImgs/playerAvatar9.png";
+import playerAvatar10 from "./assets/userImgs/playerAvatar10.png";
+import playerAvatar11 from "./assets/userImgs/playerAvatar11.png";
+import playerAvatar12 from "./assets/userImgs/playerAvatar12.png";
+import playerAvatar13 from "./assets/userImgs/playerAvatar13.png";
+import playerAvatar14 from "./assets/userImgs/playerAvatar14.png";
+import playerAvatar15 from "./assets/userImgs/playerAvatar15.png";
+import playerAvatar16 from "./assets/userImgs/playerAvatar16.png";
+import playerAvatar17 from "./assets/userImgs/playerAvatar17.png";
+import playerAvatar18 from "./assets/userImgs/playerAvatar18.png";
+
 import axios from "axios";
 import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -150,7 +169,7 @@ const NewLeaderBoard = ({
   allMantaData,
   allBaseData,
   allTaikoData,
-  onPremiumClick
+  onPremiumClick,
 }) => {
   const chainItems = [
     {
@@ -389,7 +408,7 @@ const NewLeaderBoard = ({
   useEffect(() => {
     setAllData(allBnbData);
   }, []);
-  
+
   return (
     <>
       <div
@@ -961,44 +980,199 @@ const NewLeaderBoard = ({
                                               {parseInt(index) + 1}
                                             </td>
                                             <td className="playerName col-3 font-montserrat">
-                                              {item.displayName === username ? (
-                                                <div className="position-relative d-flex align-items-center">
-                                                  <img
-                                                    src={premiumAvatar}
-                                                    alt=""
-                                                    className="playerAvatar"
-                                                  />
-                                                  <span>
-                                                    {" "}
-                                                    {item.displayName?.slice(
-                                                      0,
-                                                      10
-                                                    )}
-                                                    {item.displayName?.length >
-                                                      10 && "..."}
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                <div className="position-relative d-flex align-items-center">
-                                                  <img
-                                                    src={
-                                                      index + 1 <= 10
+                                              <div className="position-relative d-flex align-items-center">
+                                                <img
+                                                  src={
+                                                    optionText2 === "bnb"
+                                                      ? index + 1 <= 10
                                                         ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
                                                             index + 1
                                                           }.png`)
-                                                        : playerAvatar
-                                                    }
-                                                    alt=""
-                                                    className="playerAvatar me-2"
-                                                  />{" "}
-                                                  {item.displayName?.slice(
-                                                    0,
-                                                    10
-                                                  )}
-                                                  {item.displayName?.length >
-                                                    10 && "..."}
-                                                </div>
-                                              )}
+                                                        : index + 1 >= 11 &&
+                                                          index + 1 <= 15
+                                                        ? playerAvatar1
+                                                        : index + 1 >= 16 &&
+                                                          index + 1 <= 20
+                                                        ? playerAvatar2
+                                                        : index + 1 >= 21 &&
+                                                          index + 1 <= 25
+                                                        ? playerAvatar3
+                                                        : index + 1 >= 26 &&
+                                                          index + 1 <= 30
+                                                        ? playerAvatar4
+                                                        : index + 1 >= 31 &&
+                                                          index + 1 <= 35
+                                                        ? playerAvatar5
+                                                        : index + 1 >= 36 &&
+                                                          index + 1 <= 40
+                                                        ? playerAvatar6
+                                                        : index + 1 >= 41 &&
+                                                          index + 1 <= 45
+                                                        ? playerAvatar7
+                                                        : index + 1 >= 46 &&
+                                                          index + 1 <= 50
+                                                        ? playerAvatar8
+                                                        : index + 1 >= 51 &&
+                                                          index + 1 <= 55
+                                                        ? playerAvatar9
+                                                        : index + 1 >= 56 &&
+                                                          index + 1 <= 60
+                                                        ? playerAvatar10
+                                                        : index + 1 >= 61 &&
+                                                          index + 1 <= 65
+                                                        ? playerAvatar11
+                                                        : index + 1 >= 66 &&
+                                                          index + 1 <= 70
+                                                        ? playerAvatar12
+                                                        : index + 1 >= 71 &&
+                                                          index + 1 <= 75
+                                                        ? playerAvatar13
+                                                        : index + 1 >= 76 &&
+                                                          index + 1 <= 80
+                                                        ? playerAvatar14
+                                                        : index + 1 >= 81 &&
+                                                          index + 1 <= 85
+                                                        ? playerAvatar15
+                                                        : index + 1 >= 86 &&
+                                                          index + 1 <= 90
+                                                        ? playerAvatar16
+                                                        : index + 1 >= 91 &&
+                                                          index + 1 <= 95
+                                                        ? playerAvatar17
+                                                        : playerAvatar18
+                                                      : optionText2 === "manta"
+                                                      ? index + 1 <= 10
+                                                        ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
+                                                            index + 1
+                                                          }.png`)
+                                                        : index + 1 >= 11 &&
+                                                          index + 1 <= 15
+                                                        ? playerAvatar1
+                                                        : index + 1 >= 16 &&
+                                                          index + 1 <= 20
+                                                        ? playerAvatar2
+                                                        : index + 1 >= 21 &&
+                                                          index + 1 <= 25
+                                                        ? playerAvatar3
+                                                        : index + 1 >= 26 &&
+                                                          index + 1 <= 30
+                                                        ? playerAvatar4
+                                                        : index + 1 >= 31 &&
+                                                          index + 1 <= 35
+                                                        ? playerAvatar5
+                                                        : index + 1 >= 36 &&
+                                                          index + 1 <= 40
+                                                        ? playerAvatar6
+                                                        : index + 1 >= 41 &&
+                                                          index + 1 <= 45
+                                                        ? playerAvatar7
+                                                        : index + 1 >= 46 &&
+                                                          index + 1 <= 50
+                                                        ? playerAvatar8
+                                                        : index + 1 >= 51 &&
+                                                          index + 1 <= 55
+                                                        ? playerAvatar9
+                                                        : index + 1 >= 56 &&
+                                                          index + 1 <= 60
+                                                        ? playerAvatar10
+                                                        : index + 1 >= 61 &&
+                                                          index + 1 <= 65
+                                                        ? playerAvatar11
+                                                        : playerAvatar12
+                                                      : optionText2 === "taiko"
+                                                      ? index + 1 <= 10
+                                                        ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
+                                                            index + 1
+                                                          }.png`)
+                                                        : index + 1 >= 11 &&
+                                                          index + 1 <= 15
+                                                        ? playerAvatar1
+                                                        : index + 1 >= 16 &&
+                                                          index + 1 <= 20
+                                                        ? playerAvatar2
+                                                        : index + 1 >= 21 &&
+                                                          index + 1 <= 25
+                                                        ? playerAvatar3
+                                                        : index + 1 >= 26 &&
+                                                          index + 1 <= 30
+                                                        ? playerAvatar4
+                                                        : index + 1 >= 31 &&
+                                                          index + 1 <= 35
+                                                        ? playerAvatar5
+                                                        : index + 1 >= 36 &&
+                                                          index + 1 <= 40
+                                                        ? playerAvatar6
+                                                        : index + 1 >= 41 &&
+                                                          index + 1 <= 45
+                                                        ? playerAvatar7
+                                                        : index + 1 >= 46 &&
+                                                          index + 1 <= 50
+                                                        ? playerAvatar8
+                                                        : index + 1 >= 51 &&
+                                                          index + 1 <= 55
+                                                        ? playerAvatar9
+                                                        : index + 1 >= 56 &&
+                                                          index + 1 <= 60
+                                                        ? playerAvatar10
+                                                        : index + 1 >= 61 &&
+                                                          index + 1 <= 65
+                                                        ? playerAvatar11
+                                                        : index + 1 >= 66 &&
+                                                          index + 1 <= 70
+                                                        ? playerAvatar12
+                                                        : index + 1 >= 71 &&
+                                                          index + 1 <= 75
+                                                        ? playerAvatar13
+                                                        : index + 1 >= 76 &&
+                                                          index + 1 <= 80
+                                                        ? playerAvatar14
+                                                        : index + 1 >= 81 &&
+                                                          index + 1 <= 85
+                                                        ? playerAvatar15
+                                                        : playerAvatar16
+                                                      : index + 1 <= 10
+                                                      ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
+                                                          index + 1
+                                                        }.png`)
+                                                      : index + 1 >= 11 &&
+                                                        index + 1 <= 15
+                                                      ? playerAvatar1
+                                                      : index + 1 >= 16 &&
+                                                        index + 1 <= 20
+                                                      ? playerAvatar2
+                                                      : index + 1 >= 21 &&
+                                                        index + 1 <= 25
+                                                      ? playerAvatar3
+                                                      : index + 1 >= 26 &&
+                                                        index + 1 <= 30
+                                                      ? playerAvatar4
+                                                      : index + 1 >= 31 &&
+                                                        index + 1 <= 35
+                                                      ? playerAvatar5
+                                                      : index + 1 >= 36 &&
+                                                        index + 1 <= 40
+                                                      ? playerAvatar6
+                                                      : index + 1 >= 41 &&
+                                                        index + 1 <= 45
+                                                      ? playerAvatar7
+                                                      : index + 1 >= 46 &&
+                                                        index + 1 <= 50
+                                                      ? playerAvatar8
+                                                      : index + 1 >= 51 &&
+                                                        index + 1 <= 55
+                                                      ? playerAvatar9
+                                                      : index + 1 >= 56 &&
+                                                        index + 1 <= 60
+                                                      ? playerAvatar10
+                                                      : playerAvatar11
+                                                  }
+                                                  alt=""
+                                                  className="playerAvatar me-2"
+                                                />{" "}
+                                                {item.displayName?.slice(0, 10)}
+                                                {item.displayName?.length >
+                                                  10 && "..."}
+                                              </div>
                                             </td>
                                             <td className="playerScore col-3 text-center font-montserrat">
                                               {getFormattedNumber(
@@ -1053,7 +1227,6 @@ const NewLeaderBoard = ({
                                                 </div>
                                               </td>
                                             )}
-                                            
                                           </tr>
                                         );
                                       }
@@ -1132,7 +1305,8 @@ const NewLeaderBoard = ({
                                                     style={{ color: "#fff" }}
                                                   >
                                                     {getFormattedNumber(
-                                                      leaderboard.previous_rewards[
+                                                      leaderboard
+                                                        .previous_rewards[
                                                         index
                                                       ],
                                                       0
@@ -1172,7 +1346,6 @@ const NewLeaderBoard = ({
                                                 </div>
                                               </td>
                                             )}
-                                           
                                           </tr>
                                         );
                                       }
@@ -1260,6 +1433,9 @@ const NewLeaderBoard = ({
                                                 src={playerAvatar}
                                                 alt=""
                                                 className="playerAvatar"
+                                                style={{
+                                                  filter: "grayscale(1)",
+                                                }}
                                               />{" "}
                                               {leaderboard.player_data.displayName?.slice(
                                                 0,
