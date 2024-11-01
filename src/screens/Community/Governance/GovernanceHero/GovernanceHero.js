@@ -4,7 +4,7 @@ import "./_governanceHero.scss";
 const GovernanceHero = ({onCreateProposal}) => {
   return (
     <div className="govhero-wrapper video-wrapper pb-5 position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="custom-container  my-5 py-5">
+      <div className="custom-container ps-4 my-5 py-5">
         <div className="d-flex flex-column w-100 gap-3">
           <div className="col-lg-5">
             <div className="d-flex flex-column gap-3 px-3 px-lg-0">

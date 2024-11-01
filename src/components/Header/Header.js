@@ -386,7 +386,8 @@ const Header = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}/${notificationId}`, {
+        )}/${notificationId}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -489,8 +490,8 @@ const Header = ({
   //   collections: null,
   //   account: "account",
   // });
-  // }, []); 
-  
+  // }, []);
+
   return (
     <div className="d-flex flex-column">
       <div
@@ -499,7 +500,12 @@ const Header = ({
       >
         <div className="row justify-content-between mx-0 w-100">
           <div className="col-7 col-xl-7 col-xxl-7 d-flex align-items-center justify-content-start gap-5 ps-0">
-            <NavLink to="/" onClick={()=>{window.scrollTo(0,0)}}>
+            <NavLink
+              to="/"
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+            >
               <img src={metaverse} alt="metaverse" height={32} />
             </NavLink>
             <div
@@ -694,7 +700,7 @@ const Header = ({
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                 isActive ? "nav-anchor activenavlink" : "nav-anchor"
+                  isActive ? "nav-anchor activenavlink" : "nav-anchor"
                 }
               >
                 About
@@ -768,163 +774,171 @@ const Header = ({
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
             <div
+              className="d-flex align-items-center justify-content-center h-100"
               onMouseEnter={() => handleDropdown("account")}
               onMouseLeave={() => handleDropdown(null)}
-              className="d-flex align-items-center gap-2 position-relative account-btn-hover p-2"
-              style={{ cursor: "pointer" }}
             >
-              <img src={personIcon} alt="" />
-              <h6 className="mb-0 account-txt">
-                {username !== undefined && email !== undefined
-                  ? username
-                  : "Account"}
-              </h6>
-              <img src={headerArrow} alt="" />
-
               <div
-                className={`header-dropdown p-3 d-flex flex-column gap-2 ${
-                  dropdown.account === "account" ? "header-dropdown-active" : ""
-                }`}
-                style={{ top: "140%" }}
+                className="d-flex align-items-center gap-2 position-relative account-btn-hover p-2"
+                style={{ cursor: "pointer" }}
               >
-                {account.logged === false ? (
-                  <>
-                    <NavLink to={"/auth"} className="header-log-btn py-2">
-                      Log In
-                    </NavLink>
-                    <hr className="header-divider my-0" />
-                    <NavLink
-                      to={"/account"}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                          : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                      }
-                    >
-                      <img width={20} height={20} src={guestIcon} alt="" />
-                      Continue as Guest
-                    </NavLink>
-                    <NavLink
-                      to={"/auth"}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                          : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                      }
-                    >
-                      <img width={20} height={20} src={registerIcon} alt="" />
-                      Sign Up
-                    </NavLink>
-                    <hr className="header-divider my-0" />
-                  </>
-                ) : account.logged === true && account.guest === true ? (
-                  <>
-                    <NavLink
-                      to={"/account"}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
-                          : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
-                      }
-                    >
-                      <img width={20} height={20} src={userIcon} alt="" />
-                      {username ?? "Guest"}
-                      <img
-                        src={
-                          account.linked === false ? unlinkedIcon : linkedIcon
+                <img src={personIcon} alt="" />
+                <h6 className="mb-0 account-txt">
+                  {username !== undefined && email !== undefined
+                    ? username
+                    : "Account"}
+                </h6>
+                <img src={headerArrow} alt="" />
+
+                <div
+                  className={`header-dropdown p-3 d-flex flex-column gap-2 ${
+                    dropdown.account === "account"
+                      ? "header-dropdown-active"
+                      : ""
+                  }`}
+                  style={{ top: "140%" }}
+                >
+                  {account.logged === false ? (
+                    <>
+                      <NavLink to={"/auth"} className="header-log-btn py-2">
+                        Log In
+                      </NavLink>
+                      <hr className="header-divider my-0" />
+                      <NavLink
+                        to={"/account"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
-                        className="link-icon"
-                        width={20}
-                        height={20}
-                        alt=""
-                      />
-                    </NavLink>
-                    <div
-                      className={`dropdown-nav ${
-                        account.linked === false ? "account-not-linked" : ""
-                      } nav-active p-2 d-flex align-items-center gap-2`}
-                    >
-                      <img width={20} height={20} src={walletIcon} alt="" />
-                      <div className="d-flex flex-column">
-                        <span className="header-wallet-span">
-                          Wallet Address
-                        </span>
-                        <span className="header-wallet">
-                          {account.wallet !== false
-                            ? shortAddress(account.wallet)
-                            : "NA"}
-                        </span>
+                      >
+                        <img width={20} height={20} src={guestIcon} alt="" />
+                        Continue as Guest
+                      </NavLink>
+                      <NavLink
+                        to={"/auth"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                        }
+                      >
+                        <img width={20} height={20} src={registerIcon} alt="" />
+                        Sign Up
+                      </NavLink>
+                      <hr className="header-divider my-0" />
+                    </>
+                  ) : account.logged === true && account.guest === true ? (
+                    <>
+                      <NavLink
+                        to={"/account"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                            : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
+                        }
+                      >
+                        <img width={20} height={20} src={userIcon} alt="" />
+                        {username ?? "Guest"}
+                        <img
+                          src={
+                            account.linked === false ? unlinkedIcon : linkedIcon
+                          }
+                          className="link-icon"
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                      </NavLink>
+                      <div
+                        className={`dropdown-nav ${
+                          account.linked === false ? "account-not-linked" : ""
+                        } nav-active p-2 d-flex align-items-center gap-2`}
+                      >
+                        <img width={20} height={20} src={walletIcon} alt="" />
+                        <div className="d-flex flex-column">
+                          <span className="header-wallet-span">
+                            Wallet Address
+                          </span>
+                          <span className="header-wallet">
+                            {account.wallet !== false
+                              ? shortAddress(account.wallet)
+                              : "NA"}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <hr className="header-divider my-0" />
-                  </>
-                ) : (
-                  <></>
-                )}
-                <NavLink
-                  to={"/account/premium"}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                  }
-                >
-                  <img width={20} height={20} src={premiumIcon} alt="" />
-                  Premium
-                </NavLink>
-                <NavLink
-                  to={"/contact-us"}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                  }
-                >
-                  <img width={20} height={20} src={supportIcon} alt="" />
-                  Support
-                </NavLink>
-                <NavLink
-                  to={"/marketplace"}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                      : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                  }
-                >
-                  <img width={20} height={20} src={cartIcon2} alt="" />
-                  Shop
-                </NavLink>
-                <a
-                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                  target="_blank"
-                  rel="noreferrer"
-                  className={"dropdown-nav p-2 d-flex align-items-center gap-2"}
-                >
-                  <img width={20} height={20} src={epicIcon} alt="" />
-                  Download
-                </a>
-                {email && (
-                  <>
-                    <hr className="header-divider my-0" />
-                    <button
-                      className="sign-out-btn py-1 d-flex align-items-center gap-2 justify-content-start"
-                      onClick={() => {
-                        logout();
-                        onLogout();
-                        setshowmenuAccount(false);
-                        setAccount({
-                          logged: false,
-                          wallet: coinbase,
-                          linked: false,
-                          guest: true,
-                        });
-                      }}
-                    >
-                      <img src={logouticon} alt="" className="logout-icon" />{" "}
-                      Log Out
-                    </button>
-                  </>
-                )}
+                      <hr className="header-divider my-0" />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  <NavLink
+                    to={"/account/premium"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                        : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                    }
+                  >
+                    <img width={20} height={20} src={premiumIcon} alt="" />
+                    Premium
+                  </NavLink>
+                  <NavLink
+                    to={"/contact-us"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                        : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                    }
+                  >
+                    <img width={20} height={20} src={supportIcon} alt="" />
+                    Support
+                  </NavLink>
+                  <NavLink
+                    to={"/marketplace"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                        : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                    }
+                  >
+                    <img width={20} height={20} src={cartIcon2} alt="" />
+                    Shop
+                  </NavLink>
+                  <a
+                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={
+                      "dropdown-nav p-2 d-flex align-items-center gap-2"
+                    }
+                  >
+                    <img width={20} height={20} src={epicIcon} alt="" />
+                    Download
+                  </a>
+                  {email && (
+                    <>
+                      <hr className="header-divider my-0" />
+                      <button
+                        className="sign-out-btn py-1 d-flex align-items-center gap-2 justify-content-start"
+                        onClick={() => {
+                          logout();
+                          onLogout();
+                          setshowmenuAccount(false);
+                          setAccount({
+                            logged: false,
+                            wallet: coinbase,
+                            linked: false,
+                            guest: true,
+                          });
+                        }}
+                      >
+                        <img src={logouticon} alt="" className="logout-icon" />{" "}
+                        Log Out
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
             {/* {!coinbase ? (
