@@ -388,7 +388,7 @@ const NewLeaderBoard = ({
   useEffect(() => {
     setAllData(allBnbData);
   }, []);
-console.log(allData)
+  
   return (
     <>
       <div
