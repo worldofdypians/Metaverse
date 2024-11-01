@@ -351,7 +351,7 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          $
+                        +$
                           {getFormattedNumber(
                             allStarData.premium_rewards[index],
                             0
@@ -538,7 +538,7 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          $
+                        +$
                           {getFormattedNumber(
                             allStarData.premium_rewards_weekly[index],
                             0
