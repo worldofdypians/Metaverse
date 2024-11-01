@@ -752,8 +752,8 @@ const Roadmap = () => {
             </span> */}
           </h6>
           <span className="roadmap-content">
-            Dypius is developing an extremely ambitious and complex game. The
-            World of Dypians contains a massive 2,000 sq km explorable
+            World of Dypians is developing an extremely ambitious and complex game. The
+            The game contains a massive 2,000 sq km explorable
             environment, integration of advanced artificial intelligence, a
             unique land ownership and real estate market, high graphic gameplay
             and is built to support multiple blockchains.
