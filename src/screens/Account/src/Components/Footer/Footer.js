@@ -52,14 +52,14 @@ const Footer = () => {
     <div className="footer-container flex-column px-3 px-lg-5">
       <div className="container-fluid d-flex w-100 pb-4 flex-column flex-xxl-row flex-lg-row flex-xl-row  gap-3 justify-content-between align-items-baseline">
         <div className="d-flex pt-5  w-50 footer-wrapper flex-row align-items-start align-items-lg-center gap-4 gap-lg-0 justify-content-between">
-          <a
+          {/* <a
             href="https://www.dypius.com/"
             target="_blank"
             className="footer-link font-poppins"
             rel="noreferrer"
           >
             Dypius
-          </a>
+          </a> */}
           {/* <span className="footer-link font-poppins">Whitepaper</span> */}
           <a href="https://www.worldofdypians.com/terms-of-service" style={{ textDecoration: "none" }}>
             <span className="footer-link font-poppins">Terms of Service</span>
@@ -128,7 +128,7 @@ const Footer = () => {
         <span className="footer-link font-poppins">
           Copyright © World of Dypians {year}. All rights reserved.
         </span>
-        <span className="footer-link font-poppins">Powered by Dypius.</span>
+        {/* <span className="footer-link font-poppins">Powered by Dypius.</span> */}
       </div>
     </div>
   );
