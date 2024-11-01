@@ -150,6 +150,7 @@ const NewLeaderBoard = ({
   allMantaData,
   allBaseData,
   allTaikoData,
+  onPremiumClick
 }) => {
   const chainItems = [
     {
@@ -775,7 +776,7 @@ const NewLeaderBoard = ({
                     <div className="d-flex align-items-center gap-2">
                       {!isPremium ? (
                         <NavLink
-                          className="activate-btn px-3 py-1"
+                          className="activate-btn2 px-3 py-1"
                           to="/account#premium"
                           style={{
                             background: "#7E52D2",
@@ -785,10 +786,8 @@ const NewLeaderBoard = ({
                         </NavLink>
                       ) : (
                         <button
-                          className="activate-btn px-3 py-1"
-                          style={{
-                            background: "#AC1186",
-                          }}
+                          className="activate-btn2 px-3 py-1"
+                          onClick={onPremiumClick}
                         >
                           Lifetime
                         </button>
