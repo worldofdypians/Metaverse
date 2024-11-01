@@ -9920,6 +9920,9 @@ function Dashboard({
                             weeklyplayerData={weeklyplayerData}
                             monthlyplayerData={monthlyplayerData}
                             genesisData={genesisData}
+                            onPremiumClick={() => {
+                              setgetPremiumPopup(true);
+                            }}
                           />
                         </div>
                       </OutsideClickHandler>
