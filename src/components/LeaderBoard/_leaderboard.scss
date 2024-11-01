@@ -9,9 +9,93 @@
   line-height: 32px;
   color: #ffffff;
   @media screen and (max-width: 786px) {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
+
+
+.leaderboardTitleGlobal {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 32px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 15px;
+  line-height: normal;
+
+  }
+}
+
+
+.leaderboard-active-btn {
+  border-radius: 8px;
+  border: 1px solid #386fc8;
+  background: linear-gradient(to bottom right, #386fc8 0%, #032c6c 50%) bottom
+      right / 50% 50% no-repeat,
+    linear-gradient(to bottom left, #386fc8 0%, #032c6c 50%) bottom left / 50%
+      50% no-repeat,
+    linear-gradient(to top left, #386fc8 0%, #032c6c 50%) top left / 50% 50%
+      no-repeat,
+    linear-gradient(to top right, #386fc8 0%, #032c6c 50%) top right / 50% 50%
+      no-repeat;
+  color: #f7f7ff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  // transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+}
+
+.table-btns-wrapper {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.leaderboard-inactive-btn {
+  border-radius: 8px;
+  border: 1px solid #757086;
+  color: #757086;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+  
+}
+
+.global-leaderboard-wrapper {
+  @media screen and (max-width: 786px) {
+    height: 400px;
+    overflow: auto;
+    padding-right: 10px;
+  }
+}
+
+
+.leaderboard-inactive-btn2 {
+  border-radius: 8px;
+  border: 1px solid #757086;
+  color: #757086;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
 
 .leaderboard-title {
   font-size: 20px;
@@ -29,8 +113,6 @@
     overflow: hidden;
   }
 }
-
-
 
 .grandPrices-wrapper {
   background-color: #242240;
@@ -137,7 +219,6 @@
 
   @media screen and (max-width: 500px) {
     font-size: 9px;
-
   }
 }
 
@@ -159,9 +240,25 @@
   }
 }
 
-.optionText:hover,
+.optionText:hover, .leaderboard-inactive-btn2:hover,
 .activeoption {
   color: #fff;
+}
+
+.new-leaderboard-desc-title {
+  color: #F4E07B;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.new-leaderboard-desc {
+  color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px;
 }
 
 .optionTextGolden {
@@ -252,7 +349,7 @@
   height: 30px;
   @media screen and (max-width: 500px) {
     width: 25px;
-  height: 25px;
+    height: 25px;
   }
 }
 .premium-star {
@@ -537,10 +634,26 @@
   line-height: normal;
 }
 
+.new-leaderboard-green-btn {
+  border-radius: 8px;
+background: linear-gradient(90deg, #7BD8B0 0%, #DCFB85 100%);
+color: #333;
+text-align: center;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+border: none;
+}
+
 .view-chains-wrapper {
   border-radius: 10px;
   border-bottom: 1px solid rgba(76, 78, 100, 0.5);
-  background: linear-gradient(180deg, rgba(53, 34, 89, 0.4) 99.99%, rgba(52, 35, 87, 0.4) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(53, 34, 89, 0.4) 99.99%,
+    rgba(52, 35, 87, 0.4) 100%
+  );
   backdrop-filter: blur(13px);
   span {
     color: #f7f7ff;
@@ -553,13 +666,13 @@
   }
 }
 
-.monthly-players-percent{
+.monthly-players-percent {
   position: absolute;
   top: 0;
   bottom: 0;
   right: -40%;
   margin: auto;
-  color: #7BD8B0;
+  color: #7bd8b0;
   text-align: center;
   font-family: "Montserrat";
   font-size: 10px;
