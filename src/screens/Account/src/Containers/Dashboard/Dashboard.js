@@ -654,9 +654,7 @@ function Dashboard({
   const leaderboardId = document.querySelector("#leaderboard");
   const { BigNumber } = window;
   const now = new Date();
-  const firstOfNextMonth = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)
-  );
+  const isAfterNovember2nd = now.getUTCMonth() === 10 && now.getUTCDate() >= 2; // November is month 10 (0-indexed)
 
   //leaderboard calls
 
@@ -1403,7 +1401,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1750,7 +1748,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2099,7 +2097,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2467,7 +2465,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2834,7 +2832,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3201,7 +3199,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3819,7 +3817,7 @@ function Dashboard({
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -4598,7 +4596,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: bnbStars,
-        previous_rewards: bnbStarsPremium,
+        previous_rewards: isAfterNovember2nd ? bnbStars : bnbStarsPremium,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
@@ -4633,7 +4631,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: bnbStars,
-        previous_rewards: bnbStarsPremium,
+        previous_rewards:  isAfterNovember2nd ? bnbStars : bnbStarsPremium,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
@@ -4681,7 +4679,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards:  isAfterNovember2nd ? skaleStars : skaleStarsPremium,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4734,7 +4732,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards:  isAfterNovember2nd ? baseStars : skaleStarsPremium,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4782,7 +4780,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards:  isAfterNovember2nd ? baseStars :  skaleStarsPremium,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -4831,7 +4829,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: mantaStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards:  isAfterNovember2nd ? mantaStars : skaleStarsPremium,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -4882,7 +4880,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards: isAfterNovember2nd ? baseStars : skaleStarsPremium,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -4933,7 +4931,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: skaleStarsPremium,
+        previous_rewards: isAfterNovember2nd ? taikoStars : skaleStarsPremium,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,
@@ -10007,7 +10005,7 @@ function Dashboard({
                                 leaderboardBtn === "weekly"
                                   ? "leaderboard-active-btn"
                                   : "leaderboard-inactive-btn"
-                              }  w-100 py-2`}
+                              }  w-100 py-lg-2 py-1`}
                               onClick={() => {
                                 setleaderboardBtn("weekly");
                               }}
@@ -10019,7 +10017,7 @@ function Dashboard({
                                 leaderboardBtn === "monthly"
                                   ? "leaderboard-active-btn"
                                   : "leaderboard-inactive-btn"
-                              }  w-100 py-2`}
+                              }  w-100 py-lg-2 py-1`}
                               onClick={() => {
                                 setleaderboardBtn("monthly");
                               }}

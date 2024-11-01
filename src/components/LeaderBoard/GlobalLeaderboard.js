@@ -132,7 +132,7 @@ const GlobalLeaderboard = ({
 
   return (
     <div
-      className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
+      className={`d-flex flex-column gap-3 leaderboard-wrapper ${screen === "dash" && 'global-leaderboard-wrapper'} mt-4 position-relative`}
       style={{
         alignSelf: !location.pathname.includes("account") && "baseline",
         minWidth: !location.pathname.includes("account") && "92%",
