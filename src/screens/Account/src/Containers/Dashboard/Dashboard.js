@@ -1433,24 +1433,24 @@ function Dashboard({
   //     setPrevDataCoreWeekly(placeholderplayerData);
   //   }
   // };
-  // const fetchPreviousMonthlyWinnersCore = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardCoreMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 100,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersCore = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardCoreMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataCoreMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataCoreMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataCoreMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataCoreMonthly(placeholderplayerData);
+    }
+  };
   const fetchDailyRecordsCore = async () => {
     const data = {
       StatisticName: "LeaderboardCoreDaily",
@@ -1502,33 +1502,33 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsCore = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardCoreMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  //   setMonthlyRecordsCore(result.data.data.leaderboard);
+  const fetchMonthlyRecordsCore = async () => {
+    const data = {
+      StatisticName: "LeaderboardCoreMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setMonthlyRecordsCore(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersCore(parseInt(result.data.data.version));
-  //   fillRecordsMonthlyCore(result.data.data.leaderboard);
+    fetchPreviousMonthlyWinnersCore(parseInt(result.data.data.version));
+    fillRecordsMonthlyCore(result.data.data.leaderboard);
 
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerCoreMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
-  //     }
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerCoreMonthly(true);
+        fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerCoreMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerCoreMonthly(false);
+        fetchMonthlyRecordsAroundPlayerCore(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerCore = async (itemData) => {
     const data = {
@@ -1648,70 +1648,70 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsAroundPlayerCore = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardCoreMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerCore = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardCoreMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setMonthlyDataAmountCore(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9]) +
-  //               Number(skalePrizesMonthlyGolden[9])
-  //             : Number(skalePrizesMonthly[userPosition]) +
-  //               Number(skalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
-  //       setMonthlyDataAmountCore(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9])
-  //             : Number(skalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     } else setMonthlyDataAmountCore(0);
+      if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setMonthlyDataAmountCore(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+        setMonthlyDataAmountCore(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      } else setMonthlyDataAmountCore(0);
 
-  //     setUserRankCore(testArray[0].position);
-  //     setUserCoreScore(testArray[0].statValue);
+      setUserRankCore(testArray[0].position);
+      setUserCoreScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerCoreMonthly(true);
-  //         setUserDataCoreMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerCoreMonthly(false);
-  //         setUserDataCoreMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerCoreMonthly(false);
-  //       setUserDataCoreMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerCoreMonthly(true);
+          setUserDataCoreMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerCoreMonthly(false);
+          setUserDataCoreMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerCoreMonthly(false);
+        setUserDataCoreMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsViction = (itemData) => {
     if (itemData.length === 0) {
@@ -1781,24 +1781,24 @@ function Dashboard({
   //     setPrevDataVictionWeekly(placeholderplayerData);
   //   }
   // };
-  // const fetchPreviousMonthlyWinnersViction = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardVictionMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersViction = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardVictionMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataVictionMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataVictionMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataVictionMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataVictionMonthly(placeholderplayerData);
+    }
+  };
 
   const fetchDailyRecordsViction = async () => {
     const data = {
@@ -1851,32 +1851,32 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsViction = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardVictionMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  //   setMonthlyRecordsViction(result.data.data.leaderboard);
+  const fetchMonthlyRecordsViction = async () => {
+    const data = {
+      StatisticName: "LeaderboardVictionMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setMonthlyRecordsViction(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersViction(parseInt(result.data.data.version));
-  //   fillRecordsMonthlyViction(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerVictionMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
-  //     }
+    fetchPreviousMonthlyWinnersViction(parseInt(result.data.data.version));
+    fillRecordsMonthlyViction(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerVictionMonthly(true);
+        fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerVictionMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerVictionMonthly(false);
+        fetchMonthlyRecordsAroundPlayerViction(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerViction = async (itemData) => {
     const data = {
@@ -1996,70 +1996,70 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsAroundPlayerViction = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardVictionMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerViction = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardVictionMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime) {
-  //       setMonthlyDataAmountViction(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9]) +
-  //               Number(skalePrizesMonthlyGolden[9])
-  //             : Number(skalePrizesMonthly[userPosition]) +
-  //               Number(skalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime) {
-  //       setMonthlyDataAmountViction(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9])
-  //             : Number(skalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     }
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountViction(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountViction(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
 
-  //     setUserRankViction(testArray[0].position);
-  //     setUserVictionScore(testArray[0].statValue);
+      setUserRankViction(testArray[0].position);
+      setUserVictionScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerVictionMonthly(true);
-  //         setUserDataVictionMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerVictionMonthly(false);
-  //         setUserDataVictionMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerVictionMonthly(false);
-  //       setUserDataVictionMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerVictionMonthly(true);
+          setUserDataVictionMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerVictionMonthly(false);
+          setUserDataVictionMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerVictionMonthly(false);
+        setUserDataVictionMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsManta = (itemData) => {
     if (itemData.length === 0) {
@@ -2131,24 +2131,24 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchPreviousMonthlyWinnersManta = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardMantaMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersManta = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardMantaMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataMantaMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataMantaMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataMantaMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataMantaMonthly(placeholderplayerData);
+    }
+  };
 
   const fetchDailyRecordsManta = async () => {
     const data = {
@@ -2211,38 +2211,38 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsManta = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardMantaMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios
-  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
-  //     .catch((e) => {
-  //       console.error(e);
-  //       fillRecordsMonthlyManta([]);
-  //     });
-  //   setMonthlyRecordsManta(result.data.data.leaderboard);
+  const fetchMonthlyRecordsManta = async () => {
+    const data = {
+      StatisticName: "LeaderboardMantaMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyManta([]);
+      });
+    setMonthlyRecordsManta(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersManta(parseInt(result.data.data.version));
+    fetchPreviousMonthlyWinnersManta(parseInt(result.data.data.version));
 
-  //   fillRecordsMonthlyManta(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerMantaMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
-  //     }
+    fillRecordsMonthlyManta(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerMantaMonthly(true);
+        fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerMantaMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerMantaMonthly(false);
+        fetchMonthlyRecordsAroundPlayerManta(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerManta = async (itemData) => {
     const data = {
@@ -2362,70 +2362,70 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsAroundPlayerManta = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardMantaMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerManta = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMantaMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime) {
-  //       setMonthlyDataAmountManta(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9]) +
-  //               Number(skalePrizesMonthlyGolden[9])
-  //             : Number(skalePrizesMonthly[userPosition]) +
-  //               Number(skalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime) {
-  //       setMonthlyDataAmountManta(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9])
-  //             : Number(skalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     }
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountManta(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
 
-  //     setUserRankManta(testArray[0].position);
-  //     setUserMantaScore(testArray[0].statValue);
+      setUserRankManta(testArray[0].position);
+      setUserMantaScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerMantaMonthly(true);
-  //         setUserDataMantaMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerMantaMonthly(false);
-  //         setUserDataMantaMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerMantaMonthly(false);
-  //       setUserDataMantaMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerMantaMonthly(true);
+          setUserDataMantaMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerMantaMonthly(false);
+          setUserDataMantaMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerMantaMonthly(false);
+        setUserDataMantaMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsBase = (itemData) => {
     if (itemData.length === 0) {
@@ -2498,24 +2498,24 @@ function Dashboard({
   //     setPrevDataBaseWeekly(placeholderplayerData);
   //   }
   // };
-  // const fetchPreviousMonthlyWinnersBase = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardBaseMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersBase = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardBaseMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataBaseMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataBaseMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataBaseMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataBaseMonthly(placeholderplayerData);
+    }
+  };
 
   const fetchDailyRecordsBase = async () => {
     const data = {
@@ -2580,38 +2580,38 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsBase = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardBaseMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios
-  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
-  //     .catch((e) => {
-  //       console.error(e);
-  //       fillRecordsMonthlyBase([]);
-  //     });
-  //   setMonthlyRecordsBase(result.data.data.leaderboard);
+  const fetchMonthlyRecordsBase = async () => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyBase([]);
+      });
+    setMonthlyRecordsBase(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersBase(parseInt(result.data.data.version));
+    fetchPreviousMonthlyWinnersBase(parseInt(result.data.data.version));
 
-  //   fillRecordsMonthlyBase(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerBaseMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
-  //     }
+    fillRecordsMonthlyBase(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerBaseMonthly(true);
+        fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerBaseMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerBaseMonthly(false);
+        fetchMonthlyRecordsAroundPlayerBase(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerBase = async (itemData) => {
     const data = {
@@ -2731,70 +2731,70 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsAroundPlayerBase = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardBaseMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerBase = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardBaseMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime) {
-  //       setMonthlyDataAmountBase(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9]) +
-  //               Number(skalePrizesMonthlyGolden[9])
-  //             : Number(skalePrizesMonthly[userPosition]) +
-  //               Number(skalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime) {
-  //       setMonthlyDataAmountBase(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9])
-  //             : Number(skalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     }
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountBase(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
 
-  //     setUserRankBase(testArray[0].position);
-  //     setUserBaseScore(testArray[0].statValue);
+      setUserRankBase(testArray[0].position);
+      setUserBaseScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerBaseMonthly(true);
-  //         setUserDataBaseMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerBaseMonthly(false);
-  //         setUserDataBaseMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerBaseMonthly(false);
-  //       setUserDataBaseMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerBaseMonthly(true);
+          setUserDataBaseMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerBaseMonthly(false);
+          setUserDataBaseMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerBaseMonthly(false);
+        setUserDataBaseMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsTaiko = (itemData) => {
     if (itemData.length === 0) {
@@ -2865,24 +2865,24 @@ function Dashboard({
   //     setPrevDataTaikoWeekly(placeholderplayerData);
   //   }
   // };
-  // const fetchPreviousMonthlyWinnersTaiko = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardTaikoMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersTaiko = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardTaikoMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataTaikoMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataTaikoMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataTaikoMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataTaikoMonthly(placeholderplayerData);
+    }
+  };
 
   const fetchDailyRecordsTaiko = async () => {
     const data = {
@@ -2945,38 +2945,38 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsTaiko = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardTaikoMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios
-  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
-  //     .catch((e) => {
-  //       console.error(e);
-  //       fillRecordsMonthlyTaiko([]);
-  //     });
-  //   setMonthlyRecordsTaiko(result.data.data.leaderboard);
+  const fetchMonthlyRecordsTaiko = async () => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyTaiko([]);
+      });
+    setMonthlyRecordsTaiko(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersTaiko(parseInt(result.data.data.version));
+    fetchPreviousMonthlyWinnersTaiko(parseInt(result.data.data.version));
 
-  //   fillRecordsMonthlyTaiko(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerTaikoMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-  //     }
+    fillRecordsMonthlyTaiko(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerTaikoMonthly(true);
+        fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerTaikoMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerTaikoMonthly(false);
+        fetchMonthlyRecordsAroundPlayerTaiko(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerTaiko = async (itemData) => {
     const data = {
@@ -3096,70 +3096,70 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecordsAroundPlayerTaiko = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardTaikoMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerTaiko = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardTaikoMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime) {
-  //       setMonthlyDataAmountTaiko(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9]) +
-  //               Number(skalePrizesMonthlyGolden[9])
-  //             : Number(skalePrizesMonthly[userPosition]) +
-  //               Number(skalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime) {
-  //       setMonthlyDataAmountTaiko(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(skalePrizesMonthly[9])
-  //             : Number(skalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     }
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountTaiko(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
 
-  //     setUserRankTaiko(testArray[0].position);
-  //     setUserTaikoScore(testArray[0].statValue);
+      setUserRankTaiko(testArray[0].position);
+      setUserTaikoScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerTaikoMonthly(true);
-  //         setUserDataTaikoMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerTaikoMonthly(false);
-  //         setUserDataTaikoMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerTaikoMonthly(false);
-  //       setUserDataTaikoMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerTaikoMonthly(true);
+          setUserDataTaikoMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerTaikoMonthly(false);
+          setUserDataTaikoMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerTaikoMonthly(false);
+        setUserDataTaikoMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsSkale = (itemData) => {
     if (itemData.length === 0) {
@@ -3231,24 +3231,24 @@ function Dashboard({
   //     setPrevDataSkaleWeekly(placeholderplayerData);
   //   }
   // };
-  // const fetchPreviousMonthlyWinnersSkale = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "LeaderboardSkaleMonthly",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 10,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinnersSkale = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSkaleMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setPrevDataSkaleMonthly(result.data.data.leaderboard);
-  //   } else {
-  //     setPrevDataSkaleMonthly(placeholderplayerData);
-  //   }
-  // };
+      setPrevDataSkaleMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataSkaleMonthly(placeholderplayerData);
+    }
+  };
 
   const fetchDailyRecordsSkale = async () => {
     const data = {
@@ -3302,33 +3302,33 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsSkale = async () => {
-  //   const data = {
-  //     StatisticName: "LeaderboardSkaleMonthly",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  //   setMonthlyRecordsSkale(result.data.data.leaderboard);
+  const fetchMonthlyRecordsSkale = async () => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setMonthlyRecordsSkale(result.data.data.leaderboard);
 
-  //   fetchPreviousMonthlyWinnersSkale(parseInt(result.data.data.version));
+    fetchPreviousMonthlyWinnersSkale(parseInt(result.data.data.version));
 
-  //   fillRecordsMonthlySkale(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
-  //     if (testArray.length > 0) {
-  //       setActivePlayerSkaleMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-  //     }
+    fillRecordsMonthlySkale(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSkaleMonthly(true);
+        fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerSkaleMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerSkaleMonthly(false);
+        fetchMonthlyRecordsAroundPlayerSkale(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchDailyRecordsAroundPlayerSkale = async (itemData) => {
     const data = {
@@ -3447,70 +3447,70 @@ function Dashboard({
   //     }
   //   }
   // };
-  // const fetchMonthlyRecordsAroundPlayerSkale = async (itemData) => {
-  //   const data = {
-  //     StatisticName: "LeaderboardSkaleMonthly",
-  //     MaxResultsCount: 6,
-  //     PlayerId: userId,
-  //   };
-  //   if (userId) {
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
+  const fetchMonthlyRecordsAroundPlayerSkale = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSkaleMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
 
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     const userPosition = testArray[0].position;
-  //     // console.log(userPosition)
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
 
-  //     if (goldenPassRemainingTime) {
-  //       setMonthlyDataAmountSkale(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(updatedSkalePrizesMonthly[9]) +
-  //               Number(updatedSkalePrizesMonthlyGolden[9])
-  //             : Number(updatedSkalePrizesMonthly[userPosition]) +
-  //               Number(updatedSkalePrizesMonthlyGolden[userPosition])
-  //           : 0
-  //       );
-  //     } else if (!goldenPassRemainingTime) {
-  //       setMonthlyDataAmountSkale(
-  //         testArray[0].statValue !== 0
-  //           ? userPosition > 10
-  //             ? 0
-  //             : userPosition === 10
-  //             ? Number(updatedSkalePrizesMonthly[9])
-  //             : Number(updatedSkalePrizesMonthly[userPosition])
-  //           : 0
-  //       );
-  //     }
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountSkale(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(updatedSkalePrizesMonthly[9]) +
+                Number(updatedSkalePrizesMonthlyGolden[9])
+              : Number(updatedSkalePrizesMonthly[userPosition]) +
+                Number(updatedSkalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountSkale(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(updatedSkalePrizesMonthly[9])
+              : Number(updatedSkalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
 
-  //     setUserRankSkale(testArray[0].position);
-  //     setUserSkaleScore(testArray[0].statValue);
+      setUserRankSkale(testArray[0].position);
+      setUserSkaleScore(testArray[0].statValue);
 
-  //     if (itemData.length > 0) {
-  //       var testArray2 = Object.values(itemData).filter(
-  //         (item) => item.displayName === username
-  //       );
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
 
-  //       if (testArray.length > 0 && testArray2.length > 0) {
-  //         setActivePlayerSkaleMonthly(true);
-  //         setUserDataSkaleMonthly([]);
-  //       } else if (testArray.length > 0 && testArray2.length === 0) {
-  //         setActivePlayerSkaleMonthly(false);
-  //         setUserDataSkaleMonthly(...testArray);
-  //       }
-  //     } else if (testArray.length > 0) {
-  //       setActivePlayerSkaleMonthly(false);
-  //       setUserDataSkaleMonthly(...testArray);
-  //     }
-  //   }
-  // };
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerSkaleMonthly(true);
+          setUserDataSkaleMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerSkaleMonthly(false);
+          setUserDataSkaleMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerSkaleMonthly(false);
+        setUserDataSkaleMonthly(...testArray);
+      }
+    }
+  };
 
   const fillRecordsStar = (itemData) => {
     if (itemData.length === 0) {
@@ -3866,22 +3866,22 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchPreviousMonthlyWinners = async (version) => {
-  //   if (version != 0) {
-  //     const data = {
-  //       StatisticName: "MonthlyLeaderboard",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 100,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
-  //       data
-  //     );
+  const fetchPreviousMonthlyWinners = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "MonthlyLeaderboard",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
 
-  //     setmonthlyplayerData(result.data.data.leaderboard);
-  //   }
-  // };
+      setmonthlyplayerData(result.data.data.leaderboard);
+    }
+  };
 
   const fetchDailyRecords = async () => {
     const data = {
@@ -3936,33 +3936,33 @@ function Dashboard({
   //   }
   // };
 
-  // const fetchMonthlyRecords = async () => {
-  //   const data = {
-  //     StatisticName: "MonthlyLeaderboard",
-  //     StartPosition: 0,
-  //     MaxResultsCount: 100,
-  //   };
-  //   const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
-  //   setMonthlyRecords(result.data.data.leaderboard);
-  //   setpreviousMonthlyVersion(result.data.data.version);
-  //   fetchPreviousMonthlyWinners(parseInt(result.data.data.version));
-  //   fillRecordsMonthly(result.data.data.leaderboard);
-  //   if (userId && username) {
-  //     var testArray = result.data.data.leaderboard.filter(
-  //       (item) => item.displayName === username
-  //     );
+  const fetchMonthlyRecords = async () => {
+    const data = {
+      StatisticName: "MonthlyLeaderboard",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
+    setMonthlyRecords(result.data.data.leaderboard);
+    setpreviousMonthlyVersion(result.data.data.version);
+    fetchPreviousMonthlyWinners(parseInt(result.data.data.version));
+    fillRecordsMonthly(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
 
-  //     if (testArray.length > 0) {
-  //       setActivePlayerMonthly(true);
-  //       fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
-  //     }
+      if (testArray.length > 0) {
+        setActivePlayerMonthly(true);
+        fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
 
-  //     if (testArray.length === 0) {
-  //       setActivePlayerMonthly(false);
-  //       fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
-  //     }
-  //   }
-  // };
+      if (testArray.length === 0) {
+        setActivePlayerMonthly(false);
+        fetchMonthlyRecordsAroundPlayer(result.data.data.leaderboard);
+      }
+    }
+  };
 
   const fetchGenesisRecords = async () => {
     const data2 = {
@@ -4077,26 +4077,26 @@ function Dashboard({
     if (username !== undefined && userId !== undefined) {
       fetchDailyRecords();
       // fetchWeeklyRecords();
-      // fetchMonthlyRecords();
+      fetchMonthlyRecords();
       fetchGenesisRecords();
       fetchDailyRecordsCore();
       // fetchWeeklyRecordsCore();
-      // fetchMonthlyRecordsCore();
+      fetchMonthlyRecordsCore();
       fetchDailyRecordsViction();
       // fetchWeeklyRecordsViction();
-      // fetchMonthlyRecordsViction();
+      fetchMonthlyRecordsViction();
       fetchDailyRecordsManta();
       // fetchWeeklyRecordsManta();
-      // fetchMonthlyRecordsManta();
+      fetchMonthlyRecordsManta();
       fetchDailyRecordsBase();
       // fetchWeeklyRecordsBase();
-      // fetchMonthlyRecordsBase();
+      fetchMonthlyRecordsBase();
       fetchDailyRecordsTaiko();
       // fetchWeeklyRecordsTaiko();
-      // fetchMonthlyRecordsTaiko();
+      fetchMonthlyRecordsTaiko();
       fetchDailyRecordsSkale();
       // fetchWeeklyRecordsSkale();
-      // fetchMonthlyRecordsSkale();
+      fetchMonthlyRecordsSkale();
       fetchRecordsStar();
       fetchRecordsStarWeekly();
     }
@@ -8850,26 +8850,26 @@ function Dashboard({
     // if (username !== undefined && userId !== undefined) {
     fetchDailyRecords();
     // fetchWeeklyRecords();
-    // fetchMonthlyRecords();
+    fetchMonthlyRecords();
     fetchGenesisRecords();
     fetchDailyRecordsCore();
     // fetchWeeklyRecordsCore();
-    // fetchMonthlyRecordsCore();
+    fetchMonthlyRecordsCore();
     fetchDailyRecordsViction();
     // fetchWeeklyRecordsViction();
-    // fetchMonthlyRecordsViction();
+    fetchMonthlyRecordsViction();
     fetchDailyRecordsManta();
     // fetchWeeklyRecordsManta();
-    // fetchMonthlyRecordsManta();
+    fetchMonthlyRecordsManta();
     fetchDailyRecordsBase();
     // fetchWeeklyRecordsBase();
-    // fetchMonthlyRecordsBase();
+    fetchMonthlyRecordsBase();
     fetchDailyRecordsTaiko();
     // fetchWeeklyRecordsTaiko();
-    // fetchMonthlyRecordsTaiko();
+    fetchMonthlyRecordsTaiko();
     fetchDailyRecordsSkale();
     // fetchWeeklyRecordsSkale();
-    // fetchMonthlyRecordsSkale();
+    fetchMonthlyRecordsSkale();
     fetchRecordsStar();
     fetchRecordsStarWeekly();
 
