@@ -22,6 +22,25 @@ import mantaActive from "./assets/mantaActive.png";
 import coreIcon from "./assets/coreIcon2.svg";
 import baseLogo from "../../screens/Home/VideoWrapper/assets/baseLogo.svg";
 
+import playerAvatar1 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar1.png";
+import playerAvatar2 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar2.png";
+import playerAvatar3 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar3.png";
+import playerAvatar4 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar4.png";
+import playerAvatar5 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar5.png";
+import playerAvatar6 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar6.png";
+import playerAvatar7 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar7.png";
+import playerAvatar8 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar8.png";
+import playerAvatar9 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar9.png";
+import playerAvatar10 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar10.png";
+import playerAvatar11 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar11.png";
+import playerAvatar12 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar12.png";
+import playerAvatar13 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar13.png";
+import playerAvatar14 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar14.png";
+import playerAvatar15 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar15.png";
+import playerAvatar16 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar16.png";
+import playerAvatar17 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar17.png";
+import playerAvatar18 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar18.png";
+
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
 import taikoLogo from "../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg";
@@ -132,7 +151,9 @@ const GlobalLeaderboard = ({
 
   return (
     <div
-      className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
+      className={`d-flex flex-column gap-3 leaderboard-wrapper ${
+        screen === "dash" && "global-leaderboard-wrapper"
+      } mt-4 position-relative`}
       style={{
         alignSelf: !location.pathname.includes("account") && "baseline",
         minWidth: !location.pathname.includes("account") && "92%",
@@ -220,8 +241,8 @@ const GlobalLeaderboard = ({
                     global leaderboard ranking.
                     <br />
                     <br />
-                    The leaderboard resets weekly and monthly, offering new chances to
-                    climb and show your skills.
+                    The leaderboard resets weekly and monthly, offering new
+                    chances to climb and show your skills.
                     <br />
                     <br />
                     <b>Leaderboard Update Time: Daily (00:00 UTC)</b>
@@ -307,6 +328,14 @@ const GlobalLeaderboard = ({
                                 ? require(`./assets/globalRanks/globalRank${
                                     index + 1
                                   }.png`)
+                                : index + 1 >= 11 && index + 1 <= 20
+                                ? playerAvatar1
+                                : index + 1 >= 21 && index + 1 <= 30
+                                ? playerAvatar2
+                                : index + 1 >= 31 && index + 1 <= 70
+                                ? playerAvatar3
+                                : index + 1 >= 71 && index + 1 <= 100
+                                ? playerAvatar4
                                 : playerAvatar
                             }
                             alt=""
@@ -351,7 +380,7 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          $
+                          +$
                           {getFormattedNumber(
                             allStarData.premium_rewards[index],
                             0
@@ -412,22 +441,24 @@ const GlobalLeaderboard = ({
                         {Number(item.position) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
-                        <img
-                          src={
-                            index + 1 <= 10
-                              ? require(`./assets/globalRanks/globalRank${
-                                  index + 1
-                                }.png`)
-                              : playerAvatar
-                          }
-                          alt=""
-                          className="playerAvatar me-2"
-                        />
-                        <span>
-                          {" "}
-                          {item.displayName?.slice(0, 13)}
-                          {item.displayName?.length > 13 && "..."}
-                        </span>
+                        <div className="playerName-inner">
+                          <img
+                            src={
+                              index + 1 <= 10
+                                ? require(`./assets/globalRanks/globalRank${
+                                    index + 1
+                                  }.png`)
+                                : playerAvatar
+                            }
+                            alt=""
+                            className="playerAvatar me-2"
+                          />
+                          <span>
+                            {" "}
+                            {item.displayName?.slice(0, 13)}
+                            {item.displayName?.length > 13 && "..."}
+                          </span>
+                        </div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -489,6 +520,14 @@ const GlobalLeaderboard = ({
                                 ? require(`./assets/globalRanks/globalRank${
                                     index + 1
                                   }.png`)
+                                : index + 1 >= 11 && index + 1 <= 20
+                                ? playerAvatar1
+                                : index + 1 >= 21 && index + 1 <= 30
+                                ? playerAvatar2
+                                : index + 1 >= 31 && index + 1 <= 70
+                                ? playerAvatar3
+                                : index + 1 >= 71 && index + 1 <= 100
+                                ? playerAvatar4
                                 : playerAvatar
                             }
                             alt=""
@@ -537,7 +576,7 @@ const GlobalLeaderboard = ({
                         }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          $
+                          +$
                           {getFormattedNumber(
                             allStarData.premium_rewards_weekly[index],
                             0
@@ -598,22 +637,24 @@ const GlobalLeaderboard = ({
                         {parseInt(index) + 1}
                       </td>
                       <td className="playerName col-5 font-montserrat">
-                        <img
-                          src={
-                            index + 1 <= 10
-                              ? require(`./assets/globalRanks/globalRank${
-                                  index + 1
-                                }.png`)
-                              : playerAvatar
-                          }
-                          alt=""
-                          className="playerAvatar me-2"
-                        />
-                        <span>
-                          {" "}
-                          {item.displayName?.slice(0, 13)}
-                          {item.displayName?.length > 13 && "..."}
-                        </span>
+                        <div className="playerName-inner">
+                          <img
+                            src={
+                              index + 1 <= 10
+                                ? require(`./assets/globalRanks/globalRank${
+                                    index + 1
+                                  }.png`)
+                                : playerAvatar
+                            }
+                            alt=""
+                            className="playerAvatar me-2"
+                          />
+                          <span>
+                            {" "}
+                            {item.displayName?.slice(0, 13)}
+                            {item.displayName?.length > 13 && "..."}
+                          </span>
+                        </div>
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
@@ -701,12 +742,12 @@ const GlobalLeaderboard = ({
         [allStarData.player_data_weekly].map((item, index) => {
           return (
             <div
-             className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
+              className="total-stars-wrapper2 d-flex align-items-center gap-5 justify-content-between py-2 px-3"
               key={index}
             >
               <div className="d-flex flex-column">
                 <div className="playerName d-flex align-items-center font-montserrat gap-2">
-                {item.statValue > 0 && <span> #{item.position + 1}</span>}
+                  {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
                     src={inactiveUserPfp}
                     alt=""

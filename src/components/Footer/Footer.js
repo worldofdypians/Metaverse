@@ -121,6 +121,10 @@ const Footer = () => {
       link: "mailto:contact@worldofdypians.com",
     },
     {
+      icon: "cmc",
+      link: "https://coinmarketcap.com/currencies/world-of-dypians/",
+    },
+    {
       icon: "coingecko",
       link: "https://www.coingecko.com/en/coins/world-of-dypians",
     },

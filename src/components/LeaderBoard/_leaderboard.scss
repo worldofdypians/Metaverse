@@ -9,7 +9,7 @@
   line-height: 32px;
   color: #ffffff;
   @media screen and (max-width: 786px) {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
 
@@ -21,7 +21,9 @@
   line-height: 32px;
   color: #ffffff;
   @media screen and (max-width: 786px) {
-    font-size: 18px;
+    font-size: 15px;
+  line-height: normal;
+
   }
 }
 
@@ -45,6 +47,9 @@
   font-weight: 500;
   line-height: normal;
   // transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .table-btns-wrapper {
@@ -61,6 +66,18 @@
   font-weight: 500;
   line-height: normal;
   background: transparent;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
+  
+}
+
+.global-leaderboard-wrapper {
+  @media screen and (max-width: 786px) {
+    height: 400px;
+    overflow: auto;
+    padding-right: 10px;
+  }
 }
 
 

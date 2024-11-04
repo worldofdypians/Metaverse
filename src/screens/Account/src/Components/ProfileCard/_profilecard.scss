@@ -943,7 +943,7 @@ background-size: cover;
   background-position: center;
 }
 
-.activate-btn, .activate-btn:hover {
+.activate-btn {
 background: #536BBE;
 border-radius: 6px;
 color: #EBEEFF;
@@ -953,7 +953,47 @@ font-style: normal;
 font-weight: 500;
 line-height: normal;
 border: none;
+transition: all 0.25s ease-in-out;
+
 }
+
+.activate-btn2 {
+  background: #AC1186;
+  border-radius: 6px;
+  color: #EBEEFF;
+  text-align: center; 
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  transition: all 0.25s ease-in-out;
+
+  }
+
+.activate-btn:hover {
+  background: #53a5be;
+  border-radius: 6px;
+  color: #EBEEFF;
+  text-align: center; 
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  }
+
+  .activate-btn2:hover {
+    background: #9411ac;
+    border-radius: 6px;
+    color: #EBEEFF;
+    text-align: center; 
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    }
 
 .total-stars-span{
   color: #FFEFCA;
