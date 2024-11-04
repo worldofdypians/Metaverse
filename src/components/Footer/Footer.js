@@ -176,7 +176,7 @@ const Footer = () => {
         <div className="d-flex align-items-center gap-lg-0 gap-4 justify-content-between flex-lg-row flex-column">
           <div className="d-flex footerlink-wrapper flex-column flex-lg-row flex-md-row align-items-center gap-2 gap-lg-5 gap-md-5">
             <NavLink to="/token" className="new-footer-link">
-              Wod Token
+              WOD Token
             </NavLink>
             <NavLink to="/marketplace" className="new-footer-link">
               Marketplace
