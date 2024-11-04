@@ -49,14 +49,15 @@ const showDesc = (index) => {
     
   return (
     <div className="roadmap-card position-relative" id={quarter} onClick={() => setActiveCard(!activeCard)} >
-              <img
+              {/* <img
                 src={require(`../../screens/Roadmap/assets/${image}.png`)}
                 alt="roadmap-image"
                 className="roadmap-image"
-              />
+              /> */}
+                         <img src={require(`../../screens/Roadmap/assets/${quarter}.svg`)} className="quarter" alt="quarter" />
               <div className="roadmap-items position-relative">
                 <div className="d-flex pt-3  flex-column align-items-center justify-content-start gap-2 roadmap-items-wrapper">
-                  <img src={roadmapIndicator} alt="indicator" style={{transform: desc !== null ? 'rotate(0deg)' : 'rotate(180deg)', visibility: index === 4 ? 'hidden' : 'visible'}} />
+                  {/* <img src={roadmapIndicator} alt="indicator" style={{transform: desc !== null ? 'rotate(0deg)' : 'rotate(180deg)', visibility: index === 4 ? 'hidden' : 'visible'}} /> */}
                   
                  <div className="d-flex flex-column align-items-start gap-3 gap-lg-2 w-100">
                  {content.map((item, index) => (
@@ -75,7 +76,7 @@ const showDesc = (index) => {
                  </div>
                 </div>
               </div>
-              <img src={require(`../../screens/Roadmap/assets/${quarter}.svg`)} className="quarter" alt="quarter" />
+   
             </div>
   )
 }

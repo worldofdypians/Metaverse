@@ -151,12 +151,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const NewLeaderBoard = ({
   username,
-  userId,
-  dypBalancebnb,
-  address,
   availableTime,
   email,
-  coinbase,
   isPremium,
   dailyplayerData,
   weeklyplayerData,
@@ -284,7 +280,6 @@ const NewLeaderBoard = ({
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
-  const [bundlesBought, setbundlesBought] = useState(0);
   const [allData, setAllData] = useState([]);
   const [selectedChain, setSelectedChain] = useState(chainItems[0]);
   const sliderRef = useRef(null);
@@ -303,18 +298,6 @@ const NewLeaderBoard = ({
     setOptionText2(item);
   };
 
-  const getBundles = async () => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
-
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const handlePrevChain = () => {
     if (selectedChain.id === 0) {
@@ -392,12 +375,11 @@ const NewLeaderBoard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    getBundles();
-  }, [address]);
-
-  useEffect(() => {
-    setOptionText2("bnb");
-  }, []);
+    if (allBnbData && allBnbData.length > 0) {
+      setOptionText2("bnb");
+      setAllData(allBnbData);
+    }
+  }, [allBnbData]);
 
   // useEffect(() => {
   //   if (countdown === null || countdown === undefined || countdown === "0") {
@@ -408,7 +390,7 @@ const NewLeaderBoard = ({
   useEffect(() => {
     setAllData(allBnbData);
   }, []);
-
+  
   return (
     <>
       <div

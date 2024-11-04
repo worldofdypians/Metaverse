@@ -1,17 +1,26 @@
+.stats-wrapper {
+  background-image: url("./statsBg.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+  background-image: url("./statsBgMobile.png");
+    
+  }
+}
+
 .explorer-grid-title {
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
   line-height: 43px;
-
+  text-transform: uppercase;
   color: #ffffff;
-
-  .explore-tag {
-    background: none !important;
-    color: rgba(140, 86, 255, 1) !important;
-  }
+  text-align: center;
 }
-
+.explore-tag {
+  background: none !important;
+  color: rgba(140, 86, 255, 1) !important;
+}
 .explorer-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -36,13 +45,39 @@
   }
 }
 
-
 @media screen and (max-width: 786px) {
-  .explorer-grid{
+  .explorer-grid {
     grid-template-columns: auto;
   }
-  .explorer-grid-title{
+  .explorer-grid-title {
     font-size: 26px !important;
     width: 100% !important;
+  }
 }
+
+.new-stats-wrapper {
+  border-radius: 20px;
+border: 1px solid #DCFB85;
+background: rgba(220, 251, 133, 0.04);
+backdrop-filter: blur(5.5px);
+
+  .new-stats-value {
+    color: #dcfb85;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 42px;
+  }
+
+  .new-stats-type {
+    color: #eeedff;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+  }
 }

@@ -1,0 +1,255 @@
+.new-treasure-hunt-wrapper {
+  border-radius: 12px;
+  background: #212246;
+}
+
+.new-treasure-hunt-title {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.08px;
+}
+
+.new-treasure-hunt-rewards {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.total-earnings-amount {
+  color: #fa7efb;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 62.5% */
+}
+
+.total-earnings-span {
+  color: #afa8ba;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 125% */
+}
+
+.treasure-type-date {
+  position: absolute;
+}
+
+.treasure-hunt-type {
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.new-event-wrapper {
+  border-radius: 12px;
+  background: #212246;
+}
+
+.new-event-banner {
+  width: 100%;
+}
+
+.new-event-banner-tooltip {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.new-event-title {
+  color: #ffc808;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.08px;
+  text-transform: uppercase;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.new-event-desc {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.purchase-package-title{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.available-on{
+    color: #8B8CA2;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.purchase-chain{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.time-remaining{
+    color: #EEEDFF;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.sync-desc{
+    color: #8B8CA2;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+
+.event-price-wrapper{
+    border-radius: 12px;
+    border: 0.5px solid #8B8CA2;
+    background: rgba(24, 25, 60, 0.10);
+}
+
+.event-price-span{
+    color: #EEEDFF;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.event-price-coin{
+    color: #FFF;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.8px;
+    text-transform: capitalize;
+}
+
+.event-price-usd{
+    color: #FFC808;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.6px;
+    text-transform: capitalize;
+}
+
+
+.event-coming-soon{
+    color: #EEEDFF;
+font-family: "Montserrat";
+font-size: 18px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+text-transform: uppercase;
+}
+
+.event-price-dropdown{
+  border-radius: 8px;
+  border: 0.5px solid #8B8CA2;
+  cursor: pointer;
+  width: 80px;
+}
+
+.event-price-dropdown-2{
+  border-radius: 8px;
+  border: 0.5px solid #8B8CA2;
+  background: #212246;
+  position: absolute;
+  width: 100%;
+  top: 110%;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .25s;
+}
+
+.active-dropdown{
+  pointer-events: auto !important;
+  opacity: 1;
+}
+
+.critical-hit-img{
+  width: auto;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+  }
+}
+
+.event-price-dropdown-item{
+  border-radius: 8px;
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.event-price-dropdown-item:hover{
+  background: rgba(255,255,255, 0.3);
+}
+
+
+
+.event-price-text{
+  color: #FFC808;
+font-family: "Montserrat";
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
