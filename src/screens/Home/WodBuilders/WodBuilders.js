@@ -75,7 +75,7 @@ const WodBuilders = ({ page }) => {
     {
       name: "Taiko",
       icon: "taiko",
-      banner: "taikoBanner.webp",
+      banner: "taikoBanner.png",
       link: "https://x.com/taikoxyz/status/1823751443121135746",
       backer: true,
     },
