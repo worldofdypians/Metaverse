@@ -589,6 +589,14 @@ const Header = ({
             >
               Marketplace
             </NavLink>
+            <NavLink
+              to="/map"
+              className={({ isActive }) =>
+                isActive ? "nav-anchor activenavlink" : "nav-anchor"
+              }
+            >
+              Map
+            </NavLink>
             <div
               className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2
                ${
@@ -763,14 +771,7 @@ const Header = ({
                 </NavLink>
               </div>
             </div>
-            <NavLink
-              to="/map"
-              className={({ isActive }) =>
-                isActive ? "nav-anchor activenavlink" : "nav-anchor"
-              }
-            >
-              Map
-            </NavLink>
+
           </div>
           <div className="col-3 d-flex align-items-center justify-content-end gap-3 pe-0 position-relative ">
             <div
