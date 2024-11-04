@@ -2249,7 +2249,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2600,7 +2600,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2717,7 +2717,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2834,7 +2834,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2951,7 +2951,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3208,7 +3208,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3341,7 +3341,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3458,7 +3458,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3585,7 +3585,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3712,7 +3712,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3839,7 +3839,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/treasure-hunt">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>

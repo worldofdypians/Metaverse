@@ -325,7 +325,7 @@ const MintPopup = ({ active, onClose, data }) => {
         data.title === "Treasure Hunt" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -344,7 +344,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Manta" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -353,7 +353,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "Taiko" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -363,7 +363,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Base" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
