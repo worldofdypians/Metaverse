@@ -74,7 +74,7 @@ import ChestFlyout from "./components/LandFlyout/ChestFlyout";
 import NFTBridge from "./screens/NFTBridge/NftBridge.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
-import OurTeam from "./screens/OurTeam/OurTeam.js"; 
+import OurTeam from "./screens/OurTeam/OurTeam.js";
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Buy from "./screens/Wod/Buy/Buy.js";
@@ -638,7 +638,6 @@ function App() {
   const [userEvents, setuserEvents] = useState(0);
   const [wodBalance, setwodBalance] = useState(0);
 
-
   const userId = data?.getPlayer?.playerId;
 
   const fetchTreasureHuntData = async (email, userAddress) => {
@@ -949,7 +948,7 @@ function App() {
       setStarRecords(finalData);
     }
   };
- 
+
   const fetchRecordsStar = async () => {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
@@ -960,9 +959,7 @@ function App() {
     setPrevVersionStar(parseInt(result.data.data.version));
     setStarRecords(result.data.data.leaderboard);
     fillRecordsStar(result.data.data.leaderboard);
-    
   };
- 
 
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
@@ -1177,9 +1174,6 @@ function App() {
     );
   };
 
- 
-
- 
   useEffect(() => {
     setAllStarData({
       rewards: monthlyStarPrizes,
@@ -2960,10 +2954,9 @@ function App() {
           console.error(e);
         });
 
-        if(tokenBalance !== undefined) {
-          setwodBalance(tokenBalance)
-        }
-     
+      if (tokenBalance !== undefined) {
+        setwodBalance(tokenBalance);
+      }
     }
   };
 
@@ -3042,7 +3035,7 @@ function App() {
       eventType: "Explore & Mine",
       eventDate: "Jul 01, 2024",
       backgroundImage: coreBg,
-      image: 'coreBanner.png',
+      image: "coreBanner.png",
 
       userEarnUsd: coreEarnUsd,
       userEarnCrypto: coreEarnToken,
@@ -3074,7 +3067,7 @@ function App() {
       eventType: "Explore & Find",
       eventDate: "Jul 01, 2024",
       backgroundImage: victionBg,
-      image: 'victionBanner.png',
+      image: "victionBanner.png",
       userEarnUsd: victionEarnUsd,
       userEarnCrypto: victionEarnToken,
       userEarnPoints: victionPoints,
@@ -3105,7 +3098,7 @@ function App() {
       eventType: "Explore & Find",
       eventDate: "Oct 21, 2024",
       backgroundImage: upcomingBase2,
-      image: 'baseBanner.png',
+      image: "baseBanner.png",
       userEarnUsd: 0,
       userEarnCrypto: 0,
       userEarnPoints: 0,
@@ -3139,7 +3132,7 @@ function App() {
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
       userEarnPoints: bnbPoints,
-      image: 'bnbBanner.png',
+      image: "bnbBanner.png",
 
       popupInfo: {
         title: "BNB Chain",
@@ -3177,7 +3170,7 @@ function App() {
       userEarnUsd: immutableEarnUsd,
       userEarnCrypto: immutableEarnToken,
       userEarnPoints: immutablePoints,
-      image: 'immutableBanner.png',
+      image: "immutableBanner.png",
 
       popupInfo: {
         title: "Immutable",
@@ -4204,7 +4197,7 @@ function App() {
 
   useEffect(() => {
     fetchSkaleBalance();
-    getWodBalance(coinbase)
+    getWodBalance(coinbase);
   }, [coinbase, isConnected, networkId]);
 
   useEffect(() => {
@@ -4383,7 +4376,6 @@ function App() {
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
                 socials={socials}
-                totalTx={totalTx}
               />
             }
           />
@@ -4509,7 +4501,6 @@ function App() {
               <Auth
                 isConnected={isConnected}
                 coinbase={coinbase}
-                 
                 onNewsLetterClick={(value) => {
                   setisCheckedNewsLetter(value);
                 }}
@@ -4611,7 +4602,7 @@ function App() {
             path="/account/premium"
             element={
               <Dashboard
-              authToken={authToken}
+                authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
@@ -5291,58 +5282,58 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
-              authToken={authToken}
-              dailyBonuslistedNFTS={listedNFTS}
-              onSuccessDeposit={() => {
-                setCount55(count55 + 1);
-              }}
-              userActiveEvents={userEvents}
-              dummyBetaPassData2={dummyBetaPassData2}
-              bnbEarnUsd={bnbEarnUsd}
-              skaleEarnUsd={skaleEarnUsd}
-              seiEarnUsd={seiEarnUsd}
-              coreEarnUsd={coreEarnUsd}
-              victionEarnUsd={victionEarnUsd}
-              taikoEarnUsd={taikoEarnUsd}
-              cookieEarnUsd={cookieEarnUsd}
-              immutableEarnUsd={immutableEarnUsd}
-              mantaEarnUsd={mantaEarnUsd}
-              multiversEarnUsd={multiversEarnUsd}
-              ethTokenData={ethTokenData}
-              dyptokenDatabnb={dyptokenDatabnb}
-              dypTokenData={dypTokenData}
-              handleSwitchChain={handleSwitchChain}
-              dypTokenData_old={dypTokenData_old}
-              coinbase={coinbase}
-              account={coinbase}
-              binanceW3WProvider={library}
-              binanceWallet={coinbase}
-              isConnected={isConnected}
-              chainId={networkId}
-              handleConnect={handleConnectWallet}
-              onSigninClick={checkData}
-              success={success}
-              availableTime={availTime}
-              handleSwitchNetwork={handleSwitchNetwork}
-              handleOpenDomains={() => setDomainPopup(true)}
-              domainName={domainName}
-              dogePrice={dogePrice}
-              onSubscribeSuccess={() => {
-                refetchPlayer();
-                setCount55(count55 + 1);
-              }}
-              isPremium={isPremium}
-              handleConnectionPassport={handleConnectPassport}
-              handleConnectBinance={handleConnectBinance}
-              handleSwitchChainGateWallet={handleSwitchNetwork}
-              handleSwitchChainBinanceWallet={handleSwitchNetwork}
-              latest20BoughtNFTS={latest20BoughtNFTS}
-              monthlyPlayers={monthlyPlayers}
-              percent={percent}
-              baseEarnUSD={baseEarnUSD}
-              onManageLogin={(value1, value2) => {
-                handleManageLogin(value1, value2);
-              }}
+                authToken={authToken}
+                dailyBonuslistedNFTS={listedNFTS}
+                onSuccessDeposit={() => {
+                  setCount55(count55 + 1);
+                }}
+                userActiveEvents={userEvents}
+                dummyBetaPassData2={dummyBetaPassData2}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                cookieEarnUsd={cookieEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
+                ethTokenData={ethTokenData}
+                dyptokenDatabnb={dyptokenDatabnb}
+                dypTokenData={dypTokenData}
+                handleSwitchChain={handleSwitchChain}
+                dypTokenData_old={dypTokenData_old}
+                coinbase={coinbase}
+                account={coinbase}
+                binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleConnect={handleConnectWallet}
+                onSigninClick={checkData}
+                success={success}
+                availableTime={availTime}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleOpenDomains={() => setDomainPopup(true)}
+                domainName={domainName}
+                dogePrice={dogePrice}
+                onSubscribeSuccess={() => {
+                  refetchPlayer();
+                  setCount55(count55 + 1);
+                }}
+                isPremium={isPremium}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectBinance={handleConnectBinance}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                latest20BoughtNFTS={latest20BoughtNFTS}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
+                baseEarnUSD={baseEarnUSD}
+                onManageLogin={(value1, value2) => {
+                  handleManageLogin(value1, value2);
+                }}
               />
             }
           />
@@ -5494,7 +5485,7 @@ function App() {
           />
 
           <Route exact path="/game" element={<Game />} />
-          <Route exact path="/game-updates" element={<GameUpdates />} /> 
+          <Route exact path="/game-updates" element={<GameUpdates />} />
           <Route exact path="/about" element={<About />} />
 
           {/* <Route

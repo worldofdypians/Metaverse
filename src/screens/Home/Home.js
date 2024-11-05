@@ -45,8 +45,6 @@ import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 // import bnbcampaign from "../../components/TimepieceMint/assets/bnbcampaign.webp";
 // import festivecampaign from "../../components/TimepieceMint/assets/festiveCampaign.webp";
 
-
-
 // import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
 // import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
@@ -62,15 +60,14 @@ const Home = ({
   handleDownload,
   monthlyPlayers,
   percent,
-  allStarData
-})  => {
-  
+  allStarData,
+  totalSupply
+}) => {
   const mantaInfo = {
     title: "Manta",
     img: mantaPopup,
     state: "manta",
   };
-
 
   const [activePopup, setActivePopup] = useState(false);
 
@@ -120,7 +117,7 @@ const Home = ({
           />
           {/* <LiveEvents /> */}
           <WodPartners full={false} />
-          <GameStats />
+          <GameStats totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}/>
           <WodBuilders />
           {/* <Utilities /> */}
           {/* <MarketSection
@@ -129,7 +126,7 @@ const Home = ({
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
           /> */}
-          <ExplorerGrid />
+          <ExplorerGrid totalSupply={totalSupply}/>
           <GameUpdates />
           {/* <LandNft /> */}
           {/* <CawsSociety
