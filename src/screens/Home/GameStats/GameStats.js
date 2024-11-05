@@ -27,7 +27,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
   return (
     <div className="d-flex flex-column">
       <div>
-        <div className="container-fluid d-flex d-md-none p-0">
+        <div className="container-fluid d-flex p-0">
           <img
             src={transactionsBannerSmall}
             className="small-transaction-banner"
@@ -73,7 +73,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
       </div>
       <div>
-        <div className="container-fluid d-flex d-md-none p-0">
+        <div className="container-fluid d-flex p-0">
           <img
             src={darkLordSpaceBannerSmall}
             className="small-transaction-banner"
@@ -106,7 +106,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
       </div>
       <div>
-        <div className="container-fluid d-flex d-md-none p-0">
+        <div className="container-fluid d-flex  p-0">
           <img
             src={lizardBannerSmall}
             className="small-transaction-banner"
@@ -139,7 +139,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
       </div>
       <div>
-        <div className="container-fluid d-flex d-md-none p-0">
+        <div className="container-fluid d-flex  p-0">
           <img
             src={cityBannerSmall}
             className="small-transaction-banner"
@@ -172,7 +172,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
       </div>
       <div>
-        <div className="container-fluid d-flex d-md-none p-0">
+        <div className="container-fluid d-flex p-0">
           <img
             src={secondCityBannerSmall}
             className="small-transaction-banner"
