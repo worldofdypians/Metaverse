@@ -156,7 +156,6 @@ const GameHero = () => {
                 >
                   <BetaEventCardHome
                     data={item}
-                   
                     isFrontPage={true}
                   />
                 </div>

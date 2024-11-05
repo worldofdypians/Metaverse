@@ -92,8 +92,6 @@ const GameEvents = () => {
                     data={item}
                     key={index}
                     isFrontPage={true}
-                    addRatio={true}
-
                   />
                 </NavLink>
               </div>
@@ -107,8 +105,6 @@ const GameEvents = () => {
                     data={item}
                     key={index}
                     isFrontPage={true}
-                    addRatio={true}
-
                   />
                 </NavLink>
               </div>

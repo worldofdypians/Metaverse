@@ -250,7 +250,6 @@ const VideoWrapper = ({
                   >
                     <BetaEventCardHome
                       data={item}
-                    
                       isFrontPage={true}
                     />
                   </NavLink>
@@ -293,7 +292,6 @@ const VideoWrapper = ({
                 >
                   <BetaEventCardHome
                     data={item}
-                   
                     isFrontPage={true}
                   />
                 </NavLink>
