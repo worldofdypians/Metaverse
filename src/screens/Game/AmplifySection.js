@@ -97,7 +97,6 @@ const AmplifySection = () => {
                 <NavLink to={`${item.link}`}>
                   <BetaEventCardHome
                     data={item}
-                   
                     isFrontPage={true}
                   />
                 </NavLink>
