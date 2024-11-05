@@ -114,6 +114,7 @@ const EarnHero = ({ onSelectFilter }) => {
                     data={item}
                     key={index}
                     isFrontPage={true}
+                    addRatio={false}
                   />
                 // </NavLink>
               ))}
