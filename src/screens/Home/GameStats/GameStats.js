@@ -87,7 +87,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               <span className="ways-to-amplify-title text-start">
               Save the Date for Warcraft 30th Anniversary Direct
               </span>
-              <span className="ways-to-amplify-desc text-start">
+              <span className="ways-to-amplify-desc mb-2 text-start">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -118,7 +118,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               <span className="ways-to-amplify-title">
               Support Cure Duchenne With the Reven Pack
               </span>
-              <span className="ways-to-amplify-desc">
+              <span className="ways-to-amplify-desc mb-2">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
@@ -144,37 +144,22 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fourth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-lg-start custom-container">
-            <div className="game-stats-grid py-0 py-md-5">
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  {getFormattedNumber(totalTx2).slice(
-                    0,
-                    getFormattedNumber(totalTx2).length - 3
-                  )}
-                </h6>
-                <span className="game-stats-type">
-                  Total on-chain transactions
-                </span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  ${getFormattedNumber(totalvolume2, 0)}
-                </h6>
-                <span className="game-stats-type">Total Volume (USD)</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(totalSupply, 0)}
-                </h6>
-                <span className="game-stats-type">Sold NFTs</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(monthlyPlayers, 0)}
-                </h6>
-                <span className="game-stats-type">Monthly Players</span>
+          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc text-start">12-Month Subscription Offer</span>
+              <span className="ways-to-amplify-title text-start">
+              Endless Adventure Together
+              </span>
+              <span className="ways-to-amplify-desc mb-2 text-start">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-start">
+                <button className="explore-btn col-lg-4 py-2">Explore</button>
+                <button className="getpremium-btn col-lg-4 py-2">
+                  Get Premium
+                </button>
               </div>
             </div>
           </div>
@@ -190,37 +175,22 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-lg-end custom-container">
-            <div className="game-stats-grid py-0 py-md-5">
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  {getFormattedNumber(totalTx2).slice(
-                    0,
-                    getFormattedNumber(totalTx2).length - 3
-                  )}
-                </h6>
-                <span className="game-stats-type">
-                  Total on-chain transactions
-                </span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  ${getFormattedNumber(totalvolume2, 0)}
-                </h6>
-                <span className="game-stats-type">Total Volume (USD)</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(totalSupply, 0)}
-                </h6>
-                <span className="game-stats-type">Sold NFTs</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(monthlyPlayers, 0)}
-                </h6>
-                <span className="game-stats-type">Monthly Players</span>
+          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc">BENEFITS</span>
+              <span className="ways-to-amplify-title">
+              A New Age of Cataclysm
+              </span>
+              <span className="ways-to-amplify-desc mb-2">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-end">
+                <button className="explore-btn col-lg-4 py-2">Explore</button>
+                <button className="getpremium-btn col-lg-4 py-2">
+                  Get Premium
+                </button>
               </div>
             </div>
           </div>
