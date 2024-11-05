@@ -82,10 +82,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper second-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-start custom-container">
-          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc text-start">BENEFITS</span>
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc text-start">
+                Learn what’s ahead
+              </span>
               <span className="ways-to-amplify-title text-start">
-              Save the Date for Warcraft 30th Anniversary Direct
+                Save the Date for Warcraft 30th Anniversary Direct
               </span>
               <span className="ways-to-amplify-desc mb-2 text-start">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -113,10 +115,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper third-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-end custom-container">
-          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc">BENEFITS</span>
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc">
+                Adopt until January 7, 2025.
+              </span>
               <span className="ways-to-amplify-title">
-              Support Cure Duchenne With the Reven Pack
+                Support Cure Duchenne With the Reven Pack
               </span>
               <span className="ways-to-amplify-desc mb-2">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -144,10 +148,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fourth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-lg-start custom-container">
-          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc text-start">12-Month Subscription Offer</span>
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc text-start">
+                12-Month Subscription Offer
+              </span>
               <span className="ways-to-amplify-title text-start">
-              Endless Adventure Together
+                Endless Adventure Together
               </span>
               <span className="ways-to-amplify-desc mb-2 text-start">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -175,10 +181,10 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-lg-end custom-container">
-          <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc">BENEFITS</span>
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
+              <span className="amp-benefits-desc">Cataclysm Classic</span>
               <span className="ways-to-amplify-title">
-              A New Age of Cataclysm
+                A New Age of Cataclysm
               </span>
               <span className="ways-to-amplify-desc mb-2">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
