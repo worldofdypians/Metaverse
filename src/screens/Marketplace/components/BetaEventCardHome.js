@@ -6,12 +6,12 @@ import whiteCalendar from "../assets/whiteCalendar.svg";
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 // import betaMyEarnings from '../assets/betaMyEarnings.png'
 
-const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage }) => {
+const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, isFrontPage, addRatio }) => {
   return (
     <div
       className={` ${data.class} justify-content-end flex-column d-flex align-items-center`}
       onClick={onOpenPopup}
-      style={{ cursor: "pointer", aspectRatio: "1.8/1" }}
+      style={{ cursor: "pointer", aspectRatio: addRatio ? "1.8/1" : '' }}
     >
       <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper">
        <div className="d-flex flex-column">
