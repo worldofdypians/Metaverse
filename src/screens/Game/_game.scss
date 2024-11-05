@@ -47,7 +47,7 @@ line-height: 24px;
 .ways-to-amplify-title {
     color: #FFF;
 text-align: right;
-font-size: 24px;
+font-size: clamp(1rem, 2vw + 1vh, 3rem);
 font-style: normal;
 font-weight: 800;
 line-height: normal;

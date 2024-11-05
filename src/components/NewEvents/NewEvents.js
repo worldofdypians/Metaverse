@@ -56,6 +56,8 @@ const NewEvents = ({
       <div
         className="custom-container mt-5"
         id={selectedEvent ? selectedEvent : ""}
+      style={{ scrollMarginTop: "100px" }}
+
       >
         <div className="row">
           <div className="col-12">
