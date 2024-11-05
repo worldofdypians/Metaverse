@@ -77,7 +77,7 @@ const VideoWrapper = ({
     },
     {
       link: "/earn",
-      title: "Stake",
+      title: "Earn",
       desc: "Earn rewards by staking WOD tokens",
       class: "earnClass",
     },
@@ -250,7 +250,6 @@ const VideoWrapper = ({
                   >
                     <BetaEventCardHome
                       data={item}
-                    
                       isFrontPage={true}
                     />
                   </NavLink>
@@ -293,7 +292,6 @@ const VideoWrapper = ({
                 >
                   <BetaEventCardHome
                     data={item}
-                   
                     isFrontPage={true}
                   />
                 </NavLink>
