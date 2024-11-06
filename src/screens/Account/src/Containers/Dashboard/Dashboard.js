@@ -272,6 +272,20 @@ function Dashboard({
     "10",
   ];
 
+  const chestImagesMat = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+  ];
+
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -413,6 +427,7 @@ function Dashboard({
   const [myMantaNfts, setmyMantaNfts] = useState([]);
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
   const [myCookieNfts, setmyCookieNfts] = useState([]);
+  const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
 
@@ -432,6 +447,10 @@ function Dashboard({
   const [gateUserPoints, setGateUserPoints] = useState(0);
   const [gateEarnBnb, setGateEarnBNB] = useState(0);
 
+  const [matEarnUsd, setmatEarnUsd] = useState(0);
+  const [matEarnToken, setmatEarnToken] = useState(0);
+  const [matPoints, setmatPoints] = useState(0);
+
   const [dogeUserPoints, setDogeUserPoints] = useState(0);
   const [dogeEarnUSD, setDogeEarnUSD] = useState(0);
   const [dogeEarnBNB, setDogeEarnBNB] = useState(0);
@@ -439,15 +458,21 @@ function Dashboard({
   const [baseUserPoints, setBaseUserPoints] = useState(0);
   const [baseEarnUSD, setBaseEarnUSD] = useState(0);
   const [baseEarnETH, setBaseEarnETH] = useState(0);
+
   const [bnbEarnToken, setBnbEarnToken] = useState(0);
   const [bnbEarnUsd, setBnbEarnUsd] = useState(0);
   const [bnbPoints, setBnbPoints] = useState(0);
+
   const [dypiusEarnTokens, setDypiusEarnTokens] = useState(0);
   const [dypiusEarnUsd, setDypiusEarnUsd] = useState(0);
 
   const [dypiusPremiumEarnTokens, setdypiusPremiumEarnTokens] = useState(0);
   const [dypiusPremiumEarnUsd, setdypiusPremiumEarnUsd] = useState(0);
   const [dypiusPremiumPoints, setdypiusPremiumPoints] = useState(0);
+
+  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
+  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
+  const [skalePoints, setSkalePoints] = useState(0);
 
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
@@ -458,30 +483,8 @@ function Dashboard({
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
 
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [standardChests, setStandardChests] = useState([]);
-  const [premiumChests, setPremiumChests] = useState([]);
+
   const [openedChests, setOpenedChests] = useState([]);
-
-  const [standardSkaleChests, setStandardSkaleChests] = useState([]);
-  const [premiumSkaleChests, setPremiumSkaleChests] = useState([]);
-
-  const [standardVictionChests, setStandardVictionChests] = useState([]);
-  const [premiumVictionChests, setPremiumVictionChests] = useState([]);
-  const [standardSeiChests, setStandardSeiChests] = useState([]);
-  const [premiumSeiChests, setPremiumSeiChests] = useState([]);
-
-  const [standardBaseChests, setStandardBaseChests] = useState([]);
-  const [premiumBaseChests, setPremiumBaseChests] = useState([]);
-
-  const [standardMantaChests, setStandardMantaChests] = useState([]);
-  const [premiumMantaChests, setPremiumMantaChests] = useState([]);
-
-  const [standardTaikoChests, setStandardTaikoChests] = useState([]);
-  const [premiumTaikoChests, setPremiumTaikoChests] = useState([]);
-
-  const [standardCoreChests, setStandardCoreChests] = useState([]);
-  const [premiumCoreChests, setPremiumCoreChests] = useState([]);
-
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
   const [openedVictionChests, setOpenedVictionChests] = useState([]);
   const [openedCoreChests, setOpenedCoreChests] = useState([]);
@@ -489,10 +492,9 @@ function Dashboard({
   const [openedMantaChests, setOpenedMantaChests] = useState([]);
   const [openedTaikoChests, setOpenedTaikoChests] = useState([]);
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
+  const [openedMatChests, setOpenedMatChests] = useState([]);
 
-  const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
-  const [skaleEarnToken, setSkaleEarnToken] = useState(0);
-  const [skalePoints, setSkalePoints] = useState(0);
+
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [adClicked, setadClicked] = useState("");
@@ -542,12 +544,16 @@ function Dashboard({
   const [claimedSeiChests, setclaimedSeiChests] = useState(0);
   const [claimedMantaChests, setclaimedMantaChests] = useState(0);
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
+  const [claimedMatChests, setclaimedMatChests] = useState(0);
+
 
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
   const [claimedMantaPremiumChests, setclaimedMantaPremiumChests] = useState(0);
   const [claimedTaikoPremiumChests, setclaimedTaikoPremiumChests] = useState(0);
+  const [claimedMatPremiumChests, setclaimedMatPremiumChests] = useState(0);
+
   const [userSocialRewards, setuserSocialRewards] = useState(0);
   const [skalePrice, setSkalePrice] = useState(0);
 
@@ -561,6 +567,7 @@ function Dashboard({
   const [allSeiChests, setallSeiChests] = useState([]);
   const [allMantaChests, setallMantaChests] = useState([]);
   const [allBaseChests, setallBaseChests] = useState([]);
+  const [allMatChests, setallMatChests] = useState([]);
 
   const [countdown700, setcountdown700] = useState();
   const [count, setCount] = useState(0);
@@ -570,6 +577,8 @@ function Dashboard({
   const [mantacount, setmantacount] = useState(0);
   const [taikocount, settaikocount] = useState(0);
   const [basecount, setbasecount] = useState(0);
+  const [matcount, setmatcount] = useState(0);
+
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -593,6 +602,8 @@ function Dashboard({
   const [taikoImages, setTaikoImages] = useState(shuffle(chestImagesTaiko));
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
   const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
+  const [matImages, setMatImages] = useState(shuffle(chestImagesMat));
+
 
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
@@ -647,6 +658,12 @@ function Dashboard({
   const [nftPremium_tokenIdTaiko, setnftPremium_tokenIdTaiko] = useState(0);
   const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
   const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
+
+  const [discountPercentageMat, setdiscountPercentageMat] = useState(0);
+  const [nftPremium_tokenIdMat, setnftPremium_tokenIdMat] = useState(0);
+  const [nftPremium_totalMat, setnftPremium_totalMat] = useState(0);
+  const [nftDiscountObjectMat, setnftDiscountObjectMat] = useState([]);
+
   const [leaderboardBtn, setleaderboardBtn] = useState("weekly");
 
   const dailyrewardpopup = document.querySelector("#dailyrewardpopup");
@@ -727,6 +744,10 @@ function Dashboard({
 
           const mantaEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "manta";
+          });
+
+          const matEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "matchain";
           });
 
           const taikoEvent = responseData.events.filter((obj) => {
@@ -820,6 +841,16 @@ function Dashboard({
             setCookiePoints(pointsBnb);
             setCookieEarnUsd(userEarnedusd);
             setCookieEarnToken(userEarnedusd / cookiePrice);
+          }
+
+          if (matEvent && matEvent[0]) {
+            const userEarnedusd =
+            matEvent[0].reward.earn.total /
+            matEvent[0].reward.earn.multiplier;
+            const pointsMat = matEvent[0].reward.earn.totalPoints;
+            setmatPoints(pointsMat);
+            setmatEarnToken(userEarnedusd / bnbPrice);
+            setmatEarnUsd(userEarnedusd);
           }
 
           if (coreEvent && coreEvent[0]) {
@@ -1164,9 +1195,6 @@ function Dashboard({
 
   const dataFetchedRef = useRef(false);
 
-  const [allData, setAllData] = useState([]);
-  const [extraStars, setExtraStars] = useState(false);
-  const [addedUser, setaddedUser] = useState(false);
 
   const [allBnbData, setAllBnbData] = useState([]);
   const [allSkaleData, setAllSkaleData] = useState([]);
@@ -1175,6 +1203,8 @@ function Dashboard({
   const [allMantaData, setAllMantaData] = useState([]);
   const [allTaikoData, setAllTaikoData] = useState([]);
   const [allBaseData, setAllBaseData] = useState([]);
+  const [allMatData, setAllMatData] = useState([]);
+
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1188,12 +1218,12 @@ function Dashboard({
   const [prevDataCore, setPrevDataCore] = useState([]);
   const [prevDataCoreWeekly, setPrevDataCoreWeekly] = useState([]);
   const [prevDataCoreMonthly, setPrevDataCoreMonthly] = useState([]);
-
   const [dailyDataAmountCore, setDailyDataAmountCore] = useState([]);
   const [weeklyDataAmountCore, setWeeklyDataAmountCore] = useState([]);
   const [monthlyDataAmountCore, setMonthlyDataAmountCore] = useState([]);
   const [userRankCore, setUserRankCore] = useState("");
   const [userCoreScore, setUserCoreScore] = useState(0);
+
   const [dailyRecordsSkale, setDailyRecordsSkale] = useState([]);
   const [weeklyRecordsSkale, setWeeklyRecordsSkale] = useState([]);
   const [monthlyRecordsSkale, setMonthlyRecordsSkale] = useState([]);
@@ -1207,28 +1237,24 @@ function Dashboard({
   const [prevDataSkale, setPrevDataSkale] = useState([]);
   const [prevDataSkaleWeekly, setPrevDataSkaleWeekly] = useState([]);
   const [prevDataSkaleMonthly, setPrevDataSkaleMonthly] = useState([]);
-
   const [dailyDataAmountSkale, setDailyDataAmountSkale] = useState([]);
   const [weeklyDataAmountSkale, setWeeklyDataAmountSkale] = useState([]);
   const [monthlyDataAmountSkale, setMonthlyDataAmountSkale] = useState([]);
   const [userRankSkale, setUserRankSkale] = useState("");
   const [userSkaleScore, setUserSkaleScore] = useState(0);
+
+
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
   const [starRecordsWeekly, setStarRecordsWeekly] = useState([]);
-
   const [activePlayerStar, setActivePlayerStar] = useState([]);
   const [activePlayerStarWeekly, setActivePlayerStarWeekly] = useState([]);
-
   const [userDataStar, setUserDataStar] = useState({});
   const [userDataStarWeekly, setUserDataStarWeekly] = useState({});
-
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevDataStarWeekly, setPrevDataStarWeekly] = useState([]);
-
   const [dataAmountStar, setDataAmountStar] = useState([]);
   const [dataAmountStarWeekly, setDataAmountStarWeekly] = useState([]);
-
   const [userCollectedStars, setuserCollectedStars] = useState(0);
   const [userCollectedStarsWeekly, setuserCollectedStarsWeekly] = useState(0);
 
@@ -1246,7 +1272,6 @@ function Dashboard({
   const [prevDataViction, setPrevDataViction] = useState([]);
   const [prevDataVictionWeekly, setPrevDataVictionWeekly] = useState([]);
   const [prevDataVictionMonthly, setPrevDataVictionMonthly] = useState([]);
-
   const [dailyDataAmountViction, setDailyDataAmountViction] = useState([]);
   const [weeklyDataAmountViction, setWeeklyDataAmountViction] = useState([]);
   const [monthlyDataAmountViction, setMonthlyDataAmountViction] = useState([]);
@@ -1266,7 +1291,6 @@ function Dashboard({
   const [prevDataManta, setPrevDataManta] = useState([]);
   const [prevDataMantaWeekly, setPrevDataMantaWeekly] = useState([]);
   const [prevDataMantaMonthly, setPrevDataMantaMonthly] = useState([]);
-
   const [dailyDataAmountManta, setDailyDataAmountManta] = useState([]);
   const [weeklyDataAmountManta, setWeeklyDataAmountManta] = useState([]);
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
@@ -1285,7 +1309,6 @@ function Dashboard({
   const [prevDataBase, setPrevDataBase] = useState([]);
   const [prevDataBaseWeekly, setPrevDataBaseWeekly] = useState([]);
   const [prevDataBaseMonthly, setPrevDataBaseMonthly] = useState([]);
-
   const [dailyDataAmountBase, setDailyDataAmountBase] = useState([]);
   const [weeklyDataAmountBase, setWeeklyDataAmountBase] = useState([]);
   const [monthlyDataAmountBase, setMonthlyDataAmountBase] = useState([]);
@@ -1305,12 +1328,31 @@ function Dashboard({
   const [prevDataTaiko, setPrevDataTaiko] = useState([]);
   const [prevDataTaikoWeekly, setPrevDataTaikoWeekly] = useState([]);
   const [prevDataTaikoMonthly, setPrevDataTaikoMonthly] = useState([]);
-
   const [dailyDataAmountTaiko, setDailyDataAmountTaiko] = useState([]);
   const [weeklyDataAmountTaiko, setWeeklyDataAmountTaiko] = useState([]);
   const [monthlyDataAmountTaiko, setMonthlyDataAmountTaiko] = useState([]);
   const [userRankTaiko, setUserRankTaiko] = useState("");
   const [userTaikoScore, setUserTaikoScore] = useState(0);
+
+
+  const [dailyRecordsMat, setDailyRecordsMat] = useState([]);
+  const [weeklyRecordsMat, setWeeklyRecordsMat] = useState([]);
+  const [monthlyRecordsMat, setMonthlyRecordsMat] = useState([]);
+  const [activePlayerMat, setActivePlayerMat] = useState(false);
+  const [activePlayerMatWeekly, setActivePlayerMatWeekly] = useState(false);
+  const [activePlayerMatMonthly, setActivePlayerMatMonthly] =
+    useState(false);
+  const [userDataMat, setUserDataMat] = useState({});
+  const [userDataMatWeekly, setUserDataMatWeekly] = useState({});
+  const [userDataMatMonthly, setUserDataMatMonthly] = useState({});
+  const [prevDataMat, setPrevDataMat] = useState([]);
+  const [prevDataMatWeekly, setPrevDataMatWeekly] = useState([]);
+  const [prevDataMatMonthly, setPrevDataMatMonthly] = useState([]);
+  const [dailyDataAmountMat, setDailyDataAmountMat] = useState([]);
+  const [weeklyDataAmountMat, setWeeklyDataAmountMat] = useState([]);
+  const [monthlyDataAmountMat, setMonthlyDataAmountMat] = useState([]);
+  const [userRankMat, setUserRankMat] = useState("");
+  const [userMatScore, setUserMatScore] = useState(0);
 
   const [dailyrecords, setRecords] = useState([]);
   const [dailyrecordsAroundPlayer, setRecordsAroundPlayer] = useState([]);
@@ -1346,16 +1388,16 @@ function Dashboard({
       setRecords(finalData);
     }
   };
-  const fillRecordsWeekly = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecords(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecords(finalData);
-    }
-  };
+  // const fillRecordsWeekly = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecords(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecords(finalData);
+  //   }
+  // };
   const fillRecordsMonthly = (itemData) => {
     if (itemData.length === 0) {
       setMonthlyRecords(placeholderplayerData);
@@ -1376,16 +1418,16 @@ function Dashboard({
       setDailyRecordsCore(finalData);
     }
   };
-  const fillRecordsWeeklyCore = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsCore(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsCore(finalData);
-    }
-  };
+  // const fillRecordsWeeklyCore = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsCore(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsCore(finalData);
+  //   }
+  // };
   const fillRecordsMonthlyCore = (itemData) => {
     if (itemData.length === 0) {
       setMonthlyRecordsCore(placeholderplayerData);
@@ -1723,16 +1765,16 @@ function Dashboard({
       setDailyRecordsViction(finalData);
     }
   };
-  const fillRecordsWeeklyViction = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsViction(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsViction(finalData);
-    }
-  };
+  // const fillRecordsWeeklyViction = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsViction(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsViction(finalData);
+  //   }
+  // };
   const fillRecordsMonthlyViction = (itemData) => {
     if (itemData.length === 0) {
       setMonthlyRecordsViction(placeholderplayerData);
@@ -2071,16 +2113,16 @@ function Dashboard({
       setDailyRecordsManta(finalData);
     }
   };
-  const fillRecordsWeeklyManta = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsManta(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsManta(finalData);
-    }
-  };
+  // const fillRecordsWeeklyManta = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsManta(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsManta(finalData);
+  //   }
+  // };
   const fillRecordsMonthlyManta = (itemData) => {
     if (itemData.length === 0) {
       setMonthlyRecordsManta(placeholderplayerData);
@@ -2438,16 +2480,16 @@ function Dashboard({
     }
   };
 
-  const fillRecordsWeeklyBase = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsBase(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsBase(finalData);
-    }
-  };
+  // const fillRecordsWeeklyBase = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsBase(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsBase(finalData);
+  //   }
+  // };
 
   const fillRecordsMonthlyBase = (itemData) => {
     if (itemData.length === 0) {
@@ -2806,16 +2848,16 @@ function Dashboard({
       setDailyRecordsTaiko(finalData);
     }
   };
-  const fillRecordsWeeklyTaiko = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsTaiko(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsTaiko(finalData);
-    }
-  };
+  // const fillRecordsWeeklyTaiko = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsTaiko(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsTaiko(finalData);
+  //   }
+  // };
   const fillRecordsMonthlyTaiko = (itemData) => {
     if (itemData.length === 0) {
       setMonthlyRecordsTaiko(placeholderplayerData);
@@ -3172,16 +3214,16 @@ function Dashboard({
     }
   };
 
-  const fillRecordsWeeklySkale = (itemData) => {
-    if (itemData.length === 0) {
-      setWeeklyRecordsSkale(placeholderplayerData);
-    } else if (itemData.length <= 10) {
-      const testArray = itemData;
-      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
-      const finalData = [...testArray, ...placeholderArray];
-      setWeeklyRecordsSkale(finalData);
-    }
-  };
+  // const fillRecordsWeeklySkale = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsSkale(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsSkale(finalData);
+  //   }
+  // };
 
   const fillRecordsMonthlySkale = (itemData) => {
     if (itemData.length === 0) {
@@ -4625,41 +4667,7 @@ function Dashboard({
         is_active: activePlayerMonthly,
       },
     ]);
-    setAllData([
-      {
-        title: "DAILY",
-        reset: "Daily (00:00 UTC)",
-        type: "stars",
-        rewards: bnbStars,
-        previous_rewards:  isAfterNovember2nd ? bnbStars : bnbStarsPremium,
-        activeData: dailyrecords,
-        previousData: dailyplayerData,
-        player_data: userData,
-        is_active: activePlayer,
-      },
-      {
-        title: "WEEKLY",
-        reset: "Monday (00:00 UTC)",
-        type: "cash",
-        rewards: weeklyPrizesBnb,
-        previous_rewards: weeklyPrizesGolden,
-        activeData: weeklyrecords,
-        previousData: weeklyplayerData,
-        player_data: userDataWeekly,
-        is_active: activePlayerWeekly,
-      },
-      {
-        title: "MONTHLY",
-        reset: "Monthly (00:00 UTC)",
-        type: "cash",
-        rewards: monthlyPrizesBnb,
-        previous_rewards: monthlyPrizesGolden,
-        activeData: monthlyrecords,
-        previousData: monthlyplayerData,
-        player_data: userDataMonthly,
-        is_active: activePlayerMonthly,
-      },
-    ]);
+
   }, [
     dailyrecords,
     dailyplayerData,
@@ -6136,8 +6144,6 @@ function Dashboard({
             }
           }
           setOpenedChests(openedChests);
-          setStandardChests(standardChestsArray);
-          setPremiumChests(premiumChestsArray);
           setclaimedChests(openedStandardChests.length);
           setclaimedPremiumChests(openedPremiumChests.length);
           setallChests(chestOrder);
@@ -6184,9 +6190,6 @@ function Dashboard({
             }
           }
           setOpenedSkaleChests(openedChests);
-          setStandardSkaleChests(standardChestsArray);
-          setPremiumSkaleChests(premiumChestsArray);
-
           setclaimedSkaleChests(openedStandardChests.length);
           setclaimedSkalePremiumChests(openedPremiumChests.length);
           setallSkaleChests(chestOrder);
@@ -6233,8 +6236,6 @@ function Dashboard({
             }
           }
           setOpenedCoreChests(openedChests);
-          setStandardCoreChests(standardChestsArray);
-          setPremiumCoreChests(premiumChestsArray);
 
           setclaimedCoreChests(openedStandardChests.length);
           setclaimedCorePremiumChests(openedPremiumChests.length);
@@ -6282,8 +6283,6 @@ function Dashboard({
             }
           }
           setOpenedVictionChests(openedChests);
-          setStandardVictionChests(standardChestsArray);
-          setPremiumVictionChests(premiumChestsArray);
 
           setclaimedVictionChests(openedStandardChests.length);
           setclaimedVictionPremiumChests(openedPremiumChests.length);
@@ -6331,9 +6330,6 @@ function Dashboard({
             }
           }
           setOpenedMantaChests(openedChests);
-          setStandardMantaChests(standardChestsArray);
-          setPremiumMantaChests(premiumChestsArray);
-
           setclaimedMantaChests(openedStandardChests.length);
           setclaimedMantaPremiumChests(openedPremiumChests.length);
           setallMantaChests(chestOrder);
@@ -6379,8 +6375,6 @@ function Dashboard({
           }
         }
         setOpenedBaseChests(openedChests);
-        setStandardBaseChests(standardChestsArray);
-        setPremiumBaseChests(premiumChestsArray);
 
         setclaimedBaseChests(openedStandardChests.length);
         setclaimedBasePremiumChests(openedPremiumChests.length);
@@ -6427,9 +6421,6 @@ function Dashboard({
             }
           }
           setOpenedTaikoChests(openedChests);
-          setStandardTaikoChests(standardChestsArray);
-          setPremiumTaikoChests(premiumChestsArray);
-
           setclaimedTaikoChests(openedStandardChests.length);
           setclaimedTaikoPremiumChests(openedPremiumChests.length);
           setallTaikoChests(chestOrder);
@@ -6475,8 +6466,6 @@ function Dashboard({
           }
         }
         setOpenedSeiChests(openedChests);
-        setStandardSeiChests(standardChestsArray);
-        setPremiumSeiChests(premiumChestsArray);
 
         setclaimedSeiChests(openedStandardChests.length);
         setclaimedSeiPremiumChests(openedPremiumChests.length);
@@ -11783,20 +11772,6 @@ function Dashboard({
                 }}
                 binanceW3WProvider={binanceW3WProvider}
                 coinbase={coinbase}
-                standardChests={standardChests}
-                premiumChests={premiumChests}
-                standardSkaleChests={standardSkaleChests}
-                premiumSkaleChests={premiumSkaleChests}
-                standardCoreChests={standardCoreChests}
-                premiumCoreChests={premiumCoreChests}
-                standardVictionChests={standardVictionChests}
-                premiumVictionChests={premiumVictionChests}
-                standardMantaChests={standardMantaChests}
-                premiumMantaChests={premiumMantaChests}
-                standardTaikoChests={standardTaikoChests}
-                premiumTaikoChests={premiumTaikoChests}
-                standardSeiChests={standardSeiChests}
-                premiumSeiChests={premiumSeiChests}
                 claimedChests={claimedChests}
                 claimedPremiumChests={claimedPremiumChests}
                 claimedSkaleChests={claimedSkaleChests}
@@ -11822,7 +11797,6 @@ function Dashboard({
                 openedBaseChests={openedBaseChests}
                 openedTaikoChests={openedTaikoChests}
                 openedSeiChests={openedSeiChests}
-                canBuy={canBuy}
                 address={userWallet}
                 allChests={allChests}
                 allSkaleChests={allSkaleChests}
