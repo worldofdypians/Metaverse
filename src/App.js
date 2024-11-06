@@ -250,6 +250,16 @@ function App() {
       },
       blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
     },
+    698: {
+      chainId: 698,
+      chainName: "Matchain",
+      rpcUrls: ["https://rpc.matchain.io"],
+      nativeCurrency: {
+        symbol: "BNB",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://matchscan.io"],
+    },
   };
 
   const {
@@ -356,6 +366,7 @@ function App() {
 
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
   const [myseiNfts, setMyseiNfts] = useState([]);
+  const [myMatNfts, setMyMatNfts] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -1395,6 +1406,8 @@ function App() {
       });
 
       getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
+      getMyNFTS(coinbase, "mat").then((NFTS) => setMyMatNfts(NFTS));
+
 
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
@@ -2524,6 +2537,11 @@ function App() {
       window.config.daily_bonus_base_address
     );
 
+    const daily_bonus_contract_mat = new window.bscWeb3.eth.Contract(
+      window.DAILY_BONUS_MAT_ABI,
+      window.config.daily_bonus_mat_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -2607,7 +2625,20 @@ function App() {
                     if (isPremium_base === true) {
                       setIsPremium(true);
                     } else {
-                      setIsPremium(false);
+                      const isPremium_mat =
+                      await daily_bonus_contract_mat.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_mat === true) {
+                      setIsPremium(true);
+                    } else {
+                        setIsPremium(false);
+                    }
+                    
                     }
                   }
                 }

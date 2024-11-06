@@ -37,6 +37,8 @@ window.config = {
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
   nft_taiko_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
+  nft_mat_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
+
 
   nft_dypius_premium_address: "0x803cEFB7DFF9b92d7f8cAd6522AB6A70dEac983B",
   nft_dypius_premium_viction_address:
@@ -3100,6 +3102,21 @@ async function getMyNFTs(address, type = "") {
     contract = new window.bscWeb3.eth.Contract(
       window.COOKIE3_NFT_ABI,
       window.config.nft_cookie3_address
+    );
+
+    const balance = await contract.methods.balanceOf(address).call();
+
+    const tokens = await Promise.all(
+      range(0, balance - 1).map((i) =>
+        contract.methods.tokenOfOwnerByIndex(address, i).call()
+      )
+    );
+
+    return tokens;
+  }  else if (type === "mat") {
+    contract = new window.bscWeb3.eth.Contract(
+      window.COOKIE3_NFT_ABI,
+      window.config.nft_mat_address
     );
 
     const balance = await contract.methods.balanceOf(address).call();
