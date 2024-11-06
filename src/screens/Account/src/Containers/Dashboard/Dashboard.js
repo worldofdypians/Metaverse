@@ -3203,6 +3203,385 @@ function Dashboard({
     }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const fillRecordsMat = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsMat(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsMat(finalData);
+    }
+  };
+  // const fillRecordsWeeklyMat = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsMat(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsMat(finalData);
+  //   }
+  // };
+  const fillRecordsMonthlyMat = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsMat(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsMat(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersMat = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardMatChainDaily",
+        StartPosition: 0,
+        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataMat(result.data.data.leaderboard);
+    } else {
+      setPrevDataMat(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  // const fetchPreviousWeeklyWinnersMat = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "LeaderboardMatChainWeekly",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setPrevDataMatWeekly(result.data.data.leaderboard);
+  //   } else {
+  //     setPrevDataMatWeekly(placeholderplayerData);
+  //   }
+  // };
+  const fetchPreviousMonthlyWinnersMat = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardMatchainMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataMatMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataMatMonthly(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsMat = async () => {
+    const data = {
+      StatisticName: "LeaderboardMatchainDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMat([]);
+      });
+
+    fetchPreviousWinnersMat(parseInt(result.data.data.version));
+    setDailyRecordsMat(result.data.data.leaderboard);
+    fillRecordsMat(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerMat(true);
+        fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerMat(false);
+        fetchDailyRecordsAroundPlayerMat(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsMat = async () => {
+  //   const data = {
+  //     StatisticName: "LeaderboardMatchainWeekly",
+  //     StartPosition: 0,
+  //     MaxResultsCount: 100,
+  //   };
+  //   const result = await axios
+  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
+  //     .catch((e) => {
+  //       console.error(e);
+  //       fillRecordsWeeklyMat([]);
+  //     });
+  //   setWeeklyRecordsMat(result.data.data.leaderboard);
+
+  //   fetchPreviousWeeklyWinnersMat(parseInt(result.data.data.version));
+  //   fillRecordsWeeklyMat(result.data.data.leaderboard);
+  //   if (userId && username) {
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     if (testArray.length > 0) {
+  //       setActivePlayerMatWeekly(true);
+  //       fetchWeeklyRecordsAroundPlayerMat(result.data.data.leaderboard);
+  //     }
+  //     if (testArray.length === 0) {
+  //       setActivePlayerMatWeekly(false);
+  //       fetchWeeklyRecordsAroundPlayerMat(result.data.data.leaderboard);
+  //     }
+  //   }
+  // };
+  const fetchMonthlyRecordsMat = async () => {
+    const data = {
+      StatisticName: "LeaderboardMatchainMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlyMat([]);
+      });
+    setMonthlyRecordsMat(result.data.data.leaderboard);
+
+    fetchPreviousMonthlyWinnersMat(parseInt(result.data.data.version));
+
+    fillRecordsMonthlyMat(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerMatMonthly(true);
+        fetchMonthlyRecordsAroundPlayerMat(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerMatMonthly(false);
+        fetchMonthlyRecordsAroundPlayerMat(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerMat = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMatchainDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountMat(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountMat(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountMat(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerMat(true);
+          setUserDataMat([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerMat(false);
+          setUserDataMat(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerMat(false);
+        setUserDataMat(...testArray);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsAroundPlayerMat = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "LeaderboardMatchainWeekly",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   if (userId) {
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     const userPosition = testArray[0].position;
+  //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountMat(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9]) +
+  //               Number(skalePrizesWeeklyGolden[9])
+  //             : Number(skalePrizesWeekly[userPosition]) +
+  //               Number(skalePrizesWeeklyGolden[userPosition])
+  //           : 0
+  //       );
+  //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountMat(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9])
+  //             : Number(skalePrizesWeekly[userPosition])
+  //           : 0
+  //       );
+  //     } else setWeeklyDataAmountMat(0);
+
+  //     if (itemData.length > 0) {
+  //       var testArray2 = Object.values(itemData).filter(
+  //         (item) => item.displayName === username
+  //       );
+
+  //       if (testArray.length > 0 && testArray2.length > 0) {
+  //         setActivePlayerMatWeekly(true);
+  //         setUserDataMatWeekly([]);
+  //       } else if (testArray.length > 0 && testArray2.length === 0) {
+  //         setActivePlayerMatWeekly(false);
+  //         setUserDataMatWeekly(...testArray);
+  //       }
+  //     } else if (testArray.length > 0) {
+  //       setActivePlayerMatWeekly(false);
+  //       setUserDataMatWeekly(...testArray);
+  //     }
+  //   }
+  // };
+
+  const fetchMonthlyRecordsAroundPlayerMat = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardMatchainMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountMat(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountMat(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankMat(testArray[0].position);
+      setUserMatScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerMatMonthly(true);
+          setUserDataMatMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerMatMonthly(false);
+          setUserDataMatMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerMatMonthly(false);
+        setUserDataMatMonthly(...testArray);
+      }
+    }
+  };
+
   const fillRecordsSkale = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsSkale(placeholderplayerData);
