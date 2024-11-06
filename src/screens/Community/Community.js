@@ -1203,7 +1203,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                     </div>
                     <span className="newsletter-span">
                       By submitting this form, you are consenting to receive
-                      marketing emails from Dypius. You may unsubscribe at
+                      marketing emails from World of Dypians. You may unsubscribe at
                       anytime.
                     </span>
                   </div>
