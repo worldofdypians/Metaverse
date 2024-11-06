@@ -920,7 +920,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                   style={{ position: "absolute", top: "4%", left: "4%" }}
                 >
                   <h6 className="community-active-title mb-0">
-                  Monthly Players:
+                  Monthly On-chain Players:
                   </h6>
                   <h6
                     className="community-active-title mb-0"
