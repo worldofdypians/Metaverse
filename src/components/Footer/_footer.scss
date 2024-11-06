@@ -68,11 +68,11 @@
   }
 
   .epic-logo-footer-wrapper {
-    width: 100%;
+    width: auto;
     display: flex;
     justify-content: end;
     position: relative;
-    right: -40px;
+    right: auto;
   }
 }
 @media screen and (max-width: 400px) {
