@@ -70,6 +70,10 @@ const GetPremiumPopup = ({
       name: "Taiko",
       symbol: "taiko",
     },
+    {
+      name: "Matchain",
+      symbol: "matchain",
+    },
   ];
 
   const { BigNumber } = window;
@@ -83,7 +87,9 @@ const GetPremiumPopup = ({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
-  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wmataddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -129,6 +135,11 @@ const GetPremiumPopup = ({
   const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
   const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
 
+  const [discountPercentageMat, setdiscountPercentageMat] = useState(0);
+  const [nftPremium_tokenIdMat, setnftPremium_tokenIdMat] = useState(0);
+  const [nftPremium_totalMat, setnftPremium_totalMat] = useState(0);
+  const [nftDiscountObjectMat, setnftDiscountObjectMat] = useState([]);
+
   const getRankData = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`, {
@@ -173,6 +184,11 @@ const GetPremiumPopup = ({
       window.config.subscription_taiko_address
     );
 
+    const premiumSc_mat = new window.matWeb3.eth.Contract(
+      window.SUBSCRIPTION_MAT_ABI,
+      window.config.subscription_mat_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -186,6 +202,11 @@ const GetPremiumPopup = ({
     const nftContract_taiko = new window.taikoWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
       window.config.nft_dypius_premium_taiko_address
+    );
+
+    const nftContract_mat = new window.matWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_mat_address
     );
 
     if (wallet) {
@@ -206,6 +227,14 @@ const GetPremiumPopup = ({
         });
 
       const result_taiko = await nftContract_taiko.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+        const result_mat = await nftContract_mat.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -237,6 +266,14 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+        const discount_mat = await premiumSc_mat.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -253,6 +290,14 @@ const GetPremiumPopup = ({
 
       const nftObject_taiko = await premiumSc_taiko.methods
         .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+
+        const nftObject_mat = await premiumSc_mat.methods
+        .nftDiscounts(window.config.nft_dypius_premium_mat_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -327,6 +372,29 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdTaiko(tokenId);
         setnftPremium_totalTaiko(parseInt(result_taiko));
+      }  else if (result_mat && parseInt(result_mat) > 0) {
+        const tokenId = await nftContract_mat.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_mat) {
+          setnftDiscountObjectMat(nftObject_mat);
+          if (discount_mat) {
+            setdiscountPercentageMat(
+              Math.max(
+                parseInt(discount_mat),
+                parseInt(nftObject_mat.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdMat(tokenId);
+        setnftPremium_totalMat(parseInt(result_mat));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
@@ -334,15 +402,22 @@ const GetPremiumPopup = ({
         setnftPremium_totalViction(0);
         setnftPremium_tokenIdTaiko(0);
         setnftPremium_totalTaiko(0);
+        setnftPremium_tokenIdMat(0);
+        setnftPremium_totalMat(0);
+
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
         } else if (discount_taiko) {
           setdiscountPercentageTaiko(parseInt(discount_taiko));
+        } else if (discount_mat) {
+          setdiscountPercentageMat(parseInt(discount_mat));
         }
       }
     } else {
+      setnftPremium_tokenIdMat(0);
+      setnftPremium_totalMat(0);
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
@@ -457,6 +532,22 @@ const GetPremiumPopup = ({
         await handleSwitchNetworkhook("0x28c58")
           .then(() => {
             handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleMatPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x2ba")
+          .then(() => {
+            handleSwitchNetwork(698);
           })
           .catch((e) => {
             console.log(e);
@@ -635,6 +726,8 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionmanta_tokens[token]?.decimals
         : chainId === 167000
         ? window.config.subscriptiontaiko_tokens[token]?.decimals
+        : chainId === 698
+        ? window.config.subscriptionmat_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -672,6 +765,11 @@ const GetPremiumPopup = ({
             token,
             discountPercentageTaiko
           )
+          : chainId === 698 
+          ? await window.getEstimatedTokenSubscriptionAmountMat(
+              token,
+              discountPercentageMat
+            )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -708,6 +806,8 @@ const GetPremiumPopup = ({
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
+    const matsubscribeAddress = window.config.subscription_mat_address;
+
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
@@ -723,6 +823,11 @@ const GetPremiumPopup = ({
     let nftContract_taiko = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
       window.config.nft_dypius_premium_taiko_address
+    );
+
+    let nftContract_mat = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_mat_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -973,6 +1078,63 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
+    }  else if (
+      chainId === 698 &&
+      nftPremium_totalMat > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_mat.methods
+          .approve(
+            window.config.subscription_mat_address,
+            nftPremium_tokenIdMat
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageMat < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(matsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
     } else {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1000,6 +1162,8 @@ const GetPremiumPopup = ({
               ? mantasubscribeAddress
               : chainId === 167000
               ? taikosubscribeAddress
+              : chainId === 698 
+              ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
               : chainId === 713715
@@ -1051,6 +1215,7 @@ const GetPremiumPopup = ({
               ? mantasubscribeAddress
               : chainId === 167000
               ? taikosubscribeAddress
+              
               : chainId === 1116
               ? coresubscribeAddress
               : chainId === 713715
@@ -1081,6 +1246,7 @@ const GetPremiumPopup = ({
     }
   };
 
+
   const handleCheckIfAlreadyApproved = async (token) => {
     const web3eth = new Web3(window.config.infura_endpoint);
     const bscWeb3 = new Web3(window.config.bsc_endpoint);
@@ -1094,6 +1260,8 @@ const GetPremiumPopup = ({
     const victionWeb3 = new Web3(window.config.viction_endpoint);
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
     const taikoWeb3 = new Web3(window.config.taiko_endpoint);
+    const matWeb3 = new Web3(window.config.mat_endpoint);
+
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1106,6 +1274,8 @@ const GetPremiumPopup = ({
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
+    const matsubscribeAddress = window.config.subscription_mat_address;
+
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1162,6 +1332,11 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontractmat = new matWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1189,6 +1364,11 @@ const GetPremiumPopup = ({
         ? await window.getEstimatedTokenSubscriptionAmountTaiko(
             token,
             discountPercentageTaiko
+          )
+        : chainId === 698 
+        ? await window.getEstimatedTokenSubscriptionAmountMat(
+            token,
+            discountPercentageMat
           )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
@@ -1454,6 +1634,59 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
           }
         }
+      }  else if (chainId === 698 ) {
+        if (nftPremium_totalMat > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+            window.config.nft_dypius_premium_mat_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdMat)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, matsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === matsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageMat === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractmat.methods
+            .allowance(coinbase, matsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -1549,6 +1782,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_MANTA"
             : chainId === 167000
             ? "SUBSCRIPTION_TAIKO"
+            : chainId === 698 
+            ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
             : chainId === 713715
@@ -1725,6 +1960,56 @@ const GetPremiumPopup = ({
                 {
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                }, {
+                  headers: { Authorization: `Bearer ${authToken}` },
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      }  else if (chainId === 698 && nftPremium_totalMat > 0) {
+        await window
+          .subscribeNFTMat(
+            nftDiscountObjectMat.nftAddress,
+            nftPremium_tokenIdMat,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "matchain subscribeNFT",
                   premiumTimestamp: today.toString(),
                 }, {
                   headers: { Authorization: `Bearer ${authToken}` },
@@ -2068,8 +2353,17 @@ const GetPremiumPopup = ({
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptiontaiko_tokens)[0]
       );
-      handleSubscriptionTokenChange(wtaikoddress);
-      handleCheckIfAlreadyApproved(wtaikoddress);
+      handleSubscriptionTokenChange(wtaikoaddress);
+      handleCheckIfAlreadyApproved(wtaikoaddress);
+    }  else if (chainId === 698 ) {
+      setChainDropdown(chainDropdowns[10]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionmat_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wmataddress);
+      handleCheckIfAlreadyApproved(wmataddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -2104,14 +2398,16 @@ const GetPremiumPopup = ({
     nftPremium_total,
     nftPremium_totalViction,
     nftPremium_totalTaiko,
-
+    nftPremium_totalMat,
     discountPercentage,
     discountPercentageViction,
     discountPercentageTaiko,
-
+    discountPercentageMat,
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
     nftPremium_tokenIdTaiko,
+    nftPremium_tokenIdMat,
+
   ]);
 
   useEffect(() => {
@@ -2147,6 +2443,11 @@ const GetPremiumPopup = ({
     } else if (chainId === 167000 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    }  else if (chainId === 698  && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmat_tokens[selectedSubscriptionToken]
           ?.decimals
       );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {

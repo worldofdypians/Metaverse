@@ -172,6 +172,10 @@ function Dashboard({
       name: "Taiko",
       symbol: "taiko",
     },
+    {
+      name: "Matchain",
+      symbol: "matchain",
+    },
 
     // {
     //   name: "SEI",
@@ -9887,6 +9891,11 @@ function Dashboard({
         window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 698 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmat_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
@@ -9934,6 +9943,8 @@ function Dashboard({
     claimedMantaPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
+    claimedMatChests,
+    claimedMatPremiumChests,
   ]);
 
   useEffect(() => {
@@ -9985,6 +9996,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
+      getAllMatChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
@@ -10076,6 +10088,8 @@ function Dashboard({
                         discountPercentage={discountPercentage}
                         discountPercentageViction={discountPercentageViction}
                         discountPercentageTaiko={discountPercentageTaiko}
+                        discountPercentageMat={discountPercentageMat}
+
                         getRankData={getRankData}
                         setPortfolio={() => setPortfolio(!portfolio)}
                         rankData={rankData}
@@ -10092,6 +10106,8 @@ function Dashboard({
                         userBaseScore={userBaseScore}
                         userRankTaiko={userRankTaiko}
                         userTaikoScore={userTaikoScore}
+                        userRankMat={userRankMat}
+                        userMatScore={userMatScore}
                         userSkaleScore={userSkaleScore}
                         genesisRank={genesisRank}
                         email={email}
@@ -10124,18 +10140,22 @@ function Dashboard({
                           setclaimedMantaChests(0);
                           setclaimedTaikoPremiumChests(0);
                           setclaimedTaikoChests(0);
+                          setclaimedMatPremiumChests(0);
+                          setclaimedMatChests(0);
                           setallChests([]);
                           setallSkaleChests([]);
                           setallCoreChests([]);
                           setallVictionChests([]);
                           setallMantaChests([]);
                           setallTaikoChests([]);
+                          setallMatChests([]);
 
                           setOpenedChests([]);
                           setOpenedCoreChests([]);
                           setOpenedVictionChests([]);
                           setOpenedMantaChests([]);
                           setOpenedTaikoChests([]);
+                          setOpenedMatChests([]);
 
                           setOpenedSkaleChests([]);
                           setclaimedSkaleChests(0);
@@ -10233,6 +10253,8 @@ function Dashboard({
                               mySkaleNfts={mySkaleNfts}
                               myMantaNfts={myMantaNfts}
                               myTaikoNfts={myTaikoNfts}
+                              myMatNfts={myMatNfts}
+
                               latestBoughtNFTS={latest20BoughtNFTS}
                               myOffers={myOffers}
                               allActiveOffers={allActiveOffers}
@@ -10300,6 +10322,8 @@ function Dashboard({
                         victionEarnUsd={victionEarnUsd}
                         mantaEarnUsd={mantaEarnUsd}
                         taikoEarnUsd={taikoEarnUsd}
+                        matEarnUsd={matEarnUsd}
+
                         cookieEarnUsd={cookieEarnUsd}
                         cookieEarnToken={cookieEarnToken}
                         cookiePoints={cookiePoints}
@@ -10339,6 +10363,8 @@ function Dashboard({
                         claimedMantaPremiumChests={claimedMantaPremiumChests}
                         claimedTaikoChests={claimedTaikoChests}
                         claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+                        claimedMatChests={claimedMatChests}
+                        claimedMatPremiumChests={claimedMatPremiumChests}
                         handleShowWalletPopup={() => {
                           setshowWalletModal(true);
                         }}
@@ -10377,6 +10403,8 @@ function Dashboard({
                         openedMantaChests={openedMantaChests}
                         openedBaseChests={openedBaseChests}
                         openedTaikoChests={openedTaikoChests}
+                        openedMatChests={openedMatChests}
+
                         onDailyBonusInfoClick={() => {
                           setdailyBonusInfo(true);
                         }}
@@ -10408,11 +10436,15 @@ function Dashboard({
                         victionPoints={victionPoints}
                         mantaPoints={mantaPoints}
                         taikoPoints={taikoPoints}
+                        matPoints={matPoints}
+
                         bnbEarnToken={bnbEarnToken}
                         coreEarnToken={coreEarnToken}
                         victionEarnToken={victionEarnToken}
                         mantaEarnToken={mantaEarnToken}
                         taikoEarnToken={taikoEarnToken}
+                        matEarnToken={matEarnToken}
+
                         bnbPoints={bnbPoints}
                         onPremiumClick={() => {
                           setgetPremiumPopup(true);
@@ -10471,6 +10503,8 @@ function Dashboard({
                       mySkaleNfts={mySkaleNfts}
                       myMantaNfts={myMantaNfts}
                       myTaikoNfts={myTaikoNfts}
+                      myMatNfts={myMatNfts}
+
                       myCookieNfts={myCookieNfts}
                       latestBoughtNFTS={latest20BoughtNFTS}
                       myOffers={myOffers}
@@ -10751,6 +10785,8 @@ function Dashboard({
                             allMantaData={allMantaData}
                             allBaseData={allBaseData}
                             allTaikoData={allTaikoData}
+                            allMatData={allMatData}
+
                             dailyplayerData={dailyplayerData}
                             weeklyplayerData={weeklyplayerData}
                             monthlyplayerData={monthlyplayerData}
@@ -10936,6 +10972,8 @@ function Dashboard({
                             allMantaChests={allMantaChests}
                             allBaseChests={allBaseChests}
                             allTaikoChests={allTaikoChests}
+                            allMatChests={allMatChests}
+
                             allSeiChests={allSeiChests}
                             availableTime={goldenPassRemainingTime}
                             userSocialRewards={userSocialRewards}
@@ -10946,6 +10984,8 @@ function Dashboard({
                             victionEarnUsd={victionEarnUsd}
                             mantaEarnUsd={mantaEarnUsd}
                             taikoEarnUsd={taikoEarnUsd}
+                            matEarnUsd={matEarnUsd}
+
                             immutableEarnUsd={immutableEarnUsd}
                             coreEarnUsd={coreEarnUsd}
                             userRankRewards={userRankRewards}
@@ -11007,10 +11047,12 @@ function Dashboard({
                             </div>
                             {discountPercentage > 0 ||
                             discountPercentageViction > 0 ||
-                            discountPercentageTaiko > 0 ||
+                            discountPercentageTaiko ||
+                            discountPercentageMat > 0 ||
                             nftPremium_total > 0 ||
                             nftPremium_totalViction ||
-                            nftPremium_totalTaiko > 0 ? (
+                            nftPremium_totalTaiko||
+                            nftPremium_totalMat > 0 ? (
                               <div className="premium-discount-bg mt-3 p-4 position-relative">
                                 <div className="premiumRedTag position-absolute">
                                   <div className="position-relative d-flex flex-column">
@@ -11023,6 +11065,8 @@ function Dashboard({
                                           ? discountPercentageViction
                                           : discountPercentageTaiko > 0
                                           ? discountPercentageTaiko
+                                          : discountPercentageMat > 0
+                                          ? discountPercentageMat
                                           : discountPercentage}
                                         %
                                       </span>
@@ -11039,7 +11083,8 @@ function Dashboard({
                                     </h6>
                                     {(nftPremium_total > 0 ||
                                       nftPremium_totalViction > 0 ||
-                                      nftPremium_totalTaiko > 0) && (
+                                      nftPremium_totalTaiko > 0||
+                                      nftPremium_totalMat > 0) && (
                                       <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
                                         Valid until:{" "}
                                         {new Date(
@@ -11048,6 +11093,9 @@ function Dashboard({
                                               1000
                                             : nftPremium_totalTaiko > 0
                                             ? nftDiscountObjectTaiko.expiration *
+                                              1000
+                                              : nftPremium_totalMat > 0
+                                            ? nftDiscountObjectMat.expiration *
                                               1000
                                             : nftDiscountObjectViction.expiration *
                                               1000
@@ -11062,6 +11110,9 @@ function Dashboard({
                                                 : nftPremium_totalTaiko > 0
                                                 ? nftDiscountObjectTaiko.expiration *
                                                   1000
+                                                  : nftPremium_totalMat > 0
+                                                ? nftDiscountObjectMat.expiration *
+                                                  1000
                                                 : nftDiscountObjectViction.expiration *
                                                   1000
                                             ).toDateString().length
@@ -11073,7 +11124,8 @@ function Dashboard({
                                     <h6 className="discount-price">
                                       {discountPercentage == 100 ||
                                       discountPercentageViction == 100 ||
-                                      discountPercentageTaiko == 100
+                                      discountPercentageTaiko == 100||
+                                      discountPercentageMat == 100
                                         ? "FREE"
                                         : "$" +
                                           (100 -
@@ -11084,6 +11136,8 @@ function Dashboard({
                                                 ? discountPercentageViction
                                                 : discountPercentageTaiko > 0
                                                 ? discountPercentageTaiko
+                                                : discountPercentageMat > 0
+                                                ? discountPercentageMat
                                                 : discountPercentage
                                             ))}
                                     </h6>
@@ -11091,7 +11145,8 @@ function Dashboard({
                                   </div>
                                   {(nftPremium_total > 0 ||
                                     nftPremium_totalViction > 0 ||
-                                    nftPremium_totalTaiko > 0) && (
+                                    nftPremium_totalTaiko > 0||
+                                    nftPremium_totalMat > 0) && (
                                     <h6 className="token-amount-placeholder m-0 premium-custom-text">
                                       Valid until:{" "}
                                       {new Date(
@@ -11099,6 +11154,9 @@ function Dashboard({
                                           ? nftDiscountObject.expiration * 1000
                                           : nftPremium_totalTaiko > 0
                                           ? nftDiscountObjectTaiko.expiration *
+                                            1000
+                                            : nftPremium_totalMat > 0
+                                          ? nftDiscountObjectMat.expiration *
                                             1000
                                           : nftDiscountObjectViction.expiration *
                                             1000
@@ -11112,6 +11170,9 @@ function Dashboard({
                                                 1000
                                               : nftPremium_totalTaiko > 0
                                               ? nftDiscountObjectTaiko.expiration *
+                                                1000
+                                                : nftPremium_totalMat > 0
+                                              ? nftDiscountObjectMat.expiration *
                                                 1000
                                               : nftDiscountObjectViction.expiration *
                                                 1000
@@ -11178,6 +11239,19 @@ function Dashboard({
                                       />
                                       <span className="subscription-chain mb-0">
                                         Taiko
+                                      </span>
+                                    </div>
+                                    <div className="d-flex align-items-center gap-2">
+                                      <img
+                                        src={
+                                          require(`../../../../../components/Header/assets/taiko.svg`)
+                                            .default
+                                        }
+                                        alt=""
+                                        style={{ width: 18, height: 18 }}
+                                      />
+                                      <span className="subscription-chain mb-0">
+                                        Matchain
                                       </span>
                                     </div>
                                     <div className="d-flex align-items-center gap-2">
@@ -11388,6 +11462,28 @@ function Dashboard({
                                               Taiko
                                             </li>
                                           )}
+
+{window.WALLET_TYPE !== "binance" &&
+                                          !window.ethereum?.isBinance && (
+                                            <li
+                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                              onClick={handleMatPool}
+                                            >
+                                              <img
+                                                src={
+                                                  require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                                    .default
+                                                }
+                                                style={{
+                                                  width: 18,
+                                                  height: 18,
+                                                }}
+                                                alt=""
+                                              />
+                                              Matchain
+                                            </li>
+                                          )}
+
                                         <li
                                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                           onClick={handleAvaxPool}
@@ -11502,7 +11598,8 @@ function Dashboard({
                                   {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
                                   {discountPercentage < 100 &&
                                     discountPercentageViction < 100 &&
-                                    discountPercentageTaiko < 100 && (
+                                    discountPercentageTaiko < 100 &&
+                                    discountPercentageMat < 100 && (
                                       <div className="d-flex flex-column align-items-end gap-3">
                                         <span className="my-premium-balance-text mb-0">
                                           My balance:{" "}
@@ -12254,7 +12351,116 @@ function Dashboard({
                                   </button>
                                 </div>
                               </div>
-                            ) : isConnected &&
+                            )  : isConnected &&
+                            discountPercentageMat > 0 &&
+                            chainId === 698  ? (
+                            <div className="d-flex align-items-center gap-3 justify-content-center">
+                              <div
+                                className={` ${
+                                  approveStatus === "fail" ||
+                                  !coinbase ||
+                                  isApproved
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-4`}
+                                  disabled={
+                                    approveStatus === "fail" ||
+                                    !coinbase ||
+                                    isApproved
+                                      ? true
+                                      : false
+                                  }
+                                  onClick={(e) => handleApprove(e)}
+                                >
+                                  {loadspinner === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "deposit" ||
+                                    approveStatus === "failsubscribe" ||
+                                    approveStatus === "approveAmount" ||
+                                    approveStatus === "successsubscribe") ? (
+                                    <>
+                                      Approve{" "}
+                                      {approveStatus === "approveAmount"
+                                        ? "token"
+                                        : nftPremium_totalMat > 0
+                                        ? "NFT"
+                                        : ""}
+                                    </>
+                                  ) : loadspinner === false &&
+                                    approveStatus === "fail" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div className="d-flex align-items-center gap-2">
+                                      Processing
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
+                                      ></div>{" "}
+                                    </div>
+                                  )}
+                                </button>
+                              </div>
+                              <div
+                                className={` ${
+                                  isApproved === false
+                                    ? "linear-border-disabled"
+                                    : "linear-border"
+                                }`}
+                              >
+                                <button
+                                  className={`btn ${
+                                    isApproved === false
+                                      ? "outline-btn-disabled"
+                                      : "filled-btn"
+                                  } px-4`}
+                                  onClick={() => handleSubscribe()}
+                                >
+                                  {loadspinnerSub === false &&
+                                  (approveStatus === "initial" ||
+                                    approveStatus === "fail" ||
+                                    approveStatus === "deposit") ? (
+                                    <>
+                                      {discountPercentageMat > 0 ||
+                                      nftPremium_totalMat > 0
+                                        ? "Redeem"
+                                        : "Buy"}
+                                    </>
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "successsubscribe" ? (
+                                    "Success"
+                                  ) : loadspinnerSub === false &&
+                                    approveStatus === "failsubscribe" ? (
+                                    "Failed"
+                                  ) : (
+                                    <div className="d-flex align-items-center gap-2">
+                                      Processing
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
+                                      ></div>{" "}
+                                    </div>
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+                          ) : isConnected &&
                               discountPercentage > 0 &&
                               chainId !== 56 ? (
                               <div
@@ -12314,7 +12520,27 @@ function Dashboard({
                                   Switch to Taiko
                                 </button>
                               </div>
-                            ) : isConnected && coinbase ? (
+                            ) : isConnected &&
+                            discountPercentageMat > 0 &&
+                            chainId !== 698  ? (
+                            <div
+                              className={`d-flex align-items-center justify-content-center mb-2`}
+                            >
+                              <button
+                                className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                                onClick={() => {
+                                  handleMatPool();
+                                }}
+                                style={{
+                                  width: "fit-content",
+                                  whiteSpace: "nowrap",
+                                  fontSize: 14,
+                                }}
+                              >
+                                Switch to Matchain
+                              </button>
+                            </div>
+                          ) : isConnected && coinbase ? (
                               <div className="d-flex align-items-center gap-3 justify-content-center">
                                 <div
                                   className={` ${
