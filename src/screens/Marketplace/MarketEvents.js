@@ -90,8 +90,6 @@ import baseThumb from "../Account/src/Components/WalletBalance/assets/baseThumb.
 import cookie3Thumb from "../Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
 import baseLogo from "../Home/VideoWrapper/assets/baseLogo.svg";
 
-
-
 import grayDollar from "../Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import closeMark from "../Account/src/Components/WalletBalance/assets/closeMark.svg";
 import twitter from "./assets/greenTwitter.svg";
@@ -184,7 +182,8 @@ const MarketEvents = ({
   tabState,
   ethTokenData,
   dyptokenData_old,
-  dogePrice,binanceW3WProvider
+  dogePrice,
+  binanceW3WProvider,
 }) => {
   const location = useLocation();
   const windowSize = useWindowSize();
@@ -249,7 +248,7 @@ const MarketEvents = ({
   const [victionEarnToken, setVictionEarnToken] = useState(0);
   const [victionPoints, setVictionPoints] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
-  const [taikoPrice, setTaikoPrice] = useState(0)
+  const [taikoPrice, setTaikoPrice] = useState(0);
   const [mantaEarnToken, setMantaEarnToken] = useState(0);
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPoints, setMantaPoints] = useState(0);
@@ -270,6 +269,12 @@ const MarketEvents = ({
   const [cookiePrice, setCookiePrice] = useState(0);
   const [cookieEarnToken, setCookieEarnToken] = useState(0);
   const [cookiePoints, setCookiePoints] = useState(0);
+
+
+  const [matEarnUsd, setmatEarnUsd] = useState(0);
+  const [matEarnToken, setmatEarnToken] = useState(0);
+  const [matPoints, setmatPoints] = useState(0);
+
 
   const selected = useRef(null);
   const { email } = useAuth();
@@ -303,8 +308,6 @@ const MarketEvents = ({
       });
   };
 
-
-  
   const fetchTaikoPrice = async () => {
     await axios
       .get(
@@ -373,7 +376,6 @@ const MarketEvents = ({
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
-
   const dailyBonusMintData = {
     title: "Daily Bonus",
     subTitle: "Coming Soon",
@@ -410,8 +412,6 @@ const MarketEvents = ({
     //   },
     // },
 
-
- 
     {
       title: "Immutable",
       logo: immutableLogo,
@@ -547,6 +547,35 @@ const MarketEvents = ({
         eventDate: "Oct 21, 2024",
       },
     },
+
+    {
+      title: "Matchain",
+      logo: bnbLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 12, 2024",
+      backgroundImage: upcomingBnb,
+      popupInfo: {
+        title: "Matchain",
+        chain: "Matchain",
+        linkState: "matchain",
+        rewards: "BNB",
+        status: "Coming Soon",
+        id: "event25",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: bnbLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "/news",
+        eventDate: "Nov 12, 2024",
+      },
+    },
+
     {
       title: "CORE",
       logo: coreLogo,
@@ -907,8 +936,6 @@ const MarketEvents = ({
     },
   ];
 
-
-
   // if (dypEvent && dypEvent[0]) {
   //   const userEarnedDyp =
   //     dypEvent[0].reward.earn.total /
@@ -1187,6 +1214,9 @@ const MarketEvents = ({
           const baseEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "base";
           });
+          const matEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "matchain";
+          });
 
           const dypEvent = responseData.events.filter((obj) => {
             return obj.betapassId === "all";
@@ -1284,6 +1314,17 @@ const MarketEvents = ({
             setMantaEarnUsd(userEarnedusd);
             setMantaEarnToken(userEarnedusd / mantaPrice);
           }
+
+          if (matEvent && matEvent[0]) {
+            const userEarnedusd =
+            matEvent[0].reward.earn.total /
+            matEvent[0].reward.earn.multiplier;
+            const pointsMat = matEvent[0].reward.earn.totalPoints;
+            setmatPoints(pointsMat);
+            setmatEarnToken(userEarnedusd / bnbPrice);
+            setmatEarnUsd(userEarnedusd);
+          }
+
           if (taikoEvent && taikoEvent[0]) {
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -1668,7 +1709,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1685,7 +1726,8 @@ const MarketEvents = ({
                                 ? taikoEarnUsd
                                 : item.title === "Cookie3"
                                 ? cookieEarnUsd
-                               
+                                : item.title === "Matchain"
+                                ? matEarnUsd
                                 : 0
                             }
                           />
@@ -1832,6 +1874,26 @@ const MarketEvents = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Matchain</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Matchain Treasure Hunt event for a chance to grab
+                        a share of the $20,000 BNB reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingSkale}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingSkaleMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
                   {/* <div className="border-0 upcoming-mint-wrapper upcoming-cookie-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Cookie3</h6>
@@ -1921,7 +1983,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(5, dummyBetaPassData2.length)
+                    .slice(6, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -2029,9 +2091,10 @@ const MarketEvents = ({
                         ? eventPopupImageGecko
                         : dummyEvent.linkState === "gate"
                         ? gatePopupImage
-                        : dummyEvent.linkState === "base" && dummyEvent.id === 'event4'
+                        : dummyEvent.linkState === "base" &&
+                          dummyEvent.id === "event4"
                         ? eventPopupImageBase
-                        : dummyEvent.id === 'event24'
+                        : dummyEvent.id === "event24"
                         ? baseThumb
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
@@ -2056,6 +2119,8 @@ const MarketEvents = ({
                         : dummyEvent.linkState === "taiko"
                         ? taikoThumb
                         : dummyEvent.linkState === "cookie3"
+                        ? cookie3Thumb
+                        : dummyEvent.linkState === "matchain"
                         ? cookie3Thumb
                         : eventPopupImage
                     }
@@ -2354,6 +2419,18 @@ const MarketEvents = ({
                       Remember to log in to the game daily and venture into the
                       Cookie3 area to uncover hidden treasures.
                     </p>
+                  )  : dummyEvent.id === "event25" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Matchain Beta Pass NFT</b>. You can get the
+                      Matchain Beta Pass NFT from the World of Dypians
+                      Marketplace. By engaging in the game on a daily basis and
+                      exploring the Matchain area, players not only stand a
+                      chance to secure daily rewards in BNB, but also earn
+                      points for their placement on the global leaderboard.
+                      Remember to log in to the game daily and venture into the
+                      Matchain area to uncover hidden treasures.
+                    </p>
                   ) : (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2403,7 +2480,8 @@ const MarketEvents = ({
                             dummyEvent.id === "event8" ||
                             dummyEvent.id === "event9" ||
                             dummyEvent.id === "event20" ||
-                            dummyEvent.id === "event3"
+                            dummyEvent.id === "event3"||
+                            dummyEvent.id === "event25"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2482,6 +2560,8 @@ const MarketEvents = ({
                 ? "Taiko"
                 : dummyEvent.id === "event23"
                 ? "Cookie3"
+                : dummyEvent.id === "event25"
+                ? "Matchain"
                 : "Base Network"}
             </h6>
             {dummyEvent.id === "event1" ? (
@@ -2549,9 +2629,7 @@ const MarketEvents = ({
                 tooling needed. Everything works out of the box, guaranteed.
               </p>
             ) : dummyEvent.id === "event23" ? (
-              <p
-                className="popup-event-desc"
-              >
+              <p className="popup-event-desc">
                 Cookie3 is the first MarketingFi protocol and AI-powered data
                 layer, built to revolutionize how users, creators, and
                 businesses interact. By leveraging AI and blockchain, Cookie3
@@ -2690,14 +2768,21 @@ const MarketEvents = ({
                 winner-take-all mentality - Core is focused instead on platform
                 growth and driving the global adoption of blockchain technology.
               </p>
+            )  : dummyEvent.id === "event25" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Matchain is a decentralized AI blockchain focused on data and identity sovereignty, utilizing advanced AI for data aggregation, analytics, and user profiling to enhance decentralized identity solutions and data management.
+              </p>
             ) : (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
                 Base is built as an Ethereum L2, with the security, stability,
-                and scalability you need to power your dapps. Base is an easy way
-                for decentralized apps to leverage Coinbase's products and
+                and scalability you need to power your dapps. Base is an easy
+                way for decentralized apps to leverage Coinbase's products and
                 distribution. Seamless Coinbase integrations, easy fiat onramps,
                 and access to the $130B assets on platform in the Coinbase
                 ecosystem.
@@ -2739,6 +2824,8 @@ const MarketEvents = ({
                     ? "https://x.com/taikoxyz"
                     : dummyEvent.id === "event23"
                     ? "https://x.com/cookie3_com"
+                     : dummyEvent.id === "event25"
+                    ? "https://x.com/matchain_io"
                     : "https://twitter.com/buildonbase"
                 }
                 target="_blank"
@@ -2782,6 +2869,8 @@ const MarketEvents = ({
                     ? "https://t.me/TaikoEcosystem"
                     : dummyEvent.id === "event23"
                     ? "https://t.me/cookie3_co"
+                    : dummyEvent.id === "event25"
+                    ? "https://t.me/matchain_fam"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2791,12 +2880,16 @@ const MarketEvents = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" &&  dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" &&
+                    dummyEvent.id !== "event24" &&
+                    dummyEvent.id !== "event7"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" &&
+                dummyEvent.id !== "event24" &&
+                dummyEvent.id !== "event7"
                   ? "Telegram"
                   : "Discord"}
               </a>
@@ -2834,6 +2927,8 @@ const MarketEvents = ({
                     ? "https://taiko.xyz/"
                     : dummyEvent.id === "event23"
                     ? "https://www.cookie3.com/"
+                    : dummyEvent.id === "event25"
+                    ? "https://www.matchain.io/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -2860,7 +2955,8 @@ const MarketEvents = ({
                         ? userPoints
                         : dummyEvent.id === "event6"
                         ? gateUserPoints
-                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseUserPoints
                         : dummyEvent.id === "event5"
                         ? dypiusEarnTokens
@@ -2888,6 +2984,8 @@ const MarketEvents = ({
                         ? immutablePoints
                         : dummyEvent.id === "event23"
                         ? cookiePoints
+                        : dummyEvent.id === "event25"
+                        ? matPoints
                         : 0,
                       0
                     )}
@@ -2915,7 +3013,8 @@ const MarketEvents = ({
                         ? userEarnUsd
                         : dummyEvent.id === "event6"
                         ? gateEarnUSD
-                        : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
+                        : dummyEvent.id === "event4" ||
+                          dummyEvent.id === "event24"
                         ? baseEarnUSD
                         : dummyEvent.id === "event5"
                         ? dypiusEarnUsd
@@ -2943,6 +3042,8 @@ const MarketEvents = ({
                         ? taikoEarnUsd
                         : dummyEvent.id === "event23"
                         ? cookieEarnUsd
+                        : dummyEvent.id === "event25"
+                        ? matEarnUsd
                         : 0,
                       2
                     )}
@@ -2956,7 +3057,8 @@ const MarketEvents = ({
                               ? userEarnETH
                               : dummyEvent.id === "event6"
                               ? gateEarnBNB
-                              : (dummyEvent.id === "event4" || dummyEvent.id === "event24")
+                              : dummyEvent.id === "event4" ||
+                                dummyEvent.id === "event24"
                               ? baseEarnETH
                               : dummyEvent.id === "event7"
                               ? dogeEarnBNB
@@ -2982,6 +3084,8 @@ const MarketEvents = ({
                               ? immutableEarnToken
                               : dummyEvent.id === "event23"
                               ? cookieEarnToken
+                              : dummyEvent.id === "event25"
+                              ? matEarnToken
                               : 0,
                             2
                           )}
@@ -2995,7 +3099,8 @@ const MarketEvents = ({
                             ? "DYP"
                             : dummyEvent.id === "event6" ||
                               dummyEvent.id === "event8" ||
-                              dummyEvent.id === "event9"
+                              dummyEvent.id === "event9"||
+                              dummyEvent.id === "event25"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
