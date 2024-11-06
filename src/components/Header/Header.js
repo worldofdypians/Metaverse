@@ -558,16 +558,7 @@ const Header = ({
                 >
                   Bridge
                 </NavLink>
-                <NavLink
-                  to={"/buy"}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "dropdown-nav nav-active p-2"
-                      : "dropdown-nav p-2"
-                  }
-                >
-                  Buy
-                </NavLink>
+               
               </div>
             </div>
             {/* <a href="#marketplace" className="nav-anchor">Marketplace</a> */}
@@ -797,7 +788,7 @@ const Header = ({
                       ? "header-dropdown-active"
                       : ""
                   }`}
-                  style={{ top: "140%", width: "300px" }}
+                  style={{ top: "150%", width: "300px", left: "-85px" }}
                 >
                   {account.logged === false ? (
                     <>
