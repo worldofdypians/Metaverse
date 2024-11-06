@@ -58,6 +58,10 @@ const Footer = () => {
       link: "mailto:contact@worldofdypians.com",
     },
     {
+      icon: "linkedin",
+      link: "https://www.linkedin.com/company/worldofdypians",
+    },
+    {
       icon: "cmc",
       link: "https://coinmarketcap.com/currencies/world-of-dypians/",
     },
