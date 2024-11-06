@@ -62,6 +62,10 @@ const Footer = () => {
       link: "https://www.linkedin.com/company/worldofdypians",
     },
     {
+      icon: "miniapp",
+      link: "https://t.me/WorldOfDypians_bot",
+    },
+    {
       icon: "cmc",
       link: "https://coinmarketcap.com/currencies/world-of-dypians/",
     },
