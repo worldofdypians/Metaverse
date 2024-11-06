@@ -29,7 +29,7 @@ const ExplorerGrid = ({ totalSupply }) => {
         <div className="row">
           <div className="col-12 col-lg-3 d-flex align-items-center justify-content-start">
             <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-              IMPORTANT STATS
+              Important Stats
             </h2>
           </div>
           <div className="col-12 col-lg-3 mb-3 mb-lg-0">

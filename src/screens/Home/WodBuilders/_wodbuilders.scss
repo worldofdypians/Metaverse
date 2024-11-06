@@ -36,10 +36,14 @@
 .builder-item {
   border-radius: 8px;
   background: linear-gradient(148deg, rgba(170, 20, 240, 0.10) 0%, rgba(170, 20, 240, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  transition: all .3s ease-in-out;
+}
 
-  backdrop-filter: blur(10px);
-  
-  backdrop-filter: blur(10px);
+.builder-item:hover{
+  .partner-banner{
+    transform: scale(1.1);
+  }
 }
 
 .builder-title {
@@ -62,7 +66,8 @@ line-height: 24px; /* 171.429% */
 
 @media screen and (max-width: 450px) {
   .builders-title {
-    font-size: 17px !important;
+    font-size: 18px !important;
+    line-height: 24px !important;
   }
 }
 
@@ -147,8 +152,12 @@ line-height: 24px; /* 171.429% */
     }
 }
 
+.partner-banner-holder{
+  border-radius: 18px 0 18px 0;
+}
 .partner-banner{
   border-radius: 18px 0 18px 0;
+  transition: all .3s;
 }
 
 .builders-bg{

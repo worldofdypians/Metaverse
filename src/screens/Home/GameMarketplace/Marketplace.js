@@ -96,56 +96,57 @@ const MarketPlace = () => {
   const windowSize = useWindowSize();
 
   return (
-    <div className="d-flex container-fluid justify-content-center px-3 px-lg-5" id="marketplace">
+    <div
+      className="d-flex container-fluid justify-content-center px-3 px-lg-5"
+      id="marketplace"
+    >
       <div className="custom-container ">
-      <div className="flex-column justify-content-center text-white gap-4 mx-2">
-        <div className="d-flex justify-content-center align-items-center flex-column gap-2">
-          <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-            GAME{" "}
-            <mark className="font-montserrat explore-tag pe-2">GALLERY</mark>
-          </h2>
-        </div>
-        {windowSize.width > 786 ? (
-          <>
-            <Marquee gradient={false} className="mb-4">
-              {shuffledMedia
-                .slice(0, shuffledMedia.length / 2)
-                .map((item, index) => (
-                  <div className="px-4" key={index}>
-                    <img
-                      src={require(`../../../assets/mediaAssets/${item}`)}
-                      alt=""
-                    />
-                  </div>
-                ))}
-            </Marquee>
-            <Marquee gradient={false} direction="right">
-              {shuffledMedia
-                .slice(shuffledMedia.length / 2, shuffledMedia.length)
-                .map((item, index) => (
-                  <div className="px-4" key={index}>
-                    <img
-                     
-                      src={require(`../../../assets/mediaAssets/${item}`)}
-                      alt=""
-                    />
-                  </div>
-                ))}
-            </Marquee>
-          </>
-        ) : (
-          <Slider {...settings}>
-            {shuffledMedia.slice(0, 8).map((item, index) => (
-              <CawsItemCard hero={item} key={index} />
-            ))}
-          </Slider>
-        )}
-        <div className="d-flex w-100 align-items-center justify-content-center mt-5">
-          {/* <div className="linear-border" style={{ width: "fit-content" }}>
+        <div className="flex-column justify-content-center text-white gap-4 mx-2">
+          <div className="d-flex justify-content-center align-items-center flex-column gap-2">
+            <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-4">
+              Game Gallery
+            </h2>
+          </div>
+          {windowSize.width > 786 ? (
+            <>
+              <Marquee gradient={false} className="mb-4">
+                {shuffledMedia
+                  .slice(0, shuffledMedia.length / 2)
+                  .map((item, index) => (
+                    <div className="px-4" key={index}>
+                      <img
+                        src={require(`../../../assets/mediaAssets/${item}`)}
+                        alt=""
+                      />
+                    </div>
+                  ))}
+              </Marquee>
+              <Marquee gradient={false} direction="right">
+                {shuffledMedia
+                  .slice(shuffledMedia.length / 2, shuffledMedia.length)
+                  .map((item, index) => (
+                    <div className="px-4" key={index}>
+                      <img
+                        src={require(`../../../assets/mediaAssets/${item}`)}
+                        alt=""
+                      />
+                    </div>
+                  ))}
+              </Marquee>
+            </>
+          ) : (
+            <Slider {...settings}>
+              {shuffledMedia.slice(0, 8).map((item, index) => (
+                <CawsItemCard hero={item} key={index} />
+              ))}
+            </Slider>
+          )}
+          <div className="d-flex w-100 align-items-center justify-content-center mt-5">
+            {/* <div className="linear-border" style={{ width: "fit-content" }}>
           <button className="btn filled-btn px-5">View on marketplace</button>
         </div> */}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );

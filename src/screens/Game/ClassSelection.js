@@ -10,8 +10,7 @@ const ClassSelection = () => {
     <div className="mt-5">
       <div className="d-flex flex-column align-items-center mb-5 w-100">
       <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-          Race and Class{" "}
-          <mark className="font-montserrat explore-tag pe-2">Selection</mark>
+          Race and Class Selection
         </h2>
         <span className="classes-desc mb-0 mb-lg-5">
           In World of Dypians, players select from a variety of Races and

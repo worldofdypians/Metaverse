@@ -10,7 +10,7 @@ const MainHero = () => {
       <div className="custom-container  mt-5 mt-lg-0 pt-5 pt-lg-0">
         <div className="d-flex w-100 flex-column align-items-center gap-2">
           <h2 className="font-montserrat main-hero-title px-0">
-            The Biggest metaverse ever built
+            The Biggest Metaverse Ever Built
           </h2>
           <p className="about-hero-desc">
             An action-packed multiplayer game where heroes come together to

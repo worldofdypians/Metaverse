@@ -81,21 +81,21 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           />
         </div>
         <div className="new-game-stats-wrapper second-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc text-start">
-                Learn what’s ahead
+          <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+              <span className="amp-benefits-desc text-center text-md-start">
+                Learn what’s ahead.
               </span>
-              <span className="ways-to-amplify-title text-start">
+              <span className="ways-to-amplify-title text-center text-md-start">
                 Save the Date for Warcraft 30th Anniversary Direct
               </span>
-              <span className="ways-to-amplify-desc mb-2 text-start">
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-start">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
                 <button className="explore-btn col-lg-4 py-2">Explore</button>
                 <button className="getpremium-btn col-lg-4 py-2">
                   Get Premium
@@ -114,21 +114,21 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           />
         </div>
         <div className="new-game-stats-wrapper third-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
                 Adopt until January 7, 2025.
               </span>
-              <span className="ways-to-amplify-title">
+              <span className="ways-to-amplify-title text-center text-md-end">
                 Support Cure Duchenne With the Reven Pack
               </span>
-              <span className="ways-to-amplify-desc mb-2">
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-end">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
                 <button className="explore-btn col-lg-4 py-2">Explore</button>
                 <button className="getpremium-btn col-lg-4 py-2">
                   Get Premium
@@ -147,21 +147,21 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           />
         </div>
         <div className="new-game-stats-wrapper fourth-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-lg-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc text-start">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+              <span className="amp-benefits-desc text-center text-md-start">
                 12-Month Subscription Offer
               </span>
-              <span className="ways-to-amplify-title text-start">
+              <span className="ways-to-amplify-title text-center text-md-start">
                 Endless Adventure Together
               </span>
-              <span className="ways-to-amplify-desc mb-2 text-start">
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-start">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
                 <button className="explore-btn col-lg-4 py-2">Explore</button>
                 <button className="getpremium-btn col-lg-4 py-2">
                   Get Premium
@@ -180,19 +180,21 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           />
         </div>
         <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-lg-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3">
-              <span className="amp-benefits-desc">Cataclysm Classic</span>
-              <span className="ways-to-amplify-title">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
+                Cataclysm Classic
+              </span>
+              <span className="ways-to-amplify-title text-center text-md-end">
                 A New Age of Cataclysm
               </span>
-              <span className="ways-to-amplify-desc mb-2">
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-end">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
                 <button className="explore-btn col-lg-4 py-2">Explore</button>
                 <button className="getpremium-btn col-lg-4 py-2">
                   Get Premium
