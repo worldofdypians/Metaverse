@@ -16,6 +16,7 @@ const EarnContent = ({
   selectedFilter,
   stakingPools,
   onPoolSelect,
+  selectedViewStyle,
 }) => {
   const [sorting, setSorting] = useState("");
   const windowSize = useWindowSize();
@@ -25,41 +26,46 @@ const EarnContent = ({
       <div className="custom-container  mt-5 mt-lg-0 tokenomicsTablewrapper">
         <div className="d-flex flex-column gap-2 w-100 px-2">
           <span className="earn-filter-title">{selectedFilter}</span>
-          <div className="row mx-0 justify-content-between align-items-center px-2 py-2 w-100 options-container">
-            <table className="earnother-table">
-              <thead className="d-flex w-100 align-items-center justify-content-around">
-                <th className="earnother-th col-lg-2">
-                  <div className="d-flex justify-content-center w-75">Pool</div>
-                </th>
-                <th
-                  className="earnother-th col-lg-2 d-flex justify-content-center gap-1 align-items-center arrowBtns"
-                  // onClick={handleSorting}
-                >
-                  APR
-                  <div className="d-flex flex-column">
-                    <img
-                      src={sorting === true ? arrowUpActive : arrowUp}
-                      alt=""
-                      className=""
-                    />
-                    <img
-                      src={sorting === false ? arrowDownActive : arrowDown}
-                      alt=""
-                      className="arrowBtns"
-                      onClick={() => {
-                        console.log("down");
-                        // setSorting("lth");
-                      }}
-                    />
-                  </div>
-                </th>
-                <th className="earnother-th col-lg-2">Locktime</th>
-                <th className="earnother-th col-lg-2">Chain</th>
-                <th className="earnother-th col-lg-2">Action</th>
-              </thead>
-            </table>
-          </div>
-          {stakingPools &&
+          {selectedViewStyle === "list" && (
+            <div className="row mx-0 justify-content-between align-items-center px-2 py-2 w-100 options-container">
+              <table className="earnother-table">
+                <thead className="d-flex w-100 align-items-center justify-content-around">
+                  <th className="earnother-th col-lg-2">
+                    <div className="d-flex justify-content-center w-75">
+                      Pool
+                    </div>
+                  </th>
+                  <th
+                    className="earnother-th col-lg-2 d-flex justify-content-center gap-1 align-items-center arrowBtns"
+                    // onClick={handleSorting}
+                  >
+                    APR
+                    <div className="d-flex flex-column">
+                      <img
+                        src={sorting === true ? arrowUpActive : arrowUp}
+                        alt=""
+                        className=""
+                      />
+                      <img
+                        src={sorting === false ? arrowDownActive : arrowDown}
+                        alt=""
+                        className="arrowBtns"
+                        onClick={() => {
+                          console.log("down");
+                          // setSorting("lth");
+                        }}
+                      />
+                    </div>
+                  </th>
+                  <th className="earnother-th col-lg-2">Locktime</th>
+                  <th className="earnother-th col-lg-2">Chain</th>
+                  <th className="earnother-th col-lg-2">Action</th>
+                </thead>
+              </table>
+            </div>
+          )}
+          {selectedViewStyle === "table" &&
+            stakingPools &&
             stakingPools.length > 0 &&
             stakingPools.map((item, index) => {
               return (
@@ -144,7 +150,11 @@ const EarnContent = ({
                           </td>
                         ) : (
                           <td className="earnother-td col-lg-1 justify-content-end">
-                            <img src={arrowFilled} alt="" className="earn-filled-arrow" />
+                            <img
+                              src={arrowFilled}
+                              alt=""
+                              className="earn-filled-arrow"
+                            />
                           </td>
                         )}
                       </tr>
@@ -153,6 +163,8 @@ const EarnContent = ({
                 </div>
               );
             })}
+
+
         </div>
       </div>
     </div>

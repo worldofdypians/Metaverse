@@ -1,11 +1,15 @@
 import React, { useRef, useState } from "react";
 import Slider from "react-slick";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
 import dropdownIcon from "../assets/dropdownIcon.svg";
-import '../../../Wod/Token/MainHero/_mainhero.scss'
+import "../../../Wod/Token/MainHero/_mainhero.scss";
+import listIcon from "../assets/listIcon.svg";
+import tableIcon from "../assets/tableIcon.svg";
+import tableIconActive from "../assets/tableIconActive.svg";
+import listIconActive from "../assets/listIconActive.svg";
 
-const EarnHero = ({ onSelectFilter }) => {
+const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
   const dypProducts = [
     {
       // link: "/earn",
@@ -82,6 +86,7 @@ const EarnHero = ({ onSelectFilter }) => {
   };
 
   const [filterTitle, setFilterTitle] = useState("All Staking Pools");
+  const [listStyle, setListStyle] = useState("table");
 
   const betaSlider = useRef(null);
 
@@ -110,11 +115,12 @@ const EarnHero = ({ onSelectFilter }) => {
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 3).map((item, index) => (
                 // <NavLink to={`${item.link}`}>
-                  <BetaEventCardHome
-                    data={item}
-                    key={index}
-                    isFrontPage={true}
-                  />
+                <BetaEventCardHome
+                  data={item}
+                  key={index}
+                  isFrontPage={true}
+                  addRatio={false}
+                />
                 // </NavLink>
               ))}
             </Slider>
@@ -128,59 +134,98 @@ const EarnHero = ({ onSelectFilter }) => {
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
                   <div className="d-flex flex-column flex-lg-row flex-md-row gap-3 w-100 mx-0 align-items-center justify-content-between">
-                    <div className="dropdown filters-dropdown w-auto">
-                      <button
-                        className="btn btn-secondary nft-dropdown w-100
-                 d-flex align-items-center justify-content-center gap-3 px-3 dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <div className="d-flex align-items-center gap-2">
-                          <h6 className="filter-nav-title mb-0">
-                            {filterTitle}
-                          </h6>
+                    <div className="d-flex align-items-center gap-3 ">
+                      <div className="d-flex justify-content-start align-items-center gap-3">
+                        <div
+                          className={`list-style ${
+                            listStyle === "table" && "list-style-active"
+                          }`}
+                          onClick={() => {
+                            setListStyle("table");
+                            onSelectViewStyle("table");
+                          }}
+                        >
+                          <img
+                            src={
+                              listStyle === "table"
+                                ? tableIconActive
+                                : tableIcon
+                            }
+                            alt=""
+                          />
                         </div>
-                        <img src={dropdownIcon} alt="" />
-                      </button>
-                      <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
-                        <li
-                          className="nft-dropdown-item"
+                        <div
+                          className={`list-style ${
+                            listStyle === "list" && "list-style-active"
+                          }`}
                           onClick={() => {
-                            setFilterTitle("All Staking Pools");
-                            onSelectFilter("All Staking Pools");
+                            setListStyle("list");
+                            onSelectViewStyle("list");
                           }}
                         >
-                          <span>All Staking Pools</span>
-                        </li>
-                        <li
-                          className="nft-dropdown-item"
-                          onClick={() => {
-                            setFilterTitle("Token");
-                            onSelectFilter("Token");
-                          }}
+                          <img
+                            src={
+                              listStyle === "list" ? listIconActive : listIcon
+                            }
+                            alt=""
+                          />
+                        </div>
+                      </div>
+
+                      <div className="dropdown filters-dropdown w-auto">
+                        <button
+                          className="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-center gap-3 px-3 dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
                         >
-                          <span>Token</span>
-                        </li>
-                        <li
-                          className="nft-dropdown-item"
-                          onClick={() => {
-                            setFilterTitle("NFT");
-                            onSelectFilter("NFT");
-                          }}
-                        >
-                          <span>NFT</span>
-                        </li>
-                        <li
-                          className="nft-dropdown-item"
-                          onClick={() => {
-                            setFilterTitle("Token + NFT");
-                            onSelectFilter("Token + NFT");
-                          }}
-                        >
-                          <span>Token + NFT</span>
-                        </li>
-                      </ul>
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="filter-nav-title mb-0">
+                              {filterTitle}
+                            </h6>
+                          </div>
+                          <img src={dropdownIcon} alt="" />
+                        </button>
+                        <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilterTitle("All Staking Pools");
+                              onSelectFilter("All Staking Pools");
+                            }}
+                          >
+                            <span>All Staking Pools</span>
+                          </li>
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilterTitle("Token");
+                              onSelectFilter("Token");
+                            }}
+                          >
+                            <span>Token</span>
+                          </li>
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilterTitle("NFT");
+                              onSelectFilter("NFT");
+                            }}
+                          >
+                            <span>NFT</span>
+                          </li>
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilterTitle("Token + NFT");
+                              onSelectFilter("Token + NFT");
+                            }}
+                          >
+                            <span>Token + NFT</span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <div className="tvl-earn-wrapper py-2 px-4">
                       <div className="d-flex align-items-center gap-2">
