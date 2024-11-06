@@ -8,7 +8,7 @@ import copyIcon from "../assets/copyIcon.svg";
 import tokenomicsChart from "../assets/tokenomicsChart.svg";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import useWindowSize from "../../../hooks/useWindowSize";
-import bnb from '../../../components/Header/assets/bnb.svg'
+import bnb from "../../../components/Header/assets/bnb.svg";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -112,18 +112,11 @@ const Tokenomics = () => {
       className="d-flex  flex-column align-items-center gap-4"
       id="tokenomics"
     >
-      <div className="custom-container px-4 px-lg-5 d-flex flex-column w-100 gap-3">
+      <div className="custom-container  d-flex flex-column w-100 gap-3">
         <h4
           className="explorer-grid-title font-montserrat text-start mb-0"
-          style={{ textTransform: "uppercase" }}
         >
-          WoD{" "}
-          <mark
-            className="font-montserrat explorer-grid-title explore-tag pe-2"
-            style={{ textTransform: "uppercase" }}
-          >
-            Tokenomics
-          </mark>
+          WoD Tokenomics
         </h4>
         <span className="tokenomics-wrapper-desc">
           The total token supply is 1B $WOD and is designed to fuel the World of
@@ -135,102 +128,104 @@ const Tokenomics = () => {
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6 tablesalewrapper h-100">
               <div className="tokenomicsTablewrapper">
-              <div className="row mx-0 mb-1 flex-nowrap">
-                <div className="col-2 d-flex justify-content-start">
-                  <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
-                </div>
-                <div className="col-2 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">ALLOCATION</h6>
-                </div>
-                <div className="col-2 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">TOKENS</h6>
-                </div>
-                <div className="col-2 d-flex justify-content-lg-center justify-content-end">
-                  <h6 className="tokenomics-table-title mb-0">
-                    CLIFF {windowSize.width > 767 && '(MONTHS)'}
-                  </h6>
-                </div>
-                <div className="col-2 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">
-                    VESTING {windowSize.width > 767 && '(MONTHS)'}
-                  </h6>
-                </div>
-                <div className="col-2 d-flex justify-content-center">
-                  <h6 className="tokenomics-table-title mb-0">UNLOCKED TGE</h6>
-                </div>
-              </div>
-              <div className="d-flex flex-column gap-1">
-                {tokenomicsData.map((item, index) => (
-                  <div
-                    className="tokenomics-table-row mx-0 row d-flex align-items-center justify-content-between justify-content-lg-center p-2"
-                    key={index}
-                  >
-                    <h6 className="tokenomics-table-head d-flex align-items-center gap-lg-2 gap-1 col-2 mb-0">
-                      <div
-                        className="tokenomics-dot"
-                        style={{ background: item.color }}
-                      ></div>
-                      {item.category}
-                    </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0">
-                      {item.allocation}%
-                    </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0">
-                      {item.tokens}
-                    </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0 text-end text-lg-center">
-                      {item.cliff}
-                    </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0">
-                      {item.vesting}
-                    </h6>
-                    <h6 className="tokenomics-table-item col-2 mb-0">
-                      {item.tge}%
+                <div className="row mx-0 mb-1 flex-nowrap">
+                  <div className="col-2 d-flex justify-content-start">
+                    <h6 className="tokenomics-table-title mb-0">CATEGORY</h6>
+                  </div>
+                  <div className="col-2 d-flex justify-content-center">
+                    <h6 className="tokenomics-table-title mb-0">ALLOCATION</h6>
+                  </div>
+                  <div className="col-2 d-flex justify-content-center">
+                    <h6 className="tokenomics-table-title mb-0">TOKENS</h6>
+                  </div>
+                  <div className="col-2 d-flex justify-content-lg-center justify-content-end">
+                    <h6 className="tokenomics-table-title mb-0">
+                      CLIFF {windowSize.width > 767 && "(MONTHS)"}
                     </h6>
                   </div>
-                ))}
-              </div>
+                  <div className="col-2 d-flex justify-content-center">
+                    <h6 className="tokenomics-table-title mb-0">
+                      VESTING {windowSize.width > 767 && "(MONTHS)"}
+                    </h6>
+                  </div>
+                  <div className="col-2 d-flex justify-content-center">
+                    <h6 className="tokenomics-table-title mb-0">
+                      UNLOCKED TGE
+                    </h6>
+                  </div>
+                </div>
+                <div className="d-flex flex-column gap-1">
+                  {tokenomicsData.map((item, index) => (
+                    <div
+                      className="tokenomics-table-row mx-0 row d-flex align-items-center justify-content-between justify-content-lg-center p-2"
+                      key={index}
+                    >
+                      <h6 className="tokenomics-table-head d-flex align-items-center gap-lg-2 gap-1 col-2 mb-0">
+                        <div
+                          className="tokenomics-dot"
+                          style={{ background: item.color }}
+                        ></div>
+                        {item.category}
+                      </h6>
+                      <h6 className="tokenomics-table-item col-2 mb-0">
+                        {item.allocation}%
+                      </h6>
+                      <h6 className="tokenomics-table-item col-2 mb-0">
+                        {item.tokens}
+                      </h6>
+                      <h6 className="tokenomics-table-item col-2 mb-0 text-end text-lg-center">
+                        {item.cliff}
+                      </h6>
+                      <h6 className="tokenomics-table-item col-2 mb-0">
+                        {item.vesting}
+                      </h6>
+                      <h6 className="tokenomics-table-item col-2 mb-0">
+                        {item.tge}%
+                      </h6>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
                 <div className="d-flex align-items-center gap-2">
                   <img src={bnb} alt="" />
-                <div className="d-flex flex-column">
-                  <span className="wod-copy-span">WOD Contract Address</span>
-                  <div className="d-flex align-items-center gap-2">
-                    <a
-                      href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
-                      target="_blank"
-                      className="wod-address"
-                    >
-                      {windowSize.width > 991
-                        ? "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
-                        : shortAddress(
-                            "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
-                          )}
-                    </a>
-                    <Clipboard
-                      component="div"
-                      data-event="click"
-                      data-tip="Copied To Clipboard!"
-                      data-clipboard-text={
-                        "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
-                      }
-                      className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
-                    >
-                      <span
-                        className="menuitem2"
-                        onClick={() => {
-                          setTooltip(true);
-                          setTimeout(() => setTooltip(false), 2000);
-                        }}
+                  <div className="d-flex flex-column">
+                    <span className="wod-copy-span">WOD Contract Address</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <a
+                        href="https://bscscan.com/token/0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        target="_blank"
+                        className="wod-address"
                       >
-                        <img src={tooltip ? check : copy} alt="" />{" "}
-                      </span>
-                    </Clipboard>
+                        {windowSize.width > 991
+                          ? "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                          : shortAddress(
+                              "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                            )}
+                      </a>
+                      <Clipboard
+                        component="div"
+                        data-event="click"
+                        data-tip="Copied To Clipboard!"
+                        data-clipboard-text={
+                          "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8"
+                        }
+                        className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
+                      >
+                        <span
+                          className="menuitem2"
+                          onClick={() => {
+                            setTooltip(true);
+                            setTimeout(() => setTooltip(false), 2000);
+                          }}
+                        >
+                          <img src={tooltip ? check : copy} alt="" />{" "}
+                        </span>
+                      </Clipboard>
+                    </div>
                   </div>
-                </div>
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img

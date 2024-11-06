@@ -336,7 +336,7 @@ const WodBuilders = ({ page }) => {
       >
         <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-            PIONEERS SHAPING THE WORLD OF DYPIANS
+            Pioneers Shaping the World of Dypians
           </h2>
         </div>
         <div className="custom-container">
@@ -348,11 +348,13 @@ const WodBuilders = ({ page }) => {
                 key={index}
                 className="builder-item p-3 d-flex flex-column gap-2"
               >
-                <img
+              <div className="partner-banner-holder overflow-hidden">
+              <img
                   src={require(`./assets/${item.banner}`)}
                   className="w-100 partner-banner"
                   alt=""
                 />
+              </div>
                 <div className="d-flex align-items-center gap-2">
                   {item.icon === "klapai" ||
                   item.icon === "manta" ||

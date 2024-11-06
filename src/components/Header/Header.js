@@ -797,7 +797,7 @@ const Header = ({
                       ? "header-dropdown-active"
                       : ""
                   }`}
-                  style={{ top: "140%" }}
+                  style={{ top: "140%", width: "300px" }}
                 >
                   {account.logged === false ? (
                     <>
@@ -1258,8 +1258,7 @@ const Header = ({
                             SELECT A NETWORK
                           </span>
                           <hr className="header-divider my-0" />
-                          <div className="d-flex gap-2 justify-content-between">
-                            <div className="d-flex flex-column gap-2">
+                          <div className="header-chain-grid">
                               <Dropdown.Item
                                 onClick={() => switchNetwork("0x1", 1)}
                               >
@@ -1319,8 +1318,6 @@ const Header = ({
                                     CORE
                                   </Dropdown.Item>
                                 )}
-                            </div>
-                            <div className="d-flex flex-column gap-2">
                               <Dropdown.Item
                                 onClick={() => switchNetwork("0x2105", 8453)}
                               >
@@ -1390,7 +1387,6 @@ const Header = ({
                                 />
                                 Conflux
                               </Dropdown.Item>
-                            </div>
                           </div>
                           <hr className="header-divider my-0" />
                           <button

@@ -181,7 +181,7 @@ const VideoWrapper = ({
             <h4 className="main-hero-title font-montserrat">
               The Biggest Metaverse
               <br />
-              Ever built
+              Ever Built
             </h4>
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
               <div

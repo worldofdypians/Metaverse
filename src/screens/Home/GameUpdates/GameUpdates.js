@@ -34,12 +34,11 @@ const GameUpdates = () => {
   }, []);
 
   return (
-    <div className="px-3 px-lg-5 d-flex justify-content-center" id="explorer">
+    <div className="px-3 px-lg-5 d-flex justify-content-center mb-4" id="explorer">
       <div className="custom-container">
       <div className="w-100">
-      <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-            <mark className="font-montserrat explore-tag pe-2">GAME</mark>
-            UPDATES{" "}
+      <h2 className="font-montserrat builders-title explorer-grid-title px-0 my-4">
+           Game Updates{" "}
           </h2>
       </div>{" "}
       <div className="announcement-side-wrapper-2 col-12">

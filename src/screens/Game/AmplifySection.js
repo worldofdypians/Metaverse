@@ -89,7 +89,7 @@ const AmplifySection = () => {
           <div className="row justify-content-center align-items-center gap-3 gap-lg-0 mx-3 mx-lg-0">
             <div className="col-12 col-lg-3">
               <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-                Ways to amplify rewards
+                Ways to Amplify Rewards
               </h2>
             </div>
             {dummyBetaPassData2.map((item, index) => (
@@ -132,10 +132,10 @@ const AmplifySection = () => {
       <div className="container-fluid d-flex align-items-center justify-content-center">
         <div className="custom-container d-flex flex-column  mt-5 w-100">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-            Amplify{" "}
-            <mark className="font-montserrat explore-tag pe-2">Experience</mark>
+            Amplify Experience
+      
           </h2>
-          <span className="classes-desc" style={{ width: "fit-content" }}>
+          <span className="classes-desc text-center" style={{ width: "fit-content" }}>
             Enhance your gameplay with advanced features and exclusive content.
           </span>
         </div>

@@ -36,7 +36,6 @@ align-items: center;
 
 .amp-benefits-desc {
     color: #ACAD98;
-text-align: right;
 font-family: Poppins;
 font-size: 14px;
 font-style: normal;
@@ -47,7 +46,6 @@ text-transform: uppercase;
 
 .ways-to-amplify-title {
     color: #FFF;
-text-align: right;
 font-size: clamp(1rem, 2vw + 1vh, 3rem);
 font-style: normal;
 font-weight: 800;
@@ -56,8 +54,7 @@ line-height: normal;
 
 .ways-to-amplify-desc {
     color: #BCBCBC;
-text-align: right;
-font-size: 12px;
+font-size: 1rem;
 font-style: normal;
 font-weight: 400;
 line-height: 16px; 

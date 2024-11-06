@@ -644,6 +644,12 @@
     opacity: 1;
     visibility: visible;
   }
+
+  .header-chain-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+  }
   
   .chaindropdown {
     width: fit-content !important;
@@ -652,6 +658,9 @@
       border: 0.5px solid #525469;
       background: rgba(8, 11, 42, 1) !important;
       backdrop-filter: blur(2px);
+      width: 300px;
+      right: -235px;
+  
       // top: 17px !important; 
   
      .dropdown-item {
