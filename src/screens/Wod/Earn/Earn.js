@@ -17,6 +17,8 @@ const Earn = ({
   chainId,
   handleSwitchNetwork,
   onConnectWallet,
+  nftPools,
+  binanceW3WProvider
 }) => {
   const tokenPools = [
     {
@@ -45,24 +47,24 @@ const Earn = ({
     },
   ];
 
-  const nftPools = [
-    {
-      tokenName: "CAWS NFT",
-      apr: 5,
-      locktime: "No lock",
-      chain: "Ethereum",
-      tokenURL: ["caws"],
-      chainLogo: "ethIcon.svg",
-    },
-    {
-      tokenName: "LAND NFT",
-      apr: 5,
-      locktime: "No lock",
-      chain: "Ethereum",
-      tokenURL: ["land"],
-      chainLogo: "ethIcon.svg",
-    },
-  ];
+  // const nftPools = [
+  //   {
+  //     tokenName: "CAWS NFT",
+  //     apr: 5,
+  //     locktime: "No lock",
+  //     chain: "Ethereum",
+  //     tokenURL: ["caws"],
+  //     chainLogo: "ethIcon.svg",
+  //   },
+  //   {
+  //     tokenName: "LAND NFT",
+  //     apr: 5,
+  //     locktime: "No lock",
+  //     chain: "Ethereum",
+  //     tokenURL: ["land"],
+  //     chainLogo: "ethIcon.svg",
+  //   },
+  // ];
 
   const nftTokenPools = [
     {
@@ -104,22 +106,33 @@ const Earn = ({
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
   const [selectedFilter, setSelectedFilter] = useState("All Pools");
-  const [stakingPools, setStakingPools] = useState(allPools);
+  const [stakingPools, setStakingPools] = useState(nftPools);
   const [showPopup, setshowPopup] = useState(false);
   const [selectedTab, setselectedTab] = useState("deposit");
   const [locktime, setlocktime] = useState("flexible");
   const [aprTooltip, setaprTooltip] = useState(false);
-  const [selectedViewStyle, setselectedViewStyle] = useState('table');
+  const [selectedViewStyle, setselectedViewStyle] = useState("table");
+  const [expired, setExpired] = useState(false);
 
-  const handleSetPools = (poolFilter) => {
+  const handleSetPools = (poolFilter, isExpired) => {
     if (poolFilter === "All pools") {
-      setStakingPools(allPools);
-    } else if (poolFilter === "Token") {
+      setStakingPools(nftPools);
+    } else if (nftPools === "Token") {
       setStakingPools(tokenPools);
     } else if (poolFilter === "NFT") {
-      setStakingPools(nftPools);
+      if (isExpired === false) {
+        let nftPoolsActive = nftPools.filter((item) => {
+          return item.expired === "No";
+        });
+        setStakingPools(nftPoolsActive);
+      } else if (isExpired === true) {
+        let nftPoolsExpired = nftPools.filter((item) => {
+          return item.expired === "Yes";
+        });
+        setStakingPools(nftPoolsExpired);
+      }
     } else if (poolFilter === "Token + NFT") {
-      setStakingPools(nftTokenPools);
+      setStakingPools(nftPools);
     }
   };
 
@@ -135,16 +148,28 @@ const Earn = ({
     document.title = "Earn";
   }, []);
 
+  useEffect(() => {
+    if (nftPools && nftPools.length > 0) {
+      handleSetPools("NFT", false);
+    }
+  }, [nftPools]);
+  console.log(nftPools);
   return (
     <>
       <div className="container-fluid token-wrapper px-0 mt-5 pt-5">
         <div className="d-flex flex-column gap-3">
           <EarnHero
-            onSelectFilter={(value) => {
+            onSelectFilter={(value, expirevalue) => {
               setSelectedFilter(value);
-              handleSetPools(value);
+              handleSetPools(value, expirevalue);
             }}
-            onSelectViewStyle={(value)=>{setselectedViewStyle(value)}}
+            onSelectViewStyle={(value) => {
+              setselectedViewStyle(value);
+            }}
+            onViewPastPools={(filterValue, value) => {
+              setExpired(value);
+              handleSetPools(filterValue, value);
+            }}
           />
           <EarnContent
             isConnected={isConnected}
@@ -158,6 +183,9 @@ const Earn = ({
               setshowPopup(true);
             }}
             selectedViewStyle={selectedViewStyle}
+            nftPools={nftPools}
+            expired={expired}
+            binanceW3WProvider={binanceW3WProvider}
           />
         </div>
       </div>

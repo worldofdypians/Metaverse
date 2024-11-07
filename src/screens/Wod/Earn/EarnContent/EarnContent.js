@@ -20,8 +20,12 @@ const EarnContent = ({
   stakingPools,
   onPoolSelect,
   selectedViewStyle,
+  expired,
+  binanceW3WProvider
 }) => {
   const [sorting, setSorting] = useState("");
+  const [selectedPool, setselectedPool] = useState();
+
   const windowSize = useWindowSize();
 
   return (
@@ -79,7 +83,10 @@ const EarnContent = ({
               stakingPools.length > 0 &&
               stakingPools.map((item, index) => {
                 return (
-                  <div className="accordion-item border-0 bg-transparent" key={index}>
+                  <div
+                    className="accordion-item border-0 bg-transparent"
+                    key={index}
+                  >
                     <div className="accordion-header" id="headingOne">
                       <button
                         className="accordion-button shadow-none p-0 bg-transparent collapsed d-flex flex-column position-relative "
@@ -88,17 +95,23 @@ const EarnContent = ({
                         data-bs-target={`#${"collapse" + index}`}
                         aria-expanded="true"
                         aria-controls={"collapse" + index}
-                        onClick={onPoolSelect}
+                        onClick={() => {
+                          setselectedPool(item);
+                        }}
                       >
                         <TopPoolsCard
                           key={index}
                           chain={chainId}
                           top_pick={false}
-                          tokenName={item.tokenName}
-                          apr={item.apr + "%"}
-                          tvl={"$" + getFormattedNumber(0)}
-                          lockTime={item.locktime ? item.locktime : "No Lock"}
-                          tokenLogo={item.tokenURL}
+                          tokenName={item.pair_name}
+                          apr={item.apy_percent + "%"}
+                          tvl={"$" + getFormattedNumber(item.tvl_usd)}
+                          lockTime={item.lock_time ? item.lock_time : "No Lock"}
+                          tokenLogo={
+                            item.pair_name === "WoD + CAWS"
+                              ? ["caws", "wod"]
+                              : [item.pair_name?.toLowerCase()]
+                          }
                           onShowDetailsClick={() => {}}
                           onHideDetailsClick={() => {}}
                           cardType={"table"}
@@ -116,7 +129,19 @@ const EarnContent = ({
                       aria-labelledby={"collapsed" + index}
                       data-bs-parent="#accordionExample"
                     >
-                      <div className="accordion-body px-2 text-white">test {index}</div>
+                      <div className="accordion-body px-2 text-white position-relative" style={{background: expired ? '#565891' : '#1e1c40', top: '-10px'}}>
+                        {item?.id ===
+                          "0xee425bbbec5e9bf4a59a1c19efff522ad8b7a47a" && (
+                          <CawsDetails
+                            coinbase={coinbase}
+                            isConnected={isConnected}
+                            chainId={chainId.toString()}
+                            handleConnection={onConnectWallet}
+                            expired={true}
+                            binanceW3WProvider={binanceW3WProvider}
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 );

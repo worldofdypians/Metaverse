@@ -637,6 +637,8 @@ function App() {
   const [seiPrice, setSeiPrice] = useState(0);
   const [userEvents, setuserEvents] = useState(0);
   const [wodBalance, setwodBalance] = useState(0);
+  const [nftPools, setnftPools] = useState([]);
+
 
   const userId = data?.getPlayer?.playerId;
 
@@ -651,7 +653,32 @@ function App() {
       let resultCaws = eth_result.data.stakingInfoCAWS;
       let resultLand = eth_result.data.stakingInfoLAND;
       let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
-      console.log(resultCaws, resultLand, resultCawsLand)
+      
+      let resultCaws2 = resultCaws.map((item)=>{
+        return{
+          ...item,
+          type: 'nft',
+          chain: 'eth'
+        }
+      })
+
+      let resultLand2 = resultLand.map((item)=>{
+        return{
+          ...item,
+          type: 'nft',
+          chain: 'eth'
+        }
+      })
+
+      let resultCawsLand2 = resultCawsLand.map((item)=>{
+        return{
+          ...item,
+          type: 'nft',
+          chain: 'eth'
+        }
+      })
+
+      setnftPools([...resultCaws2, ...resultLand2,...resultCawsLand2])
     }
   };
 
@@ -5488,6 +5515,8 @@ function App() {
                 onConnectWallet={() => {
                   setwalletModal(true);
                 }}
+                nftPools={nftPools}
+                binanceW3WProvider={library}
               />
             }
           />

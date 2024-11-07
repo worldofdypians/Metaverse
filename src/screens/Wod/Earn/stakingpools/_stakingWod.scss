@@ -40,8 +40,19 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding: 9px 24px;
+  padding: 5px 10px;
 }
+
+.addressbtn {
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #57b6ab;
+  padding: 5px 10px;
+  color: #599993;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 
 .claim-inner-btn:hover {
   border-radius: 8px;
@@ -53,7 +64,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  padding: 9px 24px;
+  padding: 5px 10px;
 }
 
 .inner-max-btn {
@@ -124,7 +135,7 @@
   line-height: 18px;
   color: #fff;
   border: none;
-  padding: 9px 24px;
+  padding: 5px 10px;
   transition: all ease 0.4s;
   -webkit-transition: all ease 0.4s;
 }
@@ -143,7 +154,7 @@
   border-radius: 10px;
   font-style: normal;
   font-weight: 500;
-  padding: 9px 24px;
+  padding: 5px 10px;
   font-size: 12px;
   line-height: 18px;
   opacity: 1 !important;

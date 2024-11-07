@@ -276,7 +276,7 @@
   background: #26264f;
   border-radius: 12px;
   border: 1px solid #7770df;
-  padding: 0 12px 12px 12px;
+  padding:  12px;
   gap: 5px;
   justify-content: center;
 }
@@ -338,13 +338,18 @@
   color: #4ed5d2;
 }
 
+.blurrypool {
+  pointer-events: none;
+  filter: blur(3px);
+}
+
 .earnrewards-text {
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: -0.018em;
-  color: #7a81b4;
+  color: #d3d7f7;
 }
 
 .earnrewards-container {
@@ -367,12 +372,16 @@
   font-size: 12px;
   line-height: 14px;
   letter-spacing: -0.018em;
-  color: #7770e0;
+  color: #4ed5d2;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 5px;
   cursor: pointer;
+}
+
+.start-title,.withdraw-littletxt, .withdraw-txt, .mybalance-text, .rewardstxtCaws {
+  font-size: 12px;
 }
 
 .bottomitems:hover {
@@ -417,8 +426,8 @@
   background: #312f69 !important;
   border: 1px solid #8e97cd !important;
   border-radius: 8px !important;
-  padding: 20px;
-  height: 38px;
+  padding: 14px;
+  height: 24px;
   /* width: 120px; */
   font-style: normal;
   font-weight: 500;
@@ -428,18 +437,38 @@
   color: #f7f7fc !important;
 }
 
+
+.outline-btn-stake {
+  background: #312f69;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #857dfa;
+  border: 1.5px solid #857dfa;
+  padding: 8px 24px;
+  transition: all ease 0.4s;
+  -webkit-transition: all ease 0.4s;
+}
+
+.outline-btn-stake:hover {
+  color: #fff;
+  background: #857dfa;
+}
+
 .amount-txt {
   font-style: normal;
-  font-weight: 400;
-  font-size: 8px;
+  font-weight: 500;
+  font-size: 10px;
   line-height: 16px;
   letter-spacing: 0.4px;
-  color: #8e97cd;
+  color: #a6accd;
   position: absolute;
   background: #312f69;
   padding: 0 3px;
   top: -8px;
-  left: 15px;
+  left: 34px;
 }
 
 .maxbtn {
@@ -459,6 +488,11 @@
 .maxbtn:focus {
   background: #7770e0;
   color: #fff;
+}
+
+.first-block-wrapper {
+  display: grid ;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .filledbtn {
