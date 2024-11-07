@@ -248,7 +248,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/stake"
+            to="/earn"
             end
             className={({ isActive }) =>
               isActive
@@ -291,7 +291,7 @@ const MarketSidebar = () => {
               );
             }}
           />
-          <NavLink
+          {/* <NavLink
             to="/marketplace/nft-bridge"
             end
             className={({ isActive }) =>
@@ -312,7 +312,7 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
+          /> */}
            {email
           //  &&
           //   data &&
@@ -358,7 +358,7 @@ const MarketSidebar = () => {
               style={{ width: "20px", height: "20px" }}
               alt=""
             />
-            <span className={`sidebar-title`}>Build in WOD</span>
+            <span className={`sidebar-title`}>Partners</span>
           </a>
           <NavLink
             to="/contact-us"
