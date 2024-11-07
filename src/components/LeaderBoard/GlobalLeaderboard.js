@@ -26,20 +26,7 @@ import playerAvatar1 from "../../screens/Account/src/Components/LeaderBoard/asse
 import playerAvatar2 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar2.png";
 import playerAvatar3 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar3.png";
 import playerAvatar4 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar4.png";
-import playerAvatar5 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar5.png";
-import playerAvatar6 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar6.png";
-import playerAvatar7 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar7.png";
-import playerAvatar8 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar8.png";
-import playerAvatar9 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar9.png";
-import playerAvatar10 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar10.png";
-import playerAvatar11 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar11.png";
-import playerAvatar12 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar12.png";
-import playerAvatar13 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar13.png";
-import playerAvatar14 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar14.png";
-import playerAvatar15 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar15.png";
-import playerAvatar16 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar16.png";
-import playerAvatar17 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar17.png";
-import playerAvatar18 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar18.png";
+import dappradar from "./assets/dappRadar.svg";
 
 import skaleActive from "./assets/skaleActive.svg";
 import yellowArrow from "./assets/yellowArrow.svg";
@@ -186,17 +173,33 @@ const GlobalLeaderboard = ({
                 appealing rewards.
               </span>
             </div>
-            <div className="global-total-wrapper py-3 w-100 d-flex flex-column align-items-center justify-content-center">
-              <div className="position-relative">
-                <h6 className="global-total-players mb-0">
-                  {getFormattedNumber(monthlyPlayers, 0)}
-                </h6>
-                <span className="monthly-players-percent">
-                  +{getFormattedNumber(percent, 2)}%
+            <a
+              href="https://dappradar.com/dapp/world-of-dypians"
+              target={"_blank"}
+              rel="noreferrer"
+              className="w-100 global-total-wrapper p-3"
+            >
+              <div className="d-flex flex-column align-items-center justify-content-center">
+                <div className="position-relative d-flex align-items-center gap-1">
+                  <h6 className="global-total-players mb-0">
+                    {getFormattedNumber(monthlyPlayers, 0)}
+                  </h6>
+                  <span
+                    className="monthly-players-percent"
+                    style={{ right: "-35px", top: "-35px" }}
+                  >
+                    <img
+                      src={dappradar}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                  </span>
+                </div>
+                <span className="global-total-span">
+                  Monthly On-chain Players
                 </span>
               </div>
-              <span className="global-total-span">Monthly Players</span>
-            </div>
+            </a>
           </div>
         </div>
       )}
