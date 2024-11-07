@@ -920,7 +920,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                   style={{ position: "absolute", top: "4%", left: "4%" }}
                 >
                   <h6 className="community-active-title mb-0">
-                  Monthly Players:
+                  Monthly On-chain Players:
                   </h6>
                   <h6
                     className="community-active-title mb-0"
@@ -1203,7 +1203,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                     </div>
                     <span className="newsletter-span">
                       By submitting this form, you are consenting to receive
-                      marketing emails from Dypius. You may unsubscribe at
+                      marketing emails from World of Dypians. You may unsubscribe at
                       anytime.
                     </span>
                   </div>
