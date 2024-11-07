@@ -5475,7 +5475,7 @@ function App() {
               />
             }
           />
-          <Route exact path="/buy" element={<Buy />} />
+          {/* <Route exact path="/buy" element={<Buy />} /> */}
           <Route exact path="/governance" element={<Governance />} />
           <Route exact path="/campaigns" element={<Campaigns />} />
           <Route
