@@ -383,6 +383,7 @@ const MarketStake = ({
     setethToUSD(Number(ethprice) * Number(EthRewards));
     setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool));
     setethToUSDCawsPremium(Number(ethprice) * EthRewardsCawsPremium);
+    setethToUSDLandPremium(Number(ethprice) * EthRewardsLandPremium);
     setPastCawsUsdPrice(Number(ethprice) * 59);
   };
 
