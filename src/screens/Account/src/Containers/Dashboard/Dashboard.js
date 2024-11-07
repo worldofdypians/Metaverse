@@ -12830,6 +12830,8 @@ function Dashboard({
                 mantaImages={mantaImages}
                 baseImages={baseImages}
                 taikoImages={taikoImages}
+                matImages={matImages}
+
                 coreImages={coreImages}
                 chainId={chainId}
                 dypTokenData={dypTokenData}
@@ -12858,6 +12860,8 @@ function Dashboard({
                 claimedBasePremiumChests={claimedBasePremiumChests}
                 claimedTaikoChests={claimedTaikoChests}
                 claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+                claimedMatChests={claimedMatChests}
+                claimedMatPremiumChests={claimedMatPremiumChests}
                 claimedSeiChests={claimedSeiChests}
                 claimedSeiPremiumChests={claimedSeiPremiumChests}
                 email={email}
@@ -12868,6 +12872,7 @@ function Dashboard({
                 openedMantaChests={openedMantaChests}
                 openedBaseChests={openedBaseChests}
                 openedTaikoChests={openedTaikoChests}
+                openedMatChests={openedMatChests}
                 openedSeiChests={openedSeiChests}
                 address={userWallet}
                 allChests={allChests}
@@ -12877,6 +12882,8 @@ function Dashboard({
                 allMantaChests={allMantaChests}
                 allBaseChests={allBaseChests}
                 allTaikoChests={allTaikoChests}
+                allMatChests={allMatChests}
+
                 allSeiChests={allSeiChests}
                 onChestClaimed={() => {
                   setCount(count + 1);
@@ -12898,6 +12905,9 @@ function Dashboard({
                 }}
                 onTaikoChestClaimed={() => {
                   settaikocount(taikocount + 1);
+                }}
+                onMatChestClaimed={() => {
+                  setmatcount(matcount + 1);
                 }}
                 onSeiChestClaimed={() => {
                   setCount(count + 1);

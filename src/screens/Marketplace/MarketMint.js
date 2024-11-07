@@ -510,7 +510,7 @@ const MarketMint = ({
     } else if (location.pathname.includes("taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
-    } else if (location.pathname.includes("mat")) {
+    } else if (location.pathname.includes("matchain")) {
       setSelectedMint(matData);
       setMintTitle("mat");
     }
@@ -658,7 +658,7 @@ const MarketMint = ({
       eventId: "matchain",
       desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
       img: taikoActive,
-      data: taikoData,
+      data: matData,
       class: "mint-taiko",
       id: "mat",
     },
