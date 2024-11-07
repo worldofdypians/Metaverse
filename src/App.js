@@ -640,6 +640,21 @@ function App() {
 
   const userId = data?.getPlayer?.playerId;
 
+  const fetchEthStaking = async () => {
+    const eth_result = await axios
+      .get(`https://api.dyp.finance/api/get_staking_info_eth`)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (eth_result && eth_result.status === 200) {
+      let resultCaws = eth_result.data.stakingInfoCAWS;
+      let resultLand = eth_result.data.stakingInfoLAND;
+      let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
+      console.log(resultCaws, resultLand, resultCawsLand)
+    }
+  };
+
   const fetchTreasureHuntData = async (email, userAddress) => {
     try {
       const response = await fetch(
@@ -4256,6 +4271,7 @@ function App() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
+    fetchEthStaking()
     fetchRecordsStar();
     fetchMonthlyPlayers();
     getTotalSupply();
