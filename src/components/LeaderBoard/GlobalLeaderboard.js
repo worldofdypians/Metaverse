@@ -258,11 +258,14 @@ const GlobalLeaderboard = ({
             <div className="d-flex flex-column">
               <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
               <h6
-                className="global-leaderboard-title d-flex algin-items-center"
+                className="global-leaderboard-title mb-0 d-flex algin-items-center"
                 style={{ color: "#F4E27B" }}
               >
                 LEADERBOARD
               </h6>
+              <span className="text-white" style={{ fontSize: 14 }}>
+                (Top 100)
+              </span>
             </div>
           )}
           <img
@@ -271,7 +274,7 @@ const GlobalLeaderboard = ({
             className={screen === "dash" && "invisible"}
           />
         </div>
-        <div className={` ${screen !== "home" && "table-outer-margin"}  p-0`}>
+        <div className={`table-outer-margin p-0`}>
           <table className="playerTable w-100" style={{ position: "relative" }}>
             <tbody>
               <tr className="playerRow">

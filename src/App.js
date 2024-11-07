@@ -515,7 +515,7 @@ function App() {
     const data = {
       StatisticName: "GlobalStarMonthlyLeaderboard",
       StartPosition: 0,
-      MaxResultsCount: 10,
+      MaxResultsCount: 100,
     };
     const result = await axios.post(`${backendApi}/auth/GetLeaderboard`, data);
     setPrevVersionStar(parseInt(result.data.data.version));
