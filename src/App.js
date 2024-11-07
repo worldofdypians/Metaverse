@@ -4480,7 +4480,7 @@ function App() {
               />
             }
           />
-
+{/* 
           <Route
             exact
             path="/marketplace/nft-bridge"
@@ -4524,7 +4524,7 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          />
+          /> */}
 
           <Route
             exact

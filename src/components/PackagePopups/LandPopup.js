@@ -81,7 +81,7 @@ const LandPopup = ({ onClosePopup }) => {
             opportunity for players looking to leave their mark on the game
             world.
           </p>
-          <h6 className="text-white">Benefits</h6>
+          <h6 className="text-white game-popup-title">Benefits</h6>
           <div className="benefit-btn-wrapper">
             {benefits.map((item, index) => {
               return (
@@ -92,7 +92,7 @@ const LandPopup = ({ onClosePopup }) => {
             })}
           </div>
 
-          <h6 className="text-white">Land Tiers</h6>
+          <h6 className="text-white game-popup-title">Land Tiers</h6>
           <p className="package-popup-desc-map">
             World of Dypians offers 5 tiers of land NFTs. Each tier offers
             unique rewards and benefits within the metaverse.

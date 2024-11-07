@@ -34,38 +34,59 @@ const GameUpdates = () => {
   }, []);
 
   return (
-    <div className="px-3 px-lg-5 d-flex justify-content-center mb-4" id="explorer">
+    <div
+      className="px-3 px-lg-5 d-flex justify-content-center mb-4"
+      id="explorer"
+    >
       <div className="custom-container">
-      <div className="w-100">
-      <h2 className="font-montserrat builders-title explorer-grid-title px-0 my-4">
-           Game Updates{" "}
+        <div className="w-100">
+          <h2 className="font-montserrat builders-title explorer-grid-title px-0 my-4">
+            Game Updates{" "}
           </h2>
-      </div>{" "}
-      <div className="announcement-side-wrapper-2 col-12">
-        {announcementsNews &&
-          announcementsNews.length > 0 &&
-          announcementsNews.slice(0, 4).map((item, index) => {
-            return (
-              <NavLink
-                to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
-                style={{ textDecoration: "none" }}
-                key={index}
-              >
-             
-                <div className="game-update-card position-relative">
-                  <img src={item.image} className="w-100 h-100" style={{objectFit: "cover"}} alt="" />
-                  <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper updates-text-wrapper">
-                    <div className="d-flex flex-column">
-                      <h6 className="events-page-title-home mb-0">
-                        {item.title.slice(0, 40) + "..."}
-                      </h6>
-                    </div>
+        </div>{" "}
+        <div className="announcement-side-wrapper-2 col-12">
+          {announcementsNews &&
+            announcementsNews.length > 0 &&
+            announcementsNews.slice(0, 4).map((item, index) => {
+              return (
+                // <NavLink
+                //   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                //   style={{ textDecoration: "none" }}
+                //   key={index}
+                // >
+
+                //   <div className="game-update-card position-relative">
+                //     <img src={item.image} className="w-100 h-100" style={{objectFit: "cover"}} alt="" />
+                //     <div className="d-flex align-items-center justify-content-between p-3 w-100 bottom-dark-wrapper updates-text-wrapper">
+                //       <div className="d-flex flex-column">
+                //         <h6 className="events-page-title-home mb-0">
+                //           {item.title.slice(0, 40) + "..."}
+                //         </h6>
+                //       </div>
+                //     </div>
+                //   </div>
+                // </NavLink>
+                <NavLink
+                  className="campaign-item d-flex flex-column gap-2"
+                  key={index}
+                  to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <img
+                    src={item.image}
+                    alt="campaign image"
+                    className="w-100 campaign-item-image"
+                    style={{objectFit: "cover"}}
+                  />
+                  <div className="d-flex align-items-center gap-2">
+                    <h6 className="campaign-item-title mb-0">
+                      {item.title.slice(0, 50) + "..."}
+                    </h6>
                   </div>
-                </div>
-              </NavLink>
-            );
-          })}{" "}
-      </div>
+                </NavLink>
+              );
+            })}{" "}
+        </div>
       </div>
     </div>
   );
