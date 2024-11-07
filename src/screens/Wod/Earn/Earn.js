@@ -161,7 +161,7 @@ const Earn = ({
           />
         </div>
       </div>
-      {showPopup && (
+      {/* {showPopup && (
         <Modal
           open={showPopup}
           aria-labelledby="modal-modal-title"
@@ -446,7 +446,7 @@ const Earn = ({
             </div>
           </Box>
         </Modal>
-      )}
+      )} */}
     </>
   );
 };

@@ -6,6 +6,9 @@ import arrowDown from "../assets/arrowDown.svg";
 import arrowDownActive from "../assets/arrowDownActive.svg";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import arrowFilled from "../assets/arrow-filled.svg";
+import TopPoolsCard from "./TopPoolsCard";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import CawsDetails from "./pools/caws";
 
 const EarnContent = ({
   isConnected,
@@ -64,7 +67,62 @@ const EarnContent = ({
               </table>
             </div>
           )}
-          {selectedViewStyle === "table" &&
+          <div
+            className={
+              selectedViewStyle === "table"
+                ? "accordion top-picks-container"
+                : "d-none"
+            }
+          >
+            {selectedViewStyle === "table" &&
+              stakingPools &&
+              stakingPools.length > 0 &&
+              stakingPools.map((item, index) => {
+                return (
+                  <div className="accordion-item border-0 bg-transparent" key={index}>
+                    <div className="accordion-header" id="headingOne">
+                      <button
+                        className="accordion-button shadow-none p-0 bg-transparent collapsed d-flex flex-column position-relative "
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target={`#${"collapse" + index}`}
+                        aria-expanded="true"
+                        aria-controls={"collapse" + index}
+                        onClick={onPoolSelect}
+                      >
+                        <TopPoolsCard
+                          key={index}
+                          chain={chainId}
+                          top_pick={false}
+                          tokenName={item.tokenName}
+                          apr={item.apr + "%"}
+                          tvl={"$" + getFormattedNumber(0)}
+                          lockTime={item.locktime ? item.locktime : "No Lock"}
+                          tokenLogo={item.tokenURL}
+                          onShowDetailsClick={() => {}}
+                          onHideDetailsClick={() => {}}
+                          cardType={"table"}
+                          details={false}
+                          isNewPool={item.new_pool === "Yes" ? true : false}
+                          isStaked={false}
+                          isAccount={true}
+                          expired={item.expired === "Yes" ? true : false}
+                        />
+                      </button>
+                    </div>
+                    <div
+                      id={"collapse" + index}
+                      className="accordion-collapse collapse"
+                      aria-labelledby={"collapsed" + index}
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div className="accordion-body px-2 text-white">test {index}</div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          {selectedViewStyle === "list" &&
             stakingPools &&
             stakingPools.length > 0 &&
             stakingPools.map((item, index) => {
@@ -163,8 +221,6 @@ const EarnContent = ({
                 </div>
               );
             })}
-
-
         </div>
       </div>
     </div>
