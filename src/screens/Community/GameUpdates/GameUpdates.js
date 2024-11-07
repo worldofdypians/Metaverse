@@ -350,11 +350,11 @@ const GameUpdates = () => {
                     <div className="d-flex flex-column gap-3">
                       <h6 className="other-news-title mb-0">{item.title}</h6>
                       <span
-                        className="announcement-side-content font-poppins gap-1 mb-0"
+                        className="announcement-side-content font-poppins gap-1 mb-0 w-75"
                         dangerouslySetInnerHTML={{
                           __html: item.content.slice(
                             0,
-                            windowSize.width > 786 ? 430 : 215
+                            windowSize.width > 786 ? 300 : 215
                           ),
                         }}
                       ></span>

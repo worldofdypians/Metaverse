@@ -63,7 +63,7 @@ const CawsPopup = ({ onClosePopup }) => {
             valuable asset for players looking to elevate their gameplay
             experience and showcase their unique sense of style within the game.
           </p>
-          <h6 className="text-white">Benefits</h6>
+          <h6 className="text-white game-popup-title">Benefits</h6>
           <div className="benefit-btn-wrapper">
             {benefits.map((item, index) => {
               return (
@@ -76,7 +76,7 @@ const CawsPopup = ({ onClosePopup }) => {
 
           <div className="caws-traits-wrapper p-3 mt-3">
             <div className="d-flex flex-column gap-3">
-              <h6 className="text-white">ALL THE TRAITS</h6>
+              <h6 className="text-white game-popup-title">All the Traits</h6>
               <p className="package-popup-desc-map">
                 Discover all the little details that make each cat as smug, cute
                 and adoptable as the other. You can easily discover their story
@@ -96,7 +96,7 @@ const CawsPopup = ({ onClosePopup }) => {
               </div>
             </div>
           </div>
-          <h6 className="text-white">CAWS Information</h6>
+          <h6 className="text-white game-popup-title">CAWS Information</h6>
           <div className="caws-btn-wrapper">
             {cawsinfo.map((item, index) => {
               return (
