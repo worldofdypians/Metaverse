@@ -174,7 +174,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <a
-              href="https://dappradar.com/dapp/world-of-dypians"
+              href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"
               target={"_blank"}
               rel="noreferrer"
               className="w-100 global-total-wrapper p-3"
