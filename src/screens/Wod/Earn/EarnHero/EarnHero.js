@@ -9,7 +9,7 @@ import tableIcon from "../assets/tableIcon.svg";
 import tableIconActive from "../assets/tableIconActive.svg";
 import listIconActive from "../assets/listIconActive.svg";
 
-const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
+const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
   const dypProducts = [
     {
       // link: "/earn",
@@ -87,6 +87,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
 
   const [filterTitle, setFilterTitle] = useState("All Staking Pools");
   const [listStyle, setListStyle] = useState("table");
+  const [pastPools, setpastPools] = useState(false);
 
   const betaSlider = useRef(null);
 
@@ -192,7 +193,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
                             className="nft-dropdown-item"
                             onClick={() => {
                               setFilterTitle("All Staking Pools");
-                              onSelectFilter("All Staking Pools");
+                              onSelectFilter("All Staking Pools",pastPools);
                             }}
                           >
                             <span>All Staking Pools</span>
@@ -201,7 +202,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
                             className="nft-dropdown-item"
                             onClick={() => {
                               setFilterTitle("Token");
-                              onSelectFilter("Token");
+                              onSelectFilter("Token",pastPools);
                             }}
                           >
                             <span>Token</span>
@@ -210,7 +211,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
                             className="nft-dropdown-item"
                             onClick={() => {
                               setFilterTitle("NFT");
-                              onSelectFilter("NFT");
+                              onSelectFilter("NFT",pastPools);
                             }}
                           >
                             <span>NFT</span>
@@ -219,12 +220,28 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle }) => {
                             className="nft-dropdown-item"
                             onClick={() => {
                               setFilterTitle("Token + NFT");
-                              onSelectFilter("Token + NFT");
+                              onSelectFilter("Token + NFT",pastPools);
                             }}
                           >
                             <span>Token + NFT</span>
                           </li>
                         </ul>
+                      </div>
+                      <div className=" d-flex justify-content-end align-items-center gap-1 gap-lg-3">
+                        <h5 className="text-white inactive-pools m-0">
+                          Past pools
+                        </h5>
+                        <div
+                          className={`pill-box ${
+                            pastPools && "pill-box-active"
+                          }`}
+                          onClick={() => {
+                            setpastPools(!pastPools);
+                            onViewPastPools(filterTitle, !pastPools);
+                          }}
+                        >
+                          <div className="pill"></div>
+                        </div>
                       </div>
                     </div>
                     <div className="tvl-earn-wrapper py-2 px-4">

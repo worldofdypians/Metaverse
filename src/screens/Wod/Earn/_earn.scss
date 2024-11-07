@@ -36,6 +36,35 @@
   }
 }
 
+.inactive-pools {
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.pill-box {
+  background: #8e97cd;
+  border-radius: 100px;
+  padding: 2px;
+  min-width: 36px;
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.pill {
+  background: #ffffff;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.pill-box-active {
+  background: #4cd0cd;
+  justify-content: end;
+}
+
+
 .earncontent-bg {
   background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
 }
