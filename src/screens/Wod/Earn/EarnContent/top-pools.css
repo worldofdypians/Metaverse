@@ -7,6 +7,7 @@
   /* width: 400px; */
   border: 2px solid #312f69;
   transition: all 0.25s;
+  cursor: pointer;
 }
 
 .earnother-table {
@@ -54,11 +55,11 @@
 }
 
 .pools-card-hover:hover {
-  border: 1px solid #8969d7;
+  border: 2px solid #8969d7;
 }
 
 .pools-card-open {
-  /* background-image: url("./assets/toppools-bg.png"); */
+  background-image: url("../assets/toppools-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

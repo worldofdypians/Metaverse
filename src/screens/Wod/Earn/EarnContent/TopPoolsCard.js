@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./top-pools.css";
 import greenArrow from "../assets/greenarrow.svg";
 import newPool from "../assets/newPool.png";
 import staked from "../assets/staked.svg";
 import stakeTag from "../assets/stakeTag.svg";
-import cawsLabel from "../assets/cawsLabel.svg";
+import cawsLabel from "../assets/cawsLabel.png";
 
 const TopPoolsCard = ({
   isAccount,
@@ -26,6 +26,10 @@ const TopPoolsCard = ({
   network,
   isPremium,
 }) => {
+
+  const [showDetails, setShowDetails] = useState(false);
+
+
   const handleDetails = () => {
     if (details === false) {
       onShowDetailsClick();
@@ -33,7 +37,7 @@ const TopPoolsCard = ({
       onHideDetailsClick();
     }
   };
-
+  
   return (
     <>
       <div
@@ -43,11 +47,15 @@ const TopPoolsCard = ({
             : network === "0"
             ? "blurryCard"
             : "poolscardwrapper"
-        } cursor-pointer position-relative ${details && "pools-card-open"}  ${
-          renderedPage === "dashboard" && !details ? "pools-card-hover" : ""
-        }`}
+        } cursor-pointer position-relative ${
+          details && "pools-card-open"
+        }  ${
+          showDetails && "pools-card-hover"
+        } `}
         onClick={() => handleDetails()}
         style={{ display: display }}
+        onMouseEnter={() => setShowDetails(true)}
+        onMouseLeave={() => setShowDetails(false)}
       >
         {isStaked && isPremium && (
           <img

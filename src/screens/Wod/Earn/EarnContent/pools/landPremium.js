@@ -298,16 +298,23 @@ const LandDetailsPremium = ({
   }, [isConnected, EthRewards]);
 
   return (
-    <div className="container-lg p-0">
-      <div
-        className={`allwrappercaws allwrapper-active mb-2 `}
-        style={{
-          borderRadius: listType !== "table" && "0px",
-        }}
-      >
+    <div className={`p-0 ${listType === "list" && "pt-4"} `}>
+      <div className={`allwrappercaws allwrapper-active mb-2 `}>
         <div className="leftside2 mb-2 w-100">
-          <div className="activewrapper position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center">
-            <div className="first-block-wrapper gap-2">
+          <div
+            className={
+              listType === "list"
+                ? "activewrapper d-flex gap-4 justify-content-between position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center"
+                : "activewrapper position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center"
+            }
+          >
+            <div
+              className={` ${
+                listType === "list"
+                  ? "d-flex align-items-center gap-3"
+                  : "first-block-wrapper gap-2"
+              } `}
+            >
               <h6 className="m-0 activetxt">
                 <img
                   src={ellipse}
@@ -365,7 +372,11 @@ const LandDetailsPremium = ({
                 </h6>
               </div> */}
             </div>
-            <div className="d-flex mt-2 align-items-center justify-content-between gap-3 position-relative">
+            <div
+              className={`d-flex ${
+                listType === "table" && "mt-2"
+              } align-items-center justify-content-between gap-3 position-relative`}
+            >
               <div
                 className="d-flex align-items-center justify-content-between gap-3 cursor-pointer"
                 onClick={showCawsPopup}
@@ -432,10 +443,24 @@ const LandDetailsPremium = ({
             </div>
           </div>
         </div>
-        <div className="pools-details-wrapper d-flex m-0 container-lg border-0 ">
-          <div className="d-flex flex-column w-100 justify-content-between gap-4 gap-lg-0">
-            <div className="firstblockwrapper">
-              <div className="d-flex flex-row align-items-center justify-content-between gap-4 h-100">
+        <div className="pools-details-wrapper d-flex m-0 border-0 ">
+          <div
+            className={` ${
+              listType === "list" ? "row" : "d-flex flex-column"
+            } w-100 justify-content-between gap-4 gap-lg-0`}
+          >
+            <div
+              className={`firstblockwrapper ${
+                listType === "list" && "col-12 col-md-6 col-lg-2 py-2"
+              }`}
+            >
+              <div
+                className={`d-flex ${
+                  listType === "table"
+                    ? "flex-row align-items-center"
+                    : "flex-column"
+                } justify-content-between gap-4 h-100`}
+              >
                 <h6 className="m-0 start-title">Start Staking</h6>
 
                 {coinbase === null ||
@@ -473,10 +498,10 @@ const LandDetailsPremium = ({
               </div>
             </div>
             <div
-              className={`otherside-border px-0 ${
-                (chainId !== "1" || expired === true || !isPremium) &&
-                "blurrypool"
-              }`}
+              className={`otherside-border  ${
+                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+              }  ${(chainId !== "1" || expired === true || !isPremium) &&
+                "blurrypool"} `}
             >
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Stake</h6>
@@ -526,13 +551,18 @@ const LandDetailsPremium = ({
               </div>
             </div>
             <div
-              className={`otherside-border px-0  ${
-                (chainId !== "1" || expired === true || !isPremium) &&
-                "blurrypool"
-              }`}
+              className={`otherside-border ${
+                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+              }  ${(chainId !== "1" || expired === true || !isPremium) &&"blurrypool"} `}
             >
               <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6 className="m-0 withdraw-txt d-flex flex-column gap-2">
+                <h6
+                  className={
+                    listType === "list"
+                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                      : "m-0 withdraw-txt d-flex flex-column gap-2"
+                  }
+                >
                   REWARDS
                   <h6
                     className="m-0 mybalance-text"
@@ -579,12 +609,10 @@ const LandDetailsPremium = ({
                 </div>
               </div>
             </div>
-
             <div
-              className={`otherside-border px-0 ${
-                (chainId !== "1" || expired === true || !isPremium) &&
-                "blurrypool"
-              }`}
+              className={`otherside-border  ${
+                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+              } ${chainId !== "1" && "blurrypool"}`}
             >
               <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
                 Unstake
