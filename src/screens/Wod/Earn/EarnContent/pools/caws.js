@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import axios from "axios";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
-
 import "../top-pools.css";
+import './_stakingWod.scss';
 import arrowup from "../../assets/arrow-up.svg";
 import moreinfo from "../../assets/more-info.svg";
 import wallet from "../../assets/wallet.svg";
 import { Tooltip } from "@mui/material";
-
 import weth from "../../assets/tokens/weth.svg";
 import NftStakeCheckListModal from "../../../../Caws/NftMinting/NftStakeChecklistModal/NftStakeChecklistModal";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -107,6 +106,7 @@ const CawsDetails = ({
   };
 
   const handleClaimAll = async () => {
+
     const address = coinbase;
     let myStakes = await getStakesIds();
     let calculateRewards = [];
@@ -317,10 +317,10 @@ const CawsDetails = ({
           borderRadius: listType !== "table" && "0px",
         }}
       >
-        <div className="leftside2 w-100">
+        <div className="leftside2 mb-2 w-100">
           <div className="activewrapper position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center">
             <div className="first-block-wrapper gap-2">
-              <h6 className="expiredtxt caws-active-txt">Expired Pool</h6>
+              <h6 className="m-0 expiredtxt caws-active-txt">Expired Pool</h6>
               {/* <div className="d-flex align-items-center justify-content-between gap-2">
                     <h6 className="earnrewards-text">Earn rewards in:</h6>
                     <h6 className="earnrewards-token d-flex align-items-center gap-1">
@@ -329,8 +329,8 @@ const CawsDetails = ({
                   </div> */}
 
               <div className="d-flex align-items-center justify-content-between gap-2">
-                <h6 className="earnrewards-text">APR:</h6>
-                <h6 className="earnrewards-token d-flex align-items-center gap-1">
+                <h6 className="m-0 earnrewards-text">APR:</h6>
+                <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
                   50%
                   <Tooltip
                     placement="top"
@@ -347,8 +347,8 @@ const CawsDetails = ({
                 </h6>
               </div>
               <div className="d-flex align-items-center justify-content-between gap-2">
-                <h6 className="earnrewards-text">Lock time:</h6>
-                <h6 className="earnrewards-token d-flex align-items-center gap-1">
+                <h6 className="m-0 earnrewards-text">Lock time:</h6>
+                <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
                   30 days
                   <Tooltip
                     placement="top"
@@ -365,18 +365,18 @@ const CawsDetails = ({
                 </h6>
               </div>
               <div className="d-flex align-items-center justify-content-between gap-2">
-                <h6 className="earnrewards-text">Total NFTs staked</h6>
-                <h6 className="earnrewards-token d-flex align-items-center gap-1">
+                <h6 className="m-0 earnrewards-text">Total NFTs staked</h6>
+                <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
                   {totalStakes}/10000
                 </h6>
               </div>
             </div>
-            <div className="d-flex align-items-center justify-content-between gap-3 position-relative">
+            <div className="d-flex mt-2 align-items-center justify-content-between gap-3 position-relative">
               <div
                 className="d-flex align-items-center justify-content-between gap-3 cursor-pointer"
                 onClick={showCawsPopup}
               >
-                <h6 className="bottomitems">Get CAWS</h6>
+                <h6 className="m-0 bottomitems">Get CAWS</h6>
               </div>
               {cawspopup === true && (
                 <div className="position-absolute">
@@ -398,7 +398,7 @@ const CawsDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             WoD Marketplace
                           </h6>
@@ -411,7 +411,7 @@ const CawsDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             Coinbase
                           </h6>
@@ -425,7 +425,7 @@ const CawsDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             OpenSea
                           </h6>
@@ -442,8 +442,7 @@ const CawsDetails = ({
           <div className="d-flex flex-column w-100 justify-content-between gap-4 gap-lg-0">
             <div className="firstblockwrapper">
               <div
-                className="d-flex flex-row align-items-center justify-content-between  gap-4"
-                style={{ height: "100%" }}
+                className="d-flex flex-row align-items-center justify-content-between gap-4 h-100"
               >
                 <h6 className="start-title m-0">Start Staking</h6>
 
@@ -460,7 +459,6 @@ const CawsDetails = ({
                   </button>
                 ) : chainId === "1" ? (
                   <div className="addressbtn btn">
-                    {/* <Address a={coinbase} chainId={1} /> */}
                     {shortAddress(coinbase)}
                   </div>
                 ) : (
@@ -476,19 +474,17 @@ const CawsDetails = ({
               </div>
             </div>
             <div
-              className={`otherside-border px-0  ${
-                chainId !== "1" && "blurrypool"
-              } ${expired === true && "blurrypool"}`}
+              className={`otherside-border px-0  ${chainId !== "1" && "blurrypool"} ${
+                expired === true && "blurrypool"
+              } `}
             >
-              <div className="d-flex align-items-center gap-2">
-                <div className="d-flex align-items-center w-100 justify-content-between gap-3 justify-content-between">
-                  <h6 className="deposit-txt">Stake</h6>
+              <div className="d-flex justify-content-between align-items-center gap-2">
+                  <h6 className="m-0 deposit-txt">Stake</h6>
 
-                  <h6 className="mybalance-text">
+                  <h6 className="m-0 mybalance-text">
                     Avaliable NFTs:{" "}
                     <b>{isConnected === false ? 0 : myNFTs.length} CAWS</b>
                   </h6>
-                </div>
                 {/* <Tooltip
                   placement="top"
                   title={
@@ -503,7 +499,7 @@ const CawsDetails = ({
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
                   <div className="position-relative">
-                    <h6 className="amount-txt">Amount 1/{myNFTs.length}</h6>
+                    <h6 className="m-0 amount-txt">Amount 1/{myNFTs.length}</h6>
                     <input
                       type={"number"}
                       disabled={
@@ -534,7 +530,6 @@ const CawsDetails = ({
                     disabled={
                       amountToStake !== "" && myNFTs.length > 0 ? false : true
                     }
-                    onClick={() => {}}
                   >
                     {showApprove === false ? "Deposit" : "Approve"}
                   </button>
@@ -550,10 +545,10 @@ const CawsDetails = ({
               } ${expired === true && "blurrypool"}`}
             >
               <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6 className="withdraw-txt d-flex flex-column gap-2">
+                <h6 className="m-0 withdraw-txt d-flex flex-column gap-2">
                   REWARDS
                   <h6
-                    className="mybalance-text"
+                    className="m-0 mybalance-text"
                     style={{ textTransform: "capitalize" }}
                   >
                     NFTs Staked:{""}
@@ -562,7 +557,7 @@ const CawsDetails = ({
                     </b>
                   </h6>
                 </h6>
-                <h6 className="withdraw-littletxt d-flex align-items-center gap-2">
+                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
                   {/* Rewards are displayed in real-time */}
                   <Tooltip
                     placement="top"
@@ -581,7 +576,7 @@ const CawsDetails = ({
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2"></div>
                 <div className="form-row d-flex gap-2 align-items-end justify-content-between">
-                  <h6 className="rewardstxtCaws d-flex align-items-center gap-2">
+                  <h6 className="m-0 rewardstxtCaws d-flex align-items-center gap-2">
                     <img src={weth} alt="" style={{ width: 18, height: 18 }} />{" "}
                     {getFormattedNumber(EthRewards, 6)} WETH ($
                     {getFormattedNumber(ethToUSD, 6)})
@@ -605,7 +600,7 @@ const CawsDetails = ({
                 chainId !== "1" && "blurrypool"
               }`}
             >
-              <h6 className="deposit-txt d-flex align-items-center gap-2 justify-content-between">
+              <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
                 Unstake
                 <Tooltip
                   placement="top"

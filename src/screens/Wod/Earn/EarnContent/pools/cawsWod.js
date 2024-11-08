@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Web3 from "web3";
 import axios from "axios";
-import moment from "moment";
-import getFormattedNumber from "../../functions/get-formatted-number";
-import { formattedNum } from "../../functions/formatUSD";
-
-import Address from "./address";
-import WalletModal from "../WalletModal";
-import "./top-pools.css";
-import ellipse from "./assets/ellipse.svg";
-import arrowup from "./assets/arrow-up.svg";
-import moreinfo from "./assets/more-info.svg";
-import wallet from "./assets/wallet.svg";
-import Tooltip from "@material-ui/core/Tooltip";
-
-import { shortAddress } from "../../functions/shortAddress";
-import xMark from "../calculator/assets/xMark.svg";
-import weth from "./assets/weth.svg";
-import { handleSwitchNetworkhook } from "../../functions/hooks";
-import useWindowSize from "../../functions/useWindowSize";
-import NftCawsWodChecklistModal from "../caws/NftMinting/components/NftMinting/NftStakeChecklistModal/NftCawsWodChecklistModal";
+import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
+import "../top-pools.css";
+import "./_stakingWod.scss";
+import arrowup from "../../assets/arrow-up.svg";
+import moreinfo from "../../assets/more-info.svg";
+import wallet from "../../assets/wallet.svg";
+import { Tooltip } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
+import weth from "../../assets/tokens/weth.svg";
+import RewardsModal from "../../../../../components/StakeModal/RewardsModal";
+import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
+import { shortAddress } from "../../../../Caws/functions/shortAddress";
+import { ethers } from "ethers";
 
 const CawsWodDetails = ({
   coinbase,
@@ -29,42 +21,34 @@ const CawsWodDetails = ({
   handleSwitchNetwork,
   chainId,
   handleConnection,
-  renderedPage,expired
+  renderedPage,
+  expired,
+  binanceW3WProvider,
 }) => {
   const [myNFTs, setMyNFTs] = useState([]);
   const [myLandNFTs, setMyLandNFTs] = useState([]);
 
-  const [amountToStake, setamountToStake] = useState("");
   const [mystakes, setMystakes] = useState([]);
   const [myLandstakes, setMyLandstakes] = useState([]);
-  const [active, setActive] = useState(true);
 
   const [color, setColor] = useState("#F13227");
   const [status, setStatus] = useState("");
   const [showApprove, setshowApprove] = useState(true);
   const [showChecklistModal, setshowChecklistModal] = useState(false);
   const [EthRewards, setEthRewards] = useState(0);
-  const [showStaked, setshowStaked] = useState(true);
-  const [showToStake, setshowToStake] = useState(false);
   const [ethToUSD, setethToUSD] = useState(0);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
   const [showUnstakeModal, setShowUnstakeModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [countDownLeft, setCountDownLeft] = useState(59000);
 
   const [approvedNfts, setApprovedNfts] = useState([]);
   const [approvedLandNfts, setApprovedLandNfts] = useState([]);
 
-  const [loadingdeposit, setloadingdeposit] = useState(false);
   const [newStakes, setnewStakes] = useState(0);
-  const [loading, setloading] = useState(false);
-  const [showClaim, setshowClaim] = useState(false);
   const [hide, setHide] = useState("");
   const [screenName, setScreenName] = useState("land");
   const [cawspopup, setCawspopup] = useState(false);
   const [landpopup, setLandpopup] = useState(false);
-
-  const windowSize = useWindowSize();
 
   const checkApproval = async () => {
     const address = coinbase;
@@ -197,14 +181,38 @@ const CawsWodDetails = ({
   };
 
   const claimRewards = async () => {
-    let myStakes = await getStakesIds();
-    // setclaimAllStatus("Claiming all rewards, please wait...");
-    await window.wod_caws
-      .claimRewardsWodCaws(myStakes)
-      .then(() => {
-        setEthRewards(0);
-      })
-      .catch((err) => {});
+    if (window.WALLET_TYPE !== "binance") {
+      let myStakes = await getStakesIds();
+      await window.wod_caws
+        .claimRewardsWodCaws(myStakes)
+        .then(() => {
+          setEthRewards(0);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let myStakes = await getStakesIds();
+
+      let staking_contract = new ethers.Contract(
+        window.config.wod_caws_address,
+        window.WOD_CAWS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse =   await staking_contract
+        .claimRewards(myStakes)
+        .catch((err) => {
+          window.alertify.error(err?.message);
+        });
+
+        const txReceipt = await txResponse.wait();
+        if (txReceipt) {
+          setEthRewards(0);
+          window.alertify.message("Claimed All Rewards!");
+        }
+
+    }
   };
 
   const convertEthToUsd = async () => {
@@ -238,21 +246,6 @@ const CawsWodDetails = ({
     setCountDownLeft(parseInt(finalDay * 1000) - Date.now());
   };
 
-  const handleUnstakeAll = async () => {
-    // setunstakeAllStatus("Unstaking all please wait...");
-    await window.wod_caws
-      .withdrawWodCaws()
-      .then(() => {
-        refreshStakes();
-        // setunstakeAllStatus("Successfully unstaked all!");
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        // setunstakeAllStatus("An error occurred, please try again");
-        setShowUnstakeModal(false);
-      });
-  };
-
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x1")
       .then(() => {
@@ -262,7 +255,7 @@ const CawsWodDetails = ({
         console.log(e);
       });
   };
- 
+
   useEffect(() => {
     if (coinbase && chainId === "1") {
       getStakesIds();
@@ -304,18 +297,15 @@ const CawsWodDetails = ({
   return (
     <div className="container-lg p-0">
       <div
-       className={`allwrappercaws allwrapper-active mb-2 `}
-       style={{
-         borderRadius: listType !== "table" && "0px",
-       }}
+        className={`allwrappercaws allwrapper-active mb-2 `}
+        style={{
+          borderRadius: listType !== "table" && "0px",
+        }}
       >
-        <div className="leftside2 w-100">
+        <div className="leftside2 mb-2 w-100">
           <div className="activewrapper position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center">
-            <div className="d-flex flex-column flex-lg-row align-items-end align-items-lg-center justify-content-between gap-3 gap-lg-5">
-            <h6 className="expiredtxt caws-active-txt">
-               
-               Expired Pool
-             </h6>
+            <div className="first-block-wrapper gap-2">
+              <h6 className="m-0 expiredtxt caws-active-txt">Expired Pool</h6>
               {/* <div className="d-flex align-items-center justify-content-between gap-2">
                     <h6 className="earnrewards-text">Earn rewards in:</h6>
                     <h6 className="earnrewards-token d-flex align-items-center gap-1">
@@ -324,8 +314,8 @@ const CawsWodDetails = ({
                   </div> */}
 
               <div className="d-flex align-items-center justify-content-between gap-2">
-                <h6 className="earnrewards-text">APR:</h6>
-                <h6 className="earnrewards-token d-flex align-items-center gap-1">
+                <h6 className="m-0 earnrewards-text">APR:</h6>
+                <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
                   50%
                   <Tooltip
                     placement="top"
@@ -342,8 +332,8 @@ const CawsWodDetails = ({
                 </h6>
               </div>
               <div className="d-flex align-items-center justify-content-between gap-2">
-                <h6 className="earnrewards-text">Lock time:</h6>
-                <h6 className="earnrewards-token d-flex align-items-center gap-1">
+                <h6 className="m-0 earnrewards-text">Lock time:</h6>
+                <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
                   No Lock
                   <Tooltip
                     placement="top"
@@ -366,12 +356,12 @@ const CawsWodDetails = ({
                 </h6>
               </div> */}
             </div>
-            <div className="d-flex align-items-center justify-content-between gap-3 position-relative">
+            <div className="d-flex mt-2 align-items-center justify-content-between gap-3 position-relative">
               <div
                 className="d-flex align-items-center justify-content-between gap-3 cursor-pointer"
                 onClick={showCawsPopup}
               >
-                <h6 className="bottomitems">Get CAWS</h6>
+                <h6 className="m-0 bottomitems">Get CAWS</h6>
               </div>
               {cawspopup === true && (
                 <div className="position-absolute">
@@ -385,7 +375,7 @@ const CawsWodDetails = ({
                       style={{ opacity: 1, width: 145 }}
                     >
                       <div className="d-flex flex-column gap-2 align-items-start">
-                      <a
+                        <a
                           href="https://www.worldofdypians.com/marketplace/caws"
                           target="_blank"
                           rel="noreferrer"
@@ -393,11 +383,11 @@ const CawsWodDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             WoD Marketplace
                           </h6>
-                      </a>
+                        </a>
                         <a
                           href="https://nft.coinbase.com/collection/catsandwatches"
                           target="_blank"
@@ -406,7 +396,7 @@ const CawsWodDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             Coinbase
                           </h6>
@@ -420,7 +410,7 @@ const CawsWodDetails = ({
                             setCawspopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             OpenSea
                           </h6>
@@ -434,7 +424,7 @@ const CawsWodDetails = ({
                 className="d-flex align-items-center justify-content-between gap-3 cursor pointer"
                 onClick={showLandPopup}
               >
-                <h6 className="bottomitems">Get WOD</h6>
+                <h6 className="m-0 bottomitems">Get WOD</h6>
               </div>
               {landpopup === true && (
                 <div className="position-absolute">
@@ -448,7 +438,7 @@ const CawsWodDetails = ({
                       style={{ opacity: 1, width: 145, left: 90 }}
                     >
                       <div className="d-flex flex-column gap-2 align-items-start">
-                      <a
+                        <a
                           href="https://www.worldofdypians.com/marketplace/land"
                           target="_blank"
                           rel="noreferrer"
@@ -456,11 +446,11 @@ const CawsWodDetails = ({
                             setLandpopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             WoD Marketplace
                           </h6>
-                      </a>
+                        </a>
                         <a
                           href="https://nft.coinbase.com/collection/worldofdypians"
                           target="_blank"
@@ -469,7 +459,7 @@ const CawsWodDetails = ({
                             setLandpopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             Coinbase
                           </h6>
@@ -483,7 +473,7 @@ const CawsWodDetails = ({
                             setLandpopup(false);
                           }}
                         >
-                          <h6 className="bottomitems">
+                          <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
                             OpenSea
                           </h6>
@@ -497,13 +487,10 @@ const CawsWodDetails = ({
           </div>
         </div>
         <div className="pools-details-wrapper d-flex m-0 container-lg border-0 ">
-          <div className="row w-100 justify-content-between gap-4 gap-lg-0">
-            <div className="firstblockwrapper col-12 col-md-6 col-lg-2">
-              <div
-                className="d-flex flex-row flex-lg-column align-items-center align-items-lg-start justify-content-between  gap-4"
-                style={{ height: "100%" }}
-              >
-                <h6 className="start-title">Start Staking</h6>
+          <div className="d-flex flex-column w-100 justify-content-between gap-4 gap-lg-0">
+            <div className="firstblockwrapper">
+              <div className="d-flex flex-row align-items-center justify-content-between gap-4 h-100">
+                <h6 className="m-0 start-title">Start Staking</h6>
 
                 {coinbase === null ||
                 coinbase === undefined ||
@@ -511,15 +498,13 @@ const CawsWodDetails = ({
                   <button
                     className="connectbtn btn"
                     onClick={() => {
-                      setShowModal(true);
+                      handleConnection();
                     }}
                   >
                     <img src={wallet} alt="" /> Connect wallet
                   </button>
                 ) : chainId === "1" ? (
-                  <div className="addressbtn btn">
-                    <Address a={coinbase} chainId={1} />
-                  </div>
+                  <div className="addressbtn btn">{shortAddress(coinbase)}</div>
                 ) : (
                   <button
                     className="connectbtn btn"
@@ -533,23 +518,21 @@ const CawsWodDetails = ({
               </div>
             </div>
             <div
-              className={`otherside-border col-12 col-md-6 col-lg-4 ${
+              className={`otherside-border  px-0  ${
                 chainId !== "1" && "blurrypool"
-              } ${expired === true && "blurrypool"}`}
+              } ${expired === true && "blurrypool"} `}
             >
               <div className="d-flex justify-content-between align-items-center gap-2">
-                <div className="d-flex align-items-center gap-3">
-                  <h6 className="deposit-txt">Stake</h6>
+                <h6 className="m-0 deposit-txt">Stake</h6>
 
-                  <h6 className="mybalance-text">
-                    Avaliable NFTs:{" "}
-                    <b>
-                      {isConnected === false ? 0 : myNFTs.length} CAWS &{" "}
-                      {isConnected === false ? 0 : myLandNFTs.length} WOD
-                    </b>
-                  </h6>
-                </div>
-                <Tooltip
+                <h6 className="m-0 mybalance-text">
+                  Avaliable NFTs:{" "}
+                  <b>
+                    {isConnected === false ? 0 : myNFTs.length} CAWS &{" "}
+                    {isConnected === false ? 0 : myLandNFTs.length} WOD
+                  </b>
+                </h6>
+                {/* <Tooltip
                   placement="top"
                   title={
                     <div className="tooltip-text">
@@ -558,12 +541,12 @@ const CawsWodDetails = ({
                   }
                 >
                   <img src={moreinfo} alt="" />
-                </Tooltip>
+                </Tooltip> */}
               </div>
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
                   <button
-                    className="btn filledbtn"
+                    className="btn disabled-btn"
                     onClick={() => {
                       setshowChecklistModal(true);
                       setOpenStakeChecklist(true);
@@ -584,14 +567,15 @@ const CawsWodDetails = ({
               </div>
             </div>
             <div
-              className={`otherside-border col-12 col-md-6
-                col-lg-4  ${chainId !== "1" && "blurrypool"}`}
+              className={`otherside-border  px-0 ${
+                chainId !== "1" && "blurrypool"
+              }`}
             >
               <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6 className="withdraw-txt d-flex gap-2 align-items-center">
+                <h6 className="m-0 withdraw-txt d-flex flex-column gap-2">
                   REWARDS
                   <h6
-                    className="mybalance-text"
+                    className="m-0 mybalance-text"
                     style={{ textTransform: "capitalize" }}
                   >
                     Staked:{""}
@@ -601,7 +585,7 @@ const CawsWodDetails = ({
                     </b>
                   </h6>
                 </h6>
-                <h6 className="withdraw-littletxt d-flex align-items-center gap-2">
+                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
                   <Tooltip
                     placement="top"
                     title={
@@ -617,10 +601,9 @@ const CawsWodDetails = ({
                 </h6>
               </div>
               <div className="d-flex flex-column gap-2 justify-content-between">
-                <div className="d-flex align-items-center justify-content-between gap-2"></div>
                 <div className="form-row d-flex gap-2 align-items-end justify-content-between">
-                  <h6 className="rewardstxtCaws d-flex align-items-center gap-2">
-                    <img src={weth} alt="" />{" "}
+                  <h6 className="m-0 rewardstxtCaws d-flex align-items-center gap-2">
+                    <img src={weth} alt="" style={{ width: 18, height: 18 }} />{" "}
                     {getFormattedNumber(EthRewards, 6)} WETH ($
                     {getFormattedNumber(ethToUSD, 6)})
                   </h6>
@@ -639,11 +622,11 @@ const CawsWodDetails = ({
             </div>
 
             <div
-              className={`otherside-border col-12 col-md-6 col-lg-2 ${
+              className={`otherside-border px-0 ${
                 chainId !== "1" && "blurrypool"
               }`}
             >
-              <h6 className="deposit-txt d-flex align-items-center gap-2 justify-content-between">
+              <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
                 Unstake
                 <Tooltip
                   placement="top"
@@ -660,7 +643,7 @@ const CawsWodDetails = ({
               </h6>
 
               <button
-                className="btn outline-btn"
+                className="btn outline-btn-stake"
                 onClick={() => {
                   setshowChecklistModal(true);
                   setOpenStakeChecklist(true);
@@ -674,68 +657,25 @@ const CawsWodDetails = ({
         </div>
       </div>
       {showChecklistModal === true && (
-        <NftCawsWodChecklistModal
-          onClose={() => {
+        <RewardsModal
+          onModalClose={() => {
             setshowChecklistModal(false);
-            setamountToStake("");
           }}
           getApprovedNfts={getApprovedNfts}
           getApprovedLandNfts={getApprovedLandNfts}
-          // nftItem={showStaked ? mystakes : showToStake ? myNFTs : showStaked}
-          nftItem={
-            hide === "" || hide === "tostake" || hide === "mystakes2"
-              ? screenName === "caws"
-                ? mystakes
-                : myLandstakes
-              : screenName === "caws"
-              ? myNFTs
-              : myLandNFTs
-          }
-          landItems={myLandNFTs}
-          cawsItems={myNFTs}
-          cawsStakes={mystakes}
           landStakes={myLandstakes}
-          onShowNextScreen={() => {
-            setScreenName("caws");
-          }}
-          onShowBackScreen={() => {
-            setScreenName("land");
-          }}
-          onshowStaked={() => {
-            setshowStaked(true);
-            setshowToStake(false);
-            setHide("mystakes2");
-          }}
-          screenName={screenName}
-          onshowToStake={() => {
-            setshowStaked(false);
-            setshowToStake(true);
-            setHide("tostake2");
-          }}
+          cawsStakes={mystakes}
+          nftItem={mystakes}
+          isConnected={isConnected}
+          coinbase={coinbase}
+          onDepositComplete={() => refreshStakes()}
+          ETHrewards={EthRewards}
+          finalUsd={ethToUSD}
+          handleConnect={handleConnection}
           onClaimAll={() => {
             claimRewards();
           }}
-          onUnstake={() => handleUnstakeAll()}
-          isConnected={isConnected}
-          coinbase={coinbase}
-          ETHrewards={EthRewards}
-          countDownLeft={countDownLeft}
-          open={openStakeChecklist ? true : false}
-          hideItem={hide}
-          onDepositComplete={() => refreshStakes()}
-        />
-      )}
-
-      {showModal === true && (
-        <WalletModal
-          show={showModal}
-          handleClose={() => {
-            setShowModal(false);
-          }}
-          handleConnection={() => {
-            handleConnection();
-            setShowModal(false);
-          }}
+          binanceW3WProvider={binanceW3WProvider}
         />
       )}
     </div>

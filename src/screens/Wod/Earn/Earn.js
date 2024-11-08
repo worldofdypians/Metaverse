@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_earn.scss";
 import EarnHero from "./EarnHero/EarnHero";
 import EarnContent from "./EarnContent/EarnContent";
-import StakingWod from "./stakingpools/StakingWod";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 import useWindowSize from "../../../hooks/useWindowSize";
-import { ClickAwayListener } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import closeX from "./assets/closeX.svg";
 
 const Earn = ({
   isConnected,
@@ -18,7 +11,8 @@ const Earn = ({
   handleSwitchNetwork,
   onConnectWallet,
   nftPools,
-  binanceW3WProvider
+  binanceW3WProvider,
+  isPremium
 }) => {
   const tokenPools = [
     {
@@ -115,10 +109,20 @@ const Earn = ({
   const [expired, setExpired] = useState(false);
 
   const handleSetPools = (poolFilter, isExpired) => {
-    if (poolFilter === "All pools") {
-      setStakingPools(nftPools);
-    } else if (nftPools === "Token") {
-      setStakingPools(tokenPools);
+    if (poolFilter === "All Staking Pools") {
+      if (isExpired === false) {
+        let nftPoolsActive = nftPools.filter((item) => {
+          return item.expired === "No";
+        });
+        setStakingPools(nftPoolsActive);
+      } else if (isExpired === true) {
+        let nftPoolsExpired = nftPools.filter((item) => {
+          return item.expired === "Yes";
+        });
+        setStakingPools(nftPoolsExpired);
+      }
+    } else if (poolFilter === "Token") {
+      setStakingPools([]);
     } else if (poolFilter === "NFT") {
       if (isExpired === false) {
         let nftPoolsActive = nftPools.filter((item) => {
@@ -132,7 +136,17 @@ const Earn = ({
         setStakingPools(nftPoolsExpired);
       }
     } else if (poolFilter === "Token + NFT") {
-      setStakingPools(nftPools);
+      if (isExpired === false) {
+        let nftPoolsActive = nftPools.filter((item) => {
+          return item.expired === "No";
+        });
+        setStakingPools(nftPoolsActive);
+      } else if (isExpired === true) {
+        let nftPoolsExpired = nftPools.filter((item) => {
+          return item.expired === "Yes";
+        });
+        setStakingPools(nftPoolsExpired);
+      }
     }
   };
 
@@ -186,6 +200,7 @@ const Earn = ({
             nftPools={nftPools}
             expired={expired}
             binanceW3WProvider={binanceW3WProvider}
+            isPremium={isPremium}
           />
         </div>
       </div>
