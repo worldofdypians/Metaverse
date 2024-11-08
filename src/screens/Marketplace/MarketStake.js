@@ -468,7 +468,7 @@ const MarketStake = ({
   };
 
   const calculateAllRewardsLandPremium = async () => {
-    let myStakes = await getCawsStakesIds();
+    let myStakes = await getStakesIdsLandPremium();
     let result = 0;
     let calculateRewards = [];
     let  staking_contract = await new window.infuraWeb3.eth.Contract(
