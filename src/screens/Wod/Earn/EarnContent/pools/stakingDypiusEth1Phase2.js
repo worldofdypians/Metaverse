@@ -1434,7 +1434,7 @@ const StakeDypiusEth1Phase2 = ({
     //       borderRadius: listType !== "table" && "0px",
     //     }}
     //   >
-    //     <div className="leftside2 w-100">
+    //     <div className="leftside2 mb-2 w-100">
     //       <div className="activewrapper">
     //         <div
     //           className={`d-flex flex-column flex-lg-row w-100 align-items-start align-items-lg-center justify-content-between ${

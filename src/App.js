@@ -5517,6 +5517,7 @@ function App() {
                 }}
                 nftPools={nftPools}
                 binanceW3WProvider={library}
+                isPremium={isPremium}
               />
             }
           />
