@@ -116,6 +116,8 @@ const Portfolio = ({
   MyNFTSLandAvax,
   MyNFTSCawsAvax,
   MyNFTSLandBase,
+  myNFTSBNB,
+  myMatNfts,
   myNFTSopBNB,
   MyNFTSCawsBase,
   myMultiversNfts,
@@ -145,7 +147,6 @@ const Portfolio = ({
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
   const [filterTitle, setFilterTitle] = useState("Balance");
   const [nftItems, setNftItems] = useState([]);
-
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
@@ -3053,6 +3054,9 @@ const Portfolio = ({
                                   window.config.nft_core_address
                                 ? "core"
                                 : nft.nftAddress ===
+                                  window.config.nft_bnb_address
+                                ? "bnb"
+                                : nft.nftAddress ===
                                   window.config.nft_viction_address
                                 ? "viction"
                                 : nft.nftAddress ===
@@ -3154,6 +3158,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_core_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_bnb_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_viction_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+50.png`

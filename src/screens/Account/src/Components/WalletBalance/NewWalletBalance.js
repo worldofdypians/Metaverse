@@ -306,6 +306,12 @@ const NewWalletBalance = ({
   cookieEarnToken,
   cookiePoints,
   authToken,
+  matEarnUsd,
+  claimedMatChests,
+  claimedMatPremiumChests,
+  openedMatChests,
+  matPoints,
+  matEarnToken,
   treasureRewardMoney,
   allClaimedChests
 }) => {
@@ -324,6 +330,8 @@ const NewWalletBalance = ({
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let matLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
@@ -490,6 +498,32 @@ const NewWalletBalance = ({
     rewards: "TAIKO",
     status: "Live",
   };
+
+  const dummyMatchain = {
+    title: "Matchain",
+    logo: taikoLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in BNB Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 19, 2024",
+    date: "Aug 19, 2024",
+    id: "event22",
+    eventType: "Explore & Mine",
+    eventDuration: matLastDay,
+    backgroundImage: taikoBg,
+
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Matchain",
+    linkState: "matchain",
+    rewards: "BNB",
+    status: "Live",
+  };
+
 
   const dummyBNB = {
     title: "BNB Chain",
@@ -681,6 +715,36 @@ const NewWalletBalance = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Oct 21, 2024",
+      },
+    },
+    {
+      title: "Matchain",
+      logo: taikoLogo,
+      eventStatus: "Coming Soon",
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Matchain",
+        chain: "Matchain",
+        linkState: "matchain",
+        rewards: "BNB",
+        status: "Coming Soon",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event25",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: matLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
       },
     },
     {
@@ -1128,7 +1192,7 @@ const NewWalletBalance = ({
 
   const totalClaimedChests =allClaimedChests
 
-  const chestPercentage = (totalClaimedChests / 140) * 100;
+  const chestPercentage = (totalClaimedChests / 160) * 100;
 
   const dummyEvents = [
     {
@@ -1549,7 +1613,6 @@ const NewWalletBalance = ({
   }, [address]);
 
 
-
   useEffect(() => {
     fetchUsersocialRewards();
   }, [userSocialRewards]);
@@ -1693,6 +1756,8 @@ const NewWalletBalance = ({
                           ? mantaEarnUsd
                           : item.title === "Taiko"
                           ? taikoEarnUsd
+                          : item.title === "Matchain"
+                          ? matEarnUsd
                           : item.title === "Cookie3"
                           ? cookieEarnUsd
                           : item.title === "Immutable"
@@ -1877,7 +1942,8 @@ const NewWalletBalance = ({
                           Number(skaleEarnUsd) +
                           Number(cawsPremiumRewards) +
                           Number(landPremiumRewards) +
-                          Number(taikoEarnUsd) +
+                          Number(taikoEarnUsd)+
+                          Number(matEarnUsd) +
                           Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
                           Number(cookieEarnUsd) +
@@ -2115,6 +2181,8 @@ const NewWalletBalance = ({
                       ? mantaEarnUsd
                       : item.title === "Taiko"
                       ? taikoEarnUsd
+                      : item.title === "Matchain"
+                      ? matEarnUsd
                       : item.title === "Cookie3"
                       ? cookieEarnUsd
                       : item.title === "Immutable"
@@ -2206,6 +2274,8 @@ const NewWalletBalance = ({
                         : dummyEvent.linkState === "manta"
                         ? mantaThumb
                         : dummyEvent.linkState === "taiko"
+                        ? taikoThumb
+                        : dummyEvent.linkState === "matchain"
                         ? taikoThumb
                         : dummyEvent.linkState === "cookie3"
                         ? cookie3Thumb
@@ -2502,6 +2572,18 @@ const NewWalletBalance = ({
                       the game daily and venture into the Taiko area to uncover
                       hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event25" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
+                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      engaging in the game on a daily basis and exploring the
+                      Matchain area, players not only stand a chance to secure
+                      daily rewards in BNB, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Matchain area to uncover
+                      hidden treasures.
+                    </p>
                   ) : dummyEvent.id === "event23" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
@@ -2564,7 +2646,8 @@ const NewWalletBalance = ({
                           : dummyEvent.id === "event6" ||
                             dummyEvent.id === "event8" ||
                             dummyEvent.id === "event9" ||
-                            dummyEvent.id === "event20"
+                            dummyEvent.id === "event20" ||
+                            dummyEvent.id === "event25"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2641,6 +2724,8 @@ const NewWalletBalance = ({
                 ? "Manta"
                 : dummyEvent.id === "event22"
                 ? "Taiko"
+                : dummyEvent.id === "event25"
+                ? "Matchain"
                 : dummyEvent.id === "event23"
                 ? "Cookie3"
                 : "Base Network"}
@@ -2657,7 +2742,14 @@ const NewWalletBalance = ({
                 connectivity for creators, communities, and markets across
                 different borders and protocols.
               </p>
-            ) : dummyEvent.id === "event2" ? (
+            ) : dummyEvent.id === "event25" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Matchain is a decentralized AI blockchain focused on data and identity sovereignty, utilizing advanced AI for data aggregation, analytics, and user profiling to enhance decentralized identity solutions and data management.
+              </p>
+            )  : dummyEvent.id === "event2" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -2896,6 +2988,8 @@ const NewWalletBalance = ({
                     ? "https://x.com/mantanetwork"
                     : dummyEvent.id === "event22"
                     ? "https://x.com/taikoxyz"
+                    : dummyEvent.id === "event25"
+                    ? "https://x.com/matchain_io"
                     : dummyEvent.id === "event23"
                     ? "https://x.com/cookie3_com"
                     : "https://twitter.com/buildonbase"
@@ -2941,6 +3035,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/TaikoEcosystem"
                     : dummyEvent.id === "event23"
                     ? "https://t.me/cookie3_co"
+                    : dummyEvent.id === "event25"
+                    ? "https://t.me/matchain_fam"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -2997,6 +3093,8 @@ const NewWalletBalance = ({
                     ? "https://taiko.xyz/"
                     : dummyEvent.id === "event23"
                     ? "https://www.cookie3.com/"
+                    : dummyEvent.id === "event25"
+                    ? "https://www.matchain.io/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -3052,6 +3150,8 @@ const NewWalletBalance = ({
                         ? immutablePoints
                         : dummyEvent.id === "event23"
                         ? cookiePoints
+                        : dummyEvent.id === "event25"
+                        ? matPoints
                         : 0,
                       0
                     )}
@@ -3106,6 +3206,8 @@ const NewWalletBalance = ({
                         ? immutableEarnUsd
                         : dummyEvent.id === "event23"
                         ? cookieEarnUsd
+                        : dummyEvent.id === "event25"
+                        ? matEarnUsd
                         : 0,
                       2
                     )}
@@ -3146,6 +3248,8 @@ const NewWalletBalance = ({
                               ? immutableEarnToken
                               : dummyEvent.id === "event23"
                               ? cookieEarnToken
+                              : dummyEvent.id === "event25"
+                              ? matEarnToken
                               : 0,
                             2
                           )}
@@ -3160,7 +3264,8 @@ const NewWalletBalance = ({
                             : dummyEvent.id === "event6" ||
                               dummyEvent.id === "event8" ||
                               dummyEvent.id === "event9" ||
-                              dummyEvent.id === "event20"
+                              dummyEvent.id === "event20"||
+                              dummyEvent.id === "event25"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"

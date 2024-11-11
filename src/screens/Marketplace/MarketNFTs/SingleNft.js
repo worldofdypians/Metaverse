@@ -248,7 +248,8 @@ const SingleNft = ({
       type !== "bnb" &&
       type !== "opbnb" &&
       type !== "multivers" &&
-      type !== "immutable"
+      type !== "immutable"&&
+      type !== "mat"
     ) {
       const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
       const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
@@ -589,6 +590,22 @@ const SingleNft = ({
       const nft_contract = new window.bscWeb3.eth.Contract(
         window.COOKIE3_NFT_ABI,
         window.config.nft_cookie3_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+      return owner;
+    } else if (nftType === "mat") {
+      const nft_contract = new window.bscWeb3.eth.Contract(
+        window.COOKIE3_NFT_ABI,
+        window.config.nft_mat_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -2583,7 +2600,12 @@ const SingleNft = ({
       nftAddress.toLowerCase() ===
       window.config.nft_cookie3_address.toLowerCase()
     ) {
-      setType("cookie3");
+      setType("mat");
+    }  else if (
+      nftAddress.toLowerCase() ===
+      window.config.nft_mat_address.toLowerCase()
+    ) {
+      setType("mat");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
     ) {
@@ -2684,6 +2706,9 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_cookie3_address.toLowerCase()
         ? "cookie3"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_mat_address.toLowerCase()
+        ? "mat"
         : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
         ? "doge"
@@ -2887,6 +2912,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "mat" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Matchain{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : type === "doge" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -3053,6 +3090,9 @@ const SingleNft = ({
                           window.config.nft_cookie3_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
                         : nftAddress.toLowerCase() ===
+                          window.config.nft_mat_address.toLowerCase()
+                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
+                        : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
                         : nftAddress.toLowerCase() ===
@@ -3125,6 +3165,8 @@ const SingleNft = ({
                           ? coreLogo
                           : type === "viction"
                           ? victionLogo
+                          : type === "mat"
+                          ? victionLogo
                           : type === "multivers"
                           ? multiversLogo
                           : type === "immutable"
@@ -3161,6 +3203,8 @@ const SingleNft = ({
                       ? "MultiversX"
                       : type === "core"
                       ? "CORE"
+                      : type === "mat"
+                      ? "Matchain"
                       : type === "taiko"
                       ? "Taiko"
                       : type === "opbnb"
@@ -3203,6 +3247,8 @@ const SingleNft = ({
                         ? "Taiko Beta Pass"
                         : type === "cookie3"
                         ? "Cookie3 Beta Pass"
+                        : type === "mat"
+                        ? "Matchain Beta Pass"
                         : type === "doge"
                         ? "Dogecoin Beta Pass"
                         : type === "bnb"
@@ -3383,7 +3429,8 @@ const SingleNft = ({
                       type !== "viction" &&
                       type !== "multivers" &&
                       type !== "skale" &&
-                      type !== "immutable" &&
+                      type !== "immutable"  &&
+                      type !== "mat" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3567,7 +3614,8 @@ const SingleNft = ({
                       type !== "landbnb" &&
                       type !== "landbase" &&
                       type !== "skale" &&
-                      type !== "immutable" && (
+                      type !== "immutable" &&
+                      type !== "mat" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -3771,7 +3819,8 @@ const SingleNft = ({
                         type === "cawsbase" ||
                         type === "landavax" ||
                         type === "landbnb" ||
-                        type === "landbase") && (
+                        type === "landbase"||
+                        type === "mat") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -3817,8 +3866,8 @@ const SingleNft = ({
                                   ? `https://taikoscan.io/address/${owner}`
                                   : type === "opbnb"
                                   ? `https://opbnbscan.com/address/${owner}`
-                                  : type === "immutable"
-                                  ? `https://explorer.immutable.com/${owner}`
+                                  : type === "mat"
+                                  ? `https://matchscan.io/address/${owner}`
                                   : `https://etherscan.io/address/${owner}`
                               }
                               target="_blank"
@@ -4025,7 +4074,8 @@ const SingleNft = ({
                         type !== "cawsbase" &&
                         type !== "landavax" &&
                         type !== "landbnb" &&
-                        type !== "landbase" && (
+                        type !== "landbase" &&
+                        type !== "mat" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -4103,7 +4153,8 @@ const SingleNft = ({
                         type !== "landavax" &&
                         type !== "landbnb" &&
                         type !== "immutable" &&
-                        type !== "landbase" && (
+                        type !== "landbase" &&
+                        type !== "mat"&& (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -4139,7 +4190,8 @@ const SingleNft = ({
                         type !== "cawsbase" &&
                         type !== "landavax" &&
                         type !== "landbnb" &&
-                        type !== "landbase" && (
+                        type !== "landbase" &&
+                        type !== "mat"&& (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -4185,7 +4237,8 @@ const SingleNft = ({
             type !== "core" &&
             type !== "viction" &&
             type !== "multivers" &&
-            type !== "immutable" && (
+            type !== "immutable" &&
+            type !== "mat" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4458,7 +4511,8 @@ const SingleNft = ({
             type === "core" ||
             type === "viction" ||
             type === "multivers" ||
-            type === "immutable") && (
+            type === "immutable" ||
+            type === "mat") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
