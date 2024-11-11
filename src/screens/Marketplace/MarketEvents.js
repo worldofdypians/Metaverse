@@ -217,6 +217,12 @@ const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
   const [dummyEvent, setDummyEvent] = useState();
   const [eventPopup, setEventPopup] = useState(false);
 
+
+  const [matEarnUsd, setmatEarnUsd] = useState(0);
+  const [matEarnToken, setmatEarnToken] = useState(0);
+  const [matPoints, setmatPoints] = useState(0);
+
+
   const selected = useRef(null);
   const { email } = useAuth();
 
@@ -679,7 +685,7 @@ const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 6).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -696,6 +702,8 @@ const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
                                 ? taikoEarnUsd
                                 : item.title === "Cookie3"
                                 ? cookieEarnUsd
+                                : item.title === "Matchain"
+                                ? matEarnUsd
                                 : 0
                             }
                           />
@@ -842,6 +850,26 @@ const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                  <div className="border-0 upcoming-mint-wrapper upcoming-skale-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Matchain</h6>
+                      <p className="upcoming-mint-desc">
+                        Join the Matchain Treasure Hunt event for a chance to grab
+                        a share of the $20,000 BNB reward pool.
+                      </p>
+                    </div>
+                    <img
+                      src={upcomingSkale}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={upcomingSkaleMobile}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
                   {/* <div className="border-0 upcoming-mint-wrapper upcoming-cookie-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Cookie3</h6>
