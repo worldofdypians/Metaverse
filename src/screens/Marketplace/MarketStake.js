@@ -1409,6 +1409,7 @@ const MarketStake = ({
             onClose={() => {
               setgetPremiumPopup(false);
             }}
+            isConnected={isConnected}
             binanceW3WProvider={binanceW3WProvider}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}

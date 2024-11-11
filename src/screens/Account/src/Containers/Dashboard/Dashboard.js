@@ -10190,6 +10190,7 @@ function Dashboard({
             onClose={() => {
               setgetPremiumPopup(false);
             }}
+            isConnected={isConnected}
           />
         ) : (
           <></>

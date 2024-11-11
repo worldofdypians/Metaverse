@@ -75,7 +75,6 @@ const Portfolio = ({
   dypBalanceavax,
   isVerified,
   email,
-  myNFTSBNB,
   // handleConnectWallet,
   handleShowWalletPopup,
   idypBalance,
@@ -484,7 +483,7 @@ const Portfolio = ({
     let mantaNftsArray = [];
     let taikoNftsArray = [];
     let cookieNftsArray = [];
-
+    let matNftsArray = [];
     // console.log(allListed, "allListed");
 
     //bought [latestBoughtNFTS]
@@ -602,6 +601,22 @@ const Portfolio = ({
         );
       }
 
+      
+      if (myMatNfts && myMatNfts.length > 0) {
+        await Promise.all(
+          myMatNfts.map(async (i) => {
+            matNftsArray.push({
+              nftAddress: window.config.nft_mat_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "mat",
+              chain: 698,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
       if (MyNFTSLandBase && MyNFTSLandBase.length > 0) {
         await Promise.all(
           MyNFTSLandBase.map(async (i) => {
@@ -1051,6 +1066,7 @@ const Portfolio = ({
         ...immutableNftsArray,
         ...mantaNftsArray,
         ...taikoNftsArray,
+        ...matNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1305,6 +1321,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_cookie3_address
       );
 
+      let matFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_mat_address
+      );
+
       const allBetapassArray = [
         ...coingeckoFilter,
         ...confluxFilter,
@@ -1314,6 +1334,7 @@ const Portfolio = ({
         ...taikoFilter,
         ...cookie3Filter,
         ...cmcFilter,
+        ...matFilter,
         ...baseFilter,
         ...skaleFilter,
         ...victionFilter,
@@ -1969,6 +1990,8 @@ const Portfolio = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                  : item.type === "mat"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "cookie3"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                   : item.type === "base"
@@ -2018,6 +2041,8 @@ const Portfolio = ({
                                   ? "MNBP"
                                   : item.type === "taiko"
                                   ? "TKBP"
+                                  : item.type === "mat"
+                                  ? "MCBP"
                                   : item.type === "cookie3"
                                   ? "CKBP"
                                   : item.type === "gate"
@@ -3072,6 +3097,9 @@ const Portfolio = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                window.config.nft_mat_address
+                              ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3146,6 +3174,11 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
@@ -3243,6 +3276,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
@@ -3431,6 +3467,9 @@ const Portfolio = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                window.config.nft_mat_address
+                              ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3525,6 +3564,11 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
@@ -3603,6 +3647,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"

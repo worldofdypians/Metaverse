@@ -30,6 +30,7 @@ const GetPremiumPopup = ({
   binanceWallet,
   authToken,
   isPremium,
+  isConnected
 }) => {
   const chainDropdowns = [
     {
