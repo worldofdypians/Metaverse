@@ -3997,7 +3997,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "bnb" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={bnbBg}
@@ -4052,7 +4052,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={mantaBg}
@@ -4097,7 +4097,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={taikoBg}
@@ -4187,7 +4187,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={skaleBg}
@@ -4230,7 +4230,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "core" && "chain-item-active"
-                          } w-100`}
+                          }  w-auto`}
                         >
                           <HtmlTooltipGift
                             placement="top"
@@ -4294,7 +4294,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "base" && "chain-item-active"
-                          } w-100`}
+                          }  w-auto`}
                         >
                           <img
                             src={comingSoon4}
@@ -4339,7 +4339,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "viction" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={victionBg}

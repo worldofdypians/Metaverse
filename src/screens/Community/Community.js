@@ -1127,7 +1127,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                       {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
-                            navigate("/marketplace/events/treasure-hunt");
+                            navigate("/account/challenges/treasure-hunt");
                           }}
                           data={item}
                           event={item}

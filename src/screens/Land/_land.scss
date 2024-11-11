@@ -704,6 +704,7 @@
     background-position: center;
   }
 
+
   .community-image {
     --mask: linear-gradient(-135deg, #0000 30px, #000 0);
     -webkit-mask: var(--mask);
@@ -1208,4 +1209,12 @@ font-weight: 800;
   .discount-break {
     display: none;
   }
+}
+
+
+.genesis-land-game {
+  background-image: url("../../assets/landAssets/landNft.webp") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
 }

@@ -312,7 +312,8 @@ const NewWalletBalance = ({
   openedMatChests,
   matPoints,
   matEarnToken,
-
+  treasureRewardMoney,
+  allClaimedChests
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -1157,8 +1158,7 @@ const NewWalletBalance = ({
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
-  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
-  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0); 
 
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -1190,16 +1190,7 @@ const NewWalletBalance = ({
   // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
-  const totalClaimedChests =
-    claimedChests +
-    claimedPremiumChests +
-    openedSkaleChests.length +
-    openedCoreChests.length +
-    openedVictionChests.length +
-    openedTaikoChests.length +
-    openedMatChests.length +
-    openedMantaChests.length +
-    openedBaseChests.length;
+  const totalClaimedChests =allClaimedChests
 
   const chestPercentage = (totalClaimedChests / 160) * 100;
 
@@ -1276,163 +1267,7 @@ const NewWalletBalance = ({
     return errors;
   };
 
-  const getTreasureChestsInfo = async () => {
-    var moneyResult = 0;
 
-    if (openedChests && openedChests.length > 0) {
-      openedChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedSkaleChests && openedSkaleChests.length > 0) {
-      openedSkaleChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedCoreChests && openedCoreChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedVictionChests && openedVictionChests.length > 0) {
-      openedVictionChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedMantaChests && openedMantaChests.length > 0) {
-      openedMantaChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedBaseChests && openedBaseChests.length > 0) {
-      openedBaseChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedTaikoChests && openedTaikoChests.length > 0) {
-      openedTaikoChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedMatChests && openedMatChests.length > 0) {
-      openedMatChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    setTreasureRewardMoney(moneyResult);
-  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -1777,19 +1612,6 @@ const NewWalletBalance = ({
     }
   }, [address]);
 
-  useEffect(() => {
-    getTreasureChestsInfo();
-  }, [
-    openedChests,
-    address,
-    openedCoreChests,
-    openedVictionChests,
-    openedSkaleChests,
-    openedMantaChests,
-    openedMatChests,
-    openedBaseChests,
-    openedTaikoChests,
-  ]);
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -3560,11 +3382,7 @@ const NewWalletBalance = ({
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
           <div
             className="popup-wrapper popup-active nft-wrapper-popup p-3"
-            style={{
-              width: "fit-content",
-              height: windowSize.width < 500 ? "80%" : "fit-content",
-              overflow: "auto",
-            }}
+            style={{ width: "fit-content", height: windowSize.width < 500 ? '80%' : 'fit-content', overflow: 'auto' }}
           >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>

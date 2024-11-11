@@ -426,9 +426,7 @@ const ProfileCard = ({
     }
   };
 
-  useEffect(() => {
-    updateUserRank();
-  }, [handleUserRank]);
+
 
   useEffect(() => {
     countBundle();
@@ -1310,15 +1308,15 @@ const ProfileCard = ({
                                       />
                                     )}
                                   </div>
-                                  <span className="rank-current-score">
+                                  {/* <span className="rank-current-score">
                                     {rankData?.multiplier === "yes"
                                       ? getFormattedNumber(
                                           userTotalScore * 4,
                                           0
                                         )
                                       : getFormattedNumber(userTotalScore, 0)}
-                                  </span>
-                                  <span className="rank-current-score">
+                                  </span> */}
+                                  {/* <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
                                       ? "28M"
                                       : userRankName?.name === "underdog"
@@ -1403,6 +1401,7 @@ const ProfileCard = ({
                                 </span>
                                 <img src={arrowCircle} alt="" />
                               </div> */}
+                              </div>
                               </div>
                             </OutsideClickHandler>
                           )}
@@ -1687,7 +1686,7 @@ const ProfileCard = ({
                   >
                     My points
                   </span>
-                  <h6
+                  {/* <h6
                     className="mb-0 your-score-text"
                     style={{
                       color:
@@ -1702,7 +1701,7 @@ const ProfileCard = ({
                     <img src={x4rounded} width={30} alt="" />
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </div>
               </div>
               <img

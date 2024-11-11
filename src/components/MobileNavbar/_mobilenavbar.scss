@@ -3,7 +3,7 @@
   top: 0;
   background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
   width: 100%;
-  z-index: 7;
+  z-index: 9;
   height: 59px;
   border-bottom: 2px solid #525469;
 
@@ -88,7 +88,7 @@
   width: 100%;
   position: fixed;
   top: -1000px;
-  z-index: 1000;
+  z-index: 1001;
   transition: all .25s;
   .mobile-nav-item {
     background: linear-gradient(87.88deg, #585775 0%, #6A43C7 100%);
@@ -98,8 +98,8 @@
     .mobile-nav-link {
       font-style: normal;
       font-weight: 500;
-      font-size: 18px;
-      line-height: 32px;
+      font-size: 14px;
+      // line-height: 32px;
       color: #ffffff;
     }
   }
