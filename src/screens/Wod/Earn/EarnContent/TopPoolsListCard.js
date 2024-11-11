@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import useWindowSize from "../../../../hooks/useWindowSize";
+import arrowFilled from "../assets/arrow-filled.svg";
 
 const TopPoolsListCard = ({
   isAccount,
@@ -20,9 +22,8 @@ const TopPoolsListCard = ({
   network,
   isPremium,
 }) => {
-
   const [showDetails, setShowDetails] = useState(false);
-
+  const windowSize = useWindowSize();
 
   const handleDetails = () => {
     if (details === false) {
@@ -34,15 +35,15 @@ const TopPoolsListCard = ({
 
   return (
     <div
-      className={`w-100 p-3 ${
+      className={`w-100 p-lg-3 p-2 ${
         expired === true
           ? "poolscardwrapperexpired"
           : network === "0"
           ? "blurryCard"
           : "poolscardwrapper"
-      } cursor-pointer position-relative ${details && "pools-card-open"} ${showDetails && "pools-card-hover"} ${
-        renderedPage === "dashboard" && !details ? "pools-card-hover" : ""
-      }`}
+      } cursor-pointer position-relative ${details && "pools-card-open"} ${
+        showDetails && "pools-card-hover"
+      } ${renderedPage === "dashboard" && !details ? "pools-card-hover" : ""}`}
       onClick={() => handleDetails()}
       style={{ display: display }}
       onMouseEnter={() => setShowDetails(true)}
@@ -62,7 +63,7 @@ const TopPoolsListCard = ({
                         src={require(`../assets/tokens/${obj}.png`)}
                         alt=""
                         className="pool-coins"
-                        style={{width: 40, height: 40}}
+                        style={{ width: windowSize && windowSize.width > 991 ? 40 : '', height: windowSize && windowSize.width > 991 ? 40 : '' }}
                       />
                     );
                   })}
@@ -117,17 +118,17 @@ const TopPoolsListCard = ({
                 Ethereum
               </h5>
             </td>
-            {/* {windowSize && windowSize.width > 991 ? ( */}
-            <td className="earnother-td col-lg-2 justify-content-end">
-              <h6 className="details-text2 py-2 gap-1 d-flex align-items-center w-75 cursor-pointer justify-content-center m-0">
-                Stake
-              </h6>
-            </td>
-            {/* ) : (
+            {windowSize && windowSize.width > 991 ? (
+              <td className="earnother-td col-lg-2 justify-content-end">
+                <h6 className="details-text2 py-2 gap-1 d-flex align-items-center w-75 cursor-pointer justify-content-center m-0">
+                  Stake
+                </h6>
+              </td>
+            ) : (
               <td className="earnother-td col-lg-1 justify-content-end">
                 <img src={arrowFilled} alt="" className="earn-filled-arrow" />
               </td>
-            )} */}
+            )}
           </tr>
         </tbody>
       </table>

@@ -235,14 +235,14 @@ const LandDetails = ({
           <div
             className={
               listType === "list"
-                ? "activewrapper d-flex gap-4 justify-content-between position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center"
+                ? "activewrapper d-flex gap-4 justify-content-between position-relative flex-row flex-lg-row align-items-end align-items-lg-center"
                 : "activewrapper position-relative flex-row-reverse flex-lg-row align-items-end align-items-lg-center"
             }
           >
             <div
               className={` ${
                 listType === "list"
-                  ? "d-flex align-items-center gap-3"
+                  ? "d-flex flex-column flex-lg-row align-items-lg-center gap-3"
                   : "first-block-wrapper gap-2"
               } `}
             >
