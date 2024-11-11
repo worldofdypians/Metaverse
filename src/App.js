@@ -250,6 +250,16 @@ function App() {
       },
       blockExplorerUrls: ["https://pacific-explorer.manta.network/"],
     },
+    698: {
+      chainId: 698,
+      chainName: "Matchain",
+      rpcUrls: ["https://rpc.matchain.io"],
+      nativeCurrency: {
+        symbol: "BNB",
+        decimals: 18,
+      },
+      blockExplorerUrls: ["https://matchscan.io"],
+    },
   };
 
   const {
@@ -356,6 +366,7 @@ function App() {
 
   const [myBaseNFTs, setmyBaseNFTs] = useState([]);
   const [myseiNfts, setMyseiNfts] = useState([]);
+  const [myMatNFTs, setMyMatNfts] = useState([]);
 
   const [myMantaNfts, setMyMantaNfts] = useState([]);
 
@@ -1395,6 +1406,8 @@ function App() {
       });
 
       getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
+      getMyNFTS(coinbase, "mat").then((NFTS) => setMyMatNfts(NFTS));
+
 
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
@@ -1712,6 +1725,77 @@ function App() {
               //   settotalSkaleNft(NFTS.length);
               //   setSkaleMintAllowed(0);
               // });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  const handleMatNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.mat_nft
+            .mintMatNFT()
+            .then(() => {
+               
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "mat").then((NFTS) => {
+                 setMyMatNfts(NFTS)
+              });
             })
             .catch((e) => {
               console.error(e);
@@ -2524,6 +2608,11 @@ function App() {
       window.config.daily_bonus_base_address
     );
 
+    const daily_bonus_contract_mat = new window.matWeb3.eth.Contract(
+      window.DAILY_BONUS_MAT_ABI,
+      window.config.daily_bonus_mat_address
+    );
+
     if (addr) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
@@ -2607,7 +2696,20 @@ function App() {
                     if (isPremium_base === true) {
                       setIsPremium(true);
                     } else {
-                      setIsPremium(false);
+                      const isPremium_mat =
+                      await daily_bonus_contract_mat.methods
+                        .isPremiumUser(addr)
+                        .call()
+                        .catch((e) => {
+                          console.error(e);
+                          return false;
+                        });
+                    if (isPremium_mat === true) {
+                      setIsPremium(true);
+                    } else {
+                        setIsPremium(false);
+                    }
+                    
                     }
                   }
                 }
@@ -3503,6 +3605,38 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+              />
+            }
+          />
+
+<Route
+            exact
+            path="/marketplace/beta-pass/matchain"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                myseiNfts={myseiNfts}
+                totalseiNft={totalseiNft}
+                handleSwitchNetwork={handleSwitchNetwork}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                totalBaseNft={totalBaseNft}
+                myBaseNFTs={myBaseNFTs}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
+                cawsArray={allCawsForTimepieceMint}
               />
             }
           />
@@ -3530,6 +3664,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3557,6 +3694,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3584,6 +3724,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3631,6 +3774,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3658,6 +3804,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3685,6 +3834,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3712,6 +3864,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3739,6 +3894,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3766,6 +3924,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3793,6 +3954,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3820,6 +3984,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3847,6 +4014,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3946,6 +4116,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -3972,6 +4145,9 @@ function App() {
                 totalBaseNft={totalBaseNft}
                 myBaseNFTs={myBaseNFTs}
                 cawsArray={allCawsForTimepieceMint}
+                myMatNFTs={myMatNFTs}
+                totalMatNfts={myMatNFTs.length}
+
               />
             }
           />
@@ -4080,6 +4256,12 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
+
+                totalMatNfts={myMatNFTs.length}
+                matMintAllowed={1- myMatNFTs.length}
+                myMatNFTs={myMatNFTs}
+                myMatNFTsCreated={myMatNFTs}
+                
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
@@ -4093,6 +4275,46 @@ function App() {
                 isConnected={isConnected}
                 chainId={networkId}
                 handleMint={handleTimepieceMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                handleBaseNftMint={handleBaseNftMint}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
+              />
+            }
+          />
+            <Route
+            exact
+            path="/marketplace/mint/matchain"
+            element={
+              <MarketMint
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
+
+                totalMatNfts={myMatNFTs.length}
+                matMintAllowed={1- myMatNFTs.length}
+                myMatNFTs={myMatNFTs}
+                myMatNFTsCreated={myMatNFTs}
+
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleMatNftMint}
                 mintStatus={mintStatus}
                 textColor={textColor}
                 calculateCaws={calculateCaws}
