@@ -1447,7 +1447,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardCoreDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -1794,7 +1794,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100 ,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2143,7 +2143,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMantaDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2511,7 +2511,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardBaseDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2878,7 +2878,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount:  100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3257,7 +3257,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMatChainDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount:  100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3624,7 +3624,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardSkaleDaily",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -4092,7 +4092,7 @@ function Dashboard({
       const data = {
         StatisticName: "GlobalStarWeeklyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -4242,7 +4242,7 @@ function Dashboard({
       const data = {
         StatisticName: "DailyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: isAfterNovember2nd ? 100 : 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -5043,7 +5043,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: bnbStars,
-        previous_rewards: isAfterNovember2nd ? bnbStars : bnbStarsPremium,
+        previous_rewards: bnbStars,
         activeData: dailyrecords,
         previousData: dailyplayerData,
         player_data: userData,
@@ -5092,7 +5092,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards:  isAfterNovember2nd ? skaleStars : skaleStarsPremium,
+        previous_rewards:skaleStars,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -5146,7 +5146,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards:  isAfterNovember2nd ? baseStars : skaleStarsPremium,
+        previous_rewards:baseStars ,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -5195,7 +5195,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards:  isAfterNovember2nd ? baseStars :  skaleStarsPremium,
+        previous_rewards:baseStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -5244,7 +5244,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: mantaStars,
-        previous_rewards:  isAfterNovember2nd ? mantaStars : skaleStarsPremium,
+        previous_rewards:  mantaStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -5295,7 +5295,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: isAfterNovember2nd ? baseStars : skaleStarsPremium,
+        previous_rewards: baseStars ,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -5346,7 +5346,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: taikoStars,
-        previous_rewards: isAfterNovember2nd ? taikoStars : skaleStarsPremium,
+        previous_rewards: taikoStars,
         activeData: dailyRecordsTaiko,
         previousData: prevDataTaiko,
         player_data: userDataTaiko,

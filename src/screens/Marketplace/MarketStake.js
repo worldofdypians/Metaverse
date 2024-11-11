@@ -383,6 +383,7 @@ const MarketStake = ({
     setethToUSD(Number(ethprice) * Number(EthRewards));
     setethToUSDLandPool(Number(ethprice) * Number(EthRewardsLandPool));
     setethToUSDCawsPremium(Number(ethprice) * EthRewardsCawsPremium);
+    setethToUSDLandPremium(Number(ethprice) * EthRewardsLandPremium);
     setPastCawsUsdPrice(Number(ethprice) * 59);
   };
 
@@ -467,7 +468,7 @@ const MarketStake = ({
   };
 
   const calculateAllRewardsLandPremium = async () => {
-    let myStakes = await getCawsStakesIds();
+    let myStakes = await getStakesIdsLandPremium();
     let result = 0;
     let calculateRewards = [];
     let  staking_contract = await new window.infuraWeb3.eth.Contract(

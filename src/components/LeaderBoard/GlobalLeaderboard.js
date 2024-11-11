@@ -174,7 +174,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
             <a
-              href="https://dappradar.com/dapp/world-of-dypians"
+              href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"
               target={"_blank"}
               rel="noreferrer"
               className="w-100 global-total-wrapper p-3"
@@ -258,11 +258,14 @@ const GlobalLeaderboard = ({
             <div className="d-flex flex-column">
               <h6 className="global-leaderboard-title mb-0">GLOBAL</h6>
               <h6
-                className="global-leaderboard-title d-flex algin-items-center"
+                className="global-leaderboard-title mb-0 d-flex algin-items-center"
                 style={{ color: "#F4E27B" }}
               >
                 LEADERBOARD
               </h6>
+              <span className="text-white" style={{ fontSize: 14 }}>
+                (Top 100)
+              </span>
             </div>
           )}
           <img
@@ -271,7 +274,7 @@ const GlobalLeaderboard = ({
             className={screen === "dash" && "invisible"}
           />
         </div>
-        <div className={` ${screen !== "home" && "table-outer-margin"}  p-0`}>
+        <div className={`table-outer-margin p-0`}>
           <table className="playerTable w-100" style={{ position: "relative" }}>
             <tbody>
               <tr className="playerRow">
@@ -669,14 +672,20 @@ const GlobalLeaderboard = ({
                         className="playerScore col-2 text-center font-montserrat"
                         style={{ color: "#09F3D2" }}
                       >
-                        $ ---
+                     ${getFormattedNumber(
+                          allStarData.rewardsWeekly[index],
+                          0
+                        )}
                       </td>
                       <td
                         className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +$ ---
+                          +${getFormattedNumber(
+                            allStarData.premium_rewards_weekly[index],
+                            0
+                          )}
                           <img
                             src={
                               (username === item.displayName &&
