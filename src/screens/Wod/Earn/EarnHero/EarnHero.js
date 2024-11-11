@@ -95,7 +95,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
     <div className="earn-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100 gap-5">
-          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5 ps-0 ps-lg-4">
+          <div className="row mx-0 align-items-center justify-content-center gap-2 mb-5 ps-0 ps-lg-4">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h2 className="font-montserrat main-hero-title px-0 text-center">
@@ -112,7 +112,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
               </div>
             </div>
           </div>
-          <div className="custom-container m-auto p-0 ">
+          {/* <div className="custom-container m-auto p-0 ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 3).map((item, index) => (
                 // <NavLink to={`${item.link}`}>
@@ -125,7 +125,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
                 // </NavLink>
               ))}
             </Slider>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="opacitywrapper position-relative bottom-0">
