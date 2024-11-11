@@ -54,7 +54,7 @@ const TokenUtility = () => {
       </div>
       <div className="container-fluid py-4 px-0 d-flex justify-content-center buy-wod-bg">
         <div className="custom-container w-100  ">
-          <div className="token-utilities-grid">
+          <div className="token-utilities-grid px-3 px-lg-0">
             {utilities.map((item, index) => (
               <div className="d-flex flex-column gap-3" key={index}>
                 <img

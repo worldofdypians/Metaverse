@@ -221,7 +221,7 @@ const WodPartners = ({ full }) => {
       <div className="custom-container">
         <div className="d-flex flex-column gap-2">
           <div className="d-flex align-items-center justify-content-between gap-2 mb-3">
-            <h2 className="font-montserrat builders-title explorer-grid-title px-0 m-0">
+            <h2 className="font-montserrat builders-title explorer-grid-title px-0 m-0 text-start">
               Partners and Investors
               {/* <mark className="font-montserrat explore-tag pe-2">INVESTORS</mark> */}
             </h2>

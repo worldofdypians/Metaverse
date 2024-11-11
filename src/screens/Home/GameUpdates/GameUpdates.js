@@ -67,7 +67,7 @@ const GameUpdates = () => {
                 //   </div>
                 // </NavLink>
                 <NavLink
-                  className="campaign-item d-flex flex-column gap-2"
+                  className="campaign-item d-flex flex-column gap-2 mb-3 mb-lg-0"
                   key={index}
                   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
                   style={{ textDecoration: "none" }}

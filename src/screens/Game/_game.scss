@@ -305,7 +305,30 @@ color: #EEEDFF !important;
 
 .game-table-container{
     @media screen and (max-width: 991px) {
-        overflow: scroll;
+        overflow-x: scroll;
 
     }
+}
+
+
+.new-game-stats-wrapper{
+    position: relative;
+        background-size: 100%;
+        aspect-ratio: 5/1;
+        background-repeat: no-repeat;
+        border-bottom: 3px solid black;
+     @media screen and (max-width: 1300px) {
+        background-size: cover;
+        background-position: right;
+     }
+     @media screen and (max-width: 900px) {
+        background-image: none !important;
+        background-color: rgba(81, 84, 111, 0.2);
+     }
+    }
+    
+
+.amplify-game-banner{
+    background-image: url("../../assets/gameAssets/amplifyBanner.webp");
+
 }

@@ -222,7 +222,7 @@ const Footer = () => {
         </div>
         <hr className="footer-divider my-4" />
         <div className="d-flex flex-column-reverse flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
-          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5">
+          <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5 mt-4 mt-lg-0">
             <img src={metaverse} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
               <span className="copyright-text">
