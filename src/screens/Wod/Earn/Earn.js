@@ -92,28 +92,10 @@ const Earn = ({
       chainLogo: "ethIcon.svg",
     },
   ];
-  const windowSize = useWindowSize();
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width:
-      windowSize.width > 1400 ? "auto" : windowSize.width > 786 ? "50%" : "95%",
-    boxShadow: 24,
-    p: 4,
-    overflow: "auto",
-    minHeight: 200,
-    overflowX: "hidden",
-    borderRadius: "10px",
-    height: windowSize.width < 500 ? "480px" : "auto",
-    background: `#1A1A36`,
-  };
 
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
-  const [selectedFilter, setSelectedFilter] = useState("All Pools");
+  const [selectedFilter, setSelectedFilter] = useState("All Staking Pools");
   const [stakingPools, setStakingPools] = useState([...tokenPools, ...nftPools]);
   const [showPopup, setshowPopup] = useState(false);
   const [aprTooltip, setaprTooltip] = useState(false);
@@ -165,13 +147,6 @@ const Earn = ({
         setStakingPools(nftPoolsExpired);
       }
     }
-  };
-
-  const aprOpen = () => {
-    setaprTooltip(true);
-  };
-  const aprClose = () => {
-    setaprTooltip(false);
   };
 
   useEffect(() => {
