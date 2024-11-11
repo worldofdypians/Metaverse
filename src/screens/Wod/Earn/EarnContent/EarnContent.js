@@ -132,12 +132,14 @@ const EarnContent = ({
                           key={index}
                           chain={chainId}
                           top_pick={false}
-                          tokenName={item.pair_name}
+                          tokenName={item.pair_name + item.type}
                           apr={item.apy_percent + "%"}
                           tvl={"$" + getFormattedNumber(item.tvl_usd)}
                           lockTime={item.lock_time ? item.lock_time : "No Lock"}
                           tokenLogo={
-                            item.pair_name === "WoD + CAWS"
+                            item.tokenURL
+                              ? item.tokenURL
+                              : item.pair_name === "WoD + CAWS"
                               ? ["caws", "wod"]
                               : [item.pair_name?.toLowerCase()]
                           }
@@ -285,7 +287,9 @@ const EarnContent = ({
                         tvl={"$" + getFormattedNumber(item.tvl_usd)}
                         lockTime={item.lock_time ? item.lock_time : "No Lock"}
                         tokenLogo={
-                          item.pair_name === "WoD + CAWS"
+                          item.tokenURL
+                            ? item.tokenURL
+                            : item.pair_name === "WoD + CAWS"
                             ? ["caws", "wod"]
                             : [item.pair_name?.toLowerCase()]
                         }

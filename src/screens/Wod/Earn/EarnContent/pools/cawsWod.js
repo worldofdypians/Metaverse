@@ -596,9 +596,7 @@ const CawsWodDetails = ({
             <div
               className={`otherside-border ${
                 listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${chainId !== "1" && "blurrypool"} ${
-                expired === true && "blurrypool"
-              }`}
+              }  ${chainId !== "1" && "blurrypool"}`}
             >
               <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                 <h6
