@@ -213,6 +213,9 @@ const GlobalLeaderboard = ({
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
+              <span className={`text-white ${screen !== "dash" && 'invisible'} `} style={{ fontSize: 14 }}>
+                (Top 100)
+              </span>
                 <img
                   src={tooltipIcon}
                   alt=""
@@ -268,6 +271,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
           )}
+          
           <img
             src={globalIcon}
             alt=""
@@ -672,14 +676,20 @@ const GlobalLeaderboard = ({
                         className="playerScore col-2 text-center font-montserrat"
                         style={{ color: "#09F3D2" }}
                       >
-                        $ ---
+                     ${getFormattedNumber(
+                          allStarData.rewardsWeekly[index],
+                          0
+                        )}
                       </td>
                       <td
                         className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +$ ---
+                          +${getFormattedNumber(
+                            allStarData.premium_rewards_weekly[index],
+                            0
+                          )}
                           <img
                             src={
                               (username === item.displayName &&
