@@ -17,6 +17,7 @@ import skaleLogo from "../../Marketplace/MarketNFTs/assets/skaleLogo.svg";
 import bnbLogo from "../../Marketplace/MarketNFTs/assets/bnblogo.svg";
 
 import victionLogo from "./assets/victionLogo.svg";
+import buyWod from "./assets/buyWod.svg";
 import victionBg from "./assets/victionBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
@@ -84,7 +85,7 @@ const VideoWrapper = ({
     {
       link: "/account/challenges/treasure-hunt",
       title: "EVENTS",
-      desc: "Join exciting in-game events",
+      desc: "Join exciting in-game challenges",
       class: "eventClass",
     },
     {
@@ -218,7 +219,7 @@ const VideoWrapper = ({
                     setmultiplayerModal(true);
                   }}
                 >
-                  <img src={wodToken} alt="" />
+                  <img src={buyWod} alt="" />
                   Buy WoD
                 </button>
               </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./_gamestats.scss";
 import transactionsBannerSmall from "./assets/transactionsBannerSmall.webp";
 import darkLordSpaceBannerSmall from "./assets/darkLordSpaceBannerSmall.webp";
+import groupBannerSmall from "./assets/groupBannerSmall.webp";
 import cityBannerSmall from "./assets/cityBannerSmall.webp";
 import secondCityBannerSmall from "./assets/secondCityBannerSmall.webp";
 import lizardBannerSmall from "./assets/lizardBannerSmall.webp";
@@ -27,7 +28,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
   return (
     <div className="d-flex flex-column">
       <div>
-        <div className="container-fluid d-flex p-0">
+        <div className="container-fluid d-flex  p-0">
           <img
             src={transactionsBannerSmall}
             className="small-transaction-banner"
@@ -35,38 +36,22 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           />
         </div>
         <div className="new-game-stats-wrapper first-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-lg-end custom-container">
-            <div className="game-stats-grid py-0 py-md-5">
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  {getFormattedNumber(totalTx2).slice(
-                    0,
-                    getFormattedNumber(totalTx2).length - 3
-                  )}
-                </h6>
-                <span className="game-stats-type">
-                  Total on-chain transactions
-                </span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {" "}
-                  ${getFormattedNumber(totalvolume2, 0)}
-                </h6>
-                <span className="game-stats-type">Total Volume (USD)</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(totalSupply, 0)}
-                </h6>
-                <span className="game-stats-type">Sold NFTs</span>
-              </div>
-              <div className="d-flex flex-column align-items-center gap-2 p-3">
-                <h6 className="game-stats-value mb-0">
-                  {getFormattedNumber(monthlyPlayers, 0)}
-                </h6>
-                <span className="game-stats-type">Monthly Players</span>
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
+                ADVENTURE
+              </span>
+              <span className="ways-to-amplify-title text-center text-md-end">
+                Discover a World Beyond Imagination
+              </span>
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
+                Step into a boundless realm where every choice matters. In World
+                of Dypians, each path leads to new wonders and dangers, awaiting
+                only the most daring adventurers. Forge alliances, uncover
+                secrets, and shape your own destiny.
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
+                <button className="explore-btn col-lg-4 py-2">Join Now</button>
               </div>
             </div>
           </div>
@@ -84,21 +69,20 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
             <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
-                Learn what’s ahead.
+                LEGEND
               </span>
               <span className="ways-to-amplify-title text-center text-md-start">
-                Save the Date for Warcraft 30th Anniversary Direct
+                Conquer Legendary Quests
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen
+                The world needs heroes, and World of Dypians calls for the
+                brave. Take on epic quests filled with mythical creatures,
+                ancient artifacts, and rewards that will enhance your powers.
+                Will you rise to the challenge?
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <button className="explore-btn col-lg-4 py-2">Explore</button>
-                <button className="getpremium-btn col-lg-4 py-2">
-                  Get Premium
+                <button className="explore-btn col-lg-4 py-2">
+                  Challenges
                 </button>
               </div>
             </div>
@@ -117,21 +101,22 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
             <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
               <span className="amp-benefits-desc text-center text-md-end">
-                Adopt until January 7, 2025.
+                EPIC
               </span>
               <span className="ways-to-amplify-title text-center text-md-end">
-                Support Cure Duchenne With the Reven Pack
+                Embark on a New Era of Gameplay
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen
+                World of Dypians offers dynamic gameplay where strategy and
+                courage are rewarded. Join forces with others, explore vast
+                landscapes, and unlock powerful relics.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <button className="explore-btn col-lg-4 py-2">Explore</button>
+                <button className="explore-btn col-lg-4 py-2">
+                  Join the Fight
+                </button>
                 <button className="getpremium-btn col-lg-4 py-2">
-                  Get Premium
+                  Explore Now
                 </button>
               </div>
             </div>
@@ -150,22 +135,49 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
             <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
-                12-Month Subscription Offer
+                MAP
               </span>
               <span className="ways-to-amplify-title text-center text-md-start">
-                Endless Adventure Together
+                Explore the World of Dypians
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen
+                Join a vibrant community of adventurers in World of Dypians.
+                From competitive events to collaborative challenges, connect
+                with players around the world who share your passion.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <button className="explore-btn col-lg-4 py-2">Explore</button>
-                <button className="getpremium-btn col-lg-4 py-2">
-                  Get Premium
+                <button className="explore-btn col-lg-4 py-2">Start Exploring</button>
+          
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="container-fluid d-flex  p-0">
+          <img
+            src={groupBannerSmall}
+            className="small-transaction-banner"
+            alt=""
+          />
+        </div>
+        <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
+              COMMUNITY
+              </span>
+              <span className="ways-to-amplify-title text-center text-md-end">
+              Discover a Community Like No Other
+              </span>
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
+              Join a vibrant community of adventurers in World of Dypians. From competitive events to collaborative challenges, connect with players around the world who share your passion.
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
+                <button className="explore-btn col-lg-4 py-2">
+                    Connect
                 </button>
+             
               </div>
             </div>
           </div>
@@ -179,25 +191,22 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
             alt=""
           />
         </div>
-        <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
-              <span className="amp-benefits-desc text-center text-md-end">
-                Cataclysm Classic
+        <div className="new-game-stats-wrapper sixth-banner d-flex align-items-center justify-content-center ">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+              <span className="amp-benefits-desc text-center text-md-start">
+                NEWS
               </span>
-              <span className="ways-to-amplify-title text-center text-md-end">
-                A New Age of Cataclysm
+              <span className="ways-to-amplify-title text-center text-md-start">
+              Latest Updates in World of Dypians
               </span>
-              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
+              Dive into the newest features, events, and surprises in World of Dypians. There’s always something fresh waiting for you—don’t miss out!
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <button className="explore-btn col-lg-4 py-2">Explore</button>
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
+                <button className="explore-btn col-lg-4 py-2">Learn More</button>
                 <button className="getpremium-btn col-lg-4 py-2">
-                  Get Premium
+                  Campaigns
                 </button>
               </div>
             </div>
