@@ -458,6 +458,26 @@ const Roadmap = () => {
           desc: "Launch the Genesis Land NFT Staking Pool, allowing landholders to stake their NFTs and earn rewards, adding a new utility for Genesis Land owners within the World of Dypians.",
           completed: true,
         },
+        {
+          title: "Launch of Mini App",
+          desc: "A task-based telegram mini app on Telegram that allows players to complete various missions, earn rewards, and stay engaged with the community directly through the platform.",
+          completed: true,
+        },
+        {
+          title: "Expansion to New Chains",
+          desc: "Expanding the game's ecosystem by integrating with additional blockchain networks, making the game accessible to more users and enhancing interoperability.",
+          completed: true,
+        },
+        {
+          title: "Addition of AI Powered NPCs",
+          desc: "Introducing a variety of new Non-Player Characters (NPCs) to enrich the game world, each with unique interactions and quests for players to discover.",
+          completed: true,
+        },
+        {
+          title: "Enhancements of Leaderboards",
+          desc: "Upgraded leaderboards to improve player experience and new competitive features, allowing players to track their progress more effectively.",
+          completed: true,
+        },
         // {
         //   title: "Introduction of Shop v2",
         //   desc: "Improve and expand the in-game shop with new features and offerings.",
@@ -465,6 +485,61 @@ const Roadmap = () => {
         // },
 
       
+       
+        {
+          title: "Partnership Development",
+          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
+          completed: true,
+        },
+      ],
+    },
+    {
+      quarter: "quarterFour",
+      image: "quarterFourImage",
+
+      content: [
+       
+        {
+          title: "Launch of Crypto Museum",
+          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
+          completed: false,
+        },
+        // {
+        //   title: "Introduction of Character Customization",
+        //   desc: "Allow players to personalize their main avatar/character with facial and body features.",
+        //   completed: false,
+        // },
+        //  {
+        //   title: "Full Release of the Multiplayer PvP",
+        //   desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
+        //   completed: false,
+        // },
+        {
+          title: "Introduction of Shop v1",
+          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
+          completed: false,
+        },
+        {
+          title: "Multiplayer Social Hub",
+          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
+          completed: false,
+        },
+        // {
+        //   title: "Loot Box Introduction",
+        //   desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
+        //   completed: false,
+        // },
+        {
+          title: "Introduction of the Mall Center",
+          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
+          completed: false,
+        },
+        // {
+        //   title: "Full Release of the Multiplayer PvE",
+        //   desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
+        //   completed: false,
+        // },
+
         {
           title: "Addition of Game Currency",
           desc: "Introduce a new in-game currency to enhance the game's economy and provide more options for players.",
@@ -501,69 +576,16 @@ const Roadmap = () => {
           completed: false,
         },
 
-        {
-          title: "Partnership Development",
-          desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
-          completed: false,
-        },
-      ],
-    },
-    {
-      quarter: "quarterFour",
-      image: "quarterFourImage",
-
-      content: [
-       
-        {
-          title: "Launch of Crypto Museum",
-          desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Character Customization",
-          desc: "Allow players to personalize their main avatar/character with facial and body features.",
-          completed: false,
-        },
-         {
-          title: "Full Release of the Multiplayer PvP",
-          desc: "Launch the full version of the multiplayer player-versus-player mode for competitive gameplay.",
-          completed: false,
-        },
-        {
-          title: "Introduction of Shop v1",
-          desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
-          completed: false,
-        },
-        {
-          title: "Multiplayer Social Hub",
-          desc: "Create a social hub where players can interact, form communities, and engage in multiplayer activities.",
-          completed: false,
-        },
-        // {
-        //   title: "Loot Box Introduction",
-        //   desc: "Introduce loot boxes as a new gameplay mechanic to reward players with random items.",
-        //   completed: false,
-        // },
-        {
-          title: "Introduction of the Mall Center",
-          desc: "Introduce a mall center in the game where players can shop for various items and goods.",
-          completed: false,
-        },
-        {
-          title: "Full Release of the Multiplayer PvE",
-          desc: "Launch the full version of the multiplayer player-versus-environment mode for all players to enjoy.",
-          completed: false,
-        },
         // {
         //   title: "Introduction of Character NFT Generation",
         //   desc: "Generate the main character in the game as an NFT item, adding value and uniqueness to the player's experience.",
         //   completed: false,
         // },
-        {
-          title: "Adopt CAWS Functionality",
-          desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
-          completed: false,
-        },
+        // {
+        //   title: "Adopt CAWS Functionality",
+        //   desc: "Allow players to adopt a CAWS (cat) in-game, feed it, grow it, and use it within the game world.",
+        //   completed: false,
+        // },
         // {
         //   title: "NFT Customization",
         //   desc: "Enable players to customize their NFTs, such as weapons and equipment, by adding elements or items to them.",
@@ -575,16 +597,16 @@ const Roadmap = () => {
         //   desc: "Introduce peer-to-peer trading functionality in the game to allow players to exchange items and goods directly.",
         //   completed: false,
         // },
-        {
-          title: "Addition of New AI Powered NPCs",
-          desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
-          completed: false,
-        },
-        {
-          title: "In-Game DeFi integration",
-          desc: "Incorporating DeFi products and functionalities in an enjoyable and visual way into the platform.",
-          completed: false,
-        },
+        // {
+        //   title: "Addition of New AI Powered NPCs",
+        //   desc: "Introduce new AI-powered NPCs to the game to provide additional challenges and interactions for players.",
+        //   completed: false,
+        // },
+        // {
+        //   title: "In-Game DeFi integration",
+        //   desc: "Incorporating DeFi products and functionalities in an enjoyable and visual way into the platform.",
+        //   completed: false,
+        // },
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
