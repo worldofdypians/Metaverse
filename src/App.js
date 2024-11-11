@@ -5650,7 +5650,7 @@ function App() {
               />
             }
           /> */}
-          <Route
+          {/* <Route
             exact
             path="/marketplace/stake"
             element={
@@ -5673,7 +5673,7 @@ function App() {
                 binanceWallet={coinbase}
               />
             }
-          />
+          /> */}
           <Route
             exact
             path="/marketplace/mint/timepiece"

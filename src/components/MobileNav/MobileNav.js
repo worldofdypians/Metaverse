@@ -97,7 +97,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/marketplace/stake"
+          to="/earn"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -132,7 +132,7 @@ const MobileNav = () => {
             );
           }}
         />
-        <NavLink
+        {/* <NavLink
           to="/marketplace/nft-bridge"
           end
           className={({ isActive }) =>
@@ -149,7 +149,7 @@ const MobileNav = () => {
               </>
             );
           }}
-        />
+        /> */}
         {email && <NavLink
           to="/loyalty-program"
           end
