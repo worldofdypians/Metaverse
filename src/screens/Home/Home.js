@@ -127,7 +127,7 @@ const Home = ({
             idyptokenDatabnb={idyptokenDatabnb}
           /> */}
           <ExplorerGrid totalSupply={totalSupply}/>
-          <GameUpdates />
+          {/* <GameUpdates /> */}
           {/* <LandNft /> */}
           {/* <CawsSociety
             content="The Cats and Watches Society (CAWS) NFT is a unique collection of
