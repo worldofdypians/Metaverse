@@ -12,32 +12,46 @@ const Earn = ({
   onConnectWallet,
   nftPools,
   binanceW3WProvider,
-  isPremium
+  isPremium,
 }) => {
   const tokenPools = [
     {
-      tokenName: "WOD",
-      apr: 20,
-      locktime: "30 days",
+      pair_name: "WOD",
+      apy_percent: 20,
+      lock_time: "30 days",
       chain: "BNB Chain",
-      tokenURL: ["wod"],
+      tokenURL: ["wodToken"],
       chainLogo: "bnbLogo.svg",
+      tvl_usd: 12220,
+      type: 'token',
+      expired: 'No',
+      id: 'one'
     },
     {
-      tokenName: "WOD",
-      apr: 15,
-      locktime: "60 days",
+      pair_name: "WOD",
+      apy_percent: 15,
+      lock_time: "60 days",
       chain: "BNB Chain",
-      tokenURL: ["wod"],
+      tokenURL: ["wodToken"],
       chainLogo: "bnbLogo.svg",
+      tvl_usd: 12220,
+      type: 'token',
+      expired: 'No',
+      id: 'two'
+
+
     },
     {
-      tokenName: "WOD",
-      apr: 5,
-      locktime: "No lock",
+      pair_name: "WOD",
+      apy_percent: 5,
+      lock_time: "No lock",
       chain: "Ethereum",
-      tokenURL: ["wod"],
+      tokenURL: ["wodToken"],
       chainLogo: "ethIcon.svg",
+      tvl_usd: 12220,
+      type: 'token',
+      expired: 'No',
+      id: 'three'
     },
   ];
 
@@ -100,21 +114,20 @@ const Earn = ({
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
   const [selectedFilter, setSelectedFilter] = useState("All Pools");
-  const [stakingPools, setStakingPools] = useState(nftPools);
+  const [stakingPools, setStakingPools] = useState([...tokenPools, ...nftPools]);
   const [showPopup, setshowPopup] = useState(false);
-  const [selectedTab, setselectedTab] = useState("deposit");
-  const [locktime, setlocktime] = useState("flexible");
   const [aprTooltip, setaprTooltip] = useState(false);
   const [selectedViewStyle, setselectedViewStyle] = useState("table");
   const [expired, setExpired] = useState(false);
 
   const handleSetPools = (poolFilter, isExpired) => {
     if (poolFilter === "All Staking Pools") {
+      const allPools = [...tokenPools, ...nftPools]
       if (isExpired === false) {
-        let nftPoolsActive = nftPools.filter((item) => {
+        let poolsActive = allPools.filter((item) => {
           return item.expired === "No";
         });
-        setStakingPools(nftPoolsActive);
+        setStakingPools(poolsActive);
       } else if (isExpired === true) {
         let nftPoolsExpired = nftPools.filter((item) => {
           return item.expired === "Yes";
@@ -122,7 +135,11 @@ const Earn = ({
         setStakingPools(nftPoolsExpired);
       }
     } else if (poolFilter === "Token") {
-      setStakingPools([]);
+      if (isExpired === false) {
+        setStakingPools(tokenPools);
+      } else if (isExpired === true) {
+        setStakingPools([]);
+      }
     } else if (poolFilter === "NFT") {
       if (isExpired === false) {
         let nftPoolsActive = nftPools.filter((item) => {
@@ -164,10 +181,10 @@ const Earn = ({
 
   useEffect(() => {
     if (nftPools && nftPools.length > 0) {
-      handleSetPools("NFT", false);
+      handleSetPools("All Staking Pools", false);
     }
   }, [nftPools]);
-  console.log(nftPools);
+
   return (
     <>
       <div className="container-fluid token-wrapper px-0 mt-5 pt-5">
@@ -204,292 +221,6 @@ const Earn = ({
           />
         </div>
       </div>
-      {/* {showPopup && (
-        <Modal
-          open={showPopup}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <div className="position-relative d-flex flex-column">
-              <img
-                src={closeX}
-                alt=""
-                className="close-x position-relative cursor-pointer "
-                onClick={() => {
-                  setshowPopup(false);
-                }}
-                style={{
-                  bottom: "17px",
-                  alignSelf: "end",
-                  width: 16,
-                  height: 16,
-                }}
-              />
-              <div className="staking-pool-bigwrapper my-0 p-3">
-                <div className="d-flex flex-column gap-4">
-                  <div className="d-flex flex-column gap-2 w-100 align-items-center">
-                    <div className="d-flex align-items-center gap-5 w-100">
-                      <span
-                        className={
-                          selectedTab === "deposit"
-                            ? "switchchain-txt-active"
-                            : "switchchain-txt"
-                        }
-                        onClick={() => {
-                          setselectedTab("deposit");
-                        }}
-                      >
-                        Deposit
-                      </span>
-                      <span
-                        className={
-                          selectedTab === "withdraw"
-                            ? "switchchain-txt-active"
-                            : "switchchain-txt"
-                        }
-                        onClick={() => {
-                          setselectedTab("withdraw");
-                        }}
-                      >
-                        Withdraw
-                      </span>
-                    </div>
-                    <div className="info-pool-wrapper py-3 w-100">
-                      <div className="info-pool-inner-wrapper d-flex flex-column flex-lg-row align-items-center gap-2">
-                        <div className="info-pool-item p-2">
-                          <div className="d-flex justify-content-between gap-1 align-items-center">
-                            <span className="info-pool-left-text">Chain </span>
-                            <span className="info-pool-right-text">
-                              Ethereum
-                            </span>
-                          </div>
-                        </div>
-                        <div className="info-pool-item p-2">
-                          <div className="d-flex justify-content-between gap-1 align-items-center">
-                            <span className="info-pool-left-text">APR </span>
-                            <span className="info-pool-right-text">12%</span>
-                          </div>
-                        </div>
-
-                        <div className="info-pool-item p-2">
-                          <div className="d-flex justify-content-between gap-1 align-items-center">
-                            <span className="info-pool-left-text">TVL</span>
-                            <span className="info-pool-right-text">
-                              ${getFormattedNumber(5000, 2)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="locktimewrapper align-items-center gap-2">
-                      <button
-                        className={
-                          //   getClassName(
-                          //   selectedchain,
-                          //   "No lock",
-                          //   selectedpoolType,
-                          //   selectedPool,
-                          //   ethPoolsDyp,
-                          //   ethPoolsiDyp,
-                          //   bnbPoolsDyp,
-                          //   bnbPoolsiDyp,
-                          //   avaxPoolsDyp,
-                          //   avaxPoolsiDyp
-                          // )
-
-                          locktime === "flexible"
-                            ? "method-btn-active"
-                            : "method-btn"
-                        }
-                        onClick={() => {
-                          setlocktime("flexible");
-                        }}
-                        // onClick={() =>
-                        //  { handleSelectPool(
-                        //     selectedchain,
-                        //     "No lock",
-                        //     selectedpoolType,
-                        //     ethPoolsDyp,
-                        //     ethPoolsiDyp,
-                        //     bnbPoolsDyp,
-                        //     bnbPoolsiDyp,
-                        //     avaxPoolsDyp,
-                        //     avaxPoolsiDyp
-                        //   )}
-                        // }
-                      >
-                        Flexible
-                      </button>
-                      <button
-                        className={
-                          //   getClassName(
-                          //   selectedchain,
-                          //   "30 days",
-                          //   selectedpoolType,
-                          //   selectedPool,
-                          //   ethPoolsDyp,
-                          //   ethPoolsiDyp,
-                          //   bnbPoolsDyp,
-                          //   bnbPoolsiDyp,
-                          //   avaxPoolsDyp,
-                          //   avaxPoolsiDyp
-                          // )
-                          locktime === "30 days"
-                            ? "method-btn-active"
-                            : "method-btn"
-                        }
-                        onClick={() => {
-                          setlocktime("30 days");
-                        }}
-                        // onClick={() =>
-                        //   {handleSelectPool(
-                        //     selectedchain,
-                        //     "30 days",
-                        //     selectedpoolType,
-                        //     ethPoolsDyp,
-                        //     ethPoolsiDyp,
-                        //     bnbPoolsDyp,
-                        //     bnbPoolsiDyp,
-                        //     avaxPoolsDyp,
-                        //     avaxPoolsiDyp
-                        //   )}
-                        // }
-                      >
-                        30 Days
-                      </button>
-                      <button
-                        className={
-                          //   getClassName(
-                          //   selectedchain,
-                          //   "60 days",
-                          //   selectedpoolType,
-                          //   selectedPool,
-                          //   ethPoolsDyp,
-                          //   ethPoolsiDyp,
-                          //   bnbPoolsDyp,
-                          //   bnbPoolsiDyp,
-                          //   avaxPoolsDyp,
-                          //   avaxPoolsiDyp
-                          // )
-
-                          locktime === "60 days"
-                            ? "method-btn-active"
-                            : "method-btn"
-                        }
-                        onClick={() => {
-                          setlocktime("60 days");
-                        }}
-                        // onClick={() => {
-                        //   handleSelectPool(
-                        //     selectedchain,
-                        //     "60 days",
-                        //     selectedpoolType,
-                        //     ethPoolsDyp,
-                        //     ethPoolsiDyp,
-                        //     bnbPoolsDyp,
-                        //     bnbPoolsiDyp,
-                        //     avaxPoolsDyp,
-                        //     avaxPoolsiDyp
-                        //   )
-                        // }}
-                      >
-                        60 Days
-                      </button>
-                      <button
-                        className={
-                          //   getClassName(
-                          //   selectedchain,
-                          //   "90 days",
-                          //   selectedpoolType,
-                          //   selectedPool,
-                          //   ethPoolsDyp,
-                          //   ethPoolsiDyp,
-                          //   bnbPoolsDyp,
-                          //   bnbPoolsiDyp,
-                          //   avaxPoolsDyp,
-                          //   avaxPoolsiDyp
-                          // )
-                          locktime === "90 days"
-                            ? "method-btn-active"
-                            : "method-btn"
-                        }
-                        onClick={() => {
-                          setlocktime("90 days");
-                        }}
-                        // onClick={() =>
-                        //  { handleSelectPool(
-                        //     selectedchain,
-                        //     "90 days",
-                        //     selectedpoolType,
-                        //     ethPoolsDyp,
-                        //     ethPoolsiDyp,
-                        //     bnbPoolsDyp,
-                        //     bnbPoolsiDyp,
-                        //     avaxPoolsDyp,
-                        //     avaxPoolsiDyp
-                        //   )}
-                        // }
-                      >
-                        90 Days
-                      </button>
-                      <button
-                        className={
-                          //   getClassName(
-                          //   selectedchain,
-                          //   "120 days",
-                          //   selectedpoolType,
-                          //   selectedPool,
-                          //   ethPoolsDyp,
-                          //   ethPoolsiDyp,
-                          //   bnbPoolsDyp,
-                          //   bnbPoolsiDyp,
-                          //   avaxPoolsDyp,
-                          //   avaxPoolsiDyp
-                          // )
-                          locktime === "120 days"
-                            ? "method-btn-active"
-                            : "method-btn"
-                        }
-                        onClick={() => {
-                          setlocktime("120 days");
-                        }}
-                        // onClick={() =>
-                        //  { handleSelectPool(
-                        //     selectedchain,
-                        //     "120 days",
-                        //     selectedpoolType,
-                        //     ethPoolsDyp,
-                        //     ethPoolsiDyp,
-                        //     bnbPoolsDyp,
-                        //     bnbPoolsiDyp,
-                        //     avaxPoolsDyp,
-                        //     avaxPoolsiDyp
-                        //   )}
-                        // }
-                      >
-                        120 Days
-                      </button>
-                    </div>
-                  </div>
-                  <StakingWod
-                    selectedTab={selectedTab}
-                    chainId={chainId?.toString()}
-                    coinbase={coinbase}
-                    lockTime={30}
-                    is_wallet_connected={isConnected}
-                    fee={0}
-                    staking={window.constant_staking_idyp_2}
-                    expiration_time={"Jul 12 2025"}
-                    onConnectWallet={onConnectWallet}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
-                </div>
-              </div>
-            </div>
-          </Box>
-        </Modal>
-      )} */}
     </>
   );
 };
