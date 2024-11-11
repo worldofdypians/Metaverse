@@ -2,6 +2,7 @@ import React from "react";
 import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import { NavLink } from "react-router-dom";
 import amplifyCheck from "../../assets/gameAssets/amplifyCheck.svg";
+import amplifyBannerSmall from "../../assets/gameAssets/amplifyBannerSmall.webp";
 
 const AmplifySection = () => {
   const dummyBetaPassData2 = [
@@ -105,21 +106,30 @@ const AmplifySection = () => {
           </div>
         </div>
       </div>
-      <div className="new-amplify-wrapper d-flex align-items-center justify-content-center">
-        <div className="custom-container">
-          <div className="d-flex align-items-center justify-content-center justify-content-lg-end">
-            <div className="d-flex flex-column col-lg-3 gap-4 px-4 px-lg-0">
-              <span className="amp-benefits-desc">BENEFITS</span>
-              <span className="ways-to-amplify-title">
-                WAYS TO AMPLIFY REWARDS
+      <div>
+        <div className="container-fluid d-flex  p-0">
+          <img
+            src={amplifyBannerSmall}
+            className="small-transaction-banner"
+            alt=""
+          />
+        </div>
+        <div className="new-game-stats-wrapper amplify-game-banner d-flex align-items-center justify-content-center ">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
+                Benefits
               </span>
-              <span className="ways-to-amplify-desc">
+              <span className="ways-to-amplify-title text-center text-md-end">
+                Ways to Amplify Rewards
+              </span>
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took a galley
                 of type and scrambled it to make a type specimen
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-end">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
                 <button className="explore-btn col-lg-4 py-2">Explore</button>
                 <button className="getpremium-btn col-lg-4 py-2">
                   Get Premium

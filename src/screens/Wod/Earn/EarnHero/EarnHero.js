@@ -95,7 +95,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
     <div className="earn-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100 gap-5">
-          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5 ps-4">
+          <div className="row mx-0 align-items-center justify-content-center gap-2 my-5 ps-0 ps-lg-4">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h2 className="font-montserrat main-hero-title px-0 text-center">
@@ -135,7 +135,7 @@ const EarnHero = ({ onSelectFilter, onSelectViewStyle, onViewPastPools }) => {
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
                   <div className="d-flex flex-column flex-lg-row flex-md-row gap-3 w-100 mx-0 align-items-center justify-content-between">
-                    <div className="d-flex align-items-center gap-3 ">
+                    <div className="d-flex align-items-center gap-3 flex-wrap">
                       <div className="d-flex justify-content-start align-items-center gap-3">
                         <div
                           className={`list-style ${

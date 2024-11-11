@@ -115,7 +115,7 @@ const GameHero = () => {
     <>
       <div className="about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative">
         <div className="custom-container  mt-5 mt-lg-0">
-          <div className="d-flex w-100 flex-column align-items-center gap-2">
+          <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0">
             <h2 className="font-montserrat main-hero-title  px-0">
               What is <br />
               World of Dypians?

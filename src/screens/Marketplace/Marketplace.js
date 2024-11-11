@@ -548,8 +548,8 @@ const Marketplace = ({
       <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-4 position-relative">
         <div className="custom-container mx-0">
           <div className="market-upper-wrapper pb-5">
-            <div className="d-flex flex-column gap-5">
-              <div className="row mx-0 justify-content-center p-4  marketplace-banner align-items-center mt-4 mt-lg-0">
+            <div className="d-flex flex-column gap-4 gap-lg-5 mt-3 mt-lg-0">
+              <div className="row mx-0 justify-content-center p-4  marketplace-banner align-items-center mt-5 mt-lg-0">
                 <div className="col-12 col-lg-6">
                   <h6 className="market-banner-title text-uppercase text-center">
                     Explore the World of Dypians{" "}

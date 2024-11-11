@@ -112,7 +112,7 @@ const Tokenomics = () => {
       className="d-flex  flex-column align-items-center gap-4"
       id="tokenomics"
     >
-      <div className="custom-container  d-flex flex-column w-100 gap-3">
+      <div className="custom-container  d-flex flex-column w-100 gap-3 px-3 px-lg-0">
         <h4
           className="explorer-grid-title font-montserrat text-start mb-0"
         >

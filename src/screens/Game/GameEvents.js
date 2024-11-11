@@ -73,7 +73,7 @@ const GameEvents = () => {
     <>
       <div className="our-team d-flex align-items-center justify-content-center my-5 py-4">
         <div className="custom-container">
-          <div className="d-flex flex-column position-relative align-items-center  w-100">
+          <div className="d-flex flex-column position-relative align-items-center  w-100 px-3 px-lg-0 mb-3 mb-lg-0">
             <h2 className="font-montserrat builders-title explorer-grid-title px-0">
               Game Events
             </h2>

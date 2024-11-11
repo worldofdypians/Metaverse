@@ -8,7 +8,7 @@ import humansBg from "../../assets/gameAssets/humansBg.webp";
 const ClassSelection = () => {
   return (
     <div className="mt-5">
-      <div className="d-flex flex-column align-items-center mb-5 w-100">
+      <div className="d-flex flex-column align-items-center mb-5 w-100 px-3 px-lg-0">
       <h2 className="font-montserrat builders-title explorer-grid-title px-0">
           Race and Class Selection
         </h2>
