@@ -7,6 +7,7 @@ import cityBannerSmall from "./assets/cityBannerSmall.webp";
 import secondCityBannerSmall from "./assets/secondCityBannerSmall.webp";
 import lizardBannerSmall from "./assets/lizardBannerSmall.webp";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
 
 const GameStats = ({ totalSupply, monthlyPlayers }) => {
   const [totalTx2, setTotalTx] = useState(0);
@@ -51,7 +52,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 secrets, and shape your own destiny.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <button className="explore-btn col-lg-4 py-2">Join Now</button>
+                <NavLink to={"/account"} className="explore-btn col-lg-4 py-2">Join Now</NavLink>
               </div>
             </div>
           </div>
@@ -81,9 +82,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 Will you rise to the challenge?
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <button className="explore-btn col-lg-4 py-2">
+                <NavLink to={"/account/challenges/treasure-hunt"} className="explore-btn col-lg-4 py-2">
                   Challenges
-                </button>
+                </NavLink>
               </div>
             </div>
           </div>
@@ -112,12 +113,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 landscapes, and unlock powerful relics.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <button className="explore-btn col-lg-4 py-2">
+                <NavLink to={"https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"} target="_blank" className="explore-btn col-lg-4 py-2">
                   Join the Fight
-                </button>
-                <button className="getpremium-btn col-lg-4 py-2">
+                </NavLink>
+                <NavLink to={"/game"} className="getpremium-btn col-lg-4 py-2">
                   Explore Now
-                </button>
+                </NavLink>
               </div>
             </div>
           </div>
@@ -146,7 +147,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 with players around the world who share your passion.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <button className="explore-btn col-lg-4 py-2">Start Exploring</button>
+                <NavLink to={"/map"} className="explore-btn col-lg-4 py-2">Start Exploring</NavLink>
           
               </div>
             </div>
@@ -174,9 +175,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               Join a vibrant community of adventurers in World of Dypians. From competitive events to collaborative challenges, connect with players around the world who share your passion.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <button className="explore-btn col-lg-4 py-2">
+                <NavLink to={"https://discord.gg/worldofdypians"} target="_blank" className="explore-btn col-lg-4 py-2">
                     Connect
-                </button>
+                </NavLink>
              
               </div>
             </div>
@@ -195,19 +196,19 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
             <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
-                NEWS
+                UPDATES
               </span>
               <span className="ways-to-amplify-title text-center text-md-start">
               Latest Updates in World of Dypians
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
-              Dive into the newest features, events, and surprises in World of Dypians. There’s always something fresh waiting for you—don’t miss out!
+              Dive into the newest features, events, and surprises in World of Dypians. There’s always something fresh waiting for you!
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <button className="explore-btn col-lg-4 py-2">Learn More</button>
-                <button className="getpremium-btn col-lg-4 py-2">
+                <NavLink to={"/game-updates"} className="explore-btn col-lg-4 py-2">Learn More</NavLink>
+                <NavLink to={"/campaigns"} className="getpremium-btn col-lg-4 py-2">
                   Campaigns
-                </button>
+                </NavLink>
               </div>
             </div>
           </div>

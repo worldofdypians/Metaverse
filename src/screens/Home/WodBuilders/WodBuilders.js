@@ -348,13 +348,13 @@ const WodBuilders = ({ page }) => {
                 key={index}
                 className="builder-item p-3 d-flex flex-column gap-2"
               >
-              <div className="partner-banner-holder overflow-hidden">
-              <img
-                  src={require(`./assets/${item.banner}`)}
-                  className="w-100 partner-banner"
-                  alt=""
-                />
-              </div>
+                <div className="partner-banner-holder overflow-hidden">
+                  <img
+                    src={require(`./assets/${item.banner}`)}
+                    className="w-100 partner-banner"
+                    alt=""
+                  />
+                </div>
                 <div className="d-flex align-items-center gap-2">
                   {item.icon === "klapai" ||
                   item.icon === "manta" ||
@@ -377,7 +377,6 @@ const WodBuilders = ({ page }) => {
                       width={24}
                       height={24}
                       alt=""
-                      
                     />
                   )}
 
@@ -399,14 +398,12 @@ const WodBuilders = ({ page }) => {
             </div>
           ) : (
             <div className="d-flex justify-content-center mt-3">
-              <div
-                className="linear-border"
+              <button
+                className="btn filled-btn px-5"
                 onClick={() => (slice === 8 ? setSlice(24) : setSlice(8))}
               >
-                <button className="btn filled-btn px-5">
-                  {slice === 8 ? "View More" : "View Less"}
-                </button>
-              </div>
+                {slice === 8 ? "View More" : "View Less"}
+              </button>
             </div>
           )}
         </div>

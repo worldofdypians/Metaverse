@@ -46,14 +46,21 @@ const WodPartners = ({ full }) => {
       icon: "taiko.svg",
     },
     {
-      name: "Conflux",
-      icon: "conflux.svg",
+      name: "KuCoin",
+      icon: "kucoin.svg",
     },
     {
-      name: "BabyDoge",
-      icon: "babydoge.svg",
+      name: "Binance Web3",
+      icon: "binanceWeb3.png",
     },
-    
+    {
+      name: "Immutable",
+      icon: "immutable.svg",
+    },
+    {
+      name: "Coin98",
+      icon: "coin98.svg",
+    },
     {
       name: "Avalanche",
       icon: "avalanche.svg",
@@ -62,10 +69,7 @@ const WodPartners = ({ full }) => {
       name: "Chainlink",
       icon: "chainlink.svg",
     },
-    {
-      name: "Coin98",
-      icon: "coin98.svg",
-    },
+
     {
       name: "Gate.Io",
       icon: "gateio.svg",
@@ -78,18 +82,16 @@ const WodPartners = ({ full }) => {
       name: "Easy2Stake",
       icon: "easy2stake.svg",
     },
+
     {
-      name: "KuCoin",
-      icon: "kucoin.svg",
+      name: "Conflux",
+      icon: "conflux.svg",
     },
     {
       name: "SEI",
       icon: "seiLogo.svg",
     },
-    {
-      name: "Immutable",
-      icon: "immutable.svg",
-    },
+
     {
       name: "Cookie3",
       icon: "cookie3.svg",
@@ -106,10 +108,7 @@ const WodPartners = ({ full }) => {
       name: "Crypto Adventure",
       icon: "cryptoadventure.svg",
     },
-    {
-      name: "Binance Web3",
-      icon: "binanceWeb3.png",
-    },
+
     {
       name: "Financial Move",
       icon: "financialmove.svg",
@@ -129,6 +128,10 @@ const WodPartners = ({ full }) => {
     {
       name: "Magic Store",
       icon: "magicstore.svg",
+    },
+    {
+      name: "BabyDoge",
+      icon: "babydoge.svg",
     },
     {
       name: "GGG",
@@ -207,16 +210,11 @@ const WodPartners = ({ full }) => {
       name: "Dyor Exchange",
       icon: "dyor.svg",
     },
-   
- 
-   
+
     {
       name: "MPC Education",
       icon: "mpceducation.svg",
     },
-   
-  
-   
   ];
 
   return (

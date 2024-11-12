@@ -50,9 +50,11 @@
 
 .stake-wod-btn {
   border-radius: 10px;
-  background: linear-gradient(90deg, #7bd8b0 0%, #dcfb85 100%);
+  background: linear-gradient(270deg, #7bd8b0, #dcfb85, #dcfb85, #7bd8b0);
+  background-size: 300%;
+  background-position: 0 0;
   border: none;
-  color: #333;
+  color: #333 !important;
   text-align: center;
   font-family: "Montserrat";
   text-transform: uppercase;
@@ -60,7 +62,13 @@
   font-style: normal;
   font-weight: 700;
   // line-height: normal;
+transition: all .25s;
 }
+
+.stake-wod-btn:hover {
+  background-position: 100% 0 !important;
+}
+
 .stake-wod-btn-inactive,
 .stake-wod-btn-inactive:hover {
   border-radius: 10px;
@@ -84,7 +92,9 @@
 
 .buy-wod-btn {
   border-radius: 10px;
-  background: linear-gradient(90deg, #7b2eb0 0%, #2647c9 100%);
+  background: linear-gradient(270deg, #7b2eb0, #2647c9, #2647c9, #7b2eb0);
+  background-size: 300%;
+  background-position: 0 0;
   border: none;
   color: #eeedff;
   text-align: center;
@@ -94,6 +104,12 @@
   font-style: normal;
   font-weight: 700;
   // line-height: normal;
+transition: all .25s;
+
+}
+
+.buy-wod-btn:hover {
+  background-position: 100% 0 !important;
 }
 
 .buy-wod-bg {

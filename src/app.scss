@@ -19,7 +19,7 @@
   font-family: "Oxanium";
   src: url("./fonts/Oxanium.ttf");
 }
-.custom-container{
+.custom-container {
   max-width: 1600px;
   width: 100%;
   // @media screen and (max-width: 1600px) {
@@ -75,7 +75,7 @@ html {
 }
 
 .lifetime-plan-text2 {
-  color: #FFF;
+  color: #fff;
   font-size: 11px;
   font-style: normal;
   font-weight: 300;
@@ -91,7 +91,7 @@ html {
 }
 
 .discount-price-profile {
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -108,14 +108,13 @@ html {
 }
 
 .old-price-text-profile {
-  color: #968AB6;
+  color: #968ab6;
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
   // line-height: 32px;
   text-decoration-line: line-through;
 }
-
 
 .premiumRedTag {
   top: -11px;
@@ -237,11 +236,10 @@ body {
     content: "";
   }
 
-
   .linear-border-roadmap {
     position: relative;
     padding: 3px;
-    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
+    background: linear-gradient(90deg, #b936f5 0.23%, #c64c85 99.72%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,
@@ -340,8 +338,6 @@ body {
     flex-direction: column;
   }
 
-
-
   .walletclose {
     display: flex;
     justify-content: end;
@@ -439,7 +435,6 @@ body {
     white-space: pre;
   }
 
-
   .outline-btn-roadmap {
     clip-path: polygon(
       0 19px,
@@ -469,7 +464,7 @@ body {
       calc(100% - 19px) 100%,
       0 100%
     );
-    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
+    background: linear-gradient(90deg, #b936f5 0.23%, #c64c85 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -480,19 +475,12 @@ body {
     white-space: pre;
   }
 
-
-
   .multiplayer-btn {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
-    background: linear-gradient(90deg, #7B2EB0 0.23%, #2647C9 99.72%);
-filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
+    border-radius: 12px;
+    background: linear-gradient(270deg, #7b2eb0, #2647c9, #2647c9, #7b2eb0);
+    background-size: 300%;
+    background-position: 0 0;
+    filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -501,18 +489,13 @@ filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
     text-align: center;
     color: #ffffff;
     white-space: pre;
+    transition: all 0.25s;
   }
 
   .multiplayer-btn:hover {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
-    background: linear-gradient(to left, #7b2eb0 0.23%, #142d8e 99.72%);
+    // background: linear-gradient(to left, #7b2eb0 0.23%, #142d8e 99.72%);
+    background-position: 100% 0 !important;
+
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -581,37 +564,26 @@ filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
   }
 
   .filled-btn {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
-    background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
+    border-radius: 12px;
+    background: linear-gradient(270deg, #7bd8b0, #dcfb85, #dcfb85, #7bd8b0);
+    background-size: 300%;
+    background-position: 0 0;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
-    color: #080b2a;
+    color: #080b2a !important;
     border: none !important;
     white-space: pre;
     transition: all 0.25s;
   }
 
+  .filled-btn:hover {
+    background-position: 100% 0 !important;
+  }
 
   .filled-btn-roadmap {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
-    background: linear-gradient(90deg, #B936F5 0.23%, #C64C85 99.72%);
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
@@ -704,10 +676,7 @@ filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
     transition: all 0.25s;
   }
 
-  .filled-btn:hover {
-    color: #ffffff;
-    background: #080b2a;
-  }
+
 
   .pink-filled-btn {
     clip-path: polygon(
@@ -751,7 +720,7 @@ filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
   .multiplayer-linear-border {
     position: relative;
     padding: 2px;
-    background: linear-gradient(90deg, #7B2EB0 0.23%, #2647C9 99.72%);;
+    background: linear-gradient(90deg, #7b2eb0 0.23%, #2647c9 99.72%);
     border-radius: 8px;
     clip-path: polygon(
       0 20px,

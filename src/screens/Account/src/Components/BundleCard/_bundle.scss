@@ -628,7 +628,9 @@ input[type="range"]:focus::-ms-fill-upper {
 }
 
 .pill-btn2 {
-  background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
+  background: linear-gradient(270deg, #7bd8af, #d9fa86, #d9fa86, #7bd8af);
+  background-size: 300%;
+  background-position: 0 0;
   border-radius: 8px;
   font-size: 16px;
   font-style: normal;
@@ -637,36 +639,55 @@ line-height: normal;
 border: none;
   color: #080b2a;
   border: none;
-
+transition: all .25s;
   @media screen and (max-width: 500px) {
     font-size: 13px;
   }
 }
 
+.pill-btn2:hover {
+  background-position: 100% 0 !important;
+}
+
 .signinbtn {
   border-radius: 8px;
-background: linear-gradient(90deg, #760F5A -10.16%, #624592 129.3%);
+background: linear-gradient(270deg, #760F5A, #624592, #624592, #760F5A);
+  background-size: 300%;
+  background-position: 0 0;
 color: #FFF;
 font-size: 12px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
 border: none;
+transition: all .25s;
 
+}
+
+.signinbtn:hover {
+  background-position: 100% 0 !important;
 }
 
 .signinbtn2 {
   border-radius: 8px;
-background: linear-gradient(90deg, #760F5A -10.16%, #624592 129.3%);
+background: linear-gradient(270deg, #760F5A, #624592, #624592, #760F5A);
+  background-size: 300%;
+  background-position: 0 0;
 color: #FFF;
 font-size: 16px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
 border: none;
+transition: all .25s;
+
 @media screen and (max-width: 500px) {
   font-size: 13px;
 }
+}
+
+.signinbtn2:hover {
+  background-position: 100% 0 !important;
 }
 
 .rewards-btn {
