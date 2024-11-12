@@ -1530,19 +1530,9 @@ function App() {
     setBetaModal(true);
   };
 
-  const handleDownload = () => {
-    setdownloadSelected(true);
-    setShowWalletModalDownload(true);
-  };
 
-  const handleSignUp = () => {
-    if (activeUser === true) {
-      setFireAppContent(true);
-    } else {
-      setShowWalletModalRegister(true);
-    }
-  };
 
+ 
   const handleConnection = async () => {
     try {
       localStorage.setItem("logout", "false");
@@ -4564,7 +4554,6 @@ function App() {
               <Home
                 handleRegister={handleRegister}
                 allStarData={allStarData}
-                handleDownload={handleDownload}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
@@ -6341,79 +6330,11 @@ function App() {
         />
       )}
 
-      {showWalletModalDownload === true && (
-        <CheckWhitelistModal
-          open={showWalletModalDownload}
-          onClose={() => {
-            setdownloadSelected(false);
-            setShowWalletModalDownload(false);
-          }}
-          isPremium={isPremium}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-          openRegister={handleRegister}
-          donwloadSelected={donwloadSelected}
-          cawsMinted={myCAWSNFTsCreated.length}
-          cawsStaked={myCAWSNFTsTotalStaked.length}
-          landMinted={myNFTs.length}
-          landStaked={mystakes.length}
-          handleActiveUser={(value) => {
-            setactiveUser(value);
-          }}
-        />
-      )}
+    
 
       {fireAppcontent === true && <AppContent />}
 
-      {showWalletModalRegister === true && (
-        <CheckWhitelistModal
-          open={showWalletModalRegister}
-          onClose={() => {
-            setShowWalletModalRegister(false);
-          }}
-          isPremium={isPremium}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-          openRegister={handleRegister}
-          donwloadSelected={donwloadSelected}
-          cawsMinted={myCAWSNFTsCreated.length}
-          cawsStaked={myCAWSNFTsTotalStaked.length}
-          landMinted={myNFTs.length}
-          landStaked={mystakes.length}
-          handleRedirect={() => {
-            setFireAppContent(true);
-          }}
-          handleActiveUser={(value) => {
-            setactiveUser(value);
-          }}
-        />
-      )}
-
-      {showWalletModalRegister2 === true && (
-        <CheckAuthUserModal
-          open={showWalletModalRegister2}
-          onClose={() => {
-            setShowWalletModalRegister2(false);
-          }}
-          handleConnect={handleConnection}
-          coinbase={coinbase}
-          showForms={showForms}
-          openRegister={handleRegister}
-          donwloadSelected={donwloadSelected}
-          cawsMinted={myCAWSNFTsCreated.length}
-          cawsStaked={myCAWSNFTsTotalStaked.length}
-          landMinted={myNFTs.length}
-          landStaked={mystakes.length}
-          handleRedirect={() => {
-            setFireAppContent(true);
-          }}
-          handleActiveUser={(value) => {
-            setactiveUser(value);
-          }}
-        />
-      )}
+    
     </>
   );
 }

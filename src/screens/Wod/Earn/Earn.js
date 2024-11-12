@@ -92,28 +92,10 @@ const Earn = ({
       chainLogo: "ethIcon.svg",
     },
   ];
-  const windowSize = useWindowSize();
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width:
-      windowSize.width > 1400 ? "auto" : windowSize.width > 786 ? "50%" : "95%",
-    boxShadow: 24,
-    p: 4,
-    overflow: "auto",
-    minHeight: 200,
-    overflowX: "hidden",
-    borderRadius: "10px",
-    height: windowSize.width < 500 ? "480px" : "auto",
-    background: `#1A1A36`,
-  };
 
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
-  const [selectedFilter, setSelectedFilter] = useState("All Pools");
+  const [selectedFilter, setSelectedFilter] = useState("All");
   const [stakingPools, setStakingPools] = useState([...tokenPools, ...nftPools]);
   const [showPopup, setshowPopup] = useState(false);
   const [aprTooltip, setaprTooltip] = useState(false);
@@ -121,7 +103,7 @@ const Earn = ({
   const [expired, setExpired] = useState(false);
 
   const handleSetPools = (poolFilter, isExpired) => {
-    if (poolFilter === "All Staking Pools") {
+    if (poolFilter === "All") {
       const allPools = [...tokenPools, ...nftPools]
       if (isExpired === false) {
         let poolsActive = allPools.filter((item) => {
@@ -134,7 +116,7 @@ const Earn = ({
         });
         setStakingPools(nftPoolsExpired);
       }
-    } else if (poolFilter === "Token") {
+    } else if (poolFilter === "WOD") {
       if (isExpired === false) {
         setStakingPools(tokenPools);
       } else if (isExpired === true) {
@@ -152,26 +134,7 @@ const Earn = ({
         });
         setStakingPools(nftPoolsExpired);
       }
-    } else if (poolFilter === "Token + NFT") {
-      if (isExpired === false) {
-        let nftPoolsActive = nftPools.filter((item) => {
-          return item.expired === "No";
-        });
-        setStakingPools(nftPoolsActive);
-      } else if (isExpired === true) {
-        let nftPoolsExpired = nftPools.filter((item) => {
-          return item.expired === "Yes";
-        });
-        setStakingPools(nftPoolsExpired);
-      }
-    }
-  };
-
-  const aprOpen = () => {
-    setaprTooltip(true);
-  };
-  const aprClose = () => {
-    setaprTooltip(false);
+    } 
   };
 
   useEffect(() => {
@@ -181,7 +144,7 @@ const Earn = ({
 
   useEffect(() => {
     if (nftPools && nftPools.length > 0) {
-      handleSetPools("All Staking Pools", false);
+      handleSetPools("All", false);
     }
   }, [nftPools]);
 
