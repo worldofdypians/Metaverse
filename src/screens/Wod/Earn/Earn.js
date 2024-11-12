@@ -95,7 +95,7 @@ const Earn = ({
 
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
-  const [selectedFilter, setSelectedFilter] = useState("All Staking Pools");
+  const [selectedFilter, setSelectedFilter] = useState("All");
   const [stakingPools, setStakingPools] = useState([...tokenPools, ...nftPools]);
   const [showPopup, setshowPopup] = useState(false);
   const [aprTooltip, setaprTooltip] = useState(false);
@@ -103,7 +103,7 @@ const Earn = ({
   const [expired, setExpired] = useState(false);
 
   const handleSetPools = (poolFilter, isExpired) => {
-    if (poolFilter === "All Staking Pools") {
+    if (poolFilter === "All") {
       const allPools = [...tokenPools, ...nftPools]
       if (isExpired === false) {
         let poolsActive = allPools.filter((item) => {
@@ -116,7 +116,7 @@ const Earn = ({
         });
         setStakingPools(nftPoolsExpired);
       }
-    } else if (poolFilter === "Token") {
+    } else if (poolFilter === "WOD") {
       if (isExpired === false) {
         setStakingPools(tokenPools);
       } else if (isExpired === true) {
@@ -134,19 +134,7 @@ const Earn = ({
         });
         setStakingPools(nftPoolsExpired);
       }
-    } else if (poolFilter === "Token + NFT") {
-      if (isExpired === false) {
-        let nftPoolsActive = nftPools.filter((item) => {
-          return item.expired === "No";
-        });
-        setStakingPools(nftPoolsActive);
-      } else if (isExpired === true) {
-        let nftPoolsExpired = nftPools.filter((item) => {
-          return item.expired === "Yes";
-        });
-        setStakingPools(nftPoolsExpired);
-      }
-    }
+    } 
   };
 
   useEffect(() => {
@@ -156,7 +144,7 @@ const Earn = ({
 
   useEffect(() => {
     if (nftPools && nftPools.length > 0) {
-      handleSetPools("All Staking Pools", false);
+      handleSetPools("All", false);
     }
   }, [nftPools]);
 

@@ -13,6 +13,7 @@ import CawsWodDetails from "./pools/cawsWod";
 import CawsDetailsPremium from "./pools/cawsPremium";
 import LandDetailsPremium from "./pools/landPremium";
 import TopPoolsListCard from "./TopPoolsListCard";
+import StakeWodDetails from "./pools/stakingWod";
 
 const EarnContent = ({
   isConnected,
@@ -251,6 +252,26 @@ const EarnContent = ({
                             listType={selectedViewStyle}
                           />
                         )}
+
+                        {(item?.id === "one" ||
+                          item?.id === "two" ||
+                          item?.id === "three") && (
+                          <StakeWodDetails
+                            coinbase={coinbase}
+                            isConnected={isConnected}
+                            chainId={chainId?.toString()}
+                            handleConnection={onConnectWallet}
+                            expired={false}
+                            staking={window.constant_staking_wod}
+                            apr={20}
+                            expiration_time={"07 Jun 2025"}
+                            lockTime={"No Lock"}
+                            fee={0}
+                            binanceW3WProvider={binanceW3WProvider}
+                            handleSwitchNetwork={handleSwitchNetwork}
+                            listType={selectedViewStyle}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -386,6 +407,26 @@ const EarnContent = ({
                           binanceW3WProvider={binanceW3WProvider}
                           handleSwitchNetwork={handleSwitchNetwork}
                           isPremium={isPremium}
+                          listType={selectedViewStyle}
+                        />
+                      )}
+
+                      {(item?.id === "one" ||
+                        item?.id === "two" ||
+                        item?.id === "three") && (
+                        <StakeWodDetails
+                          coinbase={coinbase}
+                          isConnected={isConnected}
+                          chainId={chainId?.toString()}
+                          handleConnection={onConnectWallet}
+                          expired={false}
+                          staking={window.constant_staking_wod}
+                          apr={20}
+                          expiration_time={"07 Jun 2025"}
+                          lockTime={"No Lock"}
+                          fee={0}
+                          binanceW3WProvider={binanceW3WProvider}
+                          handleSwitchNetwork={handleSwitchNetwork}
                           listType={selectedViewStyle}
                         />
                       )}

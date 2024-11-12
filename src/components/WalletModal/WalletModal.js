@@ -11,7 +11,7 @@ const WalletModal = ({
   handleConnectBinance,
 }) => {
   return (
-    <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
+    <Modal visible={show} onModalClose={handleClose}>
       <OutsideClickHandler onOutsideClick={handleClose}>
         <div className="walletmodal-wrapper px-3 py-4" id={"connect"}>
           <div className="sc-jwKygS bFQpTL">

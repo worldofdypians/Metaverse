@@ -334,9 +334,9 @@ const Land = ({
     setshowWithdrawModal(true);
   };
 
-  const handleWhitelist = () => {
-    setwhitelistModal(true);
-  };
+  // const handleWhitelist = () => {
+  //   setwhitelistModal(true);
+  // };
 
   const checkCawsToUse = async () => {
     const testArray = [];
@@ -532,7 +532,7 @@ const Land = ({
         />
       )}
 
-      {whitelistModal === true && (
+      {/* {whitelistModal === true && (
         <LandWhitelistModal
           open={whitelistModal}
           onClose={() => {
@@ -547,7 +547,7 @@ const Land = ({
           handleConnect={handleConnectWallet}
           chainId={chainId}
         />
-      )}
+      )} */}
 
       {walletModal === true && (
         <WalletModal
@@ -579,7 +579,7 @@ const Land = ({
           ETHrewards={EthRewards}
           onClaimAll={claimRewards}
           chainId={chainId}
-          handleWhitelist={handleWhitelist}
+          // handleWhitelist={handleWhitelist}
           mintPrice={mintPrice}
           mintPriceDiscount={mintPriceDiscount}
           totalCaws={totalCawsDiscount}

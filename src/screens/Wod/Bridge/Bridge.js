@@ -13,7 +13,7 @@ const Bridge = ({
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "WoD Bridge";
+    document.title = "WOD Bridge";
   }, []);
 
   const scrollToElement = (eventId) => {
