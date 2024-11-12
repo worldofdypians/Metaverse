@@ -40,7 +40,9 @@ const TimepieceNFT = ({
   timepieceBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId,timepiece
+  binanceW3WProvider,
+  chainId,
+  timepiece,
 }) => {
   const override = {
     display: "block",
@@ -567,7 +569,6 @@ const TimepieceNFT = ({
   };
 
   const getListedTimepiece = async () => {
- 
     const timepieceArray = [...timepiece, ...timepieceBought];
     const timepieceArray2 = [...timepiece];
 
@@ -784,7 +785,7 @@ const TimepieceNFT = ({
   }, [timepieceNFTS, totalSupply]);
 
   useEffect(() => {
-    if (timepieceBought && timepiece && timepiece.length>0) {
+    if (timepieceBought && timepiece && timepiece.length > 0) {
       getListedTimepiece();
     }
   }, [timepieceBought, nftCount, alltimepieceNfts.length, timepiece]);
@@ -851,13 +852,13 @@ const TimepieceNFT = ({
                       to="/caws-timepiece"
                       style={{ width: "fit-content" }}
                     >
-                      <button className="btn pill-btn">Explore</button>
+                      <button className="pill-btn2 px-3 py-2">Explore</button>
                     </NavLink>
                     <NavLink
                       to="/marketplace/mint/timepiece"
                       style={{ textDecoration: "none" }}
                     >
-                      <button className="btn mint-now-btn gap-2">
+                      <button className="signinbtn2 px-3 py-2 d-flex align-items-center gap-2">
                         <img src={mintNowIcon} alt="" />
                         Available minting
                       </button>
@@ -1042,7 +1043,6 @@ const TimepieceNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}
@@ -1229,7 +1229,6 @@ const TimepieceNFT = ({
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       );
@@ -1284,8 +1283,7 @@ const TimepieceNFT = ({
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
                               binanceW3WProvider={binanceW3WProvider}
-                            chainId={chainId}
-
+                              chainId={chainId}
                             />
                           </NavLink>
                         ))}
