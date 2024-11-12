@@ -52,7 +52,7 @@ const VideoWrapper = ({
   const betaSlider = useRef(null);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
-  
+
   const downloader = useRef();
   const windowSize = useWindowSize();
   downloader?.current?.addEventListener("mouseenter", () => {
@@ -64,8 +64,6 @@ const VideoWrapper = ({
 
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
-
-
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
 
@@ -185,44 +183,26 @@ const VideoWrapper = ({
               Ever Built
             </h4>
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
-              <div
-                className="linear-border p-0"
-                style={{
-                  width: "fit-content",
-                  zIndex: 5,
-                  position: "relative",
-                  textDecoration: "none",
-                }}
-              >
-                <div className="opacitywrapper5 filled-btn m-0 px-3">
-                  <a
-                    className="game-event-download py-1 d-flex align-items-center gap-2"
-                    href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                    target="_blank"
-                  >
-                    <img src={epicblack} alt="icon" className="epicgame2" />
-                    Download
-                  </a>
-                </div>
-              </div>
-              <div
-                className="multiplayer-linear-border col-lg-7 col-12"
-                style={{
-                  zIndex: 5,
-                  position: "relative",
-                  textDecoration: "none",
-                }}
-              >
-                <button
-                  className="btn multiplayer-btn py-1 px-3 d-flex align-items-center w-100 gap-2 justify-content-center"
-                  onClick={() => {
-                    setmultiplayerModal(true);
-                  }}
+              <div className="filled-btn m-0 py-1 px-5">
+                <a
+                  className="game-event-download py-1 d-flex align-items-center gap-2"
+                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                  target="_blank"
                 >
-                  <img src={buyWod} alt="" />
-                  Buy WoD
-                </button>
+                  <img src={epicblack} alt="icon" className="epicgame2" />
+                  Download
+                </a>
               </div>
+
+              <button
+                className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
+                onClick={() => {
+                  setmultiplayerModal(true);
+                }}
+              >
+                <img src={buyWod} alt="" />
+                Buy WoD
+              </button>
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">
@@ -247,12 +227,9 @@ const VideoWrapper = ({
                     onClick={() => {
                       item.link === "/" && setModal(true);
                     }}
-                      key={index}
+                    key={index}
                   >
-                    <BetaEventCardHome
-                      data={item}
-                      isFrontPage={true}
-                    />
+                    <BetaEventCardHome data={item} isFrontPage={true} />
                   </NavLink>
                 ))}
               </Slider>
@@ -289,12 +266,9 @@ const VideoWrapper = ({
                   onClick={() => {
                     item.link === "/" && setModal(true);
                   }}
-                   key={index}
+                  key={index}
                 >
-                  <BetaEventCardHome
-                    data={item}
-                    isFrontPage={true}
-                  />
+                  <BetaEventCardHome data={item} isFrontPage={true} />
                 </NavLink>
               ))}
             </Slider>

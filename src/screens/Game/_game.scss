@@ -35,7 +35,7 @@
 }
 
 .amp-benefits-desc {
-  color: #00E5FF;
+  color: #00e5ff;
   font-family: Poppins;
   font-size: 14px;
   font-style: normal;
@@ -53,7 +53,7 @@
 }
 
 .ways-to-amplify-desc {
-  color: #EEEDFF;
+  color: #eeedff;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -62,14 +62,21 @@
 
 .explore-btn {
   border-radius: 12px;
-  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
-  color: #eeedff;
+  background: linear-gradient(270deg, #008ebf, #00b7cc, #00b7cc, #008ebf);
+  background-size: 300%;
+  background-position: 0 0;
+  color: #eeedff !important;
   text-align: center;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   border: none;
+  transition: all 0.25s;
+}
+
+.explore-btn:hover {
+  background-position: 100% 0 !important;
 }
 
 .getpremium-btn {
@@ -82,6 +89,12 @@
   font-weight: 700;
   line-height: normal;
   background: transparent;
+  transition: all 0.25s;
+}
+
+.getpremium-btn:hover {
+  background: #ffd37e;
+  color: #eeedff !important;
 }
 
 .humans-bg {
@@ -289,8 +302,15 @@
 }
 
 .buy-premium-btn {
-  background: linear-gradient(90deg, #ff8168 0%, #ea6278 100%) !important;
+  background: linear-gradient(270deg, #ff8168, #ea6278, #ea6278, #ff8168);
+  background-size: 300%;
+  background-position: 0 0;
   color: #eeedff !important;
+  transition: all .25s;
+}
+
+.buy-premium-btn:hover {
+  background-position: 100% 0 !important;
 }
 
 .amplify-table-wrapper {

@@ -183,15 +183,22 @@
 }
 
 .epic-games-btn {
-  background: linear-gradient(to right, #b936f5, #c64c85);
+  background: linear-gradient(270deg, #b936f5, #c64c85, #c64c85, #b936f5);
+  background-size: 300%;
+  background-position: 0 0;
   border-radius: 8px;
   border: none;
-  color: #eeedff;
+  color: #eeedff !important;
   font-family: "Montserrat";
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: all .25s;
+}
+
+.epic-games-btn:hover{
+  background-position: 100% 0 !important;
 }
 
 .fullBtn {

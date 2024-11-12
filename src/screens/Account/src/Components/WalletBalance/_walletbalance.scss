@@ -1696,7 +1696,7 @@ background: rgba(142, 151, 205, 0.20) !important;
   // background: linear-gradient(to right, #3dbda7, #067d71);
   border-radius: 6px;
   padding: 3px 10px;
-  color: inherit;
+  color: #080b2a !important;
   font-size: 12pt;
   font-style: normal;
   font-weight: 500;
@@ -1707,10 +1707,7 @@ background: rgba(142, 151, 205, 0.20) !important;
   align-self: center;
 }
 
-.game-event-download:hover {
-  color: #fff;
-  // background: linear-gradient(to right, #024539, #00d1bc);
-}
+
 
 .game-img-second {
   width: 60px;
