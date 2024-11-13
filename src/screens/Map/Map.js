@@ -112,7 +112,7 @@ const Map = ({
 
 
 
-  const allChallenges = [...challenges, ...liveTreasureHunts]
+  const allChallenges = [...challenges]
 
   // Custom marker click handler with memoization
   const handleMarkerClick = useCallback((marker, zoom, type) => {
