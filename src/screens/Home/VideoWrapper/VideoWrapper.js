@@ -201,7 +201,7 @@ const VideoWrapper = ({
                 }}
               >
                 <img src={buyWod} alt="" />
-                Buy WoD
+                Buy WOD
               </button>
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">

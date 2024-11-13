@@ -116,7 +116,7 @@ const Tokenomics = () => {
         <h4
           className="explorer-grid-title font-montserrat text-start mb-0"
         >
-          WoD Tokenomics
+          WOD Tokenomics
         </h4>
         <span className="tokenomics-wrapper-desc">
           The total token supply is 1B $WOD and is designed to fuel the World of

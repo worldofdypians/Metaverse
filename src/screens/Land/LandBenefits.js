@@ -6,7 +6,7 @@ const LandBenefits = () => {
   const dimensions = [
     {
       title: "2,000km\u00b2",
-      content: "Total WoD area",
+      content: "Total WOD area",
     },
     {
       title: "100,000",

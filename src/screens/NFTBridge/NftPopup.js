@@ -77,7 +77,7 @@ const NftPopup = ({
         />
       </div>
       <span className="stake-modal-desc">
-        Select the NFT you wish to bridge, whether from CAWS or WoD Genesis Land
+        Select the NFT you wish to bridge, whether from CAWS or WOD Genesis Land
         NFTs.
       </span>
 

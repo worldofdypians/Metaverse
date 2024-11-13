@@ -37,9 +37,9 @@ const BridgeHero = ({ onScroll }) => {
                       onScroll("bridge");
                     }}
                   >
-                    Bridge WoD
+                    Bridge WOD
                   </button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
+                  <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
                 </div>
               </div>
             </div>

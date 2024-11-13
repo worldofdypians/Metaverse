@@ -94,7 +94,7 @@ function LoginConflux({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,on
         />
         <span className="footertxt-coingecko mt-1">
           Users who have claimed the {mintTitle} NFT are required to create a
-          WoD Account to receive the NFT and participate in the exclusive event.
+          WOD Account to receive the NFT and participate in the exclusive event.
         </span>
         <div className="summaryseparator"></div>
 
@@ -144,7 +144,7 @@ function LoginConflux({ mintTitle, onSuccessLogin, newEmail, onUsernameChange,on
           </span>
           <span className="footertxt-coingecko mt-1">
             Users who have claimed the {mintTitle} NFT are required to create a
-            WoD Account to receive the NFT and participate in the exclusive
+            WOD Account to receive the NFT and participate in the exclusive
             event.
           </span>
           <div className="summaryseparator"></div>

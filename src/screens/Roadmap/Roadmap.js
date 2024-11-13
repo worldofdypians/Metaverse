@@ -115,7 +115,7 @@ const Roadmap = () => {
       content: [
         {
           title: "Introduction of marketplace",
-          desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
+          desc: "Users can access WOD marketplace to purchase assets used to customize and enhance their experience.",
           completed: true,
         },
 

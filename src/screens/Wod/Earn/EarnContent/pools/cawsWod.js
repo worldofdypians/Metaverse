@@ -396,7 +396,7 @@ const CawsWodDetails = ({
                         >
                           <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
-                            WoD Marketplace
+                            WOD Marketplace
                           </h6>
                         </a>
                         <a
@@ -459,7 +459,7 @@ const CawsWodDetails = ({
                         >
                           <h6 className="m-0 bottomitems">
                             <img src={arrowup} alt="" />
-                            WoD Marketplace
+                            WOD Marketplace
                           </h6>
                         </a>
                         <a

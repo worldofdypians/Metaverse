@@ -12954,7 +12954,7 @@ function Dashboard({
                     </ul>
                   </p>
                   <p className="popup-paragraph mb-4">
-                    The WoD Team will review the quality of the content, the
+                    The WOD Team will review the quality of the content, the
                     engagement of the post, and other details. If you are
                     eligible, they will determine the reward, which is
                     distributed in BNB on a monthly basis.

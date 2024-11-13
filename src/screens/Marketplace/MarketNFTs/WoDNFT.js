@@ -832,7 +832,7 @@ const WoDNFT = ({
 
                   <p className="collection-desc">
                     The Genesis Land offers <b>Access</b> to the metaverse,{" "}
-                    <b>Ownership</b> to land in WoD, participate on different{" "}
+                    <b>Ownership</b> to land in WOD, participate on different{" "}
                     <b>on-chain Events,</b> have a dedicated{" "}
                     <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and
                     earn multiple <b>Rewards</b> by playing the game.
