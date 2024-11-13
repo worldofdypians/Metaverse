@@ -637,7 +637,7 @@ input[type="range"]:focus::-ms-fill-upper {
 font-weight: 600;
 line-height: normal;
 border: none;
-  color: #080b2a;
+  color: #080b2a !important;
   border: none;
 transition: all .25s;
   @media screen and (max-width: 500px) {

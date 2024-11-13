@@ -805,7 +805,8 @@ const CawsNFT = ({
                     earn multiple <b>Rewards</b>.
                   </p>
                   <NavLink to="/caws" style={{ width: "fit-content" }}>
-                    <button className="btn pill-btn">Explore</button>
+                  <button className="pill-btn2 px-3 py-2">Explore</button>
+
                   </NavLink>
                 </div>
               </div>

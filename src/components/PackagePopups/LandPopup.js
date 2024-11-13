@@ -138,14 +138,12 @@ const LandPopup = ({ onClosePopup }) => {
               margin: "10px auto auto auto",
             }}
           >
-            <div className="opacitywrapper5 filled-btn m-0 px-3">
               <NavLink
-                className="game-event-download py-1 d-flex align-items-center gap-2"
+                className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
                 to="/marketplace/land"
               >
                 GET YOUR LAND
               </NavLink>
-            </div>
           </div>
         </div>
       </div>

@@ -771,7 +771,7 @@ const WoDNFT = ({
   }, []);
 
   useEffect(() => {
-    if (wodBought && wodBought.length > 0 && wod && wod.length>0) {
+    if (wodBought && wodBought.length > 0 && wod && wod.length > 0) {
       getListedWod();
     }
   }, [wodBought, nftCount, allwodNfts.length, wod]);
@@ -809,7 +809,7 @@ const WoDNFT = ({
     }
     sortNfts("lth");
   }, [landNfts]);
-  
+
   return (
     <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div
@@ -838,7 +838,7 @@ const WoDNFT = ({
                     earn multiple <b>Rewards</b> by playing the game.
                   </p>
                   <NavLink to="/land" style={{ width: "fit-content" }}>
-                    <button className="btn pill-btn">Explore</button>
+                    <button className="pill-btn2 px-3 py-2">Explore</button>
                   </NavLink>
                 </div>
               </div>

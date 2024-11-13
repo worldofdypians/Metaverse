@@ -101,10 +101,9 @@ const CawsPopup = ({ onClosePopup }) => {
             {cawsinfo.map((item, index) => {
               return (
                 <div className="caws-info-item p-2" key={index}>
-                    <div className="d-flex flex-column gap-1 align-items-center justify-content-center">
-                <span className="caws-info-value">{item.value}</span>
-                <span className="caws-info-title">{item.title}</span>
-
+                  <div className="d-flex flex-column gap-1 align-items-center justify-content-center">
+                    <span className="caws-info-value">{item.value}</span>
+                    <span className="caws-info-title">{item.title}</span>
                   </div>
                 </div>
               );
@@ -120,14 +119,12 @@ const CawsPopup = ({ onClosePopup }) => {
               margin: "10px auto auto auto",
             }}
           >
-            <div className="opacitywrapper5 filled-btn m-0 px-3">
               <NavLink
-                className="game-event-download py-1 d-flex align-items-center gap-2"
+                className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
                 to="/marketplace/caws"
               >
                 GET YOUR CAWS
               </NavLink>
-            </div>
           </div>
         </div>
       </div>
