@@ -694,9 +694,7 @@ const [dailyBonusPopup, setDailyBonusPopup] = useState(false)
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Immutable"
-                                ? immutableEarnUsd
-                                : item.title === "Manta"
+                               item.title === "Manta"
                                 ? mantaEarnUsd
                                 : item.title === "Taiko"
                                 ? taikoEarnUsd
