@@ -412,33 +412,7 @@ const MarketEvents = ({
 
 
  
-    {
-      title: "Immutable",
-      logo: immutableLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in IMX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2024",
-      backgroundImage: immutableBg,
-      popupInfo: {
-        title: "Immutable",
-        chain: "Immutable",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Live",
-        id: "event15",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: immutableLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
-        eventDate: "Aug 15, 2024",
-      },
-    },
+   
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -545,6 +519,33 @@ const MarketEvents = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Oct 21, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 15, 2024",
+      backgroundImage: immutableBg,
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Expired",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: immutableLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Aug 15, 2024",
       },
     },
     {
@@ -1668,7 +1669,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 5).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1921,7 +1922,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(5, dummyBetaPassData2.length)
+                    .slice(4, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
