@@ -106,15 +106,41 @@
   justify-content: center;
 }
 
-.video-wrapper {
-  background-size: cover;
-  background-repeat: no-repeat;
-  // min-height: 100vh;
-  background-position: center;
+.main-hero-title{
+  color: #FFF;
+  text-align: center;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.80);
+  font-size: 50px !important;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 32px !important;
+  }
+}
 
-  // @media only screen and (max-width: 991px) {
-  //   background-image: url("../../../assets/videoBackground.webp");
-  // }
+.main-hero-subtitle {
+  color: #FFF;
+  text-align: center;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.80);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.video-wrapper {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  background-position: center;
+  background-image: url(../../../assets/wodAssets/mainHero.webp);
+  @media only screen and (max-width: 991px) {
+    min-height: auto;
+  background-size: cover;
+
+  }
 
   .video-main-title {
     font-style: normal;
@@ -182,13 +208,15 @@
 
 .download-buttons-wrapper {
   position: absolute;
-  left: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
   top: 40%;
   bottom: 0;
   margin: auto;
 
   @media screen and (max-width: 991px) {
-    position: static;
+    position: relative;
     margin-top: 8rem;
+    margin-bottom: 2rem;
   }
 }

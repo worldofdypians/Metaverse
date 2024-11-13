@@ -1,6 +1,3 @@
-* {
-  font-family: "Poppins" !important;
-}
 
 .App {
   text-align: center;
@@ -14,8 +11,24 @@
 
 .premium-chains-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+}
+
+
+.custom-marketplace-container{
+  width: 85%;
+}
+
+
+@media screen and (max-width: 786px) {
+  .premium-chains-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .custom-marketplace-container{
+    width: 100%;
+  }
 }
 
 @font-face {
@@ -400,26 +413,6 @@ iframe {
   outline: none;
 }
 
-.filled-btn {
-  clip-path: polygon(
-    0 19px,
-    19px 0,
-    100% 0,
-    100% calc(100% - 19px),
-    calc(100% - 19px) 100%,
-    0 100%
-  );
-  background: linear-gradient(89.7deg, #7bd8b0 0.23%, #dcfb85 99.72%);
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: #080b2a;
-  border: none !important;
-  white-space: pre;
-  transition: all 0.25s;
-}
 
 .filled-error-btn {
   clip-path: polygon(
@@ -442,10 +435,7 @@ iframe {
   transition: all 0.25s;
 }
 
-.filled-btn:hover {
-  color: #ffffff;
-  background: #080b2a;
-}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

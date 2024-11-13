@@ -105,17 +105,12 @@ const NewDailyBonus = ({
   isPremium,
   chainId,
   handleSwitchNetwork,
-  standardChests,
-  standardSkaleChests,
   claimedPremiumChests,
   claimedSkaleChests,
   claimedSkalePremiumChests,
-  premiumChests,
-  premiumSkaleChests,
   claimedChests,
   email,
   openedChests,
-  canBuy,
   address,
   allChests,
   allSkaleChests,
@@ -145,8 +140,6 @@ const NewDailyBonus = ({
   onSeiChestClaimed,
   allCoreChests,
   allVictionChests,
-  standardSeiChests,
-  premiumSeiChests,
   claimedSeiChests,
   claimedSeiPremiumChests,
   openedSeiChests,
@@ -157,8 +150,6 @@ const NewDailyBonus = ({
   coreImages,
   mantaImages,
   baseImages,
-  standardMantaChests,
-  premiumMantaChests,
   claimedMantaChests,
   claimedMantaPremiumChests,
   claimedBaseChests,
@@ -170,8 +161,6 @@ const NewDailyBonus = ({
   onMantaChestClaimed,
   onBaseChestClaimed,
   taikoImages,
-  standardTaikoChests,
-  premiumTaikoChests,
   claimedTaikoChests,
   claimedTaikoPremiumChests,
   openedTaikoChests,
@@ -181,6 +170,12 @@ const NewDailyBonus = ({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   binanceWallet,
+  matImages,
+  claimedMatChests,
+  claimedMatPremiumChests,
+  openedMatChests,
+  onMatChestClaimed,
+  allMatChests
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -215,6 +210,9 @@ const NewDailyBonus = ({
 
   const taikoClaimed = claimedTaikoChests + claimedTaikoPremiumChests;
   const taikoPercentage = (taikoClaimed / 20) * 100;
+
+  const matClaimed = claimedMatChests + claimedMatPremiumChests;
+  const matPercentage = (matClaimed / 20) * 100;
 
   const seiClaimed = claimedSeiChests + claimedSeiPremiumChests;
   const seiPercentage = (seiClaimed / 20) * 100;
@@ -440,6 +438,9 @@ const NewDailyBonus = ({
   const [totalBaseUsd, settotalBaseUsd] = useState(0);
   const [totalTaikoPoints, settotalTaikoPoints] = useState(0);
   const [totalTaikoUsd, settotalTaikoUsd] = useState(0);
+  const [totalMatPoints, settotalMatPoints] = useState(0);
+  const [totalMatUsd, settotalMatUsd] = useState(0);
+
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
   const [totalSeiUsd, settotalSeiUsd] = useState(0);
 
@@ -685,6 +686,41 @@ const NewDailyBonus = ({
       settotalTaikoUsd(resultTaikoUsd);
     }
 
+    if (allMatChests && allMatChests.length > 0) {
+      let resultMatPoints = 0;
+      let resultMatUsd = 0;
+
+      allMatChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultMatPoints += Number(innerChest.reward);
+              }
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                resultMatUsd += Number(innerChest.reward);
+              }
+            });
+          } else if (chest.rewards.length === 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Points") {
+                resultMatPoints += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+
+      settotalMatPoints(resultMatPoints);
+      settotalMatUsd(resultMatUsd);
+    }
+
+
     if (allSeiChests && allSeiChests.length > 0) {
       let resultSeiPoints = 0;
       let resultSeiUsd = 0;
@@ -777,6 +813,8 @@ const NewDailyBonus = ({
         showSingleRewardDataBase(rewardData.chestId, isActiveIndex - 1);
       } else if (chain === "taiko") {
         showSingleRewardDataTaiko(rewardData.chestId, isActiveIndex - 1);
+      } else if (chain === "matchain") {
+        showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1);
       }
     }
   };
@@ -877,6 +915,33 @@ const NewDailyBonus = ({
       );
     }
   };
+
+  const handleMatPool = async () => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x2ba")
+            .then(() => {
+              handleSwitchNetwork(698);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    } else {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
+    }
+  };
+
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
@@ -2061,6 +2126,122 @@ const NewDailyBonus = ({
     }
   };
 
+  const showSingleRewardDataMat = (chestID, chestIndex) => {
+    const filteredResult = openedMatChests.find(
+      (el) =>
+        el.chestId === chestID && allMatChests.indexOf(el) === chestIndex
+    );
+    setIsActive(chestID);
+    setIsActiveIndex(chestIndex + 1);
+    if (filteredResult) {
+      const result = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "CAWS"
+        );
+      });
+
+      const resultLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "LAND"
+        );
+      });
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
+      const resultWon = filteredResult.rewards.find((obj) => {
+        return obj.rewardType === "Money" && obj.status === "Claimed";
+      });
+
+      const resultPoints = filteredResult.rewards.length === 1;
+
+      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
+        );
+      });
+
+      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+          );
+        }
+      );
+
+      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
+        (obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimable" &&
+            obj.details ===
+              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
+          );
+        }
+      );
+
+      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
+        );
+      });
+
+      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimable" &&
+          obj.details ===
+            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
+        );
+      });
+
+      if (result) {
+        setMessage("caws");
+      } else if (resultLand) {
+        setMessage("wod");
+      } else if (!result && !resultLand && resultPremium) {
+        setMessage("needPremium");
+      } else if (resultWon) {
+        setMessage("won");
+      } else if (resultPoints) {
+        setMessage("wonPoints");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultWonMoneyNoLand) {
+        setMessage("winDangerLand");
+      } else if (resultWonMoneyNotEnoughLands) {
+        setMessage("winDangerNotEnoughLand");
+      } else if (resultWonMoneyhasNftsNoPremium) {
+        setMessage("winDangerHasNftsNoPremium");
+      } else if (resultWonMoneyhasNftsNoDyp) {
+        setMessage("winDangerHasNftsPremiumNoDyp");
+      }
+
+      setLiveRewardData(filteredResult);
+      setRewardData(filteredResult);
+    } else {
+      setLiveRewardData([]);
+    }
+  };
+
   const showSingleRewardDataSei = (chestID, chestIndex) => {
     const filteredResult = openedSeiChests.find(
       (el) => el.chestId === chestID && allSeiChests.indexOf(el) === chestIndex
@@ -2185,6 +2366,7 @@ const NewDailyBonus = ({
     allMantaChests,
     allBaseChests,
     allTaikoChests,
+    allMatChests,
     allCoreChests,
   ]);
 
@@ -2661,6 +2843,77 @@ const NewDailyBonus = ({
       ) {
         setMessage("notsupported");
       }
+    } else if (chain === "matchain") {
+      // if (window.WALLET_TYPE !== "binance") {
+      //   if (email && coinbase && address) {
+      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+      //       if (isPremium) {
+      //         if (
+      //           claimedMatChests + claimedMatPremiumChests === 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase()
+      //         ) {
+      //           setMessage("complete");
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       } else if (!isPremium) {
+      //         if (
+      //           claimedMatChests === 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("premium");
+      //           setDisable(true);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       }
+      //     } else {
+      //       setMessage("switchAccount");
+      //       setDisable(true);
+      //     }
+      //   } else {
+      //     setMessage("login");
+      //     setDisable(true);
+      //   }
+      // } else if (
+      //   window.WALLET_TYPE === "binance" ||
+      //   window.ethereum?.isBinance
+      // ) {
+      //   setMessage("notsupported");
+      // }
+      setMessage("comingsoon");
+
     }
   }, [
     email,
@@ -2683,6 +2936,8 @@ const NewDailyBonus = ({
     claimedBasePremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
+    claimedMatChests,
+    claimedMatPremiumChests,
     rewardData,
   ]);
 
@@ -2813,6 +3068,8 @@ const NewDailyBonus = ({
                       ? totalBasePoints
                       : chain === "taiko"
                       ? totalTaikoPoints
+                      : chain === "matchain"
+                      ? totalMatPoints
                       : chain === "sei"
                       ? 0
                       : totalSkalePoints,
@@ -2839,6 +3096,8 @@ const NewDailyBonus = ({
                       ? totalBaseUsd
                       : chain === "taiko"
                       ? totalTaikoUsd
+                      : chain === "matchain"
+                      ? totalMatUsd
                       : chain === "sei"
                       ? 0
                       : totalSkaleUsd,
@@ -3169,6 +3428,105 @@ const NewDailyBonus = ({
                               </div>
                               <span className="percentage-span">
                                 {parseInt(taikoPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "matchain" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon}
+                            className={`chain-img ${
+                              chain === "matchain" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "matchain" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("matchain");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 698
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMatPool}
+                              >
+                                {" "}
+                                <img src={taiko} alt="" /> Matchain
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              {/* <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div> */}
+                              <span className="percentage-span">
+                                {/* {parseInt(matPercentage)}% */}
+                                Coming Soon
                               </span>
                             </div>
                           </div>
@@ -3603,22 +3961,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div className={`position-relative chain-item w-100`}>
-                          <img
-                            src={comingSoon}
-                            className={`chain-img`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
-                          >
-                            <div className="d-flex align-items-center gap-2">
-                              <span className="percentage-span">
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                      
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon2}
@@ -3657,7 +4000,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "bnb" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={bnbBg}
@@ -3712,7 +4055,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "manta" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={mantaBg}
@@ -3757,7 +4100,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "taiko" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={taikoBg}
@@ -3801,8 +4144,53 @@ const NewDailyBonus = ({
 
                         <div
                           className={`position-relative chain-item ${
-                            chain === "skale" && "chain-item-active"
+                            chain === "matchain" && "chain-item-active"
                           } w-100`}
+                        >
+                          <img
+                            src={comingSoon}
+                            className={`chain-img ${
+                              chain === "matchain" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "matchain" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("matchain");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            {/* <h6 className="chain-title-position mb-0">
+                              Manta CHAIN
+                            </h6> */}
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 698
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMatPool}
+                              >
+                                {" "}
+                                <img src={taiko} alt="" /> Matchain
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "skale" && "chain-item-active"
+                          } w-auto`}
                         >
                           <img
                             src={skaleBg}
@@ -3845,7 +4233,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "core" && "chain-item-active"
-                          } w-100`}
+                          }  w-auto`}
                         >
                           <HtmlTooltipGift
                             placement="top"
@@ -3909,7 +4297,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "base" && "chain-item-active"
-                          } w-100`}
+                          }  w-auto`}
                         >
                           <img
                             src={comingSoon4}
@@ -3954,7 +4342,7 @@ const NewDailyBonus = ({
                         <div
                           className={`position-relative chain-item ${
                             chain === "viction" && "chain-item-active"
-                          } w-100`}
+                          } w-auto`}
                         >
                           <img
                             src={victionBg}
@@ -4506,6 +4894,109 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
+
+                              : chain === "matchain"
+                              ? allMatChests && allMatChests.length > 0
+                                ? allMatChests.map((item, index) => (
+                                    <NewChestItem
+                                      coinbase={coinbase}
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      image={matImages[index]}
+                                      chain={chain}
+                                      key={index}
+                                      item={item}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onMatChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataMat(value, value2);
+                                        setIsActive(value);
+                                        setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={item.chestType?.toLowerCase()}
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.isOpened}
+                                      disableBtn={disable}
+                                      isActive={isActive}
+                                      isActiveIndex={isActiveIndex}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]?.closedImg
+                                      }
+                                    />
+                                  ))
+                                : window.range(0, 19).map((item, index) => (
+                                    <NewChestItem
+                                      coinbase={coinbase}
+                                      claimingChest={claimingChest}
+                                      setClaimingChest={setClaimingChest}
+                                      buyNftPopup={buyNftPopup}
+                                      chainId={chainId}
+                                      chain={chain}
+                                      key={index}
+                                      item={item}
+                                      image={matImages[index]}
+                                      // openChest={openChest}
+                                      selectedChest={selectedChest}
+                                      isPremium={isPremium}
+                                      onClaimRewards={(value) => {
+                                        // setRewardData(value);
+                                        setLiveRewardData(value);
+                                        onMatChestClaimed();
+                                        showLiveRewardData(value);
+                                        setIsActive(item.chestId);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      handleShowRewards={(value, value2) => {
+                                        showSingleRewardDataMat(value, value2);
+                                        setIsActive(value);
+                                        // setIsActiveIndex(index + 1);
+                                      }}
+                                      onLoadingChest={(value) => {
+                                        // setDisable(value);
+                                      }}
+                                      onChestStatus={(val) => {
+                                        setMessage(val);
+                                      }}
+                                      address={address}
+                                      email={email}
+                                      rewardTypes={
+                                        index + 1 <= 10 ? "standard" : "premium"
+                                      }
+                                      chestId={item.chestId}
+                                      chestIndex={index + 1}
+                                      open={item.opened}
+                                      disableBtn={true}
+                                      isActive={isActive}
+                                      openChest={() => {
+                                        console.log("test");
+                                      }}
+                                      dummypremiumChests={
+                                        dummypremiumChests[index - 10]?.closedImg
+                                      }
+                                    />
+                                  ))
+
+
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -4856,6 +5347,22 @@ const NewDailyBonus = ({
                               onClick={handleTaikoPool}
                             >
                               Taiko Chain
+                            </span>
+                          </h6>
+                        ) : chain === "matchain" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleMatPool}
+                            >
+                              Matchain
                             </span>
                           </h6>
                         ) : chain === "core" ? (
@@ -7109,6 +7616,7 @@ const NewDailyBonus = ({
             onCoreChestClaimed();
             onMantaChestClaimed();
             onTaikoChestClaimed();
+            onMatChestClaimed();
             onBaseChestClaimed();
             setcountListedNfts(countListedNfts);
             // setBuyNftPopup(false);
@@ -7127,6 +7635,11 @@ const NewDailyBonus = ({
                   )
                 : chain === "taiko"
                 ? showSingleRewardDataTaiko(
+                    rewardData.chestId,
+                    isActiveIndex - 1
+                  )
+                  : chain === "matchain"
+                ? showSingleRewardDataMat(
                     rewardData.chestId,
                     isActiveIndex - 1
                   )

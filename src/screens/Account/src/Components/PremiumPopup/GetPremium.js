@@ -16,6 +16,7 @@ import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
 import { ethers } from "ethers";
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+import "./_getpremium.scss";
 
 const GetPremiumPopup = ({
   coinbase,
@@ -27,7 +28,9 @@ const GetPremiumPopup = ({
   handleSwitchChainBinanceWallet,
   handleSwitchChainGateWallet,
   binanceWallet,
-  authToken
+  authToken,
+  isPremium,
+  isConnected
 }) => {
   const chainDropdowns = [
     {
@@ -70,6 +73,10 @@ const GetPremiumPopup = ({
       name: "Taiko",
       symbol: "taiko",
     },
+    {
+      name: "Matchain",
+      symbol: "matchain",
+    },
   ];
 
   const { BigNumber } = window;
@@ -83,7 +90,8 @@ const GetPremiumPopup = ({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
-  let wtaikoddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wmataddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",
@@ -129,6 +137,11 @@ const GetPremiumPopup = ({
   const [nftPremium_totalTaiko, setnftPremium_totalTaiko] = useState(0);
   const [nftDiscountObjectTaiko, setnftDiscountObjectTaiko] = useState([]);
 
+  const [discountPercentageMat, setdiscountPercentageMat] = useState(0);
+  const [nftPremium_tokenIdMat, setnftPremium_tokenIdMat] = useState(0);
+  const [nftPremium_totalMat, setnftPremium_totalMat] = useState(0);
+  const [nftDiscountObjectMat, setnftDiscountObjectMat] = useState([]);
+
   const getRankData = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`, {
@@ -140,11 +153,15 @@ const GetPremiumPopup = ({
       .catch(async (err) => {
         if (err.response.status === 404) {
           await axios
-            .post(`https://api.worldofdypians.com/api/addUserRank`, {
-              walletAddress: coinbase,
-            }, {
-              headers: { Authorization: `Bearer ${authToken}` },
-            })
+            .post(
+              `https://api.worldofdypians.com/api/addUserRank`,
+              {
+                walletAddress: coinbase,
+              },
+              {
+                headers: { Authorization: `Bearer ${authToken}` },
+              }
+            )
             .then(async (data) => {
               const response2 = await axios
                 .get(`https://api.worldofdypians.com/api/userRanks/${coinbase}`)
@@ -173,6 +190,11 @@ const GetPremiumPopup = ({
       window.config.subscription_taiko_address
     );
 
+    const premiumSc_mat = new window.matWeb3.eth.Contract(
+      window.SUBSCRIPTION_MAT_ABI,
+      window.config.subscription_mat_address
+    );
+
     const nftContract = new window.bscWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_ABI,
       window.config.nft_dypius_premium_address
@@ -186,6 +208,11 @@ const GetPremiumPopup = ({
     const nftContract_taiko = new window.taikoWeb3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
       window.config.nft_dypius_premium_taiko_address
+    );
+
+    const nftContract_mat = new window.matWeb3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_mat_address
     );
 
     if (wallet) {
@@ -206,6 +233,14 @@ const GetPremiumPopup = ({
         });
 
       const result_taiko = await nftContract_taiko.methods
+        .balanceOf(wallet)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
+      const result_mat = await nftContract_mat.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -237,6 +272,14 @@ const GetPremiumPopup = ({
           return 0;
         });
 
+      const discount_mat = await premiumSc_mat.methods
+        .discountPercentageGlobal()
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+
       const nftObject = await premiumSc.methods
         .nftDiscounts(window.config.nft_dypius_premium_address)
         .call()
@@ -253,6 +296,13 @@ const GetPremiumPopup = ({
 
       const nftObject_taiko = await premiumSc_taiko.methods
         .nftDiscounts(window.config.nft_dypius_premium_taiko_address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
+      const nftObject_mat = await premiumSc_mat.methods
+        .nftDiscounts(window.config.nft_dypius_premium_mat_address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -327,6 +377,29 @@ const GetPremiumPopup = ({
 
         setnftPremium_tokenIdTaiko(tokenId);
         setnftPremium_totalTaiko(parseInt(result_taiko));
+      } else if (result_mat && parseInt(result_mat) > 0) {
+        const tokenId = await nftContract_mat.methods
+          .tokenOfOwnerByIndex(wallet, 0)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+
+        if (nftObject_mat) {
+          setnftDiscountObjectMat(nftObject_mat);
+          if (discount_mat) {
+            setdiscountPercentageMat(
+              Math.max(
+                parseInt(discount_mat),
+                parseInt(nftObject_mat.discountPercentage)
+              )
+            );
+          }
+        }
+
+        setnftPremium_tokenIdMat(tokenId);
+        setnftPremium_totalMat(parseInt(result_mat));
       } else {
         setnftPremium_tokenId(0);
         setnftPremium_total(0);
@@ -334,15 +407,22 @@ const GetPremiumPopup = ({
         setnftPremium_totalViction(0);
         setnftPremium_tokenIdTaiko(0);
         setnftPremium_totalTaiko(0);
+        setnftPremium_tokenIdMat(0);
+        setnftPremium_totalMat(0);
+
         if (discount) {
           setdiscountPercentage(parseInt(discount));
         } else if (discount_viction) {
           setdiscountPercentageViction(parseInt(discount_viction));
         } else if (discount_taiko) {
           setdiscountPercentageTaiko(parseInt(discount_taiko));
+        } else if (discount_mat) {
+          setdiscountPercentageMat(parseInt(discount_mat));
         }
       }
     } else {
+      setnftPremium_tokenIdMat(0);
+      setnftPremium_totalMat(0);
       setnftPremium_tokenId(0);
       setnftPremium_total(0);
       setnftPremium_tokenIdViction(0);
@@ -457,6 +537,22 @@ const GetPremiumPopup = ({
         await handleSwitchNetworkhook("0x28c58")
           .then(() => {
             handleSwitchNetwork(167000);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+  const handleMatPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x2ba")
+          .then(() => {
+            handleSwitchNetwork(698);
           })
           .catch((e) => {
             console.log(e);
@@ -635,7 +731,11 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionmanta_tokens[token]?.decimals
         : chainId === 167000
         ? window.config.subscriptiontaiko_tokens[token]?.decimals
-        : window.config.subscriptioncfx_tokens[token]?.decimals;
+        : chainId === 698
+        ? window.config.subscriptionmat_tokens[token]?.decimals
+        : chainId === 1030
+        ? window.config.subscriptioncfx_tokens[token]?.decimals
+        : window.config.subscriptioneth_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
     setTokenBalance("");
@@ -672,9 +772,14 @@ const GetPremiumPopup = ({
             token,
             discountPercentageTaiko
           )
+        : chainId === 698
+        ? await window.getEstimatedTokenSubscriptionAmountMat(
+            token,
+            discountPercentageMat
+          )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
-        : await window.getEstimatedTokenSubscriptionAmount(token);
+        : await window.getEstimatedTokenSubscriptionAmountETH(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
 
@@ -682,6 +787,8 @@ const GetPremiumPopup = ({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
+
+    console.log("tokenprice", tokenprice, tokenDecimals, token);
     if (coinbase && window.WALLET_TYPE === "binance") {
       let token_Sc = new ethers.Contract(
         token,
@@ -708,6 +815,7 @@ const GetPremiumPopup = ({
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
+    const matsubscribeAddress = window.config.subscription_mat_address;
 
     const coresubscribeAddress = window.config.subscription_core_address;
 
@@ -723,6 +831,11 @@ const GetPremiumPopup = ({
     let nftContract_taiko = new window.web3.eth.Contract(
       window.NFT_DYPIUS_PREMIUM_TAIKO_ABI,
       window.config.nft_dypius_premium_taiko_address
+    );
+
+    let nftContract_mat = new window.web3.eth.Contract(
+      window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+      window.config.nft_dypius_premium_mat_address
     );
 
     if (chainId === 56 && nftPremium_total > 0) {
@@ -973,6 +1086,63 @@ const GetPremiumPopup = ({
             }, 5000);
           });
       }
+    } else if (
+      chainId === 698 &&
+      nftPremium_totalMat > 0 &&
+      window.WALLET_TYPE !== "binance"
+    ) {
+      if (approveStatus === "initial") {
+        await nftContract_mat.methods
+          .approve(
+            window.config.subscription_mat_address,
+            nftPremium_tokenIdMat
+          )
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            if (discountPercentageMat < 100) {
+              setapproveStatus("approveAmount");
+            } else {
+              setapproveStatus("deposit");
+            }
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      } else if (approveStatus === "approveAmount") {
+        let tokenContract = new window.web3.eth.Contract(
+          window.ERC20_ABI,
+          selectedSubscriptionToken
+        );
+        await tokenContract.methods
+          .approve(matsubscribeAddress, price)
+          .send({ from: coinbase })
+          .then(() => {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          })
+          .catch((e) => {
+            setstatus(e?.message);
+            setloadspinner(false);
+            setapproveStatus("fail");
+            window.alertify.error(e?.message);
+            setTimeout(() => {
+              setstatus("");
+              setloadspinner(false);
+              setapproveStatus("initial");
+            }, 5000);
+          });
+      }
     } else {
       if (window.WALLET_TYPE !== "binance") {
         let tokenContract = new window.web3.eth.Contract(
@@ -1000,6 +1170,8 @@ const GetPremiumPopup = ({
               ? mantasubscribeAddress
               : chainId === 167000
               ? taikosubscribeAddress
+              : chainId === 698
+              ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
               : chainId === 713715
@@ -1094,6 +1266,7 @@ const GetPremiumPopup = ({
     const victionWeb3 = new Web3(window.config.viction_endpoint);
     const mantaWeb3 = new Web3(window.config.manta_endpoint);
     const taikoWeb3 = new Web3(window.config.taiko_endpoint);
+    const matWeb3 = new Web3(window.config.mat_endpoint);
 
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
@@ -1106,6 +1279,7 @@ const GetPremiumPopup = ({
     const victionsubscribeAddress = window.config.subscription_viction_address;
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
+    const matsubscribeAddress = window.config.subscription_mat_address;
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -1162,6 +1336,11 @@ const GetPremiumPopup = ({
       subscribeToken
     );
 
+    const subscribeTokencontractmat = new matWeb3.eth.Contract(
+      window.ERC20_ABI,
+      subscribeToken
+    );
+
     let tokenprice =
       chainId === 1
         ? await window.getEstimatedTokenSubscriptionAmountETH(token)
@@ -1190,11 +1369,16 @@ const GetPremiumPopup = ({
             token,
             discountPercentageTaiko
           )
+        : chainId === 698
+        ? await window.getEstimatedTokenSubscriptionAmountMat(
+            token,
+            discountPercentageMat
+          )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
-        : await window.getEstimatedTokenSubscriptionAmount(token);
+        : await window.getEstimatedTokenSubscriptionAmountETH(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
 
@@ -1454,6 +1638,59 @@ const GetPremiumPopup = ({
             setapproveStatus("initial");
           }
         }
+      } else if (chainId === 698) {
+        if (nftPremium_totalMat > 0) {
+          let contract = new window.web3.eth.Contract(
+            window.NFT_DYPIUS_PREMIUM_MAT_ABI,
+            window.config.nft_dypius_premium_mat_address
+          );
+
+          let approved = await contract.methods
+            .getApproved(nftPremium_tokenIdMat)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          let approvedAll = await contract.methods
+            .isApprovedForAll(coinbase, matsubscribeAddress)
+            .call()
+            .catch((e) => {
+              console.error(e);
+              return false;
+            });
+
+          if (
+            approved.toLowerCase() === matsubscribeAddress.toLowerCase() ||
+            approvedAll === true
+          ) {
+            if (discountPercentageMat === 100) {
+              setloadspinner(false);
+              setisApproved(true);
+              setapproveStatus("deposit");
+            }
+          } else {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        } else {
+          const result = await subscribeTokencontractmat.methods
+            .allowance(coinbase, matsubscribeAddress)
+            .call()
+            .then();
+
+          if (result != 0 && Number(result) >= Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(true);
+            setapproveStatus("deposit");
+          } else if (result == 0 || Number(result) < Number(tokenprice)) {
+            setloadspinner(false);
+            setisApproved(false);
+            setapproveStatus("initial");
+          }
+        }
       } else if (chainId === 43114) {
         const result = await subscribeTokencontractavax.methods
           .allowance(coinbase, avaxsubscribeAddress)
@@ -1512,6 +1749,10 @@ const GetPremiumPopup = ({
           setisApproved(false);
           setapproveStatus("initial");
         }
+      } else {
+        setloadspinner(false);
+        setisApproved(false);
+        setapproveStatus("initial");
       }
     }
   };
@@ -1549,6 +1790,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_MANTA"
             : chainId === 167000
             ? "SUBSCRIPTION_TAIKO"
+            : chainId === 698
+            ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
             : chainId === 713715
@@ -1576,7 +1819,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "bnb subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -1627,7 +1871,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "bnb subscribeBNB",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -1676,7 +1921,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "viction subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -1726,7 +1972,59 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: "taiko subscribeNFT",
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
+                  headers: { Authorization: `Bearer ${authToken}` },
+                }
+              )
+              .then(() => {
+                getRankData();
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          })
+          .catch(() => {
+            setloadspinnerSub(false);
+            setapproveStatus("failsubscribe");
+            setstatus(e?.message);
+            window.alertify.error(e?.message);
+
+            setTimeout(() => {
+              setloadspinnerSub(false);
+              setloadspinner(false);
+              setapproveStatus("initial");
+              setstatus("");
+            }, 5000);
+          });
+      } else if (chainId === 698 && nftPremium_totalMat > 0) {
+        await window
+          .subscribeNFTMat(
+            nftDiscountObjectMat.nftAddress,
+            nftPremium_tokenIdMat,
+            selectedSubscriptionToken,
+            price
+          )
+          .then(async (data) => {
+            setloadspinnerSub(false);
+            handleUpdatePremiumUser(coinbase);
+            setapproveStatus("successsubscribe");
+            onSuccessDeposit();
+            await axios
+              .patch(
+                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+                {
+                  multiplier: "yes",
+                  chain: "matchain subscribeNFT",
+                  premiumTimestamp: today.toString(),
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -1772,7 +2070,8 @@ const GetPremiumPopup = ({
                   multiplier: "yes",
                   chain: chainId.toString(),
                   premiumTimestamp: today.toString(),
-                }, {
+                },
+                {
                   headers: { Authorization: `Bearer ${authToken}` },
                 }
               )
@@ -1870,7 +2169,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: "bnb subscribeNFT BinanceWallet",
                 premiumTimestamp: today.toString(),
-              }, {
+              },
+              {
                 headers: { Authorization: `Bearer ${authToken}` },
               }
             )
@@ -1921,7 +2221,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: "bnb subscribeBNB BinanceWallet",
                 premiumTimestamp: today.toString(),
-              }, {
+              },
+              {
                 headers: { Authorization: `Bearer ${authToken}` },
               }
             )
@@ -1968,7 +2269,8 @@ const GetPremiumPopup = ({
                 multiplier: "yes",
                 chain: chainId.toString(),
                 premiumTimestamp: today.toString(),
-              }, {
+              },
+              {
                 headers: { Authorization: `Bearer ${authToken}` },
               }
             )
@@ -2068,8 +2370,17 @@ const GetPremiumPopup = ({
       setselectedSubscriptionToken(
         Object.keys(window.config.subscriptiontaiko_tokens)[0]
       );
-      handleSubscriptionTokenChange(wtaikoddress);
-      handleCheckIfAlreadyApproved(wtaikoddress);
+      handleSubscriptionTokenChange(wtaikoaddress);
+      handleCheckIfAlreadyApproved(wtaikoaddress);
+    } else if (chainId === 698) {
+      setChainDropdown(chainDropdowns[10]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("USDT");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionmat_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wmataddress);
+      handleCheckIfAlreadyApproved(wmataddress);
     } else if (chainId === 1116) {
       setChainDropdown(chainDropdowns[6]);
       setdropdownIcon("usdt");
@@ -2104,14 +2415,15 @@ const GetPremiumPopup = ({
     nftPremium_total,
     nftPremium_totalViction,
     nftPremium_totalTaiko,
-
+    nftPremium_totalMat,
     discountPercentage,
     discountPercentageViction,
     discountPercentageTaiko,
-
+    discountPercentageMat,
     nftPremium_tokenId,
     nftPremium_tokenIdViction,
     nftPremium_tokenIdTaiko,
+    nftPremium_tokenIdMat,
   ]);
 
   useEffect(() => {
@@ -2149,6 +2461,11 @@ const GetPremiumPopup = ({
         window.config.subscriptiontaiko_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 698 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionmat_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     } else if (chainId === 1116 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
@@ -2164,6 +2481,11 @@ const GetPremiumPopup = ({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else {
+      settokenDecimals(
+        window.config.subscriptioneth_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     }
   }, [chainId, selectedSubscriptionToken]);
 
@@ -2172,60 +2494,145 @@ const GetPremiumPopup = ({
   }, [chainId, coinbase]);
 
   return (
-    <div
-      className="popup-wrapper popup-active p-4"
-      id="subscribe"
-      style={{ width: "40%", pointerEvents: "auto" }}
-    >
-      <div className="subscribe-container p-2 position-relative">
-        <div className="" style={{ background: "#8E97CD" }}></div>
-        <div className="d-flex justify-content-between align-items-center">
-          <h6 className="free-plan-title">Premium Subscription</h6>
-          <img
-            src={xMark}
-            onClick={onClose}
-            alt=""
-            style={{ cursor: "pointer" }}
-          />
+    <div className="custom-container mt-5 mt-lg-0">
+      {isPremium ? (
+        <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
+          <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between gap-5 gap-lg-0 p-3">
+            <h6 className="mb-0 already-premium-title">Premium Subscriber</h6>
+            <img src={premiumIcon} className="already-preium-badge" alt="" />
+          </div>
+          <div className="mt-3 p-3 benefits-title-wrapper">
+            <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+          </div>
+          <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex align-items-center gap-2">
+                <img src={metaverseIcon} alt="" />
+                <h6 className="premium-benefits-title mb-0">Metaverse</h6>
+              </div>
+              {metaverseBenefits.map((item, index) => (
+                <div className="d-flex align-items-center gap-2">
+                  <img src={greenCheck} alt="" />
+                  <span className="premium-benefits-item mb-0">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex align-items-center gap-2">
+                <img src={dappsIcon} alt="" />
+                <h6 className="premium-benefits-title mb-0">Dapps</h6>
+              </div>
+              {dappsBenefits.map((item, index) => (
+                <div className="d-flex align-items-center gap-2">
+                  <img src={greenCheck} alt="" />
+                  <span className="premium-benefits-item mb-0">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        {discountPercentage > 0 ||
-        discountPercentageViction > 0 ||
-        discountPercentageTaiko > 0 ||
-        nftPremium_total > 0 ||
-        nftPremium_totalViction ||
-        nftPremium_totalTaiko > 0 ? (
-          <div className="premium-discount-bg mt-3 p-4 position-relative">
-            <div className="premiumRedTag position-absolute">
-              <div className="position-relative d-flex flex-column">
-                <img src={premiumRedTag} alt="" />
-                <div className="d-flex flex-column position-absolute discountwrap">
-                  <span className="discount-price2 font-oxanium">
-                    {discountPercentage > 0
-                      ? discountPercentage
-                      : discountPercentageViction > 0
-                      ? discountPercentageViction
-                      : discountPercentageTaiko > 0
-                      ? discountPercentageTaiko
-                      : discountPercentage}
-                    %
-                  </span>
-                  <span className="discount-price-bottom">Discount</span>
+      ) : (
+        <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
+          <div className="" style={{ background: "#8E97CD" }}></div>
+          {discountPercentage > 0 ||
+          discountPercentageViction > 0 ||
+          discountPercentageTaiko > 0 ||
+          discountPercentageMat > 0 ||
+          nftPremium_total > 0 ||
+          nftPremium_totalViction ||
+          nftPremium_totalTaiko > 0 ||
+          nftPremium_totalMat > 0 ? (
+            <div className="premium-discount-bg mt-3 p-4 position-relative">
+              <div className="premiumRedTag position-absolute">
+                <div className="position-relative d-flex flex-column">
+                  <img src={premiumRedTag} alt="" />
+                  <div className="d-flex flex-column position-absolute discountwrap">
+                    <span className="discount-price2 font-oxanium">
+                      {discountPercentage > 0
+                        ? discountPercentage
+                        : discountPercentageViction > 0
+                        ? discountPercentageViction
+                        : discountPercentageTaiko > 0
+                        ? discountPercentageTaiko
+                        : discountPercentageMat > 0
+                        ? discountPercentageMat
+                        : discountPercentage}
+                      %
+                    </span>
+                    <span className="discount-price-bottom">Discount</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-              <div className="d-flex flex-column">
-                <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+              <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
+                <div className="d-flex flex-column">
+                  <h6 className="lifetime-plan-text m-0">Lifetime plan</h6>
+                  {(nftPremium_total > 0 ||
+                    nftPremium_totalViction > 0 ||
+                    nftPremium_totalTaiko > 0 ||
+                    nftPremium_totalMat > 0) && (
+                    <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                      Valid until:{" "}
+                      {new Date(
+                        nftPremium_total > 0
+                          ? nftDiscountObject.expiration * 1000
+                          : nftPremium_totalTaiko > 0
+                          ? nftDiscountObjectTaiko.expiration * 1000
+                          : nftPremium_totalMat > 0
+                          ? nftDiscountObjectMat.expiration * 1000
+                          : nftDiscountObjectViction.expiration * 1000
+                      )
+                        .toDateString()
+                        .slice(
+                          3,
+                          new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftPremium_totalTaiko > 0
+                              ? nftDiscountObjectTaiko.expiration * 1000
+                              : nftPremium_totalMat > 0
+                              ? nftDiscountObjectMat.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
+                          ).toDateString().length
+                        )}
+                    </h6>
+                  )}
+                </div>
+                <div className="d-flex align-items-end gap-2">
+                  <h6 className="discount-price">
+                    {discountPercentage == 100 ||
+                    discountPercentageViction == 100 ||
+                    discountPercentageTaiko == 100 ||
+                    discountPercentageMat == 100
+                      ? "FREE"
+                      : "$" +
+                        (100 -
+                          Number(
+                            discountPercentage > 0
+                              ? discountPercentage
+                              : discountPercentageViction > 0
+                              ? discountPercentageViction
+                              : discountPercentageTaiko > 0
+                              ? discountPercentageTaiko
+                              : discountPercentageMat > 0
+                              ? discountPercentageMat
+                              : discountPercentage
+                          ))}
+                  </h6>
+                  <h6 className="old-price-text">$100</h6>
+                </div>
                 {(nftPremium_total > 0 ||
                   nftPremium_totalViction > 0 ||
-                  nftPremium_totalTaiko > 0) && (
-                  <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                  nftPremium_totalTaiko > 0 ||
+                  nftPremium_totalMat > 0) && (
+                  <h6 className="token-amount-placeholder m-0 premium-custom-text">
                     Valid until:{" "}
                     {new Date(
                       nftPremium_total > 0
                         ? nftDiscountObject.expiration * 1000
                         : nftPremium_totalTaiko > 0
                         ? nftDiscountObjectTaiko.expiration * 1000
+                        : nftPremium_totalMat > 0
+                        ? nftDiscountObjectMat.expiration * 1000
                         : nftDiscountObjectViction.expiration * 1000
                     )
                       .toDateString()
@@ -2236,159 +2643,131 @@ const GetPremiumPopup = ({
                             ? nftDiscountObject.expiration * 1000
                             : nftPremium_totalTaiko > 0
                             ? nftDiscountObjectTaiko.expiration * 1000
+                            : nftPremium_totalMat > 0
+                            ? nftDiscountObjectMat.expiration * 1000
                             : nftDiscountObjectViction.expiration * 1000
                         ).toDateString().length
                       )}
                   </h6>
                 )}
               </div>
-              <div className="d-flex align-items-end gap-2">
-                <h6 className="discount-price">
-                  {discountPercentage == 100 ||
-                  discountPercentageViction == 100 ||
-                  discountPercentageTaiko == 100
-                    ? "FREE"
-                    : "$" +
-                      (100 -
-                        Number(
-                          discountPercentage > 0
-                            ? discountPercentage
-                            : discountPercentageViction > 0
-                            ? discountPercentageViction
-                            : discountPercentageTaiko > 0
-                            ? discountPercentageTaiko
-                            : discountPercentage
-                        ))}
-                </h6>
-                <h6 className="old-price-text">$100</h6>
+            </div>
+          ) : (
+            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+              <div className="d-flex flex-column gap-2">
+                <span className="lifetime-plan mb-0">Lifetime plan</span>
+                <h6 className="plan-cost mb-0">$100</h6>
               </div>
-              {(nftPremium_total > 0 ||
-                nftPremium_totalViction > 0 ||
-                nftPremium_totalTaiko > 0) && (
-                <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                  Valid until:{" "}
-                  {new Date(
-                    nftPremium_total > 0
-                      ? nftDiscountObject.expiration * 1000
-                      : nftPremium_totalTaiko > 0
-                      ? nftDiscountObjectTaiko.expiration * 1000
-                      : nftDiscountObjectViction.expiration * 1000
-                  )
-                    .toDateString()
-                    .slice(
-                      3,
-                      new Date(
-                        nftPremium_total > 0
-                          ? nftDiscountObject.expiration * 1000
-                          : nftPremium_totalTaiko > 0
-                          ? nftDiscountObjectTaiko.expiration * 1000
-                          : nftDiscountObjectViction.expiration * 1000
-                      ).toDateString().length
-                    )}
-                </h6>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-            <div className="d-flex flex-column gap-2">
-              <span className="lifetime-plan mb-0">Lifetime plan</span>
-              <h6 className="plan-cost mb-0">$100</h6>
-            </div>
-            <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-              <div className="premium-chains-wrapper">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/ethIcon.svg`).default
-                    }
-                    style={{ width: 18, height: 18 }}
-                    alt=""
-                  />
-                  <span className="subscription-chain mb-0">Ethereum</span>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                        .default
-                    }
-                    style={{ width: 18, height: 18 }}
-                    alt=""
-                  />
-                  <span className="subscription-chain mb-0">BNB Chain</span>
-                </div>
+              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                <div className="premium-chains-wrapper">
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/ethIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">Ethereum</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">BNB Chain</span>
+                  </div>
 
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={require(`../../../../../components/Header/assets/manta.png`)}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">Manta</span>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={
-                      require(`../../../../../components/Header/assets/taiko.svg`)
-                        .default
-                    }
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">Taiko</span>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                        .default
-                    }
-                    style={{ width: 18, height: 18 }}
-                    alt=""
-                  />
-                  <span className="subscription-chain mb-0">Avalanche</span>
-                </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={require(`../../../../../components/Header/assets/manta.png`)}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Manta</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../../../../components/Header/assets/taiko.svg`)
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Taiko</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../../../../components/Header/assets/taiko.svg`)
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Matchain</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">Avalanche</span>
+                  </div>
 
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={baseLogo}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">Base</span>
-                </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={baseLogo}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Base</span>
+                  </div>
 
-                <div className="d-flex align-items-center gap-2">
-                  <img src={conflux} alt="" style={{ width: 18, height: 18 }} />
-                  <span className="subscription-chain mb-0">Conflux</span>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={skaleIcon}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">SKALE</span>
-                </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={conflux}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Conflux</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={skaleIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">SKALE</span>
+                  </div>
 
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={coreIcon}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">CORE</span>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={vicitonIcon}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  <span className="subscription-chain mb-0">Viction</span>
-                </div>
-                {/*   <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={coreIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">CORE</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={vicitonIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Viction</span>
+                  </div>
+                  {/*   <div className="d-flex align-items-center gap-2">
                                     <img
                                       src={seiIcon}
                                       alt=""
@@ -2398,215 +2777,288 @@ const GetPremiumPopup = ({
                                       SEI
                                     </span>
                                   </div> */}
-              </div>
-              <img src={premiumIcon} alt="" />
-            </div>
-          </div>
-        )}
-        <div className="my-3">
-          <h6 className="popup-subtitle mb-0">Benefits</h6>
-        </div>
-        <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-          <div className="d-flex flex-column gap-2">
-            <div className="d-flex align-items-center gap-2">
-              <img src={metaverseIcon} alt="" />
-              <h6 className="premium-benefits-title mb-0">Metaverse</h6>
-            </div>
-            {metaverseBenefits.map((item, index) => (
-              <div className="d-flex align-items-center gap-2">
-                <img src={greenCheck} alt="" />
-                <span className="premium-benefits-item mb-0">{item}</span>
-              </div>
-            ))}
-          </div>
-          <div className="d-flex flex-column gap-2">
-            <div className="d-flex align-items-center gap-2">
-              <img src={dappsIcon} alt="" />
-              <h6 className="premium-benefits-title mb-0">Dapps</h6>
-            </div>
-            {dappsBenefits.map((item, index) => (
-              <div className="d-flex align-items-center gap-2">
-                <img src={greenCheck} alt="" />
-                <span className="premium-benefits-item mb-0">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>{" "}
-        <hr className="form-divider my-4" />
-        <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
-          <div className="d-flex flex-column gap-3 subscribe-input-container">
-            <span className="token-amount-placeholder">Select chain</span>
-            <div class="dropdown position relative">
-              <button
-                class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{ color: "#fff" }}
-                >
-                  <img
-                    src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
-                    alt=""
-                    style={{ width: 18, height: 18 }}
-                  />
-                  {chainDropdown.name}
                 </div>
-                <img src={launchpadIndicator} alt="" />
-              </button>
-              <ul class="dropdown-menu w-100">
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleEthPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/ethIcon.svg`).default
-                    }
-                    alt=""
-                  />
-                  Ethereum
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleBnbPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                        .default
-                    }
-                    alt=""
-                  />
-                  BNB Chain
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleMantaPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/mantaIcon.svg`)
-                        .default
-                    }
-                    style={{ width: 18, height: 18 }}
-                    alt=""
-                  />
-                  Manta
-                </li>
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
+                <img src={premiumIcon} alt="" />
+              </div>
+            </div>
+          )}
+          <div className="mt-3 p-3 benefits-title-wrapper">
+            <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+          </div>
+          <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex align-items-center gap-2">
+                <img src={metaverseIcon} alt="" />
+                <h6 className="premium-benefits-title mb-0">Metaverse</h6>
+              </div>
+              {metaverseBenefits.map((item, index) => (
+                <div className="d-flex align-items-center gap-2">
+                  <img src={greenCheck} alt="" />
+                  <span className="premium-benefits-item mb-0">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex align-items-center gap-2">
+                <img src={dappsIcon} alt="" />
+                <h6 className="premium-benefits-title mb-0">Dapps</h6>
+              </div>
+              {dappsBenefits.map((item, index) => (
+                <div className="d-flex align-items-center gap-2">
+                  <img src={greenCheck} alt="" />
+                  <span className="premium-benefits-item mb-0">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* <hr className="form-divider my-4" /> */}
+          <div className="d-flex align-items-end justify-content-between mt-3">
+            <h6 className="become-premium-new-title mb-0">
+              Become Premium Subscriber
+            </h6>
+            <span className="my-premium-balance">
+              My Balance:{" "}
+              {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
+              {dropdownIcon.toUpperCase()}
+            </span>
+          </div>
+          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0">
+            <div className="d-flex align-items-end gap-4">
+              <div className="d-flex flex-column gap-3">
+                <span className="token-amount-placeholder">Select chain</span>
+                <div class="dropdown position relative">
+                  <button
+                    class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <div
+                      className="d-flex align-items-center gap-2 pe-3"
+                      style={{ color: "#fff" }}
+                    >
+                      <img
+                        src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
+                        alt=""
+                        style={{ width: 18, height: 18 }}
+                      />
+                      {chainDropdown.name}
+                    </div>
+                    <img src={launchpadIndicator} alt="" />
+                  </button>
+                  <ul class="dropdown-menu w-100">
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleTaikoPool}
+                      onClick={handleEthPool}
                     >
                       <img
                         src={
-                          require(`../../Images/premium/tokens/taikoIcon.svg`)
+                          require(`../../Images/premium/tokens/ethIcon.svg`)
+                            .default
+                        }
+                        alt=""
+                      />
+                      Ethereum
+                    </li>
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleBnbPool}
+                    >
+                      <img
+                        src={
+                          require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                            .default
+                        }
+                        alt=""
+                      />
+                      BNB Chain
+                    </li>
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleMantaPool}
+                    >
+                      <img
+                        src={
+                          require(`../../Images/premium/tokens/mantaIcon.svg`)
                             .default
                         }
                         style={{ width: 18, height: 18 }}
                         alt=""
                       />
-                      Taiko
+                      Manta
                     </li>
-                  )}
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleAvaxPool}
-                >
-                  <img
-                    src={
-                      require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                        .default
-                    }
-                    alt=""
-                  />
-                  Avalanche
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleBasePool}
-                >
-                  <img
-                    src={baseLogo}
-                    alt=""
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                    }}
-                  />
-                  Base Network
-                </li>
-                <li
-                  className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                  onClick={handleConfluxPool}
-                >
-                  <img
-                    src={conflux}
-                    alt=""
-                    style={{
-                      width: "18px",
-                      height: "18px",
-                    }}
-                  />
-                  Conflux Network
-                </li>
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <li
-                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleSkalePool}
-                    >
-                      <img
-                        src={skaleIcon}
-                        alt=""
-                        style={{
-                          width: "18px",
-                          height: "18px",
-                        }}
-                      />
-                      SKALE
-                    </li>
-                  )}
 
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleMatPool}
+                        >
+                          <img
+                            src={
+                              require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                .default
+                            }
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          Matchain
+                        </li>
+                      )}
+
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleCorePool}
+                      onClick={handleAvaxPool}
                     >
                       <img
-                        src={coreIcon}
+                        src={
+                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                            .default
+                        }
+                        alt=""
+                      />
+                      Avalanche
+                    </li>
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleBasePool}
+                    >
+                      <img
+                        src={baseLogo}
                         alt=""
                         style={{
                           width: "18px",
                           height: "18px",
                         }}
                       />
-                      CORE
+                      Base Network
                     </li>
-                  )}
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                      onClick={handleVictionPool}
+                      onClick={handleConfluxPool}
                     >
                       <img
-                        src={vicitonIcon}
+                        src={conflux}
                         alt=""
                         style={{
                           width: "18px",
                           height: "18px",
                         }}
                       />
-                      Viction
+                      Conflux Network
                     </li>
-                  )}
-                {/*     <li
+
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleTaikoPool}
+                        >
+                          <img
+                            src={
+                              require(`../../Images/premium/tokens/taikoIcon.svg`)
+                                .default
+                            }
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          Taiko
+                        </li>
+                      )}
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleAvaxPool}
+                    >
+                      <img
+                        src={
+                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                            .default
+                        }
+                        alt=""
+                      />
+                      Avalanche
+                    </li>
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleBasePool}
+                    >
+                      <img
+                        src={baseLogo}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                      Base Network
+                    </li>
+                    <li
+                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                      onClick={handleConfluxPool}
+                    >
+                      <img
+                        src={conflux}
+                        alt=""
+                        style={{
+                          width: "18px",
+                          height: "18px",
+                        }}
+                      />
+                      Conflux Network
+                    </li>
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleSkalePool}
+                        >
+                          <img
+                            src={skaleIcon}
+                            alt=""
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                            }}
+                          />
+                          SKALE
+                        </li>
+                      )}
+
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleCorePool}
+                        >
+                          <img
+                            src={coreIcon}
+                            alt=""
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                            }}
+                          />
+                          CORE
+                        </li>
+                      )}
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleVictionPool}
+                        >
+                          <img
+                            src={vicitonIcon}
+                            alt=""
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                            }}
+                          />
+                          Viction
+                        </li>
+                      )}
+                    {/*     <li
                                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                       onClick={handleSeiPool}
                                     >
@@ -2620,31 +3072,18 @@ const GetPremiumPopup = ({
                                       />
                                       SEI
                                     </li> */}
-              </ul>
-            </div>
-          </div>
-          <div className="d-flex flex-column gap-3 subscribe-input-container"></div>
-          {discountPercentage < 100 &&
-            discountPercentageViction < 100 &&
-            discountPercentageTaiko < 100 && (
-              <div className="d-flex flex-column align-items-end gap-3">
-                <span className="my-premium-balance-text mb-0">
-                  My balance:{" "}
-                  {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                  {dropdownIcon.toUpperCase()}
+                  </ul>
+                </div>
+              </div>
+              <div className="d-flex flex-column gap-3">
+                <span className="token-amount-placeholder">
+                  Subscription Price
                 </span>
-                <div
-                  className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                  style={{ height: "34px" }}
-                >
-                  <span className="subscription-price-text mb-0">
-                    Subscription Price:
-                  </span>
-
+                <div className="launchpad-dropdown dropdown-toggle d-flex align-items-center ps-0 gap-3">
                   <div className="d-flex align-items-center gap-2">
                     <div class="dropdown position relative">
                       <button
-                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between align-items-center dropdown-toggle2 w-100`}
+                        class={`btn launchpad-dropdown d-flex gap-1 justify-content-between dropdown-toggle-game align-items-center  w-100`}
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -2684,11 +3123,13 @@ const GetPremiumPopup = ({
                             ? window.config.subscriptionmanta_tokens
                             : chainId === 167000
                             ? window.config.subscriptiontaiko_tokens
+                            : chainId === 698
+                            ? window.config.subscriptionmat_tokens
                             : chainId === 1116
                             ? window.config.subscriptioncore_tokens
                             : chainId === 713715
                             ? window.config.subscriptionsei_tokens
-                            : window.config.subscription_tokens
+                            : window.config.subscriptioneth_tokens
                         ).map((t, i) => (
                           <li
                             key={i}
@@ -2725,13 +3166,16 @@ const GetPremiumPopup = ({
                                     : chainId === 167000
                                     ? window.config.subscriptiontaiko_tokens[t]
                                         ?.symbol
+                                    : chainId === 698
+                                    ? window.config.subscriptionmat_tokens[t]
+                                        ?.symbol
                                     : chainId === 1116
                                     ? window.config.subscriptioncore_tokens[t]
                                         ?.symbol
                                     : chainId === 713715
                                     ? window.config.subscriptionsei_tokens[t]
                                         ?.symbol
-                                    : window.config.subscription_tokens[t]
+                                    : window.config.subscriptioneth_tokens[t]
                                         ?.symbol
                                 );
                                 setdropdownTitle(
@@ -2763,13 +3207,16 @@ const GetPremiumPopup = ({
                                     : chainId === 167000
                                     ? window.config.subscriptiontaiko_tokens[t]
                                         ?.symbol
+                                    : chainId === 698
+                                    ? window.config.subscriptionmat_tokens[t]
+                                        ?.symbol
                                     : chainId === 713715
                                     ? window.config.subscriptionsei_tokens[t]
                                         ?.symbol
                                     : chainId === 1116
                                     ? window.config.subscriptionsei_tokens[t]
                                         ?.symbol
-                                    : window.config.subscription_tokens[t]
+                                    : window.config.subscriptioneth_tokens[t]
                                         ?.symbol
                                 );
 
@@ -2821,11 +3268,15 @@ const GetPremiumPopup = ({
                                   ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
                                       t
                                     ]?.symbol.toLowerCase()}Icon.svg`)
+                                  : chainId === 698
+                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
+                                      t
+                                    ]?.symbol.toLowerCase()}Icon.svg`)
                                   : chainId === 713715
                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                       t
                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                  : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                  : require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
                                       t
                                     ]?.symbol.toLowerCase()}Icon.svg`)
                               }
@@ -2859,9 +3310,11 @@ const GetPremiumPopup = ({
                               : chainId === 167000
                               ? window.config.subscriptiontaiko_tokens[t]
                                   ?.symbol
+                              : chainId === 698
+                              ? window.config.subscriptionmat_tokens[t]?.symbol
                               : chainId === 713715
                               ? window.config.subscriptionsei_tokens[t]?.symbol
-                              : window.config.subscription_tokens[t]?.symbol}
+                              : window.config.subscriptioneth_tokens[t]?.symbol}
                           </li>
                         ))}
                       </ul>
@@ -2873,10 +3326,10 @@ const GetPremiumPopup = ({
                     alt="usdt"
                   /> */}
                     <span className="subscription-price-token mb-0">
-                      {formattedPrice.slice(0, 7)}
+                      {formattedPrice.slice(0, 7)} {dropdownTitle}
                     </span>
                   </div>
-                  <span className="subscription-price-usd mb-0">
+                  <span className="subscription-price-usd-game mb-0">
                     {" "}
                     $
                     {100 -
@@ -2887,14 +3340,600 @@ const GetPremiumPopup = ({
                           ? discountPercentageViction
                           : discountPercentageTaiko != 0
                           ? discountPercentageTaiko
+                          : discountPercentageMat != 0
+                          ? discountPercentageMat
                           : discountPercentage
                       )}
                   </span>
                 </div>
               </div>
-            )}
+            </div>
+            {isConnected && discountPercentage > 0 && chainId === 56 ? (
+              <div className="d-flex align-items-center gap-3 justify-content-center">
+                <div
+                  className={` ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    disabled={
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? true
+                        : false
+                    }
+                    onClick={(e) => handleApprove(e)}
+                  >
+                    {loadspinner === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "deposit" ||
+                      approveStatus === "failsubscribe" ||
+                      approveStatus === "approveAmount" ||
+                      approveStatus === "successsubscribe") ? (
+                      <>
+                        Approve{" "}
+                        {approveStatus === "approveAmount"
+                          ? "token"
+                          : nftPremium_total > 0
+                          ? "NFT"
+                          : ""}
+                      </>
+                    ) : loadspinner === false && approveStatus === "fail" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={` ${
+                    isApproved === false
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      isApproved === false
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    onClick={() => handleSubscribe()}
+                  >
+                    {loadspinnerSub === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "fail" ||
+                      approveStatus === "deposit") ? (
+                      <>
+                        {discountPercentage > 0 || nftPremium_total > 0
+                          ? "Redeem"
+                          : "Buy"}
+                      </>
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "successsubscribe" ? (
+                      "Success"
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "failsubscribe" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : isConnected &&
+              discountPercentageViction > 0 &&
+              chainId === 88 ? (
+              <div className="d-flex align-items-center gap-3 justify-content-center">
+                <div
+                  className={` ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    disabled={
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? true
+                        : false
+                    }
+                    onClick={(e) => handleApprove(e)}
+                  >
+                    {loadspinner === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "deposit" ||
+                      approveStatus === "failsubscribe" ||
+                      approveStatus === "approveAmount" ||
+                      approveStatus === "successsubscribe") ? (
+                      <>
+                        Approve{" "}
+                        {approveStatus === "approveAmount"
+                          ? "token"
+                          : nftPremium_totalViction > 0
+                          ? "NFT"
+                          : ""}
+                      </>
+                    ) : loadspinner === false && approveStatus === "fail" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={` ${
+                    isApproved === false
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      isApproved === false
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    onClick={() => handleSubscribe()}
+                  >
+                    {loadspinnerSub === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "fail" ||
+                      approveStatus === "deposit") ? (
+                      <>
+                        {discountPercentageViction > 0 ||
+                        nftPremium_totalViction > 0
+                          ? "Redeem"
+                          : "Buy"}
+                      </>
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "successsubscribe" ? (
+                      "Success"
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "failsubscribe" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : isConnected &&
+              discountPercentageTaiko > 0 &&
+              chainId === 167000 ? (
+              <div className="d-flex align-items-center gap-3 justify-content-center">
+                <div
+                  className={` ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    disabled={
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? true
+                        : false
+                    }
+                    onClick={(e) => handleApprove(e)}
+                  >
+                    {loadspinner === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "deposit" ||
+                      approveStatus === "failsubscribe" ||
+                      approveStatus === "approveAmount" ||
+                      approveStatus === "successsubscribe") ? (
+                      <>
+                        Approve{" "}
+                        {approveStatus === "approveAmount"
+                          ? "token"
+                          : nftPremium_totalTaiko > 0
+                          ? "NFT"
+                          : ""}
+                      </>
+                    ) : loadspinner === false && approveStatus === "fail" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={` ${
+                    isApproved === false
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      isApproved === false
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    onClick={() => handleSubscribe()}
+                  >
+                    {loadspinnerSub === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "fail" ||
+                      approveStatus === "deposit") ? (
+                      <>
+                        {discountPercentageTaiko > 0 ||
+                        nftPremium_totalTaiko > 0
+                          ? "Redeem"
+                          : "Buy"}
+                      </>
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "successsubscribe" ? (
+                      "Success"
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "failsubscribe" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : isConnected && discountPercentageMat > 0 && chainId === 698 ? (
+              <div className="d-flex align-items-center gap-3 justify-content-center">
+                <div
+                  className={` ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    disabled={
+                      approveStatus === "fail" || !coinbase || isApproved
+                        ? true
+                        : false
+                    }
+                    onClick={(e) => handleApprove(e)}
+                  >
+                    {loadspinner === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "deposit" ||
+                      approveStatus === "failsubscribe" ||
+                      approveStatus === "approveAmount" ||
+                      approveStatus === "successsubscribe") ? (
+                      <>
+                        Approve{" "}
+                        {approveStatus === "approveAmount"
+                          ? "token"
+                          : nftPremium_totalMat > 0
+                          ? "NFT"
+                          : ""}
+                      </>
+                    ) : loadspinner === false && approveStatus === "fail" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={` ${
+                    isApproved === false
+                      ? "linear-border-disabled"
+                      : "linear-border"
+                  }`}
+                >
+                  <button
+                    className={`btn ${
+                      isApproved === false
+                        ? "outline-btn-disabled"
+                        : "filled-btn"
+                    } px-4`}
+                    onClick={() => handleSubscribe()}
+                  >
+                    {loadspinnerSub === false &&
+                    (approveStatus === "initial" ||
+                      approveStatus === "fail" ||
+                      approveStatus === "deposit") ? (
+                      <>
+                        {discountPercentageMat > 0 || nftPremium_totalMat > 0
+                          ? "Redeem"
+                          : "Buy"}
+                      </>
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "successsubscribe" ? (
+                      "Success"
+                    ) : loadspinnerSub === false &&
+                      approveStatus === "failsubscribe" ? (
+                      "Failed"
+                    ) : (
+                      <div className="d-flex align-items-center gap-2">
+                        Processing
+                        <div
+                          className="spinner-border "
+                          role="status"
+                          style={{
+                            height: "1rem",
+                            width: "1rem",
+                          }}
+                        ></div>{" "}
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
+              <div
+                className={`d-flex align-items-center justify-content-center mb-2`}
+              >
+                <button
+                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  onClick={() => {
+                    handleBnbPool();
+                  }}
+                  style={{
+                    width: "fit-content",
+                    whiteSpace: "nowrap",
+                    fontSize: 14,
+                  }}
+                >
+                  Switch to BNB Chain
+                </button>
+              </div>
+            ) : isConnected &&
+              discountPercentageViction > 0 &&
+              chainId !== 88 ? (
+              <div
+                className={`d-flex align-items-center justify-content-center mb-2`}
+              >
+                <button
+                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  onClick={() => {
+                    handleVictionPool();
+                  }}
+                  style={{
+                    width: "fit-content",
+                    whiteSpace: "nowrap",
+                    fontSize: 14,
+                  }}
+                >
+                  Switch to Viction
+                </button>
+              </div>
+            ) : isConnected &&
+              discountPercentageTaiko > 0 &&
+              chainId !== 167000 ? (
+              <div
+                className={`d-flex align-items-center justify-content-center mb-2`}
+              >
+                <button
+                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  onClick={() => {
+                    handleTaikoPool();
+                  }}
+                  style={{
+                    width: "fit-content",
+                    whiteSpace: "nowrap",
+                    fontSize: 14,
+                  }}
+                >
+                  Switch to Taiko
+                </button>
+              </div>
+            ) : isConnected && discountPercentageMat > 0 && chainId !== 698 ? (
+              <div
+                className={`d-flex align-items-center justify-content-center mb-2`}
+              >
+                <button
+                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  onClick={() => {
+                    handleMatPool();
+                  }}
+                  style={{
+                    width: "fit-content",
+                    whiteSpace: "nowrap",
+                    fontSize: 14,
+                  }}
+                >
+                  Switch to Matchain
+                </button>
+              </div>
+            ) : (
+              <div className="d-flex align-items-center gap-3 justify-content-center">
+                <button
+                  className={`btn ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "stake-wod-btn-inactive"
+                      : "stake-wod-btn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={(e) => handleApprove(e)}
+                >
+                  {loadspinner === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "deposit" ||
+                    approveStatus === "approveAmount" ||
+                    approveStatus === "failsubscribe" ||
+                    approveStatus === "successsubscribe") ? (
+                    <>
+                      Approve{" "}
+                      {approveStatus === "approveAmount"
+                        ? "token"
+                        : nftPremium_total > 0
+                        ? "NFT"
+                        : ""}
+                    </>
+                  ) : loadspinner === false && approveStatus === "fail" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
 
-          {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
+                <button
+                  className={`btn ${
+                    isApproved === false
+                      ? "stake-wod-btn-inactive"
+                      : "stake-wod-btn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || !isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={() => handleSubscribe()}
+                >
+                  {loadspinnerSub === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "fail" ||
+                    approveStatus === "deposit") ? (
+                    <>
+                      {discountPercentage > 0 || nftPremium_total > 0
+                        ? "Redeem"
+                        : "Buy"}
+                    </>
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "successsubscribe" ? (
+                    "Success"
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "failsubscribe" ? (
+                    "Failed"
+                  ) : (
+                    <div
+                      className="spinner-border "
+                      role="status"
+                      style={{
+                        height: "1rem",
+                        width: "1rem",
+                      }}
+                    ></div>
+                  )}
+                </button>
+              </div>
+            )}
+            {/* {discountPercentage < 100 && discountPercentageViction < 100 && (
+            <div className="d-flex flex-column align-items-end gap-3">
+              <span className="my-premium-balance-text mb-0">
+                My balance:{" "}
+                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
+                {dropdownIcon.toUpperCase()}
+              </span>
+              <div
+                className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
+                style={{ height: "34px" }}
+              >
+                <span className="subscription-price-text mb-0">
+                  Subscription Price:
+                </span>
+
+                
+              </div>
+            </div>
+          )} */}
+
+            {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
               <span className="token-balance-placeholder">
                 Token Balance
               </span>
@@ -2906,8 +3945,8 @@ const GetPremiumPopup = ({
                 )}
               </h6>
             </div> */}
-        </div>
-        {/* <div
+          </div>
+          {/* <div
             className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
             style={{ width: "100%" }}
           >
@@ -2927,467 +3966,36 @@ const GetPremiumPopup = ({
               />
             </div>
           </div> */}
-        {chainId === 1482601649 && (
-          <div className="gotoNebula-wrapper p-3 mb-3">
-            <div className="d-flex w-100 justify-content-between gap-2">
-              <span className="nebula-wrapper-text">
-                Bridge your USDC to Nebula now!
-              </span>
-              <a
-                className="nebula-bridgebtn"
-                href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Nebula Bridge
-              </a>
+          {chainId === 1482601649 && (
+            <div className="gotoNebula-wrapper p-3 mb-3">
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="nebula-wrapper-text">
+                  Bridge your USDC to Nebula now!
+                </span>
+                <a
+                  className="nebula-bridgebtn"
+                  href="https://portal.skale.space/bridge?from=mainnet&to=green-giddy-denebola&token=usdc&type=erc20"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Nebula Bridge
+                </a>
+              </div>
             </div>
-          </div>
-        )}
-        {discountPercentage > 0 && chainId === 56 ? (
-          <div className="d-flex align-items-center gap-3 justify-content-center">
-            <div
-              className={` ${
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? "outline-btn-disabled"
-                    : "filled-btn"
-                } px-4`}
-                disabled={
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? true
-                    : false
-                }
-                onClick={(e) => handleApprove(e)}
-              >
-                {loadspinner === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "deposit" ||
-                  approveStatus === "approveAmount" ||
-                  approveStatus === "failsubscribe" ||
-                  approveStatus === "successsubscribe") ? (
-                  <>
-                    Approve{" "}
-                    {approveStatus === "approveAmount"
-                      ? "token"
-                      : nftPremium_total > 0
-                      ? "NFT"
-                      : ""}
-                  </>
-                ) : loadspinner === false && approveStatus === "fail" ? (
-                  "Failed"
-                ) : (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{
-                        height: "1rem",
-                        width: "1rem",
-                      }}
-                    ></div>{" "}
-                  </div>
-                )}
-              </button>
-            </div>
-            <div
-              className={` ${
-                isApproved === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
-                } px-4`}
-                onClick={() => handleSubscribe()}
-              >
-                {loadspinnerSub === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "fail" ||
-                  approveStatus === "deposit") ? (
-                  <>
-                    {discountPercentage > 0 || nftPremium_total > 0
-                      ? "Redeem"
-                      : "Buy"}
-                  </>
-                ) : loadspinnerSub === false &&
-                  approveStatus === "successsubscribe" ? (
-                  "Success"
-                ) : loadspinnerSub === false &&
-                  approveStatus === "failsubscribe" ? (
-                  "Failed"
-                ) : (
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{
-                      height: "1rem",
-                      width: "1rem",
-                    }}
-                  ></div>
-                )}
-              </button>
-            </div>
-          </div>
-        ) : discountPercentage > 0 && chainId !== 56 ? (
-          <div
-            className={`d-flex align-items-center justify-content-center mb-2`}
-          >
-            <button
-              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-              onClick={() => {
-                handleBnbPool();
-              }}
-              style={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
-                fontSize: 14,
-              }}
-            >
-              Switch to BNB Chain
-            </button>{" "}
-          </div>
-        ) : discountPercentageViction > 0 && chainId === 88 ? (
-          <div className="d-flex align-items-center gap-3 justify-content-center">
-            <div
-              className={` ${
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? "outline-btn-disabled"
-                    : "filled-btn"
-                } px-4`}
-                disabled={
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? true
-                    : false
-                }
-                onClick={(e) => handleApprove(e)}
-              >
-                {loadspinner === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "deposit" ||
-                  approveStatus === "approveAmount" ||
-                  approveStatus === "failsubscribe" ||
-                  approveStatus === "successsubscribe") ? (
-                  <>
-                    Approve{" "}
-                    {approveStatus === "approveAmount"
-                      ? "token"
-                      : nftPremium_totalViction > 0
-                      ? "NFT"
-                      : ""}
-                  </>
-                ) : loadspinner === false && approveStatus === "fail" ? (
-                  "Failed"
-                ) : (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{
-                        height: "1rem",
-                        width: "1rem",
-                      }}
-                    ></div>{" "}
-                  </div>
-                )}
-              </button>
-            </div>
-            <div
-              className={` ${
-                isApproved === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
-                } px-4`}
-                onClick={() => handleSubscribe()}
-              >
-                {loadspinnerSub === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "fail" ||
-                  approveStatus === "deposit") ? (
-                  <>
-                    {discountPercentageViction > 0 ||
-                    nftPremium_totalViction > 0
-                      ? "Redeem"
-                      : "Buy"}
-                  </>
-                ) : loadspinnerSub === false &&
-                  approveStatus === "successsubscribe" ? (
-                  "Success"
-                ) : loadspinnerSub === false &&
-                  approveStatus === "failsubscribe" ? (
-                  "Failed"
-                ) : (
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{
-                      height: "1rem",
-                      width: "1rem",
-                    }}
-                  ></div>
-                )}
-              </button>
-            </div>
-          </div>
-        ) : discountPercentageViction > 0 && chainId !== 88 ? (
-          <div
-            className={`d-flex align-items-center justify-content-center mb-2`}
-          >
-            <button
-              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-              onClick={() => {
-                handleVictionPool();
-              }}
-              style={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
-                fontSize: 14,
-              }}
-            >
-              Switch to Viction
-            </button>{" "}
-          </div>
-        ) : discountPercentageTaiko > 0 && chainId === 167000 ? (
-          <div className="d-flex align-items-center gap-3 justify-content-center">
-            <div
-              className={` ${
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? "outline-btn-disabled"
-                    : "filled-btn"
-                } px-4`}
-                disabled={
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? true
-                    : false
-                }
-                onClick={(e) => handleApprove(e)}
-              >
-                {loadspinner === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "deposit" ||
-                  approveStatus === "approveAmount" ||
-                  approveStatus === "failsubscribe" ||
-                  approveStatus === "successsubscribe") ? (
-                  <>
-                    Approve{" "}
-                    {approveStatus === "approveAmount"
-                      ? "token"
-                      : nftPremium_totalTaiko > 0
-                      ? "NFT"
-                      : ""}
-                  </>
-                ) : loadspinner === false && approveStatus === "fail" ? (
-                  "Failed"
-                ) : (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{
-                        height: "1rem",
-                        width: "1rem",
-                      }}
-                    ></div>{" "}
-                  </div>
-                )}
-              </button>
-            </div>
-            <div
-              className={` ${
-                isApproved === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
-                } px-4`}
-                onClick={() => handleSubscribe()}
-              >
-                {loadspinnerSub === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "fail" ||
-                  approveStatus === "deposit") ? (
-                  <>
-                    {discountPercentageTaiko > 0 || nftPremium_totalTaiko > 0
-                      ? "Redeem"
-                      : "Buy"}
-                  </>
-                ) : loadspinnerSub === false &&
-                  approveStatus === "successsubscribe" ? (
-                  "Success"
-                ) : loadspinnerSub === false &&
-                  approveStatus === "failsubscribe" ? (
-                  "Failed"
-                ) : (
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{
-                      height: "1rem",
-                      width: "1rem",
-                    }}
-                  ></div>
-                )}
-              </button>
-            </div>
-          </div>
-        ) : discountPercentageTaiko > 0 && chainId !== 167000 ? (
-          <div
-            className={`d-flex align-items-center justify-content-center mb-2`}
-          >
-            <button
-              className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-              onClick={() => {
-                handleTaikoPool();
-              }}
-              style={{
-                width: "fit-content",
-                whiteSpace: "nowrap",
-                fontSize: 14,
-              }}
-            >
-              Switch to Taiko
-            </button>{" "}
-          </div>
-        ) : (
-          <div className="d-flex align-items-center gap-3 justify-content-center">
-            <div
-              className={` ${
-                approveStatus === "fail" || !coinbase || isApproved
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? "outline-btn-disabled"
-                    : "filled-btn"
-                } px-4`}
-                disabled={
-                  approveStatus === "fail" || !coinbase || isApproved
-                    ? true
-                    : false
-                }
-                onClick={(e) => handleApprove(e)}
-              >
-                {loadspinner === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "deposit" ||
-                  approveStatus === "approveAmount" ||
-                  approveStatus === "failsubscribe" ||
-                  approveStatus === "successsubscribe") ? (
-                  <>
-                    Approve{" "}
-                    {approveStatus === "approveAmount"
-                      ? "token"
-                      : nftPremium_total > 0
-                      ? "NFT"
-                      : ""}
-                  </>
-                ) : loadspinner === false && approveStatus === "fail" ? (
-                  "Failed"
-                ) : (
-                  <div className="d-flex align-items-center gap-2">
-                    Processing
-                    <div
-                      className="spinner-border "
-                      role="status"
-                      style={{
-                        height: "1rem",
-                        width: "1rem",
-                      }}
-                    ></div>{" "}
-                  </div>
-                )}
-              </button>
-            </div>
-            <div
-              className={` ${
-                isApproved === false
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }`}
-            >
-              <button
-                className={`btn ${
-                  isApproved === false ? "outline-btn-disabled" : "filled-btn"
-                } px-4`}
-                onClick={() => handleSubscribe()}
-              >
-                {loadspinnerSub === false &&
-                (approveStatus === "initial" ||
-                  approveStatus === "fail" ||
-                  approveStatus === "deposit") ? (
-                  <>
-                    {discountPercentage > 0 || nftPremium_total > 0
-                      ? "Redeem"
-                      : "Buy"}
-                  </>
-                ) : loadspinnerSub === false &&
-                  approveStatus === "successsubscribe" ? (
-                  "Success"
-                ) : loadspinnerSub === false &&
-                  approveStatus === "failsubscribe" ? (
-                  "Failed"
-                ) : (
-                  <div
-                    className="spinner-border "
-                    role="status"
-                    style={{
-                      height: "1rem",
-                      width: "1rem",
-                    }}
-                  ></div>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
-        <div
-          className={`d-flex align-items-center ${
-            !coinbase ? "justify-content-between" : "justify-content-end"
-          }`}
-        >
-          {!coinbase && (
-            <span style={{ color: "rgb(227, 6 ,19)" }}>
-              Please connect your wallet first
-            </span>
           )}
+          <div
+            className={`d-flex align-items-center ${
+              !coinbase ? "justify-content-between" : "justify-content-end"
+            }`}
+          >
+            {!coinbase && (
+              <span style={{ color: "rgb(227, 6 ,19)" }}>
+                Please connect your wallet first
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

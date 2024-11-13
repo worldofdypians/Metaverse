@@ -6,7 +6,7 @@ const EventSliderCard = ({ data, mintTitle, onSelectCard }) => {
     <NavLink
       to={`/marketplace/mint/${data.eventId}`}
       className={` ${
-        mintTitle === data.eventId && "active-mint-selected"
+        mintTitle === data.id && "active-mint-selected"
       }  active-mint ${data.class} justify-content-between d-flex flex-column`}
       onClick={onSelectCard}
     >

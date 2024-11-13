@@ -147,14 +147,14 @@ const MainHero = ({scrollInto}) => {
   const betaSlider2 = useRef(null);
 
   return (
-    <div className="px-3 mainhero-wrapper px-lg-5 d-flex flex-column justify-content-center align-items-center">
+    <div className="px-3 mainhero-wrapper2 px-lg-5 d-flex flex-column justify-content-center align-items-center">
       <div className="custom-container w-100  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">
-                  WoD Token
+                WOD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
                   WOD is a utility token issued on BNB Chain, providing the

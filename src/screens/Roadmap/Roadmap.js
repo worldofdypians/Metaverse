@@ -40,47 +40,7 @@ const Roadmap = () => {
     document.title = "Roadmap";
   }, []);
 
-  var settings = {
-    dots: true,
-    arrows: false,
-    fade: true,
-    infinite: false,
-    dotsClass: "button__bar",
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-          infinite: true,
-          autoplay: true,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          autoplay: true,
-        },
-      },
-    ],
-  };
+ 
 
   const [title, setTitle] = useState("2024");
   const [tooltip, setTooltip] = useState(false);
@@ -155,7 +115,7 @@ const Roadmap = () => {
       content: [
         {
           title: "Introduction of marketplace",
-          desc: "Users can access WoD marketplace to purchase assets used to customize and enhance their experience.",
+          desc: "Users can access WOD marketplace to purchase assets used to customize and enhance their experience.",
           completed: true,
         },
 
@@ -357,7 +317,7 @@ const Roadmap = () => {
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
           completed: true,
         },
-   {
+        {
           title: "Enhanced Leaderboard",
           desc: "Integrate an enhanced leaderboard feature to track player achievements and progress, promoting competition and recognition among players.",
           completed: true,
@@ -373,7 +333,7 @@ const Roadmap = () => {
           desc: "Implement a skyway system for efficient travel within the game world, offering a scenic and immersive mode of transportation for players.",
           completed: true,
         },
-     
+
         {
           title: "Rank and Reward System",
           desc: "Introduce a ranking system based on player performance and engagement, rewarding players with unique perks and benefits as they progress through the ranks.",
@@ -390,7 +350,6 @@ const Roadmap = () => {
           desc: "Release a mobile application to provide users with a more convenient way to access the platform and its features.",
           completed: true,
         },
-       
       ],
     },
     {
@@ -619,7 +578,6 @@ const Roadmap = () => {
   const [roadmapItems, setRoadmapItems] = useState(roadmapItems2024);
 
   const mainUpdate = [
-
     {
       title: "Improving Tracking Rewards",
       date: "June 2024",
@@ -757,70 +715,138 @@ const Roadmap = () => {
   };
 
   useEffect(() => {
-    slider.current.innerSlider.slickGoTo(0);
+    slider?.current?.innerSlider?.slickGoTo(0);
   }, []);
 
+  var settings = {
+    dots: false,
+    arrows: false,
+    dotsClass: "button__bar",
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: false,
+    initialSlide: 0,
+    draggable: false, 
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 0,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+          dots: false,
+          arrows: true
+        },
+      },
+    ],
+  };
+
+
+
   return (
-    <div className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg">
-      <div className="roadmap-main-wrapper px-0 w-100 d-flex flex-column">
-        <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5 mt-5 mt-lg-0">
-          <h6 className="roadmap-title font-organetto d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
-            Roadmap{" "}
-            {/* <span
-              className="roadmap-title font-organetto"
+    <div
+      className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg"
+      id="roadmap"
+      style={{scrollMarginTop: "100px"}}
+
+    >
+      <div className="roadmap-main-wrapper px-0 w-100 d-flex align-items-center justify-content-center flex-column">
+        <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5">
+          <h6 className="roadmap-title font-montserrat  text-uppercase d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
+            Game{" "}
+            <span
+              className="roadmap-title font-montserrat text-uppercase"
               style={{ color: "#8c56ff" }}
             >
-              2023
-            </span> */}
+              Roadmap
+            </span>
           </h6>
           <span className="roadmap-content">
-            World of Dypians is developing an extremely ambitious and complex game. The
-            The game contains a massive 2,000 sq km explorable
-            environment, integration of advanced artificial intelligence, a
-            unique land ownership and real estate market, high graphic gameplay
-            and is built to support multiple blockchains.
+            Discover our future plans and upcoming features for World of
+            Dypians. From new quests and game modes to major updates and
+            community events, stay informed on the exciting journey ahead.
           </span>
-        </div>
-        <div className="row justify-content-center align-items-center w-100 mx-0 px-3 px-lg-5">
-          <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between mb-5 gap-3 position-relative">
-            <div className="d-flex align-items-center gap-3">
+          <div className="d-flex align-items-center justify-content-center gap-3">
               <div
-                className="linear-border"
-                style={{
-                  width: "fit-content",
+              className="linear-border-roadmap"
+              style={{
+                width: "fit-content",
+              }}
+            >
+              <button
+                className={`btn ${
+                  title === "2024"
+                    ? "filled-btn-roadmap"
+                    : "outline-btn-roadmap"
+                } px-5`}
+                onClick={() => {
+                  setRoadmapItems(roadmapItems2024);
+                  setTitle("2024");
                 }}
               >
-                <button
-                  className={`btn ${
-                    title === "2023" ? "filled-btn" : "outline-btn"
-                  } px-5`}
-                  onClick={() => {
-                    setRoadmapItems(roadmapItems2023);
-                    setTitle("2023");
-                  }}
-                >
-                  2023
-                </button>
-              </div>
-              <div
-                className="linear-border"
-                style={{
-                  width: "fit-content",
-                }}
-              >
-                <button
-                  className={`btn ${
-                    title === "2024" ? "filled-btn" : "outline-btn"
-                  } px-5`}
-                  onClick={() => {
-                    setRoadmapItems(roadmapItems2024);
-                    setTitle("2024");
-                  }}
-                >
-                  2024
-                </button>
-              </div>
+                2024
+              </button>
             </div>
+             <div
+              className="linear-border-roadmap"
+              style={{
+                width: "fit-content",
+              }}
+            >
+              <button
+                className={`btn ${
+                  title === "2023"
+                    ? "filled-btn-roadmap"
+                    : "outline-btn-roadmap"
+                } px-5`}
+                onClick={() => {
+                  setRoadmapItems(roadmapItems2023);
+                  setTitle("2023");
+                }}
+              >
+                2023
+              </button>
+            </div>
+         
+          </div>
+        </div>
+        <div className="row justify-content-center custom-container align-items-center w-100 mx-0 px-3 px-lg-5">
+          {/* <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center justify-content-between mb-5 gap-3 position-relative">
+         
             <div
               className="opacitywrapper4 m-0"
               onMouseEnter={() => {
@@ -849,42 +875,15 @@ const Roadmap = () => {
             >
               <p className="tooltip-content m-0">Early Access Game</p>
             </div>
-          </div>
-          <div className="roadmap-grid px-3 px-lg-0">
-            <div
+          </div> */}
+          <div className="">
+            {/* <div
               className="d-flex flex-column align-items-center position-relative roadmap-slider-wrapper gap-3"
               style={{ height: "fit-content" }}
             >
               <Slider ref={(c) => (slider.current = c)} {...settings}>
                 <div className="d-flex flex-column gap-3">
-                  {/* <div
-                    className="roadmap-main-update position-relative"
-                    style={{ visibility: "hidden" }}
-                  >
-                    <img src="" className="main-update-image" alt="" />
-                    <div className="main-update-title-wrapper w-100">
-                      <span className="font-organetto main-update-date">
-                        ..
-                      </span>
-                      <h6 className="main-update-title mb-0 font-organetto">
-                        ..
-                      </h6>
-                    </div>
-                  </div>
-                  <div
-                    className="roadmap-main-update position-relative"
-                    style={{ visibility: "hidden" }}
-                  >
-                    <img src="" className="main-update-image" alt="" />
-                    <div className="main-update-title-wrapper w-100">
-                      <span className="font-organetto main-update-date">
-                        ..
-                      </span>
-                      <h6 className="main-update-title mb-0 font-organetto">
-                        ..
-                      </h6>
-                    </div>
-                  </div> */}
+                  
                   {mainUpdate.slice(0, 3).map((item) => (
                     <div className="roadmap-main-update position-relative">
                       <img
@@ -1069,8 +1068,8 @@ const Roadmap = () => {
                 onClick={next}
               />
               <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
-            </div>
-
+            </div> */}
+<Slider ref={(c) => (slider.current = c)} {...settings}>
             {roadmapItems.map((item, index) => (
               <RoadmapCard
                 quarter={item.quarter}
@@ -1079,7 +1078,7 @@ const Roadmap = () => {
                 index={index}
                 image={item.image}
               />
-            ))}
+            ))}</Slider>
           </div>
         </div>
       </div>

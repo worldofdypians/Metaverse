@@ -10,7 +10,7 @@ const EmptyCawsCard = () => {
             <img src={emptyCaws} className='empty-image' alt="" />
         </div>
         <div className="empty-card-info p-2 w-100">
-            <span className="info-text">Get your CAWS NFT from the WoD Game Shop</span>
+            <span className="info-text">Get your CAWS NFT from the WOD Game Shop</span>
         </div>
     </div>
 </div>

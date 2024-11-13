@@ -17,7 +17,7 @@ import newCawsStake from "./assets/newCawsStake.png";
 import newCawsStakeMobile from "./assets/newCawsStakeMobile.png";
 import newWodStake from "./assets/newWodStake.png";
 import newWodStakeMobile from "./assets/newWodStakeMobile.png";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import CawsStakeModal from "../../components/StakeModal/CawsStakeModal";
 import { useNavigate } from "react-router-dom";
 import GetPremiumPopup from "../Account/src/Components/PremiumPopup/GetPremium";
@@ -743,15 +743,15 @@ const MarketStake = ({
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
+        className="container-fluid d-flex justify-content-end mt-lg-5 pt-lg-5 p-0 "
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
-          className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
+          className="container-nft d-flex align-items-start flex-column gap-2 px-3 position-relative my-5 my-lg-4 pt-4 pt-lg-0"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0">
+          <div className="custom-container mx-0">
             <h6 className="nft-page-title font-raleway mt-3 mb-4 mb-lg-4 mt-lg-4">
               NFT <span style={{ color: "#8c56ff" }}> Staking</span>
             </h6>
@@ -974,15 +974,14 @@ const MarketStake = ({
                           </button>
                         )}
                         {isConnected && !isPremium && (
-                          <button
+                          <NavLink
+                          to={"/account/premium"}
                             className="btn pill-btn px-4 py-2"
                             style={{ width: "fit-content" }}
-                            onClick={() => {
-                              setgetPremiumPopup(true);
-                            }}
+                            
                           >
                             Become Premium
-                          </button>
+                          </NavLink>
                         )}
 
                         {isConnected && chainId !== 1 && isPremium && (
@@ -1410,6 +1409,7 @@ const MarketStake = ({
             onClose={() => {
               setgetPremiumPopup(false);
             }}
+            isConnected={isConnected}
             binanceW3WProvider={binanceW3WProvider}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}

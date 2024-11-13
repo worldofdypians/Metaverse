@@ -21,11 +21,18 @@
   width: 100%;
 }
 
+// .slick-list {
+//   margin: 0 -10px;
+// }
+// .slick-slide > div {
+//   padding: 0 10px;
+// }
+
 .slick-list {
-  margin: 0 -10px;
+  margin: 0 -5px;
 }
 .slick-slide > div {
-  padding: 0 10px;
+  padding: 0 5px;
 }
 
 .button__bar {
@@ -93,6 +100,10 @@
   .caws-grid {
     grid-template-columns: auto;
     gap: 30px;
+  }
+
+  .slick-list {
+    margin: 0px;
   }
 
   .marketplace-title {

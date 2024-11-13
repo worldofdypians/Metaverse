@@ -1,0 +1,12 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1261161206">
+<circle id="Ellipse 2209" cx="8" cy="8" r="8" fill="#242424"/>
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M8.87285 5.23948L10.3347 6.29358L10.893 7.99895L10.3347 9.70433L8.87285 10.7584H7.09334L5.62191 9.70433L5.05994 7.99895L5.62191 6.29358L7.09334 5.23948H8.87285ZM6.4209 3.20001H6.3978L3.85452 5.03331L2.88281 8.00001L3.85452 10.9667L6.3978 12.8H6.4209H9.5409H9.58473L12.1447 10.9667L13.1228 8.00001L12.1447 5.03331L9.58473 3.20001H9.5409H6.4209Z" fill="url(#paint0_linear_1649_3263)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1649_3263" x1="1.23165" y1="2.24001" x2="42.7276" y2="21.5727" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F4977C"/>
+<stop offset="1" stop-color="#D7AF6A"/>
+</linearGradient>
+</defs>
+</svg>

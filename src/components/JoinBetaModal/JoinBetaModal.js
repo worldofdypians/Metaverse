@@ -590,7 +590,7 @@ const JoinBetaModal = ({
               <h2 className="font-organetto register-grid-title px-0">
                 {"Successfully applied as"}{" "}
                 <mark className="font-organetto register-tag">
-                  WoD Beta Tester
+                WOD Beta Tester
                 </mark>
               </h2>
               {/* <img

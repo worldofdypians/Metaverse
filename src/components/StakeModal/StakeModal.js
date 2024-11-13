@@ -133,7 +133,7 @@ const StakeModal = ({
       .then(() => {
         setloading(false);
         setColor("#52A8A4");
-        setStatus("*WoD approved successfully");
+        setStatus("*WOD approved successfully");
         setTimeout(() => {
           checkApprovalLand();
         }, 3000);
@@ -593,7 +593,7 @@ const StakeModal = ({
               style={{ top: "-30px", right: "-175px" }}
             >
               <p className="tooltip-content2 m-0">
-                You can select a maximum of 50 WoD Land and CAWS NFTs
+                You can select a maximum of 50 WOD Land and CAWS NFTs
               </p>
             </div>
           </div>

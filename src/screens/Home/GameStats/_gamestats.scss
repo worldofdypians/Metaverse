@@ -1,0 +1,92 @@
+.new-game-stats-wrapper{
+position: relative;
+    background-size: 100%;
+    aspect-ratio: 5/1;
+    background-repeat: no-repeat;
+    border-bottom: 3px solid black;
+ @media screen and (max-width: 1300px) {
+    background-size: cover;
+    background-position: right;
+ }
+ @media screen and (max-width: 900px) {
+    background-image: none !important;
+    background-color: rgba(81, 84, 111, 0.2);
+ }
+}
+
+.first-banner{
+  background-image: url("./assets/transactionsBanner2.webp");
+}
+
+.second-banner{
+    background-image: url("./assets/darkLordSpaceBanner.webp");
+
+}
+
+.third-banner{
+    background-image: url("./assets/lizardBanner.webp");
+
+}
+.fourth-banner{
+    background-image: url("./assets/cityBanner.webp");
+
+}
+.fifth-banner{
+    background-image: url("./assets/groupBanner.webp");
+}
+.sixth-banner{
+    background-image: url("./assets/secondCityBanner.webp");
+}
+
+.amplify-game-banner{
+    background-image: url("../../../assets/gameAssets/amplifyBanner.webp");
+
+}
+
+.small-transaction-banner{
+    width: 100%;
+    display: none;
+    @media screen and (max-width: 900px) {
+      display: flex;
+     }
+}
+
+.game-stats-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 30px;
+    background: url('./assets/gameStatsLines.svg');
+    background-size: 100% 100%;
+    @media screen and (max-width: 786px) {
+        gap: 10px;
+    }
+}
+.game-stats-value{
+    color: #fff;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: clamp(1rem, 2vw + 1vh, 3rem);
+    font-style: normal;
+    font-weight: 900;
+    line-height: 24px; /* 66.667% */
+    // @media screen and (max-width: 1300px) {
+    //     font-size: 24px;
+    // }
+    // @media screen and (max-width: 1200px) {
+    //     font-size: 20px;
+    // }
+ 
+}
+.game-stats-type{
+    color: rgba(238, 237, 255, 0.60);
+    text-align: center;
+    font-family: "Montserrat";
+   font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 171.429% */
+    white-space: nowrap;
+    @media screen and (max-width: 786px) {
+        font-size: 12px;
+    }
+}

@@ -198,7 +198,7 @@ const CawsWodNftChecklist = ({
                     color: "#B8B8E0",
                   }}
                 >
-                  WoD Land {landNft?.name} <br />
+                  WOD Land {landNft?.name} <br />
                   {nft?.name}
                 </p>
                 {isStake ? (

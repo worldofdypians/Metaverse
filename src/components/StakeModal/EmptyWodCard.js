@@ -10,7 +10,7 @@ const EmptyWodCard = () => {
         </div>
         <div className="empty-card-info p-2 w-100">
           <span className="info-text">
-            Get your WoD NFT from the WoD Game Shop
+            Get your WOD NFT from the WOD Game Shop
           </span>
         </div>
       </div>

@@ -82,6 +82,8 @@ const MyRewardsPopupNew = ({
   cookieEarnUsd,
   landPremiumRewards,
   baseEarnUSD,
+  allMatChests,
+  matEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -111,6 +113,8 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyBase, setTreasureRewardMoneyBase] = useState(0);
 
   const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
+  const [treasureRewardMoneyMat, setTreasureRewardMoneyMat] = useState(0);
+
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -408,6 +412,8 @@ const MyRewardsPopupNew = ({
     var moneyResultBase = 0;
 
     var moneyResultTaiko = 0;
+    var moneyResultMat = 0;
+
 
     var moneyResultSei = 0;
 
@@ -544,6 +550,25 @@ const MyRewardsPopupNew = ({
       });
     }
 
+    if (allMatChests && allMatChests.length > 0) {
+      allMatChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultMat += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
@@ -551,6 +576,8 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyManta(moneyResultManta);
     setTreasureRewardMoneyBase(moneyResultBase);
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
+    setTreasureRewardMoneyMat(moneyResultMat);
+
   };
 
   const fetchCachedData = () => {
@@ -778,6 +805,7 @@ const MyRewardsPopupNew = ({
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
                       Number(taikoEarnUsd) +
+                      Number(matEarnUsd) +
                       Number(cookieEarnUsd) +
                       Number(mantaEarnUsd) +
                       // Number(dailyplayerData) +
@@ -1071,6 +1099,7 @@ const MyRewardsPopupNew = ({
                       Number(multiversEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(taikoEarnUsd) +
+                      Number(matEarnUsd) +
                       Number(cookieEarnUsd),
                     2
                   )}
@@ -1156,6 +1185,14 @@ const MyRewardsPopupNew = ({
             <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
             <img
               src={require("../../../../../components/Header/assets/manta.png")}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={
+                require("../../../../../components/Header/assets/taiko.svg")
+                  .default
+              }
               style={{ width: 16, height: 16 }}
               alt=""
             />
@@ -1260,6 +1297,12 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Matchain</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Genesis</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(gemRewards, 2)}
@@ -1333,7 +1376,7 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">WoD Land & CAWS </span>
+                <span className="item-name-left">WOD Land & CAWS </span>
                 <span className="item-name-right">
                   ${getFormattedNumber(wodCawsRewards, 2)}
                 </span>
@@ -1471,6 +1514,16 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
 
+              <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Matchain</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyMat, 2)}
+                </span>
+              </div>
+
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
                 <span className="item-name-right">
@@ -1533,6 +1586,22 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(taikoEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        require("../../../../../components/Header/assets/taiko.svg")
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Matchain
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(matEarnUsd, 2)}
                   </span>
                 </div>
               </div>

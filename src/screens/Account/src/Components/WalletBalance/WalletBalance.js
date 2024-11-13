@@ -122,6 +122,7 @@ const WalletBalance = ({
   myMantaNfts,
   myTaikoNfts,
   myCookieNfts,
+  myMatNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -476,6 +477,7 @@ const WalletBalance = ({
     let multiversNftsArray = [];
     let mantaNftsArray = [];
     let taikoNftsArray = [];
+    let matNftsArray = [];
     let cookieNftsArray = [];
 
     // console.log(allListed, "allListed");
@@ -849,6 +851,22 @@ const WalletBalance = ({
         );
       }
 
+      if (myMatNfts && myMatNfts.length > 0) {
+        await Promise.all(
+          myMatNfts.map(async (i) => {
+            matNftsArray.push({
+              nftAddress: window.config.nft_mat_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "mat",
+              chain: 698,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myCookieNfts && myCookieNfts.length > 0) {
         await Promise.all(
           myCookieNfts.map(async (i) => {
@@ -1044,6 +1062,7 @@ const WalletBalance = ({
         ...immutableNftsArray,
         ...mantaNftsArray,
         ...taikoNftsArray,
+        ...matNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1498,11 +1517,7 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
-  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
-  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
-  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+
 
   const [dummyEvent, setDummyEvent] = useState({});
   const [reqModal, setReqModal] = useState(false);
@@ -2083,6 +2098,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                  : item.type === "mat"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "cookie3"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                   : item.type === "base"
@@ -2132,6 +2149,8 @@ const WalletBalance = ({
                                   ? "MNBP"
                                   : item.type === "taiko"
                                   ? "TKBP"
+                                  : item.type === "mat"
+                                  ? "MCBP"
                                   : item.type === "cookie3"
                                   ? "CKBP"
                                   : item.type === "gate"
@@ -3118,6 +3137,9 @@ const WalletBalance = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                window.config.nft_mat_address
+                              ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3191,6 +3213,9 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
@@ -3286,6 +3311,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
@@ -3474,6 +3502,9 @@ const WalletBalance = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                  window.config.nft_mat_address
+                                ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3569,6 +3600,9 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
@@ -3646,6 +3680,9 @@ const WalletBalance = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? "TKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"

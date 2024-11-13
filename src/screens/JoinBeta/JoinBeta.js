@@ -41,7 +41,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
     "Priority on employee openings",
     "Monetary compensation and other special prizes",
     "Gain valuable experience",
-    "Become certified WoD Beta Tester",
+    "Become certified WOD Beta Tester",
     "Improve your potential employment opportunities"
   ];
 
@@ -78,7 +78,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column beta-main-wrapper py-5">
         <div className="row w-100 pt-5 pt-lg-0 px-3 px-lg-5 mx-0 justify-content-between align-items-center">
           <div className="col-12 col-lg-6">
@@ -104,7 +104,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           <div className="col-12 col-lg-5">
             <div className="join-beta-banner  d-flex justify-content-center  flex-column gap-2">
               <h6 className="font-organetto become-tester-title">
-              Apply to become a WoD{" "}
+              Apply to become a WOD{" "}
                 <span
                   className="become-tester-title font-organetto"
                   style={{ color: "#00fecf" }}

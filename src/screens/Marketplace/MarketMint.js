@@ -120,6 +120,10 @@ const MarketMint = ({
   mantaMintAllowed,
   myMantaNfts,
   myMantaNFTsCreated,
+  totalMatNfts,
+  matMintAllowed,
+  myMatNFTs,
+  myMatNFTsCreated
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -225,6 +229,14 @@ const MarketMint = ({
     id: "taiko",
     cardTitle: "Taiko Beta Pass",
     title: "Taiko Beta Pass",
+    background: "taiko-mint-bg",
+    mobileBg: "taikoMobileBg.png",
+  };
+
+  const matData = {
+    id: "mat",
+    cardTitle: "Matchain Beta Pass",
+    title: "Matchain Beta Pass",
     background: "taiko-mint-bg",
     mobileBg: "taikoMobileBg.png",
   };
@@ -423,6 +435,33 @@ const MarketMint = ({
     }
   };
 
+  const handleMatPool = async () => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x2ba")
+            .then(() => {
+              handleSwitchNetwork(698);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    } else {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
+    }
+  };
+
+
   const handleTaikoPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
@@ -471,6 +510,9 @@ const MarketMint = ({
     } else if (location.pathname.includes("taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
+    } else if (location.pathname.includes("matchain")) {
+      setSelectedMint(matData);
+      setMintTitle("mat");
     }
     getTotalSupply();
   }, [location]);
@@ -610,6 +652,17 @@ const MarketMint = ({
     //   class: "mint-taiko",
     //   id: "taiko",
     // },
+
+     {
+      title: "Matchain Pass",
+      eventId: "matchain",
+      desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
+      img: taikoActive,
+      data: matData,
+      class: "mint-taiko",
+      id: "mat",
+    },
+
     // {
     //   title: "Immutable Pass",
     //   eventId: "immutable",
@@ -827,6 +880,14 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        } else if (selectedMint.id === "mat") {
+          if (chainId !== 698) {
+            setactiveButton(false);
+            setStatus("Switch to Matchain to continue minting.");
+          } else if (chainId === 698) {
+            setactiveButton(true);
+            setStatus("");
+          }
         } else if (selectedMint.id === "opbnb") {
           if (chainId !== 204) {
             setactiveButton(false);
@@ -910,15 +971,15 @@ const MarketMint = ({
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-end mt-5 mt-lg-0 p-0"
+        className="container-fluid d-flex justify-content-end mt-lg-5 pt-lg-5 p-0"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
-          className="container-nft d-flex align-items-start flex-column gap-2 px-3 px-lg-5 my-4 position-relative"
+          className="container-nft d-flex align-items-start flex-column gap-2 px-3  my-4 position-relative"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 px-0">
+          <div className="custom-container mx-0 px-0 mt-4 mt-lg-0">
             <div className="row justify-content-center align-items-center w-100 mx-0 px-3 py-3 p-lg-0 gap-5 gap-lg-0">
               {/* <div className="row align-items-center mb-5">
         <div className="col-12 col-lg-7">
@@ -981,7 +1042,7 @@ const MarketMint = ({
 
               {activeTab === "live" && (
                 <>
-                  {/* {dummyCards.length > 1 && (
+                  {dummyCards.length > 1 && (
                     <div className="pb-5 px-0 position-relative">
                       {activeSlide > 0 && (
                         <div className="prev-arrow-nft" onClick={firstPrev}>
@@ -1012,14 +1073,14 @@ const MarketMint = ({
                             data={item}
                             onSelectCard={() => {
                               setSelectedMint(item.data);
-                              setMintTitle(item.eventId);
+                              setMintTitle(item.id);
                             }}
                             mintTitle={mintTitle}
                           />
                         ))}
                       </Slider>
                     </div>
-                  )} */}
+                  )}
                   {selectedMint && (
                     <>
                       <div className="col-12 col-md-12 col-xxl-3 ps-2 ps-lg-0 staking-height-2">
@@ -1040,6 +1101,14 @@ const MarketMint = ({
                                   <span>{myMantaNFTsCreated.length}</span>
                                 </div>
                               )} */}
+
+                              {showBadge &&
+                              myMatNFTs.length > 0 &&
+                              selectedMint.id === "mat" && (
+                                <div className="totalcreated">
+                                  <span>{myMatNFTs.length}</span>
+                                </div>
+                              )}
                            
                             <div
                               className={`genesis-wrapper ${
@@ -1054,6 +1123,13 @@ const MarketMint = ({
                                   : selectedMint.id === "sei" &&
                                     totalseiNft === 0
                                   ? "conflux-empty"
+
+                                  : selectedMint.id === "mat" && totalMatNfts > 0
+                                  ? "sei-active"
+                                  : selectedMint.id === "mat" &&
+                                    totalMatNfts === 0
+                                  ? "conflux-empty"
+
                                 
                                   : selectedMint.id === "manta" &&
                                     totalMantaNft > 0
@@ -1149,6 +1225,42 @@ const MarketMint = ({
                               </NavLink>
                             </div>
                           )}
+
+{selectedMint.id === "mat" && (
+                            <div
+                              className={
+                                isConnected === false ||
+                                activeButton === false ||
+                                myMatNFTs.length === 0
+                                  ? "linear-border-disabled"
+                                  : "linear-border"
+                              }
+                            >
+                              <NavLink
+                                className={`btn ${
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myMatNFTs.length === 0
+                                    ? "outline-btn-disabled"
+                                    : "outline-btn"
+                                } px-5 w-100`}
+                                disabled={
+                                  isConnected === false ||
+                                  activeButton === false ||
+                                  myMatNFTs.length === 0
+                                }
+                                to={`/marketplace/nft/${myMatNFTs[0]}/${window.config.nft_mat_address}`}
+                                onClick={() => {
+                                  updateViewCount(
+                                    myMatNFTs[0],
+                                    window.config.nft_mat_address
+                                  );
+                                }}
+                              >
+                                View NFT
+                              </NavLink>
+                            </div>
+                          )}
                        
 
                           
@@ -1196,6 +1308,19 @@ const MarketMint = ({
                                   />
                                   <span className="mint-benefits-title">
                                     Minting is available on Manta
+                                  </span>
+                                </div>
+                              ) : null}
+                              {mintTitle === "mat" ? (
+                                <div className="d-flex align-items-center gap-2">
+                                  <img
+                                    src={blockChainIcon}
+                                    width={40}
+                                    height={40}
+                                    alt=""
+                                  />
+                                  <span className="mint-benefits-title">
+                                    Minting is available on Matchain
                                   </span>
                                 </div>
                               ) : null}
@@ -1582,7 +1707,8 @@ const MarketMint = ({
                                     <h6 className="latest-mint-number mb-0">
                                       {mintTitle === "manta"
                                         ? mantaMintAllowed
-                                       
+                                       :mintTitle === "mat"
+                                       ? matMintAllowed
                                         : 0}{" "}
                                       NFT
                                     </h6>
@@ -1621,12 +1747,15 @@ const MarketMint = ({
                                 ? "Manta"
                                 : mintTitle === "taiko"
                                 ? "Taiko"
+                                : mintTitle === "mat"
+                                ? "Matchain"
                                 : "SEI"}
                               <img
                                 style={{ width: 24, height: 24 }}
                                 src={mintTitle === "manta"
                                     ? mantaLogo
-                                    
+                                    : mintTitle === "mat"
+                                    ? seiLogo
                                     : seiLogo
                                 }
                                 alt=""
@@ -1743,6 +1872,104 @@ const MarketMint = ({
                                 </div>
                               )}
                              
+
+                             {selectedMint.id === "mat" && (
+                                <div
+                                  className={
+                                    (isConnected === true &&
+                                      chainId !== 698) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    mintloading === "error" ||
+                                    totalMatNfts > 0
+                                      ? "linear-border-disabled"
+                                      : "linear-border"
+                                  }
+                                >
+                                  <button
+                                    className={`btn ${
+                                      mintloading === "error"
+                                        ? "filled-error-btn"
+                                        : (isConnected === true &&
+                                            chainId !== 698) ||
+                                          (status !== "Connect your wallet." &&
+                                            status !== "") ||
+                                            totalMatNfts > 0
+                                        ? "outline-btn-disabled"
+                                        : "filled-btn"
+                                    }  px-4 w-100`}
+                                    onClick={() => {
+                                      isConnected === true && chainId === 698
+                                        ? handleMint()
+                                        : showWalletConnect();
+                                    }}
+                                    disabled={
+                                      mintloading === "error" ||
+                                      mintloading === "success" ||
+                                      (isConnected === true &&
+                                        chainId !== 698) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                        totalMatNfts > 0
+                                        ? true
+                                        : false
+                                    }
+                                    onMouseEnter={() => {
+                                      setMouseOver(true);
+                                    }}
+                                    onMouseLeave={() => {
+                                      setMouseOver(false);
+                                    }}
+                                  >
+                                    {(isConnected === false ||
+                                      chainId !== 698) && (
+                                      <img
+                                        src={
+                                          mouseOver === false
+                                            ? blackWallet
+                                            : whitewallet
+                                        }
+                                        alt=""
+                                        style={{
+                                          width: "23px",
+                                          height: "23px",
+                                        }}
+                                      />
+                                    )}{" "}
+                                    {mintloading === "initial" &&
+                                    isConnected === true &&
+                                    chainId === 698 ? (
+                                      "Mint"
+                                    ) : mintloading === "mint" &&
+                                      isConnected === true &&
+                                      chainId === 698 ? (
+                                      <>
+                                        <div
+                                          className="spinner-border "
+                                          role="status"
+                                        ></div>
+                                      </>
+                                    ) : mintloading === "error" &&
+                                      isConnected === true &&
+                                      chainId === 698 ? (
+                                      "Failed"
+                                    ) : mintloading === "success" &&
+                                      isConnected === true &&
+                                      activeButton ===
+                                        (isConnected === true &&
+                                          chainId === 698) ? (
+                                      "Success"
+                                    ) : isConnected === true &&
+                                      chainId !== 698 ? (
+                                      " Switch Chain"
+                                    ) : (
+                                      "Connect wallet"
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+                             
+
                               {selectedMint.id === "manta" && (
                                 <div
                                   className={
@@ -1898,6 +2125,26 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
+                  <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                    <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
+                      <h6 className="upcoming-mint-title">Matchain Beta Pass</h6>
+                      <p className="upcoming-mint-desc">
+                        Get access to a special ticket to enter the metaverse
+                        and participate in an exclusive event hosted by Matchain
+                      </p>
+                    </div>
+                    <img
+                      src={baseBg}
+                      alt=""
+                      className="upcoming-mint-img d-none d-lg-block"
+                    />
+                    <img
+                      src={baseMobileBg}
+                      alt=""
+                      className="upcoming-mint-img d-block d-lg-none d-md-none"
+                    />
+                  </div>
+
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>

@@ -232,26 +232,43 @@ const OurTeam = () => {
   }, []);
 
   return (
-    <div className="container-fluid our-team my-5 px-0" id="ourteam">
-      <div className="px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0" id="ourteam"
+    >
+      <div className="px-3 px-lg-5 d-flex pt-lg-5 flex-column justify-content-center align-items-center">
         <div className="row w-100 justify-content-center align-items-center">
           <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
-            <h2 className="font-organetto explorer-grid-title px-0">
-              Our <mark className="font-organetto explore-tag">Team</mark>
+            <h2 className="font-montserrat explorer-grid-title text-uppercase text-center px-0">
+              WOD <mark className="font-montserrat text-uppercase explore-tag">Team</mark>
             </h2>
             <p className="text-white text-center">
-              World of Dypians is made up of a global team of experts with
-              decades of experience in crypto, gaming, business, engineering,
-              development, finance, and more. Furthermore, each team member's
-              background and contributions are available to the public.
+              Our dedicated team at World of Dypians is comprised of experienced
+              professionals passionate about gaming, blockchain, and innovation.
+              With a diverse skill set and a shared vision, we work tirelessly
+              to bring you an exceptional gaming experience and continuous
+              advancements in the World of Dypians ecosystem. Meet the talented
+              individuals driving our project's success!
             </p>
           </div>
         </div>
-        <div className="team-container w-100 d-grid">
-          {windowSize.width < 786
-            ? bios
-                .slice(0, slice)
-                .map((person, index) => (
+      </div>{" "}
+      <div className="our-team d-flex align-items-center justify-content-center my-5 py-4">
+        <div className="custom-container">
+          <div className="team-container w-100 d-grid">
+            {windowSize.width < 786
+              ? bios
+                  .slice(0, slice)
+                  .map((person, index) => (
+                    <TeamCard
+                      key={index}
+                      id={person.id}
+                      name={person.name}
+                      position={person.position}
+                      content={person.content}
+                      photo={person.photo}
+                      link={person.link}
+                    />
+                  ))
+              : bios.map((person, index) => (
                   <TeamCard
                     key={index}
                     id={person.id}
@@ -261,26 +278,25 @@ const OurTeam = () => {
                     photo={person.photo}
                     link={person.link}
                   />
-                ))
-            : bios.map((person, index) => (
-                <TeamCard
-                  key={index}
-                  id={person.id}
-                  name={person.name}
-                  position={person.position}
-                  content={person.content}
-                  photo={person.photo}
-                  link={person.link}
-                />
-              ))}
-        </div>
-        <div
-          className={`row mt-4  justify-content-center ${
+                ))}
+          </div>
+          <div className={`row mt-4  justify-content-center ${
             windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
           }`}
         >
-          <div className="linear-border" onClick={loadMore}>
-            <button className={`btn filled-btn px-5 `}>Load More</button>
+            <div
+              className={`linear-border `}
+              onClick={loadMore}
+              style={{width: 'fit-content'}}
+            >
+              <button
+                className={`btn filled-btn px-5 ${
+                  windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+                }`}
+              >
+                Load More
+              </button>
+            </div>
           </div>
         </div>
       </div>
