@@ -213,6 +213,9 @@ const GlobalLeaderboard = ({
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
+              <span className={`text-white ${screen !== "dash" && 'invisible'} `} style={{ fontSize: 14 }}>
+                (Top 100)
+              </span>
                 <img
                   src={tooltipIcon}
                   alt=""
@@ -268,6 +271,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
           )}
+          
           <img
             src={globalIcon}
             alt=""

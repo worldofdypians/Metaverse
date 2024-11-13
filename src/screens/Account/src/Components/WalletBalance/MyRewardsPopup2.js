@@ -788,6 +788,7 @@ const MyRewardsPopupNew = ({
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
                       Number(bnbEarnUsd) +
+                      Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd),
                     2
@@ -803,7 +804,6 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(immutableEarnUsd) +
                       Number(taikoEarnUsd) +
                       Number(matEarnUsd) +
                       Number(cookieEarnUsd) +
@@ -1088,6 +1088,7 @@ const MyRewardsPopupNew = ({
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
                       Number(bnbEarnUsd) +
+                      Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd),
                     2
@@ -1095,7 +1096,6 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(skaleEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(immutableEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(taikoEarnUsd) +
@@ -1610,19 +1610,6 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={immutableLogo}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Immutable
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(immutableEarnUsd, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
                       src={baseLogo}
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1719,6 +1706,19 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(baseRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={immutableLogo}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Immutable
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(immutableEarnUsd, 2)}
                   </span>
                 </div>
               </div>
