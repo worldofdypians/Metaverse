@@ -1190,8 +1190,30 @@
   }
 }
 
+.mint-time3 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 40px;
+  color: #ffffff;
+
+  @media screen and (max-width: 786px) {
+    font-size: 30px;
+  }
+}
+
 .days {
   font-family: "Organetto";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
+.days3 {
   font-style: normal;
   font-weight: 800;
   font-size: 12px;

@@ -387,6 +387,28 @@ input[type="range"]:focus::-ms-fill-upper {
   color: #ffffff;
 }
 
+.mint-time3 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 40px;
+  color: #ffffff;
+
+  @media screen and (max-width: 786px) {
+    font-size: 30px;
+  }
+}
+.days3 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
+
 .timerwrapper2 {
   background: #2e2853;
   border: 2px solid #2e2853;

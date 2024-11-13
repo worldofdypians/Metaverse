@@ -18,19 +18,19 @@ const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time">{days < 10 ? "0" + days : days}</h6>
-        <span className="days">Days</span>
+        <h6 className="mint-time3 mb-0">{days < 10 ? "0" + days : days}</h6>
+        <span className="days3">Days</span>
       </div>
-      <h6 className="mint-time">:</h6>
+      <h6 className="mint-time3 mb-0">:</h6>
 
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time">{hours < 10 ? "0" + hours : hours}</h6>
-        <span className="days">Hours</span>
+        <h6 className="mint-time3 mb-0">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="days3">Hours</span>
       </div>
-      <h6 className="mint-time">:</h6>
+      <h6 className="mint-time3 mb-0">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time">{minutes < 10 ? "0" + minutes : minutes}</h6>
-        <span className="days">minutes</span>
+        <h6 className="mint-time3 mb-0">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <span className="days3">Minutes</span>
       </div>
     </div>
   );
@@ -48,6 +48,14 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
   const [showApproval, setshowApproval] = useState(true);
   const [checkWallet, setcheckWallet] = useState(true);
   const [dragonRuinsDypAmount, setDragonRuinsDypAmount] = useState(0);
+
+
+  const now = new Date();
+  const isMonday = now.getDay() === 1; 
+
+  const nextMidnight = new Date(now);
+  nextMidnight.setHours(24, 0, 0, 0); 
+  const timeUntilMidnight = nextMidnight - now;
 
   const handleRefreshCountdown = async () => {
     const remainingTime = await wod_abi.methods
@@ -239,8 +247,8 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
           <span className="purchase-chain">BNB Chain</span>
         </div>
       </div>
-      <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
-        <div className="event-price-wrapper p-3 d-flex align-items-center gap-5">
+      <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative" >
+        <div className="event-price-wrapper p-3 d-flex align-items-center gap-5" style={{pointerEvents: isMonday ? "auto" : "none", filter: isMonday ? "none" : "blur(5px)"}}>
           <span className="event-price-span">Event Price</span>
           <div className="d-flex align-items-center gap-3">
             <div className="d-flex align-items-center gap-1">
@@ -252,13 +260,20 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
             <span className="event-price-usd">($3.75)</span>
           </div>
         </div>
-        <div className="d-flex align-items-center gap-3">
+        {!isMonday ? 
+        <h6 className="available-day-text mb-0 text-white" style={{fontWeight: "700", fontSize: "18px"}}>Available on Monday</h6>  
+        :
+        <div className="position-relative">
+          <Countdown renderer={renderer} date={Date.now() + timeUntilMidnight} />
+        </div>
+      }
+        <div className="d-flex align-items-center gap-3" style={{pointerEvents: isMonday ? "auto" : "none", filter: isMonday ? "none" : "blur(5px)"}}>
           <button
             disabled={
-              bundleState === "deposit" || checkWallet === false ? true : false
+              bundleState === "deposit" || checkWallet === false  || !isMonday ? true : false
             }
             className={` ${
-              bundleState === "deposit" || checkWallet === false
+              bundleState === "deposit" || checkWallet === false || !isMonday
                 ? "stake-wod-btn-inactive"
                 : "stake-wod-btn"
             }  py-2 px-4`}
@@ -271,7 +286,7 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
 
           <button
             disabled={
-              bundleState === "deposit" && checkWallet === true ? false : true
+              bundleState === "deposit" && checkWallet === true || isMonday ? false : true
             }
             className={` ${
               bundleState === "deposit" ||
@@ -335,3 +350,7 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
 };
 
 export default DragonRuins;
+
+
+
+// style={{pointerEvents: isMonday ? "auto" : "none", filter: isMonday ? "none" : "blur(5px)"}}

@@ -115,13 +115,16 @@ const Map = ({
   const allChallenges = [...challenges]
 
   // Custom marker click handler with memoization
-  const handleMarkerClick = useCallback((marker, zoom, type) => {
-    setEvents(false);
+  const handleMarkerClick = useCallback((marker, zoom, type, showMarker) => {
+    if(showMarker !== false){
+      setEvents(false);
     setSelectedMarker(marker);
-    setCenter(marker.location);
-    setZoom(zoom);
-    setMarkerType(type || "");
     setShow(true);
+    setMarkerType(type || "");
+    }
+    
+    setZoom(zoom);
+    setCenter(marker.location);
   }, []);
 
   // Create custom cluster icon

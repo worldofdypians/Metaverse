@@ -878,7 +878,7 @@ const Header = ({
                         } nav-active p-2 d-flex align-items-center gap-2`}
                       >
                         <img width={20} height={20} src={walletIcon} alt="" />
-                        <div className="d-flex flex-column">
+                        <div className="d-flex flex-column gap-2">
                           <span className="header-wallet-span">
                             Wallet Address
                           </span>
