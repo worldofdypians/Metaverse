@@ -179,7 +179,7 @@ const EarnContent = ({
                         style={{
                           background: expired ? "#565891" : "#1e1c40",
                           top: "-10px",
-                          border: "2px solid #7770df",
+                          border: "2px solid #00B7CC",
                         }}
                       >
                         {item?.id ===
@@ -337,7 +337,7 @@ const EarnContent = ({
                       style={{
                         background: expired ? "#565891" : "#1e1c40",
                         top: "-10px",
-                        border: "2px solid #7770df",
+                        border: "2px solid #00B7CC",
                       }}
                     >
                       {item?.id ===

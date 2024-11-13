@@ -118,7 +118,7 @@ const Tokenomics = () => {
           className="explorer-grid-title text-uppercase font-montserrat text-start mb-0"
           
         >
-          WoD{" "}
+          WOD{" "}
           <mark
             className="font-montserrat explorer-grid-title  text-uppercase explore-tag pe-2"
           >

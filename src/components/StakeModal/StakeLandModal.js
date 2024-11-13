@@ -650,7 +650,7 @@ const StakeLandModal = ({
                   style={{ top: "-30px", right: "-175px" }}
                 >
                   <p className="tooltip-content2 m-0">
-                    You can select a maximum of 50 WoD Land NFTs
+                    You can select a maximum of 50 WOD Land NFTs
                   </p>
                 </div>
               </div>

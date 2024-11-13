@@ -157,13 +157,13 @@ const MainHero = () => {
                 WOD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
-                  WoD is a utility token that provides the foundation for the
+                WOD is a utility token that provides the foundation for the
                   World of Dypians ecosystem within a decentralized platform
                   that focuses on scalability, security, and global adoption.
                 </span>
                 <div className="d-flex align-items-center gap-3">
-                  <button className="stake-wod-btn px-4 py-2">Stake WoD</button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
+                  <button className="stake-wod-btn px-4 py-2">Stake WOD</button>
+                  <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@ const MainHero = () => {
                   >
                     Buy{" "}
                     <mark className="font-montserrat main-hero-title explore-tag pe-2">
-                      WoD
+                    WOD
                     </mark>
                   </h4>
                   <div className="row w-100 mx-0 align-items-center justify-content-between">

@@ -2844,74 +2844,76 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "matchain") {
-      if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
-          if (coinbase.toLowerCase() === address.toLowerCase()) {
-            if (isPremium) {
-              if (
-                claimedMatChests + claimedMatPremiumChests === 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase()
-              ) {
-                setMessage("complete");
-              } else if (
-                claimedMatChests + claimedMatPremiumChests < 20 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMatChests + claimedMatPremiumChests < 20 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 698
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            } else if (!isPremium) {
-              if (
-                claimedMatChests === 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("premium");
-                setDisable(true);
-              } else if (
-                claimedMatChests < 10 &&
-                rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId === 698
-              ) {
-                setMessage("");
-                setDisable(false);
-              } else if (
-                claimedMatChests < 10 &&
-                // rewardData.length === 0 &&
-                address.toLowerCase() === coinbase.toLowerCase() &&
-                chainId !== 698
-              ) {
-                setMessage("switch");
-                setDisable(true);
-              }
-            }
-          } else {
-            setMessage("switchAccount");
-            setDisable(true);
-          }
-        } else {
-          setMessage("login");
-          setDisable(true);
-        }
-      } else if (
-        window.WALLET_TYPE === "binance" ||
-        window.ethereum?.isBinance
-      ) {
-        setMessage("notsupported");
-      }
+      // if (window.WALLET_TYPE !== "binance") {
+      //   if (email && coinbase && address) {
+      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+      //       if (isPremium) {
+      //         if (
+      //           claimedMatChests + claimedMatPremiumChests === 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase()
+      //         ) {
+      //           setMessage("complete");
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       } else if (!isPremium) {
+      //         if (
+      //           claimedMatChests === 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("premium");
+      //           setDisable(true);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       }
+      //     } else {
+      //       setMessage("switchAccount");
+      //       setDisable(true);
+      //     }
+      //   } else {
+      //     setMessage("login");
+      //     setDisable(true);
+      //   }
+      // } else if (
+      //   window.WALLET_TYPE === "binance" ||
+      //   window.ethereum?.isBinance
+      // ) {
+      //   setMessage("notsupported");
+      // }
+      setMessage("comingsoon");
+
     }
   }, [
     email,
@@ -3470,7 +3472,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
+                              {/* <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -3521,9 +3523,10 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div>
+                              </div> */}
                               <span className="percentage-span">
-                                {parseInt(matPercentage)}%
+                                {/* {parseInt(matPercentage)}% */}
+                                Coming Soon
                               </span>
                             </div>
                           </div>

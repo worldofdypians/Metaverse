@@ -42,7 +42,7 @@ const Utility = () => {
     <div className="utility-wrapper build-business-wrapper justify-content-center py-5 position-relative d-flex align-items-center">
     <div className="custom-container w-100">
       <h4 className="main-hero-title font-montserrat text-center mb-3">
-        WoD{" "}
+        WOD{" "}
         <mark className="font-montserrat main-hero-title explore-tag pe-2">
           Utility
         </mark>

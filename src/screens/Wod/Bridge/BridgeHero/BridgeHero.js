@@ -11,7 +11,7 @@ const BridgeHero = ({ onScroll }) => {
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h6 className="market-banner-title text-center">
-                  WOD
+                World of Dypians
                   <mark
                     className="p-0"
                     style={{
@@ -37,9 +37,9 @@ const BridgeHero = ({ onScroll }) => {
                       onScroll("bridge");
                     }}
                   >
-                    Bridge WoD
+                    Bridge WOD
                   </button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WoD</button>
+                  <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
                 </div>
               </div>
             </div>

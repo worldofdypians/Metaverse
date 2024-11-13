@@ -170,7 +170,7 @@ const LandWhitelistModal = ({
           <div>
             <div className="d-flex justify-content-between gap-1">
               <h2 className="font-organetto register-grid-title px-0">
-                WoD Genesis Land NFT{" "}
+              WOD Genesis Land NFT{" "}
                 <mark className="font-organetto register-tag"> whitelist</mark>
               </h2>
               <img

@@ -1376,7 +1376,7 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">WoD Land & CAWS </span>
+                <span className="item-name-left">WOD Land & CAWS </span>
                 <span className="item-name-right">
                   ${getFormattedNumber(wodCawsRewards, 2)}
                 </span>

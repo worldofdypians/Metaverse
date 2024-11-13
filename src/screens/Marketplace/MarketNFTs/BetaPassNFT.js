@@ -3676,7 +3676,7 @@ const BetaPassNFT = ({
                               <span className="footertxt-coingecko mt-4">
                                 Users who have claimed the{" "}
                                 {selectedMint.cardTitle} NFT are required to
-                                create a WoD Account to receive the NFT and
+                                create a WOD Account to receive the NFT and
                                 participate in the exclusive event.
                               </span>
 

@@ -2373,7 +2373,7 @@ const NFTBridge = ({
                               </h4>
                               <span className="status-desc">
                                 Select the NFT you wish to bridge, whether from
-                                CAWS or WoD Genesis Land NFTs. After selection,
+                                CAWS or WOD Genesis Land NFTs. After selection,
                                 use the approve button and approve the
                                 transaction in your wallet.
                               </span>

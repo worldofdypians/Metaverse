@@ -154,7 +154,7 @@ const MainHero = ({scrollInto}) => {
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">
-                  WoD Token
+                WOD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
                   WOD is a utility token issued on BNB Chain, providing the
