@@ -9360,19 +9360,19 @@ function Dashboard({
 
     const totalScore_multiplied =
       rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
-    if (totalScore_multiplied > 15999999 && totalScore_multiplied < 28000000) {
+    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
       setUserRankRewards(5);
     } else if (
-      totalScore_multiplied >= 28000000 &&
-      totalScore_multiplied < 41000000
+      totalScore_multiplied >= 26000000 &&
+      totalScore_multiplied < 39000000
     ) {
       setUserRankRewards(10);
     } else if (
-      totalScore_multiplied >= 41000000 &&
-      totalScore_multiplied < 66000000
+      totalScore_multiplied >= 39000000 &&
+      totalScore_multiplied < 64000000
     ) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 66000000) {
+    } else if (totalScore_multiplied >= 64000000) {
       setUserRankRewards(100);
     }
   };
@@ -9384,37 +9384,37 @@ function Dashboard({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 65999999) {
+    if (allScore > 63999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 40999999) {
+    } else if (allScore > 38999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 66000000) * 100);
-    } else if (allScore > 27999999) {
+      setUserProgress((allScore / 64000000) * 100);
+    } else if (allScore > 25999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 41000000) * 100);
-    } else if (allScore > 15999999) {
+      setUserProgress((allScore / 39000000) * 100);
+    } else if (allScore > 13999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 28000000) * 100);
+      setUserProgress((allScore / 26000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 16000000) * 100);
+      setUserProgress((allScore / 14000000) * 100);
     }
   };
 

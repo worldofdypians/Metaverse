@@ -861,6 +861,13 @@ const NewLeaderBoard = ({
               )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
+                     {optionText2 === "matchain" ? (
+                <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                  <h6 className="mb-0">Coming Soon</h6>
+                </div>
+              ) : (
+                <></>
+              )}
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
@@ -886,7 +893,7 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={`leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
+                            className={`${optionText2 === 'matchain' && 'blur-leaderboard'} leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
