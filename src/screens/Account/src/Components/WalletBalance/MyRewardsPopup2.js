@@ -1021,7 +1021,7 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
-                      Number(treasureRewardMoneySei) +
+                      Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
@@ -1196,14 +1196,14 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            <img
+            {/* <img
               src={
                 require("../../../../../components/Header/assets/taiko.svg")
                   .default
               }
               style={{ width: 16, height: 16 }}
               alt=""
-            />
+            /> */}
             <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
             <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
@@ -1296,12 +1296,12 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(0, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Matchain</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(0, 2)}
                   </span>
-                </div>
+                </div> */}
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Genesis</span>
                   <span className="item-name-right">
@@ -1514,7 +1514,7 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
 
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Matchain</span>
                 <span className="item-name-right">
                   $
@@ -1522,7 +1522,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyMat, 2)}
                 </span>
-              </div>
+              </div> */}
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
@@ -1588,7 +1588,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(taikoEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
@@ -1603,7 +1603,7 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(matEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
               </div>
 
               <div className="d-flex flex-column gap-2">

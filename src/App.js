@@ -3290,7 +3290,7 @@ function App() {
     {
       title: "Immutable",
       logo: immutableLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "IMX",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
@@ -3312,7 +3312,7 @@ function App() {
         chain: "Immutable",
         linkState: "immutable",
         rewards: "IMX",
-        status: "Live",
+        status: "Expired",
         id: "event15",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in IMX Rewards",
