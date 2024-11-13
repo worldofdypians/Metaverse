@@ -1,11 +1,11 @@
 .poolscardwrapper {
-  background: #312f69;
+  background: #242556;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.08);
   border-radius: 12px;
   position: relative;
   /* padding: 10px; */
   /* width: 400px; */
-  border: 2px solid #312f69;
+  border: 2px solid #242556;
   transition: all 0.25s;
   cursor: pointer;
 }
@@ -381,8 +381,29 @@
   cursor: pointer;
 }
 
+
+.mybalance-text{
+  color: #C0C9FF;
+
+  b{
+  color: #4ed5d2;  
+  }
+ 
+
+  
+}
+
+.rewardstxtwod {
+  color: #00E5FF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
 .start-title,.withdraw-littletxt, .withdraw-txt, .mybalance-text, .rewardstxtCaws, .available-nfts {
   font-size: 12px;
+  line-height: normal;
 }
 
 .bottomitems:hover {
@@ -439,24 +460,31 @@
 }
 
 
-.outline-btn-stake {
+.outline-btn-stake, .outline-btn-stake:hover {
   background: #312f69;
   border-radius: 8px;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
-  color: #857dfa;
-  border: 1.5px solid #857dfa;
-  padding: 8px 24px;
+  color: #4ed5d2;
+  border: 1px solid #4ed5d2;
+  padding: 5px 10px;
   transition: all ease 0.4s;
   -webkit-transition: all ease 0.4s;
 }
 
-.outline-btn-stake:hover {
-  color: #fff;
-  background: #857dfa;
+.stake-separator {
+  height: 1px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(192, 201, 255, 0.30);
 }
+
+/* .outline-btn-stake:hover {
+  color: #fff;
+  background: #4ed5d2;
+} */
 
 .amount-txt {
   font-style: normal;

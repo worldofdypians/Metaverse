@@ -50,7 +50,7 @@ const Modal = ({
                 className="m-0"
               >
                 {title === "stats"
-                  ? "My Stats"
+                  ? "Pool Details"
                   : title === "proposal"
                   ? "New proposal"
                   : title === "withdraw"
