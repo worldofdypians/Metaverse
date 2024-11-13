@@ -3232,6 +3232,7 @@ function App() {
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Oct 21, 2024",
+      type: "Treasure Hunt",
       backgroundImage: upcomingBase2,
       image: "baseBanner.png",
       userEarnUsd: 0,
