@@ -392,14 +392,7 @@ iframe {
 }
 
 .outline-btn-disabled {
-  clip-path: polygon(
-    0 19px,
-    19px 0,
-    100% 0,
-    100% calc(100% - 19px),
-    calc(100% - 19px) 100%,
-    0 100%
-  );
+ 
   background: #c4c4c4;
   font-family: "Poppins";
   font-style: normal;

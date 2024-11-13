@@ -396,14 +396,7 @@ body {
   }
 
   .outline-btn {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
+   
     background: #080b2a;
     font-family: "Poppins";
     font-style: normal;
@@ -416,14 +409,7 @@ body {
   }
 
   .outline-btn:hover {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
+  
     background: linear-gradient(89.7deg, #7b84d8 0.23%, #a4fb85 99.72%);
     font-family: "Poppins";
     font-style: normal;
@@ -507,14 +493,7 @@ body {
   }
 
   .outline-btn-disabled {
-    clip-path: polygon(
-      0 19px,
-      19px 0,
-      100% 0,
-      100% calc(100% - 19px),
-      calc(100% - 19px) 100%,
-      0 100%
-    );
+    border-radius: 12px;
     background: #c4c4c4;
     font-family: "Poppins";
     font-style: normal;
