@@ -3108,14 +3108,16 @@ const NewWalletBalance = ({
                   src={
                     dummyEvent.id !== "event4" &&
                     dummyEvent.id !== "event24" &&
-                    dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event7"&&
+                    dummyEvent.id !== "event15"
                       ? telegram
                       : discord
                   }
                 />
                 {dummyEvent.id !== "event4" &&
                 dummyEvent.id !== "event24" &&
-                dummyEvent.id !== "event7"
+                dummyEvent.id !== "event7" &&
+                dummyEvent.id !== "event15"
                   ? "Telegram"
                   : "Discord"}
               </a>

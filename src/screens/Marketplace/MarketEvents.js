@@ -1678,15 +1678,14 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                              item.title === "Immutable"
-                                ? immutableEarnUsd
-                                : item.title === "Manta"
+                               item.title === "Manta"
                                 ? mantaEarnUsd
                                 : item.title === "Taiko"
                                 ? taikoEarnUsd
                                 : item.title === "Cookie3"
                                 ? cookieEarnUsd
-                               
+                                : item.title === "Base"
+                                ? baseEarnUSD
                                 : 0
                             }
                           />
@@ -1955,6 +1954,8 @@ const MarketEvents = ({
                             ? skaleEarnUsd
                             : item.title === "CORE"
                             ? coreEarnUsd
+                            : item.title === "Immutable" 
+                            ? immutableEarnUsd
                             : item.title === "Viciton"
                             ? victionEarnUsd
                             : 0
@@ -2792,12 +2793,12 @@ const MarketEvents = ({
                 <img
                   alt=""
                   src={
-                    dummyEvent.id !== "event4" &&  dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event4" &&  dummyEvent.id !== "event24" && dummyEvent.id !== "event7" && dummyEvent.id !== "event15"
                       ? telegram
                       : discord
                   }
                 />
-                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7"
+                {dummyEvent.id !== "event4" && dummyEvent.id !== "event24" && dummyEvent.id !== "event7" && dummyEvent.id !== "event15"
                   ? "Telegram"
                   : "Discord"}
               </a>
