@@ -142,6 +142,8 @@ const EarnContent = ({
                               ? item.tokenURL
                               : item.pair_name === "WoD + CAWS"
                               ? ["caws", "wod"]
+                              : item.pair_name === "Genesis Land"
+                              ? ["wod"]
                               : [item.pair_name?.toLowerCase()]
                           }
                           onShowDetailsClick={() => {
@@ -169,7 +171,7 @@ const EarnContent = ({
                     </div>
                     <div
                       id={"collapse" + index}
-                      className="accordion-collapse collapse"
+                      className={`accordion-collapse collapse `}
                       aria-labelledby={"collapsed" + index}
                       data-bs-parent="#accordionExample"
                       style={{ zIndex: "1" }}
@@ -265,11 +267,13 @@ const EarnContent = ({
                             staking={window.constant_staking_wod}
                             apr={20}
                             expiration_time={"07 Jun 2025"}
-                            lockTime={"No Lock"}
+                            poolCap={1000000}
+                            start_date={"28 Nov 2024"}
                             fee={0}
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            lockTime={"30 days"}
                           />
                         )}
                       </div>
@@ -312,6 +316,8 @@ const EarnContent = ({
                             ? item.tokenURL
                             : item.pair_name === "WoD + CAWS"
                             ? ["caws", "wod"]
+                            : item.pair_name === "Genesis Land"
+                            ? ["wod"]
                             : [item.pair_name?.toLowerCase()]
                         }
                         onShowDetailsClick={() => {}}
@@ -423,11 +429,13 @@ const EarnContent = ({
                           staking={window.constant_staking_wod}
                           apr={20}
                           expiration_time={"07 Jun 2025"}
-                          lockTime={"No Lock"}
+                          poolCap={1000000}
+                          start_date={"28 Nov 2024"}
                           fee={0}
                           binanceW3WProvider={binanceW3WProvider}
                           handleSwitchNetwork={handleSwitchNetwork}
                           listType={selectedViewStyle}
+                          lockTime={"30 days"}
                         />
                       )}
                     </div>
