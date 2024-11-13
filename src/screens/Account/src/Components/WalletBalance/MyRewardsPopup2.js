@@ -788,6 +788,7 @@ const MyRewardsPopupNew = ({
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
                       Number(bnbEarnUsd) +
+                      Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd),
                     2
@@ -803,7 +804,6 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(immutableEarnUsd) +
                       Number(taikoEarnUsd) +
                       Number(matEarnUsd) +
                       Number(cookieEarnUsd) +
@@ -1021,7 +1021,7 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
-                      Number(treasureRewardMoneySei) +
+                      Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
@@ -1088,6 +1088,7 @@ const MyRewardsPopupNew = ({
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
                       Number(bnbEarnUsd) +
+                      Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd),
                     2
@@ -1095,7 +1096,6 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(skaleEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(immutableEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(taikoEarnUsd) +
@@ -1196,14 +1196,14 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            <img
+            {/* <img
               src={
                 require("../../../../../components/Header/assets/taiko.svg")
                   .default
               }
               style={{ width: 16, height: 16 }}
               alt=""
-            />
+            /> */}
             <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
             <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
@@ -1296,12 +1296,12 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(0, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Matchain</span>
                   <span className="item-name-right">
                     ${getFormattedNumber(0, 2)}
                   </span>
-                </div>
+                </div> */}
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Genesis</span>
                   <span className="item-name-right">
@@ -1514,7 +1514,7 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
 
-              <div className="d-flex w-100 justify-content-between gap-2">
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Matchain</span>
                 <span className="item-name-right">
                   $
@@ -1522,7 +1522,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyMat, 2)}
                 </span>
-              </div>
+              </div> */}
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
@@ -1588,7 +1588,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(taikoEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
@@ -1603,23 +1603,10 @@ const MyRewardsPopupNew = ({
                   <span className="item-name-right">
                     ${getFormattedNumber(matEarnUsd, 2)}
                   </span>
-                </div>
+                </div> */}
               </div>
 
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={immutableLogo}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Immutable
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(immutableEarnUsd, 2)}
-                  </span>
-                </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1719,6 +1706,19 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(baseRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={immutableLogo}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Immutable
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(immutableEarnUsd, 2)}
                   </span>
                 </div>
               </div>

@@ -868,14 +868,16 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               src={
                 dummyEvent.popupInfo.id !== "event4" &&
                 dummyEvent.popupInfo.id !== "event24" &&
-                dummyEvent.popupInfo.id !== "event7"
+                dummyEvent.popupInfo.id !== "event7" &&
+                dummyEvent.popupInfo.id !== "event15"
                   ? telegram
                   : discord
               }
             />
             {dummyEvent.popupInfo.id !== "event4" &&
             dummyEvent.popupInfo.id !== "event24" &&
-            dummyEvent.popupInfo.id !== "event7"
+            dummyEvent.popupInfo.id !== "event7"&&
+            dummyEvent.popupInfo.id !== "event15"
               ? "Telegram"
               : "Discord"}
           </a>

@@ -606,36 +606,6 @@ const NewWalletBalance = ({
       },
     },
     {
-      title: "Immutable",
-      logo: immutableLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in IMX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2024",
-      backgroundImage: immutableBg,
-      popupInfo: {
-        title: "Immutable",
-        chain: "Immutable",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Live",
-        logo: immutableLogo,
-        date: "Aug 15, 2024",
-        id: "event15",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: immutableLastDay,
-        backgroundImage: immutableBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
-        eventDate: "Aug 15, 2024",
-      },
-    },
-    {
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Live",
@@ -1944,7 +1914,7 @@ const NewWalletBalance = ({
                           Number(landPremiumRewards) +
                           Number(taikoEarnUsd)+
                           Number(matEarnUsd) +
-                          Number(immutableEarnUsd) +
+                          // Number(immutableEarnUsd) +
                           Number(mantaEarnUsd) +
                           Number(cookieEarnUsd) +
                           Number(baseEarnUSD),
@@ -3048,14 +3018,16 @@ const NewWalletBalance = ({
                   src={
                     dummyEvent.id !== "event4" &&
                     dummyEvent.id !== "event24" &&
-                    dummyEvent.id !== "event7"
+                    dummyEvent.id !== "event7"&&
+                    dummyEvent.id !== "event15"
                       ? telegram
                       : discord
                   }
                 />
                 {dummyEvent.id !== "event4" &&
                 dummyEvent.id !== "event24" &&
-                dummyEvent.id !== "event7"
+                dummyEvent.id !== "event7" &&
+                dummyEvent.id !== "event15"
                   ? "Telegram"
                   : "Discord"}
               </a>
