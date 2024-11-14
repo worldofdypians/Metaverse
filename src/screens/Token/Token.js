@@ -28,7 +28,7 @@ const Token = () => {
         <MainHero scrollInto={scrollToView}/>
         <TokenUtility />
         <Tokenomics />
-        <Investors />
+        <Investors page={"token"} />
         {/* <Utility /> */}
       </div>
     </div>

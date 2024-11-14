@@ -11,6 +11,10 @@ import { TextField } from "@mui/material";
 import styled from "styled-components";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import bridgeIcon from "../assets/bridgeIcon.svg";
+import ethIcon from "../assets/ethIcon.svg";
+import bnbIcon from "../assets/bnbIcon.svg";
+import wodIcon from "../assets/wodIcon.svg";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -85,7 +89,71 @@ const BridgeContent = ({
       className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center"
       id="bridge"
     >
-      <div className="custom-container w-100">
+      <div className="container-fluid d-flex align-items-center justify-content-center">
+        <div className="row w-100 justify-content-center">
+            <div className="new-bridge-wrapper d-flex flex-column gap-3 p-3 mt-4 mt-lg-0">
+            <div className="bridge-input-wrapper d-flex flex-column gap-2">
+                <div className="bridge-input-upper-wrapper  d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center p-3 gap-2">
+                    <img src={wodIcon} alt="" />
+                    <h6 className="mb-0 bridge-wod-title">WOD</h6>
+                  </div>
+                  <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
+                    <span className="bridge-network-span">Network</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={bnbIcon} alt="" />
+                      <h6 className="mb-0 bridge-network-title">BNB Chain</h6>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-between p-3">
+                  <div className="d-flex align-items-center gap-2">
+                    <button className="bridge-max-btn">MAX</button>
+                    <input
+                      type="number"
+                      className="bridge-amount-input"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div className="d-flex flex-column gap-1">
+                    <span className="bridge-balance-span">Balance</span>
+                    <span className="bridge-balance">2,500,000 WOD</span>
+                  </div>
+                </div>
+              </div>
+                  <div className="d-flex justify-content-center w-100">
+                  <img src={bridgeIcon} width={30} height={30} alt="" />
+                  </div>
+              <div className="bridge-input-wrapper d-flex flex-column gap-2">
+                <div className="bridge-input-upper-wrapper  d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center p-3 gap-2">
+                    <img src={wodIcon} alt="" />
+                    <h6 className="mb-0 bridge-wod-title">WOD</h6>
+                  </div>
+                  <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
+                    <span className="bridge-network-span">Network</span>
+                    <div className="d-flex align-items-center gap-2">
+                      <h6 className="mb-0 bridge-network-title">Coming Soon</h6>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center justify-content-between p-3">
+                    <input
+                      type="number"
+                      className="bridge-amount-input"
+                      placeholder="0"
+                    />
+                  <div className="d-flex flex-column gap-1">
+                    <span className="bridge-balance-span">Balance</span>
+                    <span className="bridge-balance">2,500,000 WOD</span>
+                  </div>
+                </div>
+              </div>
+              <button className="outline-btn-disabled w-100 py-2" disabled>Coming Soon</button>
+            </div>
+        </div>
+      </div>
+      {/* <div className="custom-container w-100">
         <div className="row mx-0">
           <div className="col-12 col-lg-6">
             <div className="bridge-token-wrapper p-3">
@@ -383,7 +451,7 @@ const BridgeContent = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

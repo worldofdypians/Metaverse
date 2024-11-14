@@ -2,6 +2,7 @@
   background-image: url("./statsBg.webp");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  border-bottom: 3px solid black;
   @media screen and (max-width: 786px) {
   background-image: url("./statsBgMobile.png");
     
@@ -9,12 +10,12 @@
 }
 
 .explorer-grid-title {
+  color: #fff;
+  font-size: clamp(1rem, 2vw + 1vh, 3rem);
   font-style: normal;
   font-weight: 800;
-  font-size: 40px;
-  line-height: 43px;
-  color: #ffffff;
-  text-align: center;
+  line-height: normal;
+  text-shadow: 0 0 1px transparent, 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 .explore-tag {
   background: none !important;
@@ -79,4 +80,11 @@ backdrop-filter: blur(5.5px);
     font-weight: 500;
     line-height: 24px;
   }
+}
+
+.dappRadar-full{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30%;
 }

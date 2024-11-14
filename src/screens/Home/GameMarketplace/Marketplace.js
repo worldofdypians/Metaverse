@@ -97,14 +97,14 @@ const MarketPlace = () => {
 
   return (
     <div
-      className="d-flex container-fluid justify-content-center px-3 px-lg-5"
+      className="d-flex container-fluid justify-content-center px-3 px-lg-5 mt-4"
       id="marketplace"
     >
       <div className="custom-container ">
         <div className="flex-column justify-content-center text-white gap-4 mx-2">
-          <div className="d-flex justify-content-center align-items-center flex-column gap-2">
+          <div className="d-flex justify-content-start align-items-center flex-column gap-2">
             <h2 className="font-montserrat builders-title explorer-grid-title px-0 mb-4">
-              Game Gallery
+               Gallery
             </h2>
           </div>
           {windowSize.width > 786 ? (

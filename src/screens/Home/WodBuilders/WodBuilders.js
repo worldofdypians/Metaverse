@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
+import partnersDropdown from "./assets/partnersDropdown.svg";
 
 const WodBuilders = ({ page }) => {
   const [slice, setSlice] = useState(2);
@@ -329,12 +330,12 @@ const WodBuilders = ({ page }) => {
   return (
     <div className="extra-margin">
       <div
-        className={`px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center builders-bg mb-5 ${
+        className={`px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center builders-bg ${
           slice !== 8 && "builders-bg-large"
         }`}
         id="wodbuilders"
       >
-        <div className="d-flex  justify-content-center align-items-center mb-4 gap-2">
+        <div className="d-flex  justify-content-center align-items-center mb-3 mt-4 pt-2 gap-2">
           <h2 className="font-montserrat builders-title explorer-grid-title px-0">
             Pioneers Shaping the World of Dypians
           </h2>
@@ -388,22 +389,31 @@ const WodBuilders = ({ page }) => {
           {windowSize.width < 786 ? (
             <div className="d-flex justify-content-center mt-3">
               <div
-                className="linear-border"
+                className="d-flex align-items-center gap-2 view-more-partners position-relative"
                 onClick={() => (slice === 2 ? setSlice(24) : setSlice(2))}
+                style={{bottom: "0"}}
               >
-                <button className="btn filled-btn px-5">
+                <span className="view-all-partners ">
+                  {" "}
                   {slice === 2 ? "View More" : "View Less"}
-                </button>
+                </span>
+                <img src={partnersDropdown} width={20} height={20} style={{transform: slice === 2 ? "none" : "rotate(180deg)"}} alt="" />
               </div>
             </div>
           ) : (
             <div className="d-flex justify-content-center mt-3">
-              <button
-                className="btn filled-btn px-5"
+              <div
+                className="d-flex align-items-center gap-2 view-more-partners position-relative"
                 onClick={() => (slice === 8 ? setSlice(24) : setSlice(8))}
+                style={{bottom: "0"}}
               >
-                {slice === 8 ? "View More" : "View Less"}
-              </button>
+                <span className="view-all-partners ">
+                  {" "}
+                  {slice === 8 ? "View More" : "View Less"}
+                </span>
+
+                <img src={partnersDropdown} width={20} height={20} style={{transform: slice === 8 ? "none" : "rotate(180deg)"}} alt="" />
+              </div>
             </div>
           )}
         </div>

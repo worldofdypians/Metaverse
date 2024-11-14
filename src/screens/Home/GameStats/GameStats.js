@@ -38,12 +38,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper first-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
               <span className="amp-benefits-desc text-center text-md-end">
                 ADVENTURE
               </span>
               <span className="ways-to-amplify-title text-center text-md-end">
-                Discover a World Beyond Imagination
+                The World Beyond Imagination
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
                 Step into a boundless realm where every choice matters. In World
@@ -51,8 +51,10 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 only the most daring adventurers. Forge alliances, uncover
                 secrets, and shape your own destiny.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <NavLink to={"/account"} className="explore-btn col-lg-4 py-2">Join Now</NavLink>
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+                <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
+                  Join Now
+                </NavLink>
               </div>
             </div>
           </div>
@@ -68,7 +70,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper second-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
                 LEGEND
               </span>
@@ -81,8 +83,11 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 ancient artifacts, and rewards that will enhance your powers.
                 Will you rise to the challenge?
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <NavLink to={"/account/challenges/treasure-hunt"} className="explore-btn col-lg-4 py-2">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
+                <NavLink
+                  to={"/account/challenges/treasure-hunt"}
+                  className="getpremium-btn col-lg-4 py-2"
+                >
                   Challenges
                 </NavLink>
               </div>
@@ -100,7 +105,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper third-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
               <span className="amp-benefits-desc text-center text-md-end">
                 EPIC
               </span>
@@ -112,8 +117,14 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 courage are rewarded. Join forces with others, explore vast
                 landscapes, and unlock powerful relics.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <NavLink to={"https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"} target="_blank" className="explore-btn col-lg-4 py-2">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+                <NavLink
+                  to={
+                    "https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
+                  }
+                  target="_blank"
+                  className="explore-btn col-lg-4 py-2"
+                >
                   Join the Fight
                 </NavLink>
                 <NavLink to={"/game"} className="getpremium-btn col-lg-4 py-2">
@@ -134,7 +145,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fourth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
                 MAP
               </span>
@@ -146,9 +157,10 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 From competitive events to collaborative challenges, connect
                 with players around the world who share your passion.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <NavLink to={"/map"} className="explore-btn col-lg-4 py-2">Start Exploring</NavLink>
-          
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
+                <NavLink to={"/map"} className="getpremium-btn col-lg-4 py-2">
+                  Start Exploring
+                </NavLink>
               </div>
             </div>
           </div>
@@ -164,21 +176,26 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper fifth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
               <span className="amp-benefits-desc text-center text-md-end">
-              COMMUNITY
+                COMMUNITY
               </span>
               <span className="ways-to-amplify-title text-center text-md-end">
-              Discover a Community Like No Other
+                A Community Like No Other
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
-              Join a vibrant community of adventurers in World of Dypians. From competitive events to collaborative challenges, connect with players around the world who share your passion.
+                Join a vibrant community of adventurers in World of Dypians.
+                From competitive events to collaborative challenges, connect
+                with players around the world who share your passion.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <NavLink to={"https://discord.gg/worldofdypians"} target="_blank" className="explore-btn col-lg-4 py-2">
-                    Connect
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+                <NavLink
+                  to={"https://discord.gg/worldofdypians"}
+                  target="_blank"
+                  className="explore-btn col-lg-4 py-2"
+                >
+                  Connect
                 </NavLink>
-             
               </div>
             </div>
           </div>
@@ -194,19 +211,28 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
         </div>
         <div className="new-game-stats-wrapper sixth-banner d-flex align-items-center justify-content-center ">
           <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-2 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
               <span className="amp-benefits-desc text-center text-md-start">
                 UPDATES
               </span>
               <span className="ways-to-amplify-title text-center text-md-start">
-              Latest Updates in World of Dypians
+                Latest Updates
               </span>
               <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
-              Dive into the newest features, events, and surprises in World of Dypians. There’s always something fresh waiting for you!
+                Dive into the newest features, events, and surprises in World of
+                Dypians. There’s always something fresh waiting for you!
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100">
-                <NavLink to={"/game-updates"} className="explore-btn col-lg-4 py-2">Learn More</NavLink>
-                <NavLink to={"/campaigns"} className="getpremium-btn col-lg-4 py-2">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
+                <NavLink
+                  to={"/game-updates"}
+                  className="getpremium-btn col-lg-4 py-2"
+                >
+                  Learn More
+                </NavLink>
+                <NavLink
+                  to={"/campaigns"}
+                  className="getpremium-btn col-lg-4 py-2"
+                >
                   Campaigns
                 </NavLink>
               </div>

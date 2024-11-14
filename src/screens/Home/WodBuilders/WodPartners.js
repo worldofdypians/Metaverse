@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_wodbuilders.scss";
-import partnersRight from "./assets/partnersRight.svg";
+import partnersDropdown from "./assets/partnersDropdown.svg";
 import { NavLink } from "react-router-dom";
 
 const WodPartners = ({ full }) => {
@@ -217,9 +217,11 @@ const WodPartners = ({ full }) => {
     },
   ];
 
+  const [slice, setSlice] = useState(14);
+
   return (
     <div
-      className="w-100 px-3 px-lg-5 mx-0 build-business-wrapper py-4 d-flex justify-content-center"
+      className="w-100 px-3 px-lg-5 pb-5 pt-4 mx-0 build-business-wrapper d-flex justify-content-center position-relative"
       id="partners"
     >
       <div className="custom-container">
@@ -234,14 +236,14 @@ const WodPartners = ({ full }) => {
                 to={"/about#partners"}
                 className="d-flex align-items-center gap-2"
               >
-                <span className="view-all-partners">View All</span>
-                <img src={partnersRight} alt="" />
+                {/* <span className="view-all-partners">View All</span>
+                <img src={partnersDropdown} alt="" /> */}
               </NavLink>
             )}
           </div>
           <div className="new-partners-grid">
             {partners
-              .slice(0, full ? partners.length : 14)
+              .slice(0, full ? partners.length : slice)
               .map((partner, index) => (
                 <div
                   key={index}
@@ -265,6 +267,34 @@ const WodPartners = ({ full }) => {
           </div>
         </div>
       </div>
+
+      {!full && (
+        <>
+          {slice === 14 ? (
+            <div
+              className="d-flex align-items-center gap-2 view-more-partners"
+              onClick={() => setSlice(partners.length)}
+            >
+              <span className="view-all-partners ">View All</span>
+              <img src={partnersDropdown} width={20} height={20} alt="" />
+            </div>
+          ) : (
+            <div
+              className="d-flex align-items-center gap-2 view-more-partners"
+              onClick={() => setSlice(14)}
+            >
+              <span className="view-all-partners ">View Less</span>
+              <img
+                src={partnersDropdown}
+                width={20}
+                height={20}
+                style={{ transform: "rotate(180deg)" }}
+                alt=""
+              />
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
