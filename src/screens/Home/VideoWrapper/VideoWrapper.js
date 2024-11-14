@@ -247,7 +247,7 @@ const VideoWrapper = ({
             style={{
               // maxWidth: "2400px",
               width: "100%",
-              height: "100vh",
+              maxHeight: "100vh",
               objectFit: "cover",
             }}
           ></video>

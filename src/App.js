@@ -1,14 +1,14 @@
 import Home from "./screens/Home/Home";
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {  Routes, Route, Navigate } from "react-router-dom";
 import "./fonts/Organetto.ttf";
 import { Amplify } from "aws-amplify";
-import { ApolloProvider, useMutation } from "@apollo/client";
+import {  useMutation } from "@apollo/client";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./screens/Account/src/aws-exports";
 import "./screens/Account/src/App.css";
 import { checkout, passport, config } from "@imtbl/sdk";
-import AuthProvider, {
+import  {
   useAuth,
 } from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
 import {
@@ -17,15 +17,11 @@ import {
   ResetPassword,
 } from "./screens/Account/src/Containers";
 import PlayerCreation from "./screens/Account/src/Containers/PlayerCreation/PlayerCreation.js";
-import client from "./screens/Account/src/apolloConfig.js";
 import Dashboard from "./screens/Account/src/Containers/Dashboard/Dashboard.js";
 import LandingScreen from "./screens/Account/src/Containers/LandingScreen/LandingScreen.js";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import MarketplaceFooter from "./components/Footer/MarketplaceFooter";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
-import Caws from "./screens/Caws/Caws";
-import NftMinting from "./screens/Caws/NftMinting/NftMinting";
 import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
 import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelistModal";
@@ -53,8 +49,6 @@ import {
 import CawsNFT from "./screens/Marketplace/MarketNFTs/CawsNFT";
 import WoDNFT from "./screens/Marketplace/MarketNFTs/WoDNFT";
 import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
-import MarketStake from "./screens/Marketplace/MarketStake";
-import MarketEvents from "./screens/Marketplace/MarketEvents";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
@@ -4570,7 +4564,6 @@ function App() {
               />
             }
           />
-          <Route exact path="/caws" element={<Caws />} />
           <Route exact path="/tokenomics" element={<Token />} />
           <Route
             exact
