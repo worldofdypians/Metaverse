@@ -336,6 +336,7 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
   }
 
   .walletclose {
@@ -857,7 +858,8 @@ body {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+  background:#1a1c39;
+  border: 0;
 }
 
 .MuiBox-root {

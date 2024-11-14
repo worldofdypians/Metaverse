@@ -189,6 +189,7 @@
   @media only screen and (max-width: 540px) {
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
+    height: fit-content;
   }
 }
 
@@ -288,8 +289,6 @@
 }
 
 .modal-scroll2 {
-
-
   @media screen and (max-width: 991px) {
     height: 380px;
     overflow-x: hidden;
@@ -303,6 +302,9 @@
   width: 25%;
   @media screen and (max-width: 991px) {
     width: 50%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 }
 

@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 // import { NavLink } from "react-router-dom";
-import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
-import dropdownIcon from "../assets/dropdownIcon.svg";
+// import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
+// import dropdownIcon from "../assets/dropdownIcon.svg";
 import "../../../Wod/Token/MainHero/_mainhero.scss";
-import listIcon from "../assets/listIcon.svg";
-import tableIcon from "../assets/tableIcon.svg";
-import tableIconActive from "../assets/tableIconActive.svg";
-import listIconActive from "../assets/listIconActive.svg";
+// import listIcon from "../assets/listIcon.svg";
+// import tableIcon from "../assets/tableIcon.svg";
+// import tableIconActive from "../assets/tableIconActive.svg";
+// import listIconActive from "../assets/listIconActive.svg";
 
 const EarnHero = ({
   onSelectFilter,
@@ -15,91 +15,91 @@ const EarnHero = ({
   onViewPastPools,
   onViewStakedOnlyPools,
 }) => {
-  const dypProducts = [
-    {
-      // link: "/earn",
-      title: "TOKEN",
-      desc: "Boost rewards with WOD tokens",
-      class: "tokenEarnClass",
-    },
-    {
-      // link: "/bridge",
-      title: "NFT",
-      desc: "Utilize your NFTs for unique benefits",
-      class: "tokenBridgeClass",
-    },
-    {
-      // link: "/governance",
-      title: "TOKEN & NFT",
-      desc: "Combine tokens and NFTs for maximum rewards",
-      class: "tokenGovernanceClass",
-    },
-  ];
+  // const dypProducts = [
+  //   {
+  //     // link: "/earn",
+  //     title: "TOKEN",
+  //     desc: "Boost rewards with WOD tokens",
+  //     class: "tokenEarnClass",
+  //   },
+  //   {
+  //     // link: "/bridge",
+  //     title: "NFT",
+  //     desc: "Utilize your NFTs for unique benefits",
+  //     class: "tokenBridgeClass",
+  //   },
+  //   {
+  //     // link: "/governance",
+  //     title: "TOKEN & NFT",
+  //     desc: "Combine tokens and NFTs for maximum rewards",
+  //     class: "tokenGovernanceClass",
+  //   },
+  // ];
 
-  var settings = {
-    dots: false,
-    arrows: false,
-    dotsClass: "button__bar",
-    infinite: false,
-    speed: 300,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    draggable: false,
-    responsive: [
-      {
-        breakpoint: 1600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1500,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1400,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 1050,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
+  // var settings = {
+  //   dots: false,
+  //   arrows: false,
+  //   dotsClass: "button__bar",
+  //   infinite: false,
+  //   speed: 300,
+  //   slidesToShow: 3,
+  //   slidesToScroll: 1,
+  //   initialSlide: 0,
+  //   draggable: false,
+  //   responsive: [
+  //     {
+  //       breakpoint: 1600,
+  //       settings: {
+  //         slidesToShow: 3,
+  //         slidesToScroll: 1,
+  //         initialSlide: 0,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 1500,
+  //       settings: {
+  //         slidesToShow: 3,
+  //         slidesToScroll: 1,
+  //         initialSlide: 0,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 1400,
+  //       settings: {
+  //         slidesToShow: 3,
+  //         slidesToScroll: 1,
+  //         initialSlide: 0,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 1050,
+  //       settings: {
+  //         slidesToShow: 2,
+  //         slidesToScroll: 1,
+  //         initialSlide: 0,
+  //       },
+  //     },
+  //     {
+  //       breakpoint: 480,
+  //       settings: {
+  //         slidesToShow: 1,
+  //         slidesToScroll: 1,
+  //         initialSlide: 0,
+  //       },
+  //     },
+  //   ],
+  // };
 
   const [filterTitle, setFilterTitle] = useState("All");
-  const [listStyle, setListStyle] = useState("table");
+  // const [listStyle, setListStyle] = useState("table");
   const [pastPools, setpastPools] = useState(false);
   const [stakedOnly, setstakedOnly] = useState(false);
 
-  const betaSlider = useRef(null);
+  // const betaSlider = useRef(null);
 
   return (
     <div className="earn-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
-      <div className="custom-container  mt-5 mt-lg-0">
+      <div className="custom-container  mt-5 pt-5 pt-lg-0 mt-lg-0">
         <div className="d-flex flex-column w-100 gap-5">
           <div className="row mx-0 align-items-center justify-content-center gap-2 mb-5 pb-lg-5">
             <div className="col-12 col-lg-6 ps-lg-0">

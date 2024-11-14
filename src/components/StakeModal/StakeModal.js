@@ -269,7 +269,7 @@ const StakeModal = ({
           alt=""
         />
       </div>
-      <span className="stake-modal-desc">
+      <span className="stake-modal-desc text-wrap">
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
@@ -332,7 +332,7 @@ const StakeModal = ({
         <div className="col-6 col-lg-6">
           <div className="nft-modal-grid">
             {landItems.length === 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 2)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 2)].map((item, id) => {
                 return <EmptyWodCard key={id} />;
               })
             ) : landItems.length === 1 ? (
@@ -386,7 +386,7 @@ const StakeModal = ({
                 {[
                   ...Array(
                     devicewidth < 500
-                      ? 1
+                      ? 2
                       : Math.abs(2 - parseInt(landItems.length))
                   ),
                 ].map((item, id) => {
@@ -447,7 +447,7 @@ const StakeModal = ({
         <div className="col-6 col-lg-6">
           <div className="nft-modal-grid">
             {cawsItems.length === 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 2)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 2)].map((item, id) => {
                 return <EmptyCawsCard key={id} />;
               })
             ) : cawsItems.length === 1 ? (
@@ -562,7 +562,7 @@ const StakeModal = ({
       </div>
       <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
         <img src={greenInfo} alt="" />
-        <span className="info-span-text">
+        <span className="info-span-text text-wrap">
           Please choose the NFTs that you wish to stake. Once you have made your
           selection, you will be required to approve the process before
           depositing the NFTs.

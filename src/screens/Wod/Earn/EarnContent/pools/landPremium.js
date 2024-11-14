@@ -710,51 +710,51 @@ const LandDetailsPremium = ({
           onModalClose={() => {
             hidePopup();
           }}
-          width="fit-content"
+          maxWidth={560}
         >
           <div className="earn-hero-content px-4 pb-4 token-wrapper">
             <div className="l-box pl-3 pr-3">
               <div className="container px-0">
                 <div className="stats-container my-4">
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">My Stakes</span>
                     <h6 className="stats-card-content">
                       {mystakes.length} WOD
                     </h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Pool Cap</span>
                     <h6 className="stats-card-content">100 NFTs</h6>
                   </div>
 
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Available Quota:</span>
                     <h6 className="stats-card-content">
                       {100 - totalStakes} NFTs
                     </h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Maximum deposit:</span>
                     <h6 className="stats-card-content">N/A</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">TVL USD</span>
                     <h6 className="stats-card-content">
                       ${getFormattedNumber(tvl_usd)} USD
                     </h6>
                   </div>
 
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">
                       Contract Start date:
                     </span>
                     <h6 className="stats-card-content">05 Apr 2024</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract End date:</span>
                     <h6 className="stats-card-content">27 Jul 2025</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract Address:</span>
 
                     <a

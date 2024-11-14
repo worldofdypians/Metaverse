@@ -464,7 +464,7 @@ const LandPremiumStakeModal = ({
           alt=""
         />
       </div>
-      <span className="stake-modal-desc">
+      <span className="stake-modal-desc text-wrap">
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
@@ -647,7 +647,7 @@ const LandPremiumStakeModal = ({
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
           <img src={greenInfo} alt="" />
-          <span className="info-span-text">
+          <span className="info-span-text text-wrap">
             {isStake
               ? `Please select the NFTs to claim your rewards or withdraw them
             from the staking pool.`
