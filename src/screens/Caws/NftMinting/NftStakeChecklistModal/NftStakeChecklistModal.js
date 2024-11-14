@@ -1,4 +1,4 @@
-import Modal from "../General/Modal/Modal";
+import Modal from "../../../../components/General/Modal";
 import axios from "axios";
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
@@ -7,7 +7,7 @@ import EmptyCawsCard from "../../../../components/StakeModal/EmptyCawsCard";
 import NftStakingCawChecklist from "../General/NftStakingCawChecklist/NftStakingCawChecklist";
 import { formattedNum } from "../../functions/formatUSD";
 import getFormattedNumber from "../../functions/get-formatted-number";
-
+import useWindowSize from "../../../../hooks/useWindowSize";
 import "./_nftStakeChecklistModal.scss";
 import CountDownTimerUnstake from "../../elements/CountDownUnstake";
 import { ethers } from "ethers";
@@ -325,98 +325,92 @@ const NftStakeCheckListModal = ({
     setStatus("*Processing unstake");
     setColor("#F13227");
     if (window.WALLET_TYPE !== "binance") {
-    await stake_contract.methods
-      .emergencyWithdraw(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+      await stake_contract.methods
+        .emergencyWithdraw(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      )
-      .send()
-      .then(() => {
-        setStatus("*Unstaked successfully");
-        setColor("#57AEAA");
-        handleClearStatus();
-        setSelectedNftIds([]);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setStatus("An error occurred, please try again");
-        setColor("#F13227");
-        setSelectedNftIds([]);
-        handleClearStatus();
-      });
-    }
-    else   if (window.WALLET_TYPE === "binance") {
+        )
+        .send()
+        .then(() => {
+          setStatus("*Unstaked successfully");
+          setColor("#57AEAA");
+          handleClearStatus();
+          setSelectedNftIds([]);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          handleClearStatus();
+        });
+    } else if (window.WALLET_TYPE === "binance") {
       let staking_contract = new ethers.Contract(
         window.config.nftstaking_address,
         window.NFTSTAKING_ABI,
         binanceW3WProvider.getSigner()
       );
 
-      const txResponse =   await staking_contract
-      .emergencyWithdraw(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+      const txResponse = await staking_contract
+        .emergencyWithdraw(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      ) 
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setStatus("An error occurred, please try again");
-        setColor("#F13227");
-        setSelectedNftIds([]);
-        handleClearStatus();
-      });
+        )
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setStatus("An error occurred, please try again");
+          setColor("#F13227");
+          setSelectedNftIds([]);
+          handleClearStatus();
+        });
 
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-      setStatus("*Unstaked successfully");
-      setColor("#57AEAA");
-      handleClearStatus();
-      setSelectedNftIds([]);
+        setStatus("*Unstaked successfully");
+        setColor("#57AEAA");
+        handleClearStatus();
+        setSelectedNftIds([]);
       }
-
     }
   };
 
   const handleClaim = async (itemId) => {
-
     if (window.WALLET_TYPE !== "binance") {
+      let staking_contract = await window.getContractNFT("NFTSTAKING");
+      setloadingClaim(true);
+      setActive(false);
+      setStatus("*Claiming rewards...");
+      setColor("#F13227");
 
-    let staking_contract = await window.getContractNFT("NFTSTAKING");
-    setloadingClaim(true);
-    setActive(false);
-    setStatus("*Claiming rewards...");
-    setColor("#F13227");
-
-    await staking_contract.methods
-      .claimRewards(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+      await staking_contract.methods
+        .claimRewards(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      )
-      .send()
-      .then(() => {
-        setloadingClaim(false);
-        setStatus("*Claimed successfully");
-        handleClearStatus();
-        setColor("#57AEAA");
-        setSelectedNftIds([]);
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setloadingClaim(false);
-        setStatus("An error occurred, please try again");
-        setSelectedNftIds([]);
-      });
-
-    }
-    else if (window.WALLET_TYPE === "binance") {
+        )
+        .send()
+        .then(() => {
+          setloadingClaim(false);
+          setStatus("*Claimed successfully");
+          handleClearStatus();
+          setColor("#57AEAA");
+          setSelectedNftIds([]);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
       setloadingClaim(true);
       setActive(false);
       setStatus("*Claiming rewards...");
@@ -429,61 +423,65 @@ const NftStakeCheckListModal = ({
       );
 
       const txResponse = await stake_contract
-      .claimRewards(
-        checkUnstakebtn === true
-          ? nftIds.length === selectNftIds.length
-            ? nftIds
+        .claimRewards(
+          checkUnstakebtn === true
+            ? nftIds.length === selectNftIds.length
+              ? nftIds
+              : selectNftIds
             : selectNftIds
-          : selectNftIds
-      ) 
-      .catch((err) => {
-        window.alertify.error(err?.message);
-        setloadingClaim(false);
-        setStatus("An error occurred, please try again");
-        setSelectedNftIds([]);
-      });
+        )
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setloadingClaim(false);
+          setStatus("An error occurred, please try again");
+          setSelectedNftIds([]);
+        });
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
-      setloadingClaim(false);
-      setStatus("*Claimed successfully");
-      handleClearStatus();
-      setColor("#57AEAA");
-      setSelectedNftIds([]);
+        setloadingClaim(false);
+        setStatus("*Claimed successfully");
+        handleClearStatus();
+        setColor("#57AEAA");
+        setSelectedNftIds([]);
       }
     }
   };
-
-  const devicewidth = window.innerWidth;
-
+ 
+  const windowSize = useWindowSize();
   return (
     <Modal
       visible={open}
-      setIsVisible={() => {
+      onModalClose={() => {
         onClose();
         setCheckUnstakeBtn(false);
         setCheckBtn(false);
         setSelectedNftIds([]);
       }}
       modalId="stakechecklist"
-      width="fit-content"
+      maxWidth={
+        windowSize.width ?
+        windowSize.width > 1600
+          ? "50%"
+          : windowSize.width <= 1600 && windowSize.width > 786
+          ? "75%"
+          : "95%"
+          :"50%"
+      }
     >
-      <div className="left-col">
+      <div className="modal-scroll2">
+      <div className="left-col p-4">
         <div className="d-flex align-items-center justify-content-between width-100">
           <div
-            className="rarity-rank mt-6"
-            style={{
-              position: "relative",
-              background: "#312F69",
-            }}
+            className="rarity-rank mt-6 position-relative"
           >
             <h3
               className="mb-2"
-              style={{ fontSize: devicewidth < 500 ? 16 : 32 }}
+              style={{ fontSize: windowSize.width < 500 ? 16 : 32 }}
             >
               Staked NFTs
             </h3>
             <h6
-              className="checklist-subtitle mb-2"
+              className="text-wrap checklist-subtitle mb-2"
               style={{ color: "#C0CBF7" }}
             >
               A list of your NFT collection that can be removed from the staking
@@ -525,7 +523,6 @@ const NftStakeCheckListModal = ({
                 To Stake
               </h5>
             </div> */}
-          
           </div>
           {showToStake === true ? (
             <div className="justify-content-start">
@@ -580,7 +577,7 @@ const NftStakeCheckListModal = ({
         <div className="">
           <div className="caw-card2 align-items-center">
             {nftItem.length == 0 ? (
-              [...Array(devicewidth < 500 ? 1 : 8)].map((item, id) => {
+              [...Array(windowSize.width < 500 ? 1 : 4)].map((item, id) => {
                 return <EmptyCawsCard key={id} />;
               })
             ) : nftItem.length <= 4 ? (
@@ -636,9 +633,9 @@ const NftStakeCheckListModal = ({
                 })}
                 {[
                   ...Array(
-                    devicewidth < 500
+                    windowSize.width < 500
                       ? 1
-                      : Math.abs(8 - parseInt(nftItem.length))
+                      : Math.abs(4 - parseInt(nftItem.length))
                   ),
                 ].map((item, id) => {
                   return <EmptyCawsCard key={id} />;
@@ -693,9 +690,9 @@ const NftStakeCheckListModal = ({
             )}
           </div>
         </div>
-      </div>{" "}
-      <div style={{ display: "block" }} className="bottom-static-wrapper">
-        <p className="d-flex info-text align-items-start gap-3">
+      </div></div>
+      <div className="bottom-static-wrapper px-4 pt-4 d-block">
+        <p className="d-flex m-0 info-text align-items-start gap-3">
           <img src={require("./assets/more-info.svg").default} alt="" />
           {!showStaked
             ? "Please select which NFTs to Stake."
@@ -839,14 +836,11 @@ const NftStakeCheckListModal = ({
 
         <div
           className="mt-2"
-          style={{
-            display:
-              showStaked === true && nftItem.length > 0 ? "block" : "none",
-          }}
+      
         >
           <div>
             <div
-              className="mt-4 d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between"
+              className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between"
               style={{ gap: 20 }}
             >
               <div className="row m-0 claimAll-wrapper blurrypool">
@@ -874,11 +868,6 @@ const NftStakeCheckListModal = ({
                         alignItems: "baseline",
                       }}
                     >
-                      {/* <ToolTip
-                          title=""
-                          icon={"i"}
-                          padding={"5px 0px 0px 0px"}
-                        /> */}
                       Total earned
                     </p>
                     <div className="d-flex justify-content-between">
@@ -890,11 +879,7 @@ const NftStakeCheckListModal = ({
                         {getFormattedNumber(ETHrewards, 6)} WETH (
                         {formattedNum(ethToUSD, true)})
                       </h6>
-                      {/* <img
-                          src={EthLogo}
-                          alt=""
-                          style={{ width: 24, height: 24 }}
-                        /> */}
+                    
                     </div>
                   </div>
                 </div>
@@ -1056,7 +1041,6 @@ const NftStakeCheckListModal = ({
                           selectNftIds.length == 0
                         ? "auto"
                         : "none",
-                    width: "50%",
                     borderRadius: "8px",
                     color: ETHrewards != 0 ? "#FFFFFF" : "#C0C9FF",
                     margin: "auto",

@@ -2,23 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ethers } from "ethers";
-import { dashboardBackground } from "../../Themes/Images";
 import { GENERATE_NONCE, GET_PLAYER, VERIFY_WALLET } from "./Dashboard.schema";
 import { useAuth } from "../../Utils.js/Auth/AuthDetails";
-import { getWalletTokens } from "../../web3/tmp";
-import { Grid } from "@mui/material";
-import { HashLoader } from "react-spinners";
-import { Cart, LoginWrapper, ErrorAlert, Button } from "../../Components";
-import LandCart from "../../Components/Cart/LandCart";
-import EmptyCard from "../../Components/Cart/EmptyCard";
-import classes from "./Dashboard.module.css";
-import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-import LeaderBoard from "../../Components/LeaderBoard/LeaderBoard";
-import WalletBalance from "../../Components/WalletBalance/WalletBalance";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
-import ChecklistModal from "../../Components/ChecklistModal/ChecklistModal";
-import ChecklistLandNftModal from "../../Components/ChecklistModal/ChecklistLandNftModal";
-import EmptyGenesisCard from "../../Components/EmptyGenesisCard/EmptyGenesisCard";
+import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
 import { ERC20_ABI, iDYP_3500_ABI, WOD_ABI } from "../../web3/abis";
 import _, { chain } from "lodash";
@@ -29,13 +16,8 @@ import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar
 import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
-import NewWalletBalance from "../../Components/WalletBalance/NewWalletBalance";
-import DailyBonusPopup from "../../Components/WalletBalance/DailyBonusPopup";
-import rewardPopup from "../../Components/WalletBalance/assets/rewardspopup3.webp";
 import OutsideClickHandler from "react-outside-click-handler";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-import MyRewardsPopup from "../../Components/WalletBalance/MyRewardsPopup";
-import coinStackIcon from "../../Images/premium/coinStackIcon.svg";
 import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
 import dappsIcon from "../../Images/premium/dappsIcon.svg";
 import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
@@ -50,55 +32,14 @@ import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
-import immutableIcon from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 
-import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import dypius from "../../Components/WalletBalance/assets/dypIcon.svg";
-import dypiusPremium from "../../Components/WalletBalance/assets/dypiusPremium16.svg";
-import upcomingDyp from "../../Components/WalletBalance/assets/upcomingDyp.webp";
-import upcomingCookie from "../../../../Marketplace/assets/cookieBg.webp";
-
-import victionLogo from "../../Components/WalletBalance/assets/victionLogo.svg";
-import multiversLogo from "../../Components/WalletBalance/assets/multiversLogo.svg";
-import victionBg from "../../Components/WalletBalance/assets/victionBg.webp";
-import multiversBg from "../../Components/WalletBalance/assets/multiversBg.webp";
-import seiLogo from "../../Components/WalletBalance/assets/seiLogo.svg";
-import seiBg from "../../Components/WalletBalance/assets/seiBg.webp";
-import coreLogo from "../../Components/WalletBalance/assets/coreLogo.svg";
-import bnbLogo from "../../Components/WalletBalance/assets/bnbIcon.svg";
-import taikoLogo from "../../Components/WalletBalance/assets/taikoLogo.svg";
-import taikoBg from "../../../../Marketplace/assets/taikoBg.webp";
-import mantaBg from "../../../../Marketplace/assets/mantaBg.webp";
-
-import mantaLogo from "../../Components/WalletBalance/assets/mantaLogo2.png";
-import cookie3Logo from "../../../../Marketplace/assets/cookie3Logo.svg";
-
-import coreBg from "../../Components/WalletBalance/assets/coreBg.webp";
-import immutableLogo from "../../Components/WalletBalance/assets/immutableLogo.svg";
-import immutableBg from "../../Components/WalletBalance/assets/immutableBg.webp";
-import upcomingSkale from "../../../../Marketplace/assets/upcomingSkale.webp";
-import upcomingBnb from "../../../../Marketplace/assets/upcomingBnb.png";
-import upcomingDoge from "../../../../Marketplace/assets/upcomingDoge.webp";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
-import gate from "../../Components/WalletBalance/assets/gate.svg";
-import coingecko from "../../Components/WalletBalance/assets/coingecko.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
-import confluxUpcoming from "../../Components/WalletBalance/assets/confluxUpcoming.png";
-import gateUpcoming from "../../Components/WalletBalance/assets/gateUpcoming.webp";
-import skaleLogo from "../../Components/WalletBalance/assets/skaleLogo.svg";
-import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "../../Components/WalletBalance/assets/baseUpcoming.webp";
-import cmcUpcoming from "../../../../Marketplace/assets/upcomingCmc.webp";
-import upcomingDyp2 from "../../../../Marketplace/assets/dypiusBgPic2.webp";
-import upcomingBase2 from "../../../../Marketplace/assets/upcomingBase2.webp";
-
-import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
+import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
@@ -110,7 +51,6 @@ import {
 } from "../../web3";
 import { NavLink, useLocation } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
-import TopSection from "./Components/TopSection/TopSection";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 import {
@@ -124,9 +64,7 @@ import {
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
 } from "./stars";
-import ProfileSidebar from "../../../../../components/ProfileSidebar/ProfileSidebar";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
-import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
 import RankPopup from "../../../../../components/MyProfile/RankPopup";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
@@ -5301,7 +5239,7 @@ function Dashboard({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
-  let wmataddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];

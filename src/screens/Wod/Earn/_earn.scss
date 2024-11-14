@@ -3,9 +3,9 @@
 }
 
 .earn-mainhero-wrapper {
-  min-height: 50vh !important;
+  min-height: 65vh !important;
   background-image: linear-gradient(
-      180deg,
+     0deg,
       #080b2a 0%,
       rgba(8, 11, 42, 0.6) 100%
     ),
@@ -123,6 +123,11 @@ background: transparent;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
+
+  @media only screen and (max-width: 540px) {
+    grid-template-columns: repeat(2, 1fr);
+
+  }
 }
 
 .errormsg {
@@ -137,9 +142,10 @@ background: transparent;
 }
 
 .stats-card {
-  background: #26264f;
+  background: #2d3065;
   border-radius: 8px;
-  height: fit-content;
+  height: 100%;
+  align-items: center;
 }
 
 .stats-card-title {
@@ -147,6 +153,7 @@ background: transparent;
   font-size: 12px;
   letter-spacing: -0.018em;
   color: #4cd0cd !important;
+
 }
 
 .stats-card-content {
@@ -154,6 +161,7 @@ background: transparent;
 font-size: 14px;
 letter-spacing: -0.018em;
 color: #F7F7FC;
+text-align: center;
 }
 
 .stats-usd-value{

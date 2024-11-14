@@ -179,7 +179,7 @@ const EarnContent = ({
                       <div
                         className="accordion-body px-2 text-white position-relative"
                         style={{
-                          background: expired ? "#565891" : "#1e1c40",
+                          background: expired ? "#403E6B" : "#1e1c40",
                           top: "-10px",
                           border: "2px solid #00B7CC",
                         }}
@@ -195,6 +195,11 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 
@@ -209,6 +214,12 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
+                            
                           />
                         )}
 
@@ -223,6 +234,11 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
                         {item?.id ===
@@ -237,6 +253,11 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 
@@ -252,6 +273,11 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 
@@ -282,7 +308,7 @@ const EarnContent = ({
                 );
               })}
           </div>
-          {selectedViewStyle === "list" &&
+          {/* {selectedViewStyle === "list" &&
             stakingPools &&
             stakingPools.length > 0 &&
             stakingPools.map((item, index) => {
@@ -341,7 +367,7 @@ const EarnContent = ({
                     <div
                       className="accordion-body px-2 text-white position-relative"
                       style={{
-                        background: expired ? "#565891" : "#1e1c40",
+                        background: expired ? "#403E6B" : "#1e1c40",
                         top: "-10px",
                         border: "2px solid #00B7CC",
                       }}
@@ -442,7 +468,7 @@ const EarnContent = ({
                   </div>
                 </div>
               );
-            })}
+            })} */}
         </div>
       </div>
     </div>

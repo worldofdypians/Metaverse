@@ -4,7 +4,6 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 import "../top-pools.css";
 import "./_stakingWod.scss";
 import failMark from "../../assets/failMark.svg";
-import statsLinkIcon from "../../assets/statsLinkIcon.svg";
 import statsIcon from "../../assets/statsIcon.svg";
 
 import wodToken from "../../assets/tokens/wodToken.png";
@@ -917,7 +916,8 @@ const StakeWodDetails = ({
                   } ${
                     depositStatus === "deposit" || depositStatus === "success"
                       ? "success-button"
-                      : depositStatus === "fail" || chainId !== "1"
+                      : ((depositStatus === "fail" || chainId !== "1")&&
+                      isConnected)
                       ? "fail-button"
                       : null
                   } d-flex justify-content-center align-items-center gap-2`}
@@ -969,7 +969,7 @@ const StakeWodDetails = ({
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
             {pendingDivs > 0 && <div className="stake-separator"></div>}
-            {pendingDivs > 0 && (
+            {/* {pendingDivs > 0 && ( */}
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
@@ -1034,7 +1034,6 @@ const StakeWodDetails = ({
                             : null
                         } d-flex justify-content-center align-items-center gap-2`}
                         style={{ height: "fit-content" }}
-                        // onClick={handleClaimDivs}
                         onClick={() => {
                           handleClaimDivs();
                         }}
@@ -1094,11 +1093,11 @@ const StakeWodDetails = ({
                   {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
                 </div>
               </div>
-            )}
+             {/* )} */}
             {depositedTokens && depositedTokens > 0 && (
               <div className="stake-separator"></div>
             )}
-            {depositedTokens && depositedTokens > 0 && (
+            {/* {depositedTokens && depositedTokens > 0 && ( */}
               <div
                 className={`otherside-border  ${
                   listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
@@ -1141,13 +1140,11 @@ const StakeWodDetails = ({
                         Withdraw
                       </button>
                     </div>
-                    {errorMsg3 && (
-                      <h6 className="errormsg w-100">{errorMsg3}</h6>
-                    )}
+                     
                   </div>
                 </div>
               </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>
@@ -1160,60 +1157,60 @@ const StakeWodDetails = ({
           onModalClose={() => {
             hidePopup();
           }}
-          width="fit-content"
+          maxWidth={560}
         >
           <div className="earn-hero-content px-4 pb-4 token-wrapper">
             <div className="l-box pl-3 pr-3">
               <div className="container px-0">
                 <div className="stats-container my-4">
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">My WOD Deposit</span>
                     <h6 className="stats-card-content">
                       {getFormattedNumber(depositedTokens, 2)} WOD
                     </h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Pool Cap</span>
                     <h6 className="stats-card-content">
                       {getFormattedNumber(poolCap, 2)} WOD
                     </h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Pool fee:</span>
                     <h6 className="stats-card-content">{fee}%</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Available Quota:</span>
                     <h6 className="stats-card-content">
                       {getFormattedNumber(availableQuota, 2)} WOD
                     </h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Maximum deposit:</span>
                     <h6 className="stats-card-content">N/A</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">TVL USD</span>
                     <h6 className="stats-card-content">${tvl_usd} USD</h6>
                   </div>
 
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">
                       Contract Start date:
                     </span>
                     <h6 className="stats-card-content">{start_date}</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract End date:</span>
                     <h6 className="stats-card-content">{expiration_time}</h6>
                   </div>
-                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Contract Address:</span>
 
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`${window.config.bscscan_baseURL}/address/${staking._address}`}
+                      href={`https://bscscan.com/address/${staking._address}`}
                       className="stats-card-content text-decoration-underline"
                     >
                       {shortAddress(staking._address)}{" "}
@@ -1252,7 +1249,7 @@ const StakeWodDetails = ({
             <div className="l-box pl-3 pr-3">
               <div className="container px-0">
                 <div className="row" style={{ marginLeft: "0px" }}>
-                  <h6 className="withdrawdesc mt-2 p-0">
+                  <h6 className="withdrawdesc mt-2 p-0 text-wrap">
                     {lockTime === "No Lock"
                       ? "Your deposit has no lock-in period. You can withdraw your assets anytime, or continue to earn rewards every day."
                       : `The pool has a lock time. You can withdraw your deposited assets after the lock time expires.`}

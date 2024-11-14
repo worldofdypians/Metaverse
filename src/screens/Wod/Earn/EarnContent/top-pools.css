@@ -44,7 +44,7 @@
 }
 
 .poolscardwrapperexpired {
-  background: #565891;
+  background: #403E6B;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.12);
   border-radius: 12px;
   position: relative;
@@ -153,7 +153,7 @@
 }
 
 .details-wrapper {
-  background: #312f69;
+  background: #3A3B74;
   border-radius: 5px 5px 0px 0px;
   cursor: pointer;
   display: flex;
@@ -170,7 +170,7 @@
 }
 
 .details-wrapperexpired {
-  background: #565891;
+  background: #403E6B;
   border-radius: 5px 5px 0px 0px;
   cursor: pointer;
   display: flex;

@@ -91,7 +91,7 @@ const GetPremiumPopup = ({
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
-  let wmataddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
 
   const metaverseBenefits = [
     "Exclusive access to World of Dypians",

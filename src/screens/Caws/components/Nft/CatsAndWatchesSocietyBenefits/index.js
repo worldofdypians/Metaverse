@@ -1,3 +1,0 @@
-import CatsAndWatchesSocietyBenefits from './CatsAndWatchesSocietyBenefits'
-
-export default CatsAndWatchesSocietyBenefits

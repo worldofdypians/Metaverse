@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_earn.scss";
 import EarnHero from "./EarnHero/EarnHero";
 import EarnContent from "./EarnContent/EarnContent";
-import useWindowSize from "../../../hooks/useWindowSize";
+// import useWindowSize from "../../../hooks/useWindowSize";
 
 const Earn = ({
   isConnected,
@@ -150,7 +150,7 @@ const Earn = ({
 
   return (
     <>
-      <div className="container-fluid token-wrapper px-0 mt-5 pt-5">
+      <div className="container-fluid token-wrapper px-0">
         <div className="d-flex flex-column gap-3">
           <EarnHero
             onSelectFilter={(value, expirevalue) => {

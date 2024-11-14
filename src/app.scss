@@ -2,8 +2,9 @@
 @import "../src/screens/Caws/colors";
 @import "../src/screens/Caws/nftWhiteList";
 @import "../src/screens/Caws/responsive";
-@import "../src/screens/Caws/NftMinting/MyStakes/myStakes";
-@import "../src//screens/Caws/NftMinting/MyNfts/myNfts";
+@import "../src/screens/Account/src/Components/BundleCard/bundle";
+@import '../src/screens/Caws/NftMinting/General/NftCawCard/nftCawCard';
+@import '../src/screens/Caws/NftMinting/General/NftStakingCawCard/nftStakeCawCard';
 
 @font-face {
   font-family: "Organetto";
@@ -45,6 +46,7 @@ html {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .premium-discount-bg {
@@ -336,6 +338,7 @@ body {
     padding: 2rem;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
   }
 
   .walletclose {
@@ -857,7 +860,8 @@ body {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+  background:#1a1c39;
+  border: 0;
 }
 
 .MuiBox-root {
