@@ -179,7 +179,7 @@ const EarnContent = ({
                       <div
                         className="accordion-body px-2 text-white position-relative"
                         style={{
-                          background: expired ? "#565891" : "#1e1c40",
+                          background: expired ? "#403E6B" : "#1e1c40",
                           top: "-10px",
                           border: "2px solid #00B7CC",
                         }}
@@ -352,7 +352,7 @@ const EarnContent = ({
                     <div
                       className="accordion-body px-2 text-white position-relative"
                       style={{
-                        background: expired ? "#565891" : "#1e1c40",
+                        background: expired ? "#403E6B" : "#1e1c40",
                         top: "-10px",
                         border: "2px solid #00B7CC",
                       }}

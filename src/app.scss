@@ -2,8 +2,9 @@
 @import "../src/screens/Caws/colors";
 @import "../src/screens/Caws/nftWhiteList";
 @import "../src/screens/Caws/responsive";
-@import "../src/screens/Caws/NftMinting/MyStakes/myStakes";
-@import "../src//screens/Caws/NftMinting/MyNfts/myNfts";
+@import "../src/screens/Account/src/Components/BundleCard/bundle";
+@import '../src/screens/Caws/NftMinting/General/NftCawCard/nftCawCard';
+@import '../src/screens/Caws/NftMinting/General/NftStakingCawCard/nftStakeCawCard';
 
 @font-face {
   font-family: "Organetto";

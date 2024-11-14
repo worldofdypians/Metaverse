@@ -649,6 +649,20 @@ input[type="range"]:focus::-ms-fill-upper {
   border: none;
 }
 
+.pill-btn-claim {
+  background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #080b2a;
+  border: none;
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+}
+
 .pill-btn2 {
   background: linear-gradient(270deg, #7bd8af, #d9fa86, #d9fa86, #7bd8af);
   background-size: 300%;

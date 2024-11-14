@@ -81,8 +81,8 @@ const TopPoolsCard = ({
         )}
 
         <div
-          className="purplediv"
-          style={{ background: details ? "#7770e0" : "#8890C4", top: "12px" }}
+          className="purplediv-stake"
+          style={{top: "12px" }}
         ></div>
         <div className="d-flex flex-column gap-0">
           <div className="d-flex m-0 justify-content between gap-2 align-items-center justify-content-between title-apr-wrapper">

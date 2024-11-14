@@ -694,6 +694,7 @@ const CawsDetailsPremium = ({
           myCawsstakes={mystakes}
           binanceW3WProvider={binanceW3WProvider}
           onUnstake={refreshStakes}
+          ETHrewards={EthRewards}
         />
       )}
 

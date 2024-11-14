@@ -447,7 +447,7 @@ const RewardsModal = ({
             </div>
             {isConnected && (
               <button
-                className={`pill-btn ${
+                className={`pill-btn-claim ${
                   ETHrewards == 0 && "disabled-approve-btn"
                 } mb-1 w-100 p-2`}
                 onClick={() => {

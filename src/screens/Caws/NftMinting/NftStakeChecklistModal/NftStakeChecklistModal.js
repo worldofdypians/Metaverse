@@ -691,8 +691,8 @@ const NftStakeCheckListModal = ({
           </div>
         </div>
       </div></div>
-      <div className="bottom-static-wrapper px-4 d-block">
-        <p className="d-flex info-text align-items-start gap-3">
+      <div className="bottom-static-wrapper px-4 pt-4 d-block">
+        <p className="d-flex m-0 info-text align-items-start gap-3">
           <img src={require("./assets/more-info.svg").default} alt="" />
           {!showStaked
             ? "Please select which NFTs to Stake."
@@ -840,7 +840,7 @@ const NftStakeCheckListModal = ({
         >
           <div>
             <div
-              className="mt-4 d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between"
+              className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row align-items-center justify-content-between"
               style={{ gap: 20 }}
             >
               <div className="row m-0 claimAll-wrapper blurrypool">
@@ -868,11 +868,6 @@ const NftStakeCheckListModal = ({
                         alignItems: "baseline",
                       }}
                     >
-                      {/* <ToolTip
-                          title=""
-                          icon={"i"}
-                          padding={"5px 0px 0px 0px"}
-                        /> */}
                       Total earned
                     </p>
                     <div className="d-flex justify-content-between">
@@ -884,11 +879,7 @@ const NftStakeCheckListModal = ({
                         {getFormattedNumber(ETHrewards, 6)} WETH (
                         {formattedNum(ethToUSD, true)})
                       </h6>
-                      {/* <img
-                          src={EthLogo}
-                          alt=""
-                          style={{ width: 24, height: 24 }}
-                        /> */}
+                    
                     </div>
                   </div>
                 </div>

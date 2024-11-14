@@ -232,7 +232,7 @@ const Footer = () => {
                 All trademarks referenced herein are the properties of their
                 respective owners.
               </span>
-              <div className="d-flex align-items-center gap-5">
+              <div className="d-flex align-items-center gap-lg-5 gap-3">
                 <NavLink
                   to="/terms-of-service"
                   onClick={() => scrollToTop("terms")}
