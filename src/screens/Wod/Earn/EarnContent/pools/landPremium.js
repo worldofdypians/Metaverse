@@ -37,8 +37,6 @@ const LandDetailsPremium = ({
   const [EthRewards, setEthRewards] = useState(0);
   const [ethToUSD, setethToUSD] = useState(0);
   const [openStakeChecklist, setOpenStakeChecklist] = useState(false);
-  const [showUnstakeModal, setShowUnstakeModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [countDownLeft, setCountDownLeft] = useState(59000);
   const [totalStakes, settotalStakes] = useState(0);
   const [approvedNfts, setApprovedNfts] = useState([]);
@@ -529,15 +527,7 @@ const LandDetailsPremium = ({
                       ? "Switch to Ethereum"
                       : "Become Premium"}
                   </button>
-                  {/* <div className="available-nfts">
-                    Selected NFTs:{" "}
-                    <b>{isConnected === false ? 0 : approvedNfts.length}</b>
-                  </div> */}
                 </div>
-
-                {/* {this.state.errorMsg && (
-                  <h6 className="errormsg">{this.state.errorMsg}</h6>
-                )} */}
               </div>
             </div>
             {mystakes.length > 0 && <div className="stake-separator"></div>}

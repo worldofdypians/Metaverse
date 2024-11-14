@@ -195,6 +195,11 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 
@@ -209,6 +214,11 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                             
                           />
                         )}
@@ -224,6 +234,11 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
                         {item?.id ===
@@ -293,7 +308,7 @@ const EarnContent = ({
                 );
               })}
           </div>
-          {selectedViewStyle === "list" &&
+          {/* {selectedViewStyle === "list" &&
             stakingPools &&
             stakingPools.length > 0 &&
             stakingPools.map((item, index) => {
@@ -453,7 +468,7 @@ const EarnContent = ({
                   </div>
                 </div>
               );
-            })}
+            })} */}
         </div>
       </div>
     </div>
