@@ -2,6 +2,7 @@
   background-image: url("./statsBg.webp");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  border-bottom: 3px solid black;
   @media screen and (max-width: 786px) {
   background-image: url("./statsBgMobile.png");
     
@@ -79,4 +80,11 @@ backdrop-filter: blur(5.5px);
     font-weight: 500;
     line-height: 24px;
   }
+}
+
+.dappRadar-full{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30%;
 }

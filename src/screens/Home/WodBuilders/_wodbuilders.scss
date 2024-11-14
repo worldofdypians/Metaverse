@@ -35,7 +35,7 @@
 
 .builder-item {
   border-radius: 8px;
-  background: linear-gradient(148deg, rgba(170, 20, 240, 0.10) 0%, rgba(170, 20, 240, 0.05) 100%);
+  background: linear-gradient(148deg, rgba(60, 140, 170, 0.4) 0%, rgba(80, 40, 150, 0.05) 100%);
   backdrop-filter: blur(10px);
   transition: all .3s ease-in-out;
 }
@@ -164,11 +164,11 @@ line-height: 24px; /* 171.429% */
   background-image: url('./assets/buildersBg.webp');
   padding-top: 20px;
   padding-bottom: 20px;
-  background-size: 100% 75%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: bottom;
-
-  
+  // margin-top: -40px;
+border-bottom: 3px solid black;
 }
 
 .builders-bg-large{

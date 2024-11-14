@@ -11,7 +11,7 @@ const BridgeHero = ({ onScroll }) => {
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h6 className="market-banner-title text-center">
-                World of Dypians
+                  World of Dypians
                   <mark
                     className="p-0"
                     style={{
@@ -30,7 +30,7 @@ const BridgeHero = ({ onScroll }) => {
                   range of assets and explore new dimensions within the gaming
                   universe.
                 </span>
-                <div className="d-flex align-items-center gap-3">
+                {/* <div className="d-flex align-items-center gap-3">
                   <button
                     className="stake-wod-btn px-4 py-2"
                     onClick={() => {
@@ -40,7 +40,7 @@ const BridgeHero = ({ onScroll }) => {
                     Bridge WOD
                   </button>
                   <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
-                </div>
+                </div> */}
               </div>
             </div>
             {/* <div className="col-12 col-lg-5 pe-0 d-flex justify-content-center">

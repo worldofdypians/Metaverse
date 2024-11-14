@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_investors.scss";
 import WodBuilders from "../../Home/WodBuilders/WodBuilders";
 import NewBuilders from "../../Home/WodBuilders/NewBuilders";
+import partnersDropdown from "../../Home/WodBuilders/assets/partnersDropdown.svg";
 
-const Investors = () => {
+
+const Investors = ({ page }) => {
   const investors = [
     {
       title: "BNB Chain",
@@ -67,10 +69,19 @@ const Investors = () => {
     },
   ];
 
+const [show, setShow] = useState(false)
+
   return (
-    <div className="container-fluid px-4 px-lg-5 py-4 investors-bg d-flex flex-column gap-5" id='backers&partners'>
-      <div className="d-flex flex-column gap-3">
-        <h6 className="mb-0 investors-title">Backers</h6>
+    <div
+      className="container-fluid px-4 px-lg-5 py-4 investors-bg d-flex align-items-center flex-column gap-5"
+      id="backers&partners"
+    >
+      <div
+        className={`d-flex ${
+          page === "home" ? "custom-container" : ""
+        } flex-column gap-3`}
+      >
+        <h6 className={`mb-0 ${page === "home" ? "explorer-grid-title" : "investors-title"} `}>Backers</h6>
         <div className="new-investors-grid">
           {investors.map((item, index) => (
             <a
@@ -88,10 +99,31 @@ const Investors = () => {
           ))}
         </div>
       </div>
-      <div className="d-flex flex-column gap-3">
-        <h6 className="mb-0 investors-title">Partners</h6>
-        <NewBuilders />
-      </div>
+     {show &&
+      <div
+      className={`d-flex ${
+        page === "home" ? "custom-container" : ""
+      } flex-column gap-3`}
+    >
+      <h6 className={`mb-0 ${page === "home" ? "explorer-grid-title" : "investors-title"} `}>Partners</h6>
+      <NewBuilders />
+    </div>
+     }
+      {page === "home" &&
+       <div className="d-flex justify-content-center mt-3">
+       <div
+         className="d-flex align-items-center gap-2 view-more-partners position-relative"
+         onClick={() => setShow(!show)}
+         style={{bottom: "0"}}
+       >
+         <span className="view-all-partners ">
+           {" "}
+           {!show ? "View Partners" : "View Less"}
+         </span>
+         <img src={partnersDropdown} width={20} height={20} style={{transform: !show ? "none" : "rotate(180deg)"}} alt="" />
+       </div>
+     </div>
+      }
     </div>
   );
 };

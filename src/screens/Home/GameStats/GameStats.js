@@ -51,8 +51,8 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 only the most daring adventurers. Forge alliances, uncover
                 secrets, and shape your own destiny.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
-                <NavLink to={"/account"} className="explore-btn col-lg-4 py-2">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+                <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
                   Join Now
                 </NavLink>
               </div>
@@ -86,7 +86,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink
                   to={"/account/challenges/treasure-hunt"}
-                  className="explore-btn col-lg-4 py-2"
+                  className="getpremium-btn col-lg-4 py-2"
                 >
                   Challenges
                 </NavLink>
@@ -117,7 +117,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 courage are rewarded. Join forces with others, explore vast
                 landscapes, and unlock powerful relics.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
                 <NavLink
                   to={
                     "https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
@@ -158,7 +158,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 with players around the world who share your passion.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
-                <NavLink to={"/map"} className="explore-btn col-lg-4 py-2">
+                <NavLink to={"/map"} className="getpremium-btn col-lg-4 py-2">
                   Start Exploring
                 </NavLink>
               </div>
@@ -188,7 +188,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 From competitive events to collaborative challenges, connect
                 with players around the world who share your passion.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
                 <NavLink
                   to={"https://discord.gg/worldofdypians"}
                   target="_blank"
@@ -225,7 +225,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink
                   to={"/game-updates"}
-                  className="explore-btn col-lg-4 py-2"
+                  className="getpremium-btn col-lg-4 py-2"
                 >
                   Learn More
                 </NavLink>

@@ -54,6 +54,7 @@ import WodBuilders from "./WodBuilders/WodBuilders";
 import GameUpdates from "./GameUpdates/GameUpdates";
 import WodPartners from "./WodBuilders/WodPartners";
 import GameStats from "./GameStats/GameStats";
+import Investors from "../Token/Investors/Investors";
 
 const Home = ({
   handleRegister,
@@ -116,7 +117,7 @@ const Home = ({
             percent={percent}
           />
           {/* <LiveEvents /> */}
-          <WodPartners full={false} />
+          {/* <WodPartners full={false} /> */}
           <GameStats totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}/>
           <WodBuilders />
           {/* <Utilities /> */}
@@ -126,7 +127,8 @@ const Home = ({
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
           /> */}
-          <ExplorerGrid totalSupply={totalSupply}/>
+          <ExplorerGrid totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}/>
+          <Investors page={"home"} />
           {/* <GameUpdates /> */}
           {/* <LandNft /> */}
           {/* <CawsSociety
