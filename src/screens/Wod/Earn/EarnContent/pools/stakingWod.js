@@ -4,7 +4,6 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 import "../top-pools.css";
 import "./_stakingWod.scss";
 import failMark from "../../assets/failMark.svg";
-import statsLinkIcon from "../../assets/statsLinkIcon.svg";
 import statsIcon from "../../assets/statsIcon.svg";
 
 import wodToken from "../../assets/tokens/wodToken.png";
@@ -917,7 +916,8 @@ const StakeWodDetails = ({
                   } ${
                     depositStatus === "deposit" || depositStatus === "success"
                       ? "success-button"
-                      : depositStatus === "fail" || chainId !== "1"
+                      : ((depositStatus === "fail" || chainId !== "1")&&
+                      isConnected)
                       ? "fail-button"
                       : null
                   } d-flex justify-content-center align-items-center gap-2`}
@@ -969,7 +969,7 @@ const StakeWodDetails = ({
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
             {pendingDivs > 0 && <div className="stake-separator"></div>}
-            {pendingDivs > 0 && (
+            {/* {pendingDivs > 0 && ( */}
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
@@ -1034,7 +1034,6 @@ const StakeWodDetails = ({
                             : null
                         } d-flex justify-content-center align-items-center gap-2`}
                         style={{ height: "fit-content" }}
-                        // onClick={handleClaimDivs}
                         onClick={() => {
                           handleClaimDivs();
                         }}
@@ -1094,11 +1093,11 @@ const StakeWodDetails = ({
                   {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
                 </div>
               </div>
-            )}
+             {/* )} */}
             {depositedTokens && depositedTokens > 0 && (
               <div className="stake-separator"></div>
             )}
-            {depositedTokens && depositedTokens > 0 && (
+            {/* {depositedTokens && depositedTokens > 0 && ( */}
               <div
                 className={`otherside-border  ${
                   listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
@@ -1141,13 +1140,11 @@ const StakeWodDetails = ({
                         Withdraw
                       </button>
                     </div>
-                    {errorMsg3 && (
-                      <h6 className="errormsg w-100">{errorMsg3}</h6>
-                    )}
+                     
                   </div>
                 </div>
               </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>
@@ -1213,7 +1210,7 @@ const StakeWodDetails = ({
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`${window.config.bscscan_baseURL}/address/${staking._address}`}
+                      href={`https://bscscan.com/address/${staking._address}`}
                       className="stats-card-content text-decoration-underline"
                     >
                       {shortAddress(staking._address)}{" "}

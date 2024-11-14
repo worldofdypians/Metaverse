@@ -3,19 +3,17 @@ import axios from "axios";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import "../top-pools.css";
 import "./_stakingWod.scss";
-import arrowup from "../../assets/arrow-up.svg";
 import moreinfo from "../../assets/more-info.svg";
-import wallet from "../../assets/wallet.svg";
-import ellipse from "../../assets/ellipse.svg";
+import statsIcon from "../../assets/statsIcon.svg";
 
 import { Tooltip } from "@mui/material";
-import OutsideClickHandler from "react-outside-click-handler";
 import weth from "../../assets/tokens/weth.svg";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import CawsStakeModal from "../../../../../components/StakeModal/CawsStakeModal";
+import Modal from "../../../../../components/General/Modal";
 
 const CawsDetailsPremium = ({
   coinbase,
@@ -28,6 +26,7 @@ const CawsDetailsPremium = ({
   expired,
   isPremium,
   binanceW3WProvider,
+  tvl_usd,
 }) => {
   const [myNFTs, setMyNFTs] = useState([]);
   const [mystakes, setMystakes] = useState([]);
@@ -45,12 +44,22 @@ const CawsDetailsPremium = ({
   const [count, setcount] = useState(0);
   const [count2, setcount2] = useState(0);
   const [newStakes, setnewStakes] = useState(0);
-
+  const [popup, setpopup] = useState(false);
+  const [claimLoading, setclaimLoading] = useState(false);
+  const [claimStatus, setclaimStatus] = useState("initial");
   const [hide, setHide] = useState("");
   const navigate = useNavigate();
 
   const refreshStakes = () => {
     setnewStakes(newStakes + 1);
+  };
+
+  const showPopup = () => {
+    setpopup(true);
+  };
+
+  const hidePopup = () => {
+    setpopup(false);
   };
 
   const checkApproval = async () => {
@@ -145,24 +154,35 @@ const CawsDetailsPremium = ({
   };
 
   const claimRewards = async () => {
+    setclaimLoading(true);
+
     if (window.WALLET_TYPE !== "binance") {
-    let myStakes = await getStakesIds();
-    let staking_contract = await window.getContractCawsPremiumNFT(
-      "CAWSPREMIUM"
-    );
-    // setclaimAllStatus("Claiming all rewards, please wait...");
-    await staking_contract.methods
-      .claimRewards(myStakes)
-      .send()
-      .then(() => {
-        setEthRewards(0);
-        window.alertify.message('Claimed All Rewards!')
-      })
-      .catch((err) => {
-        window.alertify.error(err?.message);
-      });
-    }
-    else if (window.WALLET_TYPE === "binance") {
+      let myStakes = await getStakesIds();
+      let staking_contract = await window.getContractCawsPremiumNFT(
+        "CAWSPREMIUM"
+      );
+      // setclaimAllStatus("Claiming all rewards, please wait...");
+      await staking_contract.methods
+        .claimRewards(myStakes)
+        .send()
+        .then(() => {
+          setEthRewards(0);
+          window.alertify.message("Claimed All Rewards!");
+          setclaimStatus("success");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        })
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
       let myStakes = await getStakesIds();
 
       let staking_contract = new ethers.Contract(
@@ -171,17 +191,27 @@ const CawsDetailsPremium = ({
         binanceW3WProvider.getSigner()
       );
       const txResponse = await staking_contract
-      .claimRewards(myStakes)
-      .catch((err) => {
-        window.alertify.error(err?.message);
-      });
+        .claimRewards(myStakes)
+        .catch((err) => {
+          window.alertify.error(err?.message);
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
 
       const txReceipt = await txResponse.wait();
       if (txReceipt) {
+        setclaimStatus("success");
+        setclaimLoading(false);
+
+        setTimeout(() => {
+          setclaimStatus("initial");
+        }, 5000);
         setEthRewards(0);
         window.alertify.message("Claimed All Rewards!");
       }
-
     }
   };
 
@@ -232,8 +262,6 @@ const CawsDetailsPremium = ({
     }
   };
 
-
-
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x1")
       .then(() => {
@@ -261,9 +289,20 @@ const CawsDetailsPremium = ({
         settotalStakes(data);
       });
   };
-  
-  const showCawsPopup = () => {
-    setCawspopup(true);
+
+  const manageState = () => {
+    if (isConnected && chainId === "1" && isPremium) {
+      setshowChecklistModal(true);
+      setOpenStakeChecklist(true);
+      setApprovedNfts([]);
+      setHide("staked");
+    } else if (!isConnected) {
+      handleConnection();
+    } else if (isConnected && chainId !== "1") {
+      handleEthPool();
+    } else if (isConnected && !isPremium && chainId === "1") {
+      handleNavigateToPlans();
+    }
   };
 
   useEffect(() => {
@@ -300,7 +339,7 @@ const CawsDetailsPremium = ({
   return (
     <div className={`p-0 ${listType === "list" && "pt-4"} `}>
       <div className={`allwrappercaws allwrapper-active mb-2 `}>
-        <div className="leftside2 mb-2 w-100">
+        {/* <div className="leftside2 mb-2 w-100">
           <div
             className={
               listType === "list"
@@ -324,13 +363,7 @@ const CawsDetailsPremium = ({
                 />
                 Active status
               </h6>
-              {/* <div className="d-flex align-items-center justify-content-between gap-2">
-                    <h6 className="earnrewards-text">Earn rewards in:</h6>
-                    <h6 className="earnrewards-token d-flex align-items-center gap-1">
-                      DYP
-                    </h6>
-                  </div> */}
-
+      
               <div className="d-flex align-items-center justify-content-between gap-2">
                 <h6 className="m-0 earnrewards-text">Pool Cap:</h6>
                 <h6 className="m-0 earnrewards-token d-flex align-items-center gap-1">
@@ -442,7 +475,7 @@ const CawsDetailsPremium = ({
               )}
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="pools-details-wrapper d-flex m-0 border-0 ">
           <div
             className={` ${
@@ -450,199 +483,188 @@ const CawsDetailsPremium = ({
             } w-100 justify-content-between gap-4 gap-lg-0`}
           >
             <div
-              className={`firstblockwrapper ${
-                listType === "list" && "col-12 col-md-6 col-lg-2 py-2"
-              }`}
-            >
-              <div
-                className={`d-flex ${
-                  listType === "table"
-                    ? "flex-row align-items-center"
-                    : "flex-column"
-                } justify-content-between gap-4 h-100`}
-              >
-                <h6 className="m-0 start-title">Start Staking</h6>
-
-                {coinbase === null ||
-                coinbase === undefined ||
-                isConnected === false ? (
-                  <button
-                    className="connectbtn btn"
-                    onClick={() => {
-                      handleConnection();
-                    }}
-                  >
-                    <img src={wallet} alt="" /> Connect wallet
-                  </button>
-                ) : chainId === "1" && isPremium ? (
-                  <div className="addressbtn btn">{shortAddress(coinbase)}</div>
-                ) : chainId !== "1" && isPremium ? (
-                  <button
-                    className="connectbtn btn"
-                    onClick={() => {
-                      handleEthPool();
-                    }}
-                  >
-                    Change Network
-                  </button>
-                ) : (
-                  <button
-                    className="connectbtn btn"
-                    onClick={() => {
-                      handleNavigateToPlans();
-                    }}
-                  >
-                    Become Premium
-                  </button>
-                )}
-              </div>
-            </div>
-            <div
               className={`otherside-border  ${
                 listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(chainId !== "1" || expired === true || !isPremium) &&
-                "blurrypool"} `}
+              }  ${expired === true && "blurrypool"} `}
             >
               <div className="d-flex justify-content-between align-items-center gap-2">
-                <h6 className="m-0 deposit-txt">Stake</h6>
+                <h6 className="m-0 deposit-txt">Deposit</h6>
+                <div className="d-flex align-items-center gap-1">
+                  <div
+                    className="info-pool-wrapper p-2"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      showPopup();
+                    }}
+                  >
+                    <h6 className="m-0 mybalance-text d-flex align-items-center gap-1">
+                      <img src={statsIcon} alt="" /> Details
+                    </h6>
+                  </div>
 
-                <h6 className="m-0 mybalance-text">
-                  Avaliable NFTs:{" "}
-                  <b>{isConnected === false ? 0 : myNFTs.length} CAWS</b>
-                </h6>
+                  <div className="info-pool-wrapper p-2">
+                    <h6 className="m-0 mybalance-text">
+                      Balance:{" "}
+                      <b>
+                        {isConnected === false ? 0 : myNFTs.length} CAWS NFTs
+                      </b>
+                    </h6>
+                  </div>
+                </div>
               </div>
-              {/* <Tooltip
-                  placement="top"
-                  title={
-                    <div className="tooltip-text">
-                      {"Deposit your CAWS NFTs to the staking smart contract."}
-                    </div>
-                  }
-                >
-                  <img src={moreinfo} alt="" />
-                </Tooltip> */}
+
               <div className="d-flex flex-column gap-2 justify-content-between">
                 <div className="d-flex align-items-center justify-content-between gap-2">
                   <button
-                    className={`btn ${
-                      !isPremium || mystakes.length === 4
-                        ? "disabled-btn"
-                        : "filledbtn"
+                    className={`btn w-100 connectbtn  ${
+                      (mystakes.length === 4 || totalStakes === 200) &&
+                      "disabled-btn"
+                    }
+                    ${
+                      (!isPremium || chainId !== "1") && isConnected
+                        ? "fail-button"
+                        : "connectbtn"
                     } d-flex justify-content-center align-items-center`}
                     disabled={
                       !isPremium || mystakes.length === 4 || totalStakes === 200
                     }
                     onClick={() => {
-                      setshowChecklistModal(true);
-                      setOpenStakeChecklist(true);
-                      setApprovedNfts([]);
-                      setHide("staked");
+                      manageState();
                     }}
                   >
-                    Select NFTs
+                    {isConnected && chainId === "1" && isPremium
+                      ? "Select NFTs"
+                      : !isConnected
+                      ? "Connect Wallet"
+                      : isConnected && isPremium && chainId !== "1"
+                      ? "Switch to Ethereum"
+                      : "Become Premium"}
                   </button>
-                  {/* <div className="available-nfts">
-                    Selected NFTs:{" "}
-                    <b>{isConnected === false ? 0 : approvedNfts.length}</b>
-                  </div> */}
                 </div>
-
-                {/* {this.state.errorMsg && (
-                  <h6 className="errormsg">{this.state.errorMsg}</h6>
-                )} */}
               </div>
             </div>
-            <div
-              className={`otherside-border ${
-                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(chainId !== "1" || expired === true || !isPremium) &&"blurrypool"} `}
-            >
-              <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6
-                  className={
-                    listType === "list"
-                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                      : "m-0 withdraw-txt d-flex flex-column gap-2"
-                  }
-                >
-                  REWARDS
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
+            {mystakes.length > 0 && (
+              <div
+                className={`otherside-border ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+                }  ${
+                  (chainId !== "1" || expired === true || !isPremium) &&
+                  "blurrypool"
+                } `}
+              >
+                <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                   <h6
-                    className="m-0 mybalance-text"
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    NFTs Staked:{""}
-                    <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
-                  </h6>
-                </h6>
-                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
-                  {/* Rewards are displayed in real-time */}
-                  <Tooltip
-                    placement="top"
-                    title={
-                      <div className="tooltip-text">
-                        {
-                          "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
-                        }
-                      </div>
+                    className={
+                      listType === "list"
+                        ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                        : "m-0 withdraw-txt d-flex flex-column gap-2"
                     }
                   >
-                    <img src={moreinfo} alt="" />
-                  </Tooltip>
-                </h6>
-              </div>
-              <div className="d-flex flex-column gap-2 justify-content-between">
-                <div className="form-row d-flex gap-2 align-items-end justify-content-between">
-                  <h6 className="m-0 rewardstxtCaws d-flex align-items-center gap-2">
-                    <img src={weth} alt="" style={{ width: 18, height: 18 }} />{" "}
-                    {getFormattedNumber(EthRewards, 6)} WETH ($
-                    {getFormattedNumber(ethToUSD, 6)})
+                    Earnings
+                    <h6
+                      className="m-0 mybalance-text"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      NFTs Staked:{" "}
+                      <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
+                    </h6>
                   </h6>
-                  <button
-                    className={`btn ${
-                      EthRewards === 0 ? "disabled-btn" : "filledbtn"
-                    } d-flex justify-content-center align-items-center`}
-                    style={{ height: "fit-content" }}
-                    onClick={claimRewards}
-                    disabled={!isPremium || EthRewards === 0}
-                  >
-                    Claim
-                  </button>
+                  <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <div className="tooltip-text">
+                          {
+                            "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
+                          }
+                        </div>
+                      }
+                    >
+                      <img src={moreinfo} alt="" />
+                    </Tooltip>
+                  </h6>
+                </div>
+                <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
+                  <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6>
+
+                  <div className="form-row d-flex gap-2 align-items-end justify-content-between">
+                    <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
+                      <img
+                        src={weth}
+                        alt=""
+                        style={{ width: 18, height: 18 }}
+                      />{" "}
+                      {getFormattedNumber(EthRewards, 4)} WETH ($
+                      {getFormattedNumber(ethToUSD, 4)})
+                    </h6>
+                    <button
+                      className={`btn w-100 claim-inner-btn ${
+                        (claimStatus === "claimed" &&
+                          claimStatus === "initial") ||
+                        EthRewards === 0
+                          ? "disabled-btn"
+                          : claimStatus === "failed"
+                          ? "fail-button"
+                          : claimStatus === "success"
+                          ? "success-button"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      style={{ height: "fit-content" }}
+                      onClick={claimRewards}
+                      disabled={!isPremium || EthRewards === 0}
+                    >
+                      {claimLoading ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : claimStatus === "failed" ? (
+                        <>Failed</>
+                      ) : claimStatus === "success" ? (
+                        <>Success</>
+                      ) : (
+                        <>Claim</>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div
-              className={`otherside-border  ${
-                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-              } ${chainId !== "1" && "blurrypool"}`}
-            >
-              <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
-                Unstake
-                <Tooltip
-                  placement="top"
-                  title={
-                    <div className="tooltip-text">
-                      {
-                        "Withdraw your deposited NFTs from the staking smart contract."
-                      }
-                    </div>
-                  }
-                >
-                  <img src={moreinfo} alt="" />
-                </Tooltip>
-              </h6>
-
-              <button
-                className="btn outline-btn-stake"
-                onClick={() => {
-                  setshowChecklistModal(true);
-                  setOpenStakeChecklist(true);
-                  setHide("");
-                }}
+            )}
+            {mystakes.length > 0 && (
+              <div
+                className={`otherside-border  ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+                } ${chainId !== "1" && "blurrypool"}`}
               >
-                Withdraw
-              </button>
-            </div>
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
+                    My Deposit
+                  </h6>
+                  <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                    <h6 className={"m-0 mybalance-text d-flex"}>Unlocks in</h6>
+                    <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
+                        Anytime
+                      </h6>
+                      <button
+                        disabled={false}
+                        className={"outline-btn-stake btn"}
+                        onClick={() => {
+                          setshowChecklistModal(true);
+                          setOpenStakeChecklist(true);
+                          setHide("");
+                        }}
+                      >
+                        Withdraw
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -663,12 +685,89 @@ const CawsDetailsPremium = ({
           onClaimAll={() => {
             claimRewards();
           }}
-          isStake={ hide === "" || hide === "tostake" || hide === "mystakes2" ? true : false}
+          isStake={
+            hide === "" || hide === "tostake" || hide === "mystakes2"
+              ? true
+              : false
+          }
           handleConnect={handleConnection}
           myCawsstakes={mystakes}
           binanceW3WProvider={binanceW3WProvider}
           onUnstake={refreshStakes}
         />
+      )}
+
+      {popup && (
+        <Modal
+          visible={popup}
+          modalId="tymodal"
+          title="stats"
+          onModalClose={() => {
+            hidePopup();
+          }}
+          width="fit-content"
+        >
+          <div className="earn-hero-content px-4 pb-4 token-wrapper">
+            <div className="l-box pl-3 pr-3">
+              <div className="container px-0">
+                <div className="stats-container my-4">
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">My Stakes</span>
+                    <h6 className="stats-card-content">
+                      {mystakes.length} WOD
+                    </h6>
+                  </div>
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">Pool Cap</span>
+                    <h6 className="stats-card-content">100 NFTs</h6>
+                  </div>
+
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">Available Quota:</span>
+                    <h6 className="stats-card-content">
+                      {100 - totalStakes} NFTs
+                    </h6>
+                  </div>
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">Maximum deposit:</span>
+                    <h6 className="stats-card-content">N/A</h6>
+                  </div>
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">TVL USD</span>
+                    <h6 className="stats-card-content">
+                      ${getFormattedNumber(tvl_usd)} USD
+                    </h6>
+                  </div>
+
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">
+                      Contract Start date:
+                    </span>
+                    <h6 className="stats-card-content">09 Sep 2024</h6>
+                  </div>
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">Contract End date:</span>
+                    <h6 className="stats-card-content">25 Feb 2025</h6>
+                  </div>
+                  <div className="stats-card p-3 d-flex flex-column mx-auto w-100">
+                    <span className="stats-card-title">Contract Address:</span>
+
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://etherscan.io/address/${window.config.nft_caws_premiumstake_address}`}
+                      className="stats-card-content text-decoration-underline"
+                    >
+                      {shortAddress(
+                        window.config.nft_caws_premiumstake_address
+                      )}{" "}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

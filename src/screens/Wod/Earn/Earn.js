@@ -150,7 +150,7 @@ const Earn = ({
 
   return (
     <>
-      <div className="container-fluid token-wrapper px-0 mt-5 pt-5">
+      <div className="container-fluid token-wrapper px-0 mt-5 pt-lg-5">
         <div className="d-flex flex-column gap-3">
           <EarnHero
             onSelectFilter={(value, expirevalue) => {

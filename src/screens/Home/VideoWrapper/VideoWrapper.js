@@ -235,10 +235,10 @@ const VideoWrapper = ({
               </Slider>
             </div>
           )}
-          {/* <video
+          <video
             preload="auto"
             className="d-none d-lg-flex d-xl-flex elementor-video"
-            src="https://dypmeta.s3.us-east-2.amazonaws.com/dypius.mov"
+            src="https://cdn.worldofdypians.com/media/wodhomepage.mp4"
             autoPlay={true}
             loop={true}
             muted="muted"
@@ -247,10 +247,10 @@ const VideoWrapper = ({
             style={{
               // maxWidth: "2400px",
               width: "100%",
-              height: "90vh",
+              height: "100vh",
               objectFit: "cover",
             }}
-          ></video> */}
+          ></video>
         </div>
         {/* <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start"> */}
         {/* <GlobalLeaderboard /> */}

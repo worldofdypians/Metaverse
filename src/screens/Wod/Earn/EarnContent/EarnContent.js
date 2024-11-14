@@ -209,6 +209,7 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
+                            
                           />
                         )}
 
@@ -237,6 +238,11 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 
@@ -252,6 +258,11 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
+                            tvl_usd={selectedPool.find((obj) => {
+                              return (
+                                obj.id.toLowerCase() === item.id.toLowerCase()
+                              );
+                            })?.tvl_usd}
                           />
                         )}
 

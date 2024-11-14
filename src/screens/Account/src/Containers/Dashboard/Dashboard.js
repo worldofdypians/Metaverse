@@ -5301,7 +5301,7 @@ function Dashboard({
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
-  let wmataddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
+  let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
   let wcoreAddress = "0x900101d06a7426441ae63e9ab3b9b0f63be145f1";
 
   const dailyPrizes = [10, 8, 5, 5, 0, 0, 0, 0, 0, 0];

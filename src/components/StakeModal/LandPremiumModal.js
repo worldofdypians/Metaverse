@@ -212,7 +212,7 @@ const LandPremiumStakeModal = ({
           handleClearStatus();
         });
     } else if (window.WALLET_TYPE === "binance") {
-      let stake_contract = await new ethers.Contract(
+      let stake_contract = new ethers.Contract(
         window.config.nft_land_premiumstake_address,
         window.LANDPREMIUM_ABI,
         binanceW3WProvider.getSigner()
