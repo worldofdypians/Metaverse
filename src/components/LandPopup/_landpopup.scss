@@ -74,6 +74,14 @@
   }
 }
 
+.table-outer-margin::-webkit-scrollbar{
+  border-radius: 5px !important;
+  width: 15px !important;
+}
+.table-outer-margin::-webkit-scrollbar-thumb{
+  border-radius: 5px !important;
+}
+
 .top100-text {
   color: #09F3D2;
   text-align: center; 

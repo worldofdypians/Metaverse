@@ -3544,12 +3544,25 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.event-card{
+  transition: all .25s;
+}
+
 .events-page-title-home {
-  color: #dcfb85;
+  color: #f3bf09;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: 24px;
+}
+
+
+.event-card:hover{
+  border: 1px solid #f3bf09 !important;
+  .events-page-title-home {
+    color: #fff;
+  
+  }
 }
 
 .tokenClass {
@@ -3591,6 +3604,36 @@ backdrop-filter: blur(5.5px);
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(../../assets/wodAssets/leaderboardBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.mapClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/mapBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.landClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/landCardBg.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.cawsClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../../assets/wodAssets/cawsCardBg.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

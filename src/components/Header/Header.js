@@ -141,6 +141,7 @@ const Header = ({
     about: null,
     collections: null,
     account: null,
+    chains: null
   });
 
   // const [domainPopup, setDomainPopup] = useState(false);
@@ -1254,12 +1255,14 @@ const Header = ({
                         color: tooltip ? "#82DAAB" : "#FFFFFF",
                         minHeight: "34px",
                       }}
-                      onMouseEnter={() => {
-                        setshowChainDropdown(true);
-                      }}
-                      onMouseLeave={() => {
-                        setshowChainDropdown(false);
-                      }}
+                      // onMouseEnter={() => {
+                      //   setshowChainDropdown(true);
+                      // }}
+                      // onMouseLeave={() => {
+                      //   setshowChainDropdown(false);
+                      // }}
+                      onMouseEnter={() => handleDropdown("chains")}
+                      onMouseLeave={() => handleDropdown(null)}
                     >
                       <DropdownButton
                         id="dropdown-basic-button"
@@ -1309,8 +1312,19 @@ const Header = ({
                           </span>
                         }
                       >
-                        <div className="d-flex flex-column gap-2">
-                          <span className="select-gray-txt pt-2">
+                       
+                      </DropdownButton>
+                      <div
+                    className={`header-dropdown p-3 d-flex flex-column gap-2 ${
+                      dropdown.chains === "chains"
+                        ? "header-dropdown-active"
+                        : ""
+                    }`}
+                    style={{left: "17.5%", top: "62px", width: "315px"}}
+                  >
+                     <div className="d-flex flex-column position-relative gap-2">
+                      <div className="triangle" style={{top: "-30px"}}></div>
+                          <span className="select-gray-txt ">
                             SELECT A NETWORK
                           </span>
                           <hr className="header-divider my-0" />
@@ -1453,7 +1467,7 @@ const Header = ({
                           </div>
                           <hr className="header-divider my-0" />
                           <button
-                            className="sign-out-btn pt-2 pb-3  d-flex align-items-center gap-2 ms-2 justify-content-start"
+                            className="sign-out-btn pt-2  d-flex align-items-center gap-2 ms-2 justify-content-start"
                             onClick={() => {
                               manageDisconnect();
                             }}
@@ -1466,7 +1480,7 @@ const Header = ({
                             DISCONNECT
                           </button>
                         </div>
-                      </DropdownButton>
+                    </div>
                       <span
                         className="d-flex align-items-center gap-2"
                         // onClick={() => {

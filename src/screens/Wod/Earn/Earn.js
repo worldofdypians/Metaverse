@@ -150,22 +150,23 @@ const Earn = ({
 
   return (
     <>
-      <div className="container-fluid token-wrapper px-0">
+      <div className="container-fluid earn-mainhero-wrapper token-wrapper px-0">
         <div className="d-flex flex-column gap-3">
           <EarnHero
-            onSelectFilter={(value, expirevalue) => {
-              setSelectedFilter(value);
-              handleSetPools(value, expirevalue);
-            }}
-            onSelectViewStyle={(value) => {
-              setselectedViewStyle(value);
-            }}
-            onViewPastPools={(filterValue, value) => {
-              setExpired(value);
-              handleSetPools(filterValue, value);
-            }}
+           
           />
           <EarnContent
+           onSelectFilter={(value, expirevalue) => {
+            setSelectedFilter(value);
+            handleSetPools(value, expirevalue);
+          }}
+          onSelectViewStyle={(value) => {
+            setselectedViewStyle(value);
+          }}
+          onViewPastPools={(filterValue, value) => {
+            setExpired(value);
+            handleSetPools(filterValue, value);
+          }}
             isConnected={isConnected}
             coinbase={coinbase}
             chainId={chainId}
