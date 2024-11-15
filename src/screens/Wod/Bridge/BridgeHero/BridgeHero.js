@@ -4,7 +4,7 @@ import bridgeIcon from "../../../../assets/wodAssets/bridgeIcon.svg";
 
 const BridgeHero = ({ onScroll }) => {
   return (
-    <div className="bridge-mainhero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center gap-5">
+    <div className="bridge-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-center gap-2 mt-5 mt-lg-0">

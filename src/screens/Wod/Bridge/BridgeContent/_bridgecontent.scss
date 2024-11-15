@@ -212,7 +212,7 @@ border: none;
 background: transparent;
 color: #fff;
 font-family: "Poppins";
-font-size: 22px;
+font-size: 18px;
 font-style: normal;
 font-weight: 500;
 line-height: 26px; /* 118.182% */
@@ -228,7 +228,7 @@ width: 50%;
 .bridge-amount-input::placeholder{
   color: #C0C9FF;
   font-family: "Poppins";
-  font-size: 22px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 26px; /* 118.182% */
@@ -252,4 +252,5 @@ width: 50%;
   font-style: normal;
   font-weight: 500;
   line-height: 18px; /* 150% */
+  white-space: nowrap;
 }

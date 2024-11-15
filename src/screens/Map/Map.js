@@ -55,9 +55,7 @@ const MapSidebar = React.lazy(() => import("./components/MapSidebar"));
 const MarkerDetails = React.lazy(() => import("./components/MarkerDetails"));
 const EventsBar = React.lazy(() => import("./components/EventsBar"));
 
-const Map = ({
-  dummyBetaPassData2
-}) => {
+const Map = ({ dummyBetaPassData2 }) => {
   const mapRef = useRef();
   const [center, setCenter] = useState([
     -0.06862161903162572, 0.08585214614868165,
@@ -88,11 +86,8 @@ const Map = ({
   const [events, setEvents] = useState(false);
 
   const liveTreasureHunts = dummyBetaPassData2.filter((item) => {
-    return item.eventStatus === "Live"
-  })
-
-  
-
+    return item.eventStatus === "Live";
+  });
 
   // Memoize large data to avoid re-renders
   const memoizedChainAreas = useMemo(() => chainAreas, [chainAreas]);
@@ -102,7 +97,10 @@ const Map = ({
   const memoizedAreas = useMemo(() => areas, [areas]);
   const memoizedTeleports = useMemo(() => teleports, [teleports]);
   const memoizedLeaderboards = useMemo(() => leaderboards, [leaderboards]);
-  const memoizedCraftingTables = useMemo(() => craftingTables, [craftingTables]);
+  const memoizedCraftingTables = useMemo(
+    () => craftingTables,
+    [craftingTables]
+  );
   const memoizedMines = useMemo(() => mines, [mines]);
   const memoizedBearAreas = useMemo(() => bearAreas, [bearAreas]);
   const memoizedBoarAreas = useMemo(() => boarAreas, [boarAreas]);
@@ -110,19 +108,17 @@ const Map = ({
   const memoizedFirstParcel = useMemo(() => firstParcel, [firstParcel]);
   const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
 
-
-
-  const allChallenges = [...challenges]
+  const allChallenges = [...challenges];
 
   // Custom marker click handler with memoization
   const handleMarkerClick = useCallback((marker, zoom, type, showMarker) => {
-    if(showMarker !== false){
+    if (showMarker !== false) {
       setEvents(false);
-    setSelectedMarker(marker);
-    setShow(true);
-    setMarkerType(type || "");
+      setSelectedMarker(marker);
+      setShow(true);
+      setMarkerType(type || "");
     }
-    
+
     setZoom(zoom);
     setCenter(marker.location);
   }, []);
@@ -168,7 +164,8 @@ const Map = ({
   );
 
   return (
-    <div className="d-flex align-items-start">
+    <>
+      {" "}
       <Suspense fallback={<div className="d-none">Loading...</div>}>
         <MapSidebar
           switches={switches}
@@ -194,7 +191,7 @@ const Map = ({
         ]}
         style={{ height: "100vh", width: "100%" }}
       >
-        {/* <TileLayer url="/testtiles/{z}/{x}/{y}.png" noWrap={true} /> */}
+        {/* <TileLayer url="/customTiles/{z}/{x}/{y}.webp" noWrap={true} /> */}
         <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
 
         <ChainMarkers />
@@ -365,7 +362,6 @@ const Map = ({
         />
         <ZoomToLocation coordinates={center} zoomLevel={zoom} />
       </MapContainer>
-
       <div
         className={`events-arrow ${events ? "events-arrow-open" : ""} ${
           show || selectedMarker ? "d-none" : "d-flex"
@@ -401,7 +397,7 @@ const Map = ({
           liveTreasureHunts={liveTreasureHunts}
         />
       </Suspense>
-    </div>
+    </>
   );
 };
 

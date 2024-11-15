@@ -86,7 +86,7 @@ const BridgeContent = ({
 
   return (
     <div
-      className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center"
+      className="ecosystem-wrapper position-relative d-flex justify-content-center align-items-center mb-5"
       id="bridge"
     >
       <div className="container-fluid d-flex align-items-center justify-content-center">
@@ -113,6 +113,7 @@ const BridgeContent = ({
                       type="number"
                       className="bridge-amount-input"
                       placeholder="0"
+                      disabled={true}
                     />
                   </div>
                   <div className="d-flex flex-column gap-1">
@@ -142,6 +143,7 @@ const BridgeContent = ({
                       type="number"
                       className="bridge-amount-input"
                       placeholder="0"
+                      disabled={true}
                     />
                   <div className="d-flex flex-column gap-1">
                     <span className="bridge-balance-span">Balance</span>

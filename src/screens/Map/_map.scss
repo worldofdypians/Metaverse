@@ -1,6 +1,7 @@
 .leaflet-container {
   height: 100vh !important;
   // background: black !important;
+  width: 100vw;
   background-image: url("./assets/stars.webp") !important;
   background-size: 100%;
 }
