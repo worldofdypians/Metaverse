@@ -8,6 +8,8 @@ import premiumIcon from "../../Images/premium/premiumIcon.svg";
 import Web3 from "web3";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
+import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
@@ -2705,8 +2707,7 @@ const GetPremiumPopup = ({
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
-                        require(`../../../../../components/Header/assets/taiko.svg`)
-                          .default
+                        matchainLogo
                       }
                       alt=""
                       style={{ width: 18, height: 18 }}
@@ -2812,7 +2813,7 @@ const GetPremiumPopup = ({
             </div>
           </div>
           {/* <hr className="form-divider my-4" /> */}
-          <div className="d-flex align-items-end justify-content-between mt-3">
+          <div className="d-flex align-items-lg-end align-items-start flex-column flex-lg-row justify-content-between mt-3">
             <h6 className="become-premium-new-title mb-0">
               Become Prime Subscriber
             </h6>
@@ -2822,9 +2823,9 @@ const GetPremiumPopup = ({
               {dropdownIcon.toUpperCase()}
             </span>
           </div>
-          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0">
-            <div className="d-flex align-items-end gap-4">
-              <div className="d-flex flex-column gap-3">
+          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0">
+            <div className="d-flex flex-column flex-lg-row align-items-lg-end gap-lg-4">
+              <div className="d-flex flex-column gap-lg-3">
                 <span className="token-amount-placeholder">Select chain</span>
                 <div class="dropdown position relative">
                   <button
@@ -2896,8 +2897,7 @@ const GetPremiumPopup = ({
                         >
                           <img
                             src={
-                              require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                .default
+                              matchainLogo
                             }
                             style={{ width: 18, height: 18 }}
                             alt=""
@@ -3075,7 +3075,7 @@ const GetPremiumPopup = ({
                   </ul>
                 </div>
               </div>
-              <div className="d-flex flex-column gap-3">
+              <div className="d-flex flex-column gap-lg-3">
                 <span className="token-amount-placeholder">
                   Subscription Price
                 </span>

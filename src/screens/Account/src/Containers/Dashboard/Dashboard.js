@@ -37,6 +37,8 @@ import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
+import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
@@ -7123,7 +7125,7 @@ function Dashboard({
         : chainId === 167000
         ? window.config.subscriptiontaiko_tokens[token]?.decimals
         : chainId === 698
-        ? window.config.subscriptiontmat_tokens[token]?.decimals
+        ? window.config.subscriptionmat_tokens[token]?.decimals
         : window.config.subscriptioncfx_tokens[token]?.decimals;
     setprice("");
     setformattedPrice("");
@@ -10903,8 +10905,7 @@ function Dashboard({
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
-                        require(`../../../../../components/Header/assets/taiko.svg`)
-                          .default
+                        matchainLogo
                       }
                       alt=""
                       style={{ width: 18, height: 18 }}
@@ -11018,7 +11019,7 @@ function Dashboard({
                               </span>
                               <div className="dropdown position relative">
                                 <button
-                                  class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
+                                  class={`btn launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
                                   type="button"
                                   data-bs-toggle="dropdown"
                                   aria-expanded="false"
@@ -11105,8 +11106,7 @@ function Dashboard({
                                             >
                                               <img
                                                 src={
-                                                  require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                                    .default
+                                                  matchainLogo
                                                 }
                                                 style={{
                                                   width: 18,
