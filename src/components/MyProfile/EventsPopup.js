@@ -3,6 +3,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
 import confluxPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImage.png";
 import eventPopupImageGecko from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
+import eventPopupImageMatchain from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImageMatchain.webp";
+
 import upcomingDyp from "../../screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
 import upcomingDyp2 from "../../screens/Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
 import dypeventPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/dypEventImage.png";
@@ -148,6 +150,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? taikoThumb
                     : dummyEvent.popupInfo.linkState === "cookie3"
                     ? cookie3Thumb
+                    : dummyEvent.popupInfo.linkState === "matchain"
+                    ? eventPopupImageMatchain
                     : eventPopupImage
                 }
                 alt=""
@@ -435,7 +439,19 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   the global leaderboard. Remember to log in to the game daily
                   and venture into the Cookie3 area to uncover hidden treasures.
                 </p>
-              ) : (
+              ) : dummyEvent.popupInfo.id === "event25" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
+                  Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
+                  Matchain area, players not only stand a chance to secure
+                  daily rewards in BNB, but also earn points for their
+                  placement on the global leaderboard. Remember to log in to
+                  the game daily and venture into the Matchain area to uncover
+                  hidden treasures.
+                </p>
+              ): (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Base Beta Pass NFT</b>. You can get the Base Beta
@@ -484,7 +500,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                         dummyEvent.popupInfo.id === "event8" ||
                         dummyEvent.popupInfo.id === "event9" ||
                         dummyEvent.popupInfo.id === "event20" ||
-                        dummyEvent.popupInfo.id === "event3"
+                        dummyEvent.popupInfo.id === "event3" ||
+                        dummyEvent.popupInfo.id === "event25"
                       ? "BNB"
                       : dummyEvent.popupInfo.id === "event7"
                       ? "DOGE"
@@ -564,6 +581,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             ? "Taiko"
             : dummyEvent.popupInfo.id === "event23"
             ? "Cookie3"
+            : dummyEvent.popupInfo.id === "event25"
+            ? "Matchain"
             : "Base Network"}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
@@ -764,6 +783,13 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             Core is focused instead on platform growth and driving the global
             adoption of blockchain technology.
           </p>
+        ) : dummyEvent.popupInfo.id === "event25" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+            Matchain is a decentralized AI blockchain focused on data and identity sovereignty, utilizing advanced AI for data aggregation, analytics, and user profiling to enhance decentralized identity solutions and data management.
+          </p>
         ) : (
           <p
             className="popup-event-desc"
@@ -811,6 +837,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/mantanetwork"
                 : dummyEvent.popupInfo.id === "event22"
                 ? "https://x.com/taikoxyz"
+                : dummyEvent.popupInfo.id === "event25"
+                    ? "https://x.com/matchain_io"
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://x.com/cookie3_com"
                 : "https://twitter.com/buildonbase"
@@ -857,6 +885,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://t.me/TaikoEcosystem"
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://t.me/cookie3_co"
+                : dummyEvent.popupInfo.id === "event25"
+                    ? "https://t.me/matchain_fam"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -916,6 +946,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://taiko.xyz/"
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://www.cookie3.com/"
+                : dummyEvent.popupInfo.id === "event25"
+                    ? "https://www.matchain.io/"
                 : "https://base.org/"
             }
             target="_blank"
@@ -961,13 +993,14 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                         ? "CFX"
                         : dummyEvent.popupInfo.id === "event2"
                         ? "C98"
-                        : dummyEvent.popupInfo.id === "event3"
-                        ? "BNB"
+                       
                         : dummyEvent.popupInfo.id === "event5"
                         ? "DYP"
                         : dummyEvent.popupInfo.id === "event6" ||
                           dummyEvent.popupInfo.id === "event8" ||
-                          dummyEvent.popupInfo.id === "event9"
+                          dummyEvent.popupInfo.id === "event9" ||
+                          dummyEvent.popupInfo.id === "event3"||
+                          dummyEvent.popupInfo.id === "event25"
                         ? "BNB"
                         : dummyEvent.popupInfo.id === "event7"
                         ? "DOGE"

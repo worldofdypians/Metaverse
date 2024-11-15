@@ -51,6 +51,8 @@ import base from "./assets/base.svg";
 import conflux from "./assets/conflux.svg";
 import manta from "./assets/manta.png";
 import taiko from "./assets/taiko.svg";
+import matchain from "./assets/matchain.svg";
+
 import sei from "./assets/sei.svg";
 import multiversx from "./assets/multiversx.svg";
 
@@ -1295,7 +1297,7 @@ const Header = ({
                                     : taikoState === true
                                     ? taiko
                                     : matState === true
-                                    ? taiko
+                                    ? matchain
                                     : // : seiState === true
                                       // ? sei
                                       error
@@ -1361,7 +1363,7 @@ const Header = ({
                                   onClick={() => switchNetwork("0x2ba", 698)}
                                 >
                                   <img
-                                    src={taiko}
+                                    src={matchain}
                                     width={20}
                                     height={20}
                                     alt=""

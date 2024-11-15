@@ -47,10 +47,15 @@ import coreInactive from "./assets/coreInactive.svg";
 import baseActive from "./assets/baseActive.svg";
 import baseInactive from "./assets/baseInactive.svg";
 
+import matchainActive from "../../../../../components/Header/assets/matchain.svg";
+
+
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
 import taikoActive from "./assets/taikoActive.svg";
 import taikoInactive from "./assets/taikoInactive.svg";
+import matchainInactive from "./assets/matchainInactive.svg";
+
 import taikoWhite from "./assets/taikoWhite.svg";
 import multiversxActive from "./assets/multiversxActive.svg";
 import seiActive from "./assets/seiActive.svg";
@@ -80,6 +85,8 @@ import goldenPremiumPlayer from "./assets/goldenPremiumPlayer.png";
 import bnbWhite from "./assets/bnbWhite.svg";
 import victionWhite from "./assets/victionWhite.svg";
 import coreWhite from "./assets/coreWhite.svg";
+import matchainWhite from "./assets/matchainWhite.svg";
+
 import baseWhite from "./assets/baseWhite.svg";
 
 import skaleWhite from "./assets/skaleWhite.svg";
@@ -552,11 +559,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "matchain"
-                              ? taikoActive
+                              ? matchainActive
                               : optionText2 !== "matchain" &&
                                 hoverState === "matchain"
-                              ? taikoWhite
-                              : taikoInactive
+                              ? matchainWhite
+                              : matchainInactive
                           }
                           className={`${
                             optionText2 === "matchain"

@@ -779,6 +779,20 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+
+.matchain-mint-bg {
+  background-image: url("./assets/matchainBg.webp");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  @media screen and (max-width: 786px) {
+    background-image: none;
+    // background: linear-gradient(137deg, #181636 8.24%, #7133E5 100%);
+    background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
+  }
+}
+
 .bnb-mint-bg {
   background-image: url("./assets/bnbBackground2.webp");
   background-size: cover;
@@ -826,6 +840,9 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
+
+
+ 
 
 .cookie3-mint-bg {
   background-image: url("./assets/cookieBackground.webp");
@@ -1411,6 +1428,13 @@
 
 .sei-active {
   background-image: url("../../assets/seiActive.webp");
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-position: center;
+}
+
+.mat-active {
+  background-image: url("../../assets/matchainActive.webp");
   background-repeat: no-repeat;
   background-size: cover !important;
   background-position: center;

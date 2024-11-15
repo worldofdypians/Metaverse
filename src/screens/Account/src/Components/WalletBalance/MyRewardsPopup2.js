@@ -26,6 +26,8 @@ import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg";
+import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
@@ -1198,8 +1200,7 @@ const MyRewardsPopupNew = ({
             />
             {/* <img
               src={
-                require("../../../../../components/Header/assets/taiko.svg")
-                  .default
+                matchainLogo
               }
               style={{ width: 16, height: 16 }}
               alt=""

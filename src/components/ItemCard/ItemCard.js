@@ -87,55 +87,59 @@ const ItemCard = ({
 
       return result;
     } else if (window.WALLET_TYPE === "binance") {
-      const contract_old = new ethers.Contract(
-        window.config.dyp_token_address,
-        window.DYP_ABI,
-        binanceW3WProvider.getSigner()
-      );
+      // const contract_old = new ethers.Contract(
+      //   window.config.dyp_token_address,
+      //   window.DYP_ABI,
+      //   binanceW3WProvider.getSigner()
+      // );
 
-      const contract = new ethers.Contract(
-        window.config.token_dypius_new_address,
-        window.DYP_ABI,
-        binanceW3WProvider.getSigner()
-      );
+      // const contract = new ethers.Contract(
+      //   window.config.token_dypius_new_address,
+      //   window.DYP_ABI,
+      //   binanceW3WProvider.getSigner()
+      // );
 
-      if (tokenType === "dypv2") {
-        const allowance = await contract.allowance(
-          coinbase,
-          window.config.nft_marketplace_address
-        );
+      // if (tokenType === "dypv2") {
+      //   const allowance = await contract.allowance(
+      //     coinbase,
+      //     window.config.nft_marketplace_address
+      //   );
 
-        return Number(allowance) >= Number(amount);
-      } else if (tokenType === "dypv1") {
-        const allowance = await contract_old.allowance(
-          coinbase,
-          window.config.nft_marketplace_address
-        );
+      //   return Number(allowance) >= Number(amount);
+      // } else if (tokenType === "dypv1") {
+      //   const allowance = await contract_old.allowance(
+      //     coinbase,
+      //     window.config.nft_marketplace_address
+      //   );
 
-        return Number(allowance) >= Number(amount);
-      } else if (tokenType === "eth") {
+      //   return Number(allowance) >= Number(amount);
+      // } else
+       if (tokenType === "eth") {
         return true;
       }
     }
   };
 
   const checkapprove = async (nftItem) => {
-    const tokenType =
-      nftItem.payment_tokenAddress === window.config.dyp_token_address
-        ? "dypv1"
-        : nftItem.payment_tokenAddress ===
-          window.config.token_dypius_new_address
-        ? "dypv2"
-        : "eth";
+    // const tokenType =
+    //   nftItem.payment_tokenAddress === window.config.dyp_token_address
+    //     ? "dypv1"
+    //     : nftItem.payment_tokenAddress ===
+    //       window.config.token_dypius_new_address
+    //     ? "dypv2"
+    //     : "eth";
 
-    if (isConnected === true && nftItem.payment_priceType === 1) {
-      isApprovedBuy(tokenType, nftItem.price).then((isApproved) => {
-        console.log(isApproved);
-        setbuttonTxt(isApproved ? "Buy" : "Approve");
-        setIsApprove(isApproved);
-        setpurchasestate(isApproved ? "buy" : "approve");
-      });
-    } else if (isConnected === true && nftItem.payment_priceType === 0) {
+    const tokenType =  "eth";
+
+    // if (isConnected === true && nftItem.payment_priceType === 1) {
+    //   isApprovedBuy(tokenType, nftItem.price).then((isApproved) => {
+    //     console.log(isApproved);
+    //     setbuttonTxt(isApproved ? "Buy" : "Approve");
+    //     setIsApprove(isApproved);
+    //     setpurchasestate(isApproved ? "buy" : "approve");
+    //   });
+    // } else
+     if (isConnected === true && nftItem.payment_priceType === 0) {
       setbuttonTxt("Buy");
       setIsApprove(true);
       setpurchasestate("buy");
@@ -253,42 +257,43 @@ const ItemCard = ({
         console.error(error);
       }
 
-      if (nft.payment_priceType === 1) {
-        console.log("yes dyp", nft);
-        const txResponse = await marketplace
-          .buyItem(
-            nft.nftAddress,
-            nft.tokenId,
-            [nft.payment_priceType, nft.payment_tokenAddress],
-            {
-              from: coinbase,
-              value: 0,
-              ...transactionParameters,
-            }
-          )
-          // .send({ from: coinbase, value: 0
-          //   , ...transactionParameters
-          // })
-          .catch((e) => {
-            console.error(e);
-            setpurchasestate("fail");
-            setStatus("fail");
-          });
+      // if (nft.payment_priceType === 1) {
+      //   console.log("yes dyp", nft);
+      //   const txResponse = await marketplace
+      //     .buyItem(
+      //       nft.nftAddress,
+      //       nft.tokenId,
+      //       [nft.payment_priceType, nft.payment_tokenAddress],
+      //       {
+      //         from: coinbase,
+      //         value: 0,
+      //         ...transactionParameters,
+      //       }
+      //     )
+      //     // .send({ from: coinbase, value: 0
+      //     //   , ...transactionParameters
+      //     // })
+      //     .catch((e) => {
+      //       console.error(e);
+      //       setpurchasestate("fail");
+      //       setStatus("fail");
+      //     });
 
-        const txReceipt = await txResponse.wait();
-        if (txReceipt) {
-          setShowToast(true);
-          setpurchasestate("success");
-          setStatus("done");
-          handleRefreshListing();
-          setTimeout(() => {
-            checkapprove(nft);
-            setShowModal(false);
-          }, 2000);
+      //   const txReceipt = await txResponse.wait();
+      //   if (txReceipt) {
+      //     setShowToast(true);
+      //     setpurchasestate("success");
+      //     setStatus("done");
+      //     handleRefreshListing();
+      //     setTimeout(() => {
+      //       checkapprove(nft);
+      //       setShowModal(false);
+      //     }, 2000);
 
-          setToastTitle("Successfully purchased!");
-        }
-      } else if (nft.payment_priceType === 0) {
+      //     setToastTitle("Successfully purchased!");
+      //   }
+      // } else
+       if (nft.payment_priceType === 0) {
         const txResponse = await marketplace
           .buyItem(
             nft.nftAddress,
@@ -339,12 +344,7 @@ const ItemCard = ({
 
   const handleBuyState = async (nft) => {
     if (chainId === 1) {
-      const tokenType =
-        nft.payment_tokenAddress === window.config.dyp_token_address
-          ? "dypv1"
-          : nft.payment_tokenAddress === window.config.token_dypius_new_address
-          ? "dypv2"
-          : "eth";
+      const tokenType = "eth";
 
       const isApproved = isApprovedBuy(tokenType, nft.price);
       console.log("Buystate");
@@ -499,87 +499,88 @@ const ItemCard = ({
               }
             }
           }
-        } else {
-          setbuttonTxt("Approve");
-          setpurchasestate("approve");
-          setStatus("approve");
+        } 
+        // else {
+        //   setbuttonTxt("Approve");
+        //   setpurchasestate("approve");
+        //   setStatus("approve");
 
-          console.log("approve buying");
-          if (window.WALLET_TYPE !== "binance") {
-            await window
-              .approveBuy(nft.price)
-              .then((result) => {
-                setbuttonTxt("Buy");
-                setpurchasestate("buy");
-                setStatus("approve");
-                setIsApprove(true);
-                setTimeout(() => {
-                  handleBuy(nft);
-                }, 2000);
-              })
-              .catch((e) => {
-                console.error(e);
-                setStatus("fail");
-                setpurchasestate("fail");
-              });
-          } else if (window.WALLET_TYPE === "binance") {
-            const contract_old = new ethers.Contract(
-              window.config.dyp_token_address,
-              window.DYP_ABI,
-              binanceW3WProvider.getSigner()
-            );
+        //   console.log("approve buying");
+        //   if (window.WALLET_TYPE !== "binance") {
+        //     await window
+        //       .approveBuy(nft.price)
+        //       .then((result) => {
+        //         setbuttonTxt("Buy");
+        //         setpurchasestate("buy");
+        //         setStatus("approve");
+        //         setIsApprove(true);
+        //         setTimeout(() => {
+        //           handleBuy(nft);
+        //         }, 2000);
+        //       })
+        //       .catch((e) => {
+        //         console.error(e);
+        //         setStatus("fail");
+        //         setpurchasestate("fail");
+        //       });
+        //   } else if (window.WALLET_TYPE === "binance") {
+        //     const contract_old = new ethers.Contract(
+        //       window.config.dyp_token_address,
+        //       window.DYP_ABI,
+        //       binanceW3WProvider.getSigner()
+        //     );
 
-            const contract = new ethers.Contract(
-              window.config.token_dypius_new_address,
-              window.DYP_ABI,
-              binanceW3WProvider.getSigner()
-            );
+        //     const contract = new ethers.Contract(
+        //       window.config.token_dypius_new_address,
+        //       window.DYP_ABI,
+        //       binanceW3WProvider.getSigner()
+        //     );
 
-            if (tokenType === "dypv2") {
-              const txResponse = await contract
-                .approve(window.config.nft_marketplace_address, nft.price, {
-                  from: coinbase,
-                })
-                .catch((e) => {
-                  console.error(e);
-                  setStatus("fail");
-                  setpurchasestate("fail");
-                });
+        //     if (tokenType === "dypv2") {
+        //       const txResponse = await contract
+        //         .approve(window.config.nft_marketplace_address, nft.price, {
+        //           from: coinbase,
+        //         })
+        //         .catch((e) => {
+        //           console.error(e);
+        //           setStatus("fail");
+        //           setpurchasestate("fail");
+        //         });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonTxt("Buy");
-                setpurchasestate("buy");
-                setStatus("approve");
-                setIsApprove(true);
-                setTimeout(() => {
-                  handleBuy(nft);
-                }, 2000);
-              }
-            } else if (tokenType === "dypv1") {
-              const txResponse = await contract_old
-                .approve(window.config.nft_marketplace_address, nft.price, {
-                  from: coinbase,
-                })
-                .catch((e) => {
-                  console.error(e);
-                  setStatus("fail");
-                  setpurchasestate("fail");
-                });
+        //       const txReceipt = await txResponse.wait();
+        //       if (txReceipt) {
+        //         setbuttonTxt("Buy");
+        //         setpurchasestate("buy");
+        //         setStatus("approve");
+        //         setIsApprove(true);
+        //         setTimeout(() => {
+        //           handleBuy(nft);
+        //         }, 2000);
+        //       }
+        //     } else if (tokenType === "dypv1") {
+        //       const txResponse = await contract_old
+        //         .approve(window.config.nft_marketplace_address, nft.price, {
+        //           from: coinbase,
+        //         })
+        //         .catch((e) => {
+        //           console.error(e);
+        //           setStatus("fail");
+        //           setpurchasestate("fail");
+        //         });
 
-              const txReceipt = await txResponse.wait();
-              if (txReceipt) {
-                setbuttonTxt("Buy");
-                setpurchasestate("buy");
-                setStatus("approve");
-                setIsApprove(true);
-                setTimeout(() => {
-                  handleBuy(nft);
-                }, 2000);
-              }
-            }
-          }
-        }
+        //       const txReceipt = await txResponse.wait();
+        //       if (txReceipt) {
+        //         setbuttonTxt("Buy");
+        //         setpurchasestate("buy");
+        //         setStatus("approve");
+        //         setIsApprove(true);
+        //         setTimeout(() => {
+        //           handleBuy(nft);
+        //         }, 2000);
+        //       }
+        //     }
+        //   }
+        // }
       }
     } else {
       window.alertify.error(
@@ -745,14 +746,9 @@ const ItemCard = ({
                   >
                     {getFormattedNumber(
                       nft.price / 1e18,
-                      nft.payment_priceType === 0 ? 2 : 0
+                      2
                     )}{" "}
-                    {nft.payment_priceType === 0
-                      ? "ETH"
-                      : nft?.payment_tokenAddress ===
-                        window.config.dyp_token_address
-                      ? "DYPv1"
-                      : "DYPv2"}
+                   ETH 
                   </span>
 
                   <span
@@ -766,12 +762,8 @@ const ItemCard = ({
                   >
                     $
                     {getFormattedNumber(
-                      nft.payment_priceType === 0
-                        ? ethTokenData * (nft.price / 1e18)
-                        : nft?.payment_tokenAddress ===
-                          window.config.dyp_token_address
-                        ? dypTokenData_old * (nft.price / 1e18)
-                        : dypTokenData * (nft.price / 1e18),
+                        ethTokenData * (nft.price / 1e18)
+                         ,
                       2
                     )}
                   </span>
@@ -810,9 +802,9 @@ const ItemCard = ({
                 Last Sale:{" "}
                 {getFormattedNumber(
                   lastSold / 1e18,
-                  nft.soldPriceType === 0 ? 2 : 0
+                  2
                 )}{" "}
-                {nft.soldPriceType === 0 ? "ETH" : "DYP"}
+                 ETH 
               </span>
             </div>
           )}

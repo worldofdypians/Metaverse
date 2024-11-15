@@ -23,6 +23,8 @@ import confluxActive from "./assets/confluxActive.png";
 import coin98Active from "./assets/coin98Active.png";
 import bnbActive from "./assets/bnbActive.png";
 import taikoActive from "./assets/taikoActive.png";
+import matchainActive from "./assets/matchainActive.webp";
+
 import mantaActive from "./assets/mantaActive.png";
 import coingeckoActive from "./assets/coingeckoActive.png";
 import skaleActive from "./assets/upcomingSkaleMobile.webp";
@@ -33,6 +35,8 @@ import seiActive from "./assets/seiActive.webp";
 import multiversActive from "./assets/multiversActive.webp";
 import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
 import mantaLogo from "./assets/mantaLogo.png";
+import matchainLogo from "../../components/Header/assets/matchain.svg";
+
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
 import kucoinActive from "./assets/kucoinActive.png";
@@ -50,7 +54,10 @@ import seiBg from "./assets/seiBg.webp";
 import coreBg from "./assets/coreBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
 import baseBg from "./assets/baseBg.png";
+import matchainBg from "./assets/matchainBg.webp";
+
 import baseMobileBg from "./assets/baseMobileBg.png";
+
 import taikoMobileBg from "./assets/taikoActive.png";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
@@ -237,8 +244,8 @@ const MarketMint = ({
     id: "mat",
     cardTitle: "Matchain Beta Pass",
     title: "Matchain Beta Pass",
-    background: "taiko-mint-bg",
-    mobileBg: "taikoMobileBg.png",
+    background: "matchain-mint-bg",
+    mobileBg: "matchainMobileBg.webp",
   };
 
   const windowSize = useWindowSize();
@@ -656,9 +663,9 @@ const MarketMint = ({
       title: "Matchain Pass",
       eventId: "matchain",
       desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
-      img: taikoActive,
+      img: matchainActive,
       data: matData,
-      class: "mint-taiko",
+      class: "mint-matchain",
       id: "mat",
     },
 
@@ -1123,7 +1130,7 @@ const MarketMint = ({
                                   ? "conflux-empty"
                                   : selectedMint.id === "mat" &&
                                     totalMatNfts > 0
-                                  ? "sei-active"
+                                  ? "mat-active"
                                   : selectedMint.id === "mat" &&
                                     totalMatNfts === 0
                                   ? "conflux-empty"
@@ -1701,7 +1708,7 @@ const MarketMint = ({
                                   mintTitle === "manta"
                                     ? mantaLogo
                                     : mintTitle === "mat"
-                                    ? seiLogo
+                                    ? matchainLogo
                                     : seiLogo
                                 }
                                 alt=""
@@ -2027,7 +2034,7 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">
                         Matchain Beta Pass
@@ -2038,12 +2045,12 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={baseBg}
+                      src={matchainBg}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={baseMobileBg}
+                      src={matchainActive}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />

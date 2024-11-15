@@ -2608,11 +2608,12 @@ window.buyNFT = async (
     });
   console.log("transactionParameters", transactionParameters);
 
-  if (priceType === 1) {
-    await marketplace.methods
-      .buyItem(nft_address, tokenId, [priceType, priceAddress])
-      .send({ from: await getCoinbase(), value: 0, ...transactionParameters });
-  } else if (priceType === 0) {
+  // if (priceType === 1) {
+  //   await marketplace.methods
+  //     .buyItem(nft_address, tokenId, [priceType, priceAddress])
+  //     .send({ from: await getCoinbase(), value: 0, ...transactionParameters });
+  // } else
+   if (priceType === 0) {
     await marketplace.methods
       .buyItem(nft_address, tokenId, [priceType, priceAddress])
       .send({
@@ -2662,15 +2663,16 @@ window.buyNFT2 = async (
     });
   console.log("transactionParameters", transactionParameters);
 
-  if (priceType === 1) {
-    await marketplace.methods
-      .buyItem(nft_address, tokenId, [priceType, priceAddress])
-      .send({ from: await getCoinbase(), value: 0, ...transactionParameters })
-      .on("transactionHash", (hash) => {
-        console.log(`Transaction hash: ${hash}`);
-        return hash;
-      });
-  } else if (priceType === 0) {
+  // if (priceType === 1) {
+  //   await marketplace.methods
+  //     .buyItem(nft_address, tokenId, [priceType, priceAddress])
+  //     .send({ from: await getCoinbase(), value: 0, ...transactionParameters })
+  //     .on("transactionHash", (hash) => {
+  //       console.log(`Transaction hash: ${hash}`);
+  //       return hash;
+  //     });
+  // } else
+   if (priceType === 0) {
     await marketplace.methods
       .buyItem(nft_address, tokenId, [priceType, priceAddress])
       .send({
@@ -2715,29 +2717,30 @@ window.approveBuy = async (tokenType, amount) => {
 
 window.isApprovedBuy = async (tokenType, amount) => {
   window.web3 = new Web3(window.ethereum);
-  const contract_old = new window.web3.eth.Contract(
-    window.DYP_ABI,
-    window.config.dyp_token_address
-  );
+  // const contract_old = new window.web3.eth.Contract(
+  //   window.DYP_ABI,
+  //   window.config.dyp_token_address
+  // );
 
-  const contract = new window.web3.eth.Contract(
-    window.DYP_ABI,
-    window.config.token_dypius_new_address
-  );
+  // const contract = new window.web3.eth.Contract(
+  //   window.DYP_ABI,
+  //   window.config.token_dypius_new_address
+  // );
 
   const coinbase = await getCoinbase();
 
-  if (tokenType === "dypv2") {
-    const allowance = await contract.methods
-      .allowance(coinbase, window.config.nft_marketplace_address)
-      .call({ from: await getCoinbase() });
-    return Number(allowance) >= Number(amount);
-  } else if (tokenType === "dypv1") {
-    const allowance = await contract_old.methods
-      .allowance(coinbase, window.config.nft_marketplace_address)
-      .call({ from: await getCoinbase() });
-    return Number(allowance) >= Number(amount);
-  } else if (tokenType === "eth") {
+  // if (tokenType === "dypv2") {
+  //   const allowance = await contract.methods
+  //     .allowance(coinbase, window.config.nft_marketplace_address)
+  //     .call({ from: await getCoinbase() });
+  //   return Number(allowance) >= Number(amount);
+  // } else if (tokenType === "dypv1") {
+  //   const allowance = await contract_old.methods
+  //     .allowance(coinbase, window.config.nft_marketplace_address)
+  //     .call({ from: await getCoinbase() });
+  //   return Number(allowance) >= Number(amount);
+  // } else
+   if (tokenType === "eth") {
     return true;
   }
 
@@ -2846,12 +2849,12 @@ window.cancelListNFT = async (nftAddress, tokenId, priceType, tokenType) => {
     price_address = "0x0000000000000000000000000000000000000000";
   }
 
-  if (priceType === 1) {
-    price_address =
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address;
-  }
+  // if (priceType === 1) {
+  //   price_address =
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address;
+  // }
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -2879,13 +2882,13 @@ window.updateListingNFT = async (token, price, priceType, type, tokenType) => {
     price_address = "0x0000000000000000000000000000000000000000";
   }
 
-  if (priceType === 1) {
-    price_nft = 1;
-    price_address =
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address;
-  }
+  // if (priceType === 1) {
+  //   price_nft = 1;
+  //   price_address =
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address;
+  // }
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -2917,13 +2920,13 @@ window.listNFT = async (token, price, priceType, type = "", tokenType) => {
     price_address = "0x0000000000000000000000000000000000000000";
   }
 
-  if (priceType === 1) {
-    price_nft = 1;
-    price_address =
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address;
-  }
+  // if (priceType === 1) {
+  //   price_nft = 1;
+  //   price_address =
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address;
+  // }
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -2998,12 +3001,12 @@ window.makeOffer = async (nftAddress, tokenId, price, priceType, tokenType) => {
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
 
-  if (priceType === 1) {
-    price_address =
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address;
-  }
+  // if (priceType === 1) {
+  //   price_address =
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address;
+  // }
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -3077,12 +3080,12 @@ window.updateOffer = async (
     price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
   }
 
-  if (priceType === 1) {
-    price_address =
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address;
-  }
+  // if (priceType === 1) {
+  //   price_address =
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address;
+  // }
 
   const marketplace = new window.web3.eth.Contract(
     window.MARKETPLACE_ABI,
@@ -3121,24 +3124,25 @@ window.updateOffer = async (
 window.approveOffer = async (amount, priceType, tokenType) => {
   console.log(amount, priceType, tokenType);
   const web3 = new Web3(window.ethereum);
-  if (priceType === 1) {
-    const contract = new web3.eth.Contract(
-      window.DYP_ABI,
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address
-    );
+  // if (priceType === 1) {
+  //   const contract = new web3.eth.Contract(
+  //     window.DYP_ABI,
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address
+  //   );
 
-    console.log("amount", amount);
-    console.log(
-      "window.config.nft_marketplace_address",
-      window.config.nft_marketplace_address
-    );
+  //   console.log("amount", amount);
+  //   console.log(
+  //     "window.config.nft_marketplace_address",
+  //     window.config.nft_marketplace_address
+  //   );
 
-    await contract.methods
-      .approve(window.config.nft_marketplace_address, amount)
-      .send({ from: await getCoinbase() });
-  } else if (priceType === 0) {
+  //   await contract.methods
+  //     .approve(window.config.nft_marketplace_address, amount)
+  //     .send({ from: await getCoinbase() });
+  // } else
+   if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.TOKEN_ABI,
       window.config.weth2_address
@@ -3189,28 +3193,29 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
   window.web3 = new Web3(window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
-  if (priceType === 1) {
-    const contract = new window.web3.eth.Contract(
-      window.DYP_ABI,
-      tokenType === "dypv2"
-        ? window.config.token_dypius_new_address
-        : window.config.dyp_token_address
-    );
+  // if (priceType === 1) {
+  //   const contract = new window.web3.eth.Contract(
+  //     window.DYP_ABI,
+  //     tokenType === "dypv2"
+  //       ? window.config.token_dypius_new_address
+  //       : window.config.dyp_token_address
+  //   );
 
-    const coinbase = await getCoinbase();
+  //   const coinbase = await getCoinbase();
 
-    const allowance = await contract.methods
-      .allowance(coinbase, window.config.nft_marketplace_address)
-      .call({ from: await getCoinbase() });
-    console.log(
-      "appr makeoffer",
-      Number(allowance) >= Number(amount),
-      Number(allowance),
-      Number(amount)
-    );
+  //   const allowance = await contract.methods
+  //     .allowance(coinbase, window.config.nft_marketplace_address)
+  //     .call({ from: await getCoinbase() });
+  //   console.log(
+  //     "appr makeoffer",
+  //     Number(allowance) >= Number(amount),
+  //     Number(allowance),
+  //     Number(amount)
+  //   );
 
-    return Number(allowance) >= Number(amount);
-  } else if (priceType === 0) {
+  //   return Number(allowance) >= Number(amount);
+  // } else 
+  if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.TOKEN_ABI,
       window.config.weth2_address

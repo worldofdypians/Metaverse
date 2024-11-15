@@ -10668,6 +10668,7 @@ function Dashboard({
                 MyNFTSLandBase={MyNFTSLandBase}
                 myNFTSBNB={MyNFTSBNB}
                 MyNFTSCawsBase={MyNFTSCawsBase}
+                myMatNfts={myMatNfts}
               />
             </div>
           </OutsideClickHandler>
