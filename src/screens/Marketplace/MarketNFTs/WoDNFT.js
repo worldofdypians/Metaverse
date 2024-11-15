@@ -819,7 +819,7 @@ const WoDNFT = ({
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft2  d-flex  align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
           <div className="custom-container mx-0 position-relative">
@@ -982,7 +982,7 @@ const WoDNFT = ({
                     <>
                       {landNfts.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1168,7 +1168,7 @@ const WoDNFT = ({
                     dummyData.map((nft, index) => {
                       return (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1220,7 +1220,7 @@ const WoDNFT = ({
                         .slice(0, next2)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             state={{

@@ -811,7 +811,7 @@ const MyProfile = ({
                           style={{ background: "#061F33" }}
                         >
                           <span className="limited-offer-purchase">
-                            Get Premium
+                            Get Prime
                           </span>
                         </div>
                       </div>
@@ -905,7 +905,7 @@ const MyProfile = ({
                           style={{ background: "#061F33" }}
                         >
                           <span className="limited-offer-purchase">
-                            Get Premium
+                            Get Prime
                           </span>
                         </div>
                       </div>
@@ -980,7 +980,7 @@ const MyProfile = ({
             <div className="col-12 col-lg-4 mt-3">
               <NavLink
                 className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3"
-                to={"/marketplace/stake"}
+                to={"/earn"}
               >
                 <div className="d-flex flex-column justify-content-between h-100">
                   <div className="d-flex flex-column">

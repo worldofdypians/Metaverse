@@ -20,8 +20,8 @@ const TokenUtility = () => {
     },
     {
       icon: "nftMarketplace",
-      title: "NFT Marketplace",
-      desc: "Use the token to buy, sell, and trade NFTs within the marketplace",
+      title: "NFT Shop",
+      desc: "Use the token to buy, sell, and trade NFTs within the Shop",
     },
     {
       icon: "governanceDecisions",

@@ -761,7 +761,7 @@ const LandStaking = ({
                 </a>
               </div>
               <div className={"linear-border-purple2 mt-4"}>
-                <NavLink to={'/marketplace/land'} className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`} >
+                <NavLink to={'/shop/land'} className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`} >
                   <img src={wodLogo} width={25} height={25} alt=''/>
                   Buy on WOD
                 </NavLink>

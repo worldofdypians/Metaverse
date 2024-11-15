@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../_earn.scss";
 import arrowUp from "../assets/arrowUp.svg";
 import arrowUpActive from "../assets/arrowUpActive.svg";
@@ -42,6 +42,12 @@ const EarnContent = ({
       prevSelected.filter((selectedItem) => selectedItem.id !== item.id)
     );
   };
+
+  useEffect(() => {
+    setselectedPool([]);
+  }, [expired, selectedFilter]);
+
+  console.log(selectedPool);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 py-4 earncontent-bg">
@@ -195,11 +201,13 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
-                            tvl_usd={selectedPool.find((obj) => {
-                              return (
-                                obj.id.toLowerCase() === item.id.toLowerCase()
-                              );
-                            })?.tvl_usd}
+                            tvl_usd={
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              })?.tvl_usd
+                            }
                           />
                         )}
 
@@ -214,12 +222,13 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
-                            tvl_usd={selectedPool.find((obj) => {
-                              return (
-                                obj.id.toLowerCase() === item.id.toLowerCase()
-                              );
-                            })?.tvl_usd}
-                            
+                            tvl_usd={
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              })?.tvl_usd
+                            }
                           />
                         )}
 
@@ -234,11 +243,13 @@ const EarnContent = ({
                             binanceW3WProvider={binanceW3WProvider}
                             handleSwitchNetwork={handleSwitchNetwork}
                             listType={selectedViewStyle}
-                            tvl_usd={selectedPool.find((obj) => {
-                              return (
-                                obj.id.toLowerCase() === item.id.toLowerCase()
-                              );
-                            })?.tvl_usd}
+                            tvl_usd={
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              })?.tvl_usd
+                            }
                           />
                         )}
                         {item?.id ===
@@ -253,11 +264,13 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
-                            tvl_usd={selectedPool.find((obj) => {
-                              return (
-                                obj.id.toLowerCase() === item.id.toLowerCase()
-                              );
-                            })?.tvl_usd}
+                            tvl_usd={
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              })?.tvl_usd
+                            }
                           />
                         )}
 
@@ -273,11 +286,13 @@ const EarnContent = ({
                             handleSwitchNetwork={handleSwitchNetwork}
                             isPremium={isPremium}
                             listType={selectedViewStyle}
-                            tvl_usd={selectedPool.find((obj) => {
-                              return (
-                                obj.id.toLowerCase() === item.id.toLowerCase()
-                              );
-                            })?.tvl_usd}
+                            tvl_usd={
+                              selectedPool.find((obj) => {
+                                return (
+                                  obj.id.toLowerCase() === item.id.toLowerCase()
+                                );
+                              })?.tvl_usd
+                            }
                           />
                         )}
 

@@ -204,7 +204,7 @@ const AmplifySection = () => {
                   <div className="py-4">
                     <NavLink
                       className="stake-wod-btn px-4 py-2 mt-4"
-                      to={"/marketplace/beta-pass/base"}
+                      to={"/shop/beta-pass/base"}
                     >
                       Get Beta Pass
                     </NavLink>
@@ -214,7 +214,7 @@ const AmplifySection = () => {
                   <div className="py-4">
                     <NavLink
                       className="stake-wod-btn buy-premium-btn px-4 py-2 mt-4"
-                      to={"/account/premium"}
+                      to={"/account/prime"}
                     >
                       Buy Premium
                     </NavLink>

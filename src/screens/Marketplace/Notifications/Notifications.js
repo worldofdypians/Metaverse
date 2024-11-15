@@ -80,7 +80,7 @@ const Notifications = ({
             update: "no",
             title: "Welcome",
             description:
-              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
             redirect_link: "",
           }, {
             headers: { Authorization: `Bearer ${authToken}` },
@@ -289,7 +289,7 @@ const Notifications = ({
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
-        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
     }
   }, [nftCount, coinbase, isConnected]);

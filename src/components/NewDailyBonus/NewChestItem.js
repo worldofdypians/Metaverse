@@ -1618,7 +1618,7 @@ const NewChestItem = ({
         />
       )}
       <div className="new-claim-chest-btn d-flex align-items-center justify-content-center">
-        {open ? "Claimed" : rewardTypes === "premium" ? "Premium" : "Claim "}
+        {open ? "Claimed" : rewardTypes === "premium" ? "Prime" : "Claim "}
       </div>
     </div>
   );

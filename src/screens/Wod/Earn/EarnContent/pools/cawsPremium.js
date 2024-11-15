@@ -273,7 +273,7 @@ const CawsDetailsPremium = ({
   };
 
   const handleNavigateToPlans = () => {
-    navigate("/account/premium");
+    navigate("/account/prime");
   };
 
   const totalStakedNft = async () => {

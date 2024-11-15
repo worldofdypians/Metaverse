@@ -488,6 +488,16 @@ const LandDetails = ({
                 </div>
               </div>
             </div>
+            {!isConnected && (
+              <button
+                className={`btn w-100 connectbtn  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleConnection();
+                }}
+              >
+                Connect Wallet
+              </button>
+            )}
             {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div

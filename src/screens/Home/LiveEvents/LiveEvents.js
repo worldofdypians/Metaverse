@@ -96,7 +96,7 @@ const LiveEvents = () => {
         <div className="live-events-container mt-4">
           <Slider {...settings}>
             {events.map((item, index) => (
-              <NavLink to={`/marketplace/events/${item.id}`} className="live-event-card p-3 d-flex flex-column align-items-center justify-content-center gap-3">
+              <NavLink to={`/account/challenges/${item.id}`} className="live-event-card p-3 d-flex flex-column align-items-center justify-content-center gap-3">
               <img src={require(`./assets/${item.image}`)} className='w-100' alt="" />
               <h6 className="live-event-card-title mb-0">{item.name}</h6>
              </NavLink>

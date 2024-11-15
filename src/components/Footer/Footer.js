@@ -165,7 +165,7 @@ const Footer = () => {
   };
 
   useEffect(() => {
-    if (location.pathname.includes("marketplace")) {
+    if (location.pathname.includes("shop")) {
       setPadding(true);
     } else {
       setPadding(false);
@@ -190,8 +190,8 @@ const Footer = () => {
             <NavLink to="/token" className="new-footer-link">
               WOD Token
             </NavLink>
-            <NavLink to="/marketplace" className="new-footer-link">
-              Marketplace
+            <NavLink to="/shop" className="new-footer-link">
+            Shop
             </NavLink>
             <NavLink to="/earn" className="new-footer-link">
               Earn

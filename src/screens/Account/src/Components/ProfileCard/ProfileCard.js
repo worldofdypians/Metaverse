@@ -817,7 +817,7 @@ const ProfileCard = ({
                         >
                           {/* <div className="table-separator position-absolute"></div> */}
                           <h6 className="become-premium-title mb-0">
-                            Premium Subscription
+                          Prime Subscription
                           </h6>
 
                           <img

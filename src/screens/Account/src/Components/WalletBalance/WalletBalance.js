@@ -1783,7 +1783,7 @@ const WalletBalance = ({
                     favoriteItems.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -1905,7 +1905,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -1946,7 +1946,7 @@ const WalletBalance = ({
                     myOffers.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -2018,8 +2018,8 @@ const WalletBalance = ({
                         key={index}
                         to={
                           item.isStaked === true
-                            ? `/marketplace/stake`
-                            : `/marketplace/nft/${item.tokenId}/${item.nftAddress}`
+                            ? `/earn`
+                            : `/shop/nft/${item.tokenId}/${item.nftAddress}`
                         }
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -2201,7 +2201,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -2248,7 +2248,7 @@ const WalletBalance = ({
                     landStaked.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/stake`}
+                        to={`/earn`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2277,7 +2277,7 @@ const WalletBalance = ({
                     myCawsWodStakes.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/stake`}
+                        to={`/earn`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2338,7 +2338,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2381,7 +2381,7 @@ const WalletBalance = ({
                     listedItems.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -2453,7 +2453,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -3064,8 +3064,8 @@ const WalletBalance = ({
                         <NavLink
                           to={
                             nft.isStaked === true
-                              ? `/marketplace/stake`
-                              : `/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`
+                              ? `/earn`
+                              : `/shop/nft/${nft.tokenId}/${nft.nftAddress}`
                           }
                           style={{ textDecoration: "none" }}
                           key={index}
@@ -3362,7 +3362,7 @@ const WalletBalance = ({
                       .slice(offersPageSlice - 9, offersPageSlice)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3430,7 +3430,7 @@ const WalletBalance = ({
                       .slice(favoritesSliceValue - 9, favoritesSliceValue)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3731,7 +3731,7 @@ const WalletBalance = ({
                       .slice(listedPageSlice - 9, listedPageSlice)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3841,7 +3841,7 @@ const WalletBalance = ({
                         .slice(stakedPageSlice - 9, stakedPageSlice)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/stake`}
+                            to={`/earn`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3883,7 +3883,7 @@ const WalletBalance = ({
                       landStaked.length > 0 &&
                       landStaked.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/stake`}
+                          to={`/earn`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3913,7 +3913,7 @@ const WalletBalance = ({
                       nftItems.length > 0 &&
                       nftItems.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/stake`}
+                          to={`/earn`}
                           style={{ textDecoration: "none" }}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
                           key={index}

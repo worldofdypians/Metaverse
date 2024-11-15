@@ -1051,7 +1051,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                 {active ? (
                   <div className="w-100 d-flex flex-column justify-content-between mt-5">
                     <div className="new-packages-grid community-packages-grid mt-3 mt-lg-0 w-100">
-                      <NavLink to="/marketplace/events/dragon-ruins">
+                      <NavLink to="/account/challenges/dragon-ruins">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1068,7 +1068,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/golden-pass">
+                      <NavLink to="/account/challenges/golden-pass">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1085,7 +1085,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/puzzle-madness">
+                      <NavLink to="/account/challenges/puzzle-madness">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1102,7 +1102,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/critical-hit">
+                      <NavLink to="/account/challenges/critical-hit">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1142,7 +1142,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {
-                            navigate("/marketplace/events/past");
+                            navigate("/account/challenges");
                           }}
                           data={item}
                           event={item}

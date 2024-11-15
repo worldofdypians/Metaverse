@@ -672,7 +672,7 @@ const DailyBonusPopup = ({
                   }}
                 >
                   <h6 className="chest-event-title mb-0 font-organetto">
-                    Premium
+                  Prime
                   </h6>
                 </div>
               </div>
@@ -786,7 +786,7 @@ const DailyBonusPopup = ({
                     !isPremium ? (
                     <span className="sync-txt d-flex align-items-center gap-1">
                       <img src={triangle} alt="" />
-                      You need to be a Premium Subscriber in order to unlock the
+                      You need to be a Prime Subscriber in order to unlock the
                       Chests
                     </span>
                   ) : !canBuy ? (

@@ -783,7 +783,7 @@ const NewLeaderBoard = ({
                       {!availableTime ? (
                         <NavLink
                           className="activate-btn px-3 py-1"
-                          to="/marketplace/events/golden-pass"
+                          to="/account/challenges/golden-pass"
                         >
                           Activate
                         </NavLink>
@@ -812,7 +812,7 @@ const NewLeaderBoard = ({
                           Extra Daily Stars
                         </span>
                         <span className="user-rank-text">
-                          {isPremium ? "Activated" : "Premium Subscription"}
+                          {isPremium ? "Activated" : "Prime Subscription"}
                         </span>
                       </div>
                     </div>
@@ -820,7 +820,7 @@ const NewLeaderBoard = ({
                       {!isPremium ? (
                         <NavLink
                           className="activate-btn2 px-3 py-1"
-                          to="/account#premium"
+                          to="/account/prime"
                           style={{
                             background: "#7E52D2",
                           }}

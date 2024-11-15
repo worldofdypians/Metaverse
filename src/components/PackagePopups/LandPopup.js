@@ -140,7 +140,7 @@ const LandPopup = ({ onClosePopup }) => {
           >
               <NavLink
                 className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
-                to="/marketplace/land"
+                to="/shop/land"
               >
                 GET YOUR LAND
               </NavLink>
