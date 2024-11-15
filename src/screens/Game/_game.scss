@@ -161,7 +161,7 @@
   // }
 }
 
-.warrior-info-wrapper{
+.warrior-info-wrapper {
   position: absolute;
   width: 50%;
   @media screen and (max-width: 786px) {
@@ -170,7 +170,7 @@
 }
 
 .humans-class-text {
-  -webkit-text-stroke: 2px #5FF4FF;
+  -webkit-text-stroke: 2px #5ff4ff;
   font-family: "Oxanium";
   color: transparent;
   font-size: 46px;
@@ -183,32 +183,32 @@
   }
 }
 
-.warrior-class-title{
-  color: #8BD8FF;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.warrior-class-title {
+  color: #8bd8ff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
-.mage-class-title{
-  color: #FFAEB2;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-align: end;
+.mage-class-title {
+  color: #ffaeb2;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: end;
 }
 
-.warrior-class-desc{
-  color: #EEEDFF;
-font-size: 16px;
-font-style: normal;
-font-weight: 500;
-line-height: 24px; /* 150% */
+.warrior-class-desc {
+  color: #eeedff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
 }
 
 .aliens-class-text {
-  -webkit-text-stroke: 2px #FF5F66;
+  -webkit-text-stroke: 2px #ff5f66;
   font-family: "Oxanium";
   color: transparent;
   font-size: 46px;
@@ -413,4 +413,52 @@ line-height: 24px; /* 150% */
 
 .amplify-game-banner {
   background-image: url("../../assets/gameAssets/amplifyBanner.webp");
+}
+
+.leaderboards-game-wrapper {
+  width: 49%;
+  border-radius: 0 20px 20px 0;
+  background: url("../../assets/gameAssets/gameLeaderboardBg.webp");
+  background-size: 100%;
+}
+
+.golden-pass-game-wrapper {
+  width: 49%;
+  border-radius: 20px 0 0 20px;
+  background: url("../../assets/gameAssets/gameGoldenPassBg.webp");
+  background-size: 100%;
+}
+
+.game-feature-title {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.game-feature-desc {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  width: 75%;
+}
+
+.game-feature-redirect {
+  color: #dcfb85;
+  text-align: right;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.game-feature-img {
+  width: 230px;
+  height: 230px;
 }
