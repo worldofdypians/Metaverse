@@ -3,8 +3,13 @@
 @import "../src/screens/Caws/nftWhiteList";
 @import "../src/screens/Caws/responsive";
 @import "../src/screens/Account/src/Components/BundleCard/bundle";
+@import "../src/screens/Account/src/Components/ProfileCard/profilecard";
+
+@import "../src/screens/Account/src/Containers/Dashboard/Components/TopSection/topsection";
 @import '../src/screens/Caws/NftMinting/General/NftCawCard/nftCawCard';
 @import '../src/screens/Caws/NftMinting/General/NftStakingCawCard/nftStakeCawCard';
+@import '../src/components/LandPopup/landpopup';
+
 
 @font-face {
   font-family: "Organetto";

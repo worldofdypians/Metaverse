@@ -3321,24 +3321,14 @@ const SingleNft = ({
                             >
                               {getFormattedNumber(
                                 nft?.price / 1e18,
-                                nft?.payment_priceType === 0 ? 3 : 0
+                                3
                               )}{" "}
-                              {nft?.payment_priceType === 0
-                                ? "ETH"
-                                : nft?.payment_tokenAddress ===
-                                  window.config.dyp_token_address
-                                ? "DYPv1"
-                                : "DYPv2"}
+                             ETH
                             </span>
                             <span className="nft-price-usd">
                               $
                               {getFormattedNumber(
-                                nft?.payment_priceType === 0
-                                  ? ethTokenData * (nft?.price / 1e18)
-                                  : nft?.payment_tokenAddress ===
-                                    window.config.dyp_token_address
-                                  ? dyptokenData_old * (nft?.price / 1e18)
-                                  : dyptokenData * (nft?.price / 1e18),
+                                 ethTokenData * (nft?.price / 1e18),
                                 2
                               )}
                             </span>
@@ -3357,7 +3347,7 @@ const SingleNft = ({
                             <div className="d-flex gap-2 align-items-center">
                               <img
                                 src={
-                                  nft?.payment_priceType === 0 ? topEth : topDyp
+                                topEth
                                 }
                                 alt=""
                                 height={30}
@@ -3366,24 +3356,15 @@ const SingleNft = ({
                               <span className="nft-price-eth">
                                 {getFormattedNumber(
                                   nft?.price / 1e18,
-                                  nft?.payment_priceType === 0 ? 3 : 0
+                                  3
                                 )}{" "}
-                                {nft?.payment_priceType === 0
-                                  ? "ETH"
-                                  : nft?.payment_tokenAddress ===
-                                    window.config.dyp_token_address
-                                  ? "DYPv1"
-                                  : "DYPv2"}
+                                 ETH 
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  nft?.payment_priceType === 0
-                                    ? ethTokenData * (nft?.price / 1e18)
-                                    : nft?.payment_tokenAddress ===
-                                      window.config.dyp_token_address
-                                    ? dyptokenData_old * (nft?.price / 1e18)
-                                    : dyptokenData * (nft?.price / 1e18),
+                                  ethTokenData * (nft?.price / 1e18)
+                                   ,
                                   2
                                 )}
                               </span>
@@ -3487,22 +3468,13 @@ const SingleNft = ({
                               />
                               <div className="d-flex flex-column gap-1">
                                 <span className="nft-price-eth gap-3 d-flex">
-                                  {nft.payment_priceType === 0
-                                    ? "ETH"
-                                    : nft.payment_tokenAddress ===
-                                      window.config.token_dypius_new_address
-                                    ? "DYPv2"
-                                    : "DYPv1"}{" "}
+                                 ETH
                                 </span>
                                 <span className="nft-price-usd">
                                   $
                                   {getFormattedNumber(
-                                    nft?.payment_priceType === 0
-                                      ? ethTokenData * (nft?.price / 1e18)
-                                      : nft?.payment_tokenAddress ===
-                                        window.config.dyp_token_address
-                                      ? dyptokenData_old * (nft?.price / 1e18)
-                                      : dyptokenData * (nft?.price / 1e18),
+                                     ethTokenData * (nft?.price / 1e18)
+                                      ,
                                     2
                                   )}
                                 </span>
