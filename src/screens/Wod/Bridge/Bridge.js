@@ -30,7 +30,7 @@ const Bridge = ({
   };
 
   return (
-    <div className="container-fluid token-wrapper px-0">
+    <div className="container-fluid bridge-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
         <BridgeHero onScroll={scrollToElement} />
         <BridgeContent

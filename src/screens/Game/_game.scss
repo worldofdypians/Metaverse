@@ -92,6 +92,9 @@
   transition: all 0.25s;
   width: fit-content;
   text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
 }
 
 .explore-btn:hover {
@@ -113,6 +116,9 @@
   padding: 12px 30px !important;
   width: fit-content;
   text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
 }
 
 .getpremium-btn:hover {
@@ -352,6 +358,7 @@
   background-size: 100%;
   aspect-ratio: 5/1;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
   border-bottom: 3px solid black;
   @media screen and (max-width: 1300px) {
     background-size: cover;
