@@ -5,6 +5,7 @@ import ClassSelection from "./ClassSelection";
 import AmplifySection from "./AmplifySection";
 import GameEvents from "./GameEvents";
 import AmplifyExperience from "./AmplifyExperience";
+import FeatureSection from "./FeatureSection";
 
 const Game = () => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const Game = () => {
         <ClassSelection />
         <AmplifySection />
         <GameEvents />
+        <FeatureSection />
         <AmplifyExperience />
       </div>
     </div>
