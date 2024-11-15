@@ -2984,7 +2984,7 @@ const NewDailyBonus = ({
                         <b>
                           There are a total of 20 chests to unlock, with 10
                           chests available to all players for free, and the
-                          remaining 10 exclusive to premium subscribers.
+                          remaining 10 exclusive to Prime subscribers.
                         </b>
                         <br />
                         <br />
@@ -3013,7 +3013,7 @@ const NewDailyBonus = ({
                         </div>
                         Some of the rewards opened in the chests might require
                         an action, such as buying a CAWS or Genesis Land NFT, or
-                        purchasing a Premium Subscription, in order to claim the
+                        purchasing a Prime Subscription, in order to claim the
                         reward. The deadline for taking the action is 00:00 UTC
                         each day.
                         <br />
@@ -5597,7 +5597,7 @@ const NewDailyBonus = ({
                                 )}
                               </span>{" "}
                               reward will be allocated to you if you become a
-                              Premium Subscriber.
+                              Prime Subscriber.
                             </span>
                           </div>
                         </div>
@@ -5646,7 +5646,7 @@ const NewDailyBonus = ({
                             className="get-premium-btn px-2 py-1 mb-2 mb-lg-0"
                             onClick={onPremiumClick}
                           >
-                            Get Premium
+                            Get Prime
                           </button>
                         </div>
                       </div>
@@ -5853,11 +5853,11 @@ const NewDailyBonus = ({
                             className="desc-title mb-0"
                             style={{ color: "#fff" }}
                           >
-                            Become Premium Subscriber
+                            Become Prime Subscriber
                           </h6>
                           <span className="chain-desc mb-0">
                             Enjoy extra benefits and unlock more chests for
-                            extra rewards by upgrading to premium.
+                            extra rewards by upgrading to Prime.
                           </span>
                         </div>
                         <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
@@ -5870,7 +5870,7 @@ const NewDailyBonus = ({
                             className="get-premium-btn px-2 py-1"
                             onClick={onPremiumClickOther}
                           >
-                            Get Premium
+                            Get Prime
                           </button>
                         </div>
                       </div>

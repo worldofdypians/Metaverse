@@ -565,6 +565,16 @@ const CawsDetails = ({
                 </div>
               </div>
             </div>
+            {!isConnected && (
+              <button
+                className={`btn w-100 connectbtn  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleConnection();
+                }}
+              >
+                Connect Wallet
+              </button>
+            )}
             {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div
@@ -751,9 +761,7 @@ const CawsDetails = ({
                       href={`https://etherscan.io/address/${window.config.nftstaking_address50}`}
                       className="stats-card-content text-decoration-underline"
                     >
-                      {shortAddress(
-                        window.config.nftstaking_address50
-                      )}{" "}
+                      {shortAddress(window.config.nftstaking_address50)}{" "}
                     </a>
                   </div>
                 </div>

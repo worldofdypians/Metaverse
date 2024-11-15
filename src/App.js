@@ -4241,7 +4241,7 @@ function App() {
             update: "no",
             title: "Welcome",
             description:
-              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
             redirect_link: "",
           },
           {
@@ -4425,7 +4425,7 @@ function App() {
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
-        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT marketplace, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
+        "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
     }
   }, [coinbase, nftCount]);
@@ -4517,7 +4517,7 @@ function App() {
         <Routes>
           <Route path="/news/:newsId?/:titleId?" element={<News />} />
           <Route
-            path="marketplace/nft/:nftId/:nftAddress?"
+            path="shop/nft/:nftId/:nftAddress?"
             element={
               <SingleNft
                 coinbase={coinbase}
@@ -4785,7 +4785,7 @@ function App() {
 
           <Route
             exact
-            path="/account/premium"
+            path="/account/prime"
             element={
               <Dashboard
                 authToken={authToken}
@@ -4868,7 +4868,7 @@ function App() {
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
-            path="/marketplace"
+            path="/shop"
             element={
               <Marketplace
                 totalSupply={totalSupply}
@@ -4890,7 +4890,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/caws"
+            path="/shop/caws"
             element={
               <CawsNFT
                 ethTokenData={ethTokenData}
@@ -4911,7 +4911,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/land"
+            path="/shop/land"
             element={
               <WoDNFT
                 ethTokenData={ethTokenData}
@@ -4932,7 +4932,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/timepiece"
+            path="/shop/timepiece"
             element={
               <TimepieceNFT
                 ethTokenData={ethTokenData}
@@ -4956,7 +4956,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/bnb"
+            path="/shop/beta-pass/bnb"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -4985,7 +4985,7 @@ function App() {
 
 <Route
             exact
-            path="/marketplace/beta-pass/matchain"
+            path="/shop/beta-pass/matchain"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5015,7 +5015,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/cookie3"
+            path="/shop/beta-pass/cookie3"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5045,7 +5045,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/manta"
+            path="/shop/beta-pass/manta"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5075,7 +5075,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/taiko"
+            path="/shop/beta-pass/taiko"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5125,7 +5125,7 @@ function App() {
           {/* )} */}
           <Route
             exact
-            path="/marketplace/beta-pass/conflux"
+            path="/shop/beta-pass/conflux"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5155,7 +5155,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/sei"
+            path="/shop/beta-pass/sei"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5185,7 +5185,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/core"
+            path="/shop/beta-pass/core"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5215,7 +5215,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/multiversx"
+            path="/shop/beta-pass/multiversx"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5245,7 +5245,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/viction"
+            path="/shop/beta-pass/viction"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5275,7 +5275,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/skale"
+            path="/shop/beta-pass/skale"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5305,7 +5305,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/doge"
+            path="/shop/beta-pass/doge"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5335,7 +5335,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/coinmarketcap"
+            path="/shop/beta-pass/coinmarketcap"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5365,7 +5365,7 @@ function App() {
 
           <Route
             exact
-            path="/marketplace/beta-pass/gate"
+            path="/shop/beta-pass/gate"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5395,7 +5395,7 @@ function App() {
 
           {/* <Route
                 exact
-                path="/marketplace/beta-pass/avalanche"
+                path="/shop/beta-pass/avalanche"
                 element={
                   <BetaPassNFT
                     type={"avalanche"}
@@ -5431,7 +5431,7 @@ function App() {
               /> */}
           {/* <Route
                 exact
-                path="/marketplace/beta-pass/coin98"
+                path="/shop/beta-pass/coin98"
                 element={
                   <BetaPassNFT
                     type={"coin98"}
@@ -5467,7 +5467,7 @@ function App() {
               /> */}
           <Route
             exact
-            path="/marketplace/beta-pass/coingecko/:terms?"
+            path="/shop/beta-pass/coingecko/:terms?"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5496,7 +5496,7 @@ function App() {
           />
           <Route
             exact
-            path="/marketplace/beta-pass/base"
+            path="/shop/beta-pass/base"
             element={
               <BetaPassNFT
                 isConnected={isConnected}
@@ -5587,7 +5587,7 @@ function App() {
           />
           {/* <Route
             exact
-            path="/marketplace/events/upcoming"
+            path="/shop/events/upcoming"
             element={
               <MarketEvents
                 tabState={"upcoming"}
@@ -5611,7 +5611,7 @@ function App() {
           /> */}
           {/* <Route
             exact
-            path="/marketplace/events/past"
+            path="/shop/events/past"
             element={
               <MarketEvents
                 tabState={"past"}
@@ -5635,7 +5635,7 @@ function App() {
           /> */}
           {/* <Route
             exact
-            path="/marketplace/stake"
+            path="/shop/stake"
             element={
               <MarketStake
                 authToken={authToken}
@@ -5659,7 +5659,7 @@ function App() {
           /> */}
           <Route
             exact
-            path="/marketplace/mint/timepiece"
+            path="/shop/mint/timepiece"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5699,7 +5699,7 @@ function App() {
           />
             <Route
             exact
-            path="/marketplace/mint/matchain"
+            path="/shop/mint/matchain"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5787,7 +5787,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/bnbchain"
+            path="/shop/mint/bnbchain"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5835,7 +5835,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/opbnbchain"
+            path="/shop/mint/opbnbchain"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5892,7 +5892,7 @@ function App() {
           />
           {/* <Route
             exact
-            path="/marketplace/mint/manta"
+            path="/shop/mint/manta"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -5950,7 +5950,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/immutable"
+            path="/shop/mint/immutable"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6008,7 +6008,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/taiko"
+            path="/shop/mint/taiko"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6070,7 +6070,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/viction"
+            path="/shop/mint/viction"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6116,7 +6116,7 @@ function App() {
 
           {/* <Route
               exact
-              path="/marketplace/mint/multiversx"
+              path="/shop/mint/multiversx"
               element={
                 <MarketMint
                   coinbase={coinbase}
@@ -6159,7 +6159,7 @@ function App() {
 
           {/* <Route
             exact
-            path="/marketplace/mint/core"
+            path="/shop/mint/core"
             element={
               <MarketMint
                 coinbase={coinbase}
@@ -6212,7 +6212,7 @@ function App() {
             /> */}
           {/* <Route
               exact
-              path="/marketplace/mint/sei"
+              path="/shop/mint/sei"
               element={
                 <MarketMint
                   coinbase={coinbase}

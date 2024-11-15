@@ -239,7 +239,7 @@ const GlobalLeaderboard = ({
                     that will boost your global ranking.
                     <br />
                     <br />
-                    Premium Subscribers earn extra STARS from Daily
+                    Prime Subscribers earn extra STARS from Daily
                     Leaderboards, improving competitiveness and progression.
                     <br />
                     <br />

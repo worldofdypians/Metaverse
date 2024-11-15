@@ -592,7 +592,7 @@ const Header = ({
                 </div>
               </div>
             </div>
-            {/* <a href="#marketplace" className="nav-anchor">Marketplace</a> */}
+             
             {/* <div className="nav-anchor">Roadmap</div> */}
 
             <NavLink
@@ -604,12 +604,12 @@ const Header = ({
               Game
             </NavLink>
             <NavLink
-              to="/marketplace"
+              to="/shop"
               className={({ isActive }) =>
                 isActive ? "nav-anchor activenavlink" : "nav-anchor"
               }
             >
-              Marketplace
+              Shop
             </NavLink>
             <NavLink
               to="/map"
@@ -922,7 +922,7 @@ const Header = ({
                         <></>
                       )}
                       <NavLink
-                        to={"/account/premium"}
+                        to={"/account/prime"}
                         className={({ isActive }) =>
                           isActive
                             ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
@@ -930,7 +930,7 @@ const Header = ({
                         }
                       >
                         <img width={20} height={20} src={premiumIcon} alt="" />
-                        Premium
+                        Prime
                       </NavLink>
                       <NavLink
                         to={"/contact-us"}
@@ -944,7 +944,7 @@ const Header = ({
                         Support
                       </NavLink>
                       <NavLink
-                        to={"/marketplace"}
+                        to={"/shop"}
                         className={({ isActive }) =>
                           isActive
                             ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
@@ -1087,10 +1087,10 @@ const Header = ({
                                 <a
                                   href={
                                     nft.welcome === "yes"
-                                      ? "https://www.worldofdypians.com/marketplace"
+                                      ? "https://www.worldofdypians.com/shop"
                                       : nft.redirect_link
                                       ? nft.redirect_link
-                                      : `https://www.worldofdypians.com/marketplace/nft/${
+                                      : `https://www.worldofdypians.com/shop/nft/${
                                           nft.tokenId
                                         }/${nft.nftAddress.toLowerCase()}`
                                   }

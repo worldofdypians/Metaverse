@@ -305,7 +305,7 @@ const Marketplace = ({
     getAllData();
     fetchCachedData();
     window.scrollTo(0, 0);
-    document.title = "Marketplace";
+    document.title = "Shop";
   }, []);
 
   const updateFavs = () => {
@@ -561,7 +561,7 @@ const Marketplace = ({
                         background: "transparent",
                       }}
                     >
-                      Marketplace
+                      Shop
                     </mark>
                   </h6>
 
@@ -644,487 +644,7 @@ const Marketplace = ({
           </div>
           <div className="main-wrapper w-100">
             <GameEvents/>
-            {/* <h6 className="nft-wrapper-title font-raleway my-4 ms-3 ms-lg-0">
-              Active Events
-            </h6> */}
-            {/* <div className="nft-outer-wrapper2 row d-flex align-items-center justify-content-around gap-5 gap-lg-0 p-2 p-lg-5 mx-2 mx-lg-0 position-relative">
-              {windowSize.width > 786 ? (
-                <>
-                  <NavLink
-                    to="/marketplace/events/treasure-hunt"
-                    state={{ package: "betaPass" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Tresure Hunt</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/treasure.jpg")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
-
-                  
-
-                  <NavLink
-                    to="/marketplace/events/dragon-ruins"
-                    state={{ package: "dragon" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Dragon Ruins</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
-
-                  <NavLink
-                    to="/marketplace/events/golden-pass"
-                    state={{ package: "dyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Golden Pass</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("../Account/src/Components/BundleCard/assets/goldenPass.webp")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
-                  <NavLink
-                    to="/marketplace/events/puzzle-madness"
-                    state={{ package: "idyp" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur  d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">
-                          Puzzle Madness
-                        </span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/puzzleMadness.png")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
-                  <NavLink
-                    to="/marketplace/events/critical-hit"
-                    state={{ package: "criticalHit" }}
-                    className="d-flex flex-column align-items-center gap-2 col-12 col-lg-2 position-relative"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div className="position-relative package-blur">
-                      <div className="first-box-blur d-flex align-items-end justify-content-center">
-                        <span className="blur-package-title">Critical Hit</span>
-                      </div>
-                      <div className="second-box-blur"></div>
-                      <img
-                        src={require("./assets/criticalHit.webp")}
-                        alt=""
-                        className="blur-img"
-                      />
-                    </div>
-                  </NavLink>
-                </>
-              ) : (
-                <div className="d-flex justify-content-center">
-                  <div className="new-packages-grid mb-3">
-                    <div className="">
-                      <NavLink
-                        to="/marketplace/events/treasure-hunt"
-                        state={{ package: "betaPass" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/treasure.jpg")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Treasure Hunt
-                        </span>
-                      </NavLink>
-                    </div>
-                   
-                    <div className="">
-                      <NavLink
-                        to="/marketplace/events/dragon-ruins"
-                        state={{ package: "dragon" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("../Account/src/Components/BundleCard/assets/dragonPackageIcon.webp")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Dragon Ruins
-                        </span>
-                      </NavLink>
-                    </div>
-                    <div className="">
-                      <NavLink
-                        to="/marketplace/events/golden-pass"
-                        state={{ package: "dyp" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/goldenPass.png")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">Golden Pass</span>
-                      </NavLink>
-                    </div>
-                    <div className="">
-                      <NavLink
-                        to="/marketplace/events/puzzle-madness"
-                        state={{ package: "idyp" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/puzzleMadness.png")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Puzzle Madness
-                        </span>
-                      </NavLink>
-                    </div>
-                    <div className="">
-                      <NavLink
-                        to="/marketplace/events/critical-hit"
-                        state={{ package: "criticalHit" }}
-                        className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
-                      >
-                        <img
-                          src={require("./assets/criticalHit.webp")}
-                          className="w-100"
-                          style={{ borderRadius: "16px" }}
-                          alt=""
-                        />
-                        <span className="event-package-title">
-                          Critical Hit
-                        </span>
-                      </NavLink>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div> */}
-            {/*  <div
-              className="row mx-1 justify-content-center d-flex my-4 align-items-start nft-outer-wrapper2 px-3 py-5 px-lg-5 gap-4 my-4"
-              style={{ minHeight: "420px" }}
-            >
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
-                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-4">
-                  <h6 className="nft-wrapper-title font-raleway mb-0">
-                    Top Sales
-                  </h6>
-                  <div className="d-flex  align-items-center gap-4">
-                    <h6
-                      className={`filter-title mb-0 ${
-                        topSalesFilter === "all" && "filter-selected"
-                      }`}
-                      onClick={() => setTopSalesFilter("all")}
-                    >
-                      All
-                    </h6>
-                    <h6
-                      className={`filter-title mb-0 ${
-                        topSalesFilter === "caws" && "filter-selected"
-                      }`}
-                      onClick={() => setTopSalesFilter("caws")}
-                    >
-                      CAWS
-                    </h6>
-                    <h6
-                      className={`filter-title mb-0 ${
-                        topSalesFilter === "land" && "filter-selected"
-                      }`}
-                      onClick={() => setTopSalesFilter("land")}
-                    >
-                      Land
-                    </h6>
-                    <h6
-                      className={`filter-title mb-0 ${
-                        topSalesFilter === "timepiece" && "filter-selected"
-                      }`}
-                      onClick={() => setTopSalesFilter("timepiece")}
-                    >
-                      Timepiece
-                    </h6>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-4">
-                  <h6
-                    className={`filter-title  mb-0 ${
-                      topSalesDate === "24h" && "filter-selected"
-                    }`}
-                    onClick={() => setTopSalesDate("24h")}
-                  >
-                    24H
-                  </h6>
-                  <h6
-                    className={`filter-title  mb-0 ${
-                      topSalesDate === "week" && "filter-selected"
-                    }`}
-                    onClick={() => setTopSalesDate("week")}
-                  >
-                    7D
-                  </h6>
-                  <h6
-                    className={`filter-title  mb-0 ${
-                      topSalesDate === "month" && "filter-selected"
-                    }`}
-                    onClick={() => setTopSalesDate("month")}
-                  >
-                    30D
-                  </h6>
-                </div>
-              </div> 
-              <div className="w-100" style={{ minHeight: "260px" }}>
-                <div
-                  className={
-                    loadingTopSales === false
-                      ? "row align-items-start position-relative justify-content-start px-0"
-                      : "loader-wrapper"
-                  }
-                  style={{ rowGap: "22px" }}
-                >
-                  {!loadingTopSales ? (
-                    topSold && topSold.length > 0 ? (
-                      topSold.slice(0, 9).map((nft, index) => (
-                        <div className="col-12 col-lg-4" key={index}>
-                          <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
-                            style={{ textDecoration: "none" }}
-                            state={{
-                              nft: nft,
-                              type: nft.type,
-                              isOwner:
-                                nft.buyer?.toLowerCase() ===
-                                coinbase?.toLowerCase(),
-                              chain: nft.chain,
-                            }}
-                            onClick={() => {
-                              updateViewCount(nft.tokenId, nft.nftAddress);
-                            }}
-                          >
-                            <div className="top-sales-card d-flex p-3 align-items-center gap-3 position-relative">
-                         
-                              <img
-                                src={
-                                  nft.type === "caws"
-                                    ? `https://mint.dyp.finance/thumbs50/${nft.tokenId}.png`
-                                    : nft.type === "land"
-                                    ? `https://mint.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                    : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
-                                }
-                                width={40}
-                                height={40}
-                                style={{ borderRadius: "10px" }}
-                                alt=""
-                              />
-                              <div className="d-flex justify-content-between gap-2 w-100">
-                                <h6
-                                  className="nft-name-wrapper mb-0 py-1 px-2"
-                                  style={{ fontSize: 14 }}
-                                >
-                                  {nft.type === "caws"
-                                    ? "CAWS"
-                                    : nft.type === "land"
-                                    ? "Genesis Land"
-                                    : "Timepiece"}{" "}
-                                  #{nft.tokenId}
-                                </h6>
-                                <div className="d-flex align-items-center gap-1 ">
-                                  <div className="d-flex flex-column ">
-                                    <span
-                                      className="nft-price-usd overflow-hidden"
-                                      style={{
-                                        color: "#7DD9AF",
-                                        whiteSpace: "nowrap",
-                                        textOverflow: "ellipsis",
-                                        textAlign: "end",
-                                      }}
-                                    >
-                                      $
-                                      {getFormattedNumber(
-                                        nft.payment_priceType === 0
-                                          ? ethTokenData * (nft.price / 1e18)
-                                          : dypTokenData * (nft.price / 1e18),
-                                        2
-                                      )}
-                                    </span>{" "}
-                                    <span
-                                      className="top-eth overflow-hidden"
-                                      style={{
-                                        fontSize: 12,
-                                        whiteSpace: "nowrap",
-                                        textOverflow: "ellipsis",
-                                        textAlign: "end",
-                                      }}
-                                    >
-                                      {nft.payment_priceType === 0 ? (
-                                        <img
-                                          src={topEth}
-                                          height={12}
-                                          width={12}
-                                          alt=""
-                                          className="mx-1"
-                                        />
-                                      ) : (
-                                        <img
-                                          src={topDyp}
-                                          height={12}
-                                          width={12}
-                                          alt=""
-                                          className="mx-1"
-                                        />
-                                      )}
-                                      {getFormattedNumber(
-                                        nft.price / 1e18,
-                                        nft.payment_priceType === 0 ? 3 : 0
-                                      )}{" "}
-                                      {nft.payment_priceType === 0
-                                        ? "ETH"
-                                        : "DYP"}
-                                    </span>
-                                  </div>
-                                </div>
-                                <span
-                                  className="position-absolute top-sale-time"
-                                  style={{ bottom: "-20%", left: "4%" }}
-                                >
-                                  {getRelativeTime(nft.blockTimestamp)}
-                                </span>
-                              </div>
-                            </div>
-                          </NavLink>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="d-flex justify-content-center">
-                        <h3
-                          className="text-white"
-                          style={{ textAlign: "center", marginTop: '100px' }}
-                        >
-                          There were no sales for that period.
-                        </h3>
-                      </div>
-                    )
-                  ) : (
-                    <div className="row loader-wrapper gap-0">
-                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                      <div className="col-12 col-lg-4 mb-3 d-none d-lg-flex justify-content-center">
-                        <Skeleton
-                          animation="wave"
-                          width={"100%"}
-                          height={72}
-                          variant="rounded"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>*/}
-
-            {/* <div className="d-flex flex-lg-row flex-column big-wrapper">
-              <div className='leftwrapper'></div>
-              <div className="rightwrapper"></div>
-            </div> */}
-
+ 
             <div
               className="row mx-0 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
@@ -1135,65 +655,10 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
-                    <NavLink
-                      to={"/marketplace/mint/taiko"}
-                      className="w-100 m-0 d-flex flex-column gap-5"
-                    >
-                      <div className="p-4 mint-wrappernew market-mint-taiko w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
-                        <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
-                          <span>NFT Minting</span>
-                        </div>
-                        <div className="d-flex flex-column gap-2 mb-3">
-                          <h6 className="newminttitlehome m-0 position-relative">
-                            Taiko Beta
-                          </h6>
-                          <h6 className="newminttitlehome m-0 position-relative">
-                            Pass
-                          </h6>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/mint/taiko">
-                      <span
-                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
-                        style={{ width: "fit-content" }}
-                      >
-                        Mint now <img src={greenArrow} alt="" />{" "}
-                      </span>
-                    </NavLink>
-                  </div>
-                  <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
-                    <NavLink
-                      to={"/marketplace/mint/timepiece"}
-                      className="w-100 m-0 d-flex flex-column gap-5"
-                    >
-                      <div className="p-4 mint-wrappernew market-mint-timepiece w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
-                        <div className="d-flex align-items-center justify-content-center homepage-nft-mint-tag px-3 py-1">
-                          <span>NFT Minting</span>
-                        </div>
-                        <div className="d-flex flex-column gap-2 mb-3">
-                          <h6 className="newminttitlehome m-0 position-relative">
-                            CAWS
-                          </h6>
-                          <h6 className="newminttitlehome m-0 position-relative">
-                            Timepiece
-                          </h6>
-                        </div>
-                      </div>
-                    </NavLink>
-                    <NavLink to="/marketplace/mint/timepiece">
-                      <span
-                        className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
-                        style={{ width: "fit-content" }}
-                      >
-                        Mint now <img src={greenArrow} alt="" />{" "}
-                      </span>
-                    </NavLink>
-                  </div> */}
+                
                   <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
-                      to={"/marketplace/mint/timepiece"}
+                      to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
                     >
                       <div className="p-4 mint-wrappernew market-mint-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-100">
@@ -1230,7 +695,7 @@ const Marketplace = ({
                         />
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/mint/timepiece">
+                    <NavLink to="/shop/mint/timepiece">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
@@ -1243,7 +708,7 @@ const Marketplace = ({
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/stake"}
+                      to={"/earn"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1260,7 +725,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/stake">
+                    <NavLink to="/earn">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
@@ -1271,7 +736,7 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/marketplace/stake"}
+                      to={"/earn"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-land-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1288,7 +753,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/marketplace/stake">
+                    <NavLink to="/earn">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
@@ -1386,7 +851,7 @@ const Marketplace = ({
                     >
                       {recentListed.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1698,7 +1163,7 @@ const Marketplace = ({
                       recentSold.length > 0 &&
                       recentSold.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{

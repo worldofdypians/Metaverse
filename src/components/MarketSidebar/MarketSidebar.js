@@ -54,7 +54,7 @@ const MarketSidebar = () => {
       >
         <div className="d-flex flex-column  gap-2">
           {/* <NavLink
-            to="/marketplace"
+            to="/shop"
             end
             className={({ isActive }) =>
               isActive
@@ -105,10 +105,10 @@ const MarketSidebar = () => {
               <div
                 id="collapseOne"
                 className={`accordion-collapse collapse ${
-                  location.pathname.includes("marketplace/caws") ||
-                  location.pathname.includes("marketplace/land") ||
-                  location.pathname.includes("marketplace/timepiece") ||
-                  location.pathname.includes("marketplace/beta-pass")
+                  location.pathname.includes("shop/caws") ||
+                  location.pathname.includes("shop/land") ||
+                  location.pathname.includes("shop/timepiece") ||
+                  location.pathname.includes("shop/beta-pass")
                     ? "show"
                     : null
                 }`}
@@ -118,7 +118,7 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/base"
+                      to="/shop/beta-pass/base"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -152,7 +152,7 @@ const MarketSidebar = () => {
                       </div>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/caws"
+                      to="/shop/caws"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -164,7 +164,7 @@ const MarketSidebar = () => {
                       <span className={`nft-sidebar-title`}>CAWS</span>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/land"
+                      to="/shop/land"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -176,7 +176,7 @@ const MarketSidebar = () => {
                       <span className={`nft-sidebar-title`}>Land</span>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/timepiece"
+                      to="/shop/timepiece"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -196,7 +196,7 @@ const MarketSidebar = () => {
           </div>
 
           {/* <NavLink
-            to="/marketplace/events/treasure-hunt"
+            to="/shop/events/treasure-hunt"
             end
             className={({ isActive }) =>
               isActive
@@ -270,7 +270,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace/mint/timepiece"
+            to="/shop/mint/timepiece"
             end
             className={({ isActive }) =>
               isActive
@@ -292,7 +292,7 @@ const MarketSidebar = () => {
             }}
           />
           {/* <NavLink
-            to="/marketplace/nft-bridge"
+            to="/shop/nft-bridge"
             end
             className={({ isActive }) =>
               isActive

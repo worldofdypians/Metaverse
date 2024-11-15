@@ -1409,7 +1409,7 @@ const NewBundleCard = ({
                   </div>
                   <NavLink
                     className="btn purple-pill"
-                    to="/marketplace/land"
+                    to="/shop/land"
                     rel="noreferrer"
                   >
                     Buy Genesis Land

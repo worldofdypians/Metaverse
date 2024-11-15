@@ -684,12 +684,12 @@ const MobileNavbar = ({
 
           <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
-              to="/marketplace"
+              to="/shop"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
               style={{ textDecoration: "none" }}
               onClick={() => setOpenNavbar(false)}
             >
-              <h6 className="mobile-nav-link font-poppins mb-0">Marketplace</h6>
+              <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
               <img src={mobileArrow} alt="arrow" />{" "}
             </NavLink>
           </div>

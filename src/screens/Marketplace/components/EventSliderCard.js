@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const EventSliderCard = ({ data, mintTitle, onSelectCard }) => {
   return (
     <NavLink
-      to={`/marketplace/mint/${data.eventId}`}
+      to={`/shop/mint/${data.eventId}`}
       className={` ${
         mintTitle === data.id && "active-mint-selected"
       }  active-mint ${data.class} justify-content-between d-flex flex-column`}

@@ -2498,7 +2498,7 @@ const GetPremiumPopup = ({
       {isPremium ? (
         <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
           <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between gap-5 gap-lg-0 p-3">
-            <h6 className="mb-0 already-premium-title">Premium Subscriber</h6>
+            <h6 className="mb-0 already-premium-title">Prime Subscriber</h6>
             <img src={premiumIcon} className="already-preium-badge" alt="" />
           </div>
           <div className="mt-3 p-3 benefits-title-wrapper">
@@ -2814,7 +2814,7 @@ const GetPremiumPopup = ({
           {/* <hr className="form-divider my-4" /> */}
           <div className="d-flex align-items-end justify-content-between mt-3">
             <h6 className="become-premium-new-title mb-0">
-              Become Premium Subscriber
+              Become Prime Subscriber
             </h6>
             <span className="my-premium-balance">
               My Balance:{" "}

@@ -10113,7 +10113,7 @@ function Dashboard({
                             cookieEarnUsd={cookieEarnUsd}
                             baseEarnUSD={baseEarnUSD}
                           />
-        ) : location.pathname === "/account/premium" ? (
+        ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
             chainId={chainId}
             coinbase={coinbase}
@@ -10284,7 +10284,7 @@ function Dashboard({
                         )}
 
                         <NavLink
-                          to={"/marketplace/events/golden-pass"}
+                          to={"/shop/events/golden-pass"}
                           className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
                         >
                           <span>Golden Pass - Double</span>
@@ -10323,7 +10323,7 @@ function Dashboard({
                         </div>
                       )}
                       <NavLink
-                        to={"/marketplace/events/golden-pass"}
+                        to={"/shop/events/golden-pass"}
                         className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
                       >
                         <span>Golden Pass - Double</span>
@@ -10684,7 +10684,7 @@ function Dashboard({
 
         {(getPremiumPopup ||
           adClicked === "premium" ||
-          hashValue === "#premium") && (
+          hashValue === "#prime") && (
           <OutsideClickHandler
             onOutsideClick={() => {
               setgetPremiumPopup(false);
@@ -10700,7 +10700,7 @@ function Dashboard({
               <div className="subscribe-container p-2 position-relative">
                 <div className="" style={{ background: "#8E97CD" }}></div>
                 <div className="d-flex justify-content-between align-items-center">
-                  <h6 className="free-plan-title">Premium Subscription</h6>
+                  <h6 className="free-plan-title">Prime Subscription</h6>
                   <img
                     src={xMark}
                     onClick={() => {
@@ -10856,99 +10856,116 @@ function Dashboard({
                       <h6 className="plan-cost mb-0">$100</h6>
                     </div>
                     <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-                      <div className="premium-chains-wrapper">
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              require(`../../Images/premium/tokens/ethIcon.svg`)
-                                .default
-                            }
-                            alt=""
-                          />
-                          <span className="subscription-chain mb-0">
-                            Ethereum
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                .default
-                            }
-                            alt=""
-                          />
-                          <span className="subscription-chain mb-0">
-                            BNB Chain
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={
-                              require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                .default
-                            }
-                            alt=""
-                          />
-                          <span className="subscription-chain mb-0">
-                            Avalanche
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={baseLogo}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">Base</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={conflux}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">
-                            Conflux
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={skaleIcon}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">SKALE</span>
+                    <div className="premium-chains-wrapper2">
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/ethIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">Ethereum</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">BNB Chain</span>
+                  </div>
 
-                          {/*   <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={seiIcon}
-                              alt=""
-                              style={{ width: 18, height: 18 }}
-                            />
-                            <span className="subscription-chain mb-0">
-                              SEI
-                            </span>
-                          </div> */}
-                        </div>{" "}
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={coreIcon}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">CORE</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={vicitonIcon}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">
-                            Viction
-                          </span>
-                        </div>
-                      </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={require(`../../../../../components/Header/assets/manta.png`)}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Manta</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../../../../components/Header/assets/taiko.svg`)
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Taiko</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../../../../components/Header/assets/taiko.svg`)
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Matchain</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={
+                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                          .default
+                      }
+                      style={{ width: 18, height: 18 }}
+                      alt=""
+                    />
+                    <span className="subscription-chain mb-0">Avalanche</span>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={baseLogo}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Base</span>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={conflux}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Conflux</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={skaleIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">SKALE</span>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={coreIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">CORE</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={vicitonIcon}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Viction</span>
+                  </div>
+                  
+                </div>
                       <img src={premiumIcon} alt="" />
                     </div>
                   </div>
@@ -10990,305 +11007,7 @@ function Dashboard({
                 {isConnected && (
                   <>
                     <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
-                      <div className="d-flex flex-column gap-3 subscribe-input-container">
-                        <span className="token-amount-placeholder">
-                          Select chain
-                        </span>
-                        <div className="dropdown position relative">
-                          <button
-                            class={`btn launchpad-dropdown d-flex justify-content-between align-items-center dropdown-toggle`}
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ color: "#fff" }}
-                            >
-                              <img
-                                src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
-                                alt=""
-                                style={{ width: 18, height: 18 }}
-                              />
-                              {chainDropdown.name}
-                            </div>
-                          </button>
-                          {discountPercentage > 0 ||
-                            discountPercentageViction > 0 ||
-                            discountPercentageTaiko ||
-                            discountPercentageMat > 0 ||
-                            nftPremium_total > 0 ||
-                            nftPremium_totalViction ||
-                            nftPremium_totalTaiko||
-                            nftPremium_totalMat > 0 ? (
-                            <div className="premium-discount-bg mt-3 p-4 position-relative">
-                              <div className="premiumRedTag position-absolute">
-                                <div className="position-relative d-flex flex-column">
-                                  <img src={premiumRedTag} alt="" />
-                                  <div className="d-flex flex-column position-absolute discountwrap">
-                                    <span className="discount-price2 font-oxanium">
-                                    {discountPercentage > 0
-                                          ? discountPercentage
-                                          : discountPercentageViction > 0
-                                          ? discountPercentageViction
-                                          : discountPercentageTaiko > 0
-                                          ? discountPercentageTaiko
-                                          : discountPercentageMat > 0
-                                          ? discountPercentageMat
-                                          : discountPercentage}
-                                        %
-                                    </span>
-                                    <span className="discount-price-bottom">
-                                      Discount
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="d-flex flex-row gap-2 gap-lg-0 justify-content-between mt-2 mt-lg-0 justify-content-lg-start flex-lg-column flex-md-column flex-sm-column align-items-center align-items-lg-start align-items-md-start align-items-sm-start">
-                                <div className="d-flex flex-column">
-                                  <h6 className="lifetime-plan-text m-0">
-                                    Lifetime plan
-                                  </h6>
-                                  {(nftPremium_total > 0 ||
-                                      nftPremium_totalViction > 0 ||
-                                      nftPremium_totalTaiko > 0||
-                                      nftPremium_totalMat > 0) && (
-                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                                        Valid until:{" "}
-                                        {new Date(
-                                          nftPremium_total > 0
-                                            ? nftDiscountObject.expiration *
-                                              1000
-                                            : nftPremium_totalTaiko > 0
-                                            ? nftDiscountObjectTaiko.expiration *
-                                              1000
-                                              : nftPremium_totalMat > 0
-                                            ? nftDiscountObjectMat.expiration *
-                                              1000
-                                            : nftDiscountObjectViction.expiration *
-                                              1000
-                                        )
-                                          .toDateString()
-                                          .slice(
-                                            3,
-                                            new Date(
-                                              nftPremium_total > 0
-                                                ? nftDiscountObject.expiration *
-                                                  1000
-                                                : nftPremium_totalTaiko > 0
-                                                ? nftDiscountObjectTaiko.expiration *
-                                                  1000
-                                                  : nftPremium_totalMat > 0
-                                                ? nftDiscountObjectMat.expiration *
-                                                  1000
-                                                : nftDiscountObjectViction.expiration *
-                                                  1000
-                                            ).toDateString().length
-                                          )}
-                                      </h6>
-                                    )}
-                                </div>
-                                <div className="d-flex align-items-end gap-2">
-                                  <h6 className="discount-price">
-                                  {discountPercentage == 100 ||
-                                      discountPercentageViction == 100 ||
-                                      discountPercentageTaiko == 100||
-                                      discountPercentageMat == 100
-                                        ? "FREE"
-                                        : "$" +
-                                          (100 -
-                                            Number(
-                                              discountPercentage > 0
-                                                ? discountPercentage
-                                                : discountPercentageViction > 0
-                                                ? discountPercentageViction
-                                                : discountPercentageTaiko > 0
-                                                ? discountPercentageTaiko
-                                                : discountPercentageMat > 0
-                                                ? discountPercentageMat
-                                                : discountPercentage
-                                            ))}
-                                  </h6>
-                                  <h6 className="old-price-text">$100</h6>
-                                </div>
-                                {(nftPremium_total > 0 ||
-                                    nftPremium_totalViction > 0 ||
-                                    nftPremium_totalTaiko > 0||
-                                    nftPremium_totalMat > 0) && (
-                                    <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                                      Valid until:{" "}
-                                      {new Date(
-                                        nftPremium_total > 0
-                                          ? nftDiscountObject.expiration * 1000
-                                          : nftPremium_totalTaiko > 0
-                                          ? nftDiscountObjectTaiko.expiration *
-                                            1000
-                                            : nftPremium_totalMat > 0
-                                          ? nftDiscountObjectMat.expiration *
-                                            1000
-                                          : nftDiscountObjectViction.expiration *
-                                            1000
-                                      )
-                                        .toDateString()
-                                        .slice(
-                                          3,
-                                          new Date(
-                                            nftPremium_total > 0
-                                              ? nftDiscountObject.expiration *
-                                                1000
-                                              : nftPremium_totalTaiko > 0
-                                              ? nftDiscountObjectTaiko.expiration *
-                                                1000
-                                                : nftPremium_totalMat > 0
-                                              ? nftDiscountObjectMat.expiration *
-                                                1000
-                                              : nftDiscountObjectViction.expiration *
-                                                1000
-                                          ).toDateString().length
-                                        )}
-                                    </h6>
-                                  )}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-                              <div className="d-flex flex-column gap-2">
-                                <span className="lifetime-plan mb-0">
-                                  Lifetime plan
-                                </span>
-                                <h6 className="plan-cost mb-0">$100</h6>
-                              </div>
-                              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-                                <div className="premium-chains-wrapper">
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                                          .default
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Ethereum
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                          .default
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      BNB Chain
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={require(`../../../../../components/Header/assets/manta.png`)}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Manta
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../../../../components/Header/assets/taiko.svg`)
-                                          .default
-                                      }
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Taiko
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                      <img
-                                        src={
-                                          require(`../../../../../components/Header/assets/taiko.svg`)
-                                            .default
-                                        }
-                                        alt=""
-                                        style={{ width: 18, height: 18 }}
-                                      />
-                                      <span className="subscription-chain mb-0">
-                                        Matchain
-                                      </span>
-                                    </div>
-                                    
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={
-                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                          .default
-                                      }
-                                      style={{ width: 18, height: 18 }}
-                                      alt=""
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Avalanche
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={baseLogo}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Base
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={conflux}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      Conflux
-                                    </span>
-                                  </div>
-                                  <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={skaleIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      SKALE
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>{" "}
-                            </div>
-                          )}
-                        </div>
-                        <div className="d-flex flex-column gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <img src={dappsIcon} alt="" />
-                            <h6 className="premium-benefits-title mb-0">
-                              Dapps
-                            </h6>
-                          </div>
-                          {dappsBenefits.map((item, index) => (
-                            <div className="d-flex align-items-center gap-2">
-                              <img src={greenCheck} alt="" />
-                              <span className="premium-benefits-item mb-0">
-                                {item}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>{" "}
-                      <hr className="form-divider my-4" />
+                 
                       {isConnected && (
                         <>
                           <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
@@ -11491,151 +11210,7 @@ function Dashboard({
                                         Viction
                                       </li>
                                     )}
-                                  {/*   <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={() => {
-                                        window.cached_contracts =
-                                          Object.create(null);
-                                        setTimeout(() => {
-                                          setdropdownIcon(
-                                            chainId === 1
-                                              ? window.config
-                                                  .subscriptioneth_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 56
-                                              ? window.config
-                                                  .subscriptionbnb_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 43114
-                                              ? window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 8453
-                                              ? window.config
-                                                  .subscriptionbase_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1030
-                                              ? window.config
-                                                  .subscriptioncfx_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1482601649
-                                              ? window.config
-                                                  .subscriptionskale_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 88
-                                              ? window.config
-                                                  .subscriptionviction_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1116
-                                              ? window.config
-                                                  .subscriptioncore_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 713715
-                                              ? window.config
-                                                  .subscriptionsei_tokens[t]
-                                                  ?.symbol
-                                              : window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol
-                                          );
-                                          setdropdownTitle(
-                                            chainId === 1
-                                              ? window.config
-                                                  .subscriptioneth_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 56
-                                              ? window.config
-                                                  .subscriptionbnb_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 43114
-                                              ? window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 8453
-                                              ? window.config
-                                                  .subscriptionbase_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1030
-                                              ? window.config
-                                                  .subscriptioncfx_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1482601649
-                                              ? window.config
-                                                  .subscriptionskale_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 88
-                                              ? window.config
-                                                  .subscriptionviction_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 713715
-                                              ? window.config
-                                                  .subscriptionsei_tokens[t]
-                                                  ?.symbol
-                                              : chainId === 1116
-                                              ? window.config
-                                                  .subscriptioncore_tokens[t]
-                                                  ?.symbol
-                                              : window.config
-                                                  .subscription_tokens[t]
-                                                  ?.symbol
-                                          );
-
-                                          // console.log(t);
-                                          handleSubscriptionTokenChange(t);
-                                          handleCheckIfAlreadyApproved(t);
-                                        }, 200);
-                                      }}
-                                    >
-                                      <img
-                                        src={
-                                          chainId === 1
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 56
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 43114
-                                            ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 1030
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 8453
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 1482601649
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 1116
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 88
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : chainId === 713715
-                                            ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                            : require(`../../Images/premium/tokens/${window.config.subscription_tokens[
-                                                t
-                                              ]?.symbol.toLowerCase()}Icon.svg`)
-                                        }
-                                        alt=""
-                                        style={{
-                                          width: 18,
-                                          height: 18,
-                                        }}
-                                      />
-                                      SEI
-                                    </li> */}
+                                
                                 </ul>
                               </div>
                             </div>
@@ -11718,6 +11293,9 @@ function Dashboard({
                                               : chainId === 167000
                                               ? window.config
                                                   .subscriptiontaiko_tokens
+                                                  : chainId === 698
+                                                  ? window.config
+                                                      .subscriptionmat_tokens
                                               : chainId === 1116
                                               ? window.config
                                                   .subscriptioncore_tokens
@@ -11778,6 +11356,11 @@ function Dashboard({
                                                           .subscriptiontaiko_tokens[
                                                           t
                                                         ]?.symbol
+                                                        : chainId === 698
+                                                        ? window.config
+                                                            .subscriptionmat_tokens[
+                                                            t
+                                                          ]?.symbol
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens[
@@ -11833,6 +11416,10 @@ function Dashboard({
                                                       : chainId === 167000
                                                       ? window.config
                                                           .subscriptiontaiko_tokens
+                                                      : chainId === 698
+                                                       ? window.config
+                                                              .subscriptionmat_tokens
+
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens
@@ -11904,6 +11491,11 @@ function Dashboard({
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
+                                                      : chainId === 698
+                                                      ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
+                                                          t
+                                                        ]?.symbol.toLowerCase()}Icon.svg`)
+
                                                     : chainId === 713715
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                                         t
@@ -11959,6 +11551,9 @@ function Dashboard({
                                                 ? window.config
                                                     .subscriptiontaiko_tokens[t]
                                                     ?.symbol
+                                               : chainId === 698
+                                               ? window.config.subscriptionmat_tokens[t]?.symbol
+
                                                 : chainId === 713715
                                                 ? window.config
                                                     .subscriptionsei_tokens[t]
@@ -11990,6 +11585,8 @@ function Dashboard({
                                             ? discountPercentageViction
                                             : discountPercentageTaiko != 0
                                             ? discountPercentageTaiko
+                                            : discountPercentageMat != 0
+                                            ? discountPercentageMat
                                             : discountPercentage
                                         )}
                                     </span>

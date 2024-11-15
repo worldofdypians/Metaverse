@@ -430,7 +430,7 @@
                                 )}
 
                                 <NavLink
-                                  to={"/marketplace/events/golden-pass"}
+                                  to={"/shop/events/golden-pass"}
                                   className="buy-golden-tag  px-4 py-1 d-flex flex-column justify-content-center align-items-center position-relative"
                                 >
                                   <span>Golden Pass - Double</span>
@@ -466,7 +466,7 @@
                                 </div>
                               )}
                               <NavLink
-                                to={"/marketplace/events/golden-pass"}
+                                to={"/shop/events/golden-pass"}
                                 className="buy-golden-tag px-4 py-1 d-flex flex-column align-items-center justify-content-center position-relative"
                               >
                                 <span>Golden Pass - Double</span>

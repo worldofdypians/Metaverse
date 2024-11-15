@@ -1243,7 +1243,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       </th>
                     )}
                     <th className="playerHeader text-center font-montserrat">
-                      {optionText2 === "skale" ? "Premium" : "Golden Pass"}
+                      {optionText2 === "skale" ? "Prime" : "Golden Pass"}
                     </th>
                   </tr>
                   {weeklyrecords &&
@@ -2041,7 +2041,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       Reward
                     </th>
                     <th className="playerHeader text-center font-montserrat">
-                      Premium
+                    Prime
                     </th>
                   </tr>
                   {skaleRecords &&

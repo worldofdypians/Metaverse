@@ -869,14 +869,14 @@ const BetaPassNFT = ({
       // ref={listInnerRef}
       // style={{ overflow: "scroll" }}
       >
-        <div
-          className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
-          style={{ minHeight: "72vh", maxWidth: "2400px" }}
+   <div
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
+        style={{ minHeight: "72vh", maxWidth: "2400px" }}
         >
           {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
           <div
-            className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative flex-column"
+           className="container-nft2 d-flex  align-items-start px-3 px-lg-5 position-relative"
             style={{ backgroundSize: "cover" }}
           >
             <div className="custom-container mx-0 position-relative">
@@ -963,7 +963,7 @@ const BetaPassNFT = ({
                     )}
                     {/* {mintTitle === "conflux" && (
                       <NavLink
-                        to="/marketplace/mint/conflux"
+                        to="/shop/mint/conflux"
                         style={{ textDecoration: "none" }}
                       >
                         <button className="btn mint-now-btn gap-2">
@@ -1028,7 +1028,7 @@ const BetaPassNFT = ({
                   <>
                     <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                       <NavLink
-                        to={"/marketplace/beta-pass/base"}
+                        to={"/shop/beta-pass/base"}
                         className={`${location.pathname.includes("base") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1045,7 +1045,7 @@ const BetaPassNFT = ({
                         <span>Base</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/matchain"}
+                        to={"/shop/beta-pass/matchain"}
                         className={`${location.pathname.includes("matchain") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1062,7 +1062,7 @@ const BetaPassNFT = ({
                         <span>Matchain</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/cookie3"}
+                        to={"/shop/beta-pass/cookie3"}
                         className={`${location.pathname.includes("cookie3") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1079,7 +1079,7 @@ const BetaPassNFT = ({
                         <span>Cookie3</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/taiko"}
+                        to={"/shop/beta-pass/taiko"}
                         className={`${location.pathname.includes("taiko") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1096,7 +1096,7 @@ const BetaPassNFT = ({
                         <span>Taiko</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/manta"}
+                        to={"/shop/beta-pass/manta"}
                         className={`${location.pathname.includes("manta") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1113,7 +1113,7 @@ const BetaPassNFT = ({
                         <span>Manta</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/bnb"}
+                        to={"/shop/beta-pass/bnb"}
                         className={`${location.pathname.includes("bnb") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1130,7 +1130,7 @@ const BetaPassNFT = ({
                         <span>BNB</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/core"}
+                        to={"/shop/beta-pass/core"}
                         className={`${location.pathname.includes("core") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1147,7 +1147,7 @@ const BetaPassNFT = ({
                         <span>CORE</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/multiversx"}
+                        to={"/shop/beta-pass/multiversx"}
                         className={`${location.pathname.includes("multiversx") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1164,7 +1164,7 @@ const BetaPassNFT = ({
                         <span>MultiversX</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/sei"}
+                        to={"/shop/beta-pass/sei"}
                         className={`${location.pathname.includes("sei") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1181,7 +1181,7 @@ const BetaPassNFT = ({
                         <span>SEI</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/viction"}
+                        to={"/shop/beta-pass/viction"}
                         className={`${location.pathname.includes("viction") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1198,7 +1198,7 @@ const BetaPassNFT = ({
                         <span>VICTION</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/skale"}
+                        to={"/shop/beta-pass/skale"}
                         className={`${location.pathname.includes("skale") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
@@ -1216,7 +1216,7 @@ const BetaPassNFT = ({
                         <span>SKALE</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/coinmarketcap"}
+                        to={"/shop/beta-pass/coinmarketcap"}
                         className={`${location.pathname.includes("coinmarketcap") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1229,7 +1229,7 @@ const BetaPassNFT = ({
                         <span>CoinMarketCap</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/doge"}
+                        to={"/shop/beta-pass/doge"}
                         className={`${location.pathname.includes("doge") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1247,7 +1247,7 @@ const BetaPassNFT = ({
                       </NavLink>
 
                       <NavLink
-                        to={"/marketplace/beta-pass/coingecko"}
+                        to={"/shop/beta-pass/coingecko"}
                         className={`${location.pathname.includes("coingecko") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1264,7 +1264,7 @@ const BetaPassNFT = ({
                         <span>CoinGecko</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/gate"}
+                        to={"/shop/beta-pass/gate"}
                         className={`${location.pathname.includes("gate") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1281,7 +1281,7 @@ const BetaPassNFT = ({
                         <span>Gate</span>
                       </NavLink>
                       <NavLink
-                        to={"/marketplace/beta-pass/conflux"}
+                        to={"/shop/beta-pass/conflux"}
                         className={`${location.pathname.includes("conflux") &&
                           "selected-beta-pass-item"
                           } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1298,7 +1298,7 @@ const BetaPassNFT = ({
                         <span>Conflux</span>
                       </NavLink>
                       {/* <NavLink
-                    to={"/marketplace/beta-pass/coin98"}
+                    to={"/shop/beta-pass/coin98"}
                     className={`${
                       location.pathname.includes("coin98") &&
                       "selected-beta-pass-item"
@@ -1316,7 +1316,7 @@ const BetaPassNFT = ({
                 ) : (
                   <div className="d-flex align-items-center gap-lg-4 gap-2 justify-content-center flex-wrap">
                          <NavLink
-                      to={"/marketplace/beta-pass/base"}
+                      to={"/shop/beta-pass/base"}
                       className={`${
                         location.pathname.includes("base") &&
                         "selected-beta-pass-item"
@@ -1335,7 +1335,7 @@ const BetaPassNFT = ({
                     </NavLink>
 
                     <NavLink
-                      to={"/marketplace/beta-pass/matchain"}
+                      to={"/shop/beta-pass/matchain"}
                       className={`${
                         location.pathname.includes("matchain") &&
                         "selected-beta-pass-item"
@@ -1354,7 +1354,7 @@ const BetaPassNFT = ({
                     </NavLink>
 
                     <NavLink
-                      to={"/marketplace/beta-pass/cookie3"}
+                      to={"/shop/beta-pass/cookie3"}
                       className={`${location.pathname.includes("cookie3") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1371,7 +1371,7 @@ const BetaPassNFT = ({
                       <span>Cookie3</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/taiko"}
+                      to={"/shop/beta-pass/taiko"}
                       className={`${location.pathname.includes("taiko") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1388,7 +1388,7 @@ const BetaPassNFT = ({
                       <span>Taiko</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/manta"}
+                      to={"/shop/beta-pass/manta"}
                       className={`${location.pathname.includes("manta") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1405,7 +1405,7 @@ const BetaPassNFT = ({
                       <span>Manta</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/bnb"}
+                      to={"/shop/beta-pass/bnb"}
                       className={`${location.pathname.includes("bnb") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1422,7 +1422,7 @@ const BetaPassNFT = ({
                       <span>BNB</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/core"}
+                      to={"/shop/beta-pass/core"}
                       className={`${location.pathname.includes("core") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1439,7 +1439,7 @@ const BetaPassNFT = ({
                       <span>CORE</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/multiversx"}
+                      to={"/shop/beta-pass/multiversx"}
                       className={`${location.pathname.includes("multiversx") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1456,7 +1456,7 @@ const BetaPassNFT = ({
                       <span>MultiversX</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/sei"}
+                      to={"/shop/beta-pass/sei"}
                       className={`${location.pathname.includes("sei") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1473,7 +1473,7 @@ const BetaPassNFT = ({
                       <span>SEI</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/viction"}
+                      to={"/shop/beta-pass/viction"}
                       className={`${location.pathname.includes("viction") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-4 d-flex align-items-center gap-2`}
@@ -1490,7 +1490,7 @@ const BetaPassNFT = ({
                       <span>VICTION</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/skale"}
+                      to={"/shop/beta-pass/skale"}
                       className={`${location.pathname.includes("skale") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2 position-relative`}
@@ -1508,7 +1508,7 @@ const BetaPassNFT = ({
                       <span>SKALE</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/coinmarketcap"}
+                      to={"/shop/beta-pass/coinmarketcap"}
                       className={`${location.pathname.includes("coinmarketcap") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1521,7 +1521,7 @@ const BetaPassNFT = ({
                       <span>CoinMarketCap</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/doge"}
+                      to={"/shop/beta-pass/doge"}
                       className={`${location.pathname.includes("doge") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1540,7 +1540,7 @@ const BetaPassNFT = ({
 
                
                     <NavLink
-                      to={"/marketplace/beta-pass/coingecko"}
+                      to={"/shop/beta-pass/coingecko"}
                       className={`${location.pathname.includes("coingecko") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1557,7 +1557,7 @@ const BetaPassNFT = ({
                       <span>CoinGecko</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/gate"}
+                      to={"/shop/beta-pass/gate"}
                       className={`${location.pathname.includes("gate") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1574,7 +1574,7 @@ const BetaPassNFT = ({
                       <span>Gate</span>
                     </NavLink>
                     <NavLink
-                      to={"/marketplace/beta-pass/conflux"}
+                      to={"/shop/beta-pass/conflux"}
                       className={`${location.pathname.includes("conflux") &&
                         "selected-beta-pass-item"
                         } beta-pass-item py-2 px-2 px-lg-4 px-md-4 d-flex align-items-center gap-2`}
@@ -1998,7 +1998,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/past">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2116,7 +2116,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/past">
+                                    <NavLink to="/maccount/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -2714,7 +2714,7 @@ const BetaPassNFT = ({
                                     </div>
                                   </div>
                                   <div className="d-flex gap-1 align-items-center justify-content-center">
-                                    <NavLink to="/marketplace/events/upcoming">
+                                    <NavLink to="/account/challenges/treasure-hunt">
                                       <span className="coingecko-eventdetails">
                                         Event details
                                       </span>
@@ -3711,7 +3711,7 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${myseiNfts[0]}/${window.config.nft_sei_address}`}
+                                to={`/shop/nft/${myseiNfts[0]}/${window.config.nft_sei_address}`}
                                 onClick={() => {
                                   updateViewCount(
                                     myseiNfts[0],
@@ -3811,7 +3811,7 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${myMatNFTs[0]}/${window.config.nft_mat_address}`}
+                                to={`/shop/nft/${myMatNFTs[0]}/${window.config.nft_mat_address}`}
                                 onClick={() => {
                                   updateViewCount(
                                     myMatNFTs[0],
@@ -3911,7 +3911,7 @@ const BetaPassNFT = ({
                               </div>
                             ) : (
                               <NavLink
-                                to={`/marketplace/nft/${myBaseNFTs[0]}/${window.config.nft_base_address}`}
+                                to={`/shop/nft/${myBaseNFTs[0]}/${window.config.nft_base_address}`}
                                 onClick={() => {
                                   updateViewCount(
                                     myBaseNFTs[0],
@@ -3993,7 +3993,7 @@ const BetaPassNFT = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => setOpenTerms(true)}
                 >
-                  <NavLink to="/marketplace/beta-pass/coingecko/terms-conditions">
+                  <NavLink to="/shop/beta-pass/coingecko/terms-conditions">
                     <span className="terms-and-conditions mb-0">
                       Terms & Conditions
                     </span>

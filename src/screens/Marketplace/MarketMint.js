@@ -969,15 +969,15 @@ const MarketMint = ({
   return (
     <>
       <div
-        className="container-fluid d-flex justify-content-end mt-lg-5 pt-lg-5 p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5"
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
         <div
-          className="container-nft d-flex align-items-start flex-column gap-2 px-3  my-4 position-relative"
+          className="container-nft2 d-flex  align-items-start px-3 px-lg-5 position-relative"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
-          <div className="custom-container mx-0 px-0 mt-4 mt-lg-0">
+          <div className="container-lg mx-0 position-relative">
             <div className="row justify-content-center align-items-center w-100 mx-0 px-3 py-3 p-lg-0 gap-5 gap-lg-0">
               {/* <div className="row align-items-center mb-5">
         <div className="col-12 col-lg-7">
@@ -1185,7 +1185,7 @@ const MarketMint = ({
                                 activeButton === false ||
                                 myseiNfts.length === 0
                               }
-                              to={`/marketplace/nft/${myseiNfts[0]}/${window.config.nft_sei_address}`}
+                              to={`/shop/nft/${myseiNfts[0]}/${window.config.nft_sei_address}`}
                               onClick={() => {
                                 updateViewCount(
                                   myseiNfts[0],
@@ -1211,7 +1211,7 @@ const MarketMint = ({
                                 activeButton === false ||
                                 myMatNFTs.length === 0
                               }
-                              to={`/marketplace/nft/${myMatNFTs[0]}/${window.config.nft_mat_address}`}
+                              to={`/shop/nft/${myMatNFTs[0]}/${window.config.nft_mat_address}`}
                               onClick={() => {
                                 updateViewCount(
                                   myMatNFTs[0],

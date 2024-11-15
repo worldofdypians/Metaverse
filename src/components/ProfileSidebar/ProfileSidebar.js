@@ -63,7 +63,7 @@ const ProfileSidebar = () => {
             }}
           />
           <NavLink
-            to="/marketplace"
+            to="/shop"
             end
             className={({ isActive }) =>
               isActive
@@ -84,7 +84,7 @@ const ProfileSidebar = () => {
             }}
           />
           <NavLink
-            to="/account/events/dragon-ruins"
+            to="/account/challenges/dragon-ruins"
             end
             className={({ isActive }) =>
               isActive
@@ -109,7 +109,7 @@ const ProfileSidebar = () => {
             }}
           />
           <NavLink
-            to="/account/premium"
+            to="/account/prime"
             end
             className={({ isActive }) =>
               isActive
@@ -124,13 +124,13 @@ const ProfileSidebar = () => {
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
-                  <span className={`sidebar-title`}>Premium</span>
+                  <span className={`sidebar-title`}>Prime</span>
                 </>
               );
             }}
           />
           <NavLink
-            to="/marketplace"
+            to="/shop"
             end
             className={({ isActive }) =>
               isActive

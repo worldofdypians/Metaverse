@@ -238,7 +238,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Conflux Beta Pass NFT</b>. You can get the Conflux
-                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Conflux area, players not only stand a chance to secure daily
                   rewards in CFX, but also earn points for their placement on
@@ -249,7 +249,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
-                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the Coin98
                   area, players not only stand a chance to secure daily rewards
                   in C98, but also earn points for their placement on the global
@@ -260,7 +260,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
-                  Chain Beta Pass NFT from the World of Dypians Marketplace. By
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the BNB
                   Chain area, players not only stand a chance to secure daily
                   rewards in BNB, but also earn points for their placement on
@@ -272,7 +272,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the Manta area,
                   players not only stand a chance to secure daily rewards in
                   MANTA, but also earn points for their placement on the global
@@ -283,7 +283,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the Taiko area,
                   players not only stand a chance to secure daily rewards in
                   ETH, but also earn points for their placement on the global
@@ -294,7 +294,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
-                  CoinGecko Beta Pass NFT from the World of Dypians Marketplace.
+                  CoinGecko Beta Pass NFT from the World of Dypians Shop.
                   By engaging in the game on a daily basis and exploring the
                   CoinGecko area, players not only stand a chance to secure
                   daily rewards in BNB, but also earn points for their placement
@@ -316,7 +316,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Gate Beta Pass NFT</b>. You can get the Gate Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the Gate.io area,
                   players not only stand a chance to secure daily rewards in
                   BNB, but also earn points for their placement on the global
@@ -327,7 +327,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Dogecoin Beta Pass NFT</b>. You can get the Dogecoin
-                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Dogecoin area, players not only stand a chance to secure daily
                   rewards in DOGE, but also earn points for their placement on
@@ -340,7 +340,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
                   CoinMarketCap Beta Pass NFT from the World of Dypians
-                  Marketplace. By engaging in the game on a daily basis and
+                  Shop. By engaging in the game on a daily basis and
                   exploring the CoinMarketCap area, players not only stand a
                   chance to secure daily rewards in BNB, but also earn points
                   for their placement on the global leaderboard. Remember to log
@@ -350,7 +350,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               ) : dummyEvent.popupInfo.id === "event9" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to be{" "}
-                  <b>Premium Subscribers.</b> By actively participating in the
+                  <b>Prime Subscribers.</b> By actively participating in the
                   game on a daily basis and exploring the downtown area, players
                   have the opportunity to secure daily rewards in BNB. Remember
                   to log in to the game daily and venture into the downtown area
@@ -360,7 +360,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the SKALE area,
                   players not only stand a chance to secure daily rewards in
                   SKL, but also earn points for their placement on the global
@@ -371,7 +371,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Viction Beta Pass NFT</b>. You can get the Viction
-                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Viction area, players not only stand a chance to secure daily
                   rewards in VIC, but also earn points for their placement on
@@ -382,7 +382,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Immutable Beta Pass NFT</b>. You can get the
-                  Immutable Beta Pass NFT from the World of Dypians Marketplace.
+                  Immutable Beta Pass NFT from the World of Dypians Shop.
                   By engaging in the game on a daily basis and exploring the
                   Immutable area, players not only stand a chance to secure
                   daily rewards in IMX, but also earn points for their placement
@@ -394,7 +394,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta Pass
-                  NFT from the World of Dypians Marketplace. By engaging in the
+                  NFT from the World of Dypians Shop. By engaging in the
                   game on a daily basis and exploring the SEI area, players not
                   only stand a chance to secure daily rewards in SEI, but also
                   earn points for their placement on the global leaderboard.
@@ -405,7 +405,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a CORE Beta Pass NFT</b>. You can get the CORE Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the CORE area, players
                   not only stand a chance to secure daily rewards in CORE, but
                   also earn points for their placement on the global
@@ -417,7 +417,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   To participate in the event, players are required to&nbsp;
                   <b>hold a MultiversX Beta Pass NFT</b>. You can get the
                   MultiversX Beta Pass NFT from the World of Dypians
-                  Marketplace. By engaging in the game on a daily basis and
+                  Shop. By engaging in the game on a daily basis and
                   exploring the MultiversX area, players not only stand a chance
                   to secure daily rewards in EGLD, but also earn points for
                   their placement on the global leaderboard. Remember to log in
@@ -428,7 +428,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Cookie3 Beta Pass NFT</b>. You can get the Cookie3
-                  Beta Pass NFT from the World of Dypians Marketplace. By
+                  Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Cookie3 area, players not only stand a chance to secure daily
                   rewards in COOKIE, but also earn points for their placement on
@@ -439,7 +439,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Base Beta Pass NFT</b>. You can get the Base Beta
-                  Pass NFT from the World of Dypians Marketplace. By engaging in
+                  Pass NFT from the World of Dypians Shop. By engaging in
                   the game on a daily basis and exploring the downtown area,
                   players not only stand a chance to secure daily rewards in
                   ETH, but also earn points for their placement on the global
@@ -1010,7 +1010,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           dummyEvent.popupInfo.id !== "event15" &&
           dummyEvent.popupInfo.id !== "event22" && (
             <div className="w-100 d-flex justify-content-end mt-3">
-              <NavLink to={`/marketplace/beta-pass/${dummyEvent.linkState}`}>
+              <NavLink to={`/shop/beta-pass/${dummyEvent.linkState}`}>
                 <button className="btn get-beta-btn">Get Beta Pass</button>
               </NavLink>
             </div>

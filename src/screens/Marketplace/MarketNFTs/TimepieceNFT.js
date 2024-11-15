@@ -829,7 +829,7 @@ const TimepieceNFT = ({
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft2 d-flex  align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
           <div className="custom-container mx-0 position-relative">
@@ -855,7 +855,7 @@ const TimepieceNFT = ({
                       <button className="pill-btn2 px-3 py-2">Explore</button>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/mint/timepiece"
+                      to="/shop/mint/timepiece"
                       style={{ textDecoration: "none" }}
                     >
                       <button className="signinbtn2 px-3 py-2 d-flex align-items-center gap-2">
@@ -1006,7 +1006,7 @@ const TimepieceNFT = ({
                     <>
                       {timepieceNFTS.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1194,7 +1194,7 @@ const TimepieceNFT = ({
                     dummyData.map((nft, index) => {
                       return (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1246,7 +1246,7 @@ const TimepieceNFT = ({
                         .slice(0, next2)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             state={{
