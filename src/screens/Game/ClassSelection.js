@@ -11,9 +11,8 @@ import warriorThumb2 from "../../assets/gameAssets/warriorThumb2.png";
 
 const ClassSelection = () => {
   return (
-    <div className="mt-5">
-      <div className="d-flex flex-column flex-lg-row gap-5 gap-lg-0 align-items-center justify-content-between mt-0 mt-lg-5 px-0">
-        <div className="humans-class-wrapper">
+      <div className="d-flex flex-column flex-lg-row gap-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
+        <div className="humans-class-wrapper" style={{borderBottom: "3px solid black"}}>
           <img src={warriorClass} className="humans-img" alt="" />
           <img src={warriorBg} className="humans-bg" alt="" />
           <div className="warrior-info-wrapper d-flex flex-column gap-4 ps-3 ps-lg-5">
@@ -25,21 +24,45 @@ const ClassSelection = () => {
               Specializing in combat, the warrior utilizes weapons, armor, and
               brute strength to conquer their enemies.
             </p>
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
               <div className="d-flex flex-column gap-1">
                 <span className="warrior-class-title">01</span>
+                <img src={warriorThumb1} alt="" />
+              </div>
+              <div className="d-flex flex-column gap-1">
+                <span className="warrior-class-title">02</span>
+                <img src={warriorThumb2} alt="" />
               </div>
             </div>
           </div>
         </div>
-        <div className="aliens-class-wrapper ">
+        <div className="aliens-class-wrapper" style={{borderBottom: "3px solid black"}}>
           <img src={mageClass} className="aliens-img" alt="" />
           <img src={mageBg} className="aliens-bg" alt="" />
 
-          <h6 className="aliens-class-text mb-0 me-3 me-lg-5">Mage</h6>
+          <div className="warrior-info-wrapper d-flex flex-column align-items-end gap-4 pe-3 pe-lg-5">
+            <div className="d-flex flex-column gap-2">
+              <h6 className="aliens-class-text mb-0">Mage</h6>
+              <span className="mage-class-title">Elemental Wield</span>
+            </div>
+            <p className="mb-0 warrior-class-desc" style={{textAlign: "end"}}>
+              Mages, with their ability to harness the power of the elements,
+              utilize powerful spells to freeze and ignite their enemies into
+              oblivion.
+            </p>
+            <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
+              <div className="d-flex flex-column gap-1 align-items-end">
+                <span className="mage-class-title">01</span>
+                <img src={mageThumb1} alt="" />
+              </div>
+              <div className="d-flex flex-column gap-1 align-items-end">
+                <span className="mage-class-title">02</span>
+                <img src={mageThumb2} alt="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 

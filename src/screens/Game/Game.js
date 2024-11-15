@@ -4,6 +4,7 @@ import GameHero from "./GameHero";
 import ClassSelection from "./ClassSelection";
 import AmplifySection from "./AmplifySection";
 import GameEvents from "./GameEvents";
+import AmplifyExperience from "./AmplifyExperience";
 
 const Game = () => {
   useEffect(() => {
@@ -13,11 +14,12 @@ const Game = () => {
   
   return (
     <div className="container-fluid token-wrapper px-0">
-      <div className="d-flex flex-column gap-5">
+      <div className="d-flex flex-column">
         <GameHero />
         <ClassSelection />
         <AmplifySection />
         <GameEvents />
+        <AmplifyExperience />
       </div>
     </div>
   );
