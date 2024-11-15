@@ -28,9 +28,17 @@ const EarnContent = ({
   expired,
   binanceW3WProvider,
   isPremium,
+  onSelectFilter,
+  onSelectViewStyle,
+  onViewPastPools,
+  onViewStakedOnlyPools,
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
+  const [filterTitle, setFilterTitle] = useState("All");
+  // const [listStyle, setListStyle] = useState("table");
+  const [pastPools, setpastPools] = useState(false);
+  const [stakedOnly, setstakedOnly] = useState(false);
 
   const onShowDetailsClick = (item) => {
     setselectedPool((prevSelected) => [...prevSelected, item]);
@@ -50,10 +58,164 @@ const EarnContent = ({
   console.log(selectedPool);
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center mb-5 py-4 earncontent-bg">
+    <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
+      <div
+        className="opacitywrapper position-relative bottom-0"
+        style={{ borderBottom: "3px solid black" }}
+      >
+        <div className="d-flex flex-column gap-4 position-relative">
+          <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper pt-2">
+            <div className="container-fluid py-4 staking-pools-bg">
+              <div className="custom-container p-0">
+                <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
+                  <div className="d-flex flex-column flex-lg-row gap-3 w-100 mx-0 align-items-center justify-content-between">
+                    <div className="d-flex flex-row align-items-center gap-3">
+                      <div className="d-flex align-items-center gap-3">
+                        {/* <div className="d-flex justify-content-start align-items-center gap-3">
+                          <div
+                            className={`list-style ${
+                              listStyle === "table" && "list-style-active"
+                            }`}
+                            onClick={() => {
+                              setListStyle("table");
+                              onSelectViewStyle("table");
+                            }}
+                          >
+                            <img
+                              src={
+                                listStyle === "table"
+                                  ? tableIconActive
+                                  : tableIcon
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div
+                            className={`list-style ${
+                              listStyle === "list" && "list-style-active"
+                            }`}
+                            onClick={() => {
+                              setListStyle("list");
+                              onSelectViewStyle("list");
+                            }}
+                          >
+                            <img
+                              src={
+                                listStyle === "list" ? listIconActive : listIcon
+                              }
+                              alt=""
+                            />
+                          </div>
+                        </div> */}
+                        <div className=" d-flex align-items-center pools-toggle-wrapper">
+                          <button
+                            onClick={() => {
+                              setpastPools(!pastPools);
+                              onViewPastPools(filterTitle, !pastPools);
+                            }}
+                            className={`px-4 py-2 ${
+                              pastPools === false
+                                ? "active-toggle"
+                                : "inactive-toggle"
+                            }`}
+                          >
+                            Live
+                          </button>
+                          <button
+                            onClick={() => {
+                              setpastPools(!pastPools);
+                              onViewPastPools(filterTitle, !pastPools);
+                            }}
+                            className={`px-4 py-2 ${
+                              pastPools === true
+                                ? "active-toggle"
+                                : "inactive-toggle"
+                            }`}
+                          >
+                            Past
+                          </button>
+                        </div>
+                      </div>
+                      <div className=" d-flex justify-content-end align-items-center gap-1 gap-lg-3">
+                        <div
+                          className={`pill-box ${
+                            stakedOnly && "pill-box-active"
+                          }`}
+                          onClick={() => {
+                            setstakedOnly(!stakedOnly);
+                            onViewStakedOnlyPools(
+                              filterTitle,
+                              pastPools,
+                              stakedOnly
+                            );
+                          }}
+                        >
+                          <div className="pill"></div>
+                        </div>
+                        <h5 className="text-white inactive-pools m-0">
+                          Staked only
+                        </h5>
+                      </div>
+                    </div>
+                    <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
+                      <div className=" d-flex align-items-center pools-toggle-wrapper">
+                        <button
+                          onClick={() => {
+                            setFilterTitle("All");
+                            onSelectFilter("All", pastPools);
+                          }}
+                          className={`px-4 py-2 ${
+                            filterTitle === "All"
+                              ? "active-toggle"
+                              : "inactive-toggle"
+                          }`}
+                        >
+                          All
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFilterTitle("WOD");
+                            onSelectFilter("WOD", pastPools);
+                          }}
+                          className={`px-4 py-2 ${
+                            filterTitle === "WOD"
+                              ? "active-toggle"
+                              : "inactive-toggle"
+                          }`}
+                        >
+                          WOD
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFilterTitle("NFT");
+                            onSelectFilter("NFT", pastPools);
+                          }}
+                          className={`px-4 py-2 ${
+                            filterTitle === "NFT"
+                              ? "active-toggle"
+                              : "inactive-toggle"
+                          }`}
+                        >
+                          NFTs
+                        </button>
+                      </div>
+                      <div className="tvl-earn-wrapper py-2 px-4">
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="tvl-earn-title">TVL</span>
+                          <span className="tvl-earn-amount">$1,6000,000+</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="custom-container  mt-5 mt-lg-0 tokenomicsTablewrapper">
         <div className="d-flex flex-column gap-2 w-100 px-2">
-          <span className="earn-filter-title">{selectedFilter}</span>
+          <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span>
           {stakingPools && stakingPools.length === 0 && (
             <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
               <div className="d-flex flex-column align-items-center gap-2">

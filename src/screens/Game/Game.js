@@ -16,8 +16,8 @@ const Game = () => {
       <div className="d-flex flex-column gap-5">
         <GameHero />
         <ClassSelection />
-        <GameEvents />
         <AmplifySection />
+        <GameEvents />
       </div>
     </div>
   );

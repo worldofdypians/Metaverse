@@ -76,7 +76,7 @@ const VideoWrapper = ({
     },
     {
       link: "/earn",
-      title: "Earn",
+      title: "EARN",
       desc: "Earn rewards by staking WOD tokens",
       class: "earnClass",
     },

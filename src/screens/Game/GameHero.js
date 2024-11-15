@@ -86,19 +86,19 @@ const GameHero = () => {
       state: "map",
       title: "MAPS",
       desc: "Unique game world environments",
-      class: "tokenClass",
+      class: "mapClass",
     },
     {
       state: "land",
       title: "LAND",
       desc: "Own and develop virtual areas",
-      class: "earnClass",
+      class: "landClass",
     },
     {
       state: "caws",
       title: "CAWS",
       desc: "AI-driven digital companions",
-      class: "eventClass",
+      class: "cawsClass",
     },
   ];
   const html = document.querySelector("html");
@@ -113,7 +113,7 @@ const GameHero = () => {
 
   return (
     <>
-      <div className="about-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative">
+      <div className="game-hero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative">
         <div className="custom-container  mt-5 mt-lg-0">
           <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0">
             <h2 className="font-montserrat main-hero-title  px-0">

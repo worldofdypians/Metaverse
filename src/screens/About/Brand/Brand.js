@@ -22,7 +22,7 @@ const Brand = () => {
         </div>
         <div className="position-relative">
           <img src={brandBanner} className="w-100 brandBanner" alt="" />
-          <div
+          {/* <div
             className="multiplayer-linear-border download-brand"
             style={{
               zIndex: 5,
@@ -32,6 +32,21 @@ const Brand = () => {
           >
             <a
               className="btn multiplayer-btn py-1 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
+              href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Download
+            </a>
+          </div> */}
+          <div
+            className="d-flex w-100 justify-content-center position-relative"
+            style={{ top: "-20px" }}
+          >
+            {" "}
+            <a
+              className="buy-wod-btn px-4 py-2 d-flex algin-items-center gap-1"
+              style={{ width: "fit-content" }}
               href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
               target="_blank"
               rel="noreferrer"

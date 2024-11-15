@@ -15,7 +15,7 @@ const BetaEventCard = ({
 }) => {
   return (
     <div
-      className={` ${data.class} justify-content-end flex-column d-flex align-items-center`}
+      className={` ${data.class} event-card justify-content-end flex-column d-flex align-items-center`}
       onClick={onOpenPopup}
       style={{
         cursor: "pointer",
