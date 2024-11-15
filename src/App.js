@@ -94,6 +94,8 @@ import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
 import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
+import matchainLogo from "./components/Header/assets/matchain.svg";
+
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
 import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
@@ -114,6 +116,8 @@ import upcomingBase2 from "./screens/Marketplace/assets/upcomingBase2.webp";
 import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
 import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
+import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
+
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
 import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
@@ -3430,7 +3434,7 @@ function App() {
     },
     {
       title: "Matchain",
-      logo: bnbLogo,
+      logo: matchainLogo,
       eventStatus: "Coming Soon",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3442,7 +3446,7 @@ function App() {
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Nov 12, 2024",
-      backgroundImage: upcomingCookie,
+      backgroundImage: upcomingMatchain,
       userEarnUsd: matEarnUsd,
       userEarnCrypto: matEarnToken,
       userEarnPoints: matPoints,

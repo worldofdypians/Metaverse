@@ -31,20 +31,12 @@ import multiversLogo from "../assets/multiversLogo.svg";
 
 import victionLogo from "../assets/victionLogo.svg";
 import cookie3Logo from "../assets/cookie3Logo.svg";
+import matchainLogo from "../../../components/Header/assets/matchain.svg";
+
 
 import seiLogo from "../assets/seiLogo.svg";
 
-import comingSoon from "../assets/comingSoon.svg";
-
-import wodLogo from "../assets/wodIcon.png";
-import blackWallet from "../../../assets/wallet-black.svg";
-import whitewallet from "../../../assets/wallet-white.svg";
-import addActive from "../../../assets/landAssets/addActive.svg";
-import addInactive from "../../../assets/landAssets/addInactive.svg";
-import subtractActive from "../../../assets/landAssets/subtractActive.svg";
-import subtractInactive from "../../../assets/landAssets/subtractInactive.svg";
-import dummyBadge from "../../../assets/landAssets/dummyBadge.png";
-import avaxLogo from "./assets/avaxLogo.svg";
+ 
 import dogeLogo from "./assets/dogeLogo.svg";
 import dogeBetaBanner from "./assets/dogeBetaBanner.png";
 import bnbBetaBanner from "./assets/bnbBetaBanner.png";
@@ -56,6 +48,8 @@ import betapassBannerConflux from "./assets/betaPassBannerConflux.webp";
 import betapassBannerGate from "./assets/betaPassBannerGate.webp";
 import seiBanner from "./assets/seiBanner.webp";
 import cookie3Banner from "./assets/cookie3Banner.webp";
+import matchainBanner from "./assets/matchainBanner.webp";
+
 
 import victionBanner from "./assets/victionBanner.webp";
 import immutableBanner from "./assets/immutableBanner.webp";
@@ -231,7 +225,7 @@ const BetaPassNFT = ({
     id: "mat",
     cardTitle: "Matchain Beta Pass",
     title: "Matchain Beta Pass",
-    background: "sei-mint-bg",
+    background: "matchain-mint-bg",
   };
 
   const dogeData = {
@@ -1004,7 +998,7 @@ const BetaPassNFT = ({
                                               : mintTitle === "sei"
                                                 ? seiBanner
                                                 : mintTitle === "mat"
-                                                ? seiBanner
+                                                ? matchainBanner
                                                 : mintTitle === "bnb"
                                                   ? bnbBetaBanner
                                                   : mintTitle === "manta"
@@ -1055,7 +1049,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={baseLogo}
+                          src={matchainLogo}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1346,7 +1340,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={baseLogo}
+                        src={matchainLogo}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1756,7 +1750,7 @@ const BetaPassNFT = ({
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                         >
                           <img
-                            src={baseLogo}
+                            src={matchainLogo}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -3822,7 +3816,7 @@ const BetaPassNFT = ({
                                 <div className="col-12 col-lg-5 d-flex flex-column mx-auto position-relative">
                                   <div
                                     className={`coingeckoempty-wrapper  ${totalMatNfts > 0 && mintTitle === "mat"
-                                        ? "sei-active"
+                                        ? "mat-active"
                                         : "conflux-empty"
                                       } d-flex justify-content-center align-items-center p-3 position-relative`}
                                     style={{

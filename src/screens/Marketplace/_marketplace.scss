@@ -3486,6 +3486,11 @@ backdrop-filter: blur(5.5px);
 .mint-taiko {
   background: linear-gradient(90deg, #181b38 0%, #cc238c 168.67%);
 }
+
+.mint-matchain {
+  background: linear-gradient(90deg, #181b38 0%, #D4690B 168.67%);
+}
+
 .mint-manta {
   background: linear-gradient(90deg, #181b38 0%, #be2cb0 168.67%);
 }
@@ -4563,6 +4568,12 @@ backdrop-filter: blur(5.5px);
     rgba(9, 41, 144, 1) 168.67%
   ) !important;
 }
+
+.upcoming-matchain-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(212, 105, 11, 0.5) 168.67%) !important;
+}
+
 
 .upcoming-immutable-event {
   border-radius: 20px;

@@ -214,11 +214,11 @@ const SingleNft = ({
   };
 
   const getListedNtsAsc = async () => {
-    const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+    // const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
 
-    let dypNftsAsc = dypNfts.sort((a, b) => {
-      return a.price - b.price;
-    });
+    // let dypNftsAsc = dypNfts.sort((a, b) => {
+    //   return a.price - b.price;
+    // });
 
     const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
 
@@ -227,7 +227,7 @@ const SingleNft = ({
     });
     setlowestPriceNftListed(ethNftsAsc[0].price);
 
-    setlowestPriceNftListedDYP(dypNftsAsc[0].price);
+    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
   };
 
   const getOffer = async () => {
@@ -251,18 +251,18 @@ const SingleNft = ({
       type !== "immutable"&&
       type !== "mat"
     ) {
-      const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
-      const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
+      // const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
+      // const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
 
-      const contract1 = new window.infuraWeb3.eth.Contract(
-        window.ERC20_ABI,
-        token_address
-      );
+      // const contract1 = new window.infuraWeb3.eth.Contract(
+      //   window.ERC20_ABI,
+      //   token_address
+      // );
 
-      const contract1_old = new window.infuraWeb3.eth.Contract(
-        window.ERC20_ABI,
-        token_address_old
-      );
+      // const contract1_old = new window.infuraWeb3.eth.Contract(
+      //   window.ERC20_ABI,
+      //   token_address_old
+      // );
       const contract2 = new window.infuraWeb3.eth.Contract(
         window.TOKEN_ABI,
         window.config.weth2_address
@@ -281,67 +281,68 @@ const SingleNft = ({
 
       await Promise.all(
         result.map(async (item) => {
-          if (item.offer.payment.priceType === "1") {
-            if (
-              item.offer.payment.tokenAddress.toLowerCase() ===
-              token_address_old.toLowerCase()
-            ) {
-              const balance = await contract1_old.methods
-                .balanceOf(item.offer.buyer)
-                .call()
-                .then((data) => {
-                  return window.infuraWeb3.utils.fromWei(data, "ether");
-                });
+          // if (item.offer.payment.priceType === "1") {
+          //   if (
+          //     item.offer.payment.tokenAddress.toLowerCase() ===
+          //     token_address_old.toLowerCase()
+          //   ) {
+          //     const balance = await contract1_old.methods
+          //       .balanceOf(item.offer.buyer)
+          //       .call()
+          //       .then((data) => {
+          //         return window.infuraWeb3.utils.fromWei(data, "ether");
+          //       });
 
-              const allowance = await contract1_old.methods
-                .allowance(
-                  item.offer.buyer,
-                  window.config.nft_marketplace_address
-                )
-                .call()
-                .then((data) => {
-                  return window.infuraWeb3.utils.fromWei(data, "ether");
-                });
+          //     const allowance = await contract1_old.methods
+          //       .allowance(
+          //         item.offer.buyer,
+          //         window.config.nft_marketplace_address
+          //       )
+          //       .call()
+          //       .then((data) => {
+          //         return window.infuraWeb3.utils.fromWei(data, "ether");
+          //       });
 
-              const priceFormatted = item.offer.price / 1e18;
-              // console.log(balance >= priceFormatted && allowance >= priceFormatted)
-              return finalArray.push({
-                offer: item.offer,
-                index: item.index,
-                isAllowed:
-                  balance >= priceFormatted && allowance >= priceFormatted,
-              });
-            } else if (
-              item.offer.payment.tokenAddress.toLowerCase() ===
-              token_address.toLowerCase()
-            ) {
-              const balance = await contract1.methods
-                .balanceOf(item.offer.buyer)
-                .call()
-                .then((data) => {
-                  return window.infuraWeb3.utils.fromWei(data, "ether");
-                });
+          //     const priceFormatted = item.offer.price / 1e18;
+          //     // console.log(balance >= priceFormatted && allowance >= priceFormatted)
+          //     return finalArray.push({
+          //       offer: item.offer,
+          //       index: item.index,
+          //       isAllowed:
+          //         balance >= priceFormatted && allowance >= priceFormatted,
+          //     });
+          //   } else if (
+          //     item.offer.payment.tokenAddress.toLowerCase() ===
+          //     token_address.toLowerCase()
+          //   ) {
+          //     const balance = await contract1.methods
+          //       .balanceOf(item.offer.buyer)
+          //       .call()
+          //       .then((data) => {
+          //         return window.infuraWeb3.utils.fromWei(data, "ether");
+          //       });
 
-              const allowance = await contract1.methods
-                .allowance(
-                  item.offer.buyer,
-                  window.config.nft_marketplace_address
-                )
-                .call()
-                .then((data) => {
-                  return window.infuraWeb3.utils.fromWei(data, "ether");
-                });
+          //     const allowance = await contract1.methods
+          //       .allowance(
+          //         item.offer.buyer,
+          //         window.config.nft_marketplace_address
+          //       )
+          //       .call()
+          //       .then((data) => {
+          //         return window.infuraWeb3.utils.fromWei(data, "ether");
+          //       });
 
-              const priceFormatted = item.offer.price / 1e18;
-              // console.log(balance >= priceFormatted && allowance >= priceFormatted)
-              return finalArray.push({
-                offer: item.offer,
-                index: item.index,
-                isAllowed:
-                  balance >= priceFormatted && allowance >= priceFormatted,
-              });
-            }
-          } else if (item.offer.payment.priceType === "0") {
+          //     const priceFormatted = item.offer.price / 1e18;
+          //     // console.log(balance >= priceFormatted && allowance >= priceFormatted)
+          //     return finalArray.push({
+          //       offer: item.offer,
+          //       index: item.index,
+          //       isAllowed:
+          //         balance >= priceFormatted && allowance >= priceFormatted,
+          //     });
+          //   }
+          // } else
+           if (item.offer.payment.priceType === "0") {
             const balance = await contract2.methods
               .balanceOf(item.offer.buyer)
               .call()
@@ -803,33 +804,34 @@ const SingleNft = ({
         });
       return result;
     } else if (window.WALLET_TYPE === "binance") {
-      const contract_old = new ethers.Contract(
-        window.config.dyp_token_address,
-        window.DYP_ABI,
-        binanceW3WProvider.getSigner()
-      );
+      // const contract_old = new ethers.Contract(
+      //   window.config.dyp_token_address,
+      //   window.DYP_ABI,
+      //   binanceW3WProvider.getSigner()
+      // );
 
-      const contract = new ethers.Contract(
-        window.config.token_dypius_new_address,
-        window.DYP_ABI,
-        binanceW3WProvider.getSigner()
-      );
+      // const contract = new ethers.Contract(
+      //   window.config.token_dypius_new_address,
+      //   window.DYP_ABI,
+      //   binanceW3WProvider.getSigner()
+      // );
 
-      if (tokenType === "dypv2") {
-        const allowance = await contract.allowance(
-          coinbase,
-          window.config.nft_marketplace_address
-        );
+      // if (tokenType === "dypv2") {
+      //   const allowance = await contract.allowance(
+      //     coinbase,
+      //     window.config.nft_marketplace_address
+      //   );
 
-        return Number(allowance) >= Number(amount);
-      } else if (tokenType === "dypv1") {
-        const allowance = await contract_old.allowance(
-          coinbase,
-          window.config.nft_marketplace_address
-        );
+      //   return Number(allowance) >= Number(amount);
+      // } else if (tokenType === "dypv1") {
+      //   const allowance = await contract_old.allowance(
+      //     coinbase,
+      //     window.config.nft_marketplace_address
+      //   );
 
-        return Number(allowance) >= Number(amount);
-      } else if (tokenType === "eth") {
+      //   return Number(allowance) >= Number(amount);
+      // } else 
+      if (tokenType === "eth") {
         return true;
       }
     }
@@ -988,9 +990,14 @@ const SingleNft = ({
     );
     const newPrice = new BigNumber(nftPrice * 1e18).toFixed();
     console.log(newPrice, isApproved);
+    // const tokenType =
+    //   priceType === 1 ? "dypv1" : priceType === 2 ? "dypv2" : "eth";
+    // const pricetype2 = priceType === 1 || priceType === 2 ? 1 : 0;
+
     const tokenType =
-      priceType === 1 ? "dypv1" : priceType === 2 ? "dypv2" : "eth";
-    const pricetype2 = priceType === 1 || priceType === 2 ? 1 : 0;
+     "eth";
+  const pricetype2 =  0;
+
     if (isApproved) {
       console.log("selling");
       setsellLoading(true);
@@ -1050,13 +1057,13 @@ const SingleNft = ({
           price_address = "0x0000000000000000000000000000000000000000";
         }
 
-        if (priceType === 1 || priceType === 2) {
-          price_nft = 1;
-          price_address =
-            tokenType === "dypv2"
-              ? window.config.token_dypius_new_address
-              : window.config.dyp_token_address;
-        }
+        // if (priceType === 1 || priceType === 2) {
+        //   price_nft = 1;
+        //   price_address =
+        //     tokenType === "dypv2"
+        //       ? window.config.token_dypius_new_address
+        //       : window.config.dyp_token_address;
+        // }
 
         const marketplace = new ethers.Contract(
           window.config.nft_marketplace_address,
@@ -1423,12 +1430,14 @@ const SingleNft = ({
   };
 
   async function handleBuy(nft) {
-    const tokenType =
-      nft.payment_tokenAddress === window.config.dyp_token_address
-        ? "dypv1"
-        : nft.payment_tokenAddress === window.config.token_dypius_new_address
-        ? "dypv2"
-        : "eth";
+    // const tokenType =
+    //   nft.payment_tokenAddress === window.config.dyp_token_address
+    //     ? "dypv1"
+    //     : nft.payment_tokenAddress === window.config.token_dypius_new_address
+    //     ? "dypv2"
+    //     : "eth";
+
+    const tokenType = "eth";
 
     const isApproved = await isApprovedBuy(tokenType, nft.price);
 
@@ -1529,57 +1538,58 @@ const SingleNft = ({
           console.error(error);
         }
 
-        if (nft.payment_priceType === 1) {
-          const txResponse = await marketplace
-            .buyItem(
-              nftAddress,
-              nftId,
-              [nft.payment_priceType, nft.payment_tokenAddress],
-              {
-                from: coinbase,
-                value: 0,
-                ...transactionParameters,
-              }
-            )
-            .catch((e) => {
-              setbuyStatus("failed");
-              setbuyLoading(false);
-              setPurchaseStatus(e?.message);
-              setPurchaseColor("#FF6232");
-              setTimeout(() => {
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-                setbuyStatus("");
-              }, 3000);
-              console.error(e);
-            });
+        // if (nft.payment_priceType === 1) {
+        //   const txResponse = await marketplace
+        //     .buyItem(
+        //       nftAddress,
+        //       nftId,
+        //       [nft.payment_priceType, nft.payment_tokenAddress],
+        //       {
+        //         from: coinbase,
+        //         value: 0,
+        //         ...transactionParameters,
+        //       }
+        //     )
+        //     .catch((e) => {
+        //       setbuyStatus("failed");
+        //       setbuyLoading(false);
+        //       setPurchaseStatus(e?.message);
+        //       setPurchaseColor("#FF6232");
+        //       setTimeout(() => {
+        //         setPurchaseStatus("");
+        //         setPurchaseColor("#00FECF");
+        //         setbuyStatus("");
+        //       }, 3000);
+        //       console.error(e);
+        //     });
 
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setbuyLoading(false);
-            setbuyStatus("success");
-            setPurchaseStatus("Successfully purchased!");
-            setShowToast(true);
-            setToastTitle("Successfully purchased!");
-            setPurchaseColor("#00FECF");
+        //   const txReceipt = await txResponse.wait();
+        //   if (txReceipt) {
+        //     setbuyLoading(false);
+        //     setbuyStatus("success");
+        //     setPurchaseStatus("Successfully purchased!");
+        //     setShowToast(true);
+        //     setToastTitle("Successfully purchased!");
+        //     setPurchaseColor("#00FECF");
 
-            setTimeout(() => {
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-              setbuyStatus("");
-              handleRefreshList(
-                nftAddress === window.config.nft_caws_address
-                  ? "caws"
-                  : nftAddress === window.config.nft_timepiece_address
-                  ? "timepiece"
-                  : "land",
-                nftId
-              );
-              handleRefreshListing();
-              getLatestBoughtNFT();
-            }, 3000);
-          }
-        } else if (nft.payment_priceType === 0) {
+        //     setTimeout(() => {
+        //       setPurchaseStatus("");
+        //       setPurchaseColor("#00FECF");
+        //       setbuyStatus("");
+        //       handleRefreshList(
+        //         nftAddress === window.config.nft_caws_address
+        //           ? "caws"
+        //           : nftAddress === window.config.nft_timepiece_address
+        //           ? "timepiece"
+        //           : "land",
+        //         nftId
+        //       );
+        //       handleRefreshListing();
+        //       getLatestBoughtNFT();
+        //     }, 3000);
+        //   }
+        // } else
+         if (nft.payment_priceType === 0) {
           const txResponse = await marketplace
             .buyItem(
               nftAddress,
@@ -1631,115 +1641,116 @@ const SingleNft = ({
           }
         }
       }
-    } else {
-      console.log("approve buying");
-
-      setbuyStatus("approve");
-      setbuyLoading(true);
-      setPurchaseStatus("Approving in progress...");
-      setPurchaseColor("#00FECF");
-      if (window.WALLET_TYPE !== "binance") {
-        await window
-          .approveBuy(tokenType, nft.price)
-          .then(() => {
-            setTimeout(() => {
-              setbuyStatus("buy");
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-            }, 3000);
-            setbuyStatus("success");
-            setbuyLoading(false);
-            setPurchaseStatus("Successfully approved");
-            setPurchaseColor("#00FECF");
-          })
-          .catch((e) => {
-            console.error(e);
-            setbuyStatus("failed");
-            setTimeout(() => {
-              setbuyStatus("approve");
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-            }, 3000);
-            setbuyLoading(false);
-            setPurchaseStatus(e?.message);
-            setPurchaseColor("#FF6232");
-          });
-      } else if (window.WALLET_TYPE === "binance") {
-        const contract_old = new ethers.Contract(
-          window.config.dyp_token_address,
-          window.DYP_ABI,
-          binanceW3WProvider.getSigner()
-        );
-
-        const contract = new ethers.Contract(
-          window.config.token_dypius_new_address,
-          window.DYP_ABI,
-          binanceW3WProvider.getSigner()
-        );
-
-        if (tokenType === "dypv2") {
-          const txResponse = await contract
-            .approve(window.config.nft_marketplace_address, nft.price, {
-              from: coinbase,
-            })
-            .catch((e) => {
-              console.error(e);
-              setbuyStatus("failed");
-              setTimeout(() => {
-                setbuyStatus("approve");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-              setbuyLoading(false);
-              setPurchaseStatus(e?.message);
-              setPurchaseColor("#FF6232");
-            });
-
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setTimeout(() => {
-              setbuyStatus("buy");
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-            }, 3000);
-            setbuyStatus("success");
-            setbuyLoading(false);
-            setPurchaseStatus("Successfully approved");
-            setPurchaseColor("#00FECF");
-          }
-        } else if (tokenType === "dypv1") {
-          const txResponse = await contract_old
-            .approve(window.config.nft_marketplace_address, nft.price, {
-              from: coinbase,
-            })
-            .catch((e) => {
-              console.error(e);
-              setbuyStatus("failed");
-              setTimeout(() => {
-                setbuyStatus("approve");
-                setPurchaseStatus("");
-                setPurchaseColor("#00FECF");
-              }, 3000);
-              setbuyLoading(false);
-              setPurchaseStatus(e?.message);
-              setPurchaseColor("#FF6232");
-            });
-
-          const txReceipt = await txResponse.wait();
-          if (txReceipt) {
-            setTimeout(() => {
-              setbuyStatus("buy");
-              setPurchaseStatus("");
-              setPurchaseColor("#00FECF");
-            }, 3000);
-            setbuyStatus("success");
-            setbuyLoading(false);
-            setPurchaseStatus("Successfully approved");
-            setPurchaseColor("#00FECF");
-          }
-        }
-      }
     }
+    // } else {
+    //   console.log("approve buying");
+
+    //   setbuyStatus("approve");
+    //   setbuyLoading(true);
+    //   setPurchaseStatus("Approving in progress...");
+    //   setPurchaseColor("#00FECF");
+    //   if (window.WALLET_TYPE !== "binance") {
+    //     await window
+    //       .approveBuy(tokenType, nft.price)
+    //       .then(() => {
+    //         setTimeout(() => {
+    //           setbuyStatus("buy");
+    //           setPurchaseStatus("");
+    //           setPurchaseColor("#00FECF");
+    //         }, 3000);
+    //         setbuyStatus("success");
+    //         setbuyLoading(false);
+    //         setPurchaseStatus("Successfully approved");
+    //         setPurchaseColor("#00FECF");
+    //       })
+    //       .catch((e) => {
+    //         console.error(e);
+    //         setbuyStatus("failed");
+    //         setTimeout(() => {
+    //           setbuyStatus("approve");
+    //           setPurchaseStatus("");
+    //           setPurchaseColor("#00FECF");
+    //         }, 3000);
+    //         setbuyLoading(false);
+    //         setPurchaseStatus(e?.message);
+    //         setPurchaseColor("#FF6232");
+    //       });
+    //   } else if (window.WALLET_TYPE === "binance") {
+    //     const contract_old = new ethers.Contract(
+    //       window.config.dyp_token_address,
+    //       window.DYP_ABI,
+    //       binanceW3WProvider.getSigner()
+    //     );
+
+    //     const contract = new ethers.Contract(
+    //       window.config.token_dypius_new_address,
+    //       window.DYP_ABI,
+    //       binanceW3WProvider.getSigner()
+    //     );
+
+    //     if (tokenType === "dypv2") {
+    //       const txResponse = await contract
+    //         .approve(window.config.nft_marketplace_address, nft.price, {
+    //           from: coinbase,
+    //         })
+    //         .catch((e) => {
+    //           console.error(e);
+    //           setbuyStatus("failed");
+    //           setTimeout(() => {
+    //             setbuyStatus("approve");
+    //             setPurchaseStatus("");
+    //             setPurchaseColor("#00FECF");
+    //           }, 3000);
+    //           setbuyLoading(false);
+    //           setPurchaseStatus(e?.message);
+    //           setPurchaseColor("#FF6232");
+    //         });
+
+    //       const txReceipt = await txResponse.wait();
+    //       if (txReceipt) {
+    //         setTimeout(() => {
+    //           setbuyStatus("buy");
+    //           setPurchaseStatus("");
+    //           setPurchaseColor("#00FECF");
+    //         }, 3000);
+    //         setbuyStatus("success");
+    //         setbuyLoading(false);
+    //         setPurchaseStatus("Successfully approved");
+    //         setPurchaseColor("#00FECF");
+    //       }
+    //     } else if (tokenType === "dypv1") {
+    //       const txResponse = await contract_old
+    //         .approve(window.config.nft_marketplace_address, nft.price, {
+    //           from: coinbase,
+    //         })
+    //         .catch((e) => {
+    //           console.error(e);
+    //           setbuyStatus("failed");
+    //           setTimeout(() => {
+    //             setbuyStatus("approve");
+    //             setPurchaseStatus("");
+    //             setPurchaseColor("#00FECF");
+    //           }, 3000);
+    //           setbuyLoading(false);
+    //           setPurchaseStatus(e?.message);
+    //           setPurchaseColor("#FF6232");
+    //         });
+
+    //       const txReceipt = await txResponse.wait();
+    //       if (txReceipt) {
+    //         setTimeout(() => {
+    //           setbuyStatus("buy");
+    //           setPurchaseStatus("");
+    //           setPurchaseColor("#00FECF");
+    //         }, 3000);
+    //         setbuyStatus("success");
+    //         setbuyLoading(false);
+    //         setPurchaseStatus("Successfully approved");
+    //         setPurchaseColor("#00FECF");
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   const cancelNFT = async (nftAddress, tokenId, type, tokenType) => {
@@ -1783,12 +1794,12 @@ const SingleNft = ({
         price_address = "0x0000000000000000000000000000000000000000";
       }
 
-      if (priceType === 1) {
-        price_address =
-          tokenType === "dypv2"
-            ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address;
-      }
+      // if (priceType === 1) {
+      //   price_address =
+      //     tokenType === "dypv2"
+      //       ? window.config.token_dypius_new_address
+      //       : window.config.dyp_token_address;
+      // }
 
       const marketplace = new ethers.Contract(
         window.config.nft_marketplace_address,
@@ -1921,13 +1932,13 @@ const SingleNft = ({
         price_address = "0x0000000000000000000000000000000000000000";
       }
 
-      if (priceType === 1) {
-        price_nft = 1;
-        price_address =
-          tokenType === "dypv2"
-            ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address;
-      }
+      // if (priceType === 1) {
+      //   price_nft = 1;
+      //   price_address =
+      //     tokenType === "dypv2"
+      //       ? window.config.token_dypius_new_address
+      //       : window.config.dyp_token_address;
+      // }
 
       const marketplace = new ethers.Contract(
         window.config.nft_marketplace_address,
@@ -2059,15 +2070,16 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && priceType === 0) {
       setNftPrice(newprice);
-    } else if (Number(newprice) > 100000 && priceType === 1) {
-      setNftPrice(100000);
-    } else if (Number(newprice) <= 100000 && priceType === 1) {
-      setNftPrice(newprice);
-    } else if (Number(newprice) > 100000 && priceType === 2) {
-      setNftPrice(100000);
-    } else if (Number(newprice) <= 100000 && priceType === 2) {
-      setNftPrice(newprice);
-    }
+    } 
+    // else if (Number(newprice) > 100000 && priceType === 1) {
+    //   setNftPrice(100000);
+    // } else if (Number(newprice) <= 100000 && priceType === 1) {
+    //   setNftPrice(newprice);
+    // } else if (Number(newprice) > 100000 && priceType === 2) {
+    //   setNftPrice(100000);
+    // } else if (Number(newprice) <= 100000 && priceType === 2) {
+    //   setNftPrice(newprice);
+    // }
   };
 
   const handlepricechange2 = (newprice) => {
@@ -2076,15 +2088,16 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && nft.payment_priceType === 0) {
       setNftPrice(newprice);
-    } else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
-      setNftPrice(100000);
-    } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
-      setNftPrice(newprice);
-    } else if (Number(newprice) > 100000 && nft.payment_priceType === 2) {
-      setNftPrice(100000);
-    } else if (Number(newprice) <= 100000 && nft.payment_priceType === 2) {
-      setNftPrice(newprice);
-    }
+    } 
+    // else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
+    //   setNftPrice(100000);
+    // } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
+    //   setNftPrice(newprice);
+    // } else if (Number(newprice) > 100000 && nft.payment_priceType === 2) {
+    //   setNftPrice(100000);
+    // } else if (Number(newprice) <= 100000 && nft.payment_priceType === 2) {
+    //   setNftPrice(newprice);
+    // }
   };
 
   const handleMakeOffer = async (price, pricetype, tokenType) => {
@@ -2114,12 +2127,12 @@ const SingleNft = ({
         price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
       }
 
-      if (priceType === 1) {
-        price_address =
-          tokenType === "dypv2"
-            ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address;
-      }
+      // if (priceType === 1) {
+      //   price_address =
+      //     tokenType === "dypv2"
+      //       ? window.config.token_dypius_new_address
+      //       : window.config.dyp_token_address;
+      // }
 
       const marketplace = new ethers.Contract(
         window.config.nft_marketplace_address,
@@ -2298,12 +2311,12 @@ const SingleNft = ({
         price_address = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
       }
 
-      if (priceType === 1) {
-        price_address =
-          tokenType === "dypv2"
-            ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address;
-      }
+      // if (priceType === 1) {
+      //   price_address =
+      //     tokenType === "dypv2"
+      //       ? window.config.token_dypius_new_address
+      //       : window.config.dyp_token_address;
+      // }
 
       const marketplace = new ethers.Contract(
         window.config.nft_marketplace_address,
@@ -2459,25 +2472,26 @@ const SingleNft = ({
   useEffect(() => {
     // if (isOwner === false) {
     if (coinbase) {
-      if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
-        isApprovedBuy(
-          nft.payment_tokenAddress === window.config.dyp_token_address
-            ? "dypv1"
-            : nft.payment_tokenAddress ===
-              window.config.token_dypius_new_address
-            ? "dypv2"
-            : "eth",
-          nft.price
-        ).then((isApproved) => {
-          console.log(isApproved);
-          if (isApproved === true) {
-            setbuyStatus("buy");
-          } else if (isApproved === false) {
-            setbuyStatus("approve");
-          }
-          setIsApprove(isApproved);
-        });
-      } else if (!IsListed) {
+      // if (isConnected === true && nft.payment_priceType === 1 && IsListed) {
+      //   isApprovedBuy(
+      //     nft.payment_tokenAddress === window.config.dyp_token_address
+      //       ? "dypv1"
+      //       : nft.payment_tokenAddress ===
+      //         window.config.token_dypius_new_address
+      //       ? "dypv2"
+      //       : "eth",
+      //     nft.price
+      //   ).then((isApproved) => {
+      //     console.log(isApproved);
+      //     if (isApproved === true) {
+      //       setbuyStatus("buy");
+      //     } else if (isApproved === false) {
+      //       setbuyStatus("approve");
+      //     }
+      //     setIsApprove(isApproved);
+      //   });
+      // } else
+       if (!IsListed) {
         isApprovedNFT(
           nftId,
           nftAddress === window.config.nft_caws_address
@@ -2502,12 +2516,12 @@ const SingleNft = ({
   }, [isConnected, coinbase, nftCount, IsListed]);
 
   useEffect(() => {
-    if (isConnected === true && nft && nft.payment_priceType === 1) {
-      isApprovedBuy(nft.payment_tokenAddress, nft.price).then((isApproved) => {
-        // console.log(isApproved);
-        setIsApprove(isApproved);
-      });
-    }
+    // if (isConnected === true && nft && nft.payment_priceType === 1) {
+    //   isApprovedBuy(nft.payment_tokenAddress, nft.price).then((isApproved) => {
+    //     // console.log(isApproved);
+    //     setIsApprove(isApproved);
+    //   });
+    // }
 
     if ((coinbase === undefined || !nft.price) && !owner) {
       setisOwner(false);
@@ -3484,19 +3498,12 @@ const SingleNft = ({
                         </div>
                         <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
                           <div className="d-flex w-100 justify-content-between flex-column gap-2">
-                            <span className="currentprice-txt">
+                            {/* <span className="currentprice-txt">
                               Choose currency
-                            </span>
+                            </span> */}
                             <div className="d-flex flex-row justify-content-around w-100 gap-2">
                               <div
-                                className={`d-flex gap-2 align-items-center position-relative ${
-                                  priceType === 0 && nft.payment_priceType === 0
-                                    ? "currencyWrapper"
-                                    : "currencyWrapper-inactive"
-                                } ${
-                                  nft.payment_priceType === 1 &&
-                                  "currency-wrapper-disabled"
-                                }`}
+                                className={`d-flex gap-2 align-items-center position-relative `}
                                 onClick={() => {
                                   setPriceType(0);
                                 }}
@@ -3522,7 +3529,7 @@ const SingleNft = ({
                                 </span>
                               </div>
 
-                              <div
+                              {/* <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
                                   nft.payment_priceType === 1
                                     ? "currencyWrapper"
@@ -3556,7 +3563,7 @@ const SingleNft = ({
                                     ? "DYPv2"
                                     : "DYPv1"}
                                 </span>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
@@ -3613,16 +3620,12 @@ const SingleNft = ({
                                 />
                                 <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
                                   <span className="nft-price-eth gap-3 d-flex">
-                                    {priceType === 0 ? "ETH" : "DYP"}{" "}
+                                    ETH
                                   </span>
                                   <span className="nft-price-usd">
                                     $
-                                    {getFormattedNumber(
-                                      priceType === 0
-                                        ? ethTokenData * nftPrice
-                                        : priceType === 2
-                                        ? dyptokenData * nftPrice
-                                        : dyptokenData_old * nftPrice,
+                                    {getFormattedNumber( ethTokenData * nftPrice
+                                        ,
                                       2
                                     )}
                                   </span>
@@ -3643,6 +3646,9 @@ const SingleNft = ({
                                     type="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
+                                    onClick={() => {
+                                      setPriceType(0);
+                                    }}
                                   >
                                     <div className="d-flex align-items-center gap-2">
                                       {/* <img src={filterIcon} alt="" /> */}
@@ -3658,23 +3664,19 @@ const SingleNft = ({
                                         <span className="nft-price-eth2">
                                           <img
                                             src={
-                                              priceType === 0 ? topEth : topDyp
+                                             topEth
                                             }
                                             alt=""
                                             height={20}
                                             width={20}
                                           />
-                                          {priceType === 0
-                                            ? "ETH"
-                                            : priceType === 1
-                                            ? "DYPv1"
-                                            : "DYPv2"}
+                                          ETH
                                         </span>
                                       </h6>
                                     </div>
-                                    <img src={dropdownIcon} alt="" />
+                                    {/* <img src={dropdownIcon} alt="" /> */}
                                   </button>
-                                  <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                                  {/* <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                                     <li
                                       className="nft-dropdown-item"
                                       onClick={() => {
@@ -3699,7 +3701,7 @@ const SingleNft = ({
                                     >
                                       <span>DYPv2</span>
                                     </li>
-                                  </ul>
+                                  </ul> */}
                                 </div>
 
                                 {/* <div
@@ -3937,13 +3939,7 @@ const SingleNft = ({
                                     nftPrice,
                                     nft.payment_priceType,
                                     type,
-                                    nft.payment_tokenAddress ===
-                                      window.config.token_dypius_new_address
-                                      ? "dypv2"
-                                      : nft.payment_tokenAddress ===
-                                        window.config.dyp_token_address
-                                      ? "dypv1"
-                                      : "eth"
+                                    "eth"
                                   );
                             }}
                           >
@@ -3985,13 +3981,7 @@ const SingleNft = ({
                                     nft.nftAddress,
                                     nft.tokenId,
                                     nft.payment_priceType,
-                                    nft.payment_tokenAddress ===
-                                      window.config.token_dypius_new_address
-                                      ? "dypv2"
-                                      : nft.payment_tokenAddress ===
-                                        window.config.dyp_token_address
-                                      ? "dypv1"
-                                      : "eth"
+                                     "eth"
                                   );
                             }}
                           >

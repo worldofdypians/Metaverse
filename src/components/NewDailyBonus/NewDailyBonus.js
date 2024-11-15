@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./_newdailybonus.scss";
 import bnbChain from "./assets/bnbChain.png";
 import skaleChain from "./assets/skaleChain.png";
+import matchainLogo from "../../components/Header/assets/matchain.svg";
+
 import comingSoon from "./assets/comingSoon.png";
 import comingSoon2 from "./assets/comingSoon2.png";
 import comingSoon3 from "./assets/comingSoon3.png";
@@ -175,7 +177,7 @@ const NewDailyBonus = ({
   claimedMatPremiumChests,
   openedMatChests,
   onMatChestClaimed,
-  allMatChests
+  allMatChests,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -720,7 +722,6 @@ const NewDailyBonus = ({
       settotalMatUsd(resultMatUsd);
     }
 
-
     if (allSeiChests && allSeiChests.length > 0) {
       let resultSeiPoints = 0;
       let resultSeiUsd = 0;
@@ -941,7 +942,6 @@ const NewDailyBonus = ({
       );
     }
   };
-
 
   const handleSkalePool = async () => {
     if (window.ethereum) {
@@ -2128,8 +2128,7 @@ const NewDailyBonus = ({
 
   const showSingleRewardDataMat = (chestID, chestIndex) => {
     const filteredResult = openedMatChests.find(
-      (el) =>
-        el.chestId === chestID && allMatChests.indexOf(el) === chestIndex
+      (el) => el.chestId === chestID && allMatChests.indexOf(el) === chestIndex
     );
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
@@ -2913,7 +2912,6 @@ const NewDailyBonus = ({
       //   setMessage("notsupported");
       // }
       setMessage("comingsoon");
-
     }
   }, [
     email,
@@ -3159,7 +3157,12 @@ const NewDailyBonus = ({
                                 onClick={handleBnbPool}
                               >
                                 {" "}
-                                <img src={bnbIcon} alt="" /> BNB
+                                <img
+                                  src={bnbIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                BNB
                               </button>
 
                               <button
@@ -3170,7 +3173,12 @@ const NewDailyBonus = ({
                                 } d-flex gap-1 align-items-center`}
                                 onClick={handleOpBnbPool}
                               >
-                                <img src={bnbIcon} alt="" /> opBNB
+                                <img
+                                  src={bnbIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                opBNB
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3268,7 +3276,12 @@ const NewDailyBonus = ({
                                 onClick={handleMantaPool}
                               >
                                 {" "}
-                                <img src={manta} alt="" /> MANTA
+                                <img
+                                  src={manta}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                MANTA
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3370,7 +3383,12 @@ const NewDailyBonus = ({
                                 onClick={handleTaikoPool}
                               >
                                 {" "}
-                                <img src={taiko} alt="" /> Taiko
+                                <img
+                                  src={taiko}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3446,7 +3464,8 @@ const NewDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "matchain" && "chain-title-wrapper-active"
+                              chain === "matchain" &&
+                              "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("matchain");
@@ -3468,7 +3487,12 @@ const NewDailyBonus = ({
                                 onClick={handleMatPool}
                               >
                                 {" "}
-                                <img src={taiko} alt="" /> Matchain
+                                <img
+                                  src={matchainLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Matchain
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3585,8 +3609,8 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={20}
-                                  height={20}
+                                  width={24}
+                                  height={24}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -3692,7 +3716,12 @@ const NewDailyBonus = ({
                                 onClick={handleBasePool}
                               >
                                 {" "}
-                                <img src={baseLogo} alt="" /> Base
+                                <img
+                                  src={baseLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Base
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3792,7 +3821,12 @@ const NewDailyBonus = ({
                                 onClick={handleSkalePool}
                               >
                                 {" "}
-                                <img src={skaleIcon} alt="" /> SKALE
+                                <img
+                                  src={skaleIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SKALE
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
@@ -3961,7 +3995,6 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                      
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon2}
@@ -3995,7 +4028,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                       </div>
-                    ) : windowSize.width && windowSize.width<= 992 ? (
+                    ) : windowSize.width && windowSize.width <= 992 ? (
                       <Slider {...settings}>
                         <div
                           className={`position-relative chain-item ${
@@ -4036,7 +4069,12 @@ const NewDailyBonus = ({
                                 onClick={handleBnbPool}
                               >
                                 {" "}
-                                <img src={bnbIcon} alt="" /> BNB
+                                <img
+                                  src={bnbIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                BNB
                               </button>
 
                               <button
@@ -4047,7 +4085,12 @@ const NewDailyBonus = ({
                                 } d-flex gap-1 align-items-center`}
                                 onClick={handleOpBnbPool}
                               >
-                                <img src={bnbIcon} alt="" /> opBNB
+                                <img
+                                  src={bnbIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                opBNB
                               </button>
                             </div>
                           </div>
@@ -4091,7 +4134,12 @@ const NewDailyBonus = ({
                                 onClick={handleMantaPool}
                               >
                                 {" "}
-                                <img src={manta} alt="" /> Manta
+                                <img
+                                  src={manta}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Manta
                               </button>
                             </div>
                           </div>
@@ -4136,7 +4184,12 @@ const NewDailyBonus = ({
                                 onClick={handleTaikoPool}
                               >
                                 {" "}
-                                <img src={taiko} alt="" /> Taiko
+                                <img
+                                  src={taiko}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Taiko
                               </button>
                             </div>
                           </div>
@@ -4156,7 +4209,8 @@ const NewDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "matchain" && "chain-title-wrapper-active"
+                              chain === "matchain" &&
+                              "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("matchain");
@@ -4181,7 +4235,12 @@ const NewDailyBonus = ({
                                 onClick={handleMatPool}
                               >
                                 {" "}
-                                <img src={taiko} alt="" /> Matchain
+                                <img
+                                  src={matchainLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Matchain
                               </button>
                             </div>
                           </div>
@@ -4225,7 +4284,12 @@ const NewDailyBonus = ({
                                 onClick={handleSkalePool}
                               >
                                 {" "}
-                                <img src={skaleIcon} alt="" /> SKALE
+                                <img
+                                  src={skaleIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SKALE
                               </button>
                             </div>
                           </div>
@@ -4284,8 +4348,8 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={20}
-                                  height={20}
+                                  width={24}
+                                  height={24}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -4333,7 +4397,12 @@ const NewDailyBonus = ({
                                 onClick={handleBasePool}
                               >
                                 {" "}
-                                <img src={baseLogo} alt="" /> Base
+                                <img
+                                  src={baseLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Base
                               </button>
                             </div>
                           </div>
@@ -4374,8 +4443,8 @@ const NewDailyBonus = ({
                               {" "}
                               <img
                                 src={victionIcon}
-                                width={20}
-                                height={20}
+                                width={24}
+                                height={24}
                                 alt=""
                               />{" "}
                               VICTION
@@ -4383,7 +4452,9 @@ const NewDailyBonus = ({
                           </div>
                         </div>
                       </Slider>
-                    ) : <></>}
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <div className="col-12 col-lg-7 px-0 grid-overall-wrapper">
                     <div className="grid-scroll">
@@ -4894,109 +4965,106 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-
-                              : chain === "matchain"
-                              ? allMatChests && allMatChests.length > 0
-                                ? allMatChests.map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      image={matImages[index]}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onMatChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataMat(value, value2);
-                                        setIsActive(value);
-                                        setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={item.chestType?.toLowerCase()}
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.isOpened}
-                                      disableBtn={disable}
-                                      isActive={isActive}
-                                      isActiveIndex={isActiveIndex}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-                                : window.range(0, 19).map((item, index) => (
-                                    <NewChestItem
-                                      coinbase={coinbase}
-                                      claimingChest={claimingChest}
-                                      setClaimingChest={setClaimingChest}
-                                      buyNftPopup={buyNftPopup}
-                                      chainId={chainId}
-                                      chain={chain}
-                                      key={index}
-                                      item={item}
-                                      image={matImages[index]}
-                                      // openChest={openChest}
-                                      selectedChest={selectedChest}
-                                      isPremium={isPremium}
-                                      onClaimRewards={(value) => {
-                                        // setRewardData(value);
-                                        setLiveRewardData(value);
-                                        onMatChestClaimed();
-                                        showLiveRewardData(value);
-                                        setIsActive(item.chestId);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      handleShowRewards={(value, value2) => {
-                                        showSingleRewardDataMat(value, value2);
-                                        setIsActive(value);
-                                        // setIsActiveIndex(index + 1);
-                                      }}
-                                      onLoadingChest={(value) => {
-                                        // setDisable(value);
-                                      }}
-                                      onChestStatus={(val) => {
-                                        setMessage(val);
-                                      }}
-                                      address={address}
-                                      email={email}
-                                      rewardTypes={
-                                        index + 1 <= 10 ? "standard" : "premium"
-                                      }
-                                      chestId={item.chestId}
-                                      chestIndex={index + 1}
-                                      open={item.opened}
-                                      disableBtn={true}
-                                      isActive={isActive}
-                                      openChest={() => {
-                                        console.log("test");
-                                      }}
-                                      dummypremiumChests={
-                                        dummypremiumChests[index - 10]?.closedImg
-                                      }
-                                    />
-                                  ))
-
-
+                          : chain === "matchain"
+                          ? allMatChests && allMatChests.length > 0
+                            ? allMatChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={matImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMatChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataMat(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={matImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onMatChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataMat(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -7638,11 +7706,8 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "matchain"
-                ? showSingleRewardDataMat(
-                    rewardData.chestId,
-                    isActiveIndex - 1
-                  )
+                : chain === "matchain"
+                ? showSingleRewardDataMat(rewardData.chestId, isActiveIndex - 1)
                 : chain === "viction"
                 ? showSingleRewardDataViction(
                     rewardData.chestId,

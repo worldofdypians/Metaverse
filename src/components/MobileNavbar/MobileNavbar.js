@@ -25,6 +25,7 @@ import core from "../Header/assets/core.svg";
 import manta from "../Header/assets/manta.png";
 import immutable from "../Header/assets/immutableLogo.svg";
 import taiko from "../Header/assets/taiko.svg";
+import matchain from "./assets/matchain.svg";
 
 import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
@@ -416,7 +417,7 @@ const MobileNavbar = ({
                           : taikoState === true
                           ? taiko
                           : matState === true
-                          ? taiko
+                          ? matchain
                           : // : seiState === true
                             // ? sei
                             error
@@ -491,7 +492,7 @@ const MobileNavbar = ({
                       <Dropdown.Item
                         onClick={() => switchNetwork("0x2ba", 698)}
                       >
-                        <img src={taiko} width={20} height={20} alt="" />
+                        <img src={matchain} width={20} height={20} alt="" />
                         Matchain
                       </Dropdown.Item>
                     )}
