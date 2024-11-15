@@ -525,7 +525,7 @@ const LandDetailsPremium = ({
                       ? "Connect Wallet"
                       : isConnected && isPremium && chainId !== "1"
                       ? "Switch to Ethereum"
-                      : "Become Premium"}
+                      : "Become Prime"}
                   </button>
                 </div>
               </div>
