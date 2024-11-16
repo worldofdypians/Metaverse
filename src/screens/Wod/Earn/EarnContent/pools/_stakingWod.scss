@@ -237,15 +237,19 @@
   color: #ffffff !important;
   background: linear-gradient(90.74deg, #75cac2 0%, #57b6ab 100%) !important;
   border: none !important;
-  border-radius: 8px;
+  border-radius: 12px;
   opacity: 1 !important;
+  padding: 5px 10px;
+  font-size: 12px;
 }
 .fail-button {
   color: #ffffff !important;
   background: linear-gradient(90.74deg, #f8845b 0%, #f0603a 100%) !important;
   border: none !important;
-  border-radius: 10px;
+  border-radius: 12px;
   opacity: 1 !important;
+  padding: 5px 10px;
+  font-size: 12px;
 }
 
 .stats-link2 {

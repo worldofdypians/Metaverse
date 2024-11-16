@@ -923,12 +923,21 @@ const StakeWodDetails2 = ({
                       ? true
                       : false
                   }
-                  className={`btn connectbtn w-100 ${
+                  className={`btn w-100 ${
                     depositAmount === "" &&
-                    depositStatus === "initial" &&
                     isConnected &&
                     chainId === "1" &&
                     "disabled-btn"
+                  } ${
+                     depositStatus === "initial" && depositAmount !== "" &&
+                    isConnected &&
+                    chainId === "1" &&
+                    "outline-btn-stake"
+                  } ${
+                     depositStatus === "deposit" || depositStatus === "success" &&
+                    isConnected &&
+                    chainId === "1" &&
+                    "connectbtn"
                   } ${
                     depositStatus === "deposit" || depositStatus === "success"
                       ? "success-button"
