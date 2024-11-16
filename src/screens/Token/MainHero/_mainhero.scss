@@ -49,24 +49,28 @@
 }
 
 .stake-wod-btn {
-  border-radius: 10px;
-  background: linear-gradient(270deg, #7bd8b0, #dcfb85, #dcfb85, #7bd8b0);
-  background-size: 300%;
-  background-position: 0 0;
-  border: none;
-  color: #333 !important;
+  border-radius: 12px;
+  border: 1px solid #f3bf09;
+  color: #f3bf09 !important;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
   text-align: center;
-  font-family: "Montserrat";
-  text-transform: uppercase;
-  font-size: 16px;
+  font-size: 17.28px;
   font-style: normal;
-  font-weight: 700;
-  // line-height: normal;
-transition: all .25s;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  transition: all 0.25s;
+  padding: 12px 30px !important;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
 }
 
 .stake-wod-btn:hover {
-  background-position: 100% 0 !important;
+  background: #f3bf09;
+  color: #49291c !important;
 }
 
 .stake-wod-btn-inactive,

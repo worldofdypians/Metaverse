@@ -85,7 +85,7 @@ const AmplifyExperience = () => {
                 <th className="game-table-header-1">World of Dypians</th>
                 <th className="game-table-header">Free</th>
                 <th className="game-table-header">Beta Pass</th>
-                <th className="game-table-header">Premium Subscriber</th>
+                <th className="game-table-header">Prime</th>
               </tr>
             </thead>
             <tbody>
@@ -140,10 +140,10 @@ const AmplifyExperience = () => {
                 <td>
                   <div className="py-4">
                     <NavLink
-                      className="stake-wod-btn buy-premium-btn px-4 py-2 mt-4"
+                      className="explore-btn px-4 py-2 mt-4"
                       to={"/account/prime"}
                     >
-                      Buy Premium
+                      Buy Prime
                     </NavLink>
                   </div>
                 </td>

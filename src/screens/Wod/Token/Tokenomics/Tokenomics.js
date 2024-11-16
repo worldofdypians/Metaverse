@@ -115,7 +115,7 @@ const Tokenomics = () => {
     >
       <div className="custom-container d-flex flex-column w-100 gap-3">
         <h4
-          className="explorer-grid-title text-uppercase font-montserrat text-start mb-0"
+          className="explorer-grid-title text-uppercase font-montserrat text-start mb-0 mt-5"
           
         >
           WOD{" "}

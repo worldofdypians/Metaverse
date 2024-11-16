@@ -162,7 +162,7 @@ const MainHero = ({scrollInto}) => {
                   DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
                 <div className="d-flex align-items-center gap-3">
-                  <button className="pill-btn2 px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
+                  <button className="getpremium-btn px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
                   <button className="signinbtn2 px-3 py-2" onClick={()=>{scrollInto('backers&partners')}}>Backers & Partners</button>
                 </div>
               </div>

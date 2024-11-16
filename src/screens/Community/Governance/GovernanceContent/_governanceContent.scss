@@ -1,14 +1,15 @@
 .active-proposals-wrapper {
-  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+  background: #14153F;
+  border-bottom: 3px solid black;
 }
 
 .active-proposals-inner-wrapper {
   border-radius: 10px;
-  background: #390a4e;
+  background: rgba(0, 183, 204, 0.20);
 }
 
 .active-proposals-features {
-  color: #bcadc7;
+  color: #FFF;
   font-size: 18px;
   font-style: normal;
   font-weight: 800;
@@ -46,7 +47,8 @@
 }
 
 .past-proposals-wrapper {
-  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+  background: #0E0F35;
+  border-bottom: 3px solid black;
 }
 
 .rejected-tag {
@@ -79,7 +81,7 @@
 
 .past-proposals-item {
   border-radius: 10px;
-  background: #1c0d3e;
+  background: #121342;
   cursor: pointer;
   border: 1px solid transparent;
 }
@@ -111,7 +113,7 @@
 }
 
 .proposal-top-wrapper {
-  background: linear-gradient(180deg, #140836 100.09%, #2f025b 181.99%);
+  background: #0E0F35;
 }
 
 .single-proposal-top-title {
@@ -149,8 +151,8 @@
 
 .proposal-result-wrapper {
   border-radius: 20px;
-  border: 1px solid #dcfb85;
-  background: rgba(220, 251, 133, 0.04);
+  border: 1px solid #484865;
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(5.5px);
 }
 
@@ -174,30 +176,30 @@
 .prog1 {
   background: transparent;
   border-radius: 12px;
-  border: 1px solid #7bd8b0;
+  border: 1px solid #7BD8B0;
   height: 8px;
 
   .progress-bar {
     border-radius: 12px;
-    background: #7bd8b0;
+    background: #7BD8B0;
   }
 }
 
 .prog2 {
   background: transparent;
   border-radius: 12px;
-  border: 1px solid #ff8168;
+  border: 1px solid #00B7CC;
   height: 8px;
 
   .progress-bar {
     border-radius: 12px;
-    background: #ff8168;
+    background: #00B7CC;
   }
 }
 
 .orange-btn {
   border-radius: 10px;
-  background: linear-gradient(90deg, #ff8168 0%, #ea6278 100%);
+background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
   color: #fff;
   text-align: center;
   font-size: 16px;
