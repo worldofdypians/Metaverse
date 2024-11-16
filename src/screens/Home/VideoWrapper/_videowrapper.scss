@@ -214,6 +214,8 @@
   top: 40%;
   bottom: 0;
   margin: auto;
+  z-index: 1;
+
 
   @media screen and (max-width: 991px) {
     position: relative;

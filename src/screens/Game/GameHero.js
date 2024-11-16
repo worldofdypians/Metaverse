@@ -117,8 +117,11 @@ const GameHero = () => {
         <div className="custom-container  mt-5 mt-lg-0">
           <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0">
             <h2 className="font-montserrat main-hero-title  px-0">
-              What is <br />
-              World of Dypians?
+              {/* What is <br />
+              World of Dypians? */}
+               The Biggest Metaverse
+              <br />
+              Ever Built
             </h2>
             <p className="about-hero-desc">
               An action-packed multiplayer game where heroes come together to
