@@ -2,12 +2,15 @@
   background: #242556;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.08);
   border-radius: 12px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   position: relative;
   /* padding: 10px; */
   /* width: 400px; */
-  border: 2px solid #242556;
+  border: 2px solid transparent;
   transition: all 0.25s;
   cursor: pointer;
+  border-bottom: none;
 }
 
 .earnother-table {
@@ -44,7 +47,7 @@
 }
 
 .poolscardwrapperexpired {
-  background: #403E6B;
+  background: #403e6b;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.12);
   border-radius: 12px;
   position: relative;
@@ -54,16 +57,44 @@
   transition: all 0.25s;
 }
 
-.pools-card-hover:hover {
-  border: 2px solid #00B7CC;
+.pools-card-hover {
+  /* border: 2px solid #00b7cc; */
+  background-image: url("../assets/toppools-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+  border: 2px solid #00b7cc;
+ border-bottom: none;
 }
+
+.accHeaderBorder {
+  border: 2px solid #00b7cc;
+  border-top: none;
+  transition: all 0.25s;
+}
+
+
+.accHeaderBorder2 {
+  border: 2px solid transparent;
+  border-top: none;
+  transition: all 0.25s;
+}
+
 
 .pools-card-open {
   background-image: url("../assets/toppools-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border: 2px solid #00B7CC;
+  border: 2px solid #00b7cc;
+ border-bottom: none;
+
+}
+
+.test-accordion {
+  --bs-accordion-inner-border-radius: 0px !important;
+  --bs-accordion-border-radius: 0px !important;
 }
 
 .dashboard-pool-tag {
@@ -119,8 +150,8 @@
 .tvl-amount {
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 14px;
+  /* line-height: 30px; */
   letter-spacing: -0.018em;
   color: #f7f7fc;
 }
@@ -153,7 +184,7 @@
 }
 
 .details-wrapper {
-  background: #3A3B74;
+  background: #3a3b74;
   border-radius: 5px 5px 0px 0px;
   cursor: pointer;
   display: flex;
@@ -170,7 +201,7 @@
 }
 
 .details-wrapperexpired {
-  background: #403E6B;
+  background: #403e6b;
   border-radius: 5px 5px 0px 0px;
   cursor: pointer;
   display: flex;
@@ -259,7 +290,7 @@
 .bottomwrapper2 {
   background: linear-gradient(0deg, #14142a 0%, rgba(20, 20, 42, 0) 100%);
   filter: drop-shadow(0px 32px 64px rgba(17, 17, 17, 0.08));
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 10px 10px 10px 10px !important;
 }
 
@@ -275,11 +306,13 @@
 
 .pools-details-wrapper {
   background: #26264f;
-  border-radius: 12px;
-  border: 1px solid #7770df;
-  padding:  12px;
+  /* border-radius: 12px;
+  border: 1px solid #7770df; */
+  padding: 12px;
   gap: 5px;
   justify-content: center;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .leftside {
@@ -381,27 +414,28 @@
   cursor: pointer;
 }
 
+.mybalance-text {
+  color: #c0c9ff;
 
-.mybalance-text{
-  color: #C0C9FF;
-
-  b{
-  color: #4ed5d2;  
+  b {
+    color: #4ed5d2;
   }
- 
-
-  
 }
 
 .rewardstxtwod {
-  color: #00E5FF;
+  color: #00e5ff;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-.start-title,.withdraw-littletxt, .withdraw-txt, .mybalance-text, .rewardstxtCaws, .available-nfts {
+.start-title,
+.withdraw-littletxt,
+.withdraw-txt,
+.mybalance-text,
+.rewardstxtCaws,
+.available-nfts {
   font-size: 12px;
   line-height: normal;
 }
@@ -437,10 +471,10 @@
 
 .deposit-txt {
   font-weight: 600;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 12px;
   letter-spacing: -0.018em;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   color: #f7f7fc;
 }
 
@@ -459,10 +493,9 @@
   color: #f7f7fc !important;
 }
 
-
-.outline-btn-stake, .outline-btn-stake:hover {
+.outline-btn-stake {
   background: #312f69;
-  border-radius: 8px;
+  border-radius: 12px;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -474,11 +507,26 @@
   -webkit-transition: all ease 0.4s;
 }
 
+.outline-btn-stake:focus,
+.outline-btn-stake:hover {
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  color: #fff;
+  border: 1px solid #008ebf;
+  padding: 5px 10px;
+  transition: all ease 0.4s;
+  -webkit-transition: all ease 0.4s;
+}
+
 .stake-separator {
   height: 1px;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background: rgba(192, 201, 255, 0.30);
+  background: rgba(192, 201, 255, 0.3);
 }
 
 /* .outline-btn-stake:hover {
@@ -520,8 +568,8 @@
 }
 
 .first-block-wrapper {
-  display: grid ;
-    grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .filledbtn {
@@ -633,6 +681,6 @@
   }
 }
 .locktime-amount {
-  font-size: 17px;
+  font-size: 14px;
   color: #f7f7fc !important;
 }

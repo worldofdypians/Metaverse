@@ -13,6 +13,7 @@ const Earn = ({
   nftPools,
   binanceW3WProvider,
   isPremium,
+  tvl
 }) => {
   const tokenPools = [
     {
@@ -147,13 +148,12 @@ const Earn = ({
       handleSetPools("All", false);
     }
   }, [nftPools]);
-
   return (
     <>
       <div className="container-fluid earn-mainhero-wrapper token-wrapper px-0">
         <div className="d-flex flex-column gap-3">
           <EarnHero
-           
+          
           />
           <EarnContent
            onSelectFilter={(value, expirevalue) => {
@@ -182,6 +182,7 @@ const Earn = ({
             expired={expired}
             binanceW3WProvider={binanceW3WProvider}
             isPremium={isPremium}
+            tvl={tvl}
           />
         </div>
       </div>

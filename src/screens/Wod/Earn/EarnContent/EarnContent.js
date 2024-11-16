@@ -4,7 +4,7 @@ import arrowUp from "../assets/arrowUp.svg";
 import arrowUpActive from "../assets/arrowUpActive.svg";
 import arrowDown from "../assets/arrowDown.svg";
 import arrowDownActive from "../assets/arrowDownActive.svg";
-
+import wodToken from "../assets/tokens/wodToken.png";
 import TopPoolsCard from "./TopPoolsCard";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import CawsDetails from "./pools/caws";
@@ -14,6 +14,7 @@ import CawsDetailsPremium from "./pools/cawsPremium";
 import LandDetailsPremium from "./pools/landPremium";
 import TopPoolsListCard from "./TopPoolsListCard";
 import StakeWodDetails from "./pools/stakingWod";
+import StakeWodDetails2 from "./pools/stakingWod2";
 
 const EarnContent = ({
   isConnected,
@@ -32,6 +33,7 @@ const EarnContent = ({
   onSelectViewStyle,
   onViewPastPools,
   onViewStakedOnlyPools,
+  tvl,
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -39,9 +41,10 @@ const EarnContent = ({
   // const [listStyle, setListStyle] = useState("table");
   const [pastPools, setpastPools] = useState(false);
   const [stakedOnly, setstakedOnly] = useState(false);
+  const [isHover, setisHover] = useState(false);
 
   const onShowDetailsClick = (item) => {
-    setselectedPool((prevSelected) => [...prevSelected, item]);
+    setselectedPool([item]);
   };
 
   // Handle hiding details
@@ -55,8 +58,8 @@ const EarnContent = ({
     setselectedPool([]);
   }, [expired, selectedFilter]);
 
-  console.log(selectedPool);
-
+  const tvlUsd = localStorage.getItem("tvl");
+  
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
       <div
@@ -136,7 +139,7 @@ const EarnContent = ({
                           </button>
                         </div>
                       </div>
-                      <div className=" d-flex justify-content-end align-items-center gap-1 gap-lg-3">
+                      {/* <div className=" d-flex justify-content-end align-items-center gap-1 gap-lg-3">
                         <div
                           className={`pill-box ${
                             stakedOnly && "pill-box-active"
@@ -155,9 +158,20 @@ const EarnContent = ({
                         <h5 className="text-white inactive-pools m-0">
                           Staked only
                         </h5>
-                      </div>
+                      </div> */}
                     </div>
-                    <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="tvl-earn-title text-white">Balance</span>
+                      <span className="tvl-earn-amount d-flex align-items-center gap-2">
+                        <img
+                          src={wodToken}
+                          alt=""
+                          style={{ width: 20, height: 20 }}
+                        />
+                        {getFormattedNumber(23445)}
+                      </span>
+                    </div>
+                    {/* <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
                       <div className=" d-flex align-items-center pools-toggle-wrapper">
                         <button
                           onClick={() => {
@@ -202,10 +216,10 @@ const EarnContent = ({
                       <div className="tvl-earn-wrapper py-2 px-4">
                         <div className="d-flex align-items-center gap-2">
                           <span className="tvl-earn-title">TVL</span>
-                          <span className="tvl-earn-amount">$1,6000,000+</span>
+                          <span className="tvl-earn-amount">${getFormattedNumber(tvlUsd)}</span>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -290,12 +304,18 @@ const EarnContent = ({
                       style={{ zIndex: "2" }}
                     >
                       <button
-                        className="accordion-button shadow-none p-0 bg-transparent collapsed d-flex flex-column position-relative "
+                        className="accordion-button shadow-none p-0 bg-transparent d-flex flex-column position-relative"
                         type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target={`#${"collapse" + index}`}
+                        // data-bs-toggle="collapse"
+                        // // data-bs-target={`#${"collapse" }`}
                         aria-expanded="true"
-                        aria-controls={"collapse" + index}
+                        // aria-controls={"collapse"}
+                        onMouseEnter={() => {
+                          setisHover(index);
+                        }}
+                        onMouseLeave={() => {
+                          setisHover();
+                        }}
                       >
                         <TopPoolsCard
                           key={index}
@@ -303,7 +323,7 @@ const EarnContent = ({
                           top_pick={false}
                           tokenName={item.pair_name}
                           apr={item.apy_percent + "%"}
-                          tvl={"$" + getFormattedNumber(item.tvl_usd)}
+                          tvl={getFormattedNumber(item.tvl_usd, 0) + " WOD"}
                           lockTime={item.lock_time ? item.lock_time : "No Lock"}
                           tokenLogo={
                             item.tokenURL
@@ -334,150 +354,245 @@ const EarnContent = ({
                           isStaked={false}
                           isAccount={true}
                           expired={item.expired === "Yes" ? true : false}
+                          isHover={isHover === index}
                         />
                       </button>
                     </div>
                     <div
-                      id={"collapse" + index}
-                      className={`accordion-collapse collapse `}
-                      aria-labelledby={"collapsed" + index}
+                      // id={"collapse"}
+                      className={`accordion-collapse show`}
+                      // aria-labelledby={"collapsed"}
                       data-bs-parent="#accordionExample"
                       style={{ zIndex: "1" }}
                     >
                       <div
-                        className="accordion-body px-2 text-white position-relative"
+                        className={`${
+                          isHover === index ||
+                          selectedPool.find((obj) => {
+                            return (
+                              obj.id.toLowerCase() === item.id.toLowerCase()
+                            );
+                          }) !== undefined
+                            ? "accHeaderBorder"
+                            : "accHeaderBorder2"
+                        } px-0 py-0 text-white position-relative`}
                         style={{
                           background: expired ? "#403E6B" : "#1e1c40",
-                          top: "-10px",
-                          border: "2px solid #00B7CC",
+                          borderBottomRightRadius: "12px",
+                          borderBottomLeftRadius: "12px",
+                        }}
+                        onMouseEnter={() => {
+                          setisHover(index);
+                        }}
+                        onMouseLeave={() => {
+                          setisHover();
                         }}
                       >
                         {item?.id ===
                           "0xee425bbbec5e9bf4a59a1c19efff522ad8b7a47a" && (
-                          <CawsDetails
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={true}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            listType={selectedViewStyle}
-                            tvl_usd={
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              })?.tvl_usd
-                            }
-                          />
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <CawsDetails
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={true}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              tvl_usd={
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                })?.tvl_usd
+                              }
+                            />
+                          </div>
                         )}
 
                         {item?.id ===
                           "0x6821710B0D6E9e10ACfd8433aD023f874ed782F1" && (
-                          <LandDetails
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={true}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            listType={selectedViewStyle}
-                            tvl_usd={
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              })?.tvl_usd
-                            }
-                          />
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <LandDetails
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={true}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              tvl_usd={
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                })?.tvl_usd
+                              }
+                            />
+                          </div>
                         )}
 
                         {item?.id ===
                           "0xD324A03BF17Eee8D34A8843D094a76FF8f561e38" && (
-                          <CawsWodDetails
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={true}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            listType={selectedViewStyle}
-                            tvl_usd={
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              })?.tvl_usd
-                            }
-                          />
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <CawsWodDetails
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={true}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              tvl_usd={
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                })?.tvl_usd
+                              }
+                            />
+                          </div>
                         )}
                         {item?.id ===
                           "0x097bB1679AC734E90907Ff4173bA966c694428Fc" && (
-                          <CawsDetailsPremium
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={false}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            isPremium={isPremium}
-                            listType={selectedViewStyle}
-                            tvl_usd={
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              })?.tvl_usd
-                            }
-                          />
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <CawsDetailsPremium
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              isPremium={isPremium}
+                              listType={selectedViewStyle}
+                              tvl_usd={
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                })?.tvl_usd
+                              }
+                            />
+                          </div>
                         )}
 
                         {item?.id ===
                           "0x3E0c0443A6a5382B2Ef20ECfe3bdbE84F1436523" && (
-                          <LandDetailsPremium
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={false}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            isPremium={isPremium}
-                            listType={selectedViewStyle}
-                            tvl_usd={
-                              selectedPool.find((obj) => {
-                                return (
-                                  obj.id.toLowerCase() === item.id.toLowerCase()
-                                );
-                              })?.tvl_usd
-                            }
-                          />
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <LandDetailsPremium
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              isPremium={isPremium}
+                              listType={selectedViewStyle}
+                              tvl_usd={
+                                selectedPool.find((obj) => {
+                                  return (
+                                    obj.id.toLowerCase() ===
+                                    item.id.toLowerCase()
+                                  );
+                                })?.tvl_usd
+                              }
+                            />
+                          </div>
                         )}
 
-                        {(item?.id === "one" ||
-                          item?.id === "two" ||
-                          item?.id === "three") && (
-                          <StakeWodDetails
-                            coinbase={coinbase}
-                            isConnected={isConnected}
-                            chainId={chainId?.toString()}
-                            handleConnection={onConnectWallet}
-                            expired={false}
-                            staking={window.constant_staking_wod}
-                            apr={20}
-                            expiration_time={"07 Jun 2025"}
-                            poolCap={1000000}
-                            start_date={"28 Nov 2024"}
-                            fee={0}
-                            binanceW3WProvider={binanceW3WProvider}
-                            handleSwitchNetwork={handleSwitchNetwork}
-                            listType={selectedViewStyle}
-                            lockTime={"30 days"}
-                          />
+                        {(item?.id === "one" || item?.id === "three") && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod}
+                              apr={20}
+                              expiration_time={"07 Jun 2025"}
+                              poolCap={1000000}
+                              start_date={"28 Nov 2024"}
+                              fee={0}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={"30 days"}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id === "two" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod}
+                              apr={20}
+                              expiration_time={"07 Jun 2025"}
+                              poolCap={1000000}
+                              start_date={"28 Nov 2024"}
+                              fee={0}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={"30 days"}
+                            />
+                          </div>
                         )}
                       </div>
                     </div>

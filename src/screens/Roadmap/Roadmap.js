@@ -340,7 +340,7 @@ const Roadmap = () => {
           completed: true,
         },
         {
-          title: "Premium Subscriber Benefits Expansion",
+          title: "Prime Subscriber Benefits Expansion",
           desc: "Introduce a ranking system based on player performance and engagement, rewarding players with unique perks and benefits as they progress through the ranks.",
           completed: true,
         },
@@ -386,7 +386,7 @@ const Roadmap = () => {
         },
         {
           title: "CAWS Staking Pool",
-          desc: "The launch of a new NFT staking pool for CAWS NFT holders that is accessible only to Premium Subscribers.",
+          desc: "The launch of a new NFT staking pool for CAWS NFT holders that is accessible only to Prime Subscribers.",
           completed: true,
         },
         {
@@ -604,7 +604,7 @@ const Roadmap = () => {
       image: dailyBonusBanner,
     },
     {
-      title: "Premium Subscriber Benefits Expansion",
+      title: "Prime Subscriber Benefits Expansion",
       date: "March 2024",
       image: premiumBanner,
     },

@@ -346,7 +346,7 @@ const CawsDetails = ({
 
   return (
     <div className={`p-0 ${listType === "list" && "pt-4"} `}>
-      <div className={`allwrappercaws allwrapper-active mb-2 `}>
+      <div className={`allwrappercaws allwrapper-active mb-0 `}>
         {/* <div className="leftside2 mb-2 w-100">
           <div
             className={

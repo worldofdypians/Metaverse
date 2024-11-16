@@ -40,13 +40,13 @@ const renderer = ({ days, hours, minutes, seconds }) => {
 
 const renderer2 = ({ hours, minutes }) => {
   return (
-    <h6 className="rewardstxtwod text-white mb-0">
-      {hours}D:{hours}H:{minutes}M
+    <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+      {hours}d:{hours}h:{minutes}m
     </h6>
   );
 };
 
-const StakeWodDetails = ({
+const StakeWodDetails2 = ({
   staking,
   apr,
   expiration_time,
@@ -766,7 +766,7 @@ const StakeWodDetails = ({
                 </Tooltip> */}
               </div>
               <div className="d-flex flex-column gap-3 justify-content-between">
-                <div className="d-flex flex-column w-100 gap-1">
+                <div className="d-flex flex-column gap-1 w-100">
                   <div className="d-flex align-items-center justify-content-between gap-2">
                     <div className="position-relative w-100 d-flex">
                       <input
@@ -787,13 +787,7 @@ const StakeWodDetails = ({
                         id="amount_deposit"
                         key="amount_deposit"
                       />
-                      {/* <label
-                      htmlFor="usd"
-                      className="m-0 amount-txt"
-                      onClick={() => focusInput("amount_deposit")}
-                    >
-                      Amount
-                    </label> */}
+
                       <button
                         className="inner-max-btn position-absolute"
                         onClick={handleSetMaxDeposit}
@@ -802,7 +796,6 @@ const StakeWodDetails = ({
                       </button>
                     </div>
                   </div>
-
                   <div className="d-flex pe-3 align-items-center gap-2 justify-content-end">
                     <span
                       className="bal-smallTxt"
@@ -991,145 +984,147 @@ const StakeWodDetails = ({
               </div> */}
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
-            {pendingDivs > 0 && <div className="stake-separator"></div>}
-            {pendingDivs > 0 && (
-              <div
-                className={`otherside-border ${
-                  listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${(expired === true || chainId !== "1") && "blurrypool"} `}
-              >
-                <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                  <h6
-                    className={
-                      listType === "list"
-                        ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                        : "m-0 deposit-txt d-flex flex-column gap-2"
+            {/* {pendingDivs > 0 && */}
+            <div className="stake-separator"></div>
+            {/* } */}
+            {/* {pendingDivs > 0 && ( */}
+            <div
+              className={`otherside-border ${
+                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+              }  ${(expired === true || chainId !== "1") && "blurrypool"} `}
+            >
+              <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
+                <h6
+                  className={
+                    listType === "list"
+                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                      : "m-0 deposit-txt d-flex flex-column gap-2"
+                  }
+                >
+                  Earnings
+                </h6>
+                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
+                  <Tooltip
+                    placement="top"
+                    title={
+                      <div className="tooltip-text">
+                        {
+                          "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
+                        }
+                      </div>
                     }
                   >
-                    Earnings
-                  </h6>
-                  <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
-                    <Tooltip
-                      placement="top"
-                      title={
-                        <div className="tooltip-text">
-                          {
-                            "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
-                          }
-                        </div>
-                      }
-                    >
-                      <img src={moreinfo} alt="" />
-                    </Tooltip>
-                  </h6>
-                </div>
-                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                  {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
-                  <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                    <h6 className="m-0 rewardstxtwod w-100 d-flex align-items-center gap-2">
-                      {/* <img
-                        src={wodToken}
-                        alt=""
-                        style={{ width: 18, height: 18 }}
-                      />{" "} */}
-                      {getFormattedNumber(pendingDivs, 2)} WOD
-                    </h6>
-                    <div className="d-flex w-100 align-items-center gap-2">
-                      <button
-                        disabled={
-                          claimStatus === "claimed" ||
-                          claimStatus === "success" ||
-                          pendingDivs <= 0
-                            ? //
-                              true
-                            : false
-                        }
-                        className={`btn w-100 outline-btn-stake ${
-                          (claimStatus === "claimed" &&
-                            claimStatus === "initial") ||
-                          pendingDivs <= 0
-                            ? //
-                              "disabled-btn"
-                            : claimStatus === "failed"
-                            ? "fail-button"
-                            : claimStatus === "success"
-                            ? "success-button"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
-                        style={{ height: "fit-content" }}
-                        onClick={() => {
-                          handleClaimDivs();
-                        }}
-                      >
-                        {claimLoading ? (
-                          <div
-                            class="spinner-border spinner-border-sm text-light"
-                            role="status"
-                          >
-                            <span class="visually-hidden">Loading...</span>
-                          </div>
-                        ) : claimStatus === "failed" ? (
-                          <>
-                            <img src={failMark} alt="" />
-                            Failed
-                          </>
-                        ) : claimStatus === "success" ? (
-                          <>Success</>
-                        ) : (
-                          <>Claim</>
-                        )}
-                      </button>
-                      <button
-                        disabled={pendingDivs > 0 ? false : true}
-                        className={`btn w-100 outline-btn-stake ${
-                          reInvestStatus === "invest" || pendingDivs <= 0
-                            ? "disabled-btn"
-                            : reInvestStatus === "failed"
-                            ? "fail-button"
-                            : reInvestStatus === "success"
-                            ? "success-button"
-                            : null
-                        } d-flex justify-content-center align-items-center gap-2`}
-                        style={{ height: "fit-content" }}
-                        onClick={handleReinvest}
-                      >
-                        {reInvestLoading ? (
-                          <div
-                            class="spinner-border spinner-border-sm text-light"
-                            role="status"
-                          >
-                            <span class="visually-hidden">Loading...</span>
-                          </div>
-                        ) : reInvestStatus === "failed" ? (
-                          <>
-                            <img src={failMark} alt="" />
-                            Failed
-                          </>
-                        ) : reInvestStatus === "success" ? (
-                          <>Success</>
-                        ) : (
-                          <>Reinvest</>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
-                </div>
+                    <img src={moreinfo} alt="" />
+                  </Tooltip>
+                </h6>
               </div>
-            )}
-            {depositedTokens && depositedTokens > 0 && (
-              <div className="stake-separator"></div>
-            )}
-            {depositedTokens && depositedTokens > 0 && (
-              <div
-                className={`otherside-border  ${
-                  listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-                } ${chainId !== "1" && "blurrypool"} `}
-              >
-                <div className="d-flex flex-column gap-2">
-                  <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
-                    My Deposit
-                    {/* <Tooltip
+              <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
+                <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                  <h6 className="m-0 rewardstxtwod w-100 d-flex align-items-center gap-2">
+                    {/* <img
+                      src={wodToken}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />{" "} */}
+                    {getFormattedNumber(pendingDivs, 2)} WOD
+                  </h6>
+                  <div className="d-flex w-100 align-items-center gap-2">
+                    <button
+                      disabled={
+                        claimStatus === "claimed" ||
+                        claimStatus === "success" ||
+                        pendingDivs <= 0
+                          ? //
+                            true
+                          : false
+                      }
+                      className={`btn w-100 outline-btn-stake ${
+                        (claimStatus === "claimed" &&
+                          claimStatus === "initial") ||
+                        pendingDivs <= 0
+                          ? //
+                            "disabled-btn"
+                          : claimStatus === "failed"
+                          ? "fail-button"
+                          : claimStatus === "success"
+                          ? "success-button"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      style={{ height: "fit-content" }}
+                      onClick={() => {
+                        handleClaimDivs();
+                      }}
+                    >
+                      {claimLoading ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : claimStatus === "failed" ? (
+                        <>
+                          <img src={failMark} alt="" />
+                          Failed
+                        </>
+                      ) : claimStatus === "success" ? (
+                        <>Success</>
+                      ) : (
+                        <>Claim</>
+                      )}
+                    </button>
+                    <button
+                      disabled={pendingDivs > 0 ? false : true}
+                      className={`btn w-100 outline-btn-stake ${
+                        reInvestStatus === "invest" || pendingDivs <= 0
+                          ? "disabled-btn"
+                          : reInvestStatus === "failed"
+                          ? "fail-button"
+                          : reInvestStatus === "success"
+                          ? "success-button"
+                          : null
+                      } d-flex justify-content-center align-items-center gap-2`}
+                      style={{ height: "fit-content" }}
+                      onClick={handleReinvest}
+                    >
+                      {reInvestLoading ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : reInvestStatus === "failed" ? (
+                        <>
+                          <img src={failMark} alt="" />
+                          Failed
+                        </>
+                      ) : reInvestStatus === "success" ? (
+                        <>Success</>
+                      ) : (
+                        <>Reinvest</>
+                      )}
+                    </button>
+                  </div>
+                </div>
+                {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
+              </div>
+            </div>
+            {/* )} */}
+            {/* {depositedTokens && depositedTokens > 0 && ( */}
+            <div className="stake-separator"></div>
+            {/* )} */}
+            {/* {depositedTokens && depositedTokens > 0 && ( */}
+            <div
+              className={`otherside-border  ${
+                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+              } ${chainId !== "1" && "blurrypool"} `}
+            >
+              <div className="d-flex flex-column gap-2">
+                <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
+                  My Deposit
+                  {/* <Tooltip
                     placement="top"
                     title={
                       <div className="tooltip-text">
@@ -1141,42 +1136,42 @@ const StakeWodDetails = ({
                   >
                     <img src={moreinfo} alt="" />
                   </Tooltip> */}
-                  </h6>
-                  <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                    <div className="d-flex align-items-center gap-2 justify-content-center">
-                      <div className="d-flex flex-column w-100">
-                        <h6 className={"m-0 mybalance-text d-flex"}>
-                          Unlocks in
+                </h6>
+                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                  <div className="d-flex align-items-center gap-2 justify-content-center">
+                    <div className="d-flex flex-column w-100">
+                      <h6 className={"m-0 mybalance-text d-flex"}>
+                        Unlocks in
+                      </h6>
+                      <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                        <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
+                          <Countdown
+                            date={
+                              // (Number(stakingTime) + Number(cliffTime)) * 1000
+                              today.getTime()
+                            }
+                            renderer={renderer2}
+                          />
                         </h6>
-                        <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                          <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
-                            <Countdown
-                              date={
-                                // (Number(stakingTime) + Number(cliffTime)) * 1000
-                                today.getTime()
-                              }
-                              renderer={renderer2}
-                            />
-                          </h6>
-                        </div>
                       </div>
-
-                      <button
-                        disabled={false}
-                        className={"outline-btn-stake btn"}
-                        onClick={() => {
-                          setshowWithdrawModal(true);
-                        }}
-                      >
-                        Withdraw
-                      </button>
                     </div>
+
+                    <button
+                      disabled={false}
+                      className={"outline-btn-stake btn"}
+                      onClick={() => {
+                        setshowWithdrawModal(true);
+                      }}
+                    >
+                      Withdraw
+                    </button>
                   </div>
                 </div>
               </div>
-            )}
-              <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-start'} `}
+            </div>
+            {/* )} */}
+            <div
+              className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-center'} `}
               style={{
                 cursor: "pointer",
                 width: depositedTokens > 0 ? 'fit-content' : 'auto'
@@ -1194,7 +1189,6 @@ const StakeWodDetails = ({
             </div>
           </div>
         </div>
-      
       </div>
 
       {popup && (
@@ -2538,4 +2532,4 @@ const StakeWodDetails = ({
   );
 };
 
-export default StakeWodDetails;
+export default StakeWodDetails2;
