@@ -178,9 +178,10 @@ const VideoWrapper = ({
         <div className="">
           <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
             <h4 className="main-hero-title font-montserrat">
-              The Biggest Metaverse
+              {/* The Biggest Metaverse
               <br />
-              Ever Built
+              Ever Built */}
+              Shaping the Future of <br />Gaming, DeFi, NFTs and AI
             </h4>
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
               <div className="filled-btn m-0 py-1 px-5">

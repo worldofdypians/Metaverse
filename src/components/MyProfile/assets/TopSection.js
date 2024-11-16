@@ -287,8 +287,8 @@ const TopSection = ({
                     alt=""
                     onClick={() => {
                       item.title === "goldenPass"
-                        ?  navigate("/account/challanges/golden-pass") 
-                        : item.title === "dragon" ? navigate("account/challanges/dragon-ruins") : handleShowPopup(item.title)
+                        ?  navigate("/account/challenges/golden-pass") 
+                        : item.title === "dragon" ? navigate("account/challenges/dragon-ruins") : handleShowPopup(item.title)
                     }}
                     key={index}
                   />

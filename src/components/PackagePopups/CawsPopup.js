@@ -89,10 +89,12 @@ const CawsPopup = ({ onClosePopup }) => {
                 that.
               </p>
               <div className="d-flex justify-content-center align-items-center">
-                <button className="btn-rarity-tools d-flex align-items-center gap-2 px-2 py-2">
+              <a
+              href="https://rarity.tools" className="btn-rarity-tools d-flex align-items-center gap-2 px-2 py-2" target="_blank" rel='noreferrer'>
+                  
                   <img src={rarity} alt="" /> Rarity tools{" "}
                   <ChevronArrowSvg color="white" />
-                </button>
+                </a>
               </div>
             </div>
           </div>

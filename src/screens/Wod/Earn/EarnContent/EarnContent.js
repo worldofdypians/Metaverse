@@ -213,11 +213,11 @@ const EarnContent = ({
           </div>
         </div>
       </div>
-      <div className="custom-container  mt-5 mt-lg-0 tokenomicsTablewrapper">
+      <div className="custom-container  mt-5 tokenomicsTablewrapper">
         <div className="d-flex flex-column gap-2 w-100 px-2">
-          <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span>
+          {/* <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span> */}
           {stakingPools && stakingPools.length === 0 && (
-            <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+            <div className=" flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
               <div className="d-flex flex-column align-items-center gap-2">
                 <h6 className="upcoming-stake">Staking pools are coming...</h6>
                 <span className="upcoming-stake-desc">Check back soon!</span>
