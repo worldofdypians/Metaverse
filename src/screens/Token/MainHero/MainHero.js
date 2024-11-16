@@ -161,7 +161,7 @@ const MainHero = ({scrollInto}) => {
                   foundation for the World of Dypians ecosystem, integrating
                   DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
                   <button className="getpremium-btn px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
                   <button className="signinbtn2 px-3 py-2" onClick={()=>{scrollInto('backers&partners')}}>Backers & Partners</button>
                 </div>
