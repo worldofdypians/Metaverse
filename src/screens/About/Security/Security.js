@@ -28,10 +28,10 @@ const Security = () => {
                 protection.
               </span>
               <div className="d-flex align-items-center gap-3">
-                <button className="stake-wod-btn px-4 py-2 d-flex algin-items-center gap-1">
+                <button className="explore-btn px-4 py-2 d-flex algin-items-center gap-1">
                   <img src={github} alt="" /> Github
                 </button>
-                <button className="buy-wod-btn px-4 py-2 d-flex algin-items-center gap-1">
+                <button className="explore-btn px-4 py-2 d-flex algin-items-center gap-1">
                   <img src={certik} alt="" />
                   CertiK Score
                 </button>

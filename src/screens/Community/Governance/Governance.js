@@ -15,8 +15,8 @@ const Governance = () => {
 
   return (
     <>
-      <div className="container-fluid px-0">
-        <div className="d-flex flex-column gap-5">
+      <div className="container-fluid governance-mainhero-wrapper px-0">
+        <div className="d-flex flex-column">
           <GovernanceHero
             onCreateProposal={() => {
               setCreateProposalPopup(true);

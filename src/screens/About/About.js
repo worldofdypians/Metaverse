@@ -28,7 +28,7 @@ const About = () => {
 
   return (
     <div className="container-fluid token-wrapper px-0">
-      <div className="d-flex flex-column gap-5">
+      <div className="d-flex flex-column">
         <MainHero />
         <WodPartners full={true} />
         <Roadmap />

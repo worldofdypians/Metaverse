@@ -21,20 +21,6 @@ const GovernanceInner = () => {
           </NavLink>
         </div>
         <div className="proposal-top-wrapper w-100 p-3">
-          <div className="d-flex justify-content-center">
-            <div className="custom-container">
-              <div className="d-flex flex-column gap-3 align-items-center justify-content-center">
-                <span className="single-proposal-top-title">
-                  ACCESS TO BASIC FEATURES ON THE NEW POOLS
-                </span>
-                <div className="poll-tag px-3 py-1">
-                  <span className="poll-text">Poll</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="proposal-top-wrapper w-100 p-3">
           <div className="d-flex flex-column gap-3 align-items-center justify-content-center">
             <div className="custom-container">
               <div className="d-flex flex-column flex-lg-row gap-3 justify-content-between">
@@ -58,7 +44,7 @@ const GovernanceInner = () => {
                 </div>
                 <div className="proposal-right-col col-lg-5 p-lg-3">
                   <div className="d-flex flex-column gap-3">
-                    <span className="single-proposal-description-green">
+                    <span className="single-proposal-description-green text-white">
                       Current Results
                     </span>
                     <div className="proposal-result-wrapper p-3">
@@ -144,7 +130,7 @@ const GovernanceInner = () => {
                         <button className="stake-wod-btn text-capitalize  px-2 px-lg-5 py-2">
                           Option 1
                         </button>
-                        <button className="orange-btn  px-2 px-lg-5 py-2">
+                        <button className="explore-btn px-2 px-lg-5 py-2">
                           Option 2
                         </button>
                       </div>

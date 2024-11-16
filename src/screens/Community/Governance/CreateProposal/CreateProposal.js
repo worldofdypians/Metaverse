@@ -22,7 +22,7 @@ const CreateProposal = ({ open, onClose }) => {
     overflowX: "hidden",
     borderRadius: "10px",
     height: windowSize.width < 500 ? "480px" : "auto",
-    background: `linear-gradient(180deg, #0B092D 0%, #140836 124.32%);`,
+    background: `#0E0F35`,
   };
 
   const [selectedCategory, setSelectedCategory] = useState("aor");
@@ -53,35 +53,7 @@ const CreateProposal = ({ open, onClose }) => {
               }}
             />
           </div>
-          <span className="create-proposal-desc">
-            Select a proposal category to get started
-          </span>
-          <div className="d-flex category-wrapper flex-column flex-lg-row">
-            <button
-              className={`${
-                selectedCategory === "aor"
-                  ? "proposal-category-item-active"
-                  : "proposal-category-item"
-              } py-2 px-2 px-lg-5 w-100`}
-              onClick={() => {
-                setSelectedCategory("aor");
-              }}
-            >
-              Approve or Reject (AOR)
-            </button>
-            <button
-              className={`${
-                selectedCategory === "poll"
-                  ? "proposal-category-item-active"
-                  : "proposal-category-item"
-              } py-2 px-2 px-lg-5 w-100`}
-              onClick={() => {
-                setSelectedCategory("poll");
-              }}
-            >
-              POLL (OPTION 1 OR 2)
-            </button>
-          </div>
+
           <div className="d-flex flex-column gap-2">
             <span className="proposal-subject-text">Subject</span>
             <input
@@ -95,25 +67,25 @@ const CreateProposal = ({ open, onClose }) => {
             />
           </div>
           <div className="d-flex flex-column gap-2">
-          <span className="proposal-subject-text">Description</span>
-          <textarea
-            className="proposal-textarea p-3"
-            rows={8}
-            placeholder="Enter the proposal content..."
-          ></textarea>
+            <span className="proposal-subject-text">Description</span>
+            <textarea
+              className="proposal-textarea p-3"
+              rows={8}
+              placeholder="Enter the proposal content..."
+            ></textarea>
           </div>
           <span className="create-proposal-desc col-10">
             *Submitting a proposal requires a minimum of 1,000,000 WOD
             Governance Token Balance.
           </span>
-          <div
-            className="linear-border"
-            style={{
-              width: "fit-content",
-              margin: "auto",
-            }}
-          >
-            <button className="btn filled-btn px-5">SUBMIT</button>
+
+          <div className="d-flex w-100 justify-content-center">
+            <button
+              className="getpremium-btn px-3 py-2"
+              style={{ width: "fit-content" }}
+            >
+              SUBMIT
+            </button>
           </div>
         </div>
       </Box>

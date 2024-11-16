@@ -11,7 +11,7 @@ import warriorThumb2 from "../../assets/gameAssets/warriorThumb2.png";
 
 const ClassSelection = () => {
   return (
-      <div className="d-flex flex-column flex-lg-row gap-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
+      <div className="d-flex flex-column flex-lg-row gap-0 gap-lg-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
         <div className="humans-class-wrapper" style={{borderBottom: "3px solid black"}}>
           <img src={warriorClass} className="humans-img" alt="" />
           <img src={warriorBg} className="humans-bg" alt="" />

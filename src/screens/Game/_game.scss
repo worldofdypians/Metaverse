@@ -11,6 +11,7 @@
   align-items: center;
   @media screen and (max-width: 991px) {
     width: 100%;
+    overflow: hidden;
   }
 }
 
@@ -420,6 +421,14 @@
   border-radius: 0 20px 20px 0;
   background: url("../../assets/gameAssets/gameLeaderboardBg.webp");
   background-size: 100%;
+  background-repeat: no-repeat;
+  border-bottom: 3px solid black;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    overflow: hidden;
+    background-size: 100% 100%;
+
+  }
 }
 
 .golden-pass-game-wrapper {
@@ -427,6 +436,15 @@
   border-radius: 20px 0 0 20px;
   background: url("../../assets/gameAssets/gameGoldenPassBg.webp");
   background-size: 100%;
+  border-bottom: 3px solid black;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    background-size: 100% 100%;
+    overflow: hidden;
+
+  }
 }
 
 .game-feature-title {
@@ -436,6 +454,9 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 20px;
+  }
 }
 
 .game-feature-desc {
@@ -446,6 +467,10 @@
   font-weight: 500;
   line-height: 24px; /* 150% */
   width: 75%;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+    width: 100%;
+  }
 }
 
 .game-feature-redirect {
@@ -456,9 +481,122 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+  }
 }
 
 .game-feature-img {
   width: 230px;
   height: 230px;
+  @media screen and (max-width: 786px) {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.new-challenges-hero {
+  background-image: url("../../assets/gameAssets/newChallengesBg.webp");
+  background-size: contain;
+  @media screen and (max-width: 786px) {
+    background-size: cover;
+  }
+}
+
+.challenges-button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.inactive-challenge-btn {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.25s;
+  border: none;
+  @media screen and (max-width: 786px) {
+    font-size: 15px;
+  }
+}
+
+.inactive-challenge-btn:hover {
+  background: #f3bf09;
+  color: #49291c;
+}
+
+.active-challenge-btn {
+  background: #f3bf09;
+  color: #49291c;
+}
+
+.beast-challenges-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  place-content: center;
+  gap: 40px;
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.beast-challenge-card {
+  border-radius: 20px;
+  background: #181a40;
+}
+
+.challenge-beast-desc {
+  color: #eeedff;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+}
+
+.beast-date {
+}
+
+.beast-date-text-holder {
+  display: flex;
+  width: 32px;
+  height: 12px;
+  border-radius: 5px 5px 0 0;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 200% */
+  background: blue;
+}
+
+.beast-date-holder {
+  display: flex;
+width: 32px;
+height: 22px;
+flex-direction: column;
+justify-content: center;
+border-radius: 0 0 5px 5px;
+background: #fff;
+flex-shrink: 0;
+text-align: center;
+font-family: "Poppins";
+color: black;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 16px; /* 80% */
 }

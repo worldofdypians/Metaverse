@@ -21,7 +21,7 @@ const Game = () => {
         <ClassSelection />
         <AmplifySection />
         <NewChallenges />
-        <GameEvents />
+        {/* <GameEvents /> */}
         <FeatureSection />
         <AmplifyExperience />
       </div>

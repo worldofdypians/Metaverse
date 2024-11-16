@@ -20,7 +20,7 @@ const MainHero = () => {
           </p>
           <div className="d-flex align-items-center gap-3">
             <a
-              className="stake-wod-btn px-4 py-1"
+              className="explore-btn px-4 py-1"
               href="https://store.epicgames.com/p/world-of-dypians-2e0694"
               target="_blank"
             >
@@ -32,7 +32,7 @@ const MainHero = () => {
               />{" "}
               Download
             </a>
-            <NavLink to="/join-beta" className="buy-wod-btn px-4 py-2">Join Beta</NavLink>
+            <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">Join Beta</NavLink>
           </div>
         </div>
         <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
