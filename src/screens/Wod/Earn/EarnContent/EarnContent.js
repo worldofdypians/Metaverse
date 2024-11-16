@@ -59,7 +59,7 @@ const EarnContent = ({
   }, [expired, selectedFilter]);
 
   const tvlUsd = localStorage.getItem("tvl");
-  
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
       <div
@@ -160,17 +160,21 @@ const EarnContent = ({
                         </h5>
                       </div> */}
                     </div>
-                    <div className="d-flex align-items-center gap-2">
-                      <span className="tvl-earn-title text-white">Balance</span>
-                      <span className="tvl-earn-amount d-flex align-items-center gap-2">
-                        <img
-                          src={wodToken}
-                          alt=""
-                          style={{ width: 20, height: 20 }}
-                        />
-                        {getFormattedNumber(23445)}
-                      </span>
-                    </div>
+                    {isConnected && (
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="tvl-earn-title text-white">
+                          Balance
+                        </span>
+                        <span className="tvl-earn-amount d-flex align-items-center gap-2">
+                          <img
+                            src={wodToken}
+                            alt=""
+                            style={{ width: 20, height: 20 }}
+                          />
+                          {getFormattedNumber(23445)}
+                        </span>
+                      </div>
+                    )}
                     {/* <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
                       <div className=" d-flex align-items-center pools-toggle-wrapper">
                         <button
