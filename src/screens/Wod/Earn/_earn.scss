@@ -143,7 +143,7 @@ background: transparent;
   font-size: 9px;
   line-height: 12px;
   letter-spacing: -0.018em;
-  color: #f0613b;
+  color: #F3BF09;
   display: flex;
   justify-content: center;
   margin: 0px;
@@ -560,6 +560,19 @@ text-decoration: underline;
   background: #2D3065;
 }
 
+.info-pool-wrapper2 {
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+
+.info-pool-wrapper2:hover {
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #008EBF;
+}
+
 .info-pool-item {
   border-radius: 6px;
   background: linear-gradient(90deg, #0d2e51 0%, #1c3c5e 100%);
@@ -631,11 +644,11 @@ text-decoration: underline;
   color: #fff;
 }
 
-.tvl-amount {
-  font-weight: 600;
-  font-size: 17px;
-  color: #fff;
-}
+// .tvl-amount {
+//   font-weight: 600;
+//   font-size: 17px;
+//   color: #fff;
+// }
 
 .premiumBgDesktop {
   background: url(../../../assets/wodAssets/premiumBg.webp);

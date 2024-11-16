@@ -340,7 +340,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                     </h6>
                     <p className="custom-marker-content  mb-0">
                       To join the event, players must hold a {marker.title} Beta
-                      Pass NFT or be a Premium Subscriber. Engage daily in the{" "}
+                      Pass NFT or be a Prime Subscriber. Engage daily in the{" "}
                       {marker.title} area for a chance at rewards and uncover
                       hidden treasures.
                     </p>

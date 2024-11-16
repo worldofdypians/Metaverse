@@ -25,37 +25,38 @@ const TopPoolsCard = ({
   expired,
   network,
   isPremium,
+  isHover,
 }) => {
-
   const [showDetails, setShowDetails] = useState(false);
 
-
   const handleDetails = () => {
-    if (details === false) {
+    // if (details === false) {
       onShowDetailsClick();
-    } else if (details === true) {
-      onHideDetailsClick();
-    }
+    // } else if (details === true) {
+      // onHideDetailsClick();
+    // }
   };
-  
+
   return (
     <>
       <div
-        className={`w-100 ${
+        className={`w-100  ${
           expired === true
             ? "poolscardwrapperexpired"
             : network === "0"
             ? "blurryCard"
             : "poolscardwrapper"
-        } cursor-pointer position-relative ${
-          details && "pools-card-open"
-        }  ${
-          showDetails && "pools-card-hover"
+        } cursor-pointer position-relative ${details && "pools-card-open"}  ${
+          isHover && "pools-card-hover"
         } `}
         onClick={() => handleDetails()}
         style={{ display: display }}
-        onMouseEnter={() => setShowDetails(true)}
-        onMouseLeave={() => setShowDetails(false)}
+        onMouseEnter={() => {
+          setShowDetails(true);
+        }}
+        onMouseLeave={() => {
+          setShowDetails(false);
+        }}
       >
         {isStaked && isPremium && (
           <img
@@ -80,47 +81,34 @@ const TopPoolsCard = ({
           />
         )}
 
-        <div
-          className="purplediv-stake"
-          style={{top: "12px" }}
-        ></div>
+        <div className="purplediv-stake" style={{ top: "12px" }}></div>
         <div className="d-flex flex-column gap-0">
           <div className="d-flex m-0 justify-content between gap-2 align-items-center justify-content-between title-apr-wrapper">
             <div className="d-flex align-items-center gap-2">
               {tokenLogo !== undefined &&
                 tokenLogo.map((obj, index) => {
                   return (
-                    
-                      <img
-                        src={require(`../assets/tokens/${obj}.png`)}
-                        alt=""
-                        className="pool-coins"
-                        width={32}
-                        height={32}
-                      />
-                
+                    <img
+                      src={require(`../assets/tokens/${obj}.png`)}
+                      alt=""
+                      className="pool-coins"
+                      width={32}
+                      height={32}
+                    />
                   );
                 })}
-              <h6 className="token-name m-0 d-flex align-items-center">
+              {/* <h6 className="token-name m-0 d-flex align-items-center">
                 {tokenName}
-              </h6>
+              </h6> */}
+              <div className="d-flex align-items-baseline gap-1">
+                <h6 className="apr-amount m-0 ">{apr}</h6>
+                <h6 className="apr-title m-0 ">APR</h6>
+              </div>
             </div>
-            <div className="d-flex align-items-baseline gap-1">
+            {/* <div className="d-flex align-items-baseline gap-1">
               <h6 className="apr-amount m-0 ">{apr}</h6>
               <h6 className="apr-title m-0 ">APR</h6>
-            </div>
-          </div>
-          <div
-            className={`d-flex m-0 justify-content between gap-2 align-items-center justify-content-between ${
-              expired === true ? "bottomwrapperExpired" : "bottomwrapper2"
-            } } `}
-          >
-            {cardType !== "Vault" && (
-              <div className="d-flex flex-column">
-                <h6 className="tvl-text m-0 ">Total Value Locked</h6>
-                <h6 className="tvl-amount m-0 ">{tvl}</h6>
-              </div>
-            )}
+            </div> */}
             <div
               className={`d-flex flex-column ${
                 cardType !== "Vault" && "align-items-end"
@@ -131,7 +119,28 @@ const TopPoolsCard = ({
               <h6 className="locktime-amount m-0">{lockTime}</h6>
             </div>
           </div>
-          {tvl != "--" && (
+          <div
+            className={`d-flex m-0 justify-content between gap-2 align-items-center justify-content-between ${
+              expired === true ? "bottomwrapperExpired" : "bottomwrapper2"
+            } } `}
+          >
+            {cardType !== "Vault" && (
+              <div className="d-flex flex-column">
+                <h6 className="tvl-text m-0 ">Total Staked</h6>
+                <h6 className="tvl-amount m-0 ">{tvl}</h6>
+              </div>
+            )}
+            <div
+              className={`d-flex flex-column ${
+                cardType !== "Vault" && "align-items-end"
+              }`}
+            >
+              <h6 className="tvl-text m-0">Available Quota</h6>
+
+              <h6 className="locktime-amount m-0">{"200,00"}</h6>
+            </div>
+          </div>
+          {/* {tvl != "--" && (
             <div
               className={
                 expired === true ? "details-wrapperexpired" : "details-wrapper"
@@ -159,7 +168,7 @@ const TopPoolsCard = ({
                 <img src={greenArrow} alt="" />
               </h6>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>

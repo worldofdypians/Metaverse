@@ -676,7 +676,7 @@ const CawsWodDetails = ({
                       {getFormattedNumber(ethToUSD, 4)})
                     </h6>
                     <button
-                      className={`btn w-100 claim-inner-btn ${(claimStatus === "claimed" &&
+                      className={`btn w-100 outline-btn-stake ${(claimStatus === "claimed" &&
                           claimStatus === "initial") ||
                           EthRewards === 0
                           ? //

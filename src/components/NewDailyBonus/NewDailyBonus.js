@@ -295,7 +295,7 @@ const NewDailyBonus = ({
     {
       image: premiumRound,
       holder: false,
-      message: "Premium Subscriber",
+      message: "Prime Subscriber",
       required: true,
     },
     {

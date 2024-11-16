@@ -1,16 +1,14 @@
 import Home from "./screens/Home/Home";
 import React, { useEffect, useRef, useState } from "react";
-import {  Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./fonts/Organetto.ttf";
 import { Amplify } from "aws-amplify";
-import {  useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./screens/Account/src/aws-exports";
 import "./screens/Account/src/App.css";
 import { checkout, passport, config } from "@imtbl/sdk";
-import  {
-  useAuth,
-} from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
+import { useAuth } from "./screens/Account/src/Utils.js/Auth/AuthDetails.js";
 import {
   Auth,
   ForgotPassword,
@@ -652,7 +650,7 @@ function App() {
   const [userEvents, setuserEvents] = useState(0);
   const [wodBalance, setwodBalance] = useState(0);
   const [nftPools, setnftPools] = useState([]);
-
+  const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
 
@@ -667,32 +665,39 @@ function App() {
       let resultCaws = eth_result.data.stakingInfoCAWS;
       let resultLand = eth_result.data.stakingInfoLAND;
       let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
-      
-      let resultCaws2 = resultCaws.map((item)=>{
-        return{
-          ...item,
-          type: 'nft',
-          chain: 'eth'
-        }
-      })
 
-      let resultLand2 = resultLand.map((item)=>{
-        return{
+      let resultCaws2 = resultCaws.map((item) => {
+        return {
           ...item,
-          type: 'nft',
-          chain: 'eth'
-        }
-      })
+          type: "nft",
+          chain: "eth",
+        };
+      });
 
-      let resultCawsLand2 = resultCawsLand.map((item)=>{
-        return{
+      let resultLand2 = resultLand.map((item) => {
+        return {
           ...item,
-          type: 'nft',
-          chain: 'eth'
-        }
-      })
+          type: "nft",
+          chain: "eth",
+        };
+      });
 
-      setnftPools([...resultCaws2, ...resultLand2,...resultCawsLand2])
+      let resultCawsLand2 = resultCawsLand.map((item) => {
+        return {
+          ...item,
+          type: "nft",
+          chain: "eth",
+        };
+      });
+
+      const allPools = [...resultCaws2, ...resultLand2, ...resultCawsLand2];
+      let tvl = 0;
+      allPools.forEach((item) => {
+        tvl += Number(item.tvl_usd);
+      });
+      localStorage.setItem('tvl', tvl)
+      setnftTvl(tvl)
+      setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
     }
   };
 
@@ -856,8 +861,8 @@ function App() {
 
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
-            matEvent[0].reward.earn.total /
-            matEvent[0].reward.earn.multiplier;
+              matEvent[0].reward.earn.total /
+              matEvent[0].reward.earn.multiplier;
             const pointsMat = matEvent[0].reward.earn.totalPoints;
             setmatPoints(pointsMat);
             setmatEarnToken(userEarnedusd / bnbPrice);
@@ -1528,9 +1533,6 @@ function App() {
     setBetaModal(true);
   };
 
-
-
- 
   const handleConnection = async () => {
     try {
       localStorage.setItem("logout", "false");
@@ -1889,7 +1891,6 @@ function App() {
 
       getMyNFTS(coinbase, "timepiece").then((NFTS) => setMyNFTSTimepiece(NFTS));
       getMyNFTS(coinbase, "mat").then((NFTS) => setMyMatNfts(NFTS));
-
 
       getMyNFTS(coinbase, "land").then((NFTS) => {
         setMyNFTSLand(NFTS);
@@ -2267,7 +2268,6 @@ function App() {
           let tokenId = await window.mat_nft
             .mintMatNFT()
             .then(() => {
-               
               setmintStatus("Success! Your Nft was minted successfully!");
               setmintloading("success");
               settextColor("rgb(123, 216, 176)");
@@ -2276,7 +2276,7 @@ function App() {
                 setmintloading("initial");
               }, 5000);
               getMyNFTS(coinbase, "mat").then((NFTS) => {
-                 setMyMatNfts(NFTS)
+                setMyMatNfts(NFTS);
               });
             })
             .catch((e) => {
@@ -3987,19 +3987,18 @@ function App() {
                       setIsPremium(true);
                     } else {
                       const isPremium_mat =
-                      await daily_bonus_contract_mat.methods
-                        .isPremiumUser(addr)
-                        .call()
-                        .catch((e) => {
-                          console.error(e);
-                          return false;
-                        });
-                    if (isPremium_mat === true) {
-                      setIsPremium(true);
-                    } else {
+                        await daily_bonus_contract_mat.methods
+                          .isPremiumUser(addr)
+                          .call()
+                          .catch((e) => {
+                            console.error(e);
+                            return false;
+                          });
+                      if (isPremium_mat === true) {
+                        setIsPremium(true);
+                      } else {
                         setIsPremium(false);
-                    }
-                    
+                      }
                     }
                   }
                 }
@@ -4445,7 +4444,7 @@ function App() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
-    fetchEthStaking()
+    fetchEthStaking();
     fetchRecordsStar();
     fetchMonthlyPlayers();
     getTotalSupply();
@@ -4625,7 +4624,7 @@ function App() {
               />
             }
           />
-{/* 
+          {/* 
           <Route
             exact
             path="/marketplace/nft-bridge"
@@ -4741,7 +4740,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -4804,7 +4802,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -4987,7 +4984,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/shop/beta-pass/matchain"
             element={
@@ -5011,7 +5008,6 @@ function App() {
                 myBaseNFTs={myBaseNFTs}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
                 cawsArray={allCawsForTimepieceMint}
               />
             }
@@ -5042,7 +5038,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5072,7 +5067,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5102,7 +5096,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5152,7 +5145,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5182,7 +5174,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5212,7 +5203,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5242,7 +5232,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5272,7 +5261,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5302,7 +5290,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5332,7 +5319,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5362,7 +5348,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5392,7 +5377,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5494,7 +5478,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5523,7 +5506,6 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
                 myMatNFTs={myMatNFTs}
                 totalMatNfts={myMatNFTs.length}
-
               />
             }
           />
@@ -5544,7 +5526,6 @@ function App() {
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -5670,12 +5651,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-
                 totalMatNfts={myMatNFTs.length}
-                matMintAllowed={1- myMatNFTs.length}
+                matMintAllowed={1 - myMatNFTs.length}
                 myMatNFTs={myMatNFTs}
                 myMatNFTsCreated={myMatNFTs}
-                
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
@@ -5701,7 +5680,7 @@ function App() {
               />
             }
           />
-            <Route
+          <Route
             exact
             path="/shop/mint/matchain"
             element={
@@ -5718,12 +5697,10 @@ function App() {
                 mantaMintAllowed={mantaMintAllowed}
                 myMantaNfts={myMantaNfts}
                 myMantaNFTsCreated={myMantaNFTsCreated}
-
                 totalMatNfts={myMatNFTs.length}
-                matMintAllowed={1- myMatNFTs.length}
+                matMintAllowed={1 - myMatNFTs.length}
                 myMatNFTs={myMatNFTs}
                 myMatNFTsCreated={myMatNFTs}
-
                 cawsArray={allCawsForTimepieceMint}
                 mintloading={mintloading}
                 isConnected={isConnected}
@@ -5773,6 +5750,7 @@ function App() {
                 nftPools={nftPools}
                 binanceW3WProvider={library}
                 isPremium={isPremium}
+                tvl={nftTvl}
               />
             }
           />
@@ -6328,11 +6306,7 @@ function App() {
         />
       )}
 
-    
-
       {fireAppcontent === true && <AppContent />}
-
-    
     </>
   );
 }
