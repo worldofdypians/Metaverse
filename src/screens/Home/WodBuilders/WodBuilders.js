@@ -187,12 +187,12 @@ const WodBuilders = ({ page }) => {
       backer: true,
     },
 
-    {
-      name: "Playground",
-      icon: "playground",
-      banner: "kucoinBanner.png",
-      backer: false,
-    },
+    // {
+    //   name: "Playground",
+    //   icon: "playground",
+    //   banner: "kucoinBanner.png",
+    //   backer: false,
+    // },
     {
       name: "AlterVerse",
       icon: "alterverse",

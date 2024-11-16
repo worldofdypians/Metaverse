@@ -113,10 +113,10 @@ const WodPartners = ({ full }) => {
       name: "Financial Move",
       icon: "financialmove.svg",
     },
-    {
-      name: "Playground",
-      icon: "playground.svg",
-    },
+    // {
+    //   name: "Playground",
+    //   icon: "playground.svg",
+    // },
     {
       name: "AlterVerse",
       icon: "alterverse.png",

@@ -6,6 +6,7 @@ import AmplifySection from "./AmplifySection";
 import GameEvents from "./GameEvents";
 import AmplifyExperience from "./AmplifyExperience";
 import FeatureSection from "./FeatureSection";
+import NewChallenges from "./NewChallenges";
 
 const Game = () => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const Game = () => {
         <GameHero />
         <ClassSelection />
         <AmplifySection />
+        <NewChallenges />
         <GameEvents />
         <FeatureSection />
         <AmplifyExperience />
