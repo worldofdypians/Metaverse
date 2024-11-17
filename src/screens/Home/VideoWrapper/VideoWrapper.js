@@ -37,6 +37,32 @@ import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboa
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
 import axios from "axios";
 import wodToken from "../../../assets/wodAssets/wodToken.svg";
+import Countdown from "react-countdown";
+
+
+
+const renderer = ({ days, hours, minutes }) => {
+  return (
+    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
+      <div className="d-flex flex-column gap-1 align-items-center">
+        <h6 className="main-hero-title mb-0">{days < 10 ? "0" + days : days}</h6>
+        <span className="ways-to-amplify-desc">Days</span>
+      </div>
+      <h6 className="main-hero-title mb-0">:</h6>
+
+      <div className="d-flex flex-column gap-1 align-items-center">
+        <h6 className="main-hero-title mb-0">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="ways-to-amplify-desc">Hours</span>
+      </div>
+      <h6 className="main-hero-title mb-0">:</h6>
+      <div className="d-flex flex-column gap-1 align-items-center">
+        <h6 className="main-hero-title mb-0">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <span className="ways-to-amplify-desc">Minutes</span>
+      </div>
+    </div>
+  );
+};
+
 
 const VideoWrapper = ({
   handleRegister,
@@ -66,6 +92,8 @@ const VideoWrapper = ({
   const html = document.querySelector("html");
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
+  let releaseDate = new Date("2024-11-27T12:00:00.000+02:00");
+
 
   const dummyBetaPassData2 = [
     {
@@ -176,13 +204,19 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center">
-            <h4 className="main-hero-title font-montserrat">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container">
+            <h4 className="main-hero-title font-montserrat text-start">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
               Shaping the Future of <br />Gaming, DeFi, NFTs and AI
             </h4>
+            <div className="d-flex flex-column gap-2">
+              <h6 className="release-date-title mb-0" >
+                Token Release in:
+              </h6>
+              <Countdown date={releaseDate} renderer={renderer} />
+            </div>
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
               <div className="filled-btn m-0 py-1 px-5">
                 <a

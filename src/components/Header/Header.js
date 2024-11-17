@@ -823,7 +823,7 @@ const Header = ({
                   <img src={headerArrow} alt="" />
 
                   <div
-                    className={`header-dropdown p-3 d-flex flex-column gap-2 ${
+                    className={`header-dropdown p-4 d-flex flex-column gap-2 ${
                       dropdown.account === "account"
                         ? "header-dropdown-active"
                         : ""
@@ -1317,7 +1317,7 @@ const Header = ({
                        
                       </DropdownButton>
                       <div
-                    className={`header-dropdown p-3 d-flex flex-column gap-2 ${
+                    className={`header-dropdown p-4 d-flex flex-column gap-2 ${
                       dropdown.chains === "chains"
                         ? "header-dropdown-active"
                         : ""

@@ -52,7 +52,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 secrets, and shape your own destiny.
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
-                <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
+                <NavLink to={"/game"} className="getpremium-btn col-lg-4 py-2">
                   Join Now
                 </NavLink>
               </div>

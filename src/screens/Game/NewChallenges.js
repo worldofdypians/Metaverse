@@ -17,7 +17,7 @@ import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHun
 import Slider from "react-slick";
 
 const NewChallenges = () => {
-  const [event, setEvent] = useState("daily");
+  const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
 
   const currentDate = new Date().getDay();
@@ -208,24 +208,14 @@ const NewChallenges = () => {
         </h2>
         <div className="col-12 col-md-8 col-lg-7">
           <div className="challenges-button-grid gap-4">
-            <button
-              className={`inactive-challenge-btn ${
-                event === "daily" && "active-challenge-btn"
-              } px-5 py-2`}
-              onClick={() => {
-                setEvent("daily");
-                sliderRef.current.slickGoTo(0);
-              }}
-            >
-              Daily Opportunities
-            </button>
+         
             <button
               className={`inactive-challenge-btn ${
                 event === "beast" && "active-challenge-btn"
               } px-5 py-2`}
               onClick={() => {
                 setEvent("beast");
-                sliderRef.current.slickGoTo(1);
+                sliderRef.current.slickGoTo(0);
               }}
             >
               Legendary Beast Siege
@@ -236,10 +226,21 @@ const NewChallenges = () => {
               } px-5 py-2`}
               onClick={() => {
                 setEvent("hunt");
-                sliderRef.current.slickGoTo(2);
+                sliderRef.current.slickGoTo(1);
               }}
             >
               The Great Hunt
+            </button>
+            <button
+              className={`inactive-challenge-btn ${
+                event === "daily" && "active-challenge-btn"
+              } px-5 py-2`}
+              onClick={() => {
+                setEvent("daily");
+                sliderRef.current.slickGoTo(2);
+              }}
+            >
+              Daily Opportunities
             </button>
           </div>
         </div>
@@ -247,17 +248,7 @@ const NewChallenges = () => {
       <div className="new-challenges-wrapper d-flex justify-content-center w-100 py-3">
         <div className="custom-container d-flex align-items-center justify-content-center">
           <Slider {...settings} ref={sliderRef}>
-            <div className="beast-challenges-grid px-3 px-lg-0">
-              {challengeDaily.map((item, index) => (
-                <div
-                  key={index}
-                  className="beast-challenge-card d-flex flex-column gap-2"
-                >
-                  <img src={item.image} className="w-100" alt="" />
-                  <p className="challenge-beast-desc m-0 p-3">{item.desc}</p>
-                </div>
-              ))}
-            </div>
+         
             <div className="beast-challenges-grid px-3 px-lg-0">
               {challengeBeasts.map((item, index) => (
                 <div
@@ -312,6 +303,17 @@ const NewChallenges = () => {
                  </div>
                   }
                   </div>
+                </div>
+              ))}
+            </div>
+            <div className="beast-challenges-grid px-3 px-lg-0">
+              {challengeDaily.map((item, index) => (
+                <div
+                  key={index}
+                  className="beast-challenge-card d-flex flex-column gap-2"
+                >
+                  <img src={item.image} className="w-100" alt="" />
+                  <p className="challenge-beast-desc m-0 p-3">{item.desc}</p>
                 </div>
               ))}
             </div>
