@@ -22,6 +22,9 @@ const NewChallenges = () => {
 
   const currentDate = new Date().getDay();
 
+  const adjustedDay = currentDate === 0 ? 7 : currentDate;
+
+
   const getMonday = (date) => {
     const day = date.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
     const diff = (day === 0 ? -6 : 1) - day; // Adjust to Monday
@@ -195,7 +198,7 @@ const NewChallenges = () => {
     },
   ];
 
-  // console.log(currentWeek[0].getDate());
+  console.log(adjustedDay, "currentdate");
 
   return (
     <div className="d-flex flex-column">
@@ -270,7 +273,7 @@ const NewChallenges = () => {
                         className="beast-date-text-holder d-flex align-items-center justify-content-center"
                         style={{
                           background:
-                            item.day === currentDate ? "#e10000" : "#08656a",
+                            item.day === adjustedDay ? "#e10000" : "#08656a",
                         }}
                       >
                         {item.dayText}
@@ -298,7 +301,7 @@ const NewChallenges = () => {
                      className="beast-date-text-holder d-flex align-items-center justify-content-center"
                      style={{
                        background:
-                         item.day === currentDate ? "#e10000" : "#08656a",
+                         item.day === adjustedDay ? "#e10000" : "#08656a",
                      }}
                    >
                      {item.dayText}

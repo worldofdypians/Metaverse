@@ -42,7 +42,7 @@ const LandPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup map-popup">
-        <div className="position-relative mb-3 d-flex align-items-center justify-content-center">
+        <div className="position-relative mb-3 d-flex align-items-center justify-content-center popup-header-img">
           <div className="package-popup-title-wrapper-map position-absolute d-flex align-items-center justify-content-center w-100 m-0">
             <h6 className="package-popup-title-map m-0">
               WORLD OF DYPIANS
@@ -64,7 +64,6 @@ const LandPopup = ({ onClosePopup }) => {
               alt=""
             />
           </div>
-          <img src={landPopup} alt="" className="w-100 popup-header-img" />
         </div>
 
         <div className="package-popup-content-land mx-1 p-4 pt-0 d-flex flex-column gap-2">
@@ -128,23 +127,14 @@ const LandPopup = ({ onClosePopup }) => {
             ))}
           </div>
 
-          <div
-            className="linear-border p-0"
-            style={{
-              width: "fit-content",
-              zIndex: 5,
-              position: "relative",
-              textDecoration: "none",
-              margin: "10px auto auto auto",
-            }}
+         <div className="d-flex w-100 justify-content-center mt-2">
+         <NavLink
+            className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
+            to="/shop/land"
           >
-              <NavLink
-                className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
-                to="/shop/land"
-              >
-                GET YOUR LAND
-              </NavLink>
-          </div>
+            GET YOUR LAND
+          </NavLink>
+         </div>
         </div>
       </div>
     </div>

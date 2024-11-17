@@ -78,7 +78,7 @@ const [show, setShow] = useState(false)
     >
       <div
         className={`d-flex ${
-          page === "home" ? "custom-container" : ""
+          page === "home" || page === "token" ? "custom-container" : ""
         } flex-column gap-3`}
       >
         <h6 className={`mb-0 ${page === "home" ? "explorer-grid-title" : "investors-title"} `}>Backers</h6>

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import epicblack from "../../assets/epicblack.svg";
+import epicwhite from "../../assets/epicwhite.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
 import MapPopup from "../../components/PackagePopups/MapPopup";
@@ -129,21 +129,16 @@ const GameHero = () => {
               a variety of heroes, each with unique abilities, and join forces
               with other players to destroy the enemy's bases.
             </p>
-            <div className="d-flex align-items-center gap-3">
-              <a
-                className="stake-wod-btn px-4 py-1"
-                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                target="_blank"
-              >
-                <img
-                  src={epicblack}
-                  alt="icon"
-                  className="epicgame2"
-                  style={{ width: "auto", height: "30px" }}
-                />{" "}
-                Download
-              </a>
-            </div>
+            <div className="filled-btn m-0 py-1 px-5">
+                <a
+                  className="game-event-download py-1 d-flex align-items-center gap-2"
+                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                  target="_blank"
+                >
+                  <img src={epicwhite} alt="icon" className="epicgame2" />
+                  Download
+                </a>
+              </div>
           </div>
           {/* {windowSize.width > 992 && ( */}
           <div className="opacitywrapper custom-container custom-wrapper">
