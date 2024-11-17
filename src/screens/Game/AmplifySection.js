@@ -5,6 +5,7 @@ import cawsGameBannerSmall from "../../assets/gameAssets/cawsGameBannerSmall.web
 import exploreGameBannerSmall from "../../assets/gameAssets/exploreGameBannerSmall.webp";
 import cawsAmplify from "../../assets/gameAssets/cawsAmplify.png";
 import landAmplify from "../../assets/gameAssets/landAmplify.png";
+import opensea from '../../assets/opensea.svg'
 
 const AmplifySection = () => {
   const dummyBetaPassData2 = [
@@ -61,7 +62,15 @@ const AmplifySection = () => {
                       to={"/account"}
                       className="getpremium-btn col-lg-4 py-2"
                     >
-                      Join Now
+                      Buy on Shop
+                    </NavLink>
+                    <NavLink
+                      to={"https://opensea.io/collection/catsandwatchessocietycaws"}
+                      target="_blank"
+                      className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                    >
+                      <img src={opensea} alt="" />
+                      Buy on Opensea
                     </NavLink>
                   </div>
                 </div>
@@ -94,12 +103,20 @@ const AmplifySection = () => {
                   landscapes, shape your ideal world."
                 </span>
                 <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
-                  <NavLink
-                    to={"/account/challenges/treasure-hunt"}
-                    className="getpremium-btn col-lg-4 py-2"
-                  >
-                    Challenges
-                  </NavLink>
+                <NavLink
+                      to={"/account"}
+                      className="getpremium-btn col-lg-4 py-2"
+                    >
+                      Buy on Shop
+                    </NavLink>
+                    <NavLink
+                      to={"https://opensea.io/collection/worldofdypians"}
+                      target="_blank"
+                      className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                    >
+                      <img src={opensea} alt="" />
+                      Buy on Opensea
+                    </NavLink>
                 </div>
               </div>
               <img src={landAmplify} alt="" />
