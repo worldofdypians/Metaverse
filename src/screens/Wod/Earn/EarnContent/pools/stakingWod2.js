@@ -923,14 +923,23 @@ const StakeWodDetails2 = ({
                       ? true
                       : false
                   }
-                  className={`btn connectbtn w-100 ${
+                  className={`btn w-100 ${
                     depositAmount === "" &&
-                    depositStatus === "initial" &&
                     isConnected &&
                     chainId === "1" &&
                     "disabled-btn"
                   } ${
-                    depositStatus === "deposit" || depositStatus === "success"
+                     depositStatus === "initial" && depositAmount !== "" &&
+                    isConnected &&
+                    chainId === "1" &&
+                    "outline-btn-stake"
+                  } ${
+                     depositStatus === "deposit" &&
+                    isConnected &&
+                    chainId === "1" &&
+                    "connectbtn"
+                  } ${
+                    depositStatus === "success"
                       ? "success-button"
                       : (depositStatus === "fail" || chainId !== "1") &&
                         isConnected
@@ -1174,7 +1183,7 @@ const StakeWodDetails2 = ({
               className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-center'} `}
               style={{
                 cursor: "pointer",
-                width: depositedTokens > 0 ? 'fit-content' : 'auto'
+                width: depositedTokens > 0 ? 'auto' : 'fit-content'
               }}
               onClick={() => {
                 showPopup();
@@ -1365,7 +1374,7 @@ const StakeWodDetails2 = ({
                           ? true
                           : false
                       }
-                      className={` w-100 btn filledbtn ${
+                      className={` w-100 btn connectbtn ${
                         withdrawStatus === "failed"
                           ? "fail-button"
                           : withdrawStatus === "success"

@@ -42,6 +42,8 @@ const EarnContent = ({
   const [pastPools, setpastPools] = useState(false);
   const [stakedOnly, setstakedOnly] = useState(false);
   const [isHover, setisHover] = useState(false);
+  const [totalStakesLandPremium, settotalStakesLandPremium] = useState(0);
+  const [totalStakesCawsPremium, settotalStakesCawsPremium] = useState(0);
 
   const onShowDetailsClick = (item) => {
     setselectedPool([item]);
@@ -54,21 +56,52 @@ const EarnContent = ({
     );
   };
 
+  const getTotalStakedNfts = async () => {
+    let staking_contract = await new window.infuraWeb3.eth.Contract(
+      window.LANDMINTING_ABI,
+      window.config.landnft_address,
+      { from: undefined }
+    );
+
+    await staking_contract.methods
+      .balanceOf(window.config.nft_land_premiumstake_address)
+      .call()
+      .then((data) => {
+        settotalStakesLandPremium(data);
+      });
+
+    let staking_contractCaws = await new window.infuraWeb3.eth.Contract(
+      window.CAWS_ABI,
+      window.config.nft_address
+    );
+
+    await staking_contractCaws.methods
+      .balanceOf(window.config.nft_caws_premiumstake_address)
+      .call()
+      .then((data) => {
+        settotalStakesCawsPremium(data);
+      });
+  };
+
   useEffect(() => {
     setselectedPool([]);
   }, [expired, selectedFilter]);
 
+  useEffect(() => {
+    getTotalStakedNfts();
+  }, []);
+
   const tvlUsd = localStorage.getItem("tvl");
-  
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
       <div
         className="opacitywrapper position-relative bottom-0"
-        style={{ borderBottom: "3px solid black" }}
+        style={{ borderBottom: "3px solid black", cursor: 'default' }}
       >
         <div className="d-flex flex-column gap-4 position-relative">
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper pt-2">
-            <div className="container-fluid py-4 staking-pools-bg">
+            <div className="container-fluid py-3 staking-pools-bg">
               <div className="custom-container p-0">
                 <div className="d-flex flex-column flex-lg-row align-items-center gap-4">
                   <div className="d-flex flex-column flex-lg-row gap-3 w-100 mx-0 align-items-center justify-content-between">
@@ -160,17 +193,29 @@ const EarnContent = ({
                         </h5>
                       </div> */}
                     </div>
-                    <div className="d-flex align-items-center gap-2">
-                      <span className="tvl-earn-title text-white">Balance</span>
-                      <span className="tvl-earn-amount d-flex align-items-center gap-2">
-                        <img
-                          src={wodToken}
-                          alt=""
-                          style={{ width: 20, height: 20 }}
-                        />
-                        {getFormattedNumber(23445)}
-                      </span>
-                    </div>
+                    {isConnected && (
+                      <div className="pools-toggle-wrapper py-2 px-3">
+                        <div className="d-flex align-items-center gap-2">
+                          <span
+                            className="tvl-earn-title "
+                            style={{ color: "#c0c9ff" }}
+                          >
+                            My Balance:
+                          </span>
+                          <span
+                            className="tvl-earn-title d-flex align-items-center gap-2"
+                            style={{ color: "#4ed5d2" }}
+                          >
+                            <img
+                              src={wodToken}
+                              alt=""
+                              style={{ width: 20, height: 20 }}
+                            />
+                            {getFormattedNumber(23445)}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                     {/* <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
                       <div className=" d-flex align-items-center pools-toggle-wrapper">
                         <button
@@ -228,7 +273,7 @@ const EarnContent = ({
         </div>
       </div>
       <div className="custom-container  mt-5 tokenomicsTablewrapper">
-        <div className="d-flex flex-column gap-2 w-100 px-2">
+        <div className="d-flex flex-column gap-2 w-100 px-2 px-lg-0">
           {/* <span className="earn-filter-title mt-0 mt-lg-4">{selectedFilter}</span> */}
           {stakingPools && stakingPools.length === 0 && (
             <div className=" flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
@@ -323,7 +368,11 @@ const EarnContent = ({
                           top_pick={false}
                           tokenName={item.pair_name}
                           apr={item.apy_percent + "%"}
-                          tvl={getFormattedNumber(item.tvl_usd, 0) + " WOD"}
+                          tvl={` ${
+                            item.type === "nft" ? "$" : ""
+                          }${getFormattedNumber(item.tvl_usd, 0)} ${
+                            item.type !== "nft" ? " WOD" : ""
+                          }`}
                           lockTime={item.lock_time ? item.lock_time : "No Lock"}
                           tokenLogo={
                             item.tokenURL
@@ -333,6 +382,15 @@ const EarnContent = ({
                               : item.pair_name === "Genesis Land"
                               ? ["wod"]
                               : [item.pair_name?.toLowerCase()]
+                          }
+                          availableQuota={
+                            item.type === "token"
+                              ? "TBA"
+                              : item.expired === "Yes"
+                              ? "--"
+                              : item.pair_name === "Genesis Land"
+                              ? 100 - totalStakesLandPremium
+                              : 200 - totalStakesCawsPremium
                           }
                           onShowDetailsClick={() => {
                             onShowDetailsClick(item);

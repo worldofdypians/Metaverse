@@ -532,18 +532,7 @@ const CawsDetails = ({
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Deposit</h6>
                 <div className="d-flex align-items-center gap-1">
-                  <div
-                    className="info-pool-wrapper p-2"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      showPopup();
-                    }}
-                  >
-                    <h6 className="m-0 mybalance-text d-flex align-items-center gap-1">
-                      <img src={statsIcon} alt="" /> Details
-                    </h6>
-                  </div>
-
+                  
                   <div className="info-pool-wrapper p-2">
                     <h6 className="m-0 mybalance-text">
                       Balance:{" "}
@@ -575,7 +564,19 @@ const CawsDetails = ({
                 Connect Wallet
               </button>
             )}
-            {mystakes.length > 0 && <div className="stake-separator"></div>}
+            {isConnected && chainId !=='1' && (
+              <button
+                className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleEthPool();
+                }}
+              >
+                Switch to Ethereum
+              </button>
+            )}
+            {mystakes.length > 0 &&
+             <div className="stake-separator"></div>
+             }
             {mystakes.length > 0 && (
               <div
                 className={`otherside-border ${
@@ -587,7 +588,7 @@ const CawsDetails = ({
                     className={
                       listType === "list"
                         ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                        : "m-0 withdraw-txt d-flex flex-column gap-2"
+                        : "m-0 deposit-txt d-flex flex-column gap-2"
                     }
                   >
                     Earnings
@@ -616,14 +617,14 @@ const CawsDetails = ({
                   </h6>
                 </div>
                 <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
-                  <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6>
-                  <div className="form-row w-100 d-flex gap-2 align-items-end justify-content-between">
+                  {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
+                  <div className="form-row w-100 d-flex gap-2 align-items-center justify-content-between">
                     <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
-                      <img
+                      {/* <img
                         src={weth}
                         alt=""
                         style={{ width: 18, height: 18 }}
-                      />{" "}
+                      />{" "} */}
                       {getFormattedNumber(EthRewards, 4)} WETH ($
                       {getFormattedNumber(ethToUSD, 4)})
                     </h6>
@@ -652,7 +653,9 @@ const CawsDetails = ({
                 </div>
               </div>
             )}
-            {mystakes.length > 0 && <div className="stake-separator"></div>}
+            {mystakes.length > 0 && 
+            <div className="stake-separator"></div>
+            }
 
             {mystakes.length > 0 && (
               <div
@@ -685,6 +688,23 @@ const CawsDetails = ({
                 </div>
               </div>
             )}
+            <div
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              style={{
+                cursor: "pointer",
+                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+              }}
+              onClick={() => {
+                showPopup();
+              }}
+            >
+              <h6
+                className="m-0 mybalance-text d-flex align-items-center gap-1"
+                style={{ color: "#4ed5d2" }}
+              >
+                <img src={statsIcon} alt="" /> Details
+              </h6>
+            </div>
           </div>
         </div>
       </div>
@@ -735,12 +755,12 @@ const CawsDetails = ({
             <div className="l-box pl-3 pr-3">
               <div className="container px-0">
                 <div className="stats-container my-4">
-                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
+                  {/* <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">My Stakes</span>
                     <h6 className="stats-card-content">
                       {mystakes.length} CAWS
                     </h6>
-                  </div>
+                  </div> */}
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Total NFTs staked</span>
                     <h6 className="stats-card-content">{totalStakes}/10,000</h6>

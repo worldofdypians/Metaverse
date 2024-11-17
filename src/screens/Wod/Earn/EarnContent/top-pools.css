@@ -50,10 +50,13 @@
   background: #403e6b;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.12);
   border-radius: 12px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   position: relative;
   /* padding: 10px; */
   /* width: 400px; */
   border: 2px solid transparent;
+  border-bottom: none;
   transition: all 0.25s;
 }
 
@@ -300,7 +303,7 @@
     rgba(20, 20, 42, 0.6) 0%,
     rgba(20, 20, 42, 0) 100%
   );
-  border-radius: 8px;
+  /* border-radius: 8px; */
   padding: 10px;
 }
 
@@ -524,8 +527,8 @@
 
 .stake-separator {
   height: 1px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background: rgba(192, 201, 255, 0.3);
 }
 

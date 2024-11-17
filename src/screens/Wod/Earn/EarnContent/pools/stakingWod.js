@@ -40,8 +40,8 @@ const renderer = ({ days, hours, minutes, seconds }) => {
 
 const renderer2 = ({ hours, minutes }) => {
   return (
-    <h6 className="rewardstxtwod text-white mb-0">
-      {hours}D:{hours}H:{minutes}M
+    <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+      {hours}d:{hours}h:{minutes}m
     </h6>
   );
 };
@@ -930,14 +930,23 @@ const StakeWodDetails = ({
                       ? true
                       : false
                   }
-                  className={`btn connectbtn w-100 ${
+                  className={`btn w-100  ${
                     depositAmount === "" &&
-                    depositStatus === "initial" &&
                     isConnected &&
                     chainId === "1" &&
                     "disabled-btn"
                   } ${
-                    depositStatus === "deposit" || depositStatus === "success"
+                    depositStatus === "initial" && depositAmount !== "" &&
+                   isConnected &&
+                   chainId === "1" &&
+                   "outline-btn-stake"
+                 } ${
+                    depositStatus === "deposit" &&
+                   isConnected &&
+                   chainId === "1" &&
+                   "connectbtn"
+                 } ${
+                    depositStatus === "success"
                       ? "success-button"
                       : (depositStatus === "fail" || chainId !== "1") &&
                         isConnected
@@ -991,7 +1000,9 @@ const StakeWodDetails = ({
               </div> */}
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
-            {pendingDivs > 0 && <div className="stake-separator"></div>}
+            {pendingDivs > 0 && 
+            <div className="stake-separator"></div>
+            }
             {pendingDivs > 0 && (
               <div
                 className={`otherside-border ${
@@ -1174,12 +1185,12 @@ const StakeWodDetails = ({
                   </div>
                 </div>
               </div>
-            )}
+             )}
               <div
               className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-start'} `}
               style={{
                 cursor: "pointer",
-                width: depositedTokens > 0 ? 'fit-content' : 'auto'
+                width: depositedTokens > 0 ? 'auto' : 'fit-content'
               }}
               onClick={() => {
                 showPopup();

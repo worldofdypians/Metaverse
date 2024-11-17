@@ -25,7 +25,7 @@ const TopPoolsCard = ({
   expired,
   network,
   isPremium,
-  isHover,
+  isHover,availableQuota
 }) => {
   const [showDetails, setShowDetails] = useState(false);
 
@@ -127,7 +127,7 @@ const TopPoolsCard = ({
             {cardType !== "Vault" && (
               <div className="d-flex flex-column">
                 <h6 className="tvl-text m-0 ">Total Staked</h6>
-                <h6 className="tvl-amount m-0 ">{tvl}</h6>
+                <h6 className="tvl-amount m-0 "> {tvl}</h6>
               </div>
             )}
             <div
@@ -137,7 +137,7 @@ const TopPoolsCard = ({
             >
               <h6 className="tvl-text m-0">Available Quota</h6>
 
-              <h6 className="locktime-amount m-0">{"200,00"}</h6>
+              <h6 className="locktime-amount m-0">{availableQuota}</h6>
             </div>
           </div>
           {/* {tvl != "--" && (
