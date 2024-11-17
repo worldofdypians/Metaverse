@@ -749,15 +749,25 @@ const Header = ({
               >
                 <div className="position-relative d-flex flex-column gap-2">
                   <div className="triangle"></div>
-                  <NavLink
-                    to={"/about#partners"}
+                 <NavLink
+                    to={"/about#tokenomics"}
                     className={({ isActive }) =>
-                      isActive && window.location.hash === "#partners"
+                      isActive && window.location.hash === "#tokenomics"
                         ? "dropdown-nav nav-active p-2"
                         : "dropdown-nav p-2"
                     }
                   >
-                    Partners
+                    Tokenomics
+                  </NavLink> 
+                  <NavLink
+                    to={"/about#security"}
+                    className={({ isActive }) =>
+                      isActive && window.location.hash === "#security"
+                        ? "dropdown-nav nav-active p-2"
+                        : "dropdown-nav p-2"
+                    }
+                  >
+                    Security
                   </NavLink>
                   <NavLink
                     to={"/about#roadmap"}
@@ -770,16 +780,6 @@ const Header = ({
                     Roadmap
                   </NavLink>
                   <NavLink
-                    to={"/about#tokenomics"}
-                    className={({ isActive }) =>
-                      isActive && window.location.hash === "#tokenomics"
-                        ? "dropdown-nav nav-active p-2"
-                        : "dropdown-nav p-2"
-                    }
-                  >
-                    Tokenomics
-                  </NavLink>
-                  <NavLink
                     to={"/about#ourteam"}
                     className={({ isActive }) =>
                       isActive && window.location.hash === "#ourteam"
@@ -789,6 +789,20 @@ const Header = ({
                   >
                     Team
                   </NavLink>
+                  
+                    <NavLink
+                    to={"/about#partners"}
+                    className={({ isActive }) =>
+                      isActive && window.location.hash === "#partners"
+                        ? "dropdown-nav nav-active p-2"
+                        : "dropdown-nav p-2"
+                    }
+                  >
+                    Partners
+                  </NavLink>
+                
+                
+             
                   <NavLink
                     to={"/about#brand"}
                     className={({ isActive }) =>

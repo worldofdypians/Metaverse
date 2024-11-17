@@ -238,7 +238,8 @@ const OurTeam = () => {
         <div className="row w-100 justify-content-center align-items-center">
           <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
             <h2 className="font-montserrat explorer-grid-title text-uppercase text-center px-0">
-              WOD <mark className="font-montserrat text-uppercase explore-tag">Team</mark>
+              {/* WOD  */}
+              <mark className="font-montserrat text-uppercase explore-tag">Team</mark>
             </h2>
             <p className="text-white text-center">
               Our dedicated team at World of Dypians is comprised of experienced

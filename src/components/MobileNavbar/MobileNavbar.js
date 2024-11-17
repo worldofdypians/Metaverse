@@ -151,7 +151,6 @@ const MobileNavbar = ({
         setMantaState(false);
         setTaikoState(false);
         setMatState(true);
-
       } else if (chainId === 204) {
         setMatState(false);
         setAvaxState(false);
@@ -359,7 +358,12 @@ const MobileNavbar = ({
         className="mobile-navbar d-flex d-lg-none p-3 align-items-center justify-content-between"
         id="mobileNavbar"
       >
-        <NavLink to="/" onClick={()=>{window.scrollTo(0,0)}}>
+        <NavLink
+          to="/"
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <img src={metaverse} alt="metaverse" width={126} />
         </NavLink>
         <div className="d-flex align-items-center gap-3 justify-content-between">
@@ -452,7 +456,7 @@ const MobileNavbar = ({
                         : taikoState === true
                         ? "Taiko"
                         : matState === true
-                            ? "Matchain"
+                        ? "Matchain"
                         : // : seiState === true
                           // ? "Sei"
                           "Unsupported"}
@@ -479,23 +483,21 @@ const MobileNavbar = ({
                   opBNB Chain
                 </Dropdown.Item>
                 {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x28c58", 167000)}
-                      >
-                        <img src={taiko} width={20} height={20} alt="" />
-                        Taiko
-                      </Dropdown.Item>
-                    )}
-                     {window.WALLET_TYPE !== "binance" &&
-                    !window.ethereum?.isBinance && (
-                      <Dropdown.Item
-                        onClick={() => switchNetwork("0x2ba", 698)}
-                      >
-                        <img src={matchain} width={20} height={20} alt="" />
-                        Matchain
-                      </Dropdown.Item>
-                    )}
+                  !window.ethereum?.isBinance && (
+                    <Dropdown.Item
+                      onClick={() => switchNetwork("0x28c58", 167000)}
+                    >
+                      <img src={taiko} width={20} height={20} alt="" />
+                      Taiko
+                    </Dropdown.Item>
+                  )}
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <Dropdown.Item onClick={() => switchNetwork("0x2ba", 698)}>
+                      <img src={matchain} width={20} height={20} alt="" />
+                      Matchain
+                    </Dropdown.Item>
+                  )}
                 {window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
@@ -652,7 +654,6 @@ const MobileNavbar = ({
                     >
                       <span className={`sidebar-title`}>Bridge</span>
                     </NavLink>
-                    
                   </div>
                 </div>
               </div>
@@ -812,20 +813,29 @@ const MobileNavbar = ({
               >
                 <div className="accordion-body mt-2 p-0">
                   <div className="d-flex flex-column gap-2">
-                  
                     <NavLink
-                      to="/about#partners"
+                      to="/about#tokenomics"
                       end
                       className={({ isActive }) =>
-                        isActive && window.location.hash === "#partners"
+                        isActive && window.location.hash === "#tokenomics"
                           ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
                       }
                       onClick={() => setOpenNavbar(false)}
                     >
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`sidebar-title`}>Partners</span>
-                      </div>
+                      <span className={`sidebar-title`}>Tokenomics</span>
+                    </NavLink>
+                    <NavLink
+                      to="/about#security"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#security"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Security</span>
                     </NavLink>
                     <NavLink
                       to="/about#roadmap"
@@ -840,22 +850,10 @@ const MobileNavbar = ({
                       <span className={`sidebar-title mb-0`}>Roadmap</span>
                     </NavLink>
                     <NavLink
-                      to="/about#tokenomics"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#tokenomics"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Tokenomics</span>
-                    </NavLink>
-                    <NavLink
                       to="/about#ourteam"
                       end
                       className={({ isActive }) =>
-                          isActive && window.location.hash === "#ourteam"
+                        isActive && window.location.hash === "#ourteam"
                           ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
                           : "d-flex px-2 align-items-center gap-2 sidebar-item"
                       }
@@ -863,12 +861,26 @@ const MobileNavbar = ({
                     >
                       <span className={`sidebar-title`}>Team</span>
                     </NavLink>
+                    <NavLink
+                      to="/about#partners"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#partners"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`sidebar-title`}>Partners</span>
+                      </div>
+                    </NavLink>
 
                     <NavLink
                       to="/about#brand"
                       end
                       className={({ isActive }) =>
-                         isActive && window.location.hash === "#brand"
+                        isActive && window.location.hash === "#brand"
                           ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
                           : "d-flex px-2 align-items-center gap-2 sidebar-item"
                       }

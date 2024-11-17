@@ -330,22 +330,22 @@ const PartnerForm = () => {
         </p>
         </div>
        
-        <div className=" col-12 mx-0 my-5 row gap-5 justify-content-around">
+        <div className=" col-12 mx-0 row gap-5 justify-content-around">
           <FormContainer
             title="General Inquiry"
             desc="Get immediate help and support for your inquiries."
-            accordionState={openBusiness}
-            collapse="collapseHelp"
+            accordionState={true}
+            // collapse="collapseHelp"
             emailLink="mailto:helpcenter@dypius.com"
             email="helpcenter@dypius.com"
-            image="business"
+            // image="business"
             onClick={() => {
-              setopenBusiness(!openBusiness);
+              setopenBusiness(true);
             }}
           >
             <div
-              id="collapseHelp"
-              className="accordion-collapse collapse"
+              // id="collapseHelp"
+              className="accordion-collapse show"
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
@@ -597,7 +597,7 @@ const PartnerForm = () => {
               </div>
             </div>
           </FormContainer>
-          <FormContainer
+          {/* <FormContainer
             title="Build with us"
             desc="Express your creativity and make a mark on the virtual world."
             onClick={() => {
@@ -920,7 +920,7 @@ const PartnerForm = () => {
                 />
               </div>
             </div>
-          </FormContainer>
+          </FormContainer> */}
         </div>
       </div>
       {success && (
