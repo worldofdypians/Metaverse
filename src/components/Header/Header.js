@@ -944,7 +944,7 @@ const Header = ({
                         }
                       >
                         <img width={20} height={20} src={supportIcon} alt="" />
-                        Support
+                        Contact us
                       </NavLink>
                       <NavLink
                         to={"/shop"}
