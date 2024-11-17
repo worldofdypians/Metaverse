@@ -5,14 +5,13 @@ import brandBanner from "../../../assets/brandBanner.webp";
 const Brand = () => {
   return (
     <div
-      className="d-flex justify-content-center w-100"
+      className="d-flex justify-content-center w-100 mt-4"
       id="brand"
       style={{ scrollMarginTop: "100px" }}
     >
       <div className="d-flex flex-column align-items-center gap-4">
         <h2 className="font-montserrat builders-title explorer-grid-title px-2 px-lg-0">
-          Brand Kit{" "}
-          <mark className="font-montserrat explore-tag pe-2">Assets</mark>
+          Brand Kit Assets
         </h2>
         <div className="brand-desc px-2 px-lg-0">
           Access the official World of Dypians Brand Kit, including logos, color

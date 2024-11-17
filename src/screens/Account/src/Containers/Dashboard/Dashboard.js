@@ -10472,12 +10472,10 @@ function Dashboard({
             >
                <div className="d-flex align-items-center justify-content-between">
                             <h2
-                              className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitleGlobal gap-2`}
+                              className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
+                            style={{fontSize: "24px"}}
                             >
-                              <mark className={`font-organetto bundletag`}>
-                                GLOBAL
-                              </mark>{" "}
-                              LEADERBOARDS
+                            Global Leaderboards
                             </h2>
 
                             <img
@@ -10491,8 +10489,8 @@ function Dashboard({
                             <button
                               className={` ${
                                 leaderboardBtn === "weekly"
-                                  ? "leaderboard-active-btn"
-                                  : "leaderboard-inactive-btn"
+                                  ? "getpremium-active-btn"
+                                  : "getpremium-btn"
                               }  w-100 py-lg-2 py-1`}
                               onClick={() => {
                                 setleaderboardBtn("weekly");
@@ -10503,8 +10501,8 @@ function Dashboard({
                             <button
                               className={` ${
                                 leaderboardBtn === "monthly"
-                                  ? "leaderboard-active-btn"
-                                  : "leaderboard-inactive-btn"
+                                  ? "getpremium-active-btn"
+                                  : "getpremium-btn"
                               }  w-100 py-lg-2 py-1`}
                               onClick={() => {
                                 setleaderboardBtn("monthly");

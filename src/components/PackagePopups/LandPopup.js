@@ -4,6 +4,7 @@ import landPopup from "./assets/landPopup.webp";
 import cityMap from "./assets/cityMap.webp";
 import islandMap from "./assets/islandMap.webp";
 import epicblack from "../../assets/epicblack.svg";
+import opensea from "../../assets/opensea.svg";
 import { NavLink } from "react-router-dom";
 
 const LandPopup = ({ onClosePopup }) => {
@@ -127,14 +128,19 @@ const LandPopup = ({ onClosePopup }) => {
             ))}
           </div>
 
-         <div className="d-flex w-100 justify-content-center mt-2">
-         <NavLink
-            className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
-            to="/shop/land"
-          >
-            GET YOUR LAND
-          </NavLink>
-         </div>
+          <div className="d-flex flex-column flex-lg-row w-100 align-items-center gap-3 justify-content-center mt-2">
+            <NavLink to={"/shop/land"} className="getpremium-btn col-lg-4 py-2">
+              Buy on Shop
+            </NavLink>
+            <NavLink
+              to={"https://opensea.io/collection/worldofdypians"}
+              target="_blank"
+              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+            >
+              <img src={opensea} alt="" />
+              Buy on Opensea
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>

@@ -136,11 +136,8 @@ const Tokenomics = () => {
       id="tokenomics"
     >
       <div className="custom-container d-flex flex-column w-100 gap-3">
-        <h4 className="explorer-grid-title text-uppercase font-montserrat text-start mb-0 mt-5">
-          WOD{" "}
-          <mark className="font-montserrat explorer-grid-title  text-uppercase explore-tag pe-2">
-            Tokenomics
-          </mark>
+        <h4 className="explorer-grid-title font-montserrat text-start mb-0 mt-5">
+          WOD Tokenomics
         </h4>
         <span className="tokenomics-wrapper-desc">
           The total token supply is 1B $WOD and is designed to fuel the World of

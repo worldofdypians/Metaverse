@@ -49,7 +49,7 @@ const TeamCard = ({ name, position, id, content, photo, link }) => {
             }}
             data-bs-toggle="collapse"
             data-bs-target={`#${id}`}
-            data-bs-parent="#accordionExample"
+            data-bs-parent={`accordionExample${id}`}
             aria-expanded="true"
             aria-controls={id}
             alt=""
@@ -60,7 +60,7 @@ const TeamCard = ({ name, position, id, content, photo, link }) => {
         id={id}
         className="accordion-collapse collapse position-relative"
         aria-labelledby="headingOne"
-        data-bs-parent="#accordionExample"
+        data-bs-parent={`accordionExample${id}`}
         style={{  zIndex: 1 }}
       >
         <div className="accordion-body team-info d-flex align-items-end">

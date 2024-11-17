@@ -142,7 +142,7 @@ const AmplifyExperience = () => {
                 <td>
                   <div className="py-4">
                     <NavLink
-                      className="explore-btn px-4 py-2 mt-4"
+                      className="action-btn px-4 py-2 mt-4"
                       to={"/account/prime"}
                     >
                       Buy Prime
