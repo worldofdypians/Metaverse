@@ -30,7 +30,7 @@ const FeatureSection = ({onSelectEvent}) => {
             Unlock extra rewards to boost your gaming experience and level up
             faster.
           </p>
-          <div className="d-flex align-items-center gap-1" onClick={()=>{onSelectEvent('golden')}}>
+          <div className="d-flex align-items-center gap-1" style={{cursor: 'pointer'}} onClick={()=>{onSelectEvent('golden')}}>
             <span className="game-feature-redirect text-end">
               Get Golden Pass
             </span>

@@ -16,7 +16,7 @@ import stoneEyeCard from "../../assets/gameAssets/challengeCards/stoneEyeCard.pn
 import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHuntCard.png";
 import Slider from "react-slick";
 
-const NewChallenges = () => {
+const NewChallenges = ({screen}) => {
   const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
 
@@ -212,7 +212,9 @@ const NewChallenges = () => {
             <button
               className={`inactive-challenge-btn ${
                 event === "beast" && "active-challenge-btn"
-              } px-5 py-2`}
+              } ${
+                screen === "marketplace" ? "px-4" : 'px-5'
+              } py-2`}
               onClick={() => {
                 setEvent("beast");
                 sliderRef.current.slickGoTo(0);
@@ -223,7 +225,9 @@ const NewChallenges = () => {
             <button
               className={`inactive-challenge-btn ${
                 event === "hunt" && "active-challenge-btn"
-              } px-5 py-2`}
+              } ${
+                screen === "marketplace" ? "px-4" : 'px-5'
+              } py-2`}
               onClick={() => {
                 setEvent("hunt");
                 sliderRef.current.slickGoTo(1);
@@ -234,7 +238,9 @@ const NewChallenges = () => {
             <button
               className={`inactive-challenge-btn ${
                 event === "daily" && "active-challenge-btn"
-              } px-5 py-2`}
+              } ${
+                screen === "marketplace" ? "px-4" : 'px-5'
+              } py-2`}
               onClick={() => {
                 setEvent("daily");
                 sliderRef.current.slickGoTo(2);

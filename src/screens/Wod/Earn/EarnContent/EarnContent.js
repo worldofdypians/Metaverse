@@ -34,6 +34,7 @@ const EarnContent = ({
   onViewPastPools,
   onViewStakedOnlyPools,
   tvl,
+  wodBalance
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -211,7 +212,7 @@ const EarnContent = ({
                               alt=""
                               style={{ width: 20, height: 20 }}
                             />
-                            {getFormattedNumber(23445)}
+                            {getFormattedNumber(wodBalance)}
                           </span>
                         </div>
                       </div>
