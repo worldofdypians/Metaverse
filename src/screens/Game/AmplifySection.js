@@ -5,7 +5,7 @@ import cawsGameBannerSmall from "../../assets/gameAssets/cawsGameBannerSmall.web
 import exploreGameBannerSmall from "../../assets/gameAssets/exploreGameBannerSmall.webp";
 import cawsAmplify from "../../assets/gameAssets/cawsAmplify.png";
 import landAmplify from "../../assets/gameAssets/landAmplify.png";
-import opensea from '../../assets/opensea.svg'
+import opensea from "../../assets/opensea.svg";
 
 const AmplifySection = ({setShowPopup}) => {
   const dummyBetaPassData2 = [
@@ -29,7 +29,6 @@ const AmplifySection = ({setShowPopup}) => {
     },
   ];
 
- 
   return (
     <>
       <div className="d-flex flex-column">
@@ -65,7 +64,9 @@ const AmplifySection = ({setShowPopup}) => {
                       View More
                     </button>
                     <NavLink
-                      to={"https://opensea.io/collection/catsandwatchessocietycaws"}
+                      to={
+                        "https://opensea.io/collection/catsandwatchessocietycaws"
+                      }
                       target="_blank"
                       className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
                     >
@@ -115,15 +116,14 @@ const AmplifySection = ({setShowPopup}) => {
                     >
                       Watch
                     </NavLink>
+                  </div>
                 </div>
+                <img src={landAmplify} alt="" />
               </div>
-              <img src={landAmplify} alt="" />
-             </div>
             </div>
           </div>
         </div>
       </div>
-     
     </>
   );
 };

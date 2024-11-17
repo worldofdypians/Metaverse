@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./_tokenomics.scss";
 import chart from "../../../../assets/wodAssets/dyp-chart2.svg";
 import copy from "../../../../components/Header/assets/copy.svg";
@@ -9,9 +9,15 @@ import tokenomicsChart from "../../../../assets/wodAssets/tokenomicsChart.svg";
 import bnb from "../../../../components/Header/assets/bnb.svg";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
+import { NavLink } from "react-router-dom";
+import inGameEconomyChart from "../../../Token/assets/inGameEconomyChart.svg";
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
+
+  const imageUrl = inGameEconomyChart;
 
   const tokenomicsData = [
     {
@@ -105,6 +111,22 @@ const Tokenomics = () => {
     },
   ];
 
+  useEffect(() => {
+    // Bind Fancybox to elements with `data-fancybox` attribute
+    Fancybox.bind("[data-fancybox]", {
+      infinite: false,
+      Toolbar: true,
+      buttons: ["zoom", "close"],
+      Image: {
+        zoom: true,
+      },
+      defaultDisplay: "block",
+    });
+
+    // Cleanup on component unmount
+    return () => Fancybox.destroy();
+  }, []);
+
   const windowSize = useWindowSize();
 
   return (
@@ -121,6 +143,24 @@ const Tokenomics = () => {
           The total token supply is 1B $WOD and is designed to fuel the World of
           Dypians ecosystem and help it grow.
         </span>
+        <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
+          <NavLink
+            to={
+              "https://docs.google.com/document/d/1Bs2LteaZZDb9_4QK-e4-8KPSYA6oYfQ6/edit?usp=sharing&ouid=114526870897283785273&rtpof=true&sd=true"
+            }
+            target="_blank"
+            className="explore-btn col-lg-4 py-2"
+          >
+            Read Whitepaper
+          </NavLink>
+          <a
+            href={imageUrl}
+            data-fancybox="gallery2"
+            className="getpremium-btn px-3 py-2"
+          >
+            In-Game Economy
+          </a>
+        </div>
       </div>
       <div className="w-100 py-5 d-flex justify-content-center new-tokenomics-bg">
         <div className="custom-container w-100">

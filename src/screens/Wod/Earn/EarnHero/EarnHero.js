@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 // import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
 // import dropdownIcon from "../assets/dropdownIcon.svg";
 import "../../../Wod/Token/MainHero/_mainhero.scss";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 // import listIcon from "../assets/listIcon.svg";
 // import tableIcon from "../assets/tableIcon.svg";
 // import tableIconActive from "../assets/tableIconActive.svg";
@@ -91,6 +92,7 @@ const EarnHero = ({
   // };
 
   // const betaSlider = useRef(null);
+  const tvlUsd = localStorage.getItem("tvl");
 
   return (
     <div className="earn-hero-wrapper position-relative d-flex align-items-center flex-column justify-content-end gap-5">
@@ -105,6 +107,14 @@ const EarnHero = ({
                   solutions. Make the most of your assets to earn additional
                   rewards. Start earning today!
                 </span>
+                <div className="tvl-earn-wrapper py-2 px-4">
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="tvl-earn-title">TVL</span>
+                    <span className="tvl-earn-amount">
+                      ${getFormattedNumber(tvlUsd)}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

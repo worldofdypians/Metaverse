@@ -115,7 +115,7 @@ const VideoWrapper = ({
       class: "eventClass",
     },
     {
-      link: "/account#leaderboard",
+      link: "/",
       title: "LEADERBOARD",
       desc: "Compete for top player rankings",
       class: "leaderboardClass",
@@ -313,7 +313,7 @@ const VideoWrapper = ({
       </div>
       {modal === true ? (
         <OutsideClickHandler onOutsideClick={() => setModal(false)}>
-          <div className="system-requirements-modal p-3" id="reqmodal">
+          <div className="system-requirements-modal p-3" id="reqmodal" style={{background : '#1a1c39'}}>
             <div className="d-flex align-items-start justify-content-end">
               <img
                 src={xMark}
@@ -324,7 +324,7 @@ const VideoWrapper = ({
               />
             </div>
 
-            <NewHomeLeaderboard />
+            <GlobalLeaderboard allStarData={allStarData} screen={'home'} leaderboardBtn='monthly'/>
           </div>
         </OutsideClickHandler>
       ) : (

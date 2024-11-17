@@ -34,7 +34,7 @@ const EarnContent = ({
   onViewPastPools,
   onViewStakedOnlyPools,
   tvl,
-  wodBalance
+  wodBalance,
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -98,7 +98,7 @@ const EarnContent = ({
     <div className="d-flex flex-column justify-content-center align-items-center mb-5 pb-4 earncontent-bg">
       <div
         className="opacitywrapper position-relative bottom-0"
-        style={{ borderBottom: "3px solid black", cursor: 'default' }}
+        style={{ borderBottom: "3px solid black", cursor: "default" }}
       >
         <div className="d-flex flex-column gap-4 position-relative">
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper pt-2">
@@ -195,26 +195,39 @@ const EarnContent = ({
                       </div> */}
                     </div>
                     {isConnected && (
-                      <div className="pools-toggle-wrapper py-2 px-3">
-                        <div className="d-flex align-items-center gap-2">
-                          <span
-                            className="tvl-earn-title "
-                            style={{ color: "#c0c9ff" }}
-                          >
-                            My Balance:
-                          </span>
-                          <span
-                            className="tvl-earn-title d-flex align-items-center gap-2"
-                            style={{ color: "#4ed5d2" }}
-                          >
-                            <img
-                              src={wodToken}
-                              alt=""
-                              style={{ width: 20, height: 20 }}
-                            />
-                            {getFormattedNumber(wodBalance)}
-                          </span>
+                      <div className="d-flex align-items-center gap-2">
+                        <div className="pools-toggle-wrapper py-2 px-3">
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className="tvl-earn-title "
+                              style={{ color: "#c0c9ff" }}
+                            >
+                              My Balance:
+                            </span>
+                            <span
+                              className="tvl-earn-title d-flex align-items-center gap-2"
+                              style={{ color: "#4ed5d2" }}
+                            >
+                              <img
+                                src={wodToken}
+                                alt=""
+                                style={{ width: 20, height: 20 }}
+                              />
+                              {getFormattedNumber(wodBalance)}
+                            </span>
+                          </div>
                         </div>
+                        {Number(wodBalance) === 0 && (
+                          <button
+                            className="btn multiplayer-btn py-1 px-3 d-flex align-items-center gap-2 justify-content-center"
+                            // onClick={() => {
+                            //   setmultiplayerModal(true);
+                            // }}
+                          >
+                            {/* <img src={buyWod} alt="" /> */}
+                            Buy WOD
+                          </button>
+                        )}
                       </div>
                     )}
                     {/* <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-3">
