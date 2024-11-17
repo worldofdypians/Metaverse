@@ -9,7 +9,7 @@ const GovernanceContent = () => {
         <div className="active-proposals-wrapper d-flex justify-content-center p-3">
           <div className="custom-container w-100">
             <div className="d-flex flex-column gap-3">
-              <h2 className="font-montserrat  explorer-grid-title px-0">
+              <h2 className="font-montserrat  market-banner-title px-0">
                 ACTIVE PROPOSALS
               </h2>
               <div className="active-proposals-inner-wrapper w-100 py-3 px-3 ">
@@ -47,7 +47,7 @@ const GovernanceContent = () => {
           <div className="custom-container w-100">
             <div className="d-flex flex-column gap-3">
               <div className="d-flex flex-column gap-2 justify-content-center align-items-center">
-                <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+                <h2 className="font-montserrat market-banner-title px-0">
                   PAST PROPOSALS
                 </h2>
                 <span className="market-banner-desc font-montserrat text-center">

@@ -13,6 +13,7 @@ import mazeGardenCard from "../../assets/gameAssets/challengeCards/mazeGardenCar
 import puzzleMadnessCard from "../../assets/gameAssets/challengeCards/puzzleMadnessCard.png";
 import treasureHuntCard from "../../assets/gameAssets/challengeCards/treasureHuntCard.png";
 import stoneEyeCard from "../../assets/gameAssets/challengeCards/stoneEyeCard.png";
+import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHuntCard.png";
 import Slider from "react-slick";
 
 const NewChallenges = () => {
@@ -20,6 +21,9 @@ const NewChallenges = () => {
   const [currentWeek, setCurrentWeek] = useState([]);
 
   const currentDate = new Date().getDay();
+
+  const adjustedDay = currentDate === 0 ? 7 : currentDate;
+
 
   const getMonday = (date) => {
     const day = date.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
@@ -173,6 +177,8 @@ const NewChallenges = () => {
     {
       image: mazeGardenCard,
       desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
+      day: 5,
+      dayText: "FRI",
     },
     {
       image: puzzleMadnessCard,
@@ -183,7 +189,7 @@ const NewChallenges = () => {
       desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
     },
     {
-      image: cawsCard,
+      image: explorerHuntCard,
       desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
     },
     {
@@ -192,13 +198,13 @@ const NewChallenges = () => {
     },
   ];
 
-  // console.log(currentWeek[0].getDate());
+  console.log(adjustedDay, "currentdate");
 
   return (
     <div className="d-flex flex-column">
       <div className="new-challenges-hero w-100 p-5 d-flex flex-column gap-5 align-items-center">
         <h2 className="font-montserrat main-hero-title  px-0">
-          World of Dypians Challenges
+          Events & Challenges
         </h2>
         <div className="col-12 col-md-8 col-lg-7">
           <div className="challenges-button-grid gap-4">
@@ -267,7 +273,7 @@ const NewChallenges = () => {
                         className="beast-date-text-holder d-flex align-items-center justify-content-center"
                         style={{
                           background:
-                            item.day === currentDate ? "#e10000" : "#08656a",
+                            item.day === adjustedDay ? "#e10000" : "#08656a",
                         }}
                       >
                         {item.dayText}
@@ -287,7 +293,25 @@ const NewChallenges = () => {
                   className="beast-challenge-card d-flex flex-column gap-2"
                 >
                   <img src={item.image} className="w-100" alt="" />
-                  <p className="challenge-beast-desc m-0 p-3">{item.desc}</p>
+                  <div className="d-flex align-items-start gap-2 p-3">
+                  <p className="challenge-beast-desc m-0 ">{item.desc}</p>
+                  {item.day &&
+                   <div className="beast-date d-flex flex-column">
+                   <div
+                     className="beast-date-text-holder d-flex align-items-center justify-content-center"
+                     style={{
+                       background:
+                         item.day === adjustedDay ? "#e10000" : "#08656a",
+                     }}
+                   >
+                     {item.dayText}
+                   </div>
+                   <div className="beast-date-holder d-flex align-items-center justify-content-center">
+                     {currentWeek[4]?.getDate()}
+                   </div>
+                 </div>
+                  }
+                  </div>
                 </div>
               ))}
             </div>

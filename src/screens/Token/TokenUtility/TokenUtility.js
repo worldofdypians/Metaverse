@@ -36,7 +36,7 @@ const TokenUtility = () => {
   ];
 
   return (
-    <div className="position-relative d-flex flex-column gap-5 align-items-center">
+    <div className="position-relative d-flex flex-column gap-5 align-items-center mt-4">
       <div className="container-lg">
         <div className="d-flex flex-column align-items-center gap-2">
           <div className="d-flex align-items-center gap-2">
@@ -52,7 +52,7 @@ const TokenUtility = () => {
           </p>
         </div>
       </div>
-      <div className="container-fluid py-4 px-0 d-flex justify-content-center buy-wod-bg">
+      <div className="container-fluid py-4 px-0 d-flex justify-content-center buy-wod-bg" style={{borderBottom: "3px solid black"}}>
         <div className="custom-container w-100  ">
           <div className="token-utilities-grid px-3 px-lg-0">
             {utilities.map((item, index) => (

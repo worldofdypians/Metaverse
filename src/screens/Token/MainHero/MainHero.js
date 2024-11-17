@@ -147,7 +147,7 @@ const MainHero = ({scrollInto}) => {
   const betaSlider2 = useRef(null);
 
   return (
-    <div className="px-3 mainhero-wrapper2 px-lg-5 d-flex flex-column justify-content-center align-items-center">
+    <div className="px-3 mainhero-wrapper2 px-lg-5 d-flex flex-column justify-content-center align-items-center" >
       <div className="custom-container w-100  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
@@ -161,7 +161,7 @@ const MainHero = ({scrollInto}) => {
                   foundation for the World of Dypians ecosystem, integrating
                   DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
-                <div className="d-flex align-items-center gap-3">
+                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3">
                   <button className="getpremium-btn px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
                   <button className="signinbtn2 px-3 py-2" onClick={()=>{scrollInto('backers&partners')}}>Backers & Partners</button>
                 </div>

@@ -1,0 +1,13 @@
+.economy-banner{
+    background-image: url('./assets/igEconomyBg.webp');
+    background-size: 100%;
+     background-repeat: no-repeat;
+    @media screen and (max-width: 786px) {
+        background-image: url('./assets/igEconomyBgMobile.webp');
+    }
+}
+
+.fancybox__content{
+    width: 100vw !important;
+    height: 100vh !important;
+}
