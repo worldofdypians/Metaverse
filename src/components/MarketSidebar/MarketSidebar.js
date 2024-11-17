@@ -9,7 +9,6 @@ import dypiansLogo from "./assets/dypiansLogo.png";
 import buildLogo from "./assets/buildIcon.svg";
 import supportIcon from "./assets/supportIcon.svg";
 
-
 import { useEffect } from "react";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import { useQuery } from "@apollo/client";
@@ -105,10 +104,9 @@ const MarketSidebar = () => {
               <div
                 id="collapseOne"
                 className={`accordion-collapse collapse ${
-                  location.pathname.includes("shop/caws") ||
-                  location.pathname.includes("shop/land") ||
-                  location.pathname.includes("shop/timepiece") ||
-                  location.pathname.includes("shop/beta-pass")
+                  location.pathname.includes("shop") ||
+                  location.pathname.includes("loyalty") ||
+                  location.pathname.includes("challenges")
                     ? "show"
                     : null
                 }`}
@@ -225,7 +223,7 @@ const MarketSidebar = () => {
               );
             }}
           /> */}
-           <NavLink
+          <NavLink
             to="/account/challenges/treasure-hunt"
             end
             className={({ isActive }) =>
@@ -313,40 +311,39 @@ const MarketSidebar = () => {
               );
             }}
           /> */}
-           {email
-          //  &&
-          //   data &&
-          //   data.getPlayer &&
-          //   data.getPlayer.displayName &&
-          //   data.getPlayer.playerId &&
-          //   data.getPlayer.wallet &&
-          //   data.getPlayer.wallet.publicAddress
-             && (
-              <NavLink
-                to="/loyalty-program"
-                end
-                className={({ isActive }) =>
-                  isActive
-                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-                }
-                children={({ isActive }) => {
-                  const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
-                  return (
-                    <>
-                      <img
-                        src={require(`./assets/${icon}.svg`)}
-                        // style={{ width: "20px", height: "20px" }}
-                        alt=""
-                      />
-                      <span className={`sidebar-title`}>Loyalty Program</span>
-                    </>
-                  );
-                }}
-              />
-            )}
+          {email && (
+            //  &&
+            //   data &&
+            //   data.getPlayer &&
+            //   data.getPlayer.displayName &&
+            //   data.getPlayer.playerId &&
+            //   data.getPlayer.wallet &&
+            //   data.getPlayer.wallet.publicAddress
+            <NavLink
+              to="/loyalty-program"
+              end
+              className={({ isActive }) =>
+                isActive
+                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
+              }
+              children={({ isActive }) => {
+                const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
+                return (
+                  <>
+                    <img
+                      src={require(`./assets/${icon}.svg`)}
+                      // style={{ width: "20px", height: "20px" }}
+                      alt=""
+                    />
+                    <span className={`sidebar-title`}>Loyalty Program</span>
+                  </>
+                );
+              }}
+            />
+          )}
 
-          <div className="sidebar-separator my-2"></div>
+          {/* <div className="sidebar-separator my-2"></div>
           <a
             href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
             target="_blank"
@@ -381,8 +378,7 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
-
+          /> */}
         </div>
       </div>
     </div>
