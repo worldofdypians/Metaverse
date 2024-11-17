@@ -214,7 +214,8 @@ const OurTeam = () => {
       position: "Project Coordinator",
       photo: teja,
       link: "",
-      content: "Hey, I'm Teja Charan! I've been into crypto since 2019 and have worked in cool companies dealing with virtual stuff and decentralized finance. I'm always up for learning new things and exploring the crypto world. Come along for the ride!",
+      content:
+        "Hey, I'm Teja Charan! I've been into crypto since 2019 and have worked in cool companies dealing with virtual stuff and decentralized finance. I'm always up for learning new things and exploring the crypto world. Come along for the ride!",
     },
     {
       id: "bogdan",
@@ -232,14 +233,15 @@ const OurTeam = () => {
   }, []);
 
   return (
-    <div className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0" id="ourteam"
+    <div
+      className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0"
+      id="ourteam"
     >
       <div className="px-3 px-lg-5 d-flex  flex-column justify-content-center align-items-center">
         <div className="row w-100 justify-content-center align-items-center">
           <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
-            <h2 className="font-montserrat explorer-grid-title text-uppercase text-center px-0">
-              {/* WOD  */}
-              <mark className="font-montserrat text-uppercase explore-tag">Team</mark>
+            <h2 className="font-montserrat explorer-grid-title  text-center px-0">
+              Team
             </h2>
             <p className="text-white text-center">
               Our dedicated team at World of Dypians is comprised of experienced
@@ -252,7 +254,7 @@ const OurTeam = () => {
           </div>
         </div>
       </div>{" "}
-      <div className="our-team d-flex align-items-center justify-content-center my-5 py-4">
+      <div className="our-team d-flex align-items-center justify-content-center mt-5 py-4" style={{borderBottom: "3px solid black"}}>
         <div className="custom-container">
           <div className="team-container w-100 d-grid">
             {windowSize.width < 786
@@ -281,14 +283,15 @@ const OurTeam = () => {
                   />
                 ))}
           </div>
-          <div className={`row mt-4 mx-0  justify-content-center ${
-            windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
-          }`}
-        >
+          <div
+            className={`row mt-4 mx-0  justify-content-center ${
+              windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+            }`}
+          >
             <div
               className={`linear-border `}
               onClick={loadMore}
-              style={{width: 'fit-content'}}
+              style={{ width: "fit-content" }}
             >
               <button
                 className={`btn filled-btn px-5 ${

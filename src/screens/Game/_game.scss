@@ -107,6 +107,32 @@
 .explore-btn:hover {
   background-position: 100% 0 !important;
 }
+.action-btn {
+  border-radius: 12px;
+  background: linear-gradient(270deg, #00bf7c, #00cc4e, #00cc4e, #00bf7c);
+  background-size: 300%;
+  background-position: 0 0;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
+  color: #eeedff !important;
+  color: #eeedff !important;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  transition: all 0.25s;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
+}
+
+.action-btn:hover {
+  background-position: 100% 0 !important;
+}
 
 .getpremium-btn {
   border-radius: 12px;
@@ -138,7 +164,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  background: transparent;
   transition: all 0.25s;
   padding: 12px 30px !important;
   width: fit-content;
@@ -448,7 +473,6 @@
     width: 100%;
     overflow: hidden;
     background-size: 100% 100%;
-
   }
 }
 
@@ -464,7 +488,6 @@
     width: 100%;
     background-size: 100% 100%;
     overflow: hidden;
-
   }
 }
 
@@ -606,18 +629,18 @@
 
 .beast-date-holder {
   display: flex;
-width: 32px;
-height: 22px;
-flex-direction: column;
-justify-content: center;
-border-radius: 0 0 5px 5px;
-background: #fff;
-flex-shrink: 0;
-text-align: center;
-font-family: "Poppins";
-color: black;
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: 16px; /* 80% */
+  width: 32px;
+  height: 22px;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0 0 5px 5px;
+  background: #fff;
+  flex-shrink: 0;
+  text-align: center;
+  font-family: "Poppins";
+  color: black;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px; /* 80% */
 }

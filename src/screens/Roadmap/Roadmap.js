@@ -26,21 +26,19 @@ import betaPassAddition from "./assets/betaPassAddition.png";
 import globalEvents from "./assets/globalEvents.png";
 import partnershipAddition from "./assets/partnershipAddition.png";
 import epicwhite from "./assets/epicwhite.svg";
-import wodAnimalsBanner from './assets/wodAnimalsBanner.png';
-import wodLeaderBoardBanner from './assets/wodLeaderboardBanner.png';
-import dailyBonusBanner from './assets/dailyBonusBanner.png';
-import premiumBanner from './assets/premiumsubscBanner.png';
-import uiDevelopment from './assets/uiDevelopment.png';
-import trackingRewards from './assets/trackingRewards.png';
-import myRank from './assets/myRank.png';
+import wodAnimalsBanner from "./assets/wodAnimalsBanner.png";
+import wodLeaderBoardBanner from "./assets/wodLeaderboardBanner.png";
+import dailyBonusBanner from "./assets/dailyBonusBanner.png";
+import premiumBanner from "./assets/premiumsubscBanner.png";
+import uiDevelopment from "./assets/uiDevelopment.png";
+import trackingRewards from "./assets/trackingRewards.png";
+import myRank from "./assets/myRank.png";
 
 const Roadmap = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Roadmap";
   }, []);
-
- 
 
   const [title, setTitle] = useState("2024");
   const [tooltip, setTooltip] = useState(false);
@@ -276,7 +274,6 @@ const Roadmap = () => {
     // },
   ];
 
-
   const roadmapItems2024 = [
     {
       quarter: "quarterOne",
@@ -363,7 +360,6 @@ const Roadmap = () => {
           completed: true,
         },
 
-
         // {
         //   title: "Introduction of Shop v1",
         //   desc: "Launch the first version of the in-game shop where players can buy items, loot, weapons, and equipment.",
@@ -406,7 +402,6 @@ const Roadmap = () => {
       image: "quarterThreeImage",
 
       content: [
-     
         {
           title: "Expanding with a New Environment",
           desc: "Create a new environment, such as an island, for players to explore, complete tasks, and engage in battles.",
@@ -443,8 +438,6 @@ const Roadmap = () => {
         //   completed: false,
         // },
 
-      
-       
         {
           title: "Partnership Development",
           desc: "Continuously add new features and partners, such as AI NPCs, advertising opportunities, user rewards, airdrops, and more, to enhance the user experience.",
@@ -457,7 +450,6 @@ const Roadmap = () => {
       image: "quarterFourImage",
 
       content: [
-       
         {
           title: "Launch of Crypto Museum",
           desc: "Introduce a museum within the game where players can explore and learn about cryptocurrencies.",
@@ -522,7 +514,7 @@ const Roadmap = () => {
           desc: "Introduce the Maze Garden challenge, a weekly event within the BNB Chain area where players navigate through intricate mazes and compete for one-time rewards, adding an exciting layer of strategy and fun.",
           completed: false,
         },
-        
+
         {
           title: "Full Map Enhancement",
           desc: "Upgrade the World of Dypians map with enhanced visuals, new terrains, and detailed environments, providing a richer and more immersive experience for players exploring the game world.",
@@ -728,7 +720,7 @@ const Roadmap = () => {
     slidesToScroll: 1,
     autoplay: false,
     initialSlide: 0,
-    draggable: false, 
+    draggable: false,
     responsive: [
       {
         breakpoint: 1600,
@@ -769,31 +761,22 @@ const Roadmap = () => {
           slidesToScroll: 1,
           initialSlide: 0,
           dots: false,
-          arrows: true
+          arrows: true,
         },
       },
     ],
   };
 
-
-
   return (
     <div
       className="container-fluid d-flex px-0 align-items-center justify-content-center pt-5 roadmapbg"
       id="roadmap"
-      style={{scrollMarginTop: "100px"}}
-
+      style={{ scrollMarginTop: "100px" }}
     >
       <div className="roadmap-main-wrapper px-0 w-100 d-flex align-items-center justify-content-center flex-column">
         <div className="row justify-content-center gap-3 align-items-center w-100 mx-0 px-3 px-lg-5">
-          <h6 className="roadmap-title font-montserrat  text-uppercase d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
-            Game{" "}
-            <span
-              className="roadmap-title font-montserrat text-uppercase"
-              style={{ color: "#8c56ff" }}
-            >
-              Roadmap
-            </span>
+          <h6 className="explorer-grid-title  d-flex flex-column gap-2 justify-content-center align-items-center flex-lg-row">
+            Game Roadmap
           </h6>
           <span className="roadmap-content">
             Discover our future plans and upcoming features for World of
@@ -801,7 +784,7 @@ const Roadmap = () => {
             community events, stay informed on the exciting journey ahead.
           </span>
           <div className="d-flex align-items-center justify-content-center gap-3">
-              <div
+            <div
               className="linear-border-roadmap"
               style={{
                 width: "fit-content",
@@ -821,7 +804,7 @@ const Roadmap = () => {
                 2024
               </button>
             </div>
-             <div
+            <div
               className="linear-border-roadmap"
               style={{
                 width: "fit-content",
@@ -841,7 +824,6 @@ const Roadmap = () => {
                 2023
               </button>
             </div>
-         
           </div>
         </div>
         <div className="row justify-content-center custom-container align-items-center w-100 mx-0 px-3 px-lg-5">
@@ -1069,16 +1051,17 @@ const Roadmap = () => {
               />
               <h6 className="live-now-title font-organetto mt-4">Out Now!</h6>
             </div> */}
-<Slider ref={(c) => (slider.current = c)} {...settings}>
-            {roadmapItems.map((item, index) => (
-              <RoadmapCard
-                quarter={item.quarter}
-                key={index}
-                content={item.content}
-                index={index}
-                image={item.image}
-              />
-            ))}</Slider>
+            <Slider ref={(c) => (slider.current = c)} {...settings}>
+              {roadmapItems.map((item, index) => (
+                <RoadmapCard
+                  quarter={item.quarter}
+                  key={index}
+                  content={item.content}
+                  index={index}
+                  image={item.image}
+                />
+              ))}
+            </Slider>
           </div>
         </div>
       </div>

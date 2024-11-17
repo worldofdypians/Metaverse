@@ -15,29 +15,30 @@ const Game = () => {
     document.title = "Game";
   }, []);
 
-  const [showPopup, setshowPopup] = useState("");
+  const [showPopup, setShowPopup] = useState("");
+  const [challengePopup, setChallengePopup] = useState("");
 
   return (
     <>
       <div className="container-fluid token-wrapper px-0">
         <div className="d-flex flex-column">
-          <GameHero />
+          <GameHero showPopup={showPopup} setShowPopup={setShowPopup} />
           <ClassSelection />
-          <AmplifySection />
-          <NewChallenges screen={'game'}/>
+          <AmplifySection showPopup={showPopup} setShowPopup={setShowPopup} />
+          <NewChallenges screen={"game"} />
           {/* <GameEvents /> */}
           <FeatureSection
             onSelectEvent={() => {
-              setshowPopup("golden");
+              setChallengePopup("golden");
             }}
           />
           <AmplifyExperience />
         </div>
       </div>
-      {showPopup === "golden" && (
+      {challengePopup === "golden" && (
         <GoldenPassPopup
           onClosePopup={() => {
-            setshowPopup("");
+            setChallengePopup("");
           }}
         />
       )}

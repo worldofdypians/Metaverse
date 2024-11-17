@@ -8,10 +8,9 @@ import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
 import { useNavigate } from "react-router-dom";
 
-const GameHero = () => {
+const GameHero = ({showPopup, setShowPopup}) => {
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
-  const [showPopup, setshowPopup] = useState("");
   const navigate = useNavigate();
 
   var settings = {
@@ -111,6 +110,9 @@ const GameHero = () => {
     }
   }, [showPopup]);
 
+  console.log(showPopup);
+  
+
   return (
     <>
       <div className="game-hero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative" style={{borderBottom: "none"}}>
@@ -148,7 +150,7 @@ const GameHero = () => {
                   onClick={() => {
                     item.state === "map"
                       ? navigate("/map")
-                      : setshowPopup(item.state);
+                      : setShowPopup(item.state);
                   }}
                    key={index}
                 >
@@ -166,14 +168,14 @@ const GameHero = () => {
       {showPopup === "map" && (
         <MapPopup
           onClosePopup={() => {
-            setshowPopup("");
+            setShowPopup("");
           }}
         />
       )}
       {showPopup === "land" && (
         <LandPopup
           onClosePopup={() => {
-            setshowPopup("");
+            setShowPopup("");
           }}
         />
       )}
@@ -181,7 +183,7 @@ const GameHero = () => {
       {showPopup === "caws" && (
         <CawsPopup
           onClosePopup={() => {
-            setshowPopup("");
+            setShowPopup("");
           }}
         />
       )}

@@ -3,6 +3,7 @@ import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import cawsPopup from "./assets/cawsPopup.webp";
 import rarity from "./assets/rarity.svg";
 import { NavLink } from "react-router-dom";
+import opensea from '../../assets/opensea.svg'
 import ChevronArrowSvg from "../../screens/Caws/assets/General/ChevronArrowSvg/ChevronArrowSvg";
 
 const CawsPopup = ({ onClosePopup }) => {
@@ -113,14 +114,18 @@ const CawsPopup = ({ onClosePopup }) => {
               );
             })}
           </div>
-          <div className="d-flex w-100 justify-content-center mt-2">
-
-          <NavLink
-            className="pill-btn2 px-3 py-2  d-flex align-items-center gap-2"
-            to="/shop/caws"
-          >
-            GET YOUR CAWS
-          </NavLink>
+          <div className="d-flex w-100 flex-column flex-lg-row align-items-center gap-3 justify-content-center mt-2">
+            <NavLink to={"/shop/caws"} className="getpremium-btn col-lg-4 py-2">
+              Buy on Shop
+            </NavLink>
+            <NavLink
+              to={"https://opensea.io/collection/catsandwatchessocietycaws"}
+              target="_blank"
+              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+            >
+              <img src={opensea} alt="" />
+              Buy on Opensea
+            </NavLink>
           </div>
         </div>
       </div>

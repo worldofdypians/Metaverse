@@ -6,16 +6,16 @@ import certikBig from "../assets/certikBig.svg";
 
 const Security = () => {
   return (
-    <div className="security-wrapper container-fluid py-5 py-lg-0 d-flex align-items-center" id='security'>
+    <div
+      className="security-wrapper container-fluid py-5 py-lg-0 d-flex align-items-center"
+      id="security"
+    >
       <div className="d-flex flex-column w-100 justify-content-center align-items-center">
         <div className="custom-container">
           <div className="d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-center">
             <div className="d-flex flex-column gap-3 col-lg-4">
               <h4 className="explorer-grid-title font-montserrat text-start mb-0">
-                SMART CONTRACTS
-                <mark className="font-montserrat explorer-grid-title explore-tag pe-2">
-                  SECURITY
-                </mark>
+                Smart Contracts Security
               </h4>
               <span className="tokenomics-wrapper-desc">
                 At World of Dypians, we prioritize your security. That's why
