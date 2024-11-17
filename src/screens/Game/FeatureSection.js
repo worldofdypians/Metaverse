@@ -4,7 +4,7 @@ import gameFeatureArrow from "../../assets/gameAssets/gameFeatureArrow.svg";
 import gameLeaderboard from "../../assets/gameAssets/gameLeaderboard.svg";
 import gameGoldenPass from "../../assets/gameAssets/gameGoldenPass.png";
 
-const FeatureSection = () => {
+const FeatureSection = ({onSelectEvent}) => {
   return (
     <div className="d-flex flex-column flex-lg-row gap-0 gap-lg-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
       <div className="leaderboards-game-wrapper d-flex align-items-center justify-content-between p-3 p-lg-5">
@@ -30,7 +30,7 @@ const FeatureSection = () => {
             Unlock extra rewards to boost your gaming experience and level up
             faster.
           </p>
-          <div className="d-flex align-items-center gap-1">
+          <div className="d-flex align-items-center gap-1" onClick={()=>{onSelectEvent('golden')}}>
             <span className="game-feature-redirect text-end">
               Get Golden Pass
             </span>

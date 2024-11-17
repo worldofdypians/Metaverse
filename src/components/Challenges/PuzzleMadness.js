@@ -258,19 +258,22 @@ const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupC
           </button>
           <button
             disabled={
-              bundleState3500 === "deposit" && checkWallet === true
-                ? false
-                : true
+              // bundleState3500 === "deposit" && checkWallet === true
+              //   ? false
+              //   : 
+                true
             }
-            className={` ${
-              (bundleState3500 === "deposit" || showApproval3500 === false) &&
-              checkWallet === true
-                ? "stake-wod-btn"
-                : "stake-wod-btn-inactive"
-            }  py-2 px-4`}
-            onClick={() => {
-              handleDeposit3500();
-            }}
+            // className={` ${
+            //   (bundleState3500 === "deposit" || showApproval3500 === false) &&
+            //   checkWallet === true
+            //     ? "stake-wod-btn"
+            //     : "stake-wod-btn-inactive"
+            // }  py-2 px-4`}
+
+            className={`  stake-wod-btn-inactive py-2 px-4`}
+            // onClick={() => {
+            //   handleDeposit3500();
+            // }}
           >
             {depositState3500 === "loading-deposit" ? (
               <>

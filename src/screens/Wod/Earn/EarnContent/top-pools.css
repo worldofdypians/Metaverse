@@ -664,9 +664,9 @@
 }
 
 @media screen and (max-width: 786px) {
-  .poolscardwrapper {
+  /* .poolscardwrapper {
     padding: 6px;
-  }
+  } */
   .details-wrapper {
     bottom: 6px;
   }

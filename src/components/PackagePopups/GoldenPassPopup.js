@@ -2,6 +2,7 @@ import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import popupLinear from "./assets/popupLinear.png";
 import goldenPopup from "./assets/goldenPopup.webp";
+import { NavLink } from "react-router-dom";
 
 const GoldenPassPopup = ({ onClosePopup }) => {
   return (
@@ -36,22 +37,20 @@ const GoldenPassPopup = ({ onClosePopup }) => {
           <h6 className="text-white">How it works:</h6>
           <ul className="package-popup-desc">
             <li className="package-popup-desc">
-            Purchase the bundle from the Challenge Center
+              Purchase the bundle from the Challenge Center
             </li>
             <li className="package-popup-desc">
-            The golden pass is valid for one calendar month, resetting on the 1st, regardless of the purchase date
+              The golden pass is valid for one calendar month, resetting on the
+              1st, regardless of the purchase date
             </li>
-        
-            <li className="package-popup-desc">
-            Extra rewards are given based on leaderboard rank as long as the golden pass is active
-            </li>
-             
-          </ul>
-         
 
-          <h6 className="text-white">
-            Leaderboard Reward Distribution
-          </h6>
+            <li className="package-popup-desc">
+              Extra rewards are given based on leaderboard rank as long as the
+              golden pass is active
+            </li>
+          </ul>
+
+          <h6 className="text-white">Leaderboard Reward Distribution</h6>
           <div className="table-responsive">
             <table className="table bgtable">
               <thead>
@@ -223,6 +222,12 @@ const GoldenPassPopup = ({ onClosePopup }) => {
             </table>
           </div>
         </div>
+        <NavLink
+          className="stake-wod-btn px-4 py-2 my-3 d-flex m-auto"
+          to={"/account/challenges/golden-pass"}
+        >
+          Get Golden Pass
+        </NavLink>
       </div>
     </div>
   );

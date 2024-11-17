@@ -51,7 +51,9 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
 
 
   const now = new Date();
-  const isMonday = now.getDay() === 1; 
+  // const isMonday = now.getDay() === 1; 
+  const isMonday =true; 
+
 
   const nextMidnight = new Date(now);
   nextMidnight.setHours(24, 0, 0, 0); 
@@ -260,43 +262,53 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
             <span className="event-price-usd">($3.75)</span>
           </div>
         </div>
-        {!isMonday ? 
+        {/* {!isMonday ? 
         <h6 className="available-day-text mb-0 text-white" style={{fontWeight: "700", fontSize: "18px"}}>Available on Monday</h6>  
         :
         <div className="position-relative">
           <Countdown renderer={renderer} date={Date.now() + timeUntilMidnight} />
         </div>
-      }
+      } */}
         <div className="d-flex align-items-center gap-3" style={{pointerEvents: isMonday ? "auto" : "none", filter: isMonday ? "none" : "blur(5px)"}}>
           <button
             disabled={
-              bundleState === "deposit" || checkWallet === false  || !isMonday ? true : false
+              // bundleState === "deposit" || checkWallet === false  || !isMonday ?
+               true 
+              //  : false
             }
-            className={` ${
-              bundleState === "deposit" || checkWallet === false || !isMonday
-                ? "stake-wod-btn-inactive"
-                : "stake-wod-btn"
-            }  py-2 px-4`}
-            onClick={() => {
-              handleApproval();
-            }}
+            // className={` ${
+            //   bundleState === "deposit" || checkWallet === false || !isMonday
+            //     ? "stake-wod-btn-inactive"
+            //     : "stake-wod-btn"
+            // }  py-2 px-4`}
+
+            className={` 
+              stake-wod-btn-inactive py-2 px-4`}
+
+            // onClick={() => {
+            //   handleApproval();
+            // }}
           >
             Approve
           </button>
 
           <button
             disabled={
-              bundleState === "deposit" && checkWallet === true || isMonday ? false : true
+              // bundleState === "deposit" && checkWallet === true || isMonday ? false :
+               true
             }
-            className={` ${
-              bundleState === "deposit" ||
-              (showApproval === false && checkWallet === true)
-                ? "stake-wod-btn"
-                : "stake-wod-btn-inactive"
-            }  py-2 px-4`}
-            onClick={() => {
-              handleDeposit();
-            }}
+            // className={` ${
+            //   bundleState === "deposit" ||
+            //   (showApproval === false && checkWallet === true)
+            //     ? "stake-wod-btn"
+            //     : "stake-wod-btn-inactive"
+            // }  py-2 px-4`}
+
+            className={`stake-wod-btn-inactive py-2 px-4`}
+
+            // onClick={() => {
+            //   handleDeposit();
+            // }}
           >
             Buy
           </button>

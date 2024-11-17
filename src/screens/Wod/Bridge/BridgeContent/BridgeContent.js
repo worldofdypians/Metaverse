@@ -118,7 +118,7 @@ const BridgeContent = ({
                   </div>
                   <div className="d-flex flex-column gap-1">
                     <span className="bridge-balance-span">Balance</span>
-                    <span className="bridge-balance">2,500,000 WOD</span>
+                    <span className="bridge-balance">--- WOD</span>
                   </div>
                 </div>
               </div>
@@ -147,7 +147,7 @@ const BridgeContent = ({
                     />
                   <div className="d-flex flex-column gap-1">
                     <span className="bridge-balance-span">Balance</span>
-                    <span className="bridge-balance">2,500,000 WOD</span>
+                    <span className="bridge-balance">--- WOD</span>
                   </div>
                 </div>
               </div>

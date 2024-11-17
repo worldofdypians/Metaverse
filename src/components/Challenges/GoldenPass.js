@@ -525,26 +525,29 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider,onPopupClick
         <div className="d-flex align-items-center gap-3">
           <button
             disabled={
-              bundleState700 === "deposit" ||
-              checkWallet === false ||
-              (priceType === 0 && chainId !== 1) ||
-              (priceType === 1 && chainId !== 56) ||
-              isAtlimit == true
-                ? true
-                : false
+              // bundleState700 === "deposit" ||
+              // checkWallet === false ||
+              // (priceType === 0 && chainId !== 1) ||
+              // (priceType === 1 && chainId !== 56) ||
+              // isAtlimit == true
+              //   ?
+                 true
+                // : 
+                // false
             }
-            className={` ${
-              bundleState700 === "deposit" ||
-              checkWallet === false ||
-              isAtlimit == true ||
-              (priceType === 0 && chainId !== 1) ||
-              (priceType === 1 && chainId !== 56)
-                ? "stake-wod-btn-inactive"
-                : "stake-wod-btn"
-            }  py-2 px-4`}
-            onClick={() => {
-              handleApproval700();
-            }}
+            // className={` ${
+            //   bundleState700 === "deposit" ||
+            //   checkWallet === false ||
+            //   isAtlimit == true ||
+            //   (priceType === 0 && chainId !== 1) ||
+            //   (priceType === 1 && chainId !== 56)
+            //     ? "stake-wod-btn-inactive"
+            //     : "stake-wod-btn"
+            // }  py-2 px-4`}
+            className={` stake-wod-btn-inactive py-2 px-4`}
+            // onClick={() => {
+            //   handleApproval700();
+            // }}
           >
             {bundleState700 === "loading" ? (
               <>
@@ -561,26 +564,32 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider,onPopupClick
           </button>
           <button
             disabled={
-              isAtlimit === true ||
-              checkWallet === false ||
-              (priceType === 0 && chainId !== 1) ||
-              (priceType === 1 && chainId !== 56) ||
-              depositState700 !== "deposit"
-                ? true
-                : false
+              // isAtlimit === true ||
+              // checkWallet === false ||
+              // (priceType === 0 && chainId !== 1) ||
+              // (priceType === 1 && chainId !== 56) ||
+              // depositState700 !== "deposit"
+              //   ?
+                 true
+                // : 
+                // false
             }
-            className={` ${
-              (depositState700 === "deposit" || showApproval700 === false) &&
-              ((priceType === 0 && chainId === 1) ||
-                (priceType === 1 && chainId === 56)) &&
-              checkWallet === true &&
-              isAtlimit === false
-                ? "stake-wod-btn"
-                : "stake-wod-btn-inactive"
-            }  py-2 px-4`}
-            onClick={() => {
-              handleDeposit700(priceType);
-            }}
+            // className={` ${
+            //   (depositState700 === "deposit" || showApproval700 === false) &&
+            //   ((priceType === 0 && chainId === 1) ||
+            //     (priceType === 1 && chainId === 56)) &&
+            //   checkWallet === true &&
+            //   isAtlimit === false
+            //     ? "stake-wod-btn"
+            //     : "stake-wod-btn-inactive"
+            // }  py-2 px-4`}
+
+            className={`
+             stake-wod-btn-inactive py-2 px-4`}
+
+            // onClick={() => {
+            //   handleDeposit700(priceType);
+            // }}
           >
             {depositState700 === "loading-deposit" ? (
               <>
