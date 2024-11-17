@@ -490,7 +490,7 @@ const CawsDetailsPremium = ({
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Deposit</h6>
                 <div className="d-flex align-items-center gap-1">
-                  <div
+                  {/* <div
                     className="info-pool-wrapper p-2"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -500,7 +500,7 @@ const CawsDetailsPremium = ({
                     <h6 className="m-0 mybalance-text d-flex align-items-center gap-1">
                       <img src={statsIcon} alt="" /> Details
                     </h6>
-                  </div>
+                  </div> */}
 
                   <div className="info-pool-wrapper p-2">
                     <h6 className="m-0 mybalance-text">
@@ -543,128 +543,154 @@ const CawsDetailsPremium = ({
                 </div>
               </div>
             </div>
-            {mystakes.length > 0 && <div className="stake-separator"></div>}
+            {mystakes.length > 0 && 
+            <div className="stake-separator"></div>
+             }
             {mystakes.length > 0 && (
-              <div
-                className={`otherside-border ${
-                  listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-                }  ${
-                  (chainId !== "1" || expired === true || !isPremium) &&
-                  "blurrypool"
-                } `}
-              >
-                <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
+            <div
+              className={`otherside-border ${
+                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+              }  ${
+                (chainId !== "1" || expired === true || !isPremium) &&
+                "blurrypool"
+              } `}
+            >
+              <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
+                <h6
+                  className={
+                    listType === "list"
+                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                      : "m-0 deposit-txt d-flex flex-column gap-2"
+                  }
+                >
+                  Earnings
                   <h6
-                    className={
-                      listType === "list"
-                        ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                        : "m-0 withdraw-txt d-flex flex-column gap-2"
+                    className="m-0 mybalance-text"
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    NFTs Staked:{" "}
+                    <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
+                  </h6>
+                </h6>
+                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
+                  <Tooltip
+                    placement="top"
+                    title={
+                      <div className="tooltip-text">
+                        {
+                          "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
+                        }
+                      </div>
                     }
                   >
-                    Earnings
-                    <h6
-                      className="m-0 mybalance-text"
-                      style={{ textTransform: "capitalize" }}
-                    >
-                      NFTs Staked:{" "}
-                      <b>{isConnected === false ? 0 : mystakes.length} CAWS</b>
-                    </h6>
-                  </h6>
-                  <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
-                    <Tooltip
-                      placement="top"
-                      title={
-                        <div className="tooltip-text">
-                          {
-                            "Rewards earned by your CAWS NFTs deposit to the staking smart contract are displayed in real-time."
-                          }
-                        </div>
-                      }
-                    >
-                      <img src={moreinfo} alt="" />
-                    </Tooltip>
-                  </h6>
-                </div>
-                <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
-                  <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6>
+                    <img src={moreinfo} alt="" />
+                  </Tooltip>
+                </h6>
+              </div>
+              <div className="info-pool-wrapper p-2 d-flex flex-column gap-2 justify-content-between">
+                {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
 
-                  <div className="form-row d-flex gap-2 align-items-end justify-content-between">
-                    <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
-                      <img
+                <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                  <h6 className="m-0 w-100 rewardstxtCaws d-flex align-items-center gap-2">
+                    {/* <img
                         src={weth}
                         alt=""
                         style={{ width: 18, height: 18 }}
-                      />{" "}
-                      {getFormattedNumber(EthRewards, 4)} WETH ($
-                      {getFormattedNumber(ethToUSD, 4)})
-                    </h6>
+                      />{" "} */}
+                    {getFormattedNumber(EthRewards, 4)} WETH ($
+                    {getFormattedNumber(ethToUSD, 4)})
+                  </h6>
+                  <button
+                    className={`btn w-100 outline-btn-stake ${
+                      (claimStatus === "claimed" &&
+                        claimStatus === "initial") ||
+                      EthRewards === 0
+                        ? "disabled-btn"
+                        : claimStatus === "failed"
+                        ? "fail-button"
+                        : claimStatus === "success"
+                        ? "success-button"
+                        : null
+                    } d-flex justify-content-center align-items-center gap-2`}
+                    style={{ height: "fit-content" }}
+                    onClick={claimRewards}
+                    disabled={!isPremium || EthRewards === 0}
+                  >
+                    {claimLoading ? (
+                      <div
+                        class="spinner-border spinner-border-sm text-light"
+                        role="status"
+                      >
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    ) : claimStatus === "failed" ? (
+                      <>Failed</>
+                    ) : claimStatus === "success" ? (
+                      <>Success</>
+                    ) : (
+                      <>Claim</>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+            )}
+              {mystakes.length > 0 && 
+              <div className="stake-separator"></div>
+             }
+            {mystakes.length > 0 && (
+            <div
+              className={`otherside-border  ${
+                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+              } ${chainId !== "1" && "blurrypool"}`}
+            >
+              <div className="d-flex flex-column gap-2">
+                <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
+                  My Deposit
+                </h6>
+                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                  <div className="d-flex align-items-center gap-2 justify-content-between">
+                    <div className="d-flex flex-column w-100">
+                      <h6 className={"m-0 mybalance-text d-flex"}>
+                        Unlocks in
+                      </h6>
+                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
+                        Anytime
+                      </h6>
+                    </div>
                     <button
-                      className={`btn w-100 outline-btn-stake ${
-                        (claimStatus === "claimed" &&
-                          claimStatus === "initial") ||
-                        EthRewards === 0
-                          ? "disabled-btn"
-                          : claimStatus === "failed"
-                          ? "fail-button"
-                          : claimStatus === "success"
-                          ? "success-button"
-                          : null
-                      } d-flex justify-content-center align-items-center gap-2`}
-                      style={{ height: "fit-content" }}
-                      onClick={claimRewards}
-                      disabled={!isPremium || EthRewards === 0}
+                      disabled={false}
+                      className={"outline-btn-stake btn"}
+                      onClick={() => {
+                        setshowChecklistModal(true);
+                        setOpenStakeChecklist(true);
+                        setHide("");
+                      }}
                     >
-                      {claimLoading ? (
-                        <div
-                          class="spinner-border spinner-border-sm text-light"
-                          role="status"
-                        >
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                      ) : claimStatus === "failed" ? (
-                        <>Failed</>
-                      ) : claimStatus === "success" ? (
-                        <>Success</>
-                      ) : (
-                        <>Claim</>
-                      )}
+                      Withdraw
                     </button>
                   </div>
                 </div>
               </div>
+            </div>
             )}
-            {mystakes.length > 0 && (
-              <div
-                className={`otherside-border  ${
-                  listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-                } ${chainId !== "1" && "blurrypool"}`}
+            <div
+              className={`info-pool-wrapper2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              style={{
+                cursor: "pointer",
+                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+              }}
+              onClick={() => {
+                showPopup();
+              }}
+            >
+              <h6
+                className="m-0 mybalance-text d-flex align-items-center gap-1"
+                style={{ color: "#4ed5d2" }}
               >
-                <div className="d-flex flex-column gap-2">
-                  <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
-                    My Deposit
-                  </h6>
-                  <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                    <h6 className={"m-0 mybalance-text d-flex"}>Unlocks in</h6>
-                    <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
-                        Anytime
-                      </h6>
-                      <button
-                        disabled={false}
-                        className={"outline-btn-stake btn"}
-                        onClick={() => {
-                          setshowChecklistModal(true);
-                          setOpenStakeChecklist(true);
-                          setHide("");
-                        }}
-                      >
-                        Withdraw
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+                <img src={statsIcon} alt="" /> Details
+              </h6>
+            </div>
           </div>
         </div>
       </div>
@@ -712,33 +738,33 @@ const CawsDetailsPremium = ({
             <div className="l-box pl-3 pr-3">
               <div className="container px-0">
                 <div className="stats-container my-4">
-                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
+                  {/* <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">My Stakes</span>
                     <h6 className="stats-card-content">
                       {mystakes.length} WOD
                     </h6>
-                  </div>
+                  </div> */}
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Pool Cap</span>
-                    <h6 className="stats-card-content">100 NFTs</h6>
+                    <h6 className="stats-card-content">200 NFTs</h6>
                   </div>
 
-                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
+                  {/* <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Available Quota:</span>
                     <h6 className="stats-card-content">
                       {100 - totalStakes} NFTs
                     </h6>
-                  </div>
+                  </div> */}
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Maximum deposit:</span>
                     <h6 className="stats-card-content">N/A</h6>
                   </div>
-                  <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
+                  {/* <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">TVL USD</span>
                     <h6 className="stats-card-content">
                       ${getFormattedNumber(tvl_usd)} USD
                     </h6>
-                  </div>
+                  </div> */}
 
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">

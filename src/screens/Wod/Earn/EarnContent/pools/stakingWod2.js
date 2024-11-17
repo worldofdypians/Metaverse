@@ -934,12 +934,12 @@ const StakeWodDetails2 = ({
                     chainId === "1" &&
                     "outline-btn-stake"
                   } ${
-                     depositStatus === "deposit" || depositStatus === "success" &&
+                     depositStatus === "deposit" &&
                     isConnected &&
                     chainId === "1" &&
                     "connectbtn"
                   } ${
-                    depositStatus === "deposit" || depositStatus === "success"
+                    depositStatus === "success"
                       ? "success-button"
                       : (depositStatus === "fail" || chainId !== "1") &&
                         isConnected
@@ -1183,7 +1183,7 @@ const StakeWodDetails2 = ({
               className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-center'} `}
               style={{
                 cursor: "pointer",
-                width: depositedTokens > 0 ? 'fit-content' : 'auto'
+                width: depositedTokens > 0 ? 'auto' : 'fit-content'
               }}
               onClick={() => {
                 showPopup();
@@ -1374,7 +1374,7 @@ const StakeWodDetails2 = ({
                           ? true
                           : false
                       }
-                      className={` w-100 btn filledbtn ${
+                      className={` w-100 btn connectbtn ${
                         withdrawStatus === "failed"
                           ? "fail-button"
                           : withdrawStatus === "success"
