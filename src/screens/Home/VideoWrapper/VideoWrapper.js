@@ -209,7 +209,7 @@ const VideoWrapper = ({
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
-              Shaping the Future of <br />Gaming, DeFi, NFTs and AI
+              Shaping the Future of Gaming, DeFi, NFTs and AI
             </h4>
             <div className="d-flex flex-column gap-2">
               <h6 className="release-date-title mb-0" >

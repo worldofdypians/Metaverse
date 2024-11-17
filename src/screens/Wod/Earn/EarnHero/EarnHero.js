@@ -90,8 +90,6 @@ const EarnHero = ({
   //   ],
   // };
 
-
-
   // const betaSlider = useRef(null);
 
   return (
@@ -101,20 +99,7 @@ const EarnHero = ({
           <div className="row mx-0 align-items-center justify-content-center gap-2">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
-                <h6 className="market-banner-title text-center">
-                  World of Dypians
-                  <mark
-                    className="p-0"
-                    style={{
-                      color: "#DCFB85",
-                      lineHeight: "80%",
-                      background: "transparent",
-                    }}
-                  >
-                    {" "}
-                    Earn
-                  </mark>
-                </h6>
+                <h6 className="market-banner-title text-center">Earn</h6>
                 <span className="market-banner-desc font-montserrat text-center">
                   Maximize your rewards in the World of Dypians with our Earn
                   solutions. Make the most of your assets to earn additional
@@ -139,7 +124,6 @@ const EarnHero = ({
           </div> */}
         </div>
       </div>
-    
     </div>
   );
 };
