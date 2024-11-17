@@ -122,6 +122,8 @@ const AmplifyExperience = () => {
                     <a
                       className="stake-wod-btn px-4 py-2 mt-4"
                       href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target='_blank'
+                      rel='noreferrer'
                     >
                       Download
                     </a>

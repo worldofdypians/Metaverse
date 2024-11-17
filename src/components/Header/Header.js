@@ -789,7 +789,7 @@ const Header = ({
                   >
                     Team
                   </NavLink>
-                  
+
                     <NavLink
                     to={"/about#partners"}
                     className={({ isActive }) =>
@@ -1336,7 +1336,7 @@ const Header = ({
                         ? "header-dropdown-active"
                         : ""
                     }`}
-                    style={{left: "17.5%", top: "62px", width: "315px"}}
+                    style={{left: "0", top: "62px", width: "315px"}}
                   >
                      <div className="d-flex flex-column position-relative gap-2">
                       <div className="triangle" style={{top: "-30px"}}></div>

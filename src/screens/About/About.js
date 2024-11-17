@@ -29,12 +29,12 @@ const About = () => {
   return (
     <div className="container-fluid token-wrapper px-0">
       <div className="d-flex flex-column">
-        <MainHero />
-        <WodPartners full={true} />
-        <Roadmap />
+        <MainHero /> 
         <Tokenomics />
         <Security />
+        <Roadmap />
         <OurTeam />
+        <WodPartners full={true} />
         <Brand />
       </div>
     </div>

@@ -5751,6 +5751,8 @@ function App() {
                 binanceW3WProvider={library}
                 isPremium={isPremium}
                 tvl={nftTvl}
+                wodBalance={wodBalance}
+
               />
             }
           />

@@ -24,7 +24,7 @@ const Game = () => {
           <GameHero />
           <ClassSelection />
           <AmplifySection />
-          <NewChallenges />
+          <NewChallenges screen={'game'}/>
           {/* <GameEvents /> */}
           <FeatureSection
             onSelectEvent={() => {

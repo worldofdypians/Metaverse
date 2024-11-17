@@ -102,7 +102,8 @@ const EarnHero = ({
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h6 className="market-banner-title text-center">
-                  World of Dypians
+                  {/* World of Dypians */}
+                  WOD
                   <mark
                     className="p-0"
                     style={{

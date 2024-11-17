@@ -41,6 +41,8 @@ import baseUpcoming from "./assets/baseUpcoming.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
 import GameEvents from "../Game/GameEvents";
+import NewEvents from "../../components/NewEvents/NewEvents";
+import NewChallenges from "../Game/NewChallenges";
 
 const Marketplace = ({
   listedNFTS,
@@ -552,7 +554,8 @@ const Marketplace = ({
               <div className="row mx-0 justify-content-center p-4  marketplace-banner align-items-center mt-5 mt-lg-0">
                 <div className="col-12 col-lg-6">
                   <h6 className="market-banner-title text-uppercase text-center">
-                    Explore the World of Dypians{" "}
+                    {/* Explore the World of Dypians{" "} */}
+                    Shop
                     <mark
                       className="p-0 text-uppercase"
                       style={{
@@ -561,7 +564,7 @@ const Marketplace = ({
                         background: "transparent",
                       }}
                     >
-                      Shop
+                      {/* Shop */}
                     </mark>
                   </h6>
 
@@ -643,7 +646,8 @@ const Marketplace = ({
             </div>
           </div>
           <div className="main-wrapper w-100">
-            <GameEvents/>
+            {/* <GameEvents/> */}
+            <NewChallenges screen={'marketplace'}/>
  
             <div
               className="row mx-0 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
