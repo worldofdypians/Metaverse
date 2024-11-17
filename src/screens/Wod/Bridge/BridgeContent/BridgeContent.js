@@ -134,7 +134,7 @@ const BridgeContent = ({
                   <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
                     <span className="bridge-network-span">Network</span>
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="mb-0 bridge-network-title">Coming Soon</h6>
+                      <h6 className="mb-0 bridge-network-title" style={{color: "#f3bf09"}}>Coming Soon</h6>
                     </div>
                   </div>
                 </div>

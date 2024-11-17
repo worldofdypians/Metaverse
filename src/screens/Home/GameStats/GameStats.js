@@ -53,42 +53,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
                 <NavLink to={"/game"} className="getpremium-btn col-lg-4 py-2">
-                  Join Now
-                </NavLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div className="container-fluid d-flex p-0">
-          <img
-            src={darkLordSpaceBannerSmall}
-            className="small-transaction-banner"
-            alt=""
-          />
-        </div>
-        <div className="new-game-stats-wrapper second-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
-              <span className="amp-benefits-desc text-center text-md-start">
-                LEGEND
-              </span>
-              <span className="ways-to-amplify-title text-center text-md-start">
-                Conquer Legendary Quests
-              </span>
-              <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
-                The world needs heroes, and World of Dypians calls for the
-                brave. Take on epic quests filled with mythical creatures,
-                ancient artifacts, and rewards that will enhance your powers.
-                Will you rise to the challenge?
-              </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
-                <NavLink
-                  to={"/account/challenges/treasure-hunt"}
-                  className="getpremium-btn col-lg-4 py-2"
-                >
-                  Challenges
+                  Explore More
                 </NavLink>
               </div>
             </div>
@@ -103,21 +68,21 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
             alt=""
           />
         </div>
-        <div className="new-game-stats-wrapper third-banner d-flex align-items-center justify-content-center ">
-          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
-            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
-              <span className="amp-benefits-desc text-center text-md-end">
+        <div className="new-game-stats-wrapper third-banner d-flex align-items-center justify-content-center">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-start custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
+              <span className="amp-benefits-desc text-center text-md-start">
                 EPIC
               </span>
-              <span className="ways-to-amplify-title text-center text-md-end">
+              <span className="ways-to-amplify-title text-center text-md-start">
                 Embark on a New Era of Gameplay
               </span>
-              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-start">
                 World of Dypians offers dynamic gameplay where strategy and
                 courage are rewarded. Join forces with others, explore vast
                 landscapes, and unlock powerful relics.
               </span>
-              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink
                   to={
                     "https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
@@ -127,7 +92,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                 >
                   Join the Fight
                 </NavLink>
-                <NavLink to={"/game"} className="getpremium-btn col-lg-4 py-2">
+                <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
                   Explore Now
                 </NavLink>
               </div>
@@ -135,6 +100,42 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           </div>
         </div>
       </div>
+      <div>
+        <div className="container-fluid d-flex p-0">
+          <img
+            src={darkLordSpaceBannerSmall}
+            className="small-transaction-banner"
+            alt=""
+          />
+        </div>
+        <div className="new-game-stats-wrapper second-banner d-flex align-items-center justify-content-center">
+          <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
+            <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
+              <span className="amp-benefits-desc text-center text-md-end">
+                LEGEND
+              </span>
+              <span className="ways-to-amplify-title text-center text-md-end">
+                Conquer Legendary Quests
+              </span>
+              <span className="ways-to-amplify-desc mb-2 text-center text-md-end">
+                The world needs heroes, and World of Dypians calls for the
+                brave. Take on epic quests filled with mythical creatures,
+                ancient artifacts, and rewards that will enhance your powers.
+                Will you rise to the challenge?
+              </span>
+              <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
+                <NavLink
+                  to={"/account/challenges/treasure-hunt"}
+                  className="getpremium-btn col-lg-4 py-2"
+                >
+                  Challenges
+                </NavLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
@@ -159,7 +160,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-start w-100 mt-3">
                 <NavLink to={"/map"} className="getpremium-btn col-lg-4 py-2">
-                  Start Exploring
+                  Explore Map
                 </NavLink>
               </div>
             </div>

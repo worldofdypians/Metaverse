@@ -127,6 +127,26 @@
     font-size: 13px;
   }
 }
+.getpremium-active-btn {
+  border-radius: 12px;
+  border: 1px solid #f3bf09;
+  background: #f3bf09;
+  color: #49291c !important;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
+  text-align: center;
+  font-size: 17.28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  transition: all 0.25s;
+  padding: 12px 30px !important;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
+}
 
 .getpremium-btn:hover {
   background: #f3bf09;
