@@ -280,7 +280,7 @@ const OurTeam = () => {
                   />
                 ))}
           </div>
-          <div className={`row mt-4  justify-content-center ${
+          <div className={`row mt-4 mx-0  justify-content-center ${
             windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
           }`}
         >

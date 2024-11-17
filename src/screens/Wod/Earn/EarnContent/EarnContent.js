@@ -435,7 +435,7 @@ const EarnContent = ({
                             : "accHeaderBorder2"
                         } px-0 py-0 text-white position-relative`}
                         style={{
-                          background: expired ? "#403E6B" : "#1e1c40",
+                          background: expired ? "#403E6B" : "#242556",
                           borderBottomRightRadius: "12px",
                           borderBottomLeftRadius: "12px",
                         }}

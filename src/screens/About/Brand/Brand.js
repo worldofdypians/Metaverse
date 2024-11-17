@@ -10,11 +10,11 @@ const Brand = () => {
       style={{ scrollMarginTop: "100px" }}
     >
       <div className="d-flex flex-column align-items-center gap-4">
-        <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+        <h2 className="font-montserrat builders-title explorer-grid-title px-2 px-lg-0">
           Brand Kit{" "}
           <mark className="font-montserrat explore-tag pe-2">Assets</mark>
         </h2>
-        <div className="brand-desc">
+        <div className="brand-desc px-2 px-lg-0">
           Access the official World of Dypians Brand Kit, including logos, color
           palettes, typography, and guidelines. Use these assets to ensure
           consistency and professionalism in all your projects and
