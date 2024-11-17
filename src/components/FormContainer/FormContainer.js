@@ -26,13 +26,17 @@ const FormContainer = ({
           aria-expanded="true"
           aria-controls={collapse}
           className={"px-4"}
-          style={{padding: accordionState ? '3rem 1.5rem 0 1.5rem' : '3rem 1.5rem'}}
+          style={{
+            padding: accordionState ? "3rem 1.5rem 0 1.5rem" : "3rem 1.5rem",
+          }}
         >
-          <img
-            src={image === "business" ? supportBusiness : supportInquiry}
-            alt=""
-            className={`${image} position-absolute phone-image `}
-          />
+          {image && (
+            <img
+              src={image === "business" ? supportBusiness : supportInquiry}
+              alt=""
+              className={`${image} position-absolute phone-image `}
+            />
+          )}
           <div className="d-flex gap-3 justify-content-between align-items-end align-items-lg-start mb-4 pb-2 pb-lg-0 ms-0 mb-lg-0">
             <h6 className="partner-form-title font-organetto">{title}</h6>{" "}
             <button

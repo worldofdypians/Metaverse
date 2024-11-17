@@ -32,24 +32,12 @@ const MainHero = () => {
               />{" "}
               Download
             </a>
-            <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">Join Beta</NavLink>
+            <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">
+              Join Beta
+            </NavLink>
           </div>
         </div>
         <div className="anchors-wrapper flex-wrap py-3 w-100 d-flex align-items-center justify-content-center gap-2 gap-lg-5">
-          <NavLink
-            to={"/about#partners"}
-            className="d-flex align-items-center gap-2"
-          >
-            <span className="anchor-title">Partners</span>
-            <img src={anchorArrow} alt="" />
-          </NavLink>
-          <NavLink
-            to={"/about#roadmap"}
-            className="d-flex align-items-center gap-2"
-          >
-            <span className="anchor-title">Roadmap</span>
-            <img src={anchorArrow} alt="" />
-          </NavLink>
           <NavLink
             to={"/about#tokenomics"}
             className="d-flex align-items-center gap-2"
@@ -65,12 +53,29 @@ const MainHero = () => {
             <img src={anchorArrow} alt="" />
           </NavLink>
           <NavLink
+            to={"/about#roadmap"}
+            className="d-flex align-items-center gap-2"
+          >
+            <span className="anchor-title">Roadmap</span>
+            <img src={anchorArrow} alt="" />
+          </NavLink>
+
+          <NavLink
             to={"/about#ourteam"}
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Team</span>
             <img src={anchorArrow} alt="" />
           </NavLink>
+
+          <NavLink
+            to={"/about#partners"}
+            className="d-flex align-items-center gap-2"
+          >
+            <span className="anchor-title">Partners</span>
+            <img src={anchorArrow} alt="" />
+          </NavLink>
+
           <NavLink
             to={"/about#brand"}
             className="d-flex align-items-center gap-2"
