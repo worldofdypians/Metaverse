@@ -12,6 +12,7 @@ import dailyGameDelight from "../../Community/assets/dailyGameDelight.webp";
 import wodFestive from "../../Community/assets/wodfestive.webp";
 import dypiansDiscovery from "../../Community/assets/dypiansDiscovery.webp";
 import { NavLink } from "react-router-dom";
+import NewChallenges from "../../Game/NewChallenges";
 
 const Campaigns = () => {
   const dummyData = [
@@ -233,7 +234,8 @@ const Campaigns = () => {
         </div>
       </div>
       <div className="w-100">
-        <GameEvents />
+        {/* <GameEvents /> */}
+        <NewChallenges screen={'campaigns'} />
       </div>
     </div>
   );

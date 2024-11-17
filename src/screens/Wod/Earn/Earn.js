@@ -13,7 +13,8 @@ const Earn = ({
   nftPools,
   binanceW3WProvider,
   isPremium,
-  tvl
+  tvl,
+  wodBalance
 }) => {
   const tokenPools = [
     {
@@ -183,6 +184,7 @@ const Earn = ({
             binanceW3WProvider={binanceW3WProvider}
             isPremium={isPremium}
             tvl={tvl}
+            wodBalance={wodBalance}
           />
         </div>
       </div>
