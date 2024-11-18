@@ -38,7 +38,7 @@ window.config = {
   nft_manta_address: "0xf894eBD7c4c850687D208246c42036EB951CE324",
   nft_taiko_address: "0xCb2Eb4ba62346751F36bA652010b553759141AEE",
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
-  nft_mat_address: "0x8E4917c1Ba9598fBbF66934CB17AC28c3b5849Ab",
+  nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
 
   nft_dypius_premium_address: "0x803cEFB7DFF9b92d7f8cAd6522AB6A70dEac983B",
   nft_dypius_premium_viction_address:

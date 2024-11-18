@@ -123,6 +123,7 @@ const Portfolio = ({
   myMantaNfts,
   myTaikoNfts,
   myCookieNfts,
+  wodBalance
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -144,7 +145,7 @@ const Portfolio = ({
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
   const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
-  const [filterTitle, setFilterTitle] = useState("Balance");
+  const [filterTitle, setFilterTitle] = useState("Collected");
   const [nftItems, setNftItems] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
   const [showNfts, setShowNfts] = useState(false);
@@ -1597,7 +1598,7 @@ const Portfolio = ({
           <div className="col-12 px-0 position-relative mt-lg-0">
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-                <h6
+                {/* <h6
                   className={`account-nft-sort ${
                     filterTitle === "Balance" && "nft-sort-selected"
                   } `}
@@ -1607,7 +1608,7 @@ const Portfolio = ({
                   }}
                 >
                   Balance
-                </h6>
+                </h6> */}
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"

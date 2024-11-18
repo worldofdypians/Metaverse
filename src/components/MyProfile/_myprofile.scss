@@ -465,6 +465,11 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px 20px;
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px 0px;
+  }
 }
 
 .daily-progress-item {
@@ -479,7 +484,7 @@
 
   @media screen and (max-width: 500px) {
     img {
-      width: 100%;
+      width: 70px;
       height: auto;
     }
   }
@@ -544,7 +549,7 @@
     font-size: 12px;
     font-style: normal;
     font-weight: 700;
-    line-height: 16px;
+    line-height: normal;
     white-space: nowrap;
     @media screen and (max-width: 500px) {
       font-size: 10px;
@@ -565,6 +570,11 @@
   transform: translateX(-50%);
   right: 50%;
   width: 100%;
+
+  @media screen and (max-width: 500px) {
+    white-space: nowrap;
+    font-size: 9px;
+  }
 }
 
 .daily-progress-status {
@@ -592,7 +602,7 @@
 }
 
 .new-profile-img {
-  width: 100px;
+  // width: 100px;
 }
 
 .score-text-wrapper {

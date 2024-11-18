@@ -2616,8 +2616,8 @@ const SingleNft = ({
     ) {
       setType("mat");
     }  else if (
-      nftAddress.toLowerCase() ===
-      window.config.nft_mat_address.toLowerCase()
+      nftAddress ===
+      window.config.nft_mat_address
     ) {
       setType("mat");
     } else if (
@@ -2641,8 +2641,8 @@ const SingleNft = ({
     ) {
       setType("core");
     } else if (
-      nftAddress.toLowerCase() ===
-      window.config.nft_viction_address.toLowerCase()
+      nftAddress ===
+      window.config.nft_viction_address
     ) {
       setType("viction");
     } else if (
@@ -2720,8 +2720,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_cookie3_address.toLowerCase()
         ? "cookie3"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_mat_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_mat_address
         ? "mat"
         : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
@@ -2738,8 +2738,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_core_address.toLowerCase()
         ? "core"
-        : nftAddress.toLowerCase() ===
-          window.config.nft_viction_address.toLowerCase()
+        : nftAddress ===
+          window.config.nft_viction_address
         ? "viction"
         : nftAddress.toLowerCase() ===
           window.config.nft_immutable_address.toLowerCase()
@@ -3103,8 +3103,8 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_cookie3_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_mat_address.toLowerCase()
+                        : nftAddress ===
+                          window.config.nft_mat_address
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
@@ -3115,8 +3115,8 @@ const SingleNft = ({
                         : nftAddress.toLowerCase() ===
                           window.config.nft_core_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_viction_address.toLowerCase()
+                        : nftAddress ===
+                          window.config.nft_viction_address
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_multivers_address.toLowerCase()

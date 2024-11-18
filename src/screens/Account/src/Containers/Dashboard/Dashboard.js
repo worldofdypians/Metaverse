@@ -169,7 +169,8 @@ function Dashboard({
   userActiveEvents,
   onManageLogin,
   authToken,
-  matEarnUsd
+  matEarnUsd,
+  wodBalance
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -10644,6 +10645,7 @@ function Dashboard({
               </div>
 
               <Portfolio
+              wodBalance={wodBalance}
                 ethTokenData={ethTokenData}
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
