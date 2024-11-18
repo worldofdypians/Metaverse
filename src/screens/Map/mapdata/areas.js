@@ -4664,11 +4664,11 @@ const challenges = [
     duration: "--",
     image: "puzzleMadnessDummy.png",
     type: "event",
-    infoType: "puzzlemadness",
-    marker: markers.puzzleMarker,
+    infoType: "Daily Opportunity",
+    marker: markers.criticalHitMarker,
     popupImage: criticalHitPopup,
 
-    location: [-0.041627880248805656, 0.10673046112060548],
+    location: [-0.06160496478405296, 0.09829759597778322],
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     link: "/account/challenges/critical-hit",
     popupDesc:
@@ -4687,7 +4687,7 @@ const challenges = [
     duration: "--",
     image: "dragonRuinsDummy.png",
     type: "event",
-    infoType: "dragonRuins",
+    infoType: "Legendary Beast Siege",
     marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
     popupImage: dragonRuinsPopup,
@@ -4710,11 +4710,12 @@ const challenges = [
   {
     title: "Cold Bite",
     duration: "--",
-    image: "scorpionKingDummy.png",
+    image: "coldBiteDummy.png",
     type: "event",
-    infoType: "scorpionKing",
-    marker: markers.scorpionMarker,
-    location: [-0.022588222633792756, 0.07132530212402345],
+    infoType: "Legendary Beast Siege",
+
+    marker: markers.coldFuryMarker,
+    location: [-0.06136893052665028, 0.128016471862793],
     popupImage: coldBitePopup,
     popupDesc:
       "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
@@ -4734,11 +4735,12 @@ const challenges = [
   {
     title: "Fury Beast",
     duration: "--",
-    image: "scorpionKingDummy.png",
+    image: "furyBeastDummy.png",
     type: "event",
-    infoType: "scorpionKing",
-    marker: markers.scorpionMarker,
-    location: [-0.022588222633792756, 0.07132530212402345],
+    infoType: "Legendary Beast Siege",
+
+    marker: markers.furyBeastMarker,
+    location: [-0.0658321235765625, 0.05362272262573243],
     popupImage: furyBeastPopup,
 
     popupDesc:
@@ -4759,11 +4761,12 @@ const challenges = [
   {
     title: "Wing Storm",
     duration: "--",
-    image: "scorpionKingDummy.png",
+    image: "wingStormDummy.png",
     type: "event",
-    infoType: "scorpionKing",
-    marker: markers.scorpionMarker,
-    location: [-0.022588222633792756, 0.07132530212402345],
+    infoType: "Legendary Beast Siege",
+
+    marker: markers.eagleMarker,
+    location: [-0.051476948488459, 0.034632682800292976],
     popupImage: wingStormPopup,
 
     popupDesc:
@@ -4786,7 +4789,8 @@ const challenges = [
     duration: "--",
     image: "scorpionKingDummy.png",
     type: "event",
-    infoType: "scorpionKing",
+    infoType: "Legendary Beast Siege",
+
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
     popupImage: scorpionKingPopup,
@@ -4809,11 +4813,12 @@ const challenges = [
   {
     title: "Stone Eye",
     duration: "--",
-    image: "scorpionKingDummy.png",
+    image: "stoneEyeDummy.png",
     type: "event",
-    infoType: "scorpionKing",
-    marker: markers.scorpionMarker,
-    location: [-0.022588222633792756, 0.07132530212402345],
+    infoType: "Legendary Beast Siege",
+
+    marker: markers.cyclopsMarker,
+    location: [-0.11007779025336882, 0.09102344512939455],
     popupImage: stoneEyePopup,
 
     popupDesc:
@@ -4836,9 +4841,9 @@ const challenges = [
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "event",
-    infoType: "mazeGarden",
+    infoType: "The Great Hunt",
     marker: markers.mazeMarker,
-    location: [-0.04827975655460935, 0.042529106140136726],
+    location: [-0.06562827582557527, 0.08779406547546388],
     popupImage: mazeGardenPopup,
 
     popupDesc:
@@ -4861,7 +4866,7 @@ const challenges = [
     duration: "--",
     image: "puzzleMadnessDummy.png",
     type: "event",
-    infoType: "puzzlemadness",
+    infoType: "The Great Hunt",
     marker: markers.puzzleMarker,
     link: "/account/challenges/puzzle-madness",
     popupImage: puzzleMadnessPopup,
@@ -4884,7 +4889,7 @@ const challenges = [
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "event",
-    infoType: "mazeGarden",
+    infoType: "The Great Hunt",
     marker: markers.mazeMarker,
     popupImage: treasureHuntPopup,
 
@@ -4907,7 +4912,7 @@ const challenges = [
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "event",
-    infoType: "mazeGarden",
+    infoType: "The Great Hunt",
     marker: markers.mazeMarker,
     popupImage: explorerHuntPopup,
 
@@ -4930,7 +4935,7 @@ const challenges = [
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "event",
-    infoType: "mazeGarden",
+    infoType: "The Great Hunt",
     marker: markers.mazeMarker,
     popupImage: greatCollectionPopup,
 

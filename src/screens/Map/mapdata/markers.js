@@ -38,10 +38,14 @@ import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
 import dragonIcon from "../assets/dragonMarker.png";
 import scorpionIcon from "../assets/scorpionMarker.png";
 import coldFuryIcon from "../assets/coldFuryMarker.png";
+import furyBeastIcon from "../assets/furyBeastMarker.png";
+import eagleIcon from "../assets/eagleMarker.png";
+import cyclopsIcon from "../assets/cyclopsMarker.png";
+import criticalHitIcon from "../assets/criticalHitMarker.png";
 
 import treasureHuntIcon from "../assets/treasureHuntIcon.png";
 import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
-import mazeGardenIcon from "../assets/mazeGardenIcon.png";
+import mazeGardenIcon from "../assets/mazeMarker.png";
 import trainIcon from "../assets/trainIcon.svg";
 import magnifier from "../assets/magnifier.svg";
 import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
@@ -62,6 +66,12 @@ const iconData = [
   { name: "victionMarker", url: victionIcon, size: 24, chain: true,  },
   { name: "landMarker", url: landIcon, size: 32, chain: false, },
   { name: "dragonMarker", url: dragonIcon, size: 32, chain: false, },
+  { name: "coldFuryMarker", url: coldFuryIcon, size: 32, chain: false, },
+  { name: "furyBeastMarker", url: furyBeastIcon, size: 32, chain: false, },
+  { name: "eagleMarker", url: eagleIcon, size: 32, chain: false, },
+  { name: "cyclopsMarker", url: cyclopsIcon, size: 32, chain: false, },
+  { name: "mazeMarker", url: mazeGardenIcon, size: 32, chain: false, },
+  { name: "criticalHitMarker", url: criticalHitIcon, size: 32, chain: false, },
   { name: "scorpionMarker", url: scorpionIcon, size: 32 , chain: false,},
   { name: "questMarker", url: questIcon, size: 32, chain: false, },
   { name: "teleportMarker", url: teleportIcon, size: 32, chain: false, },

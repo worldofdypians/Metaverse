@@ -3230,6 +3230,7 @@ function App() {
       eventType: "Explore & Find",
       eventDate: "Oct 21, 2024",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
       backgroundImage: upcomingBase2,
       image: "baseBanner.png",
       userEarnUsd: 0,
@@ -3294,6 +3295,8 @@ function App() {
       location: [-0.05935191046684262, 0.03785133361816407],
       image: "immutableBanner.png",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in IMX Rewards",
       myEarnings: 0.0,
@@ -3332,6 +3335,8 @@ function App() {
       location: [-0.06124018456762751, 0.11788845062255861],
       image: "taikoBanner.png",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
@@ -3368,6 +3373,8 @@ function App() {
       location: [-0.033817289296309505, 0.09595870971679689],
       image: "mantaBanner.png",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
@@ -3404,6 +3411,8 @@ function App() {
       location: [-0.12891758531392564, 0.059008598327636726],
       image: "cookie3Banner.png",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -3440,6 +3449,7 @@ function App() {
       location: [-0.12891758531392564, 0.059008598327636726],
       image: "cookie3Banner.png",
       type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,

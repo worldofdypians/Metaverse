@@ -86,10 +86,12 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                     className="map-event-type p-1 d-flex align-items-center justify-content-center"
                     style={{
                       borderColor:
-                        item.type === "Puzzle"
+                        item.infoType === "Daily Opportunity"
                           ? "#9E3C7A"
-                          : item.type === "Boss Fight"
+                          : item.infoType === "Legendary Beast Siege"
                           ? "#8C56FF"
+                          : item.infoType === "The Great Hunt"
+                          ? "#00cc4e"
                           : "#35F3FF",
                     }}
                   >
@@ -97,14 +99,16 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                       className="map-event-type-span"
                       style={{
                         color:
-                          item.type === "Puzzle"
-                            ? "#9E3C7A"
-                            : item.type === "Boss Fight"
-                            ? "#8C56FF"
-                            : "#35F3FF",
+                        item.infoType === "Daily Opportunity"
+                        ? "#9E3C7A"
+                        : item.infoType === "Legendary Beast Siege"
+                        ? "#8C56FF"
+                        : item.infoType === "The Great Hunt"
+                        ? "#00cc4e"
+                        : "#35F3FF",
                       }}
                     >
-                      {item.type}
+                      {item.infoType}
                     </span>
                   </div>
                   {item?.popupInfo?.eventDuration === "--" ? (
