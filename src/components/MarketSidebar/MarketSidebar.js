@@ -144,9 +144,7 @@ const MarketSidebar = () => {
                       <div className="icon-wrapper"></div>
                       <div className="d-flex align-items-center gap-5">
                         <span className={`nft-sidebar-title`}>Beta Pass</span>
-                        <div className="new-beta-sidebar">
-                          <span className="new-beta-text">New</span>
-                        </div>
+                      
                       </div>
                     </NavLink>
                     <NavLink

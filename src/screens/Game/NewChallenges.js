@@ -5,10 +5,7 @@ import scorpionKingCard from "../../assets/gameAssets/challengeCards/scorpionKin
 import coldBiteCard from "../../assets/gameAssets/challengeCards/coldBiteCard.png";
 import furyBeastCard from "../../assets/gameAssets/challengeCards/furyBeastCard.png";
 import wingStormCard from "../../assets/gameAssets/challengeCards/wingStormCard.png";
-import cawsCard from "../../assets/gameAssets/challengeCards/cawsCard.png";
-import chestCard from "../../assets/gameAssets/challengeCards/chestCard.png";
 import criticalHitCard from "../../assets/gameAssets/challengeCards/criticalHitCard.png";
-import leaderboardCard from "../../assets/gameAssets/challengeCards/leaderboardCard.png";
 import mazeGardenCard from "../../assets/gameAssets/challengeCards/mazeGardenCard.png";
 import puzzleMadnessCard from "../../assets/gameAssets/challengeCards/puzzleMadnessCard.png";
 import treasureHuntCard from "../../assets/gameAssets/challengeCards/treasureHuntCard.png";
@@ -17,6 +14,18 @@ import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHun
 import dailyBonusCard from "../../assets/gameAssets/challengeCards/dailyBonusCard.png";
 import dailyBonusPrimeCard from "../../assets/gameAssets/challengeCards/dailyBonusPrimeCard.png";
 import greatCollectionCard from "../../assets/gameAssets/challengeCards/greatCollectionCard.png";
+import dragonRuinsPopup from "../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
+import scorpionKingPopup from "../../assets/gameAssets/challengeCards/scorpionKingPopup.webp";
+import coldBitePopup from "../../assets/gameAssets/challengeCards/coldBitePopup.webp";
+import furyBeastPopup from "../../assets/gameAssets/challengeCards/furyBeastPopup.webp";
+import wingStormPopup from "../../assets/gameAssets/challengeCards/wingStormPopup.webp";
+import criticalHitPopup from "../../assets/gameAssets/challengeCards/criticalHitPopup.webp";
+import mazeGardenPopup from "../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
+import puzzleMadnessPopup from "../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
+import treasureHuntPopup from "../../assets/gameAssets/challengeCards/treasureHuntPopup.webp";
+import stoneEyePopup from "../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
+import explorerHuntPopup from "../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
+import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 import Slider from "react-slick";
 import ChallengePopup from "../../components/ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -143,6 +152,7 @@ const NewChallenges = ({ screen, popupEvent,
   const challengeDaily = [
     {
       image: dailyBonusCard,
+      popupImage: dragonRuinsPopup,
       desc: "Open up to 10 daily bonus chests to collect rewards and keep your progress steady. Perfect for consistent adventurers.",
       title: "Daily Bonus",
       popupDesc:
@@ -162,6 +172,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: dailyBonusPrimeCard,
+      popupImage: dragonRuinsPopup,
       desc: "Upgrade to prime access and unlock up to 20 daily bonus chests for even greater benefits and exclusive rewards.",
       title: "Daily Bonus Prime",
       popupDesc:
@@ -181,6 +192,8 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: criticalHitCard,
+      popupImage: criticalHitPopup,
+
       desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
       title: "Critical Hit",
       link: "/account/challenges/critical-hit",
@@ -201,6 +214,7 @@ const NewChallenges = ({ screen, popupEvent,
     {
       title: "Dragon Ruins",
       image: dragonRuinsCard,
+      popupImage: dragonRuinsPopup,
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
       dayText: "MON",
@@ -221,6 +235,8 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: coldBiteCard,
+      popupImage: coldBitePopup,
+
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
       dayText: "TUE",
@@ -234,7 +250,7 @@ const NewChallenges = ({ screen, popupEvent,
         "Rewards include 30,000 points and up to 300 stars.",
       ],
       tips: [
-        "Recommended Hero Level: 18 and above",
+        "Recommended Hero Level: 15 and above",
         "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
         "Focus on evading its slow but powerful swipes and counterattacking with precision.",
       ],
@@ -242,6 +258,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: furyBeastCard,
+      popupImage: furyBeastPopup,
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
       dayText: "WED",
@@ -263,6 +280,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: wingStormCard,
+      popupImage: wingStormPopup,
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -284,6 +302,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: scorpionKingCard,
+      popupImage: scorpionKingPopup,
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -305,6 +324,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: stoneEyeCard,
+      popupImage: stoneEyePopup,
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -329,6 +349,7 @@ const NewChallenges = ({ screen, popupEvent,
   const challengeHunts = [
     {
       image: mazeGardenCard,
+      popupImage: mazeGardenPopup,
       desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
       day: 5,
       dayText: "FRI",
@@ -350,6 +371,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: puzzleMadnessCard,
+      popupImage: puzzleMadnessPopup,
       desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
       title: "Puzzle Madness",
       link: "/account/challenges/puzzle-madness",
@@ -368,6 +390,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: treasureHuntCard,
+      popupImage: treasureHuntPopup,
       desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
       title: "Treasure Hunt",
       popupDesc:
@@ -386,6 +409,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: explorerHuntCard,
+      popupImage: explorerHuntPopup,
       desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
       title: "Explorer Hunt",
       popupDesc:
@@ -404,6 +428,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: greatCollectionCard,
+      popupImage: greatCollectionPopup,
       desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
       title: "The Great Collection",
       popupDesc:

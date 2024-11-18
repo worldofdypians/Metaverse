@@ -4,10 +4,13 @@ import gameFeatureArrow from "../../assets/gameAssets/gameFeatureArrow.svg";
 import gameLeaderboard from "../../assets/gameAssets/gameLeaderboard.svg";
 import gameGoldenPass from "../../assets/gameAssets/gameGoldenPass.png";
 import goldenPassCard from "../../assets/gameAssets/challengeCards/goldenPassCard.png";
+import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
 
 const FeatureSection = ({ onSelectEvent, setPopupEvent, setPopupActive }) => {
   const goldenPassEvent = {
     image: goldenPassCard,
+    popupImage: goldenPassPopup,
+
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
     link: "/account/challenges/golden-pass",
