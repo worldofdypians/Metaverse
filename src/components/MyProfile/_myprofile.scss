@@ -13,18 +13,35 @@
   text-transform: uppercase;
 }
 
+.user-data-item-left {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.user-data-item-right {
+  color: #ffd37e;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
 .loginbtn-profile {
   border-radius: 7px;
-background: linear-gradient(90deg, #B936F5 0%, #C64C85 100%);
-color: #EEEDFF;
-text-align: center; 
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-border: none;
-white-space: nowrap;
-text-transform: uppercase;
+  background: linear-gradient(90deg, #b936f5 0%, #c64c85 100%);
+  color: #eeedff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .my-profile-email {
@@ -52,7 +69,7 @@ text-transform: uppercase;
 
 .wallet-address-wrapper-error {
   border-radius: 4px;
-  background: rgba(255, 129, 104, 0.20);
+  background: rgba(255, 129, 104, 0.2);
 }
 
 .profile-wallet-span {
@@ -64,8 +81,6 @@ text-transform: uppercase;
   line-height: 8px; /* 100% */
 }
 
- 
-
 .wallet-addr {
   color: #eeedff;
   font-family: "Montserrat";
@@ -75,12 +90,12 @@ text-transform: uppercase;
   line-height: 10px;
 }
 .wallet-addr-error {
-  color: #FF8168;
+  color: #ff8168;
   font-family: "Montserrat";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 10px; 
+  line-height: 10px;
 }
 .domain-name-wrapper {
   background: linear-gradient(
@@ -159,7 +174,6 @@ text-transform: uppercase;
 }
 
 .new-special-rewards-wrapper:hover {
-
   border: 2px solid #9e3c7a;
 }
 .special-rewards-title {
@@ -220,7 +234,7 @@ text-transform: uppercase;
   width: 33%;
   transition: all 0.25s;
   @media screen and (max-width: 786px) {
-    width: 22%; 
+    width: 22%;
   }
 }
 
@@ -352,25 +366,23 @@ text-transform: uppercase;
     358.71% 141.42% at 100% 100%,
     #092e4b 0%,
     #18193c 100%
-    );
-    
-    height: 160px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.25s ease;
-    
-    
-        .slick-slider{
-         width: 100%; 
-        }
+  );
+
+  height: 160px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+
+  .slick-slider {
+    width: 100%;
+  }
   @media screen and (max-width: 786px) {
     height: auto;
   }
 }
 
 .limited-offers-wrapper:hover {
-  border: 2px solid #015F86;
-
+  border: 2px solid #015f86;
 }
 .new-stake-nft-wrapper {
   height: 160px;
@@ -388,7 +400,7 @@ text-transform: uppercase;
 }
 
 .new-stake-nft-wrapper:hover {
-  border: 2px solid #FFA1E5;
+  border: 2px solid #ffa1e5;
 }
 
 .new-stake-nft-img {
@@ -428,12 +440,12 @@ text-transform: uppercase;
 
 .progress-line {
   height: 1px;
-  background: linear-gradient(to right, #FFD37E00, #FFD37E80);
+  background: linear-gradient(to right, #ffd37e00, #ffd37e80);
   width: 100%;
 }
 .progress-line-2 {
   height: 1px;
-  background: linear-gradient(to left, #FFD37E00, #FFD37E80);
+  background: linear-gradient(to left, #ffd37e00, #ffd37e80);
   width: 100%;
 }
 
@@ -468,11 +480,13 @@ text-transform: uppercase;
   background: #0f1118;
   border: 1px solid #c09645;
   border-radius: 4px;
-  width: 38px;
+  width: 48px;
   height: 25px;
   position: absolute;
-  right: -10px;
+  right: 50%;
   top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
   span {
     color: #ffd37e;
     text-align: center;
@@ -496,9 +510,10 @@ text-transform: uppercase;
   padding-left: 5px;
   padding-right: 5px;
   position: absolute;
-  right: 0;
-  left: 0;
+  right: 50%;
   top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
   span {
     color: #ffd37e;
     text-align: center;

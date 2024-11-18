@@ -10003,6 +10003,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+            userDataStar={userDataStar}
               isgoldenPassActive={goldenPassRemainingTime}
               dragonRuinsCountdown={countdown}
               puzzleMadnessCountdown={countdown3500}

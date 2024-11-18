@@ -297,6 +297,12 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "KOLS.HOUSE",
+      icon: "kols",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
