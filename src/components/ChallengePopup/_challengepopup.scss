@@ -1,0 +1,104 @@
+.challenge-popup-wrapper {
+  border-radius: 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 1);
+  backdrop-filter: blur(2px);
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  top: -10000px;
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  margin: auto;
+  z-index: 1000;
+  border-radius: 36px;
+  pointer-events: auto !important;
+  transition: all 1s ease-in-out;
+  width: 35%;
+
+  @media screen and (max-width: 1455px) {
+    width: 55%;
+  }
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 786px) {
+    width: 90%;
+  }
+}
+
+.popup-active {
+    box-shadow: 0 0 0 10000px rgba(0, 0, 0, 0.5);
+    top: 0% !important;
+  }
+
+.challenge-popup-title-wrapper {
+  border-radius: 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 1);
+  box-shadow: 0px 4px 4px 0px rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+.challenge-popup-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 171.429% */
+}
+
+.challenge-popup-desc {
+  color: #828fbb;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 150% */
+  @media screen and (max-width: 786px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+.challenge-popup-secondary-title {
+  color: #edeeff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+  @media screen and (max-width: 786px) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+.green-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c6c3;
+}
+
+.challenge-popup-button-wrapper {
+  border-radius: 0 0 10px 10px;
+  border: 1px solid #525469;
+  background: rgba(8, 11, 42, 0.9);
+  box-shadow: 0px 4px 4px 0px rgba(8, 11, 42, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+
+.challenge-close-wrapper{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(8, 11, 42, 1);
+  position: absolute;
+  right: 15px;
+  top: 15px;
+   cursor: pointer;
+}
