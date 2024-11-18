@@ -245,7 +245,7 @@ function App() {
     1116: {
       chainId: 1116,
       chainName: "CORE",
-      rpcUrls: ["https://rpc.coredao.org/"],
+      rpcUrls: ["https://core.drpc.org"],
       nativeCurrency: {
         symbol: "CORE",
         decimals: 18,
@@ -656,7 +656,7 @@ function App() {
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
-      .get(`https://api.dyp.finance/api/get_staking_info_eth`)
+      .get(`https://api.dyp.finance/api/get_staking_info_wod_nft`)
       .catch((err) => {
         console.log(err);
       });

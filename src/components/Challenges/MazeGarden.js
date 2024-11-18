@@ -1,12 +1,19 @@
 import React from "react";
 import "./_challenges.scss";
 import mazeGardenBanner from "./assets/mazeGardenBanner.webp";
+import tooltipIcon from "./assets/tooltipIcon.svg";
 
-const MazeGarden = () => {
+const MazeGarden = ({ onPopupClick }) => {
   return (
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
+        <img
+            src={tooltipIcon}
+            className="new-event-banner-tooltip"
+            alt=""
+            onClick={onPopupClick}
+          />
           <img src={mazeGardenBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Maze Garden</h6>
         </div>
