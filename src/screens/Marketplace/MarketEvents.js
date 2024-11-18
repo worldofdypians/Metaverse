@@ -412,61 +412,7 @@ const MarketEvents = ({
 
 
  
-   
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 19, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "TAIKO",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Live",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 19, 2024",
-      },
-    },
-    {
-      title: "Manta",
-      logo: mantaLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in MANTA Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 20, 2024",
-      backgroundImage: mantaBg,
-      popupInfo: {
-        title: "Manta",
-        chain: "Manta",
-        linkState: "manta",
-        rewards: "MANTA",
-        status: "Live",
-        id: "event21",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: mantaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 20, 2024",
-      },
-    },
+
     {
       title: "Cookie3",
       logo: cookie3Logo,
@@ -519,6 +465,61 @@ const MarketEvents = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Oct 21, 2024",
+      },
+    },
+       
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "TAIKO",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Expired",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      backgroundImage: mantaBg,
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Expired",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
       },
     },
     {
@@ -1669,7 +1670,7 @@ const MarketEvents = ({
                   <div id="selected-package" ref={selected}>
                     {selectedPackage === "treasure-hunt" ? (
                       <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
-                        {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                        {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                           <BetaEventCard
                             data={item}
                             key={index}
@@ -1678,11 +1679,7 @@ const MarketEvents = ({
                               setDummyEvent(item.popupInfo);
                             }}
                             userEarnUsd={
-                               item.title === "Manta"
-                                ? mantaEarnUsd
-                                : item.title === "Taiko"
-                                ? taikoEarnUsd
-                                : item.title === "Cookie3"
+                                item.title === "Cookie3"
                                 ? cookieEarnUsd
                                 : item.title === "Base"
                                 ? baseEarnUSD
@@ -1921,7 +1918,7 @@ const MarketEvents = ({
                 // </div>
                 <div className="col-xxl-9 col-xl-10 m-auto d-flex flex-column gap-4">
                   {dummyBetaPassData2
-                    .slice(4, dummyBetaPassData2.length)
+                    .slice(2, dummyBetaPassData2.length)
                     .map((item, index) => (
                       <BetaEventCard
                         data={item}
@@ -1932,7 +1929,11 @@ const MarketEvents = ({
                         }}
                         activeTab={item.activeTab}
                         userEarnUsd={
-                          item.title === "Base"
+                          item.title === "Manta"
+                                ? mantaEarnUsd
+                                : item.title === "Taiko"
+                                ? taikoEarnUsd
+                                :item.title === "Base"
                             ? baseEarnUSD
                             : item.title === "Dogecoin"
                             ? dogeEarnUSD

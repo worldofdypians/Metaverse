@@ -441,6 +441,30 @@ const NewWalletBalance = ({
     status: "Live",
   };
 
+  const dummyCookie3 = {
+    title: "Cookie3",
+    logo: cookieLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in COOKIE Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 26, 2024",
+    date: "Aug 26, 2024",
+    id: "event23",
+    eventType: "Explore & Mine",
+    eventDuration: cookieLastDay,
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Cookie3",
+    linkState: "cookie3",
+    rewards: "COOKIE",
+    status: "Live",
+  };
+
+
   const dummyImmutable = {
     title: "Immutable",
     logo: immutableLogo,
@@ -467,7 +491,7 @@ const NewWalletBalance = ({
   const dummyTaiko = {
     title: "Taiko",
     logo: taikoLogo,
-    eventStatus: "Live",
+    eventStatus: "Expired",
     totalRewards: "$20,000 in TAIKO Rewards",
     myEarnings: 0.0,
     eventDate: "Aug 19, 2024",
@@ -486,7 +510,7 @@ const NewWalletBalance = ({
     chain: "TAIKO",
     linkState: "taiko",
     rewards: "TAIKO",
-    status: "Live",
+    status: "Expired",
   };
 
   const dummyBNB = {
@@ -539,64 +563,7 @@ const NewWalletBalance = ({
     //   },
     // },
 
-    {
-      title: "Taiko",
-      logo: taikoLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in TAIKO Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 19, 2024",
-      backgroundImage: taikoBg,
-      popupInfo: {
-        title: "Taiko",
-        chain: "Taiko",
-        linkState: "taiko",
-        rewards: "TAIKO",
-        status: "Live",
-        logo: taikoLogo,
-        date: "Aug 19, 2024",
-        id: "event22",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in TAIKO Rewards",
-        eventDuration: taikoLastDay,
-        backgroundImage: taikoBg,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 19, 2024",
-      },
-    },
-    {
-      title: "Manta",
-      logo: mantaLogo,
-      eventStatus: "Live",
-      totalRewards: "$20,000 in MANTA Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 20, 2024",
-      popupInfo: {
-        title: "Manta",
-        chain: "Manta",
-        linkState: "manta",
-        rewards: "MANTA",
-        status: "Live",
-        logo: mantaLogo,
-        date: "Aug 20, 2024",
-        id: "event21",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: mantaLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Aug 20, 2024",
-      },
-    },
+
     {
       title: "Cookie3",
       logo: cookieLogo,
@@ -649,6 +616,64 @@ const NewWalletBalance = ({
         maxPoints: "50,000",
         learnMore: "",
         eventDate: "Oct 21, 2024",
+      },
+    },
+    {
+      title: "Taiko",
+      logo: taikoLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in TAIKO Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
+      popupInfo: {
+        title: "Taiko",
+        chain: "Taiko",
+        linkState: "taiko",
+        rewards: "TAIKO",
+        status: "Expired",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event22",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in TAIKO Rewards",
+        eventDuration: taikoLastDay,
+        backgroundImage: taikoBg,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
+      },
+    },
+    {
+      title: "Manta",
+      logo: mantaLogo,
+      eventStatus: "Expired",
+      totalRewards: "$20,000 in MANTA Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Aug 20, 2024",
+      popupInfo: {
+        title: "Manta",
+        chain: "Manta",
+        linkState: "manta",
+        rewards: "MANTA",
+        status: "Expired",
+        logo: mantaLogo,
+        date: "Aug 20, 2024",
+        id: "event21",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MANTA Rewards",
+        eventDuration: mantaLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Aug 20, 2024",
       },
     },
     {
@@ -1738,30 +1763,23 @@ const NewWalletBalance = ({
               >
                 Treasure Hunt
               </h6>{" "}
-              <ActiveProfileEvent
-                data={dummyTaiko}
-                event={dummyTaiko}
-                userEarnedUsd={taikoEarnUsd}
-                onOpenEvent={() => {
-                  setDummyEvent(dummyTaiko);
-                  setEventPopup(true);
-                }}
-              />
-              <ActiveProfileEvent
-                data={dummyManta}
-                event={dummyManta}
-                userEarnedUsd={mantaEarnUsd}
-                onOpenEvent={() => {
-                  setDummyEvent(dummyManta);
-                  setEventPopup(true);
-                }}
-              />
+         
               <ActiveProfileEvent
                 data={dummyBase}
                 event={dummyBase}
                 userEarnedUsd={baseEarnUSD}
                 onOpenEvent={() => {
                   setDummyEvent(dummyBase);
+                  setEventPopup(true);
+                }}
+              />
+              
+              <ActiveProfileEvent
+                data={dummyCookie3}
+                event={dummyCookie3}
+                userEarnedUsd={cookieEarnUsd}
+                onOpenEvent={() => {
+                  setDummyEvent(dummyCookie3);
                   setEventPopup(true);
                 }}
               />
@@ -1774,15 +1792,15 @@ const NewWalletBalance = ({
                   setEventPopup(true);
                 }}
               /> */}
-              {/* <ExpiredProfileEvent
+              <ExpiredProfileEvent
                 onOpenEvent={() => {
-                  setDummyEvent(dypv2);
+                  setDummyEvent(dummyTaiko);
                   setEventPopup(true);
                 }}
-                data={dypv2}
-                event={dypv2}
-                userEarnedUsd={dypiusPremiumEarnUsd}
-              /> */}
+                data={dummyTaiko}
+                event={dummyTaiko}
+                userEarnedUsd={taikoEarnUsd}
+              />
               {dummyBetaPassData2.length > 3 && (
                 <div
                   className="d-flex align-items-center justify-content-center gap-2"
@@ -2033,9 +2051,9 @@ const NewWalletBalance = ({
                           Number(skaleEarnUsd) +
                           Number(cawsPremiumRewards) +
                           Number(landPremiumRewards) +
-                          Number(taikoEarnUsd) +
+                          // Number(taikoEarnUsd) +
                           // Number(immutableEarnUsd) +
-                          Number(mantaEarnUsd) +
+                          // Number(mantaEarnUsd) +
                           Number(cookieEarnUsd) +
                           Number(baseEarnUSD),
                         2
