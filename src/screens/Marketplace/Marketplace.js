@@ -62,7 +62,8 @@ const Marketplace = ({
   count,
   setCount,
   totalSupply,
-  binanceW3WProvider,chainId
+  binanceW3WProvider,
+  chainId,
 }) => {
   const override = {
     display: "block",
@@ -105,6 +106,9 @@ const Marketplace = ({
   const secondPrev = () => {
     secondSlider.current.slickPrev();
   };
+
+  const [popupEvent, setPopupEvent] = useState(null);
+  const [popupActive, setPopupActive] = useState(false);
 
   var settings = {
     dots: false,
@@ -288,7 +292,7 @@ const Marketplace = ({
     initialSales();
     setRecentListed(latest20RecentListedNFTS);
     setRecentSalesFilter(recentSales);
-  
+
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length === 0) {
       setLoadingRecentListings(true);
     }
@@ -342,7 +346,7 @@ const Marketplace = ({
       icon: "expand",
     },
   ];
-  
+
   const initialSales = () => {
     let datedSales = recentSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
@@ -647,8 +651,14 @@ const Marketplace = ({
           </div>
           <div className="main-wrapper w-100">
             {/* <GameEvents/> */}
-            <NewChallenges screen={'marketplace'}/>
- 
+            <NewChallenges
+              screen={"marketplace"}
+              popupEvent={popupEvent}
+              setPopupEvent={setPopupEvent}
+              popupActive={popupActive}
+              setPopupActive={setPopupActive}
+            />
+
             <div
               className="row mx-0 justify-content-center d-flex my-4 align-items-start py-5 gap-4 my-4"
               style={{ minHeight: "420px" }}
@@ -659,7 +669,6 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                
                   <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
@@ -748,7 +757,7 @@ const Marketplace = ({
                           <span>NFT Staking</span>
                         </div>
                         <div className="d-flex flex-column gap-2 mb-3">
-                        <h6 className="newminttitlehome m-0 position-relative">
+                          <h6 className="newminttitlehome m-0 position-relative">
                             Genesis NFT
                           </h6>
                           <h6 className="newminttitlehome m-0 position-relative">
@@ -766,7 +775,6 @@ const Marketplace = ({
                       </span>
                     </NavLink>
                   </div>
-                   
                 </div>
               </div>
             </div>
@@ -1198,7 +1206,6 @@ const Marketplace = ({
                             onFavorite={updateFavs}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}

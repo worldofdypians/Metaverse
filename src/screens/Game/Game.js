@@ -17,6 +17,8 @@ const Game = () => {
 
   const [showPopup, setShowPopup] = useState("");
   const [challengePopup, setChallengePopup] = useState("");
+  const [popupEvent, setPopupEvent] = useState(null);
+  const [popupActive, setPopupActive] = useState(false);
 
   return (
     <>
@@ -25,9 +27,17 @@ const Game = () => {
           <GameHero showPopup={showPopup} setShowPopup={setShowPopup} />
           <ClassSelection />
           <AmplifySection showPopup={showPopup} setShowPopup={setShowPopup} />
-          <NewChallenges screen={"game"} />
+          <NewChallenges
+            screen={"game"}
+            popupEvent={popupEvent}
+            setPopupEvent={setPopupEvent}
+            popupActive={popupActive}
+            setPopupActive={setPopupActive}
+          />
           {/* <GameEvents /> */}
           <FeatureSection
+            setPopupEvent={setPopupEvent}
+            setPopupActive={setPopupActive}
             onSelectEvent={() => {
               setChallengePopup("golden");
             }}

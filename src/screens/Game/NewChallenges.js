@@ -21,11 +21,13 @@ import Slider from "react-slick";
 import ChallengePopup from "../../components/ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
 
-const NewChallenges = ({ screen }) => {
+const NewChallenges = ({ screen, popupEvent,
+  setPopupEvent,
+  popupActive,
+  setPopupActive, }) => {
   const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
-  const [popupEvent, setPopupEvent] = useState(null);
-  const [popupActive, setPopupActive] = useState(false);
+
 
   const currentDate = new Date().getDay();
 

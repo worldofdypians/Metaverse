@@ -12,7 +12,11 @@ const ChallengePopup = ({ item, handleClose }) => {
            
           </div> */}
           <div className="position-relative w-100">
-            <img src={item.image} alt={item.title} className="w-100" />
+            <img
+              src={item.image}
+              alt={item.title}
+              className="w-100 challenge-popup-banner"
+            />
             <div
               className="challenge-close-wrapper d-flex align-items-center justify-content-center"
               onClick={handleClose}
@@ -27,17 +31,20 @@ const ChallengePopup = ({ item, handleClose }) => {
           <div className="d-flex flex-column gap-3 p-3">
             <p className="challenge-popup-desc mb-0">{item.popupDesc}</p>
             {item.title === "Puzzle Madness" ||
+            item.title === "Golden Pass" ||
             item.title === "Critical Hit" ? (
               <>
-                {item.title === "Puzzle Madness" && (
+                {item?.secondaryDesc && (
                   <p className="challenge-popup-desc mb-0">
                     {item.secondaryDesc}
                   </p>
                 )}
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 challenge-popup-secondary-title">
-                    {item.secondaryTitle}
-                  </h6>
+                  {item?.secondaryTitle && (
+                    <h6 className="mb-0 challenge-popup-secondary-title">
+                      {item.secondaryTitle}
+                    </h6>
+                  )}
                   <p className="challenge-popup-desc mb-0">{item.thirdDesc}</p>
                 </div>
               </>
