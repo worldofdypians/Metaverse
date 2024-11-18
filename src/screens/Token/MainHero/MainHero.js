@@ -28,7 +28,7 @@ const MainHero = ({scrollInto}) => {
     {
       title: "Finceptor",
       logo: "finceptor.svg",
-      link: "https://finceptor.app/deals/sale/wod-open",
+      link: "https://finceptor.app/deals/sale/wod",
     },
   ];
 
