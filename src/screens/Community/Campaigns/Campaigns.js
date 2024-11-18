@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
 import calendar from "../assets/calendar.svg";
 import calendarYellow from "../assets/calendarYellow.svg";
@@ -15,6 +15,9 @@ import { NavLink } from "react-router-dom";
 import NewChallenges from "../../Game/NewChallenges";
 
 const Campaigns = () => {
+  const [popupEvent, setPopupEvent] = useState(null);
+  const [popupActive, setPopupActive] = useState(false);
+
   const dummyData = [
     {
       title: "Dypians Global Challenge",
@@ -175,12 +178,12 @@ const Campaigns = () => {
               </div>
               <p
                 className="campaign-banner-desc mb-0"
-                dangerouslySetInnerHTML={{ __html: dummyBanner.desc}}
+                dangerouslySetInnerHTML={{ __html: dummyBanner.desc }}
               ></p>
 
               <NavLink
-              to={dummyBanner.link}
-              target="_blank"
+                to={dummyBanner.link}
+                target="_blank"
                 className="stake-wod-btn px-4 py-2 mt-4"
                 style={{ width: "fit-content" }}
               >
@@ -226,7 +229,9 @@ const Campaigns = () => {
               </div>
               <div className="d-flex align-items-center gap-2">
                 <img src={calendar} alt="" />
-                <span className="campaign-item-date">{item.start_date} - {item.end_date}</span>
+                <span className="campaign-item-date">
+                  {item.start_date} - {item.end_date}
+                </span>
               </div>
               <hr className="campaign-banner-divider" />
             </div>
@@ -235,7 +240,13 @@ const Campaigns = () => {
       </div>
       <div className="w-100">
         {/* <GameEvents /> */}
-        <NewChallenges screen={'campaigns'} />
+        <NewChallenges
+          screen={"campaigns"}
+          popupEvent={popupEvent}
+          setPopupEvent={setPopupEvent}
+          popupActive={popupActive}
+          setPopupActive={setPopupActive}
+        />
       </div>
     </div>
   );
