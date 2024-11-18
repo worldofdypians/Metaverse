@@ -32,6 +32,9 @@ import dailyBonusActive from "./assets/dailyProgress/dailyBonusActive.png";
 // import scorpionKingInactive from "./assets/dailyProgress/scorpionKingInactive.png";
 // import scorpionKingActive from "./assets/dailyProgress/scorpionKingActive.png";
 import scorpionKing from "./assets/dailyProgress/scorpionKing.png";
+import coldBite from "./assets/dailyProgress/coldBite.png";
+import stoneEye from "./assets/dailyProgress/stoneEye.png";
+import furyBeast from "./assets/dailyProgress/furyBeast.png";
 
 // import criticalHitInactive from "./assets/dailyProgress/criticalHitInactive.png";
 // import criticalHitActive from "./assets/dailyProgress/criticalHitActive.png";
@@ -156,7 +159,7 @@ const MyProfile = ({
   userDailyBundles,
   puzzleMadnessCountdown,
   userActiveEvents,
-  userDataStar
+  userDataStar,
 }) => {
   const totalClaimedChests = allClaimedChests;
 
@@ -245,9 +248,6 @@ const MyProfile = ({
       setFinished(false);
     }
   }, [totalClaimedChests, isPremium, canBuy, email]);
-
-
-
 
   return (
     <div className="custom-container mt-5">
@@ -450,7 +450,9 @@ const MyProfile = ({
                     <span className="user-data-item-left">Rank</span>
                   </div>
                   <div className="d-flex">
-                  <span className="user-data-item-right">#{userDataStar.position + 1}</span>
+                    <span className="user-data-item-right">
+                      #{userDataStar.position + 1}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -461,7 +463,9 @@ const MyProfile = ({
                     <span className="user-data-item-left">Collected</span>
                   </div>
                   <div className="d-flex">
-                  <span className="user-data-item-right">{getFormattedNumber(userDataStar.statValue,0)}</span>
+                    <span className="user-data-item-right">
+                      {getFormattedNumber(userDataStar.statValue, 0)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -472,11 +476,10 @@ const MyProfile = ({
                     <span className="user-data-item-left">Collected</span>
                   </div>
                   <div className="d-flex">
-                  <span className="user-data-item-right">4,456</span>
+                    <span className="user-data-item-right">4,456</span>
                   </div>
                 </div>
               </div>
-
             </div>
             <div className="sidebar-separator2 my-2"></div>
 
@@ -487,7 +490,7 @@ const MyProfile = ({
                 <div className="progress-line-2"></div>
               </div>
               <div className="daily-progress-grid">
-                <div className="daily-progress-item position-relative">
+                {/* <div className="daily-progress-item position-relative">
                   <img
                     src={
                       isgoldenPassActive ? goldenPassActive : goldenPassInactive
@@ -529,27 +532,36 @@ const MyProfile = ({
                       className="daily-progress-status"
                     />
                   )}
-                </div>
+                </div> */}
                 <div className="daily-progress-item position-relative">
-                  <img
-                    src={
-                      dragonRuins
-                    }
-                    alt=""
-                  />
+                  <img src={bnbMazeDay} alt="" />
                   <div className="daily-progress-value">
-                    <span>{userDailyBundles?.dragonRuinsCount}</span>
+                    <span>0</span>
                   </div>
-                  {userDailyBundles?.dragonRuinsCount > 0 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )}
+                  <span className="bundle-title-bottom">BNB Maze Day</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={scorpionKing} alt="" />
+                  <img src={coldBite} alt="" />
+                  <div className="daily-progress-value">
+                    <span>0</span>
+                  </div>
+
+                  <span className="bundle-title-bottom">Cold Bite</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={criticalHit} alt="" />
                   <div className="daily-progress-value">
                     <span>0</span>
                   </div>
@@ -558,27 +570,84 @@ const MyProfile = ({
                     alt=""
                     className="daily-progress-status"
                   /> */}
+                  <span className="bundle-title-bottom">Critical Hit</span>
+
                 </div>
+
                 <div className="daily-progress-item position-relative">
-                  <img
-                    src={
-                      puzzleMadness
-                    }
-                    alt=""
-                  />
+                  <img src={dragonRuins} alt="" />
                   <div className="daily-progress-value">
-                    <span>{userDailyBundles?.puzzleMadnessCount}</span>
+                    <span>{userDailyBundles?.dragonRuinsCount}</span>
                   </div>
-                  {userDailyBundles?.puzzleMadnessCount > 0 && (
+                  {/* {userDailyBundles?.dragonRuinsCount > 0 && (
                     <img
                       src={doneTag}
                       alt=""
                       className="daily-progress-status"
                     />
-                  )}
+                  )} */}
+                  <span className="bundle-title-bottom">Dragon Ruins</span>
+
                 </div>
 
                 <div className="daily-progress-item position-relative">
+                  <img src={puzzleMadness} alt="" />
+                  <div className="daily-progress-value">
+                    <span>{userDailyBundles?.puzzleMadnessCount}</span>
+                  </div>
+                  {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )} */}
+                  <span className="bundle-title-bottom">Puzzle Madness</span>
+
+                </div>
+
+                <div className="daily-progress-item position-relative">
+                  <img src={furyBeast} alt="" />
+                  <div className="daily-progress-value">
+                    <span>0</span>
+                  </div>
+                  <span className="bundle-title-bottom">Fury Beast</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                </div>
+
+                <div className="daily-progress-item position-relative">
+                  <img src={scorpionKing} alt="" />
+                  <div className="daily-progress-value">
+                    <span>0</span>
+                  </div>
+                  <span className="bundle-title-bottom">Scorpion King</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={stoneEye} alt="" />
+                  <div className="daily-progress-value">
+                    <span>0</span>
+                  </div>
+                  <span className="bundle-title-bottom">Stone Eye</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                </div>
+
+                {/* <div className="daily-progress-item position-relative">
                   <img
                     src={
                       totalClaimedChests === 0
@@ -598,29 +667,7 @@ const MyProfile = ({
                       className="daily-progress-status"
                     />
                   )}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={criticalHit} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
-                  </div>
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={bnbMazeDay} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>0</span>
-                  </div>
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
