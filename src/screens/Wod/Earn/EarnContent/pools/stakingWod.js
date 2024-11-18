@@ -941,9 +941,9 @@ const StakeWodDetails = ({
                    chainId === "1" &&
                    "outline-btn-stake"
                  } ${
-                    depositStatus === "deposit" &&
+                    ((depositStatus === "deposit" &&
                    isConnected &&
-                   chainId === "1" &&
+                   chainId === "1") || !isConnected) &&
                    "connectbtn"
                  } ${
                     depositStatus === "success"
