@@ -1991,7 +1991,7 @@ const Portfolio = ({
                                   : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "mat"
-                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                  ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
                                   : item.type === "cookie3"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                   : item.type === "base"
@@ -3177,7 +3177,7 @@ const Portfolio = ({
 
                                     : nft.nftAddress ===
                                       window.config.nft_mat_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
                                     
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
@@ -3567,7 +3567,7 @@ const Portfolio = ({
 
                                     : nft.nftAddress ===
                                       window.config.nft_mat_address
-                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
 
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address

@@ -3105,7 +3105,7 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_mat_address.toLowerCase()
-                        ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
+                        ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
                         : nftAddress.toLowerCase() ===
                           window.config.nft_doge_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
