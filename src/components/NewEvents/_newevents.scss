@@ -80,6 +80,13 @@
   }
 }
 
+.dynamicPosition {
+  position: absolute;
+  @media screen and (max-width: 991px) {
+    position: relative;
+  }
+}
+
 .active-challenge-item {
   border-radius: 6px;
   background: rgba(255, 200, 8, 0.1);
@@ -88,7 +95,7 @@
   h6 {
     color: #ffc808;
     font-family: "Montserrat";
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 600;
     // line-height: 24px;
