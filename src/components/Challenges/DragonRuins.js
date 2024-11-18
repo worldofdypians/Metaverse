@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./_challenges.scss";
-import dragonRuinsBanner from "./assets/dragonRuinsBanner.png";
+import dragonRuinsBanner from "./assets/dragonRuinsBanner.webp";
 import bnb from "./assets/bnb.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
