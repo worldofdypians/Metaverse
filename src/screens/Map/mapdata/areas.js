@@ -37,6 +37,19 @@ import treasureHuntInfo from "../assets/treasureHuntInfo.png";
 import dailyBonusInfo from "../assets/dailyBonusInfo.png";
 import mazeGardenInfo from "../assets/mazeGardenInfo.png";
 import leaderboardInfo from "../assets/leaderboardInfo.png";
+import goldenPassPopup from "../../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
+import dragonRuinsPopup from "../../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
+import scorpionKingPopup from "../../../assets/gameAssets/challengeCards/scorpionKingPopup.webp";
+import coldBitePopup from "../../../assets/gameAssets/challengeCards/coldBitePopup.webp";
+import furyBeastPopup from "../../../assets/gameAssets/challengeCards/furyBeastPopup.webp";
+import wingStormPopup from "../../../assets/gameAssets/challengeCards/wingStormPopup.webp";
+import criticalHitPopup from "../../../assets/gameAssets/challengeCards/criticalHitPopup.webp";
+import mazeGardenPopup from "../../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
+import puzzleMadnessPopup from "../../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
+import treasureHuntPopup from "../../../assets/gameAssets/challengeCards/treasureHuntPopup.webp";
+import stoneEyePopup from "../../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
+import explorerHuntPopup from "../../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
+import greatCollectionPopup from "../../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 
 const chainAreas = [
   {
@@ -330,7 +343,7 @@ const chainAreas = [
     size: "500x500",
     rewards: "N/A",
     desc: "Coin98 is an open, decentralized crypto wallet offering essential tools and infrastructure for users to access and participate in opportunities on the Open Internet. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -382,7 +395,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Immutable is the leading Layer 2 for NFTs and blockchain gaming, secured by Ethereum. Blockchain game developers - build & scale faster here. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -498,7 +511,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "MEXC is a top-tier crypto exchange offering comprehensive trading features, advanced security, and a wide range of digital assets, catering to both retail and institutional investors. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -544,7 +557,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: " Midle is the web and mobile app that boosts user acquisition, retention and engagement. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -590,7 +603,7 @@ const chainAreas = [
     size: "500x500",
     rewards: "N/A",
     desc: "KuCoin is a secure cryptocurrency exchange that allows you to buy, sell, and trade Bitcoin, Ethereum, and 700+ altcoins. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -636,7 +649,7 @@ const chainAreas = [
     size: "250x250",
     rewards: "N/A",
     desc: "Avalanche is a blockchain platform that aims to address the blockchain trilemma of scalability, security and decentralization. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -688,7 +701,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Gate is a globally recognized cryptocurrency exchange platform, offering a secure and innovative trading experience, supporting a broad array of digital assets.",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -734,7 +747,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Easy2Stake is a trusted staking service provider that enables secure and efficient staking for multiple blockchains, ensuring users can earn rewards while supporting web3 ecosystems. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -780,7 +793,7 @@ const chainAreas = [
     size: "250x250",
     rewards: "N/A",
     desc: "Chainlink connects existing systems to any public or private blockchain and enables secure cross-chain communication. World-class developer experience. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -904,7 +917,7 @@ const chainAreas = [
     ],
     city: "Dypians",
     size: "125x125",
-    rewards:"Available",
+    rewards: "Available",
     desc: "Taiko is a fully decentralized, Ethereum-equivalent ZK-Rollup (Type 1 ZK-EVM). The goal is to scale Ethereum while upholding the root principles of security and decentralization. ",
     benefits: [
       "Participate in exclusive quests and events",
@@ -958,7 +971,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "Available",
     desc: "Cookie3 Score is a decentralized identity and reputation system for Web3. It allows users to build trust and reputation across applications. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1004,7 +1017,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "MultiversX is a distributed blockchain network for next-gen applications. Decentralized via 3000+ nodes, scalable through sharding, fast, secure & green. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1056,7 +1069,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Conflux Network is a blockchain-based platform that connects creators, communities, and markets across different protocols. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1165,7 +1178,7 @@ const chainAreas = [
     size: "500x500",
     rewards: "N/A",
     desc: "Baby Doge was created initially as a joke meme coin with a purpose to help save dogs and spread awareness of animal adoption. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1217,7 +1230,7 @@ const chainAreas = [
     size: "500x500",
     rewards: "N/A",
     desc: "Dogecoin was originally created as a meme and evolved into a widely-used cryptocurrency, known for its supportive community and its use in charitable donations across the web. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1283,9 +1296,9 @@ const chainAreas = [
     ],
     city: "Dypians",
     size: "500x500",
-    rewards :"N/A",
+    rewards: "N/A",
     desc: "CoinMarketCap is the world's most-referenced price-tracking website for cryptoassets in the rapidly growing cryptocurrency space. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -1331,7 +1344,7 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Ordify is a curated collection designed to enhance user experience across various blockchains, connecting businesses with the community in the Bitcoin and EVM ecosystems. ",
-     benefits: [
+    benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
       "Explore an immersive environment",
@@ -4090,10 +4103,6 @@ let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
 let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
 let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 
-
-
-
-
 // const dummyBetaPassData2 = [
 //   {
 //     title: "CORE",
@@ -4649,12 +4658,72 @@ let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 //   },
 // ];
 
-
-
-
-
-
 const challenges = [
+  {
+    title: "Daily Bonus",
+    duration: "--",
+    image: "puzzleMadnessDummy.png",
+    type: "Puzzle",
+    infoType: "puzzlemadness",
+    marker: markers.puzzleMarker,
+    popupDesc:
+      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Tuesdays.",
+      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 30,000 points and up to 300 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 18 and above",
+      "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
+      "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+    ],
+    link: "/account#dailybonus",
+  },
+  {
+    title: "Daily Bonus Prime",
+    duration: "--",
+    image: "puzzleMadnessDummy.png",
+    type: "Puzzle",
+    infoType: "puzzlemadness",
+    marker: markers.puzzleMarker,
+    popupDesc:
+      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Tuesdays.",
+      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 30,000 points and up to 300 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 18 and above",
+      "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
+      "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+    ],
+    link: "/account#dailybonus",
+  },
+  {
+    title: "Critical Hit",
+    duration: "--",
+    image: "puzzleMadnessDummy.png",
+    type: "Puzzle",
+    infoType: "puzzlemadness",
+    marker: markers.puzzleMarker,
+    location: [-0.041627880248805656, 0.10673046112060548],
+    desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
+    link: "/account/challenges/critical-hit",
+    popupDesc:
+      "As a Genesis Land NFT holder, you can participate in the daily Critical Hit event to earn points and rewards. Each day, you need to log in to the game and visit your land. On your land, you have a Genesis Gem, which you need to break with a pickaxe. Once broken, it gives you either points that are added to your leaderboard rank on BNB Chain or direct rewards in BNB.",
+    secondaryTitle: "What is Genesis Land?",
+    thirdDesc:
+      "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
+    workList: [
+      "Earn 30,000-80,000 points by destroying the Gem",
+      "Receive rewards ranging from $20 to $7,000 ",
+      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+    ],
+  },
   {
     title: "Puzzle Madness",
     duration: "--",
@@ -4662,7 +4731,19 @@ const challenges = [
     type: "Puzzle",
     infoType: "puzzlemadness",
     marker: markers.puzzleMarker,
-    location: [-0.041627880248805656, 0.10673046112060548],
+    link: "/account/challenges/puzzle-madness",
+    popupDesc:
+      "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
+    secondaryDesc:
+      "Players have two hours to find the pieces. Points are added to the leaderboards even if not all pieces are found. You can extend time by purchasing another bundle.",
+    secondaryTitle: "CAWS NFT Utility",
+    thirdDesc:
+      "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
+      "An indicator will guide you on whether pieces are located making your search easier",
+    ],
   },
   {
     title: "Dragon Ruins",
@@ -4672,6 +4753,89 @@ const challenges = [
     infoType: "dragonRuins",
     marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
+    popupDesc:
+      "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Mondays.",
+      "The Dragon must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 16,000 points and up to 200 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 10 and above",
+      "Craft plenty of health potions and equip fire-resistant gear to counter the dragon's fiery breath.",
+      "Use ranged weapons to attack from a distance, avoiding its powerful melee strikes.",
+    ],
+    link: "/account/challenges/dragon-ruins",
+  },
+  {
+    title: "Cold Bite",
+    duration: "--",
+    image: "scorpionKingDummy.png",
+    type: "Boss Fight",
+    infoType: "scorpionKing",
+    marker: markers.scorpionMarker,
+    location: [-0.022588222633792756, 0.07132530212402345],
+    popupDesc:
+      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Tuesdays.",
+      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 30,000 points and up to 300 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 15 and above",
+      "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
+      "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+    ],
+    link: "/account/challenges/cold-bite",
+  },
+  {
+    title: "Fury Beast",
+    duration: "--",
+    image: "scorpionKingDummy.png",
+    type: "Boss Fight",
+    infoType: "scorpionKing",
+    marker: markers.scorpionMarker,
+    location: [-0.022588222633792756, 0.07132530212402345],
+    popupDesc:
+      "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Wednesdays.",
+      "The Gorilla must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 60,000 points and up to 400 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 18 and above",
+      "Craft plenty of health potions and focus on agility to dodge the Gorilla’s ground-pounding attacks.",
+      "Aim for weak points like the head to deal maximum damage quickly.",
+    ],
+    link: "/account/challenges/fury-beast",
+  },
+  {
+    title: "Wing Storm",
+    duration: "--",
+    image: "scorpionKingDummy.png",
+    type: "Boss Fight",
+    infoType: "scorpionKing",
+    marker: markers.scorpionMarker,
+    location: [-0.022588222633792756, 0.07132530212402345],
+    popupDesc:
+      "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Thursdays.",
+      "The Eagle must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 70,000 points and up to 500 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 22 and above",
+      "Craft plenty of health potions and use ranged weapons or magic to counter the Eagle’s aerial mobility.",
+      "Stay mobile and anticipate its swift movements to avoid being caught off-guard.",
+    ],
+    link: "/account/challenges/wing-storm",
   },
   {
     title: "Scorpion King",
@@ -4681,15 +4845,129 @@ const challenges = [
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupDesc:
+      "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Saturdays.",
+      "The Scorpion must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 120,000 points and up to 1,000 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 40 and above",
+      "Craft plenty of health potions and target the tail to disable its poison strikes and reduce the threat.",
+      "Equip high-damage weapons to end the fight quickly before the poison accumulates.",
+    ],
+    link: "/account/challenges/scorpion-king",
   },
   {
-    title: "Maze Garden",
+    title: "Stone Eye",
+    duration: "--",
+    image: "scorpionKingDummy.png",
+    type: "Boss Fight",
+    infoType: "scorpionKing",
+    marker: markers.scorpionMarker,
+    location: [-0.022588222633792756, 0.07132530212402345],
+    popupDesc:
+      "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The event is available exclusively on Sundays.",
+      "The Cyclop must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "Rewards include 80,000 points and up to 600 stars.",
+    ],
+    tips: [
+      "Recommended Hero Level: 30 and above",
+      "Craft plenty of health potions and equip high-defense gear to withstand its crushing attacks.",
+      "Attack its legs to slow it down and exploit openings for critical hits.",
+    ],
+    link: "/account/challenges/stone-eye",
+  },
+  {
+    title: "Maze Day",
     duration: "--",
     image: "mazeGardenDummy.png",
     type: "Puzzle",
     infoType: "mazeGarden",
     marker: markers.mazeMarker,
     location: [-0.04827975655460935, 0.042529106140136726],
+    popupDesc:
+      "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
+    workList: [
+      "Hold at leas 400 WOD tokens to participate.",
+      "The event is available exclusively on Fridays.",
+      "Players must find their way to the maze’s center and collect the gem to earn rewards.",
+      "Rewards include up to 200,000 points, 800 stars, and $10.",
+    ],
+    tips: [
+      "Recommended Hero Level: 15 and above",
+      "Focus on observation to spot clues, gates, and shortcuts.",
+      "Plan your route and mark your path to avoid retracing your steps.",
+    ],
+    link: "/account/challenges/maze-garden",
+  },
+  {
+    title: "Treasure Hunt",
+    duration: "--",
+    image: "mazeGardenDummy.png",
+    type: "Puzzle",
+    infoType: "mazeGarden",
+    marker: markers.mazeMarker,
+    popupDesc:
+      "Embark on a daily Treasure Hunt event where you’ll explore partner areas to uncover hidden items. These items could be Chests, Eggs, or Magma, each offering unique rewards. The event challenges players to carefully investigate specific areas each day to find the hidden treasures. Once collected, these treasures will either grant leaderboard points or direct rewards, making this event a must for adventurers looking to climb the ranks or earn exciting prizes.",
+    workList: [
+      "The event occurs daily, requiring players to visit partner areas to search for hidden items.",
+      "Hidden treasures include Chests, Eggs, or Magma, and their locations change each day.",
+      "Players must collect the treasures and reveal the rewards they contain.",
+      "Rewards include up to 50,000 points.",
+    ],
+    tips: [
+      "Explore each area thoroughly and pay attention to visual or auditory clues indicating the presence of treasures.",
+      "Plan your exploration route efficiently to maximize the number of treasures you can find in a single session.",
+    ],
+    link: "/account/challenges/treasure-hunt",
+  },
+  {
+    title: "Explorer Hunt",
+    duration: "--",
+    image: "mazeGardenDummy.png",
+    type: "Puzzle",
+    infoType: "mazeGarden",
+    marker: markers.mazeMarker,
+    popupDesc:
+      "Defend the world from the alien explorers who have landed to assess the terrain before their invasion. Players will hear an alert signaling the arrival of these intruders in a specific area, and your task is to defend the city by defeating them. The event features three levels of explorers, each more powerful and challenging than the last. Be prepared to strategize and face increasingly formidable opponents as you protect your homeland.",
+    workList: [
+      "Alerts will notify players of the arrival of alien explorers in a designated area.",
+      "Players must travel to the location and engage in combat with the explorers.",
+      "There are three levels of explorers to defeat, each with higher difficulty and rewards.",
+    ],
+    tips: [
+      "Recommended Hero Level: 20 and above",
+      "Upgrade your weapons and armor to handle the increasing difficulty of higher-level explorers.",
+      "Stock up on health potions to sustain yourself during prolonged battles.",
+    ],
+    link: "/account/challenges/explorer-hunt",
+  },
+  {
+    title: "Great Collection",
+    duration: "--",
+    image: "mazeGardenDummy.png",
+    type: "Puzzle",
+    infoType: "mazeGarden",
+    marker: markers.mazeMarker,
+    popupDesc:
+      "The Great Collection is a thrilling event where players are tasked with gathering rare and unique partner branded coins scattered across the game. This event challenges your exploration and problem-solving skills as you work to collect as many coins as possible. Compete against other players to amass the largest collection and earn exclusive rewards based on your ranking.",
+    workList: [
+      "Rare collectible items are hidden across the map, in both common and hard-to-reach locations.",
+      "Players must explore the maps to retrieve these partner branded coins.",
+      "The collected amount contributes to unlocking more rewards in the future.",
+    ],
+    tips: [
+      "Recommended Hero Level: 1 and above",
+      "Prioritize exploring areas that are less crowded to maximize your chances of finding hidden coins.",
+      "Use mounts or movement speed boosts to traverse large zones quickly.",
+    ],
+    link: "/account/challenges/great-collection",
   },
 ];
 

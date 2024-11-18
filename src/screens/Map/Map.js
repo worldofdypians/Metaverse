@@ -108,7 +108,9 @@ const Map = ({ dummyBetaPassData2 }) => {
   const memoizedFirstParcel = useMemo(() => firstParcel, [firstParcel]);
   const memoizedSecondParcel = useMemo(() => secondParcel, [secondParcel]);
 
-  const allChallenges = [...challenges];
+  const allChallenges = challenges.filter((item) =>
+    item.hasOwnProperty("location")
+  );
 
   // Custom marker click handler with memoization
   const handleMarkerClick = useCallback((marker, zoom, type, showMarker) => {
@@ -119,8 +121,10 @@ const Map = ({ dummyBetaPassData2 }) => {
       setMarkerType(type || "");
     }
 
-    setZoom(zoom);
-    setCenter(marker.location);
+    //  if(marker?.location){
+    //   setZoom(zoom);
+    //   setCenter(marker.location);
+    //  }
   }, []);
 
   // Create custom cluster icon
@@ -213,6 +217,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               icon={markers.questMarker}
               item={item}
               type={"quest"}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -222,6 +227,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.boarMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -231,6 +237,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.bearMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -241,6 +248,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.deerMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -260,6 +268,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.leaderboardsMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -269,6 +278,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.teleportMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -278,6 +288,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.mineMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
@@ -287,6 +298,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.craftingMarker}
               item={item}
+              showMarker={false}
               handleMarkerClick={handleMarkerClick}
             />
           ))}

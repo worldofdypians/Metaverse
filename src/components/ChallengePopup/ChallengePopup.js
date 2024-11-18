@@ -13,7 +13,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
           </div> */}
           <div className="position-relative w-100">
             <img
-              src={item.image}
+              src={item.popupImage}
               alt={item.title}
               className="w-100 challenge-popup-banner"
             />

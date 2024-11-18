@@ -204,7 +204,7 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container px-3 px-lg-0">
             <h4 className="main-hero-title font-montserrat text-start">
               {/* The Biggest Metaverse
               <br />
