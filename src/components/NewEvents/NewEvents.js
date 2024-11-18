@@ -241,6 +241,22 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
+                    <NavLink to="/account/challenges/dragon-ruins">
+                        <div
+                          className={`${
+                            challenge === "dragon-ruins" ||
+                            selectedEvent === "dragon-ruins"
+                              ? "active-challenge-item"
+                              : "challenge-item"
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          onClick={() => {
+                            setChallenge("dragon-ruins");
+                          }}
+                        >
+                          {/* <img src={treasureHuntIcon} alt="" /> */}
+                          <h6 className="mb-0">Legendary Beast Siege</h6>
+                        </div>
+                      </NavLink>
                       <NavLink to="/account/challenges/treasure-hunt">
                         <div
                           className={`${
@@ -253,11 +269,27 @@ const NewEvents = ({
                             setChallenge("treasure-hunt");
                           }}
                         >
-                          <img src={treasureHuntIcon} alt="" />
+                          {/* <img src={treasureHuntIcon} alt="" /> */}
+                          <h6 className="mb-0">BNB Chain Maze Day</h6>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/account/challenges/treasure-hunt">
+                        <div
+                          className={`${
+                            challenge === "treasure-hunt" ||
+                            selectedEvent === "treasure-hunt"
+                              ? "active-challenge-item"
+                              : "challenge-item"
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          onClick={() => {
+                            setChallenge("treasure-hunt");
+                          }}
+                        >
+                          {/* <img src={treasureHuntIcon} alt="" /> */}
                           <h6 className="mb-0">Treasure Hunt</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/dragon-ruins">
+                      {/* <NavLink to="/account/challenges/dragon-ruins">
                         <div
                           className={`${
                             challenge === "dragon-ruins" ||
@@ -356,7 +388,7 @@ const NewEvents = ({
                           />
                           <h6 className="mb-0">Maze Garden</h6>
                         </div>
-                      </NavLink>
+                      </NavLink> */}
                     </div>
                   </div>
                   <div className="col-12 col-lg-10">
