@@ -19,22 +19,32 @@ import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.s
 import stakeNft from "./assets/stakeNft.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
-import treasureHuntInactive from "./assets/treasureHuntInactive.png";
-import treasureHuntActive from "./assets/treasureHuntActive.png";
-import dragonRuinsInactive from "./assets/dragonRuinsInactive.png";
-import dragonRuinsActive from "./assets/dragonRuinsActive.png";
-import goldenPassInactive from "./assets/goldenPassInactive.png";
-import goldenPassActive from "./assets/goldenPassActive.png";
-import dailyBonusInactive from "./assets/dailyBonusInactive.png";
-import dailyBonusActive from "./assets/dailyBonusActive.png";
-import scorpionKingInactive from "./assets/scorpionKingInactive.png";
-import scorpionKingActive from "./assets/scorpionKingActive.png";
-import criticalHitInactive from "./assets/criticalHitInactive.png";
-import criticalHitActive from "./assets/criticalHitActive.png";
-import puzzleMadnessInactive from "./assets/puzzleMadnessInactive.png";
-import puzzleMadnessActive from "./assets/puzzleMadnessActive.png";
-import mazeGardenInactive from "./assets/mazeGardenInactive.png";
-import mazeGardenActive from "./assets/mazeGardenActive.png";
+import treasureHuntInactive from "./assets/dailyProgress/treasureHuntInactive.png";
+import treasureHuntActive from "./assets/dailyProgress/treasureHuntActive.png";
+// import dragonRuinsInactive from "./assets/dailyProgress/dragonRuinsInactive.png";
+// import dragonRuinsActive from "./assets/dailyProgress/dragonRuinsActive.png";
+import dragonRuins from "./assets/dailyProgress/dragonRuins.png";
+
+import goldenPassInactive from "./assets/dailyProgress/goldenPassInactive.png";
+import goldenPassActive from "./assets/dailyProgress/goldenPassActive.png";
+import dailyBonusInactive from "./assets/dailyProgress/dailyBonusInactive.png";
+import dailyBonusActive from "./assets/dailyProgress/dailyBonusActive.png";
+// import scorpionKingInactive from "./assets/dailyProgress/scorpionKingInactive.png";
+// import scorpionKingActive from "./assets/dailyProgress/scorpionKingActive.png";
+import scorpionKing from "./assets/dailyProgress/scorpionKing.png";
+
+// import criticalHitInactive from "./assets/dailyProgress/criticalHitInactive.png";
+// import criticalHitActive from "./assets/dailyProgress/criticalHitActive.png";
+import criticalHit from "./assets/dailyProgress/criticalHit.png";
+
+// import puzzleMadnessInactive from "./assets/dailyProgress/puzzleMadnessInactive.png";
+// import puzzleMadnessActive from "./assets/dailyProgress/puzzleMadnessActive.png";
+import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
+
+// import mazeGardenInactive from "./assets/dailyProgress/mazeGardenInactive.png";
+// import mazeGardenActive from "./assets/dailyProgress/mazeGardenActive.png";
+import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
+
 import premiumDummy from "./assets/premiumDummy.png";
 import dummyDragon from "./assets/dummyDragon.png";
 import dummyCaws from "./assets/dummyCaws.png";
@@ -146,6 +156,7 @@ const MyProfile = ({
   userDailyBundles,
   puzzleMadnessCountdown,
   userActiveEvents,
+  userDataStar
 }) => {
   const totalClaimedChests = allClaimedChests;
 
@@ -431,6 +442,44 @@ const MyProfile = ({
               </div>
             </div>
             <div className="sidebar-separator2 my-2"></div>
+            <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row">
+              <div className="wallet-address-wrapper p-2 w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="user-data-item-left">Global</span>
+                    <span className="user-data-item-left">Rank</span>
+                  </div>
+                  <div className="d-flex">
+                  <span className="user-data-item-right">#{userDataStar.position + 1}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="wallet-address-wrapper p-2 w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="user-data-item-left">Stars</span>
+                    <span className="user-data-item-left">Collected</span>
+                  </div>
+                  <div className="d-flex">
+                  <span className="user-data-item-right">{getFormattedNumber(userDataStar.statValue,0)}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="wallet-address-wrapper p-2 w-100">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="user-data-item-left">Brands</span>
+                    <span className="user-data-item-left">Collected</span>
+                  </div>
+                  <div className="d-flex">
+                  <span className="user-data-item-right">4,456</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div className="sidebar-separator2 my-2"></div>
+
             <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="progress-line"></div>
@@ -484,9 +533,7 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img
                     src={
-                      dragonRuinsCountdown
-                        ? dragonRuinsActive
-                        : dragonRuinsInactive
+                      dragonRuins
                     }
                     alt=""
                   />
@@ -502,7 +549,7 @@ const MyProfile = ({
                   )}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={scorpionKingInactive} alt="" />
+                  <img src={scorpionKing} alt="" />
                   <div className="daily-progress-value">
                     <span>0</span>
                   </div>
@@ -515,9 +562,7 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img
                     src={
-                      puzzleMadnessCountdown
-                        ? puzzleMadnessActive
-                        : puzzleMadnessInactive
+                      puzzleMadness
                     }
                     alt=""
                   />
@@ -555,7 +600,7 @@ const MyProfile = ({
                   )}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={criticalHitInactive} alt="" />
+                  <img src={criticalHit} alt="" />
                   <div className="daily-progress-value">
                     <span>0</span>
                   </div>
@@ -566,9 +611,9 @@ const MyProfile = ({
                   /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={mazeGardenInactive} alt="" />
+                  <img src={bnbMazeDay} alt="" />
                   <div className="daily-progress-value-golden">
-                    <span>Sunday</span>
+                    <span>0</span>
                   </div>
                   {/* <img
                     src={emptyTag}
