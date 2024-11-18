@@ -1572,9 +1572,9 @@ const MarketMint = ({
                                     {isConnected === false && (
                                       <img
                                         src={
-                                          mouseOver === false
-                                            ? blackWallet
-                                            : whitewallet
+                                          mouseOver === true
+                                          ? blackWallet
+                                          : whitewallet
                                         }
                                         alt=""
                                         style={{
@@ -1594,6 +1594,7 @@ const MarketMint = ({
                                         <div
                                           className="spinner-border "
                                           role="status"
+                                          style={{height: '1rem', width: '1rem'}}
                                         ></div>
                                       </>
                                     ) : mintloading === "error" &&
@@ -1768,7 +1769,7 @@ const MarketMint = ({
                                     chainId !== 713715) && (
                                     <img
                                       src={
-                                        mouseOver === false
+                                        mouseOver === true
                                           ? blackWallet
                                           : whitewallet
                                       }
@@ -1790,6 +1791,7 @@ const MarketMint = ({
                                       <div
                                         className="spinner-border "
                                         role="status"
+                                        style={{height: '1rem', width: '1rem'}}
                                       ></div>
                                     </>
                                   ) : mintloading === "error" &&
@@ -1850,7 +1852,7 @@ const MarketMint = ({
                                     chainId !== 698) && (
                                     <img
                                       src={
-                                        mouseOver === false
+                                        mouseOver === true
                                           ? blackWallet
                                           : whitewallet
                                       }
@@ -1872,6 +1874,7 @@ const MarketMint = ({
                                       <div
                                         className="spinner-border "
                                         role="status"
+                                        style={{height: '1rem', width: '1rem'}}
                                       ></div>
                                     </>
                                   ) : mintloading === "error" &&
@@ -1932,9 +1935,9 @@ const MarketMint = ({
                                     chainId !== 169) && (
                                     <img
                                       src={
-                                        mouseOver === false
-                                          ? blackWallet
-                                          : whitewallet
+                                        mouseOver === true
+                                        ? blackWallet
+                                        : whitewallet
                                       }
                                       alt=""
                                       style={{
@@ -1955,8 +1958,8 @@ const MarketMint = ({
                                         className="spinner-border"
                                         role="status"
                                         style={{
-                                          height: "1.5rem",
-                                          width: "1.5rem",
+                                          height: "1rem",
+                                          width: "1rem",
                                         }}
                                       ></div>
                                     </>

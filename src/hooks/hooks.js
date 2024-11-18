@@ -108,7 +108,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "CORE", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://rpc.coredao.org/"],
+    rpcUrls: ["https://core.drpc.org"],
     blockExplorerUrls: ["https://scan.coredao.org"],
   };
   const VICTIONPARAMS = {

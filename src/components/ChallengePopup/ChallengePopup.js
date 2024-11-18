@@ -3,7 +3,7 @@ import "./_challengepopup.scss";
 import closeChallenge from "./closeChallenge.svg";
 import { NavLink } from "react-router-dom";
 
-const ChallengePopup = ({ item, handleClose }) => {
+const ChallengePopup = ({ item, handleClose, screen }) => {
   return (
     <div className="challenge-popup-wrapper popup-active">
       <div className="d-flex flex-column justify-content-between">
@@ -80,11 +80,13 @@ const ChallengePopup = ({ item, handleClose }) => {
             </div>
           </div>
         </div>
-        <div className="challenge-popup-button-wrapper p-3 d-flex justify-content-center w-100">
-          <NavLink className={"getpremium-btn px-3 py-2"} to={item.link}>
-            Buy
-          </NavLink>
-        </div>
+        {screen !== "account" && (
+          <div className="challenge-popup-button-wrapper p-3 d-flex justify-content-center w-100">
+            <NavLink className={"getpremium-btn px-3 py-2"} to={item.link}>
+              Buy
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

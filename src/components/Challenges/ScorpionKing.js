@@ -1,12 +1,20 @@
 import React from "react";
 import "./_challenges.scss";
 import scorpionKingBanner from "./assets/scorpionKingBanner.png";
+import tooltipIcon from "./assets/tooltipIcon.svg";
 
-const ScorpionKing = () => {
+const ScorpionKing = ({ onPopupClick }) => {
   return (
     <div className="d-flex flex-column gap-3">
       <div className="new-event-wrapper d-flex flex-column">
         <div className="position-relative">
+          <img
+            src={tooltipIcon}
+            className="new-event-banner-tooltip"
+            alt=""
+            onClick={onPopupClick}
+          />
+
           <img src={scorpionKingBanner} className="new-event-banner" alt="" />
           <h6 className="mb-0 new-event-title">Scorpion King</h6>
         </div>
@@ -19,8 +27,7 @@ const ScorpionKing = () => {
           </p>
         </div>
       </div>
-    
-   
+
       <div className="new-event-wrapper mt-4 p-5 d-flex align-items-center justify-content-center">
         <h6 className="mb-0 event-coming-soon">Event Coming Soon</h6>
       </div>

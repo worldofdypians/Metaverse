@@ -19,34 +19,22 @@ import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.s
 import stakeNft from "./assets/stakeNft.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
-import treasureHuntInactive from "./assets/dailyProgress/treasureHuntInactive.png";
-import treasureHuntActive from "./assets/dailyProgress/treasureHuntActive.png";
-// import dragonRuinsInactive from "./assets/dailyProgress/dragonRuinsInactive.png";
-// import dragonRuinsActive from "./assets/dailyProgress/dragonRuinsActive.png";
-import dragonRuins from "./assets/dailyProgress/dragonRuins.png";
 
-import goldenPassInactive from "./assets/dailyProgress/goldenPassInactive.png";
-import goldenPassActive from "./assets/dailyProgress/goldenPassActive.png";
-import dailyBonusInactive from "./assets/dailyProgress/dailyBonusInactive.png";
-import dailyBonusActive from "./assets/dailyProgress/dailyBonusActive.png";
-// import scorpionKingInactive from "./assets/dailyProgress/scorpionKingInactive.png";
-// import scorpionKingActive from "./assets/dailyProgress/scorpionKingActive.png";
+import dragonRuins from "./assets/dailyProgress/dragonRuins.png";
 import scorpionKing from "./assets/dailyProgress/scorpionKing.png";
 import coldBite from "./assets/dailyProgress/coldBite.png";
 import stoneEye from "./assets/dailyProgress/stoneEye.png";
 import furyBeast from "./assets/dailyProgress/furyBeast.png";
-
-// import criticalHitInactive from "./assets/dailyProgress/criticalHitInactive.png";
-// import criticalHitActive from "./assets/dailyProgress/criticalHitActive.png";
+import wingStorm from "./assets/dailyProgress/wingStorm.png";
 import criticalHit from "./assets/dailyProgress/criticalHit.png";
-
-// import puzzleMadnessInactive from "./assets/dailyProgress/puzzleMadnessInactive.png";
-// import puzzleMadnessActive from "./assets/dailyProgress/puzzleMadnessActive.png";
 import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
-
-// import mazeGardenInactive from "./assets/dailyProgress/mazeGardenInactive.png";
-// import mazeGardenActive from "./assets/dailyProgress/mazeGardenActive.png";
 import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
+import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
+import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
+import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
+import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
+
+
 
 import premiumDummy from "./assets/premiumDummy.png";
 import dummyDragon from "./assets/dummyDragon.png";
@@ -160,10 +148,45 @@ const MyProfile = ({
   puzzleMadnessCountdown,
   userActiveEvents,
   userDataStar,
+  primeStars,
+  allClaimedChestsPremium,
+  allClaimedChestsstd
 }) => {
   const totalClaimedChests = allClaimedChests;
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
+  const utcDayIndex = new Date().getUTCDay();
+
+  const dailyEvents = [
+    {
+      image: stoneEye, // Sunday
+      title: "Stone Eye",
+    },
+    {
+      image: dragonRuins, // Monday
+      title: "Dragon Ruins",
+    },
+    {
+      image: coldBite, // Tuesday
+      title: "Cold Bite",
+    },
+    {
+      image: furyBeast, // Wednesday
+      title: "Fury Beast",
+    },
+    {
+      image: wingStorm, // Thursday
+      title: "Wing Storm",
+    },
+    {
+      image: bnbMazeDay, // Friday
+      title: "BNB Maze Day",
+    },
+    {
+      image: scorpionKing, // Saturday
+      title: "Scorpion King",
+    },
+  ];
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
@@ -535,10 +558,10 @@ const MyProfile = ({
                 </div> */}
                 <div className="daily-progress-item position-relative">
                   <img src={bnbMazeDay} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
+                  <div className="daily-progress-value-golden">
+                    <span>{primeStars === true ? '+ 50 Stars' : 'In Progress'}</span>
                   </div>
-                  <span className="bundle-title-bottom">BNB Maze Day</span>
+                  <span className="bundle-title-bottom">Prime</span>
 
                   {/* <img
                     src={emptyTag}
@@ -547,12 +570,13 @@ const MyProfile = ({
                   /> */}
                 </div>
                 <div className="daily-progress-item position-relative">
-                  <img src={coldBite} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
+                  <img src={dailyBonusStd} alt="" />
+                  <div className="daily-progress-value-golden">
+                    <span>{allClaimedChestsstd === 0 ? 'Ready' : allClaimedChestsstd < 70 ? allClaimedChestsstd : 'Completed'}</span>
                   </div>
-
-                  <span className="bundle-title-bottom">Cold Bite</span>
+                  <span className="bundle-title-bottom">
+                    Daily Bonus
+                  </span>
 
                   {/* <img
                     src={emptyTag}
@@ -560,6 +584,36 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                 </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={dailyBonusPrime} alt="" />
+                  <div className="daily-progress-value-golden">
+                  <span>{allClaimedChestsPremium === 0 ? 'Ready' : allClaimedChestsPremium < 70 ? allClaimedChestsPremium : 'Completed'}</span>
+                  </div>
+                  <span className="bundle-title-bottom">Daily Bonus Prime</span>
+
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                </div>
+                <div className="daily-progress-item position-relative">
+                  <img src={dailyEvents[utcDayIndex].image} alt="" />
+                  <div className="daily-progress-value">
+                    <span>{userDailyBundles?.dragonRuinsCount}</span>
+                  </div>
+                  {/* {userDailyBundles?.dragonRuinsCount > 0 && (
+                    <img
+                      src={doneTag}
+                      alt=""
+                      className="daily-progress-status"
+                    />
+                  )} */}
+                  <span className="bundle-title-bottom">
+                    {dailyEvents[utcDayIndex].title}
+                  </span>
+                </div>
+
                 <div className="daily-progress-item position-relative">
                   <img src={criticalHit} alt="" />
                   <div className="daily-progress-value">
@@ -571,23 +625,32 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   <span className="bundle-title-bottom">Critical Hit</span>
-
                 </div>
 
                 <div className="daily-progress-item position-relative">
-                  <img src={dragonRuins} alt="" />
+                  <img src={treasureHunt} alt="" />
                   <div className="daily-progress-value">
-                    <span>{userDailyBundles?.dragonRuinsCount}</span>
+                    <span>0</span>
                   </div>
-                  {/* {userDailyBundles?.dragonRuinsCount > 0 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )} */}
-                  <span className="bundle-title-bottom">Dragon Ruins</span>
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                  <span className="bundle-title-bottom">Treasure Hunt</span>
+                </div>
 
+                <div className="daily-progress-item position-relative">
+                  <img src={explorerHunt} alt="" />
+                  <div className="daily-progress-value">
+                    <span>0</span>
+                  </div>
+                  {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                  <span className="bundle-title-bottom">Explorer Hunt</span>
                 </div>
 
                 <div className="daily-progress-item position-relative">
@@ -603,48 +666,6 @@ const MyProfile = ({
                     />
                   )} */}
                   <span className="bundle-title-bottom">Puzzle Madness</span>
-
-                </div>
-
-                <div className="daily-progress-item position-relative">
-                  <img src={furyBeast} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
-                  </div>
-                  <span className="bundle-title-bottom">Fury Beast</span>
-
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
-                </div>
-
-                <div className="daily-progress-item position-relative">
-                  <img src={scorpionKing} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
-                  </div>
-                  <span className="bundle-title-bottom">Scorpion King</span>
-
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={stoneEye} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
-                  </div>
-                  <span className="bundle-title-bottom">Stone Eye</span>
-
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
                 </div>
 
                 {/* <div className="daily-progress-item position-relative">
