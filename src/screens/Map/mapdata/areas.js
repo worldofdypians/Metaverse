@@ -4660,56 +4660,14 @@ let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
 
 const challenges = [
   {
-    title: "Daily Bonus",
-    duration: "--",
-    image: "puzzleMadnessDummy.png",
-    type: "Puzzle",
-    infoType: "puzzlemadness",
-    marker: markers.puzzleMarker,
-    popupDesc:
-      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
-    workList: [
-      "Purchase the bundle from the Challenge & Events.",
-      "The event is available exclusively on Tuesdays.",
-      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-      "Rewards include 30,000 points and up to 300 stars.",
-    ],
-    tips: [
-      "Recommended Hero Level: 18 and above",
-      "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-      "Focus on evading its slow but powerful swipes and counterattacking with precision.",
-    ],
-    link: "/account#dailybonus",
-  },
-  {
-    title: "Daily Bonus Prime",
-    duration: "--",
-    image: "puzzleMadnessDummy.png",
-    type: "Puzzle",
-    infoType: "puzzlemadness",
-    marker: markers.puzzleMarker,
-    popupDesc:
-      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
-    workList: [
-      "Purchase the bundle from the Challenge & Events.",
-      "The event is available exclusively on Tuesdays.",
-      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-      "Rewards include 30,000 points and up to 300 stars.",
-    ],
-    tips: [
-      "Recommended Hero Level: 18 and above",
-      "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-      "Focus on evading its slow but powerful swipes and counterattacking with precision.",
-    ],
-    link: "/account#dailybonus",
-  },
-  {
     title: "Critical Hit",
     duration: "--",
     image: "puzzleMadnessDummy.png",
-    type: "Puzzle",
+    type: "event",
     infoType: "puzzlemadness",
     marker: markers.puzzleMarker,
+    popupImage: criticalHitPopup,
+
     location: [-0.041627880248805656, 0.10673046112060548],
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     link: "/account/challenges/critical-hit",
@@ -4725,34 +4683,15 @@ const challenges = [
     ],
   },
   {
-    title: "Puzzle Madness",
-    duration: "--",
-    image: "puzzleMadnessDummy.png",
-    type: "Puzzle",
-    infoType: "puzzlemadness",
-    marker: markers.puzzleMarker,
-    link: "/account/challenges/puzzle-madness",
-    popupDesc:
-      "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
-    secondaryDesc:
-      "Players have two hours to find the pieces. Points are added to the leaderboards even if not all pieces are found. You can extend time by purchasing another bundle.",
-    secondaryTitle: "CAWS NFT Utility",
-    thirdDesc:
-      "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
-    workList: [
-      "Purchase the bundle from the Challenge & Events.",
-      "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
-      "An indicator will guide you on whether pieces are located making your search easier",
-    ],
-  },
-  {
     title: "Dragon Ruins",
     duration: "--",
     image: "dragonRuinsDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "dragonRuins",
     marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
+    popupImage: dragonRuinsPopup,
+
     popupDesc:
       "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
     workList: [
@@ -4772,10 +4711,11 @@ const challenges = [
     title: "Cold Bite",
     duration: "--",
     image: "scorpionKingDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupImage: coldBitePopup,
     popupDesc:
       "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
     workList: [
@@ -4795,10 +4735,12 @@ const challenges = [
     title: "Fury Beast",
     duration: "--",
     image: "scorpionKingDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupImage: furyBeastPopup,
+
     popupDesc:
       "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
     workList: [
@@ -4818,10 +4760,12 @@ const challenges = [
     title: "Wing Storm",
     duration: "--",
     image: "scorpionKingDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupImage: wingStormPopup,
+
     popupDesc:
       "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
     workList: [
@@ -4841,10 +4785,12 @@ const challenges = [
     title: "Scorpion King",
     duration: "--",
     image: "scorpionKingDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupImage: scorpionKingPopup,
+
     popupDesc:
       "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
     workList: [
@@ -4864,10 +4810,12 @@ const challenges = [
     title: "Stone Eye",
     duration: "--",
     image: "scorpionKingDummy.png",
-    type: "Boss Fight",
+    type: "event",
     infoType: "scorpionKing",
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
+    popupImage: stoneEyePopup,
+
     popupDesc:
       "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
     workList: [
@@ -4887,10 +4835,12 @@ const challenges = [
     title: "Maze Day",
     duration: "--",
     image: "mazeGardenDummy.png",
-    type: "Puzzle",
+    type: "event",
     infoType: "mazeGarden",
     marker: markers.mazeMarker,
     location: [-0.04827975655460935, 0.042529106140136726],
+    popupImage: mazeGardenPopup,
+
     popupDesc:
       "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
     workList: [
@@ -4907,12 +4857,37 @@ const challenges = [
     link: "/account/challenges/maze-garden",
   },
   {
+    title: "Puzzle Madness",
+    duration: "--",
+    image: "puzzleMadnessDummy.png",
+    type: "event",
+    infoType: "puzzlemadness",
+    marker: markers.puzzleMarker,
+    link: "/account/challenges/puzzle-madness",
+    popupImage: puzzleMadnessPopup,
+
+    popupDesc:
+      "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
+    secondaryDesc:
+      "Players have two hours to find the pieces. Points are added to the leaderboards even if not all pieces are found. You can extend time by purchasing another bundle.",
+    secondaryTitle: "CAWS NFT Utility",
+    thirdDesc:
+      "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
+      "An indicator will guide you on whether pieces are located making your search easier",
+    ],
+  },
+  {
     title: "Treasure Hunt",
     duration: "--",
     image: "mazeGardenDummy.png",
-    type: "Puzzle",
+    type: "event",
     infoType: "mazeGarden",
     marker: markers.mazeMarker,
+    popupImage: treasureHuntPopup,
+
     popupDesc:
       "Embark on a daily Treasure Hunt event where you’ll explore partner areas to uncover hidden items. These items could be Chests, Eggs, or Magma, each offering unique rewards. The event challenges players to carefully investigate specific areas each day to find the hidden treasures. Once collected, these treasures will either grant leaderboard points or direct rewards, making this event a must for adventurers looking to climb the ranks or earn exciting prizes.",
     workList: [
@@ -4931,9 +4906,11 @@ const challenges = [
     title: "Explorer Hunt",
     duration: "--",
     image: "mazeGardenDummy.png",
-    type: "Puzzle",
+    type: "event",
     infoType: "mazeGarden",
     marker: markers.mazeMarker,
+    popupImage: explorerHuntPopup,
+
     popupDesc:
       "Defend the world from the alien explorers who have landed to assess the terrain before their invasion. Players will hear an alert signaling the arrival of these intruders in a specific area, and your task is to defend the city by defeating them. The event features three levels of explorers, each more powerful and challenging than the last. Be prepared to strategize and face increasingly formidable opponents as you protect your homeland.",
     workList: [
@@ -4952,9 +4929,11 @@ const challenges = [
     title: "Great Collection",
     duration: "--",
     image: "mazeGardenDummy.png",
-    type: "Puzzle",
+    type: "event",
     infoType: "mazeGarden",
     marker: markers.mazeMarker,
+    popupImage: greatCollectionPopup,
+
     popupDesc:
       "The Great Collection is a thrilling event where players are tasked with gathering rare and unique partner branded coins scattered across the game. This event challenges your exploration and problem-solving skills as you work to collect as many coins as possible. Compete against other players to amass the largest collection and earn exclusive rewards based on your ranking.",
     workList: [

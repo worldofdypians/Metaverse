@@ -121,10 +121,10 @@ const Map = ({ dummyBetaPassData2 }) => {
       setMarkerType(type || "");
     }
 
-    //  if(marker?.location){
-    //   setZoom(zoom);
-    //   setCenter(marker.location);
-    //  }
+     if(marker?.location){
+      setZoom(zoom);
+      setCenter(marker.location);
+     }
   }, []);
 
   // Create custom cluster icon
