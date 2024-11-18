@@ -35,8 +35,10 @@ import landIcon from "../assets/landIcon.png";
 import questIcon from "../assets/sidebarIcons/questsIcon.svg";
 import craftingIcon from "../assets/sidebarIcons/craftIcon.svg";
 import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
-import dragonIcon from "../assets/dragonIcon.png";
-import scorpionIcon from "../assets/tempScorpion2.png";
+import dragonIcon from "../assets/dragonMarker.png";
+import scorpionIcon from "../assets/scorpionMarker.png";
+import coldFuryIcon from "../assets/coldFuryMarker.png";
+
 import treasureHuntIcon from "../assets/treasureHuntIcon.png";
 import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
 import mazeGardenIcon from "../assets/mazeGardenIcon.png";

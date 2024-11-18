@@ -488,448 +488,76 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
           </div>
         ) : type === "event" ? (
           <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+         <div className="d-flex flex-column gap-2">
+         <div className="d-flex flex-column">
+          <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
               <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
               <a href="javascript:void(0)" class="closebtn-3" onClick={onClose}>
                 ×
               </a>
             </div>
-          </div>
-        ) : marker?.infoType === "puzzlemadness" ? (
-          <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex flex-column gap-2 h-100">
-              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-                <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-                <a
-                  href="javascript:void(0)"
-                  class="closebtn-3"
-                  onClick={onClose}
-                >
-                  ×
-                </a>
-              </div>
-              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100">
-                <div
-                  className="px-3 w-100 d-flex flex-column align-items-center h-100 justify-content-between mb-3"
-                  style={{ borderRadius: "12px" }}
-                >
-                  <img
-                    src={puzzleMadnessBanner}
-                    alt={marker.title}
-                    className="w-75"
-                  />
-                  <p className="custom-marker-content  mb-0">
-                    In the Puzzle Madness event, players search for 10 hidden
-                    pieces across the Island Zero and Dypians City maps. These
-                    pieces hold points that contribute to the BNB Chain
-                    leaderboard. One piece contains a multiplier (x2 to x8) that
-                    activates only after all pieces are found, significantly
-                    boosting your score.
-                    <br />
-                    <br />
-                    Players have two hours to find the pieces. Points are added
-                    to the leaderboards even if not all pieces are found. You
-                    can extend time by purchasing another bundle.
-                  </p>
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      CAWS NFT Utility
-                    </h6>
-                    <p className="custom-marker-content  mb-0">
-                      Holding a CAWS NFT gives you an advantage. Your cat
-                      companion helps detect hidden pieces with an exclamation
-                      mark above its head. However, the cat cannot detect pieces
-                      on top or inside buildings, so players must thoroughly
-                      explore.
-                    </p>
-                  </div>
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      How it works
-                    </h6>
-                    <div className="d-flex flex-column gap-1">
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Purchase the bundle from the Challenge Center
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Find 10 pieces within the two-hour limit in the Island
-                          Zero and Dypians City maps
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          An indicator will guide you on whether pieces are
-                          located making your search easier
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center">
-                    <button className="stake-wod-btn px-4 py-2 d-flex algin-items-center gap-1">
-                      Buy
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : marker?.infoType === "dragonRuins" ? (
-          <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex flex-column gap-2 h-100">
-              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-                <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-                <a
-                  href="javascript:void(0)"
-                  class="closebtn-3"
-                  onClick={onClose}
-                >
-                  ×
-                </a>
-              </div>
-              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100">
-                <div
-                  className="px-3 w-100 d-flex flex-column align-items-center h-100 justify-content-between mb-3"
-                  style={{ borderRadius: "12px" }}
-                >
-                  <img
-                    src={dragonRuinsBanner}
-                    alt={marker.title}
-                    className="w-75"
-                  />
-                  <p className="custom-marker-content  mb-0">
-                    The Dragon Ruins challenge lets players summon and battle a
-                    dragon for significant benefits. Participants get a 4x
-                    multiplier on in-game activities, boosting their leaderboard
-                    scores. The challenge benefits last for 1 hour, but players
-                    can buy bundles to extend the time and battle the dragon
-                    multiple times for more rewards. There's no limit to the
-                    number of bundles that can be purchased during the event.
-                  </p>
+            <img src={marker.popupImage} className="mx-3 my-3" alt={marker.title} />
 
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      How it works
-                    </h6>
-                    <div className="d-flex flex-column gap-1">
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Purchase the bundle from the Challenge Center
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Summon and defeat the dragon for rewards
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Enjoy a x4 multiplier on activities for 1 hour
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Buy additional bundles to extend time and earn more
-                          rewards, with no purchase limit
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex flex-column w-100 gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      Point Distribution
-                    </h6>
-                    <div className="chain-marker-info-wrapper w-100 p-2">
-                      <table className="table bgtable mb-0">
-                        <thead>
-                          <tr>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                              }}
-                            >
-                              Animal
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Points
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Multiper
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Total Points
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {dragonRuinsTable.map((item, index) => (
-                            <tr>
-                              <th
-                                scope="row d-flex align-items-center gap-2"
-                                style={{
-                                  color: "#eeedff",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                }}
-                              >
-                                <img src={item.icon} className="me-2" alt="" />
-                                {item.title}
-                              </th>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#eeedff",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {item.points}
-                              </td>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#2DF5F2",
-                                  textAlign: "center",
-                                }}
-                              >
-                                x4
-                              </td>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#2DF5F2",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {item.points * 4}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center">
-                    <button className="stake-wod-btn px-4 py-2 d-flex algin-items-center gap-1">
-                      Buy
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        ) : marker?.infoType === "scorpionKing" ? (
-          <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex flex-column gap-2 h-100">
-              <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-                <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-                <a
-                  href="javascript:void(0)"
-                  class="closebtn-3"
-                  onClick={onClose}
-                >
-                  ×
-                </a>
-              </div>
-              <div className="marker-details-inner-wrapper d-flex flex-column gap-2 h-100">
-                <div
-                  className="px-3 w-100 d-flex flex-column align-items-center h-100 justify-content-between mb-3"
-                  style={{ borderRadius: "12px" }}
-                >
-                  <img
-                    src={scorpionKingBanner}
-                    alt={marker.title}
-                    className="w-75"
-                  />
-                  <p className="custom-marker-content  mb-0">
-                    The Scorpion King challenge lets players summon and battle a
-                    dragon for significant benefits. Participants get a 4x
-                    multiplier on in-game activities, boosting their leaderboard
-                    scores. The challenge benefits last for 1 hour, but players
-                    can buy bundles to extend the time and battle the scorpion
-                    multiple times for more rewards. There's no limit to the
-                    number of bundles that can be purchased during the event.
+            <div className="d-flex flex-column gap-3 px-3">
+            <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
+            {marker.title === "Puzzle Madness" ||
+            marker.title === "Golden Pass" ||
+            marker.title === "Critical Hit" ? (
+              <>
+                {marker?.secondaryDesc && (
+                  <p className="custom-marker-content mb-0">
+                    {marker.secondaryDesc}
                   </p>
-
-                  <div className="d-flex flex-column gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      How it works
+                )}
+                <div className="d-flex flex-column gap-2">
+                  {marker?.secondaryTitle && (
+                    <h6 className="mb-0 challenge-popup-secondary-title">
+                      {marker.secondaryTitle}
                     </h6>
-                    <div className="d-flex flex-column gap-1">
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Purchase the bundle from the Challenge Center
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                        Summon and defeat the scorpion for rewards
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Enjoy a x4 multiplier on activities for 1 hour
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2">
-                        <div className="green-dot"></div>
-                        <span className="custom-marker-content">
-                          Buy additional bundles to extend time and earn more
-                          rewards, with no purchase limit
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex flex-column w-100 gap-2">
-                    <h6 className="chain-marker-benefits-title mb-0">
-                      Point Distribution
-                    </h6>
-                    <div className="chain-marker-info-wrapper w-100 p-2">
-                      <table className="table bgtable mb-0">
-                        <thead>
-                          <tr>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                              }}
-                            >
-                              Animal
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Points
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Multiper
-                            </th>
-                            <th
-                              scope="col popup-table-header"
-                              style={{
-                                color: "#828FBB",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                textAlign: "center",
-                              }}
-                            >
-                              Total Points
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {scorpionKingTable.map((item, index) => (
-                            <tr key={index}>
-                              <th
-                                scope="row d-flex align-items-center gap-2"
-                                style={{
-                                  color: "#eeedff",
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                }}
-                              >
-                                <img src={item.icon} className="me-2" alt="" />
-                                {item.title}
-                              </th>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#eeedff",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {item.points}
-                              </td>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#2DF5F2",
-                                  textAlign: "center",
-                                }}
-                              >
-                                x4
-                              </td>
-                              <td
-                                style={{
-                                  fontSize: "14px",
-                                  color: "#2DF5F2",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {item.points * 4}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="d-flex w-100 justify-content-center">
-                    <button className="stake-wod-btn px-4 py-2 d-flex algin-items-center gap-1">
-                      Buy
-                    </button>
-                  </div>
+                  )}
+                  <p className="custom-marker-content mb-0">{marker.thirdDesc}</p>
                 </div>
+              </>
+            ) : (
+              <></>
+            )}
+            <div className="d-flex flex-column gap-2">
+              <h6 className="mb-0 challenge-popup-secondary-title">
+                How it works
+              </h6>
+              <div className="d-flex flex-column gap-1">
+                {marker.workList.map((work, index) => (
+                  <div className="d-flex align-items-center gap-2" key={index}>
+                    <div className="green-dot"></div>
+                    <span className="custom-marker-content">{work}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="d-flex flex-column gap-2">
+              {marker?.tips && (
+                <h6 className="mb-0 challenge-popup-secondary-title">Tips</h6>
+              )}
+              <div className="d-flex flex-column gap-1">
+                {marker?.tips?.map((tip, index) => (
+                  <div className="d-flex align-items-center gap-2" key={index}>
+                    <div className="green-dot"></div>
+                    <span className="custom-marker-content">{tip}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        ) : marker?.infoType === "mazeGarden" ? (
-          <> </>
-        ) : (
+         </div>
+          <div className="d-flex w-100 justify-content-center">
+          <NavLink className={"getpremium-btn px-3 py-2 mb-3"} to={marker.link}>
+              Buy
+            </NavLink>
+          </div>
+          </div>
+        )  : (
           <> </>
         )}
       </>
