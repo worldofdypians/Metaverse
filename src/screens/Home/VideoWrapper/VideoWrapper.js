@@ -204,7 +204,7 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container px-3 px-lg-0">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container ">
             <h4 className="main-hero-title font-montserrat text-start">
               {/* The Biggest Metaverse
               <br />
@@ -293,7 +293,7 @@ const VideoWrapper = ({
         {/* </div> */}
         {/* </div> */}
         {windowSize.width > 992 && (
-          <div className="opacitywrapper custom-container">
+          <div className="opacitywrapper custom-container ">
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                 <NavLink

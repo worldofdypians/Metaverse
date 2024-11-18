@@ -175,7 +175,7 @@ const MainHero = () => {
       </div>
       <div className="opacitywrapper position-relative bottom-0">
         <div className="d-flex flex-column gap-4 position-relative">
-          <div className="custom-container m-auto p-0 ">
+          <div className="custom-container m-auto  ">
             <Slider {...settings} ref={betaSlider}>
               {dypProducts.slice(0, 4).map((item, index) => (
                 <NavLink to={`${item.link}`}>
@@ -190,7 +190,7 @@ const MainHero = () => {
           </div>
           <div className="d-flex flex-column mx-0 align-items-center justify-content-between gap-2 buy-items-all-wrapper py-2">
             <div className="container-fluid py-4 buy-wod-bg">
-              <div className="custom-container p-0">
+              <div className="custom-container ">
                 <div className="d-flex flex-column  gap-4">
                   <h4
                     className="main-hero-title font-montserrat text-center"
