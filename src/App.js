@@ -813,7 +813,6 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
               immutableEvent[0].reward.earn.multiplier;
@@ -825,7 +824,6 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -880,7 +878,6 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -988,6 +985,8 @@ function App() {
           }
 
           if (baseEvent && baseEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
             if (baseEvent[0].reward.earn.multiplier !== 0) {
@@ -4728,6 +4727,8 @@ function App() {
             path="/account"
             element={
               <Dashboard
+              wodBalance={wodBalance}
+
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
@@ -4790,6 +4791,8 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+              wodBalance={wodBalance}
+
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
@@ -5514,6 +5517,8 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+              wodBalance={wodBalance}
+
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {

@@ -34,8 +34,6 @@ import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
 import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
 import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
 
-
-
 import premiumDummy from "./assets/premiumDummy.png";
 import dummyDragon from "./assets/dummyDragon.png";
 import dummyCaws from "./assets/dummyCaws.png";
@@ -150,7 +148,7 @@ const MyProfile = ({
   userDataStar,
   primeStars,
   allClaimedChestsPremium,
-  allClaimedChestsstd
+  allClaimedChestsstd,
 }) => {
   const totalClaimedChests = allClaimedChests;
 
@@ -310,10 +308,10 @@ const MyProfile = ({
                   }
                   alt=""
                 />
-                <div className="score-text-wrapper d-flex flex-column align-items-center">
+                {/* <div className="score-text-wrapper d-flex flex-column align-items-center">
                   <h6 className="mb-0">{getFormattedNumber(totalScore, 0)}</h6>
                   <span>Score</span>
-                </div>
+                </div> */}
               </div>
               <div className="d-flex flex-column gap-2 w-100">
                 <div className="d-flex align-items-center gap-1">
@@ -559,7 +557,9 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={bnbMazeDay} alt="" />
                   <div className="daily-progress-value-golden">
-                    <span>{primeStars === true ? '+ 50 Stars' : 'In Progress'}</span>
+                    <span>
+                      {primeStars === true ? "+ 50 Stars" : "In Progress"}
+                    </span>
                   </div>
                   <span className="bundle-title-bottom">Prime</span>
 
@@ -572,11 +572,15 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={dailyBonusStd} alt="" />
                   <div className="daily-progress-value-golden">
-                    <span>{allClaimedChestsstd === 0 ? 'Ready' : allClaimedChestsstd < 70 ? allClaimedChestsstd : 'Completed'}</span>
+                    <span>
+                      {allClaimedChestsstd === 0
+                        ? "Ready"
+                        : allClaimedChestsstd < 70
+                        ? allClaimedChestsstd
+                        : "Completed"}
+                    </span>
                   </div>
-                  <span className="bundle-title-bottom">
-                    Daily Bonus
-                  </span>
+                  <span className="bundle-title-bottom">Daily Bonus</span>
 
                   {/* <img
                     src={emptyTag}
@@ -587,7 +591,13 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={dailyBonusPrime} alt="" />
                   <div className="daily-progress-value-golden">
-                  <span>{allClaimedChestsPremium === 0 ? 'Ready' : allClaimedChestsPremium < 70 ? allClaimedChestsPremium : 'Completed'}</span>
+                    <span>
+                      {allClaimedChestsPremium === 0
+                        ? "Ready"
+                        : allClaimedChestsPremium < 70
+                        ? allClaimedChestsPremium
+                        : "Completed"}
+                    </span>
                   </div>
                   <span className="bundle-title-bottom">Daily Bonus Prime</span>
 
@@ -600,7 +610,7 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={dailyEvents[utcDayIndex].image} alt="" />
                   <div className="daily-progress-value">
-                    <span>{userDailyBundles?.dragonRuinsCount}</span>
+                    <span>{userDailyBundles?.dragonRuinsCount === 0 ? 'Ready' : userDailyBundles?.dragonRuinsCount}</span>
                   </div>
                   {/* {userDailyBundles?.dragonRuinsCount > 0 && (
                     <img
@@ -630,7 +640,13 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={treasureHunt} alt="" />
                   <div className="daily-progress-value">
-                    <span>0</span>
+                    <span>
+                      {userActiveEvents === 2
+                        ? "Completed"
+                        : userActiveEvents === 0
+                        ? "Ready"
+                        : userActiveEvents + "/2"}
+                    </span>
                   </div>
                   {/* <img
                     src={emptyTag}
@@ -656,7 +672,7 @@ const MyProfile = ({
                 <div className="daily-progress-item position-relative">
                   <img src={puzzleMadness} alt="" />
                   <div className="daily-progress-value">
-                    <span>{userDailyBundles?.puzzleMadnessCount}</span>
+                    <span>{userDailyBundles?.puzzleMadnessCount === 0 ? 'Ready' : userDailyBundles?.puzzleMadnessCount}</span>
                   </div>
                   {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
                     <img
