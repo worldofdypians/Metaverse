@@ -4668,7 +4668,7 @@ const challenges = [
     marker: markers.criticalHitMarker,
     popupImage: criticalHitPopup,
 
-    location: [-0.06160496478405296, 0.09829759597778322],
+    location: [-0.06178739905312879, 0.09370563518485311],
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     link: "/account/challenges/critical-hit",
     popupDesc:

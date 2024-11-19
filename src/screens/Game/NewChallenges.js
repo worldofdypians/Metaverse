@@ -27,6 +27,9 @@ import treasureHuntPopup from "../../assets/gameAssets/challengeCards/treasureHu
 import stoneEyePopup from "../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
 import explorerHuntPopup from "../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
+import dailyBonusPopup from "../../assets/gameAssets/challengeCards/dailyBonusPopup.webp";
+import dailyBonusPrimePopup from "../../assets/gameAssets/challengeCards/dailyBonusPrimePopup.webp";
+import starsPopup from "../../assets/gameAssets/challengeCards/starsPopup.webp";
 import Slider from "react-slick";
 import ChallengePopup from "../../components/ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -153,7 +156,7 @@ const NewChallenges = ({ screen, popupEvent,
   const challengeDaily = [
     {
       image: dailyBonusCard,
-      popupImage: dragonRuinsPopup,
+      popupImage: dailyBonusPopup,
       desc: "Open up to 10 daily bonus chests to collect rewards and keep your progress steady. Perfect for consistent adventurers.",
       title: "Daily Bonus",
       popupDesc:
@@ -173,7 +176,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: dailyBonusPrimeCard,
-      popupImage: dragonRuinsPopup,
+      popupImage: dailyBonusPrimePopup,
       desc: "Upgrade to prime access and unlock up to 20 daily bonus chests for even greater benefits and exclusive rewards.",
       title: "Daily Bonus Prime",
       popupDesc:
@@ -217,7 +220,7 @@ const NewChallenges = ({ screen, popupEvent,
     },
     {
       image: starsCard,
-      popupImage: dragonRuinsPopup,
+      popupImage: starsPopup,
       desc: "Collect stars from different game activities to boost your global rank and earn amazing rewards.",
       title: "Daily Bonus",
       popupDesc:

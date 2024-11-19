@@ -9,13 +9,27 @@ import statsIcon from "../../assets/statsIcon.svg";
 import wodToken from "../../assets/tokens/wodToken.png";
 import moreinfo from "../../assets/more-info.svg";
 import Modal from "../../../../../components/General/Modal";
-import { Tooltip } from "@mui/material";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import axios from "axios";
 import Countdown from "react-countdown";
 import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
+
+
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "150px !important",
+    minWidth: "100px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const renderer = ({ days, hours, minutes, seconds }) => {
   return (
@@ -819,8 +833,8 @@ const StakeWodDetails = ({
                           fontWeight: 300,
                         }}
                       >
-                        {getFormattedNumber(getApproxReturn(depositAmount), 2)}{" "}
-                        WOD
+                        {/* {getFormattedNumber(getApproxReturn(depositAmount), 2)}{" "} */}
+                        --WOD
                       </span>
                     </span>
                   </div>
@@ -911,18 +925,18 @@ const StakeWodDetails = ({
                                 : "",
                           }}
                         >
-                          {getFormattedNumber(
+                          {/* {getFormattedNumber(
                             getApproxReturn(depositAmount),
                             2
-                          )}{" "}
-                          WOD
+                          )} */}
+                          --WOD
                         </span>
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <button
+                {/* <button
                   disabled={
                     (depositAmount === "" || depositLoading === true) &&
                     isConnected &&
@@ -988,6 +1002,19 @@ const StakeWodDetails = ({
                       Failed
                     </>
                   )}
+                </button> */}
+                 <button
+                  disabled={
+                    (depositAmount === "" || depositLoading === true) &&
+                    isConnected &&
+                    chainId === "1"
+                      ? true
+                      : false
+                  }
+                  className={`btn w-100  disabled-btn d-flex justify-content-center align-items-center gap-2`}
+              
+                >
+                  Coming Soon
                 </button>
               </div>
               {/* <div className="d-flex align-items-center gap-2">
@@ -1186,15 +1213,19 @@ const StakeWodDetails = ({
                 </div>
               </div>
              )}
-              <div
+           <HtmlTooltip
+           placement="top"
+           title={<span className="card-eth-chain-text">Coming Soon</span>}
+           >
+           <div
               className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-start'} `}
               style={{
                 cursor: "pointer",
                 width: depositedTokens > 0 ? 'auto' : 'fit-content'
               }}
-              onClick={() => {
-                showPopup();
-              }}
+              // onClick={() => {
+              //   showPopup();
+              // }}
             >
               <h6
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
@@ -1203,6 +1234,7 @@ const StakeWodDetails = ({
                 <img src={statsIcon} alt="" /> Details
               </h6>
             </div>
+           </HtmlTooltip>
           </div>
         </div>
       

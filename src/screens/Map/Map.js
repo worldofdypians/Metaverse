@@ -196,7 +196,7 @@ const Map = ({ dummyBetaPassData2 }) => {
         style={{ height: "100vh", width: "100%" }}
       >
         {/* <TileLayer url="/customTiles/{z}/{x}/{y}.webp" noWrap={true} /> */}
-        <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.png" />
+        <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.webp" />
 
         <ChainMarkers />
 
