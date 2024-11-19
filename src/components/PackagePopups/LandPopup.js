@@ -85,9 +85,9 @@ const LandPopup = ({ onClosePopup }) => {
           <div className="benefit-btn-wrapper">
             {benefits.map((item, index) => {
               return (
-                <button className="benefit-btn p-2" key={index}>
-                  {item.title}
-                </button>
+                <span className="benefit-btn p-2" key={index}>
+                  &#8226; {item.title}
+                </span>
               );
             })}
           </div>

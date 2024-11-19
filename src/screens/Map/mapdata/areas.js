@@ -4662,7 +4662,7 @@ const challenges = [
   {
     title: "Critical Hit",
     duration: "--",
-    image: "puzzleMadnessDummy.png",
+    image: "criticalHitDummy.png",
     type: "event",
     infoType: "Daily Opportunity",
     marker: markers.criticalHitMarker,
@@ -4839,7 +4839,7 @@ const challenges = [
   {
     title: "Maze Day",
     duration: "--",
-    image: "mazeGardenDummy.png",
+    image: "mazeDayDummy.png",
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
@@ -4887,7 +4887,7 @@ const challenges = [
   {
     title: "Treasure Hunt",
     duration: "--",
-    image: "mazeGardenDummy.png",
+    image: "treasureHuntDummy.png",
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
@@ -4910,7 +4910,7 @@ const challenges = [
   {
     title: "Explorer Hunt",
     duration: "--",
-    image: "mazeGardenDummy.png",
+    image: "explorerHuntDummy.png",
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
@@ -4933,7 +4933,7 @@ const challenges = [
   {
     title: "Great Collection",
     duration: "--",
-    image: "mazeGardenDummy.png",
+    image: "greatCollectionDummy.png",
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
