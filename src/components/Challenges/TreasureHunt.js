@@ -22,7 +22,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
               <div className="ps-lg-5 d-flex align-items-center gap-3">
                 <img src={item.logo} height={36} width={36} alt="" />
                 <div className="d-flex flex-column gap-2">
-                  <h6 className="mb-0 new-treasure-hunt-title">{item.title}</h6>
+                  <h6 className="mb-0 new-treasure-hunt-title text-uppercase">{item.title}</h6>
                   <span className="mb-0 new-treasure-hunt-rewards">
                     {item.totalRewards}
                   </span>
