@@ -19,7 +19,7 @@ const MainHero = () => {
             other players to destroy the enemy's bases.
           </p>
           <div className="d-flex align-items-center gap-3">
-            <a
+            {/* <a
               className="explore-btn px-4 py-1"
               href="https://store.epicgames.com/p/world-of-dypians-2e0694"
               target="_blank"
@@ -31,7 +31,7 @@ const MainHero = () => {
                 style={{ width: "auto", height: "30px" }}
               />{" "}
               Download
-            </a>
+            </a> */}
             <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">
               Join Beta
             </NavLink>

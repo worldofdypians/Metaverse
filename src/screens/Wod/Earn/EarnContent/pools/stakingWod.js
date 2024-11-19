@@ -1004,13 +1004,7 @@ const StakeWodDetails = ({
                   )}
                 </button> */}
                  <button
-                  disabled={
-                    (depositAmount === "" || depositLoading === true) &&
-                    isConnected &&
-                    chainId === "1"
-                      ? true
-                      : false
-                  }
+                  disabled
                   className={`btn w-100  disabled-btn d-flex justify-content-center align-items-center gap-2`}
               
                 >

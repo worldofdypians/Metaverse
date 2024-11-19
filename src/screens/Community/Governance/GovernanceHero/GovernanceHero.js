@@ -17,7 +17,7 @@ const GovernanceHero = ({ onCreateProposal }) => {
                   voice heard.
                 </span>
                 <button
-                  className="explore-btn px-3 py-2 mt-3"
+                  className="getpremium-btn px-3 py-2 mt-3"
                   onClick={onCreateProposal}
                 >
                   Create Proposal
