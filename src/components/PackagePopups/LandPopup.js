@@ -43,7 +43,7 @@ const LandPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup map-popup">
-        <div className=" d-flex align-items-start justify-content-between w-100 m-0 p-3">
+        <div className=" d-flex align-items-center justify-content-between w-100 m-0 p-3 mb-2 new-popup-title-wrapper">
           <h6 className="market-banner-title m-0">LAND NFT COLLECTION</h6>
           <img src={popupXmark} onClick={onClosePopup} alt="" />
         </div>
