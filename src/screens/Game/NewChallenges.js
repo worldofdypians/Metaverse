@@ -202,11 +202,17 @@ const NewChallenges = ({ screen, popupEvent,
       secondaryTitle: "What is Genesis Land?",
       thirdDesc:
         "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
-      workList: [
-        "Earn 30,000-80,000 points by destroying the Gem",
-        "Receive rewards ranging from $20 to $7,000 ",
-        "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
-      ],
+        workList: [
+          "Hold Genesis Land NFT to access the event.",
+          "Earn 30,000-80,000 points by destroying the Gem",
+          "Receive rewards ranging from $20 to $7,000 ",
+          "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+        ],
+        tips: [
+          "Recommended Hero Level: Any",
+          "Use your pickaxe to break the Genesis Gem efficiently.",
+          "Check your Genesis Land daily to ensure you don't miss a gem reset.",
+        ],
     },
   ];
 
@@ -357,7 +363,7 @@ const NewChallenges = ({ screen, popupEvent,
       popupDesc:
         "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
       workList: [
-        "Hold at leas 400 WOD tokens to participate.",
+        "Hold at least 400 WOD tokens to participate.",
         "The event is available exclusively on Fridays.",
         "Players must find their way to the maze’s center and collect the gem to earn rewards.",
         "Rewards include up to 200,000 points, 800 stars, and $10.",
