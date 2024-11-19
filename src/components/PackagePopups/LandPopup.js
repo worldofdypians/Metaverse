@@ -109,7 +109,7 @@ const LandPopup = ({ onClosePopup }) => {
             ))}
           </div>
 
-          <div className="d-flex flex-column flex-lg-row w-100 align-items-center gap-3 justify-content-center mt-2">
+          <div className="d-flex flex-column flex-lg-row w-100 align-items-center gap-3 justify-content-center mt-4">
             <NavLink to={"/shop/land"} className="getpremium-btn col-lg-4 py-2">
               Buy on Shop
             </NavLink>
