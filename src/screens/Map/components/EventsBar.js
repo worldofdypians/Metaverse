@@ -34,7 +34,17 @@ const renderer = ({ days, hours, minutes }) => {
 
 const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, liveTreasureHunts }) => {
  
-  const allChallenges = [...challenges, ...liveTreasureHunts]
+  const today = new Date().getDay();
+
+  const objectsWithDay = challenges.filter(item => item.day !== undefined);
+  const objectsWithoutDay = challenges.filter(item => item.day === undefined);
+
+  const todayObject = objectsWithDay.find(item => item.day === today);
+
+  if (todayObject) {
+    objectsWithoutDay.unshift(todayObject);
+  }
+  const allChallenges = [...objectsWithoutDay, ...liveTreasureHunts]
 
  
   return (
@@ -87,7 +97,7 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                     style={{
                       borderColor:
                         item.infoType === "Daily Opportunity"
-                          ? "#9E3C7A"
+                          ? "#f3bf09"
                           : item.infoType === "Legendary Beast Siege"
                           ? "#8C56FF"
                           : item.infoType === "The Great Hunt"
@@ -100,7 +110,7 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                       style={{
                         color:
                         item.infoType === "Daily Opportunity"
-                        ? "#9E3C7A"
+                        ? "#f3bf09"
                         : item.infoType === "Legendary Beast Siege"
                         ? "#8C56FF"
                         : item.infoType === "The Great Hunt"

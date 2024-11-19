@@ -695,8 +695,8 @@ function App() {
       allPools.forEach((item) => {
         tvl += Number(item.tvl_usd);
       });
-      localStorage.setItem('tvl', tvl)
-      setnftTvl(tvl)
+      localStorage.setItem("tvl", tvl);
+      setnftTvl(tvl);
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
     }
   };
@@ -824,7 +824,6 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
               taikoEvent[0].reward.earn.multiplier;
@@ -878,7 +877,6 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
               mantaEvent[0].reward.earn.multiplier;
@@ -4737,8 +4735,7 @@ function App() {
             path="/account"
             element={
               <Dashboard
-              wodBalance={wodBalance}
-
+                wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
@@ -4801,8 +4798,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
-              wodBalance={wodBalance}
-
+                wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
@@ -5527,8 +5523,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
-              wodBalance={wodBalance}
-
+                wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
@@ -5767,7 +5762,6 @@ function App() {
                 isPremium={isPremium}
                 tvl={nftTvl}
                 wodBalance={wodBalance}
-
               />
             }
           />
@@ -5780,7 +5774,11 @@ function App() {
             element={<GovernanceInner />}
           />
 
-          <Route exact path="/game" element={<Game />} />
+          <Route
+            exact
+            path="/game"
+            element={<Game allStarData={allStarData} />}
+          />
           <Route exact path="/game-updates" element={<GameUpdates />} />
           <Route exact path="/about" element={<About />} />
 

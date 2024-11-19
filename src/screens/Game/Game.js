@@ -9,7 +9,7 @@ import FeatureSection from "./FeatureSection";
 import NewChallenges from "./NewChallenges";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 
-const Game = () => {
+const Game = ({allStarData }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Game";
@@ -38,6 +38,7 @@ const Game = () => {
           <FeatureSection
             setPopupEvent={setPopupEvent}
             setPopupActive={setPopupActive}
+            allStarData={allStarData}
             onSelectEvent={() => {
               setChallengePopup("golden");
             }}
