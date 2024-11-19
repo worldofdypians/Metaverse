@@ -486,78 +486,168 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </a>
             </div>
           </div>
+        ) : type === "teleport" ? (
+          <div className="d-flex flex-column justify-content-between h-100">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex flex-column">
+                <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+                  <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+                  <a
+                    href="javascript:void(0)"
+                    class="closebtn-3"
+                    onClick={onClose}
+                  >
+                    ×
+                  </a>
+                </div>
+              </div>
+              <div className="d-flex flex-column gap-3 px-3">
+                <p className="custom-marker-content mb-0">{marker.desc}</p>
+
+                <div className="d-flex flex-column gap-3">
+                  <h6 className="mb-0 challenge-popup-secondary-title">
+                    Legendary Beast Siege
+                  </h6>
+                  <div className="marker-teleports-grid">
+                    {marker.locationPoints.slice(0, 6).map((item, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                        // style={{ cursor: "pointer" }}
+                      >
+                        <img
+                          src={require(`../assets/${item.image}`)}
+                          style={{ borderRadius: "50%" }}
+                          width={32}
+                          height={32}
+                          alt=""
+                        />
+                        <span className="custom-marker-content">
+                          {item.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="d-flex flex-column gap-3">
+                  <h6 className="mb-0 challenge-popup-secondary-title">
+                    Others
+                  </h6>
+                  <div className="marker-teleports-grid">
+                    {marker.locationPoints.slice(6, 8).map((item, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2 "
+                        key={index}
+                      >
+                        <img
+                          src={require(`../assets/${item.image}`)}
+                          style={{ borderRadius: "50%" }}
+                          width={32}
+                          height={32}
+                          alt=""
+                        />
+                        <span className="custom-marker-content">
+                          {item.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         ) : type === "event" ? (
           <div className="d-flex flex-column justify-content-between h-100">
-         <div className="d-flex flex-column gap-2">
-         <div className="d-flex flex-column">
-          <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
-              <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
-              <a href="javascript:void(0)" class="closebtn-3" onClick={onClose}>
-                ×
-              </a>
-            </div>
-            <img src={marker.popupImage} className="mx-3 my-3" alt={marker.title} />
-
-          </div>
-            <div className="d-flex flex-column gap-3 px-3">
-            <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
-            {marker.title === "Puzzle Madness" ||
-            marker.title === "Golden Pass" ||
-            marker.title === "Critical Hit" ? (
-              <>
-                {marker?.secondaryDesc && (
-                  <p className="custom-marker-content mb-0">
-                    {marker.secondaryDesc}
-                  </p>
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex flex-column">
+                <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+                  <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+                  <a
+                    href="javascript:void(0)"
+                    class="closebtn-3"
+                    onClick={onClose}
+                  >
+                    ×
+                  </a>
+                </div>
+                <img
+                  src={marker.popupImage}
+                  className="mx-3 my-3"
+                  alt={marker.title}
+                />
+              </div>
+              <div className="d-flex flex-column gap-3 px-3">
+                <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
+                {marker.title === "Puzzle Madness" ||
+                marker.title === "Golden Pass" ||
+                marker.title === "Critical Hit" ? (
+                  <>
+                    {marker?.secondaryDesc && (
+                      <p className="custom-marker-content mb-0">
+                        {marker.secondaryDesc}
+                      </p>
+                    )}
+                    <div className="d-flex flex-column gap-2">
+                      {marker?.secondaryTitle && (
+                        <h6 className="mb-0 challenge-popup-secondary-title">
+                          {marker.secondaryTitle}
+                        </h6>
+                      )}
+                      <p className="custom-marker-content mb-0">
+                        {marker.thirdDesc}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <></>
                 )}
                 <div className="d-flex flex-column gap-2">
-                  {marker?.secondaryTitle && (
+                  <h6 className="mb-0 challenge-popup-secondary-title">
+                    How it works
+                  </h6>
+                  <div className="d-flex flex-column gap-1">
+                    {marker.workList.map((work, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{work}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="d-flex flex-column gap-2">
+                  {marker?.tips && (
                     <h6 className="mb-0 challenge-popup-secondary-title">
-                      {marker.secondaryTitle}
+                      Tips
                     </h6>
                   )}
-                  <p className="custom-marker-content mb-0">{marker.thirdDesc}</p>
+                  <div className="d-flex flex-column gap-1">
+                    {marker?.tips?.map((tip, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{tip}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </>
-            ) : (
-              <></>
-            )}
-            <div className="d-flex flex-column gap-2">
-              <h6 className="mb-0 challenge-popup-secondary-title">
-                How it works
-              </h6>
-              <div className="d-flex flex-column gap-1">
-                {marker.workList.map((work, index) => (
-                  <div className="d-flex align-items-center gap-2" key={index}>
-                    <div className="green-dot"></div>
-                    <span className="custom-marker-content">{work}</span>
-                  </div>
-                ))}
               </div>
             </div>
-
-            <div className="d-flex flex-column gap-2">
-              {marker?.tips && (
-                <h6 className="mb-0 challenge-popup-secondary-title">Tips</h6>
-              )}
-              <div className="d-flex flex-column gap-1">
-                {marker?.tips?.map((tip, index) => (
-                  <div className="d-flex align-items-center gap-2" key={index}>
-                    <div className="green-dot"></div>
-                    <span className="custom-marker-content">{tip}</span>
-                  </div>
-                ))}
-              </div>
+            <div className="d-flex w-100 justify-content-center">
+              <NavLink
+                className={"getpremium-btn px-3 py-2 mb-3"}
+                to={marker.link}
+              >
+                Buy
+              </NavLink>
             </div>
           </div>
-         </div>
-          <div className="d-flex w-100 justify-content-center">
-          <NavLink className={"getpremium-btn px-3 py-2 mb-3"} to={marker.link}>
-              Buy
-            </NavLink>
-          </div>
-          </div>
-        )  : (
+        ) : (
           <> </>
         )}
       </>

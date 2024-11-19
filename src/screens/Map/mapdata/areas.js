@@ -1459,20 +1459,46 @@ const seas = [
 
 const teleports = [
   {
-    title: "Teleport #1",
-    location: [-0.06772039744052329, 0.0851869583129883],
-  },
-  {
-    title: "Teleport #2",
-    location: [-0.0714433008071946, 0.07379293441772462],
-  },
-  {
-    title: "Teleport #3",
-    location: [-0.02188682502923144, 0.06025314331054688],
-  },
-  {
-    title: "Teleport #4",
-    location: [-0.115699689434191, 0.0735461711883545],
+    title: "Teleport Station",
+    location: [-0.06895421270976658, 0.0864154100418091],
+    type: "teleport",
+    desc: "The Teleport Station is a futuristic structure that allows players to instantly travel to different locations on the map. It acts as a hub for fast traversal, saving time and enabling quick access to key areas. Players can interact with the station, select their desired destination, and be transported instantly, often accompanied by visual effects like glowing lights or beams to enhance the immersive experience. Teleport stations are typically strategically placed in major zones, making them essential for exploration and quest progression.",
+    subtitle: "Teleport Locations",
+    locationPoints: [
+   
+      {
+        title: "Dragon Ruins",
+        image: "dragonMarker.png",
+      },
+      {
+        title: "Cold Bite",
+        image: "coldFuryMarker.png",
+      },
+      {
+        title: "Fury Beast",
+        image: "furyBeastMarker.png",
+      },
+      {
+        title: "Wing Storm",
+        image: "eagleMarker.png",
+      },
+      {
+        title: "Scorpion King",
+        image: "scorpionMarker.png",
+      },
+      {
+        title: "Stone Eye",
+        image: "cyclopsMarker.png",
+      },
+      {
+        title: "Island Zero",
+        image: "islandZeroIcon.png",
+      },
+      {
+        title: "Genesis Land",
+        image: "criticalHitMarker.png",
+      },
+    ],
   },
 ];
 
@@ -4676,17 +4702,17 @@ const challenges = [
     secondaryTitle: "What is Genesis Land?",
     thirdDesc:
       "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
-      workList: [
-        "Hold Genesis Land NFT to access the event.",
-        "Earn 30,000-80,000 points by destroying the Gem",
-        "Receive rewards ranging from $20 to $7,000 ",
-        "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
-      ],
-      tips: [
-        "Recommended Hero Level: Any",
-        "Use your pickaxe to break the Genesis Gem efficiently.",
-        "Check your Genesis Land daily to ensure you don't miss a gem reset.",
-      ],
+    workList: [
+      "Hold Genesis Land NFT to access the event.",
+      "Earn 30,000-80,000 points by destroying the Gem",
+      "Receive rewards ranging from $20 to $7,000 ",
+      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+    ],
+    tips: [
+      "Recommended Hero Level: Any",
+      "Use your pickaxe to break the Genesis Gem efficiently.",
+      "Check your Genesis Land daily to ensure you don't miss a gem reset.",
+    ],
   },
   {
     title: "Dragon Ruins",

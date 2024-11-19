@@ -34,13 +34,15 @@ import Slider from "react-slick";
 import ChallengePopup from "../../components/ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
 
-const NewChallenges = ({ screen, popupEvent,
+const NewChallenges = ({
+  screen,
+  popupEvent,
   setPopupEvent,
   popupActive,
-  setPopupActive, }) => {
+  setPopupActive,
+}) => {
   const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
-
 
   const currentDate = new Date().getDay();
 
@@ -71,8 +73,6 @@ const NewChallenges = ({ screen, popupEvent,
     setCurrentWeek(week);
   }, []);
 
-
-
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -82,7 +82,6 @@ const NewChallenges = ({ screen, popupEvent,
       html.classList.remove("hidescroll");
     }
   }, [popupActive]);
-
 
   const sliderRef = useRef(null);
   var settings = {
@@ -160,18 +159,14 @@ const NewChallenges = ({ screen, popupEvent,
       desc: "Open up to 10 daily bonus chests to collect rewards and keep your progress steady. Perfect for consistent adventurers.",
       title: "Daily Bonus",
       popupDesc:
-        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+        "Unlock up to 10 free chests daily to earn leaderboard points and direct rewards. Rewards are distributed based on probabilities, with smaller prizes more common and larger prizes less likely. Each chest requires an on-chain transaction to open, and player activity influences the chances of obtaining higher-value rewards.",
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Tuesdays.",
-        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 30,000 points and up to 300 stars.",
+        "Open up to 10 chests daily across supported networks.",
+        "Complete an on-chain transaction for each chest to unlock its reward.",
+        "Rewards include up to 8,000 leaderboard points per chest and direct prizes.",
+        "Some rewards may require specific actions to claim, with deadlines at 00:00 UTC.",
       ],
-      tips: [
-        "Recommended Hero Level: 18 and above",
-        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
-      ],
+
       link: "/account#dailybonus",
     },
     {
@@ -180,18 +175,14 @@ const NewChallenges = ({ screen, popupEvent,
       desc: "Upgrade to prime access and unlock up to 20 daily bonus chests for even greater benefits and exclusive rewards.",
       title: "Daily Bonus Prime",
       popupDesc:
-        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+        "Prime users gain access to an upgraded experience with 20 chests to open daily, doubling the rewards and chances to climb leaderboards. With exclusive opportunities for higher-value prizes, Prime ensures more impactful progression and greater rewards for dedicated players.",
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Tuesdays.",
-        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 30,000 points and up to 300 stars.",
+        "Access 10 additional chests daily as a Prime user.",
+        "Complete on-chain transactions to open all 20 chests.",
+        "Rewards include up to 8,000 leaderboard points per chest and direct prizes.",
+        "Some rewards may require specific actions to claim, with deadlines at 00:00 UTC.",
       ],
-      tips: [
-        "Recommended Hero Level: 18 and above",
-        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
-      ],
+
       link: "/account#dailybonus",
     },
     {
@@ -206,17 +197,17 @@ const NewChallenges = ({ screen, popupEvent,
       secondaryTitle: "What is Genesis Land?",
       thirdDesc:
         "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
-        workList: [
-          "Hold Genesis Land NFT to access the event.",
-          "Earn 30,000-80,000 points by destroying the Gem",
-          "Receive rewards ranging from $20 to $7,000 ",
-          "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
-        ],
-        tips: [
-          "Recommended Hero Level: Any",
-          "Use your pickaxe to break the Genesis Gem efficiently.",
-          "Check your Genesis Land daily to ensure you don't miss a gem reset.",
-        ],
+      workList: [
+        "Hold Genesis Land NFT to access the event.",
+        "Earn 30,000-80,000 points by destroying the Gem",
+        "Receive rewards ranging from $20 to $7,000 ",
+        "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+      ],
+      tips: [
+        "Recommended Hero Level: Any",
+        "Use your pickaxe to break the Genesis Gem efficiently.",
+        "Check your Genesis Land daily to ensure you don't miss a gem reset.",
+      ],
     },
     {
       image: starsCard,
@@ -224,17 +215,17 @@ const NewChallenges = ({ screen, popupEvent,
       desc: "Collect stars from different game activities to boost your global rank and earn amazing rewards.",
       title: "Daily Bonus",
       popupDesc:
-        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+        "Stars are the cornerstone of leaderboard progression in the World of Dypians. Earn Stars through various in-game activities, including daily challenges, special events, and milestone achievements. Stars directly impact your rankings on chain-specific and global leaderboards, unlocking exclusive rewards and solidifying your place in the community.",
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Tuesdays.",
-        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 30,000 points and up to 300 stars.",
+        "Earn Stars by completing daily challenges, participating in events, and achieving milestones.",
+        "Stars contribute to both chain-specific and global leaderboards, tracking your performance.",
+        "Chain leaderboards reset daily, keeping competition fresh, while global leaderboards aggregate weekly and monthly scores.",
+        "The more Stars you accumulate, the higher your rank and the better rewards you can claim.",
       ],
       tips: [
-        "Recommended Hero Level: 18 and above",
-        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+        "Maximize your engagement across multiple chains to boost your global leaderboard rank.",
+        "Focus on daily tasks to ensure a consistent flow of Stars.",
+        "Participate in special events and missions for bonus opportunities.",
       ],
       link: "/account#dailybonus",
     },
@@ -527,7 +518,7 @@ const NewChallenges = ({ screen, popupEvent,
         <div className="new-challenges-wrapper d-flex justify-content-center w-100 py-3">
           <div className="custom-container d-flex align-items-center justify-content-center">
             <Slider {...settings} ref={sliderRef}>
-              <div className="beast-challenges-grid px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
                 {challengeBeasts.map((item, index) => (
                   <div
                     key={index}
@@ -559,7 +550,7 @@ const NewChallenges = ({ screen, popupEvent,
                   </div>
                 ))}
               </div>
-              <div className="beast-challenges-grid px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
                 {challengeHunts.map((item, index) => (
                   <div
                     key={index}
@@ -594,7 +585,7 @@ const NewChallenges = ({ screen, popupEvent,
                   </div>
                 ))}
               </div>
-              <div className="beast-challenges-grid px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
                 {challengeDaily.map((item, index) => (
                   <div
                     key={index}

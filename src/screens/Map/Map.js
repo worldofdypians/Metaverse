@@ -278,7 +278,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               key={item.title}
               icon={markers.teleportMarker}
               item={item}
-              showMarker={false}
+              type={item.type}
+              showMarker={true}
               handleMarkerClick={handleMarkerClick}
             />
           ))}
