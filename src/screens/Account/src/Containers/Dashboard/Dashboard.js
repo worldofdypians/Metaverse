@@ -10008,7 +10008,7 @@ function Dashboard({
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
       <div className="container-nft2 d-flex flex-column align-items-start px-4 position-relative">
-        {location.pathname === "/account" ||
+        {location.pathname.includes("/account") ||
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
