@@ -467,8 +467,7 @@ const NewChallenges = ({
       link: "/account/challenges/great-collection",
     },
   ];
-
-  console.log(adjustedDay, "currentdate");
+ 
 
   return (
     <>
