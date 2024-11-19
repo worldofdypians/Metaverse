@@ -785,10 +785,11 @@ const BetaPassNFT = ({
     } else if (locationState.includes("/beta-pass/cookie3")) {
       setSelectedMint(cookie3Data);
       setMintTitle("cookie3");
-    } else if (locationState.includes("/beta-pass/matchain")) {
-      setSelectedMint(matData);
-      setMintTitle("mat");
     }
+    //  else if (locationState.includes("/beta-pass/matchain")) {
+    //   setSelectedMint(matData);
+    //   setMintTitle("mat");
+    // }
   }, [locationState]);
 
   useEffect(() => {
@@ -1038,7 +1039,7 @@ const BetaPassNFT = ({
                         />
                         <span>Base</span>
                       </NavLink>
-                      <NavLink
+                      {/* <NavLink
                         to={"/shop/beta-pass/matchain"}
                         className={`${location.pathname.includes("matchain") &&
                           "selected-beta-pass-item"
@@ -1054,7 +1055,7 @@ const BetaPassNFT = ({
                           alt=""
                         />
                         <span>Matchain</span>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink
                         to={"/shop/beta-pass/cookie3"}
                         className={`${location.pathname.includes("cookie3") &&
@@ -1328,7 +1329,7 @@ const BetaPassNFT = ({
                       <span>Base</span>
                     </NavLink>
 
-                    <NavLink
+                    {/* <NavLink
                       to={"/shop/beta-pass/matchain"}
                       className={`${
                         location.pathname.includes("matchain") &&
@@ -1345,7 +1346,7 @@ const BetaPassNFT = ({
                         alt=""
                       />
                       <span>Matchain</span>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink
                       to={"/shop/beta-pass/cookie3"}

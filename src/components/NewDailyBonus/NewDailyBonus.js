@@ -3450,111 +3450,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "matchain" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={comingSoon}
-                            className={`chain-img ${
-                              chain === "matchain" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "matchain" &&
-                              "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("matchain");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 698
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleMatPool}
-                              >
-                                {" "}
-                                <img
-                                  src={matchainLogo}
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Matchain
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div> */}
-                              <span className="percentage-span">
-                                {/* {parseInt(matPercentage)}% */}
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                    
                         <div
                           className={`position-relative chain-item ${
                             chain === "core" && "chain-item-active"
@@ -3995,6 +3891,128 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
+                        {/* <div
+                          className={`position-relative chain-item ${
+                            chain === "matchain" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon}
+                            className={`chain-img ${
+                              chain === "matchain" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "matchain" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("matchain");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 698
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMatPool}
+                              >
+                                {" "}
+                                <img
+                                  src={matchainLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Matchain
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(matPercentage)}%
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div> */}
+ <div className={`position-relative chain-item w-100`}>
+                          <img
+                            src={comingSoon}
+                            className={`chain-img`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                          >
+                            <div className="d-flex align-items-center gap-2">
+                              <span className="percentage-span">
+                                Coming Soon
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon2}
@@ -4195,7 +4213,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div
+                        {/* <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
                           } w-100`}
@@ -4219,9 +4237,7 @@ const NewDailyBonus = ({
                               setRewardData([]);
                             }}
                           >
-                            {/* <h6 className="chain-title-position mb-0">
-                              Manta CHAIN
-                            </h6> */}
+                        
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ width: "fit-content" }}
@@ -4244,7 +4260,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div
                           className={`position-relative chain-item ${
@@ -4269,8 +4285,7 @@ const NewDailyBonus = ({
                               setIsActiveIndex();
                               setRewardData([]);
                             }}
-                          >
-                            {/* <h6 className="chain-title-position mb-0">SKALE</h6> */}
+                          > 
                             <div
                               className=" d-flex align-items-center gap-2 "
                               style={{ width: "fit-content" }}
