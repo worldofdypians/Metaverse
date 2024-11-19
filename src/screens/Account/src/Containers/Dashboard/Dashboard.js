@@ -9345,8 +9345,8 @@ function Dashboard({
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
-        block: "end",
-        inline: "nearest",
+        // block: "end",
+        // inline: "nearest",
       });
     } else {
       window.scrollTo(0, 0);

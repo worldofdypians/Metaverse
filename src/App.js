@@ -3327,7 +3327,7 @@ function App() {
     {
       title: "Taiko",
       logo: taikoLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06124018456762751, 0.11788845062255861],
@@ -3365,7 +3365,7 @@ function App() {
     {
       title: "Manta",
       logo: mantaLogo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -3438,43 +3438,43 @@ function App() {
         eventDate: "Aug 26, 2024",
       },
     },
-    {
-      title: "Matchain",
-      logo: matchainLogo,
-      eventStatus: "Coming Soon",
-      rewardType: "BNB",
-      rewardAmount: "$20,000",
-      location: [-0.12891758531392564, 0.059008598327636726],
-      image: "cookie3Banner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in BNB Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 12, 2024",
-      backgroundImage: upcomingMatchain,
-      userEarnUsd: matEarnUsd,
-      userEarnCrypto: matEarnToken,
-      userEarnPoints: matPoints,
-      popupInfo: {
-        title: "Matchain",
-        chain: "Matchain",
-        linkState: "matchain",
-        rewards: "BNB",
-        status: "Coming Soon",
-        id: "event25",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in BNB Rewards",
-        eventDuration: cookieLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Nov 12, 2024",
-      },
-    },
+    // {
+    //   title: "Matchain",
+    //   logo: matchainLogo,
+    //   eventStatus: "Coming Soon",
+    //   rewardType: "BNB",
+    //   rewardAmount: "$20,000",
+    //   location: [-0.12891758531392564, 0.059008598327636726],
+    //   image: "cookie3Banner.png",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   marker: markers.treasureMarker,
+    //   totalRewards: "$20,000 in BNB Rewards",
+    //   myEarnings: 0.0,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Nov 12, 2024",
+    //   backgroundImage: upcomingMatchain,
+    //   userEarnUsd: matEarnUsd,
+    //   userEarnCrypto: matEarnToken,
+    //   userEarnPoints: matPoints,
+    //   popupInfo: {
+    //     title: "Matchain",
+    //     chain: "Matchain",
+    //     linkState: "matchain",
+    //     rewards: "BNB",
+    //     status: "Coming Soon",
+    //     id: "event25",
+    //     eventType: "Explore & Mine",
+    //     totalRewards: "$20,000 in BNB Rewards",
+    //     eventDuration: cookieLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
+    //     minPoints: "5,000",
+    //     maxPoints: "50,000",
+    //     learnMore: "",
+    //     eventDate: "Nov 12, 2024",
+    //   },
+    // },
 
     // {
     //   title: "SEI",
@@ -4993,7 +4993,7 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             exact
             path="/shop/beta-pass/matchain"
             element={
@@ -5020,7 +5020,7 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
               />
             }
-          />
+          /> */}
 
           <Route
             exact
@@ -5690,7 +5690,7 @@ function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             exact
             path="/shop/mint/matchain"
             element={
@@ -5727,7 +5727,7 @@ function App() {
                 myseiNfts={myseiNfts}
               />
             }
-          />
+          /> */}
           <Route exact path="/token" element={<Token />} />
           <Route
             exact

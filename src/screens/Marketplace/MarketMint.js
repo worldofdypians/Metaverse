@@ -516,10 +516,11 @@ const MarketMint = ({
     } else if (location.pathname.includes("taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
-    } else if (location.pathname.includes("matchain")) {
-      setSelectedMint(matData);
-      setMintTitle("mat");
-    }
+    } 
+    // else if (location.pathname.includes("matchain")) {
+    //   setSelectedMint(matData);
+    //   setMintTitle("mat");
+    // }
     getTotalSupply();
   }, [location]);
 
@@ -659,15 +660,15 @@ const MarketMint = ({
     //   id: "taiko",
     // },
 
-    {
-      title: "Matchain Pass",
-      eventId: "matchain",
-      desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
-      img: matchainActive,
-      data: matData,
-      class: "mint-matchain",
-      id: "mat",
-    },
+    // {
+    //   title: "Matchain Pass",
+    //   eventId: "matchain",
+    //   desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
+    //   img: matchainActive,
+    //   data: matData,
+    //   class: "mint-matchain",
+    //   id: "mat",
+    // },
 
     // {
     //   title: "Immutable Pass",
@@ -1071,7 +1072,7 @@ const MarketMint = ({
                           </div>
                         </>
                       )}
-                      <Slider ref={(c) => (slider.current = c)} {...settings}>
+                      {/* <Slider ref={(c) => (slider.current = c)} {...settings}>
                         {dummyCards.map((item, index) => (
                           <EventSliderCard
                             key={index}
@@ -1083,7 +1084,7 @@ const MarketMint = ({
                             mintTitle={mintTitle}
                           />
                         ))}
-                      </Slider>
+                      </Slider> */}
                     </div>
                   )}
                   {selectedMint && (
@@ -1276,7 +1277,7 @@ const MarketMint = ({
                                   </span>
                                 </div>
                               ) : null}
-                              {mintTitle === "mat" ? (
+                              {/* {mintTitle === "mat" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
                                     src={blockChainIcon}
@@ -1288,7 +1289,7 @@ const MarketMint = ({
                                     Minting is available on Matchain
                                   </span>
                                 </div>
-                              ) : null}
+                              ) : null} */}
                             </div>
                           </div>
                           <img
@@ -2037,7 +2038,7 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                  <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-matchain-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">
                         Matchain Beta Pass
@@ -2057,7 +2058,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">

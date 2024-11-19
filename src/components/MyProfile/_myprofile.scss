@@ -237,7 +237,7 @@
   width: 60%;
   @media screen and (max-width: 786px) {
     width: 100%;
-    top: -24px;
+    top: -20px;
     right: 0px;
     justify-content: center;
   }
@@ -405,9 +405,14 @@
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   // border: 2px solid transparent;
   transition: all 0.25s ease;
-  // @media screen and (max-width: 786px) {
-  //   height: auto;
-  // }
+ 
+    .utcEventContent {
+       
+
+      @media screen and (max-width: 786px) {
+         width: 50% !important;
+    }
+  }
 }
 
 .extraRewardsGolden {

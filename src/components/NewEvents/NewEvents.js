@@ -602,47 +602,7 @@ const NewEvents = ({
             <div className="d-flex flex-column">
               <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
                 <h6 className="challenges-text mb-0">CHALLENGES & EVENTS</h6>
-                {(challenge === "treasure-hunt" ||
-                  selectedEvent === "treasure-hunt") && (
-                  <div className="d-flex align-items-center gap-2">
-                    <div
-                      className={`${
-                        eventDuration === "Live"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      }   px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Live");
-                      }}
-                    >
-                      <span>Live</span>
-                    </div>
-                    <div
-                      className={`${
-                        eventDuration === "Coming Soon"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      } px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Coming Soon");
-                      }}
-                    >
-                      <span>Upcoming</span>
-                    </div>
-                    <div
-                      className={`${
-                        eventDuration === "Expired"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      } px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Expired");
-                      }}
-                    >
-                      <span>Past</span>
-                    </div>
-                  </div>
-                )}
+            
               </div>
               <div className="new-events-bottom-wrapper p-3 mb-4">
                 <div className="row gap-2 gap-lg-0">
@@ -911,6 +871,47 @@ const NewEvents = ({
                     </div>
                   </div>
                   <div className="col-12 col-lg-10">
+                  {(challenge === "treasure-hunt" ||
+                  selectedEvent === "treasure-hunt") && (
+                  <div className="d-flex align-items-center gap-2 mb-3">
+                    <div
+                      className={`${
+                        eventDuration === "Live"
+                          ? "active-challenge-tab"
+                          : "challenge-tab"
+                      }   px-4 py-2 d-flex align-items-center justify-content-center`}
+                      onClick={() => {
+                        seteventDuration("Live");
+                      }}
+                    >
+                      <span>Live</span>
+                    </div>
+                    <div
+                      className={`${
+                        eventDuration === "Coming Soon"
+                          ? "active-challenge-tab"
+                          : "challenge-tab"
+                      } px-4 py-2 d-flex align-items-center justify-content-center`}
+                      onClick={() => {
+                        seteventDuration("Coming Soon");
+                      }}
+                    >
+                      <span>Upcoming</span>
+                    </div>
+                    <div
+                      className={`${
+                        eventDuration === "Expired"
+                          ? "active-challenge-tab"
+                          : "challenge-tab"
+                      } px-4 py-2 d-flex align-items-center justify-content-center`}
+                      onClick={() => {
+                        seteventDuration("Expired");
+                      }}
+                    >
+                      <span>Past</span>
+                    </div>
+                  </div>
+                )}
                     {challenge === "treasure-hunt" ? (
                       <TreasureHunt
                         events={events}

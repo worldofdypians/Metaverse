@@ -1142,7 +1142,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {
-                            navigate("/account/challenges");
+                            navigate("/account/challenges/treasure-hunt");
                           }}
                           data={item}
                           event={item}

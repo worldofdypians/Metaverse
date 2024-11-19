@@ -542,7 +542,7 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
 
-                      <button
+                      {/* <button
                         onMouseEnter={() => handleMouseEnter("matchain")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -579,7 +579,7 @@ const NewLeaderBoard = ({
                           : windowSize.width < 786 && optionText2 === "matchain"
                           ? "Matchain"
                           : ""}
-                      </button>
+                      </button> */}
 
 
 

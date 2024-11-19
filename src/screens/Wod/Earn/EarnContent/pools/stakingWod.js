@@ -793,7 +793,7 @@ const StakeWodDetails = ({
                         }
                         onChange={(e) => {
                           setdepositAmount(e.target.value);
-                          checkApproval(e.target.value);
+                          // checkApproval(e.target.value);
                         }}
                         placeholder="Minimum 0.001 WOD"
                         className="text-input2 w-100"
@@ -810,7 +810,7 @@ const StakeWodDetails = ({
                     </label> */}
                       <button
                         className="inner-max-btn position-absolute"
-                        onClick={handleSetMaxDeposit}
+                        // onClick={handleSetMaxDeposit}
                       >
                         Max
                       </button>
@@ -1019,12 +1019,12 @@ const StakeWodDetails = ({
                   </span>
                 </span>
               </div> */}
-              {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
+              {/* {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>} */}
             </div>
-            {pendingDivs > 0 && 
+            {/* {pendingDivs > 0 && 
             <div className="stake-separator"></div>
-            }
-            {pendingDivs > 0 && (
+            } */}
+            {/* {pendingDivs > 0 && (
               <div
                 className={`otherside-border ${
                   listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
@@ -1056,14 +1056,10 @@ const StakeWodDetails = ({
                   </h6>
                 </div>
                 <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                  {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
+              
                   <div className="form-row d-flex gap-2 align-items-center justify-content-between">
                     <h6 className="m-0 rewardstxtwod w-100 d-flex align-items-center gap-2">
-                      {/* <img
-                        src={wodToken}
-                        alt=""
-                        style={{ width: 18, height: 18 }}
-                      />{" "} */}
+                    
                       {getFormattedNumber(pendingDivs, 2)} WOD
                     </h6>
                     <div className="d-flex w-100 align-items-center gap-2">
@@ -1072,7 +1068,7 @@ const StakeWodDetails = ({
                           claimStatus === "claimed" ||
                           claimStatus === "success" ||
                           pendingDivs <= 0
-                            ? //
+                            ?  
                               true
                             : false
                         }
@@ -1080,7 +1076,7 @@ const StakeWodDetails = ({
                           (claimStatus === "claimed" &&
                             claimStatus === "initial") ||
                           pendingDivs <= 0
-                            ? //
+                            ?  
                               "disabled-btn"
                             : claimStatus === "failed"
                             ? "fail-button"
@@ -1148,11 +1144,11 @@ const StakeWodDetails = ({
                   {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
                 </div>
               </div>
-            )}
-            {depositedTokens && depositedTokens > 0 && (
+            )} */}
+            {/* {depositedTokens && depositedTokens > 0 && (
               <div className="stake-separator"></div>
-            )}
-            {depositedTokens && depositedTokens > 0 && (
+            )} */}
+            {/* {depositedTokens && depositedTokens > 0 && (
               <div
                 className={`otherside-border  ${
                   listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
@@ -1161,18 +1157,7 @@ const StakeWodDetails = ({
                 <div className="d-flex flex-column gap-2">
                   <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
                     My Deposit
-                    {/* <Tooltip
-                    placement="top"
-                    title={
-                      <div className="tooltip-text">
-                        {
-                          "Withdraw your deposited assets from the staking smart contract."
-                        }
-                      </div>
-                    }
-                  >
-                    <img src={moreinfo} alt="" />
-                  </Tooltip> */}
+                 
                   </h6>
                   <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
                     <div className="d-flex align-items-center gap-2 justify-content-center">
@@ -1184,8 +1169,7 @@ const StakeWodDetails = ({
                           <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
                             <Countdown
                               date={
-                                // (Number(stakingTime) + Number(cliffTime)) * 1000
-                                today.getTime()
+                                (Number(stakingTime) + Number(cliffTime)) * 1000 
                               }
                               renderer={renderer2}
                             />
@@ -1206,7 +1190,7 @@ const StakeWodDetails = ({
                   </div>
                 </div>
               </div>
-             )}
+             )} */}
            <HtmlTooltip
            placement="top"
            title={<span className="card-eth-chain-text">Coming Soon</span>}
