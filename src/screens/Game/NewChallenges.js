@@ -397,7 +397,7 @@ const NewChallenges = ({ screen, popupEvent,
         "Focus on observation to spot clues, gates, and shortcuts.",
         "Plan your route and mark your path to avoid retracing your steps.",
       ],
-      link: "/account/challenges/maze-garden",
+      link: "/account/challenges/maze-day",
     },
     {
       image: puzzleMadnessCard,

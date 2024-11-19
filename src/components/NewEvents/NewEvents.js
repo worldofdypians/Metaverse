@@ -199,7 +199,7 @@ const NewEvents = ({
       "Focus on observation to spot clues, gates, and shortcuts.",
       "Plan your route and mark your path to avoid retracing your steps.",
     ],
-    link: "/account/challenges/maze-garden",
+    link: "/account/challenges/maze-day",
   };
 
   const greatCollectionInfo = {
@@ -527,7 +527,7 @@ const NewEvents = ({
       eventId &&
       eventId !== "" &&
       eventId !== "treasure-hunt" &&
-      eventId !== "maze-garden" &&
+      eventId !== "maze-day" &&
       eventId !== "great-collection" &&
       eventId !== "explorer-hunt" &&
       eventId !== "critical-hit"
@@ -549,7 +549,7 @@ const NewEvents = ({
             : eventinfos.findIndex((item) => item.challange === eventId) - 0.5
         );
       }
-    } else if (eventId !== "" && eventId === "maze-garden") {
+    } else if (eventId !== "" && eventId === "maze-day") {
       setActiveEvent(mazeGardenInfo);
     } else if (eventId !== "" && eventId === "great-collection") {
       setActiveEvent(greatCollectionInfo);
@@ -581,7 +581,7 @@ const NewEvents = ({
           <div className="col-12">
             <div className="d-flex flex-column">
               <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
-                <h6 className="challenges-text mb-0">Challenges</h6>
+                <h6 className="challenges-text mb-0">CHALLENGES & EVENTS</h6>
                 {(challenge === "treasure-hunt" ||
                   selectedEvent === "treasure-hunt") && (
                   <div className="d-flex align-items-center gap-2">
@@ -641,7 +641,7 @@ const NewEvents = ({
                               return item.day === utcDayIndex;
                             }) !== undefined &&
                             eventId !== "treasure-hunt" &&
-                            eventId !== "maze-garden" &&
+                            eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
                             eventId !== "explorer-hunt" &&
                             eventId !== "critical-hit"
@@ -665,16 +665,16 @@ const NewEvents = ({
                           <h6 className="mb-0">Legendary Beast Siege</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/maze-garden">
+                      <NavLink to="/account/challenges/maze-day">
                         <div
                           className={`${
-                            challenge === "maze-garden" ||
-                            selectedEvent === "maze-garden"
+                            challenge === "maze-day" ||
+                            selectedEvent === "maze-day"
                               ? "active-challenge-item"
                               : "challenge-item"
                           } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                           onClick={() => {
-                            setChallenge("maze-garden");
+                            setChallenge("maze-day");
                             setActiveEvent(mazeGardenInfo);
                           }}
                         >
@@ -830,16 +830,16 @@ const NewEvents = ({
                           <h6 className="mb-0">Critical Hit</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/maze-garden">
+                      <NavLink to="/account/challenges/maze-day">
                         <div
                           className={` ${
-                            challenge === "maze-garden" ||
-                            selectedEvent === "maze-garden"
+                            challenge === "maze-day" ||
+                            selectedEvent === "maze-day"
                               ? "active-challenge-item"
                               : "challenge-item"
                           } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                           onClick={() => {
-                            setChallenge("maze-garden");
+                            setChallenge("maze-day");
                           }}
                         >
                           <img
@@ -1157,7 +1157,7 @@ const NewEvents = ({
                           )} */}
                         </div>
                       </div>
-                    ) : challenge === "maze-garden" ||
+                    ) : challenge === "maze-day" ||
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
                       challenge === "critical-hit" ? (
