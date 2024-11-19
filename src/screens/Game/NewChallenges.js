@@ -12,6 +12,7 @@ import treasureHuntCard from "../../assets/gameAssets/challengeCards/treasureHun
 import stoneEyeCard from "../../assets/gameAssets/challengeCards/stoneEyeCard.png";
 import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHuntCard.png";
 import dailyBonusCard from "../../assets/gameAssets/challengeCards/dailyBonusCard.png";
+import starsCard from "../../assets/gameAssets/challengeCards/starsCard.png";
 import dailyBonusPrimeCard from "../../assets/gameAssets/challengeCards/dailyBonusPrimeCard.png";
 import greatCollectionCard from "../../assets/gameAssets/challengeCards/greatCollectionCard.png";
 import dragonRuinsPopup from "../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
@@ -207,6 +208,26 @@ const NewChallenges = ({ screen, popupEvent,
         "Receive rewards ranging from $20 to $7,000 ",
         "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
       ],
+    },
+    {
+      image: starsCard,
+      popupImage: dragonRuinsPopup,
+      desc: "Collect stars from different game activities to boost your global rank and earn amazing rewards.",
+      title: "Daily Bonus",
+      popupDesc:
+        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Tuesdays.",
+        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 30,000 points and up to 300 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 18 and above",
+        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
+        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+      ],
+      link: "/account#dailybonus",
     },
   ];
 

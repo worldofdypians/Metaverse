@@ -4691,7 +4691,7 @@ const challenges = [
     marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
     popupImage: dragonRuinsPopup,
-
+    day: 1,
     popupDesc:
       "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
     workList: [
@@ -4713,6 +4713,7 @@ const challenges = [
     image: "coldBiteDummy.png",
     type: "event",
     infoType: "Legendary Beast Siege",
+    day: 2,
 
     marker: markers.coldFuryMarker,
     location: [-0.06136893052665028, 0.128016471862793],
@@ -4738,6 +4739,7 @@ const challenges = [
     image: "furyBeastDummy.png",
     type: "event",
     infoType: "Legendary Beast Siege",
+    day: 3,
 
     marker: markers.furyBeastMarker,
     location: [-0.0658321235765625, 0.05362272262573243],
@@ -4764,6 +4766,7 @@ const challenges = [
     image: "wingStormDummy.png",
     type: "event",
     infoType: "Legendary Beast Siege",
+    day: 4,
 
     marker: markers.eagleMarker,
     location: [-0.051476948488459, 0.034632682800292976],
@@ -4794,6 +4797,7 @@ const challenges = [
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
     popupImage: scorpionKingPopup,
+    day: 6,
 
     popupDesc:
       "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
@@ -4816,6 +4820,7 @@ const challenges = [
     image: "stoneEyeDummy.png",
     type: "event",
     infoType: "Legendary Beast Siege",
+    day: 0,
 
     marker: markers.cyclopsMarker,
     location: [-0.11007779025336882, 0.09102344512939455],
@@ -4845,6 +4850,7 @@ const challenges = [
     marker: markers.mazeMarker,
     location: [-0.06562827582557527, 0.08779406547546388],
     popupImage: mazeGardenPopup,
+    day: 5,
 
     popupDesc:
       "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",

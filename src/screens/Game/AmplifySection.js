@@ -65,7 +65,7 @@ const AmplifySection = ({setShowPopup}) => {
                     </button>
                     <NavLink
                       to={
-                        "https://opensea.io/collection/catsandwatchessocietycaws"
+                        "https://www.youtube.com/watch?v=4HRMvr2jtbE"
                       }
                       target="_blank"
                       className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
@@ -110,7 +110,7 @@ const AmplifySection = ({setShowPopup}) => {
                       View More
                     </button>
                     <NavLink
-                      to={"https://opensea.io/collection/catsandwatchessocietycaws"}
+                      to={"https://www.youtube.com/watch?v=4HRMvr2jtbE"}
                       target="_blank"
                       className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
                     >

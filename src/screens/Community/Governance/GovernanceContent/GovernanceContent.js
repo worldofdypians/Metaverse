@@ -110,7 +110,7 @@ const GovernanceContent = () => {
                     </div>
                     <div className="d-flex align-items-center gap-2 col-lg-2 justify-content-end">
                       <div className="option-tag px-3 py-1 col-lg-5 d-flex justify-content-center">
-                        <span className="option-text">Option 1</span>
+                        <span className="option-text">Approved</span>
                       </div>
                     </div>
                   </div>
@@ -170,7 +170,7 @@ const GovernanceContent = () => {
                     </div>
                     <div className="d-flex align-items-center gap-2 col-lg-2 justify-content-end">
                       <div className="option-tag px-3 py-1 col-lg-5 d-flex justify-content-center">
-                        <span className="option-text">Option 1</span>
+                        <span className="option-text">Approved</span>
                       </div>
                     </div>
                   </div>

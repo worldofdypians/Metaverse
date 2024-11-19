@@ -234,9 +234,11 @@ const OurTeam = () => {
 
   return (
     <div
-      className="container-fluid mt-lg-5 pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0"
+      className="container-fluid  pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0"
       id="ourteam"
     >
+   
+      <div className="our-team d-flex flex-column align-items-center justify-content-center py-4" style={{borderBottom: "3px solid black"}}>
       <div className="px-3 px-lg-5 d-flex  flex-column justify-content-center align-items-center">
         <div className="row w-100 justify-content-center align-items-center">
           <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
@@ -254,7 +256,6 @@ const OurTeam = () => {
           </div>
         </div>
       </div>{" "}
-      <div className="our-team d-flex align-items-center justify-content-center mt-5 py-4" style={{borderBottom: "3px solid black"}}>
         <div className="custom-container">
           <div className="team-container w-100 d-grid">
             {windowSize.width < 786

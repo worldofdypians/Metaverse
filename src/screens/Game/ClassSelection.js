@@ -25,14 +25,14 @@ const ClassSelection = () => {
               brute strength to conquer their enemies.
             </p>
             <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
-              <div className="d-flex flex-column gap-1">
+              <a href="https://www.youtube.com/watch?v=HuQ10vG1DnU" target="_blank" className="d-flex flex-column gap-1 warrior-class-video-wrapper">
                 <span className="warrior-class-title">01</span>
                 <img src={warriorThumb1} alt="" />
-              </div>
-              <div className="d-flex flex-column gap-1">
+              </a>
+              <a href="https://www.youtube.com/watch?v=HuQ10vG1DnU" target="_blank" className="d-flex flex-column gap-1 warrior-class-video-wrapper">
                 <span className="warrior-class-title">02</span>
                 <img src={warriorThumb2} alt="" />
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -51,14 +51,14 @@ const ClassSelection = () => {
               oblivion.
             </p>
             <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
-              <div className="d-flex flex-column gap-1 align-items-end">
+              <a href="https://www.youtube.com/watch?v=HuQ10vG1DnU" target="_blank" className="d-flex flex-column gap-1 align-items-end mage-class-video-wrapper">
                 <span className="mage-class-title">01</span>
                 <img src={mageThumb1} alt="" />
-              </div>
-              <div className="d-flex flex-column gap-1 align-items-end">
+              </a>
+              <a href="https://www.youtube.com/watch?v=5zAITRbQrY8" target="_blank" className="d-flex flex-column gap-1 align-items-end mage-class-video-wrapper">
                 <span className="mage-class-title">02</span>
                 <img src={mageThumb2} alt="" />
-              </div>
+              </a>
             </div>
           </div>
         </div>

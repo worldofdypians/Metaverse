@@ -645,3 +645,23 @@
   font-weight: 700;
   line-height: 16px; /* 80% */
 }
+
+
+.warrior-class-video-wrapper{
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.warrior-class-video-wrapper:hover{
+  filter: drop-shadow(0px 0px 4px #8bd8ff);
+}
+.mage-class-video-wrapper{
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.mage-class-video-wrapper:hover{
+  filter: drop-shadow(0px 0px 4px #ffaeb2);
+}
+
+

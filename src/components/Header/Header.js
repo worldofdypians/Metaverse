@@ -37,6 +37,7 @@ import transferIconActive from "../../screens/Marketplace/Notifications/assets/t
 import updateIcon from "../../screens/Marketplace/Notifications/assets/updateIcon.svg";
 import updateIconActive from "../../screens/Marketplace/Notifications/assets/updateIconActive.svg";
 import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
+import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBetaIcon.svg";
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
 import domainIcon from "./assets/domainIcon.svg";
@@ -949,17 +950,7 @@ const Header = ({
                         <img width={20} height={20} src={premiumIcon} alt="" />
                         Prime
                       </NavLink>
-                      <NavLink
-                        to={"/contact-us"}
-                        className={({ isActive }) =>
-                          isActive
-                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
-                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
-                        }
-                      >
-                        <img width={20} height={20} src={supportIcon} alt="" />
-                        Contact us
-                      </NavLink>
+                     
                       <NavLink
                         to={"/shop"}
                         className={({ isActive }) =>
@@ -970,6 +961,17 @@ const Header = ({
                       >
                         <img width={20} height={20} src={cartIcon2} alt="" />
                         Shop
+                      </NavLink>
+                      <NavLink
+                        to={"/join-beta"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                        }
+                      >
+                        <img width={20} height={20} src={joinBetaIcon} alt="" />
+                        Become a Beta Tester
                       </NavLink>
                       <a
                         href="https://store.epicgames.com/p/world-of-dypians-2e0694"
@@ -982,6 +984,17 @@ const Header = ({
                         <img width={20} height={20} src={epicIcon} alt="" />
                         Download
                       </a>
+                      <NavLink
+                        to={"/contact-us"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                        }
+                      >
+                        <img width={20} height={20} src={supportIcon} alt="" />
+                        Contact us
+                      </NavLink>
                       {email && (
                         <>
                           <hr className="header-divider my-0" />
