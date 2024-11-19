@@ -123,7 +123,7 @@ const Tokenomics = () => {
           Dypians ecosystem and help it grow.
         </span>
       </div>
-      <div className="w-100 px-lg-5 py-5 d-flex justify-content-center new-tokenomics-bg">
+      <div className="w-100  py-5 d-flex justify-content-center new-tokenomics-bg">
         <div className="custom-container w-100">
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6 tablesalewrapper h-100">
