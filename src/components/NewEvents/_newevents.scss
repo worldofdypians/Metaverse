@@ -13,6 +13,23 @@
   text-transform: uppercase;
 }
 
+.event-thumb-img {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition: all 0.25s;
+
+}
+
+.event-thumb-hover {
+  border: 1px solid #FFC808;
+  border-radius: 12px;
+}
+
+.event-thumb-img:hover {
+  border: 1px solid #FFC808;
+  border-radius: 12px;
+}
+
 .active-challenge-tab {
   border-radius: 6px;
   border: 0.5px solid #ffc808;
@@ -114,7 +131,7 @@
   h6 {
     color: #eeedff;
     font-family: "Montserrat";
-    font-size: 14px;
+    font-size: 13px;
     font-style: normal;
     font-weight: 600;
     // line-height: 24px;
