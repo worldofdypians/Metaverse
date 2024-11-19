@@ -8,8 +8,10 @@ import AmplifyExperience from "./AmplifyExperience";
 import FeatureSection from "./FeatureSection";
 import NewChallenges from "./NewChallenges";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
+import OutsideClickHandler from "react-outside-click-handler";
+import VideoPopup from "./VideoPopup";
 
-const Game = ({allStarData }) => {
+const Game = ({ allStarData }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Game";
@@ -19,14 +21,34 @@ const Game = ({allStarData }) => {
   const [challengePopup, setChallengePopup] = useState("");
   const [popupEvent, setPopupEvent] = useState(null);
   const [popupActive, setPopupActive] = useState(false);
+  const [videoPopup, setVideoPopup] = useState(false);
+  const [videoLink, setVideoLink] = useState(null);
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (videoPopup === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [videoPopup]);
 
   return (
     <>
       <div className="container-fluid token-wrapper px-0">
         <div className="d-flex flex-column">
           <GameHero showPopup={showPopup} setShowPopup={setShowPopup} />
-          <ClassSelection />
-          <AmplifySection showPopup={showPopup} setShowPopup={setShowPopup} />
+          <ClassSelection
+            setVideoPopup={setVideoPopup}
+            setVideoLink={setVideoLink}
+          />
+          <AmplifySection
+            showPopup={showPopup}
+            setShowPopup={setShowPopup}
+            setVideoPopup={setVideoPopup}
+            setVideoLink={setVideoLink}
+          />
           <NewChallenges
             screen={"game"}
             popupEvent={popupEvent}
@@ -52,6 +74,14 @@ const Game = ({allStarData }) => {
             setChallengePopup("");
           }}
         />
+      )}
+      {videoPopup && (
+        <OutsideClickHandler onOutsideClick={() => setVideoPopup(false)}>
+          <VideoPopup
+            videoLink={videoLink}
+            closeOverlay={() => setVideoPopup(false)}
+          />
+        </OutsideClickHandler>
       )}
     </>
   );

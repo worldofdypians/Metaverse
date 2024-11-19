@@ -10,7 +10,7 @@ import warriorThumb1 from "../../assets/gameAssets/warriorThumb1.png";
 import warriorThumb2 from "../../assets/gameAssets/warriorThumb2.png";
 import playIcon from "../../assets/gameAssets/playIcon.svg";
 
-const ClassSelection = () => {
+const ClassSelection = ({ setVideoPopup, setVideoLink }) => {
   return (
     <div className="d-flex flex-column flex-lg-row gap-0 gap-lg-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
       <div
@@ -29,32 +29,36 @@ const ClassSelection = () => {
             brute strength to conquer their enemies.
           </p>
           <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
-            <a
-              href="https://www.youtube.com/watch?v=HuQ10vG1DnU"
-              target="_blank"
+            <div
               className="d-flex flex-column gap-1 warrior-class-video-wrapper"
+              onClick={() => {
+                setVideoPopup(true);
+                setVideoLink("HuQ10vG1DnU");
+              }}
             >
               <span className="warrior-class-title">01</span>
-             <div className="position-relative">
-             <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
+              <div className="position-relative">
+                <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
                   <img src={playIcon} width={40} height={40} alt="" />
                 </div>
-             <img src={warriorThumb1} alt="" />
-             </div>
-            </a>
-            <a
-              href="https://www.youtube.com/watch?v=HuQ10vG1DnU"
-              target="_blank"
+                <img src={warriorThumb1} alt="" />
+              </div>
+            </div>
+            <div
               className="d-flex flex-column gap-1 warrior-class-video-wrapper"
+              onClick={() => {
+                setVideoPopup(true);
+                setVideoLink("HuQ10vG1DnU");
+              }}
             >
               <span className="warrior-class-title">02</span>
               <div className="position-relative">
-              <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
+                <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
                   <img src={playIcon} width={40} height={40} alt="" />
                 </div>
-              <img src={warriorThumb2} alt="" />
+                <img src={warriorThumb2} alt="" />
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -76,10 +80,12 @@ const ClassSelection = () => {
             oblivion.
           </p>
           <div className="d-flex align-items-center gap-3 mt-3 d-none d-xl-flex">
-            <a
-              href="https://www.youtube.com/watch?v=HuQ10vG1DnU"
-              target="_blank"
+            <div
               className="d-flex flex-column gap-1 align-items-end mage-class-video-wrapper"
+              onClick={() => {
+                setVideoPopup(true);
+                setVideoLink("HuQ10vG1DnU");
+              }}
             >
               <span className="mage-class-title">01</span>
               <div className="position-relative">
@@ -88,20 +94,22 @@ const ClassSelection = () => {
                 </div>
                 <img src={mageThumb1} alt="" />
               </div>
-            </a>
-            <a
-              href="https://www.youtube.com/watch?v=5zAITRbQrY8"
-              target="_blank"
+            </div>
+            <div
               className="d-flex flex-column gap-1 align-items-end mage-class-video-wrapper"
+              onClick={() => {
+                setVideoPopup(true);
+                setVideoLink("5zAITRbQrY8");
+              }}
             >
               <span className="mage-class-title">02</span>
               <div className="position-relative">
-              <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
+                <div className="play-icon-wrapper d-flex align-items-center justify-content-center">
                   <img src={playIcon} width={40} height={40} alt="" />
                 </div>
-              <img src={mageThumb2} alt="" />
+                <img src={mageThumb2} alt="" />
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </div>
