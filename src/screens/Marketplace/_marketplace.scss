@@ -2822,6 +2822,11 @@ backdrop-filter: blur(5.5px);
   }
 }
 
+.new-popup-title-wrapper{
+  border-radius: 10px;
+  border: 0.5px solid #525469;
+}
+
 .popup-header-img {
   height: 180px;
   object-fit: cover;
