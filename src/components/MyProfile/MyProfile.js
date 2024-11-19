@@ -16,7 +16,7 @@ import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets
 import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
 import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
-import stakeNft from "./assets/stakeNft.png";
+import goldenPassBadge from "./assets/goldenPassBadge.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
 
@@ -200,7 +200,7 @@ const MyProfile = ({
       image: coldBite, // Tuesday
       title: "Cold Bite",
       bannerImg: coldBiteBanner,
-      titleColor: "#68E9FE",
+      titleColor: "#68AEFE",
       contentColor: "#FFFFFF",
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
@@ -526,7 +526,7 @@ const MyProfile = ({
             </div>
             <div className="sidebar-separator2 my-2"></div>
             <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row">
-              <div className="wallet-address-wrapper p-2 w-100">
+              <div className="wallet-address-wrapper2 p-2 w-100">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="user-data-item-left">Global</span>
@@ -534,12 +534,15 @@ const MyProfile = ({
                   </div>
                   <div className="d-flex">
                     <span className="user-data-item-right">
-                      #{userDataStar.position + 1}
+                      #
+                      {userDataStar.position
+                        ? userDataStar.position + 1
+                        : "---"}
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="wallet-address-wrapper p-2 w-100">
+              <div className="wallet-address-wrapper2 p-2 w-100">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="user-data-item-left">Stars</span>
@@ -547,19 +550,19 @@ const MyProfile = ({
                   </div>
                   <div className="d-flex">
                     <span className="user-data-item-right">
-                      {getFormattedNumber(userDataStar.statValue, 0)}
+                      {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="wallet-address-wrapper p-2 w-100">
+              <div className="wallet-address-wrapper2 p-2 w-100">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="user-data-item-left">Brands</span>
                     <span className="user-data-item-left">Collected</span>
                   </div>
                   <div className="d-flex">
-                    <span className="user-data-item-right">4,456</span>
+                    <span className="user-data-item-right">---</span>
                   </div>
                 </div>
               </div>
@@ -671,11 +674,14 @@ const MyProfile = ({
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img src={dailyEvents[utcDayIndex].image} alt="" />
-                  <div className="daily-progress-value">
+                  <div className="daily-progress-value-golden">
                     <span>
-                      {userDailyBundles?.dragonRuinsCount === 0
-                        ? "Ready"
-                        : userDailyBundles?.dragonRuinsCount}
+                      {/* {userDailyBundles?.dragonRuinsCount
+                        ? userDailyBundles?.dragonRuinsCount === 0
+                          ? "Ready"
+                          : userDailyBundles?.dragonRuinsCount
+                        : "Ready"} */}
+                      Upcoming
                     </span>
                   </div>
                   {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -724,8 +730,8 @@ const MyProfile = ({
 
                 <div className="daily-progress-item position-relative">
                   <img src={explorerHunt} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
+                  <div className="daily-progress-value-golden">
+                    <span>Upcoming</span>
                   </div>
                   {/* <img
                     src={emptyTag}
@@ -737,11 +743,14 @@ const MyProfile = ({
 
                 <div className="daily-progress-item position-relative">
                   <img src={puzzleMadness} alt="" />
-                  <div className="daily-progress-value">
+                  <div className="daily-progress-value-golden">
                     <span>
-                      {userDailyBundles?.puzzleMadnessCount === 0
-                        ? "Ready"
-                        : userDailyBundles?.puzzleMadnessCount}
+                      {/* {userDailyBundles?.puzzleMadnessCount
+                        ? userDailyBundles?.puzzleMadnessCount === 0
+                          ? "Ready"
+                          : userDailyBundles?.puzzleMadnessCount
+                        : "Ready"} */}
+                      Upcoming
                     </span>
                   </div>
                   {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
@@ -924,6 +933,19 @@ const MyProfile = ({
                 onClick={openMyRewards}
               >
                 <img src={myRewardsMiner} className="miner-img" alt="" />
+                <div className="d-flex flex-column position-absolute extraRewardsGolden">
+                  <img
+                    src={goldenPassBadge}
+                    alt=""
+                    style={{ width: 60, height: 60 }}
+                  />
+                  <h6
+            className="special-rewards-total-span"
+                    style={{ color: "#F3BF09", width: "fit-content",whiteSpace: "nowrap", }}
+                  >
+                    Extra Rewards
+                  </h6>
+                </div>
                 <div className="d-flex align-items-center gap-2">
                   <h6
                     className="special-rewards-title"
@@ -938,6 +960,7 @@ const MyProfile = ({
                     Rewards
                   </h6>
                 </div>
+          
                 <div className="d-flex flex-column">
                   <h6
                     className="special-rewards-total mb-0"
@@ -976,21 +999,23 @@ const MyProfile = ({
             <div className="col-12 col-lg-6 mt-4">
               <NavLink to={dailyEvents[utcDayIndex].link}>
                 <div
-                  className={`${dailyEvents[utcDayIndex].class} position-relative  d-flex flex-row  align-items-center justify-content-between gap-3 p-3`}
+                  className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
                 >
-                  <div className="d-flex flex-column gap-2">
-                    <span
-                      className={`utcEventTitle`}
-                      style={{ color: dailyEvents[utcDayIndex].titleColor }}
-                    >
-                      {dailyEvents[utcDayIndex].title}
-                    </span>
-                    <span
-                      className={`utcEventContent`}
-                      style={{ color: dailyEvents[utcDayIndex].contentColor }}
-                    >
-                      Coming Soon
-                    </span>
+                  <div className=" d-flex flex-column justify-content-between gap-2 ">
+                    <div className="d-flex flex-column gap-2">
+                      <span
+                        className={`utcEventTitle`}
+                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                      >
+                        {dailyEvents[utcDayIndex].title}
+                      </span>
+                      <span
+                        className={`utcEventContent`}
+                        style={{ color: dailyEvents[utcDayIndex].contentColor }}
+                      >
+                        Coming Soon
+                      </span>
+                    </div>
                     <img
                       src={dailyEvents[utcDayIndex].arrow}
                       alt=""
@@ -1016,14 +1041,14 @@ const MyProfile = ({
                     <h6 className="leaderboards-title">PUZZLE MADNESS</h6>
                     <span
                       className={`utcEventContent w-75`}
-                      style={{ color: '#CCE8F5' }}
+                      style={{ color: "#CCE8F5" }}
                     >
                       Test your puzzle solving skills and boost score
                     </span>
                   </div>
                   <img src={puzzleMadnessArrow} height={20} width={20} alt="" />
                 </div>
-                <img src={puzzleMadnessBanner} className="eventbannerimg"/>
+                <img src={puzzleMadnessBanner} className="eventbannerimg" />
               </NavLink>
             </div>
           </div>

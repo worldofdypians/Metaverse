@@ -33,6 +33,7 @@
 .loginbtn-profile {
   border-radius: 7px;
   background: linear-gradient(90deg, #b936f5 0%, #c64c85 100%);
+  background-position: 0 0;
   color: #eeedff;
   text-align: center;
   font-size: 14px;
@@ -43,7 +44,10 @@
   white-space: nowrap;
   text-transform: uppercase;
 }
-
+.loginbtn-profile:hover {
+  background: linear-gradient(90deg, #c64c85 0%, #b936f5 100%);
+  background-position: 0 0;
+}
 .my-profile-email {
   color: #b8b8e0;
   font-family: "Montserrat";
@@ -65,6 +69,11 @@
 .wallet-address-wrapper {
   border-radius: 4px;
   background: rgba(128, 32, 96, 0.2);
+}
+
+.wallet-address-wrapper2 {
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .wallet-address-wrapper-error {
@@ -387,12 +396,19 @@
 .new-stake-nft-wrapper {
   height: 155px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #055F67 0%, #00293E 100%);
-  border: 2px solid transparent;
+  background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
+  // border: 2px solid transparent;
   transition: all 0.25s ease;
-  @media screen and (max-width: 786px) {
-    height: auto;
-  }
+  // @media screen and (max-width: 786px) {
+  //   height: auto;
+  // }
+}
+
+.extraRewardsGolden {
+  right: 50%;
+  left: 50%;
+  width: fit-content;
+  align-items: center;
 }
 
 // .new-stake-nft-wrapper:hover {
@@ -535,7 +551,7 @@
   left: 50%;
   transform: translateX(-50%);
   min-width: 48px;
-  @media screen and (max-width: 500px) { 
+  @media screen and (max-width: 500px) {
     height: 15px;
   }
   span {
@@ -603,85 +619,74 @@
 
 .stoneEyeBannerItem {
   border-radius: 10px;
-background: linear-gradient(90deg, #0B3398 0%, #062663 62%);
-height: 155px;
-}
-
-
-.dragonRuinsBannerItem {
-  border-radius: 10px;
-  background: linear-gradient(90deg, #2E3842 0%, #121A1E 62%);
+  background: linear-gradient(90deg, #0b3398 0%, #062663 62%);
   height: 155px;
 }
 
+.dragonRuinsBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #2e3842 0%, #121a1e 62%);
+  height: 155px;
+}
 
 .coldBiteBannerItem {
   height: 155px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #0097B9 0%, #083C49 62%);
+  background: linear-gradient(90deg, #003bb9 0%, #0a0849 62%);
 }
-
-
 
 .furyBeastBannerItem {
   border-radius: 10px;
-  background: linear-gradient(90deg, #262F29 0%, #29302C 62%);
+  background: linear-gradient(90deg, #262f29 0%, #29302c 62%);
   height: 155px;
 }
-
-
 
 .wingStormBannerItem {
   border-radius: 10px;
-  background: linear-gradient(90deg, #004E7F 0%, #073755 62%);
+  background: linear-gradient(90deg, #004e7f 0%, #073755 62%);
   height: 155px;
 }
-
-
 
 .scorpionKingBannerItem {
   border-radius: 10px;
-  background: linear-gradient(90deg, #732802 0%, #AB621E 62%);
+  background: linear-gradient(90deg, #732802 0%, #ab621e 62%);
   height: 155px;
 }
-
-
 
 .mazeDayBannerItem {
   border-radius: 10px;
-  background: linear-gradient(90deg, #081C00 0%, #081C00 65%);
+  background: linear-gradient(90deg, #081c00 0%, #081c00 65%);
   height: 155px;
-
 }
-
 
 .puzzleMadnessBannerItem {
   border-radius: 10px;
-  background: linear-gradient(90deg, #055F67 0%, #00293E 100%);
+  background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   height: 155px;
-
 }
 
 .utcEventTitle {
-font-family: Montserrat;
-font-size: 16px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
-.utcEventContent { 
-font-family: Montserrat;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.utcEventContent {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .eventbannerimg {
   position: absolute;
   height: 155px;
   right: 0;
+  top: 0;
 }
 
 .score-text-wrapper {

@@ -15,7 +15,7 @@ import criticalHitPopup from "../../assets/gameAssets/challengeCards/criticalHit
 import criticalHitBanner from "./assets/banners/criticalHitBanner.webp";
 import mazeGardenPopup from "../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
 import puzzleMadnessPopup from "../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
-import treasureHuntPopup from "../../assets/gameAssets/challengeCards/treasureHuntPopup.webp";
+import puzzleMadnessBanner from "./assets/banners/puzzleMadnessBanner.webp";
 import stoneEyePopup from "../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
 import explorerHuntPopup from "../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
 import dragonRuinsBanner from "./assets/banners/dragonRuinsBanner.webp";
@@ -36,6 +36,10 @@ import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
 import syncIcon from "../Challenges/assets/syncIcon.svg";
 import Countdown from "react-countdown";
+
+
+import goldenPassCard from "./assets/banners/goldenPassBanner.webp";
+import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
 
 import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
 import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
@@ -169,6 +173,15 @@ const NewEvents = ({
       },
 
       {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 3.5,
+          slidesToScroll: 1,
+          // initialSlide: 0,
+        },
+      },
+
+      {
         breakpoint: 600,
         settings: {
           slidesToShow: 2.5,
@@ -265,6 +278,46 @@ const NewEvents = ({
       "Recommended Hero Level: Any",
       "Use your pickaxe to break the Genesis Gem efficiently.",
       "Check your Genesis Land daily to ensure you don't miss a gem reset.",
+    ],
+  };
+
+  const puzzleMadnessInfo = {
+    id: "puzzle",
+    popupImage: puzzleMadnessPopup,
+    image: puzzleMadnessBanner,
+
+    desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
+    title: "Puzzle Madness",
+    link: "/account/challenges/puzzle-madness",
+    popupDesc:
+      "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
+    secondaryDesc:
+      "Players have two hours to find the pieces. Points are added to the leaderboards even if not all pieces are found. You can extend time by purchasing another bundle.",
+    secondaryTitle: "CAWS NFT Utility",
+    thirdDesc:
+      "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
+      "An indicator will guide you on whether pieces are located making your search easier",
+    ],
+  };
+
+  const goldenPassInfo = {
+    id: "golden",
+    popupImage: goldenPassPopup,
+    image: goldenPassCard,
+    desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
+    title: "Golden Pass",
+    link: "/account/challenges/golden-pass",
+    popupDesc:
+      "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
+    secondaryDesc:
+      "Example: If you buy the Golden Pass on the 7th, it remains active until the end of the month (e.g., from the 7th to the 30th/31st). However, it will reset on the 1st of the following month and must be repurchased to stay active.",
+    workList: [
+      "Purchase the bundle from the Challenge & Events.",
+      "The golden pass is valid for one calendar month, resetting on the 1st, regardless of the purchase date.",
+      "Extra rewards are given based on leaderboard rank as long as the golden pass is active.",
     ],
   };
 
@@ -453,45 +506,6 @@ const NewEvents = ({
       ],
       link: "/account/challenges/stone-eye",
     },
-    // {
-    //   id: 'puzzle',
-
-    //   popupImage: puzzleMadnessPopup,
-    //   image: puzzleMadnessPopup,
-
-    //   desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
-    //   title: "Puzzle Madness",
-    //   link: "/account/challenges/puzzle-madness",
-    //   popupDesc:
-    //     "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
-    //   secondaryDesc:
-    //     "Players have two hours to find the pieces. Points are added to the leaderboards even if not all pieces are found. You can extend time by purchasing another bundle.",
-    //   secondaryTitle: "CAWS NFT Utility",
-    //   thirdDesc:
-    //     "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
-    //   workList: [
-    //     "Purchase the bundle from the Challenge & Events.",
-    //     "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
-    //     "An indicator will guide you on whether pieces are located making your search easier",
-    //   ],
-    // },
-
-    // {
-    //   id: 'golden',
-    //   image: golden,
-    //   desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
-    //   title: "Golden Pass",
-    //   link: "/account/challenges/golden-pass",
-    //   popupDesc:
-    //     "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
-    //   secondaryDesc:
-    //     "Example: If you buy the Golden Pass on the 7th, it remains active until the end of the month (e.g., from the 7th to the 30th/31st). However, it will reset on the 1st of the following month and must be repurchased to stay active.",
-    //   workList: [
-    //     "Purchase the bundle from the Challenge & Events.",
-    //     "The golden pass is valid for one calendar month, resetting on the 1st, regardless of the purchase date.",
-    //     "Extra rewards are given based on leaderboard rank as long as the golden pass is active.",
-    //   ],
-    // }
   ];
 
   useEffect(() => {
@@ -530,7 +544,9 @@ const NewEvents = ({
       eventId !== "maze-day" &&
       eventId !== "great-collection" &&
       eventId !== "explorer-hunt" &&
-      eventId !== "critical-hit"
+      eventId !== "critical-hit" &&
+      eventId !== "golden-pass" &&
+      eventId !== "puzzle-madness"
     ) {
       setActiveEvent(
         eventinfos.find((item) => {
@@ -557,6 +573,10 @@ const NewEvents = ({
       setActiveEvent(explorerHuntInfo);
     } else if (eventId !== "" && eventId === "critical-hit") {
       setActiveEvent(criticalHitInfos);
+    } else if (eventId !== "" && eventId === "puzzle-madness") {
+      setActiveEvent(puzzleMadnessInfo);
+    } else if (eventId !== "" && eventId === "golden-pass") {
+      setActiveEvent(goldenPassInfo);
     }
   }, [eventId, sliderRef?.current]);
 
@@ -644,7 +664,9 @@ const NewEvents = ({
                             eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
                             eventId !== "explorer-hunt" &&
-                            eventId !== "critical-hit"
+                            eventId !== "critical-hit" &&
+                            eventId !== "golden-pass" &&
+                            eventId !== "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
                           } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
@@ -698,6 +720,42 @@ const NewEvents = ({
                           <h6 className="mb-0">Treasure Hunt</h6>
                         </div>
                       </NavLink>
+
+                      <NavLink to="/account/challenges/golden-pass">
+                        <div
+                          className={`${
+                            challenge === "golden-pass" ||
+                            selectedEvent === "golden-pass"
+                              ? "active-challenge-item"
+                              : "challenge-item"
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          onClick={() => {
+                            setChallenge("golden-pass");
+                            setActiveEvent(goldenPassInfo)
+                          }}
+                        >
+                          {/* <img src={treasureHuntIcon} alt="" /> */}
+                          <h6 className="mb-0">Golden Pass</h6>
+                        </div>
+                      </NavLink>
+                      <NavLink to="/account/challenges/puzzle-madness">
+                        <div
+                          className={`${
+                            challenge === "puzzle-madness" ||
+                            selectedEvent === "puzzle-madness"
+                              ? "active-challenge-item"
+                              : "challenge-item"
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          onClick={() => {
+                            setChallenge("puzzle-madness");
+                            setActiveEvent(puzzleMadnessInfo);
+                          }}
+                        >
+                          {/* <img src={treasureHuntIcon} alt="" /> */}
+                          <h6 className="mb-0">Puzzle Madness</h6>
+                        </div>
+                      </NavLink>
+
                       <NavLink to="/account/challenges/explorer-hunt">
                         <div
                           className={`${
@@ -1160,7 +1218,9 @@ const NewEvents = ({
                     ) : challenge === "maze-day" ||
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
-                      challenge === "critical-hit" ? (
+                      challenge === "critical-hit" ||
+                      challenge === "golden-pass" ||
+                      challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
                         <div className="new-event-wrapper d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">

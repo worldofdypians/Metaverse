@@ -476,8 +476,7 @@ const NewChallenges = ({ screen, popupEvent,
       link: "/account/challenges/great-collection",
     },
   ];
-
-  console.log(adjustedDay, "currentdate");
+ 
 
   return (
     <>
