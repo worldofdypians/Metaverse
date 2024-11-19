@@ -119,14 +119,13 @@ const AmplifyExperience = () => {
                 <td className="game-table-text py-3 ps-3"></td>
                 <td>
                   <div className="py-4">
-                    <a
+                    <NavLink
                       className="stake-wod-btn px-4 py-2 mt-4"
-                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                      target='_blank'
-                      rel='noreferrer'
+                      to={"/join-beta"}
+                     
                     >
-                      Download
-                    </a>
+                      Join Beta
+                    </NavLink>
                   </div>
                 </td>
                 <td>

@@ -36,7 +36,7 @@ const GovernanceContent = () => {
                     </div>
                   </div>
                   <div>
-                    <button className="explore-btn px-4 py-2">VOTE NOW</button>
+                    <button className="getpremium-btn px-4 py-2">VOTE NOW</button>
                   </div>
                 </div>
               </div>

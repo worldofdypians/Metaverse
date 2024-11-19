@@ -127,10 +127,10 @@ const GovernanceInner = () => {
                         Vote
                       </span>
                       <div className="d-flex align-items-center gap-2">
-                        <button className="stake-wod-btn text-capitalize  px-2 px-lg-5 py-2">
+                        <button className="getpremium-btn px-2 px-lg-5 py-2">
                           Option 1
                         </button>
-                        <button className="explore-btn px-2 px-lg-5 py-2">
+                        <button className="getpremium-btn px-2 px-lg-5 py-2">
                           Option 2
                         </button>
                       </div>

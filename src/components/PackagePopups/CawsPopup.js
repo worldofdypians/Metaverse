@@ -27,32 +27,14 @@ const CawsPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup map-popup">
-        <div className="position-relative mb-3 d-flex align-items-center justify-content-center popup-header-img">
-          <div className="package-popup-title-wrapper-map position-absolute d-flex align-items-center justify-content-center w-100 m-0">
-            <h6 className="package-popup-title-map m-0">
-              WORLD OF DYPIANS
-              <br />
-              <mark
-                className="p-0 package-popup-title-map"
-                style={{
-                  color: "#DCFB85",
-                  background: "transparent",
-                }}
-              >
-                CAWS NFT COLLECTION
-              </mark>
-            </h6>
-            <img
-              src={popupXmark}
-              className="popup-closer-map"
-              onClick={onClosePopup}
-              alt=""
-            />
-          </div>
+       
+      <div className=" d-flex align-items-start justify-content-between w-100 m-0 p-3">
+          <h6 className="market-banner-title m-0">CAWS NFT COLLECTION</h6>
+          <img src={popupXmark} onClick={onClosePopup} alt="" />
         </div>
 
         <div className="package-popup-content-land mx-1 p-4 pt-0 d-flex flex-column gap-2">
-          <p className="package-popup-desc-map">
+          <p className="ways-to-amplify-desc mb-2">
             The CAWS NFT Collection (Cats and Watches Society) brings a unique
             blend of style and functionality to the World of Dypians. These
             exclusive NFTs feature fashionable cats adorned with intricate
@@ -77,13 +59,13 @@ const CawsPopup = ({ onClosePopup }) => {
           <div className="caws-traits-wrapper p-3 mt-3">
             <div className="d-flex flex-column gap-3">
               <h6 className="text-white game-popup-title">All the Traits</h6>
-              <p className="package-popup-desc-map">
+              <p className="ways-to-amplify-desc">
                 Discover all the little details that make each cat as smug, cute
                 and adoptable as the other. You can easily discover their story
                 and personality by checking out their outfit, their expression -
                 and of course, what kind of watch they're into.
               </p>
-              <p className="package-popup-desc-map">
+              <p className="ways-to-amplify-desc">
                 We love all of our cats, but some of their watches make them
                 stand out a bit more than others. We'll let you be the judge of
                 that.
@@ -114,7 +96,7 @@ const CawsPopup = ({ onClosePopup }) => {
               );
             })}
           </div>
-          <div className="d-flex w-100 flex-column flex-lg-row align-items-center gap-3 justify-content-center mt-2">
+          <div className="d-flex w-100 mt-4 flex-column flex-lg-row align-items-center gap-3 justify-content-center ">
             <NavLink to={"/shop/caws"} className="getpremium-btn col-lg-4 py-2">
               Buy on Shop
             </NavLink>

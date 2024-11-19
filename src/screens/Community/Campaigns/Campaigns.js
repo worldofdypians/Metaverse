@@ -184,7 +184,7 @@ const Campaigns = () => {
               <NavLink
                 to={dummyBanner.link}
                 target="_blank"
-                className="stake-wod-btn px-4 py-2 mt-4"
+                className="explore-btn px-4 py-2 mt-4"
                 style={{ width: "fit-content" }}
               >
                 Explore

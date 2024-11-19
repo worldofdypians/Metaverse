@@ -24,7 +24,7 @@ const Earn = ({
       chain: "BNB Chain",
       tokenURL: ["wodToken"],
       chainLogo: "bnbLogo.svg",
-      tvl_usd: 12220,
+      tvl_usd: "--",
       type: 'token',
       expired: 'No',
       id: 'one'
@@ -36,7 +36,7 @@ const Earn = ({
       chain: "BNB Chain",
       tokenURL: ["wodToken"],
       chainLogo: "bnbLogo.svg",
-      tvl_usd: 12220,
+      tvl_usd: "--",
       type: 'token',
       expired: 'No',
       id: 'two'
@@ -50,7 +50,7 @@ const Earn = ({
       chain: "Ethereum",
       tokenURL: ["wodToken"],
       chainLogo: "ethIcon.svg",
-      tvl_usd: 12220,
+      tvl_usd: "--",
       type: 'token',
       expired: 'No',
       id: 'three'
