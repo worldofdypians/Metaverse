@@ -593,11 +593,15 @@
 }
 
 .beast-challenge-card {
-  border-radius: 20px;
+  border-radius: 22px;
   background: #181a40;
   cursor: pointer;
+  transition: all 0.25s;
 }
 
+.beast-challenge-card:hover {
+  filter: drop-shadow(0px 0px 5px #f3bf09);
+}
 
 .beast-challenge-card2 {
   border-radius: 20px;
@@ -605,7 +609,7 @@
   cursor: pointer;
 
   @media screen and (max-width: 991px) {
-   width: 100%;
+    width: 100%;
   }
 }
 
@@ -657,22 +661,51 @@
   line-height: 16px; /* 80% */
 }
 
-
-.warrior-class-video-wrapper{
-  cursor: pointer;
-  transition: all .25s;
+.play-icon-wrapper{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: all 0.25s;
+  img{
+    opacity: 1;
+  }
 }
 
-.warrior-class-video-wrapper:hover{
+.warrior-class-video-wrapper {
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.warrior-class-video-wrapper:hover {
   filter: drop-shadow(0px 0px 4px #8bd8ff);
+  .play-icon-wrapper{
+    background-color: rgba(0, 0, 0, 0.2);
+    img{
+      opacity: 1;
+    }
+  }
 }
-.mage-class-video-wrapper{
+.mage-class-video-wrapper {
   cursor: pointer;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-.mage-class-video-wrapper:hover{
+.play-icon-wrapper{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: all 0.25s;
+  img{
+    opacity: 1;
+  }
+}
+
+.mage-class-video-wrapper:hover {
   filter: drop-shadow(0px 0px 4px #ffaeb2);
+  .play-icon-wrapper{
+    background-color: rgba(0, 0, 0, 0.2);
+    img{
+      opacity: 1;
+    }
+  }
 }
-
-
