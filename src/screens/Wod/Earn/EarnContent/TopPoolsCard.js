@@ -127,7 +127,8 @@ const TopPoolsCard = ({
             {cardType !== "Vault" && (
               <div className="d-flex flex-column">
                 <h6 className="tvl-text m-0 ">Total Staked</h6>
-                <h6 className="tvl-amount m-0 "> {tvl}</h6>
+                {/* <h6 className="tvl-amount m-0 "> {tvl}</h6> */}
+                <h6 className="tvl-amount m-0 ">--WOD</h6>
               </div>
             )}
             <div

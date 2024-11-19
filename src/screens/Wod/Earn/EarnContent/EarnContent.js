@@ -16,6 +16,9 @@ import TopPoolsListCard from "./TopPoolsListCard";
 import StakeWodDetails from "./pools/stakingWod";
 import StakeWodDetails2 from "./pools/stakingWod2";
 
+
+
+
 const EarnContent = ({
   isConnected,
   coinbase,

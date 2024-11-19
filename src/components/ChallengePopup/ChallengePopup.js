@@ -11,7 +11,22 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
           {/* <div className="d-flex  p-3 d-flex justify-content-between">
            
           </div> */}
-          <div className="position-relative w-100">
+          {screen === "account" ?
+      <div className="d-flex align-items-center justify-content-between w-100 p-3">
+        <h6 className="mb-0 challenge-popup-title">
+          {item.title}
+        </h6>
+        <img
+                src={closeChallenge}
+                alt="close"
+                style={{ cursor: "pointer" }}
+                width={20}
+                height={20}
+                onClick={handleClose}
+              />
+      </div>
+      :
+      <div className="position-relative w-100">
             <img
               src={item.popupImage}
               alt={item.title}
@@ -27,7 +42,8 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
                 style={{ cursor: "pointer" }}
               />
             </div>
-          </div>
+          </div>  
+        }
           <div className="d-flex flex-column gap-3 p-3">
             <p className="challenge-popup-desc mb-0">{item.popupDesc}</p>
             {item.title === "Puzzle Madness" ||

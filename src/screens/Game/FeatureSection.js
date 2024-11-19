@@ -21,7 +21,7 @@ const FeatureSection = ({
 
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
-    link: "/account/challenges/golden-pass",
+    link: "/account",
     popupDesc:
       "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
     secondaryDesc:
