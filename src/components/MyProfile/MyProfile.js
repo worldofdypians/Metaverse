@@ -19,7 +19,7 @@ import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.s
 import goldenPassBadge from "./assets/goldenPassBadge.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
-
+import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import dragonRuins from "./assets/dailyProgress/dragonRuins.png";
 import scorpionKing from "./assets/dailyProgress/scorpionKing.png";
 import coldBite from "./assets/dailyProgress/coldBite.png";
@@ -127,8 +127,15 @@ const renderer2 = ({ hours, minutes }) => {
 
 const renderer3 = ({ days, hours }) => {
   return (
-    <span>
-      {days}d {hours}h
+    <span
+      className="special-rewards-total-span"
+      style={{
+        color: "#F3BF09",
+        width: "fit-content",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Available: {days}d {hours}h
     </span>
   );
 };
@@ -169,8 +176,24 @@ const MyProfile = ({
   primeStars,
   allClaimedChestsPremium,
   allClaimedChestsstd,
+  userRank,
+  userRankSkale,
+  userBnbScore,
+  userSkaleScore,
+  userRankCore,
+  userCoreScore,
+  userRankViction,
+  userVictionScore,
+  rankData,
+  userRankManta,
+  userMantaScore,
+  userRankBase,
+  userBaseScore,
+  userRankTaiko,
+  userTaikoScore,
 }) => {
   const totalClaimedChests = allClaimedChests;
+  const [rankDropdown, setRankDropdown] = useState(false);
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
   const utcDayIndex = new Date().getUTCDay();
@@ -333,250 +356,288 @@ const MyProfile = ({
   }, [totalClaimedChests, isPremium, canBuy, email]);
 
   return (
-    <div className="custom-container mt-5">
-      <div className="row mt-4 mt-lg-0">
-        <div className="col-12 col-lg-4">
-          <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
-            <div className="d-flex align-items-center gap-2">
-              <div
-                className="position-relative"
-                style={{ cursor: "pointer" }}
-                onClick={onOpenRankPopup}
-              >
-                <img
-                  className="new-profile-img w-100"
-                  src={
-                    userRankName.name === "starter"
-                      ? isPremium
-                        ? starterProfilePremium
+    <>
+      <div className="custom-container mt-5">
+        <div className="row mt-4 mt-lg-0">
+          <div className="col-12 col-lg-4">
+            <div className="profile-card-wrapper p-3 d-flex flex-column justify-content-between h-100">
+              <div className="d-flex align-items-center gap-2">
+                <div
+                  className="position-relative"
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    className="new-profile-img w-100"
+                    src={
+                      userRankName.name === "starter"
+                        ? isPremium
+                          ? starterProfilePremium
+                          : starterProfile
+                        : userRankName.name === "rookie"
+                        ? isPremium
+                          ? rookieProfilePremium
+                          : rookieProfile
+                        : userRankName.name === "underdog"
+                        ? isPremium
+                          ? underdogProfilePremium
+                          : underdogProfile
+                        : userRankName.name === "champion"
+                        ? isPremium
+                          ? championProfilePremium
+                          : championProfile
+                        : userRankName.name === "unstoppable"
+                        ? isPremium
+                          ? unstoppableProfilePremium
+                          : unstoppableProfile
                         : starterProfile
-                      : userRankName.name === "rookie"
-                      ? isPremium
-                        ? rookieProfilePremium
-                        : rookieProfile
-                      : userRankName.name === "underdog"
-                      ? isPremium
-                        ? underdogProfilePremium
-                        : underdogProfile
-                      : userRankName.name === "champion"
-                      ? isPremium
-                        ? championProfilePremium
-                        : championProfile
-                      : userRankName.name === "unstoppable"
-                      ? isPremium
-                        ? unstoppableProfilePremium
-                        : unstoppableProfile
-                      : starterProfile
-                  }
-                  alt=""
-                />
-                {/* <div className="score-text-wrapper d-flex flex-column align-items-center">
+                    }
+                    alt=""
+                  />
+                  {/* <div className="score-text-wrapper d-flex flex-column align-items-center">
                   <h6 className="mb-0">{getFormattedNumber(totalScore, 0)}</h6>
                   <span>Score</span>
                 </div> */}
-              </div>
-              <div className="d-flex flex-column gap-2 w-100">
-                <div className="d-flex align-items-center gap-1">
-                  <div
-                    className={`d-flex flex-column flex-lg-row align-items-lg-center ${
-                      !email
-                        ? "justify-content-between w-100"
-                        : "justify-content-start"
-                    }  gap-2`}
-                  >
-                    <h6 className="my-profile-username mb-0">
-                      {email ? username : "GUEST"}
-                    </h6>
-                    {!email && coinbase && (
-                      <NavLink
-                        className="loginbtn-profile px-5 py-2"
-                        to="/auth"
-                      >
-                        Log in
-                      </NavLink>
-                    )}
-                  </div>
-
-                  <span className="current-rank-text text-capitalize">
-                    {email ? userRankName.name : ""}
-                  </span>
                 </div>
-                <span className="my-profile-email mb-2">{email}</span>
-                <div className="d-flex flex-column flex-lg-row gap-2">
-                  <div
-                    className={` ${
-                      isConnected &&
+                <div className="d-flex flex-column gap-2 w-100">
+                  <div className="d-flex align-items-center gap-1">
+                    <div
+                      className={`d-flex flex-column flex-lg-row align-items-lg-center ${
+                        !email
+                          ? "justify-content-between w-100"
+                          : "justify-content-start"
+                      }  gap-2`}
+                    >
+                      <h6 className="my-profile-username mb-0">
+                        {email ? username : "GUEST"}
+                      </h6>
+                      {!email && coinbase && (
+                        <NavLink
+                          className="loginbtn-profile px-5 py-2"
+                          to="/auth"
+                        >
+                          Log in
+                        </NavLink>
+                      )}
+                    </div>
+
+                    <span className="current-rank-text text-capitalize">
+                      {email ? userRankName.name : ""}
+                    </span>
+                  </div>
+                  <span className="my-profile-email mb-2">{email}</span>
+                  <div className="d-flex flex-column flex-lg-row gap-2">
+                    <div
+                      className={` ${
+                        isConnected &&
+                        address &&
+                        email &&
+                        coinbase &&
+                        syncStatus !== "" &&
+                        address.toLowerCase() !== coinbase.toLowerCase()
+                          ? "wallet-address-wrapper-error"
+                          : "wallet-address-wrapper"
+                      }  w-100 d-flex align-items-center justify-content-between gap-4 p-2`}
+                    >
+                      <div className="d-flex align-items-center w-100 justify-content-between">
+                        <div className="d-flex flex-column">
+                          <span className={`profile-wallet-span mb-2`}>
+                            Wallet Address
+                          </span>
+                          <span
+                            className={`${
+                              isConnected &&
+                              address &&
+                              email &&
+                              coinbase &&
+                              syncStatus !== "" &&
+                              address.toLowerCase() !== coinbase.toLowerCase()
+                                ? "wallet-addr-error"
+                                : "wallet-addr"
+                            } `}
+                          >
+                            {email !== undefined
+                              ? shortAddress(address)
+                              : coinbase
+                              ? shortAddress(coinbase)
+                              : "--"}
+                          </span>
+                        </div>
+                        {isConnected &&
+                          address &&
+                          email &&
+                          coinbase &&
+                          syncStatus !== "" &&
+                          address.toLowerCase() !== coinbase.toLowerCase() && (
+                            <img src={errorChain} alt="" />
+                          )}
+                        {!domainName &&
+                          isConnected &&
+                          address &&
+                          email &&
+                          coinbase &&
+                          syncStatus !== "" &&
+                          address.toLowerCase() === coinbase.toLowerCase() && (
+                            <img
+                              src={domainIcon}
+                              width={30}
+                              height={30}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                              onClick={onDomainClick}
+                            />
+                          )}
+                        {!domainName &&
+                          isConnected &&
+                          address &&
+                          email &&
+                          coinbase &&
+                          syncStatus !== "" &&
+                          address.toLowerCase() !== coinbase.toLowerCase() && (
+                            <img
+                              src={errordomainIcon}
+                              width={30}
+                              height={30}
+                              alt=""
+                              style={{ cursor: "pointer" }}
+                              onClick={onDomainClick}
+                            />
+                          )}
+                      </div>
+                    </div>
+                    {(isConnected &&
                       address &&
                       email &&
                       coinbase &&
                       syncStatus !== "" &&
-                      address.toLowerCase() !== coinbase.toLowerCase()
-                        ? "wallet-address-wrapper-error"
-                        : "wallet-address-wrapper"
-                    }  w-100 d-flex align-items-center justify-content-between gap-4 p-2`}
-                  >
-                    <div className="d-flex align-items-center w-100 justify-content-between">
-                      <div className="d-flex flex-column">
-                        <span className={`profile-wallet-span mb-2`}>
-                          Wallet Address
-                        </span>
-                        <span
-                          className={`${
-                            isConnected &&
-                            address &&
-                            email &&
-                            coinbase &&
-                            syncStatus !== "" &&
-                            address.toLowerCase() !== coinbase.toLowerCase()
-                              ? "wallet-addr-error"
-                              : "wallet-addr"
-                          } `}
-                        >
-                          {email !== undefined
-                            ? shortAddress(address)
-                            : coinbase
-                            ? shortAddress(coinbase)
-                            : "--"}
-                        </span>
+                      address.toLowerCase() === coinbase.toLowerCase()) ||
+                    (isConnected && !email && coinbase) ? (
+                      <div
+                        className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
+                        onClick={openPortfolio}
+                      >
+                        <img src={portfolio} width={25} height={25} alt="" />
+                        <h6 className="mb-0">My Portfolio</h6>
                       </div>
-                      {isConnected &&
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase() && (
-                          <img src={errorChain} alt="" />
-                        )}
-                      {!domainName &&
-                        isConnected &&
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() === coinbase.toLowerCase() && (
-                          <img
-                            src={domainIcon}
-                            width={30}
-                            height={30}
-                            alt=""
-                            style={{ cursor: "pointer" }}
-                            onClick={onDomainClick}
-                          />
-                        )}
-                      {!domainName &&
-                        isConnected &&
-                        address &&
-                        email &&
-                        coinbase &&
-                        syncStatus !== "" &&
-                        address.toLowerCase() !== coinbase.toLowerCase() && (
-                          <img
-                            src={errordomainIcon}
-                            width={30}
-                            height={30}
-                            alt=""
-                            style={{ cursor: "pointer" }}
-                            onClick={onDomainClick}
-                          />
-                        )}
+                    ) : !isConnected ? (
+                      <button
+                        className="loginbtn-profile px-5 py-2"
+                        onClick={onConnectWallet}
+                      >
+                        Log in
+                      </button>
+                    ) : (
+                      <button
+                        className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
+                        onClick={onSyncClick}
+                      >
+                        <img
+                          src={sync}
+                          alt=""
+                          className={syncStatus === "loading" && "syncicon"}
+                        />{" "}
+                        {syncStatus === "initial"
+                          ? "Synchronize"
+                          : syncStatus === "loading"
+                          ? "Synchronising..."
+                          : syncStatus === "success"
+                          ? "Success"
+                          : "Error"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="sidebar-separator2 my-2"></div>
+              <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row position-relative">
+                <div
+                  className="wallet-address-wrapper2 p-2 w-100"
+                  onClick={() => {
+                    setRankDropdown(true);
+                  }}
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex flex-column">
+                      <span className="user-data-item-left">Global</span>
+                      <span className="user-data-item-left">Rank</span>
+                    </div>
+                    <div className="d-flex">
+                      <span className="user-data-item-right">
+                        #
+                        {userDataStar.position
+                          ? userDataStar.position + 1
+                          : "---"}
+                      </span>
                     </div>
                   </div>
-                  {(isConnected &&
-                    address &&
-                    email &&
-                    coinbase &&
-                    syncStatus !== "" &&
-                    address.toLowerCase() === coinbase.toLowerCase()) ||
-                  (isConnected && !email && coinbase) ? (
-                    <div
-                      className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
-                      onClick={openPortfolio}
-                    >
-                      <img src={portfolio} width={25} height={25} alt="" />
-                      <h6 className="mb-0">My Portfolio</h6>
+                </div>
+                <div
+                  className="wallet-address-wrapper2 p-2 w-100"
+                  onClick={openGlobalLeaderboard}
+                >
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex flex-column">
+                      <span className="user-data-item-left">Stars</span>
+                      <span className="user-data-item-left">Collected</span>
                     </div>
-                  ) : !isConnected ? (
-                    <button
-                      className="loginbtn-profile px-5 py-2"
-                      onClick={onConnectWallet}
-                    >
-                      Log in
-                    </button>
-                  ) : (
-                    <button
-                      className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
-                      onClick={onSyncClick}
-                    >
-                      <img
-                        src={sync}
-                        alt=""
-                        className={syncStatus === "loading" && "syncicon"}
-                      />{" "}
-                      {syncStatus === "initial"
-                        ? "Synchronize"
-                        : syncStatus === "loading"
-                        ? "Synchronising..."
-                        : syncStatus === "success"
-                        ? "Success"
-                        : "Error"}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="sidebar-separator2 my-2"></div>
-            <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row flex-md-row">
-              <div className="wallet-address-wrapper2 p-2 w-100">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="d-flex flex-column">
-                    <span className="user-data-item-left">Global</span>
-                    <span className="user-data-item-left">Rank</span>
-                  </div>
-                  <div className="d-flex">
-                    <span className="user-data-item-right">
-                      #
-                      {userDataStar.position
-                        ? userDataStar.position + 1
-                        : "---"}
-                    </span>
+                    <div className="d-flex">
+                      <span className="user-data-item-right">
+                        {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="wallet-address-wrapper2 p-2 w-100">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="d-flex flex-column">
-                    <span className="user-data-item-left">Stars</span>
-                    <span className="user-data-item-left">Collected</span>
-                  </div>
-                  <div className="d-flex">
-                    <span className="user-data-item-right">
-                      {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
-                    </span>
+                <div className="wallet-address-wrapper2 p-2 w-100">
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex flex-column">
+                      <span className="user-data-item-left">Brands</span>
+                      <span className="user-data-item-left">Collected</span>
+                    </div>
+                    <div className="d-flex">
+                      <span className="user-data-item-right">---</span>
+                    </div>
                   </div>
                 </div>
+                {rankDropdown === true && (
+                  <RankSmallPopup
+                    onClose={() => {
+                      setRankDropdown(false);
+                    }}
+                    userRank={userRank}
+                    userRankSkale={userRankSkale}
+                    userBnbScore={userBnbScore}
+                    userSkaleScore={userSkaleScore}
+                    userRankCore={userRankCore}
+                    userCoreScore={userCoreScore}
+                    userRankViction={userRankViction}
+                    userVictionScore={userVictionScore}
+                    rankData={rankData}
+                    userDataStar={userDataStar}
+                    userRankManta={userRankManta}
+                    userMantaScore={userMantaScore}
+                    userRankBase={userRankBase}
+                    userBaseScore={userBaseScore}
+                    userRankTaiko={userRankTaiko}
+                    userTaikoScore={userTaikoScore}
+                    userRankName={userRankName}
+                    onRankPopupClick={() => {
+                      onOpenRankPopup();
+                      setRankDropdown(false);
+                    }}
+                  />
+                )}
               </div>
-              <div className="wallet-address-wrapper2 p-2 w-100">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div className="d-flex flex-column">
-                    <span className="user-data-item-left">Brands</span>
-                    <span className="user-data-item-left">Collected</span>
-                  </div>
-                  <div className="d-flex">
-                    <span className="user-data-item-right">---</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="sidebar-separator2 my-2"></div>
+              <div className="sidebar-separator2 my-2"></div>
 
-            <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="progress-line"></div>
-                <span className="daily-progress-span mx-2">Daily Progress</span>
-                <div className="progress-line-2"></div>
-              </div>
-              <div className="daily-progress-grid">
-                {/* <div className="daily-progress-item position-relative">
+              <div className="daily-progress-wrapper p-3 d-flex flex-column gap-3">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="progress-line"></div>
+                  <span className="daily-progress-span mx-2">
+                    Daily Progress
+                  </span>
+                  <div className="progress-line-2"></div>
+                </div>
+                <div className="daily-progress-grid">
+                  {/* <div className="daily-progress-item position-relative">
                   <img
                     src={
                       isgoldenPassActive ? goldenPassActive : goldenPassInactive
@@ -619,151 +680,153 @@ const MyProfile = ({
                     />
                   )}
                 </div> */}
-                <div className="daily-progress-item position-relative">
-                  <img src={prime} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>
-                      {primeStars === true ? "+ 50 Stars" : "In Progress"}
-                    </span>
-                  </div>
-                  <span className="bundle-title-bottom">Prime</span>
+                  <div className="daily-progress-item position-relative">
+                    <img src={prime} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>
+                        {primeStars === true ? "+ 50 Stars" : "In Progress"}
+                      </span>
+                    </div>
+                    <span className="bundle-title-bottom">Prime</span>
 
-                  {/* <img
+                    {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={dailyBonusStd} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>
-                      {allClaimedChestsstd === 0
-                        ? "Ready"
-                        : allClaimedChestsstd < 70
-                        ? allClaimedChestsstd
-                        : "Completed"}
-                    </span>
                   </div>
-                  <span className="bundle-title-bottom">Daily Bonus</span>
+                  <div className="daily-progress-item position-relative">
+                    <img src={dailyBonusStd} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>
+                        {allClaimedChestsstd === 0
+                          ? "Ready"
+                          : allClaimedChestsstd < 70
+                          ? allClaimedChestsstd
+                          : "Completed"}
+                      </span>
+                    </div>
+                    <span className="bundle-title-bottom">Daily Bonus</span>
 
-                  {/* <img
+                    {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={dailyBonusPrime} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>
-                      {allClaimedChestsPremium === 0
-                        ? "Ready"
-                        : allClaimedChestsPremium < 70
-                        ? allClaimedChestsPremium
-                        : "Completed"}
-                    </span>
                   </div>
-                  <span className="bundle-title-bottom">Daily Bonus Prime</span>
+                  <div className="daily-progress-item position-relative">
+                    <img src={dailyBonusPrime} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>
+                        {allClaimedChestsPremium === 0
+                          ? "Ready"
+                          : allClaimedChestsPremium < 70
+                          ? allClaimedChestsPremium
+                          : "Completed"}
+                      </span>
+                    </div>
+                    <span className="bundle-title-bottom">
+                      Daily Bonus Prime
+                    </span>
 
-                  {/* <img
+                    {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                </div>
-                <div className="daily-progress-item position-relative">
-                  <img src={dailyEvents[utcDayIndex].image} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>
-                      {/* {userDailyBundles?.dragonRuinsCount
+                  </div>
+                  <div className="daily-progress-item position-relative">
+                    <img src={dailyEvents[utcDayIndex].image} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>
+                        {/* {userDailyBundles?.dragonRuinsCount
                         ? userDailyBundles?.dragonRuinsCount === 0
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                      Upcoming
-                    </span>
-                  </div>
-                  {/* {userDailyBundles?.dragonRuinsCount > 0 && (
+                        Upcoming
+                      </span>
+                    </div>
+                    {/* {userDailyBundles?.dragonRuinsCount > 0 && (
                     <img
                       src={doneTag}
                       alt=""
                       className="daily-progress-status"
                     />
                   )} */}
-                  <span className="bundle-title-bottom">
-                    {dailyEvents[utcDayIndex].title}
-                  </span>
-                </div>
-
-                <div className="daily-progress-item position-relative">
-                  <img src={criticalHit} alt="" />
-                  <div className="daily-progress-value">
-                    <span>0</span>
-                  </div>
-                  {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
-                  <span className="bundle-title-bottom">Critical Hit</span>
-                </div>
-
-                <div className="daily-progress-item position-relative">
-                  <img src={treasureHunt} alt="" />
-                  <div className="daily-progress-value">
-                    <span>
-                      {userActiveEvents === 2
-                        ? "Completed"
-                        : userActiveEvents === 0
-                        ? "Ready"
-                        : userActiveEvents + "/2"}
+                    <span className="bundle-title-bottom">
+                      {dailyEvents[utcDayIndex].title}
                     </span>
                   </div>
-                  {/* <img
+
+                  <div className="daily-progress-item position-relative">
+                    <img src={criticalHit} alt="" />
+                    <div className="daily-progress-value">
+                      <span>0</span>
+                    </div>
+                    {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                  <span className="bundle-title-bottom">Treasure Hunt</span>
-                </div>
-
-                <div className="daily-progress-item position-relative">
-                  <img src={explorerHunt} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>Upcoming</span>
+                    <span className="bundle-title-bottom">Critical Hit</span>
                   </div>
-                  {/* <img
+
+                  <div className="daily-progress-item position-relative">
+                    <img src={treasureHunt} alt="" />
+                    <div className="daily-progress-value">
+                      <span>
+                        {userActiveEvents === 2
+                          ? "Completed"
+                          : userActiveEvents === 0
+                          ? "Ready"
+                          : userActiveEvents + "/2"}
+                      </span>
+                    </div>
+                    {/* <img
                     src={emptyTag}
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                  <span className="bundle-title-bottom">Explorer Hunt</span>
-                </div>
+                    <span className="bundle-title-bottom">Treasure Hunt</span>
+                  </div>
 
-                <div className="daily-progress-item position-relative">
-                  <img src={puzzleMadness} alt="" />
-                  <div className="daily-progress-value-golden">
-                    <span>
-                      {/* {userDailyBundles?.puzzleMadnessCount
+                  <div className="daily-progress-item position-relative">
+                    <img src={explorerHunt} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>Upcoming</span>
+                    </div>
+                    {/* <img
+                    src={emptyTag}
+                    alt=""
+                    className="daily-progress-status"
+                  /> */}
+                    <span className="bundle-title-bottom">Explorer Hunt</span>
+                  </div>
+
+                  <div className="daily-progress-item position-relative">
+                    <img src={puzzleMadness} alt="" />
+                    <div className="daily-progress-value-golden">
+                      <span>
+                        {/* {userDailyBundles?.puzzleMadnessCount
                         ? userDailyBundles?.puzzleMadnessCount === 0
                           ? "Ready"
                           : userDailyBundles?.puzzleMadnessCount
                         : "Ready"} */}
-                      Upcoming
-                    </span>
-                  </div>
-                  {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
+                        Upcoming
+                      </span>
+                    </div>
+                    {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
                     <img
                       src={doneTag}
                       alt=""
                       className="daily-progress-status"
                     />
                   )} */}
-                  <span className="bundle-title-bottom">Puzzle Madness</span>
-                </div>
+                    <span className="bundle-title-bottom">Puzzle Madness</span>
+                  </div>
 
-                {/* <div className="daily-progress-item position-relative">
+                  {/* <div className="daily-progress-item position-relative">
                   <img
                     src={
                       totalClaimedChests === 0
@@ -784,276 +847,294 @@ const MyProfile = ({
                     />
                   )}
                 </div> */}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-12 col-lg-8">
-          <div className="row ">
-            <div className="col-12 col-lg-4">
-              {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
+          <div className="col-12 col-lg-8">
+            <div className="row ">
+              <div className="col-12 col-lg-4">
+                {/* <div className="new-special-rewards-wrapper d-flex flex-column gap-4 p-3">
                 <h6 className="special-rewards-title">Special Rewards</h6>
                 <div className="d-flex align-items-center gap-1">
                   <span className="special-rewards-span">Submit</span>
                   <img src={redArrow} alt="" />
                 </div>
               </div> */}
-              <div
-                className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0"
-                onClick={openDailyBonus}
-              >
-                <div className="red-div"></div>
-                <img
-                  // src={finished ? mageFinish : mageGoing}
-                  src={
-                    chestPercentage >= 50 && chestPercentage < 100
-                      ? mageGoing
-                      : chestPercentage === 100
-                      ? mageFinish
-                      : mageStarter
-                  }
-                  className={`${"daily-rewards-img"}`}
-                  alt=""
-                />
-                <div className="progress-bar-group d-flex flex-column align-items-start">
-                  {!finished && (
-                    <span className="progress-bar-title">Progress</span>
-                  )}
+                <div
+                  className="daily-bonus-wrapper mt-4 mb-5 mt-lg-0 mb-lg-0"
+                  onClick={openDailyBonus}
+                >
+                  <div className="red-div"></div>
+                  <img
+                    // src={finished ? mageFinish : mageGoing}
+                    src={
+                      chestPercentage >= 50 && chestPercentage < 100
+                        ? mageGoing
+                        : chestPercentage === 100
+                        ? mageFinish
+                        : mageStarter
+                    }
+                    className={`${"daily-rewards-img"}`}
+                    alt=""
+                  />
+                  <div className="progress-bar-group d-flex flex-column align-items-start">
+                    {!finished && (
+                      <span className="progress-bar-title">Progress</span>
+                    )}
 
-                  <div className="yellow-progress-outer">
-                    <span className="mb-0 chest-progress">
-                      {/* {claimedPremiumChests}/10 */}
-                      {parseInt(chestPercentage)}%
-                    </span>
-                    <div
-                      className="yellow-progress-inner"
-                      style={{ width: `${chestPercentage}%` }}
-                      // style={{ width: `35%` }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="d-flex flex-column justify-content-between h-100 p-3">
-                  <div
-                    className="d-flex align-items-center justify-content-between position-relative gap-1"
-                    style={{ width: "fit-content" }}
-                  >
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="leaderboards-title mb-0">Daily</h6>
-                      <h6
-                        className="leaderboards-title mb-0"
-                        style={{ color: "#FF5EA0" }}
-                      >
-                        Bonus
-                      </h6>
+                    <div className="yellow-progress-outer">
+                      <span className="mb-0 chest-progress">
+                        {/* {claimedPremiumChests}/10 */}
+                        {parseInt(chestPercentage)}%
+                      </span>
+                      <div
+                        className="yellow-progress-inner"
+                        style={{ width: `${chestPercentage}%` }}
+                        // style={{ width: `35%` }}
+                      ></div>
                     </div>
                   </div>
-
-                  <div
-                    className="d-flex flex-column align-items-center"
-                    style={{ width: "fit-content" }}
-                  >
+                  <div className="d-flex flex-column justify-content-between h-100 p-3">
                     <div
-                      className="position-relative"
+                      className="d-flex align-items-center justify-content-between position-relative gap-1"
+                      style={{ width: "fit-content" }}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <h6 className="leaderboards-title mb-0">Daily</h6>
+                        <h6
+                          className="leaderboards-title mb-0"
+                          style={{ color: "#FF5EA0" }}
+                        >
+                          Bonus
+                        </h6>
+                      </div>
+                    </div>
+
+                    <div
+                      className="d-flex flex-column align-items-center"
+                      style={{ width: "fit-content" }}
+                    >
+                      <div
+                        className="position-relative"
+                        style={{
+                          width: "96px",
+                          height: "40px",
+                          right: "0px",
+                          bottom: "15px",
+                        }}
+                      >
+                        <span className="ready-to-claim mb-0">
+                          {finished ? "Reset Time" : "Ready to Claim"}
+                        </span>
+                        <img
+                          src={readyBorder}
+                          alt=""
+                          className={`${
+                            finished ? "ready-border-2" : "ready-border"
+                          }`}
+                        />
+                      </div>
+                      {finished && (
+                        <span className="timer-text mb-0">
+                          <Countdown date={midnight} renderer={renderer2} />
+                        </span>
+                      )}
+                    </div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-8">
+                <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
+                  <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
+                    <h6 className="leaderboards-title">Game</h6>
+                    <h6
+                      className="leaderboards-title mb-0"
+                      style={{ color: "#8C56FF" }}
+                    >
+                      Leaderboards
+                    </h6>
+                  </div>
+                  <div className="d-flex align-items-center leaderboards-flag-wrapper gap-3">
+                    <div
+                      className="new-flag-wrapper global-flag"
+                      onClick={openGlobalLeaderboard}
+                    >
+                      <img src={globalFlag} className="w-100" alt="" />
+                      <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                        <span className="flag-title">Global</span>
+                        <img src={globalIcon} height={50} width={50} alt="" />
+                      </div>
+                    </div>
+                    <div
+                      className="new-flag-wrapper chains-flag"
+                      onClick={openChainsLeaderboard}
+                    >
+                      <img src={chainsFlag} className="w-100" alt="" />
+                      <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                        <span className="flag-title">Chains</span>
+                        <img src={chainsIcon} height={50} width={50} alt="" />
+                      </div>
+                    </div>
+                    <div
+                      className="new-flag-wrapper land-flag"
+                      onClick={openGenesisLeaderboard}
+                    >
+                      <img src={landFlag} className="w-100" alt="" />
+                      <div className="flag-content d-flex flex-column gap-2 align-items-center">
+                        <span className="flag-title">Genesis</span>
+                        <img src={landIcon} height={50} width={50} alt="" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-6 mt-4">
+                <div
+                  className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
+                  onClick={openMyRewards}
+                >
+                  <img src={myRewardsMiner} className="miner-img" alt="" />
+                  <div className="d-flex flex-column position-absolute extraRewardsGolden">
+                    <img
+                      src={goldenPassBadge}
+                      alt=""
+                      style={{ width: 60, height: 60 }}
+                    />
+                    <h6
+                      className="special-rewards-total-span"
                       style={{
-                        width: "96px",
-                        height: "40px",
-                        right: "0px",
-                        bottom: "15px",
+                        color: "#F3BF09",
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      <span className="ready-to-claim mb-0">
-                        {finished ? "Reset Time" : "Ready to Claim"}
-                      </span>
+                      {isgoldenPassActive ? (
+                        <Countdown
+                          date={isgoldenPassActive}
+                          renderer={renderer3}
+                        />
+                      ) : (
+                        "Extra Rewards"
+                      )}
+                    </h6>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <h6
+                      className="special-rewards-title"
+                      style={{ color: "#FFF", width: "fit-content" }}
+                    >
+                      My
+                    </h6>
+                    <h6
+                      className="special-rewards-title"
+                      style={{ color: "#35F3FF", width: "fit-content" }}
+                    >
+                      Rewards
+                    </h6>
+                  </div>
+
+                  <div className="d-flex flex-column">
+                    <h6
+                      className="special-rewards-total mb-0"
+                      style={{ color: "#FFE8D2" }}
+                    >
+                      $
+                      {getFormattedNumber(
+                        liveRewards + Number(treasureRewardMoney)
+                      )}
+                    </h6>
+                    <span
+                      className="special-rewards-total-span"
+                      style={{ color: "#FFE8D2" }}
+                    >
+                      Rewards
+                    </span>
+                  </div>
+                  <img src={cyanArrow} width={20} height={20} alt="" />
+                </div>
+              </div>
+              <div className="col-12 col-lg-6 mt-4">
+                <div
+                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3"
+                  onClick={openSpecialRewards}
+                >
+                  <h6 className="special-rewards-title">Special Rewards</h6>
+                  <div className="d-flex flex-column">
+                    <h6 className="special-rewards-total mb-0">
+                      ${getFormattedNumber(specialRewards)}
+                    </h6>
+                    <span className="special-rewards-total-span">Rewards</span>
+                  </div>
+                  <img src={redArrow} width={20} height={20} alt="" />
+                </div>
+              </div>
+              <div className="col-12 col-lg-6 mt-4">
+                <NavLink to={dailyEvents[utcDayIndex].link}>
+                  <div
+                    className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
+                  >
+                    <div className=" d-flex flex-column justify-content-between gap-2 ">
+                      <div className="d-flex flex-column gap-2">
+                        <span
+                          className={`utcEventTitle`}
+                          style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                        >
+                          {dailyEvents[utcDayIndex].title}
+                        </span>
+                        <span
+                          className={`utcEventContent`}
+                          style={{
+                            color: dailyEvents[utcDayIndex].contentColor,
+                          }}
+                        >
+                          Coming Soon
+                        </span>
+                      </div>
                       <img
-                        src={readyBorder}
+                        src={dailyEvents[utcDayIndex].arrow}
                         alt=""
-                        className={`${
-                          finished ? "ready-border-2" : "ready-border"
-                        }`}
+                        style={{ height: 20, width: 20 }}
                       />
                     </div>
-                    {finished && (
-                      <span className="timer-text mb-0">
-                        <Countdown date={midnight} renderer={renderer2} />
-                      </span>
-                    )}
+
+                    <img
+                      src={dailyEvents[utcDayIndex].bannerImg}
+                      alt=""
+                      className="eventbannerimg"
+                    />
                   </div>
-                  <div></div>
-                </div>
+                </NavLink>
               </div>
-            </div>
-            <div className="col-12 col-lg-8">
-              <div className="game-leaderboards-wrapper position-relative h-100 d-flex align-items-end  align-items-lg-center justify-content-center justify-content-lg-between p-3">
-                <div className="d-flex flex-row flex-lg-column gap-2 gap-lg-0">
-                  <h6 className="leaderboards-title">Game</h6>
-                  <h6
-                    className="leaderboards-title mb-0"
-                    style={{ color: "#8C56FF" }}
-                  >
-                    Leaderboards
-                  </h6>
-                </div>
-                <div className="d-flex align-items-center leaderboards-flag-wrapper gap-3">
-                  <div
-                    className="new-flag-wrapper global-flag"
-                    onClick={openGlobalLeaderboard}
-                  >
-                    <img src={globalFlag} className="w-100" alt="" />
-                    <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                      <span className="flag-title">Global</span>
-                      <img src={globalIcon} height={50} width={50} alt="" />
-                    </div>
-                  </div>
-                  <div
-                    className="new-flag-wrapper chains-flag"
-                    onClick={openChainsLeaderboard}
-                  >
-                    <img src={chainsFlag} className="w-100" alt="" />
-                    <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                      <span className="flag-title">Chains</span>
-                      <img src={chainsIcon} height={50} width={50} alt="" />
-                    </div>
-                  </div>
-                  <div
-                    className="new-flag-wrapper land-flag"
-                    onClick={openGenesisLeaderboard}
-                  >
-                    <img src={landFlag} className="w-100" alt="" />
-                    <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                      <span className="flag-title">Genesis</span>
-                      <img src={landIcon} height={50} width={50} alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-lg-6 mt-4">
-              <div
-                className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
-                onClick={openMyRewards}
-              >
-                <img src={myRewardsMiner} className="miner-img" alt="" />
-                <div className="d-flex flex-column position-absolute extraRewardsGolden">
-                  <img
-                    src={goldenPassBadge}
-                    alt=""
-                    style={{ width: 60, height: 60 }}
-                  />
-                  <h6
-            className="special-rewards-total-span"
-                    style={{ color: "#F3BF09", width: "fit-content",whiteSpace: "nowrap", }}
-                  >
-                    Extra Rewards
-                  </h6>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  <h6
-                    className="special-rewards-title"
-                    style={{ color: "#FFF", width: "fit-content" }}
-                  >
-                    My
-                  </h6>
-                  <h6
-                    className="special-rewards-title"
-                    style={{ color: "#35F3FF", width: "fit-content" }}
-                  >
-                    Rewards
-                  </h6>
-                </div>
-          
-                <div className="d-flex flex-column">
-                  <h6
-                    className="special-rewards-total mb-0"
-                    style={{ color: "#FFE8D2" }}
-                  >
-                    $
-                    {getFormattedNumber(
-                      liveRewards + Number(treasureRewardMoney)
-                    )}
-                  </h6>
-                  <span
-                    className="special-rewards-total-span"
-                    style={{ color: "#FFE8D2" }}
-                  >
-                    Rewards
-                  </span>
-                </div>
-                <img src={cyanArrow} width={20} height={20} alt="" />
-              </div>
-            </div>
-            <div className="col-12 col-lg-6 mt-4">
-              <div
-                className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3"
-                onClick={openSpecialRewards}
-              >
-                <h6 className="special-rewards-title">Special Rewards</h6>
-                <div className="d-flex flex-column">
-                  <h6 className="special-rewards-total mb-0">
-                    ${getFormattedNumber(specialRewards)}
-                  </h6>
-                  <span className="special-rewards-total-span">Rewards</span>
-                </div>
-                <img src={redArrow} width={20} height={20} alt="" />
-              </div>
-            </div>
-            <div className="col-12 col-lg-6 mt-4">
-              <NavLink to={dailyEvents[utcDayIndex].link}>
-                <div
-                  className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
+              <div className="col-12 col-lg-6 mt-4">
+                <NavLink
+                  className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
+                  to={"/account/challenges/puzzle-madness"}
                 >
-                  <div className=" d-flex flex-column justify-content-between gap-2 ">
-                    <div className="d-flex flex-column gap-2">
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <div className="d-flex flex-column">
+                      <h6 className="leaderboards-title">PUZZLE MADNESS</h6>
                       <span
-                        className={`utcEventTitle`}
-                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                        className={`utcEventContent w-75`}
+                        style={{ color: "#CCE8F5" }}
                       >
-                        {dailyEvents[utcDayIndex].title}
-                      </span>
-                      <span
-                        className={`utcEventContent`}
-                        style={{ color: dailyEvents[utcDayIndex].contentColor }}
-                      >
-                        Coming Soon
+                        Test your puzzle solving skills and boost score
                       </span>
                     </div>
                     <img
-                      src={dailyEvents[utcDayIndex].arrow}
+                      src={puzzleMadnessArrow}
+                      height={20}
+                      width={20}
                       alt=""
-                      style={{ height: 20, width: 20 }}
                     />
                   </div>
-
-                  <img
-                    src={dailyEvents[utcDayIndex].bannerImg}
-                    alt=""
-                    className="eventbannerimg"
-                  />
-                </div>
-              </NavLink>
-            </div>
-            <div className="col-12 col-lg-6 mt-4">
-              <NavLink
-                className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
-                to={"/account/challenges/puzzle-madness"}
-              >
-                <div className="d-flex flex-column justify-content-between h-100">
-                  <div className="d-flex flex-column">
-                    <h6 className="leaderboards-title">PUZZLE MADNESS</h6>
-                    <span
-                      className={`utcEventContent w-75`}
-                      style={{ color: "#CCE8F5" }}
-                    >
-                      Test your puzzle solving skills and boost score
-                    </span>
-                  </div>
-                  <img src={puzzleMadnessArrow} height={20} width={20} alt="" />
-                </div>
-                <img src={puzzleMadnessBanner} className="eventbannerimg" />
-              </NavLink>
+                  <img src={puzzleMadnessBanner} className="eventbannerimg" />
+                </NavLink>
+              </div>
             </div>
           </div>
-        </div>
-        {/* {allEvents &&
+          {/* {allEvents &&
         <div className="col-12">
           <div className="all-treasure-wrapper p-3 d-flex align-items-center justify-content-between mt-3">
             <div className="d-flex align-items-center justify-content-between w-100">
@@ -1137,8 +1218,9 @@ const MyProfile = ({
           </div>
         </div>
         } */}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

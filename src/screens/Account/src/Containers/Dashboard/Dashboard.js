@@ -170,7 +170,7 @@ function Dashboard({
   onManageLogin,
   authToken,
   matEarnUsd,
-  wodBalance
+  wodBalance,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -521,7 +521,6 @@ function Dashboard({
   const [openedBaseChests, setOpenedBaseChests] = useState([]);
   const [openedMatChests, setOpenedMatChests] = useState([]);
 
-
   const [leaderboard, setLeaderboard] = useState(false);
   const [genesisLeaderboard, setGenesisLeaderboard] = useState(false);
   const [adClicked, setadClicked] = useState("");
@@ -573,7 +572,6 @@ function Dashboard({
   const [claimedTaikoChests, setclaimedTaikoChests] = useState(0);
   const [claimedMatChests, setclaimedMatChests] = useState(0);
 
-
   const [claimedVictionPremiumChests, setclaimedVictionPremiumChests] =
     useState(0);
   const [claimedSeiPremiumChests, setclaimedSeiPremiumChests] = useState(0);
@@ -611,7 +609,6 @@ function Dashboard({
   const [basecount, setbasecount] = useState(0);
   const [matcount, setmatcount] = useState(0);
 
-
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
@@ -635,7 +632,6 @@ function Dashboard({
   const [mantaImages, setMantaImages] = useState(shuffle(chestImagesViction));
   const [baseImages, setBaseImages] = useState(shuffle(chestImagesBase));
   const [matImages, setMatImages] = useState(shuffle(chestImagesMat));
-
 
   const [seiImages, setSeiImages] = useState(shuffle(chestImagesSei));
 
@@ -925,7 +921,6 @@ function Dashboard({
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
 
-
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
   const [monthlyRecordsCore, setMonthlyRecordsCore] = useState([]);
@@ -962,7 +957,6 @@ function Dashboard({
   const [monthlyDataAmountSkale, setMonthlyDataAmountSkale] = useState([]);
   const [userRankSkale, setUserRankSkale] = useState("");
   const [userSkaleScore, setUserSkaleScore] = useState(0);
-
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
@@ -1054,14 +1048,12 @@ function Dashboard({
   const [userRankTaiko, setUserRankTaiko] = useState("");
   const [userTaikoScore, setUserTaikoScore] = useState(0);
 
-
   const [dailyRecordsMat, setDailyRecordsMat] = useState([]);
   const [weeklyRecordsMat, setWeeklyRecordsMat] = useState([]);
   const [monthlyRecordsMat, setMonthlyRecordsMat] = useState([]);
   const [activePlayerMat, setActivePlayerMat] = useState(false);
   const [activePlayerMatWeekly, setActivePlayerMatWeekly] = useState(false);
-  const [activePlayerMatMonthly, setActivePlayerMatMonthly] =
-    useState(false);
+  const [activePlayerMatMonthly, setActivePlayerMatMonthly] = useState(false);
   const [userDataMat, setUserDataMat] = useState({});
   const [userDataMatWeekly, setUserDataMatWeekly] = useState({});
   const [userDataMatMonthly, setUserDataMatMonthly] = useState({});
@@ -1512,7 +1504,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardVictionDaily",
         StartPosition: 0,
-        MaxResultsCount: 100 ,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2596,7 +2588,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardTaikoDaily",
         StartPosition: 0,
-        MaxResultsCount:  100,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -2925,20 +2917,6 @@ function Dashboard({
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const fillRecordsMat = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsMat(placeholderplayerData);
@@ -2975,7 +2953,7 @@ function Dashboard({
       const data = {
         StatisticName: "LeaderboardMatChainDaily",
         StartPosition: 0,
-        MaxResultsCount:  100,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3689,7 +3667,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyExtraStarPrizes[99])
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
                 : Number(monthlyStarPrizes[userPosition]) +
                   Number(monthlyExtraStarPrizes[userPosition])
               : 0
@@ -3771,7 +3750,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(monthlyStarPrizes[99]) + Number(monthlyExtraStarPrizes[99])
+                ? Number(monthlyStarPrizes[99]) +
+                  Number(monthlyExtraStarPrizes[99])
                 : Number(monthlyStarPrizes[userPosition]) +
                   Number(monthlyExtraStarPrizes[userPosition])
               : 0
@@ -3851,7 +3831,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99]) + Number(weeklyExtraStarPrizes[99])
+                ? Number(weeklyStarPrizes[99]) +
+                  Number(weeklyExtraStarPrizes[99])
                 : Number(weeklyStarPrizes[userPosition]) +
                   Number(weeklyExtraStarPrizes[userPosition])
               : 0
@@ -3897,7 +3878,8 @@ function Dashboard({
               ? userPosition > 100
                 ? 0
                 : userPosition === 100
-                ? Number(weeklyStarPrizes[99]) + Number(weeklyExtraStarPrizes[99])
+                ? Number(weeklyStarPrizes[99]) +
+                  Number(weeklyExtraStarPrizes[99])
                 : Number(weeklyStarPrizes[userPosition]) +
                   Number(weeklyExtraStarPrizes[userPosition])
               : 0
@@ -3968,10 +3950,9 @@ function Dashboard({
         data
       );
       fillRecordsDaily(result.data.data.leaderboard);
-    
 
-    setdailyplayerData(result.data.data.leaderboard);
-  }
+      setdailyplayerData(result.data.data.leaderboard);
+    }
   };
 
   const fetchGenesisPreviousWinners = async (version) => {
@@ -4216,7 +4197,7 @@ function Dashboard({
       setOpenedSkaleChests([]);
       setclaimedSkaleChests(0);
       setclaimedSkalePremiumChests(0);
-      
+
       setOpenedMatChests([]);
       setclaimedMatChests(0);
       setclaimedMatPremiumChests(0);
@@ -4485,10 +4466,9 @@ function Dashboard({
     )
       return;
 
-      if (!allFalse && isPremium === true) {
-        setprimeStars(true)
-       }
-       else setprimeStars(false)
+    if (!allFalse && isPremium === true) {
+      setprimeStars(true);
+    } else setprimeStars(false);
 
     // if (!lastUpdated.current) {
     //   let updatedActiveData = [...allStarData.activeData];
@@ -4795,7 +4775,6 @@ function Dashboard({
         is_active: activePlayerMonthly,
       },
     ]);
-
   }, [
     dailyrecords,
     dailyplayerData,
@@ -4815,7 +4794,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: skaleStars,
-        previous_rewards:skaleStars,
+        previous_rewards: skaleStars,
         activeData: dailyRecordsSkale,
         previousData: prevDataSkale,
         player_data: userDataSkale,
@@ -4869,7 +4848,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards:baseStars ,
+        previous_rewards: baseStars,
         activeData: dailyRecordsCore,
         previousData: prevDataCore,
         player_data: userDataCore,
@@ -4918,7 +4897,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards:baseStars,
+        previous_rewards: baseStars,
         activeData: dailyRecordsViction,
         previousData: prevDataViction,
         player_data: userDataViction,
@@ -4967,7 +4946,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: mantaStars,
-        previous_rewards:  mantaStars,
+        previous_rewards: mantaStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -5018,7 +4997,7 @@ function Dashboard({
         reset: "Daily (00:00 UTC)",
         type: "stars",
         rewards: baseStars,
-        previous_rewards: baseStars ,
+        previous_rewards: baseStars,
         activeData: dailyRecordsBase,
         previousData: prevDataBase,
         player_data: userDataBase,
@@ -5237,8 +5216,6 @@ function Dashboard({
     totalRewards: "$2,000 in CFX Rewards",
     eventDate: "Dec 1, 2023",
   };
-
-  
 
   let wethAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
   let wcfx = "0xfe97E85d13ABD9c1c33384E796F10B73905637cE";
@@ -5931,7 +5908,7 @@ function Dashboard({
           return 0;
         });
 
-        const result_mat = await nftContract_mat.methods
+      const result_mat = await nftContract_mat.methods
         .balanceOf(wallet)
         .call()
         .catch((e) => {
@@ -5963,7 +5940,7 @@ function Dashboard({
           return 0;
         });
 
-        const discount_mat = await premiumSc_mat.methods
+      const discount_mat = await premiumSc_mat.methods
         .discountPercentageGlobal()
         .call()
         .catch((e) => {
@@ -5992,7 +5969,7 @@ function Dashboard({
           console.error(e);
         });
 
-        const nftObject_mat = await premiumSc_mat.methods
+      const nftObject_mat = await premiumSc_mat.methods
         .nftDiscounts(window.config.nft_dypius_premium_mat_address)
         .call()
         .catch((e) => {
@@ -6122,7 +6099,6 @@ function Dashboard({
 
       setnftPremium_tokenIdMat(0);
       setnftPremium_totalMat(0);
-
     }
 
     // } else setdiscountPercentage(0);
@@ -6299,7 +6275,7 @@ function Dashboard({
           claimedVictionChests < 10 ||
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
-          claimedTaikoChests < 10||
+          claimedTaikoChests < 10 ||
           claimedMatChests < 10
         ) {
           setCanBuy(true);
@@ -6654,7 +6630,7 @@ function Dashboard({
       );
       if (result.status === 200 && result.data) {
         const chestOrder = result.data.chestOrder;
- 
+
         let openedChests = [];
         let openedStandardChests = [];
         let openedPremiumChests = [];
@@ -6667,14 +6643,14 @@ function Dashboard({
                   openedChests.push(chestOrder[item]);
                   openedStandardChests.push(chestOrder[item]);
                 }
-              } 
+              }
             } else if (chestOrder[item].chestType === "Premium") {
               if (chestOrder[item].isOpened === true) {
                 {
                   openedChests.push(chestOrder[item]);
                   openedPremiumChests.push(chestOrder[item]);
                 }
-              } 
+              }
             }
           }
           setOpenedMatChests(openedChests);
@@ -7172,11 +7148,11 @@ function Dashboard({
             token,
             discountPercentageTaiko
           )
-        : chainId === 698 
+        : chainId === 698
         ? await window.getEstimatedTokenSubscriptionAmountMat(
-              token,
-              discountPercentageMat
-            )
+            token,
+            discountPercentageMat
+          )
         : chainId === 713715
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
@@ -7483,8 +7459,8 @@ function Dashboard({
             }, 5000);
           });
       }
-    }  else if (
-      chainId === 698  &&
+    } else if (
+      chainId === 698 &&
       nftPremium_totalMat > 0 &&
       window.WALLET_TYPE !== "binance"
     ) {
@@ -7567,7 +7543,7 @@ function Dashboard({
               ? mantasubscribeAddress
               : chainId === 167000
               ? taikosubscribeAddress
-              : chainId === 698 
+              : chainId === 698
               ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
@@ -7675,7 +7651,6 @@ function Dashboard({
     const taikoWeb3 = new Web3(window.config.taiko_endpoint);
     const matWeb3 = new Web3(window.config.mat_endpoint);
 
-
     const ethsubscribeAddress = window.config.subscription_neweth_address;
     const confluxsubscribeAddress = window.config.subscription_cfx_address;
     const bnbsubscribeAddress = window.config.subscription_newbnb2_address;
@@ -7688,7 +7663,6 @@ function Dashboard({
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
     const matsubscribeAddress = window.config.subscription_mat_address;
-
 
     const subscribeToken = token;
     const subscribeTokencontract = new web3eth.eth.Contract(
@@ -7778,7 +7752,7 @@ function Dashboard({
             token,
             discountPercentageTaiko
           )
-        : chainId === 698 
+        : chainId === 698
         ? await window.getEstimatedTokenSubscriptionAmountMat(
             token,
             discountPercentageMat
@@ -8047,7 +8021,7 @@ function Dashboard({
             setapproveStatus("initial");
           }
         }
-      }  else if (chainId === 698 ) {
+      } else if (chainId === 698) {
         if (nftPremium_totalMat > 0) {
           let contract = new window.web3.eth.Contract(
             window.NFT_DYPIUS_PREMIUM_MAT_ABI,
@@ -8195,7 +8169,7 @@ function Dashboard({
             ? "SUBSCRIPTION_MANTA"
             : chainId === 167000
             ? "SUBSCRIPTION_TAIKO"
-            : chainId === 698 
+            : chainId === 698
             ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
@@ -8522,7 +8496,7 @@ function Dashboard({
               setstatus("");
             }, 5000);
           });
-      }  else if (chainId === 698  && nftPremium_totalMat > 0) {
+      } else if (chainId === 698 && nftPremium_totalMat > 0) {
         await window
           .subscribeNFTMat(
             nftDiscountObjectMat.nftAddress,
@@ -8552,7 +8526,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 698 
+                  : chainId === 698
                   ? "matchain"
                   : chainId === 713715
                   ? "sei"
@@ -9295,7 +9269,6 @@ function Dashboard({
     }
   };
 
-
   const handleRankRewards = () => {
     const totalScore =
       userBnbScore +
@@ -9770,7 +9743,6 @@ function Dashboard({
     nftPremium_tokenIdViction,
     nftPremium_tokenIdTaiko,
     nftPremium_tokenIdMat,
-
   ]);
 
   useEffect(() => {
@@ -10012,8 +9984,8 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
-            userDataStar={userDataStar}
-            primeStars={primeStars}
+              userDataStar={userDataStar}
+              primeStars={primeStars}
               isgoldenPassActive={goldenPassRemainingTime}
               dragonRuinsCountdown={countdown}
               puzzleMadnessCountdown={countdown3500}
@@ -10024,27 +9996,27 @@ function Dashboard({
                 openedCoreChests.length +
                 openedMantaChests.length +
                 openedSkaleChests.length +
-                openedTaikoChests.length  +
+                openedTaikoChests.length +
                 openedMatChests.length +
                 openedVictionChests.length
               }
               allClaimedChestsPremium={
                 claimedBasePremiumChests +
-                claimedCorePremiumChests  +
+                claimedCorePremiumChests +
                 claimedMantaPremiumChests +
                 claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
-                claimedVictionPremiumChests  +
+                claimedVictionPremiumChests +
                 claimedSkalePremiumChests +
                 claimedPremiumChests
               }
               allClaimedChestsstd={
                 claimedBaseChests +
-                claimedCoreChests  +
+                claimedCoreChests +
                 claimedMantaChests +
                 claimedMatChests +
                 claimedTaikoChests +
-                claimedVictionChests  +
+                claimedVictionChests +
                 claimedSkaleChests +
                 claimedChests
               }
@@ -10077,23 +10049,39 @@ function Dashboard({
                 handleOpenDomains();
               }}
               liveRewards={
-                Number(userSocialRewardsCached) + 
+                Number(userSocialRewardsCached) +
                 Number(userRank2) +
                 Number(genesisRank2) +
                 Number(userRankRewards) +
-                Number(dataAmountStar) + Number(dataAmountStarWeekly) +
+                Number(dataAmountStar) +
+                Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
-                Number(landPremiumRewards)+
-                Number(mantaEarnUsd)+
-                Number(taikoEarnUsd)+
-                Number(matEarnUsd)+
-                Number(immutableEarnUsd)+
-                Number(cookieEarnUsd)+
+                Number(landPremiumRewards) +
+                Number(mantaEarnUsd) +
+                Number(taikoEarnUsd) +
+                Number(matEarnUsd) +
+                Number(immutableEarnUsd) +
+                Number(cookieEarnUsd) +
                 Number(baseEarnUSD)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
               onSyncClick={handleShowSyncModal}
+              rankData={rankData}
+              userRank={userRank}
+              userRankCore={userRankCore}
+              userRankSkale={userRankSkale}
+              userBnbScore={userBnbScore}
+              userCoreScore={userCoreScore}
+              userRankViction={userRankViction}
+              userVictionScore={userVictionScore}
+              userRankManta={userRankManta}
+              userMantaScore={userMantaScore}
+              userRankBase={userRankBase}
+              userBaseScore={userBaseScore}
+              userRankTaiko={userRankTaiko}
+              userTaikoScore={userTaikoScore}
+              userSkaleScore={userSkaleScore}
             />
             <NewEvents
               events={dummyBetaPassData2}
@@ -10101,6 +10089,7 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
@@ -10110,42 +10099,39 @@ function Dashboard({
           </>
         ) : location.pathname === "/account/my-rewards" ? (
           <MyRewardsPopupNew
-                            address={userWallet}
-                            userRank2={userRank2}
-                            email={email}
-                            userDataStar={dataAmountStar}
-                            userDataStarWeekly={dataAmountStarWeekly}
-
-                            allChests={allChests}
-                            allSkaleChests={allSkaleChests}
-                            allCoreChests={allCoreChests}
-                            allVictionChests={allVictionChests}
-                            allMantaChests={allMantaChests}
-                            allBaseChests={allBaseChests}
-                            allTaikoChests={allTaikoChests}
-                            allMatChests={allMatChests}
-                            allSeiChests={allSeiChests}
-
-                            availableTime={goldenPassRemainingTime}
-                            userSocialRewards={userSocialRewards}
-                            bnbEarnUsd={bnbEarnUsd}
-                            skaleEarnUsd={skaleEarnUsd}
-                            multiversEarnUsd={multiversEarnUsd}
-                            seiEarnUsd={seiEarnUsd}
-                            victionEarnUsd={victionEarnUsd}
-                            mantaEarnUsd={mantaEarnUsd}
-                            taikoEarnUsd={taikoEarnUsd}
-                            matEarnUsd={matEarnUsd}
-
-                            immutableEarnUsd={immutableEarnUsd}
-                            coreEarnUsd={coreEarnUsd}
-                            userRankRewards={userRankRewards}
-                            cawsPremiumRewards={cawsPremiumRewards}
-                            landPremiumRewards={landPremiumRewards}
-                            genesisRank2={genesisRank2}
-                            cookieEarnUsd={cookieEarnUsd}
-                            baseEarnUSD={baseEarnUSD}
-                          />
+            address={userWallet}
+            userRank2={userRank2}
+            email={email}
+            userDataStar={dataAmountStar}
+            userDataStarWeekly={dataAmountStarWeekly}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
+            allTaikoChests={allTaikoChests}
+            allMatChests={allMatChests}
+            allSeiChests={allSeiChests}
+            availableTime={goldenPassRemainingTime}
+            userSocialRewards={userSocialRewards}
+            bnbEarnUsd={bnbEarnUsd}
+            skaleEarnUsd={skaleEarnUsd}
+            multiversEarnUsd={multiversEarnUsd}
+            seiEarnUsd={seiEarnUsd}
+            victionEarnUsd={victionEarnUsd}
+            mantaEarnUsd={mantaEarnUsd}
+            taikoEarnUsd={taikoEarnUsd}
+            matEarnUsd={matEarnUsd}
+            immutableEarnUsd={immutableEarnUsd}
+            coreEarnUsd={coreEarnUsd}
+            userRankRewards={userRankRewards}
+            cawsPremiumRewards={cawsPremiumRewards}
+            landPremiumRewards={landPremiumRewards}
+            genesisRank2={genesisRank2}
+            cookieEarnUsd={cookieEarnUsd}
+            baseEarnUSD={baseEarnUSD}
+          />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
             chainId={chainId}
@@ -10173,110 +10159,108 @@ function Dashboard({
           //   }}
           // >
           <NewDailyBonus
-          isPremium={isPremium}
-          bnbImages={bnbImages}
-          skaleImages={skaleImages}
-          seiImages={seiImages}
-          victionImages={victionImages}
-          mantaImages={mantaImages}
-          baseImages={baseImages}
-          taikoImages={taikoImages}
-          matImages={matImages}
-
-          coreImages={coreImages}
-          chainId={chainId}
-          dypTokenData={dypTokenData}
-          ethTokenData={ethTokenData}
-          dyptokenData_old={dyptokenData_old}
-          handleSwitchChain={handleSwitchChain}
-          handleSwitchNetwork={handleSwitchNetwork}
-          listedNFTS={dailyBonuslistedNFTS}
-          onclose={() => {
-            setdailyBonusPopup(false);
-            window.location.hash = "";
-          }}
-          binanceW3WProvider={binanceW3WProvider}
-          coinbase={coinbase}
-          claimedChests={claimedChests}
-          claimedPremiumChests={claimedPremiumChests}
-          claimedSkaleChests={claimedSkaleChests}
-          claimedSkalePremiumChests={claimedSkalePremiumChests}
-          claimedCoreChests={claimedCoreChests}
-          claimedCorePremiumChests={claimedCorePremiumChests}
-          claimedVictionChests={claimedVictionChests}
-          claimedVictionPremiumChests={claimedVictionPremiumChests}
-          claimedMantaChests={claimedMantaChests}
-          claimedMantaPremiumChests={claimedMantaPremiumChests}
-          claimedBaseChests={claimedBaseChests}
-          claimedBasePremiumChests={claimedBasePremiumChests}
-          claimedTaikoChests={claimedTaikoChests}
-          claimedTaikoPremiumChests={claimedTaikoPremiumChests}
-          claimedMatChests={claimedMatChests}
-          claimedMatPremiumChests={claimedMatPremiumChests}
-          claimedSeiChests={claimedSeiChests}
-          claimedSeiPremiumChests={claimedSeiPremiumChests}
-          email={email}
-          openedChests={openedChests}
-          openedSkaleChests={openedSkaleChests}
-          openedCoreChests={openedCoreChests}
-          openedVictionChests={openedVictionChests}
-          openedMantaChests={openedMantaChests}
-          openedBaseChests={openedBaseChests}
-          openedTaikoChests={openedTaikoChests}
-          openedMatChests={openedMatChests}
-          openedSeiChests={openedSeiChests}
-          address={userWallet}
-          allChests={allChests}
-          allSkaleChests={allSkaleChests}
-          allCoreChests={allCoreChests}
-          allVictionChests={allVictionChests}
-          allMantaChests={allMantaChests}
-          allBaseChests={allBaseChests}
-          allTaikoChests={allTaikoChests}
-          allMatChests={allMatChests}
-
-          allSeiChests={allSeiChests}
-          onChestClaimed={() => {
-            setCount(count + 1);
-          }}
-          onSkaleChestClaimed={() => {
-            setskalecount(skalecount + 1);
-          }}
-          onCoreChestClaimed={() => {
-            setcorecount(corecount + 1);
-          }}
-          onVictionChestClaimed={() => {
-            setvicitoncount(vicitoncount + 1);
-          }}
-          onMantaChestClaimed={() => {
-            setmantacount(mantacount + 1);
-          }}
-          onBaseChestClaimed={() => {
-            setbasecount(basecount + 1);
-          }}
-          onTaikoChestClaimed={() => {
-            settaikocount(taikocount + 1);
-          }}
-          onMatChestClaimed={() => {
-            setmatcount(matcount + 1);
-          }}
-          onSeiChestClaimed={() => {
-            setCount(count + 1);
-          }}
-          dummypremiumChests={dummypremiumChests}
-          onPremiumClick={() => {
-            setgetPremiumPopup(true);
-          }}
-          premiumTxHash={premiumTxHash}
-          selectedChainforPremium={selectedChainforPremium}
-          onPremiumClickOther={() => {
-            setdailyBonusPopup(false);
-            setgetPremiumPopup(true);
-          }}
-          handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
-          handleSwitchChainGateWallet={handleSwitchChainGateWallet}
-          binanceWallet={binanceWallet}
-        />
+            isPremium={isPremium}
+            bnbImages={bnbImages}
+            skaleImages={skaleImages}
+            seiImages={seiImages}
+            victionImages={victionImages}
+            mantaImages={mantaImages}
+            baseImages={baseImages}
+            taikoImages={taikoImages}
+            matImages={matImages}
+            coreImages={coreImages}
+            chainId={chainId}
+            dypTokenData={dypTokenData}
+            ethTokenData={ethTokenData}
+            dyptokenData_old={dyptokenData_old}
+            handleSwitchChain={handleSwitchChain}
+            handleSwitchNetwork={handleSwitchNetwork}
+            listedNFTS={dailyBonuslistedNFTS}
+            onclose={() => {
+              setdailyBonusPopup(false);
+              window.location.hash = "";
+            }}
+            binanceW3WProvider={binanceW3WProvider}
+            coinbase={coinbase}
+            claimedChests={claimedChests}
+            claimedPremiumChests={claimedPremiumChests}
+            claimedSkaleChests={claimedSkaleChests}
+            claimedSkalePremiumChests={claimedSkalePremiumChests}
+            claimedCoreChests={claimedCoreChests}
+            claimedCorePremiumChests={claimedCorePremiumChests}
+            claimedVictionChests={claimedVictionChests}
+            claimedVictionPremiumChests={claimedVictionPremiumChests}
+            claimedMantaChests={claimedMantaChests}
+            claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedBaseChests={claimedBaseChests}
+            claimedBasePremiumChests={claimedBasePremiumChests}
+            claimedTaikoChests={claimedTaikoChests}
+            claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+            claimedMatChests={claimedMatChests}
+            claimedMatPremiumChests={claimedMatPremiumChests}
+            claimedSeiChests={claimedSeiChests}
+            claimedSeiPremiumChests={claimedSeiPremiumChests}
+            email={email}
+            openedChests={openedChests}
+            openedSkaleChests={openedSkaleChests}
+            openedCoreChests={openedCoreChests}
+            openedVictionChests={openedVictionChests}
+            openedMantaChests={openedMantaChests}
+            openedBaseChests={openedBaseChests}
+            openedTaikoChests={openedTaikoChests}
+            openedMatChests={openedMatChests}
+            openedSeiChests={openedSeiChests}
+            address={userWallet}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
+            allTaikoChests={allTaikoChests}
+            allMatChests={allMatChests}
+            allSeiChests={allSeiChests}
+            onChestClaimed={() => {
+              setCount(count + 1);
+            }}
+            onSkaleChestClaimed={() => {
+              setskalecount(skalecount + 1);
+            }}
+            onCoreChestClaimed={() => {
+              setcorecount(corecount + 1);
+            }}
+            onVictionChestClaimed={() => {
+              setvicitoncount(vicitoncount + 1);
+            }}
+            onMantaChestClaimed={() => {
+              setmantacount(mantacount + 1);
+            }}
+            onBaseChestClaimed={() => {
+              setbasecount(basecount + 1);
+            }}
+            onTaikoChestClaimed={() => {
+              settaikocount(taikocount + 1);
+            }}
+            onMatChestClaimed={() => {
+              setmatcount(matcount + 1);
+            }}
+            onSeiChestClaimed={() => {
+              setCount(count + 1);
+            }}
+            dummypremiumChests={dummypremiumChests}
+            onPremiumClick={() => {
+              setgetPremiumPopup(true);
+            }}
+            premiumTxHash={premiumTxHash}
+            selectedChainforPremium={selectedChainforPremium}
+            onPremiumClickOther={() => {
+              setdailyBonusPopup(false);
+              setgetPremiumPopup(true);
+            }}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
+          />
           // </OutsideClickHandler>
         )}
         {(leaderboard || hashValue === "#leaderboard") && (
@@ -10367,31 +10351,30 @@ function Dashboard({
                       </NavLink>
                     </div>
                   )} */}
-           <NewLeaderBoard
-                            username={username}
-                            userId={userId}
-                            dypBalancebnb={dypBalancebnb}
-                            address={userWallet}
-                            availableTime={goldenPassRemainingTime}
-                            email={email}
-                            isPremium={isPremium}
-                            allBnbData={allBnbData}
-                            allSkaleData={allSkaleData}
-                            allCoreData={allCoreData}
-                            allVictionData={allVictionData}
-                            allMantaData={allMantaData}
-                            allBaseData={allBaseData}
-                            allTaikoData={allTaikoData}
-                            allMatData={allMatData}
-
-                            dailyplayerData={dailyplayerData}
-                            weeklyplayerData={weeklyplayerData}
-                            monthlyplayerData={monthlyplayerData}
-                            genesisData={genesisData}
-                            onPremiumClick={() => {
-                              setgetPremiumPopup(true);
-                            }}
-                          />
+              <NewLeaderBoard
+                username={username}
+                userId={userId}
+                dypBalancebnb={dypBalancebnb}
+                address={userWallet}
+                availableTime={goldenPassRemainingTime}
+                email={email}
+                isPremium={isPremium}
+                allBnbData={allBnbData}
+                allSkaleData={allSkaleData}
+                allCoreData={allCoreData}
+                allVictionData={allVictionData}
+                allMantaData={allMantaData}
+                allBaseData={allBaseData}
+                allTaikoData={allTaikoData}
+                allMatData={allMatData}
+                dailyplayerData={dailyplayerData}
+                weeklyplayerData={weeklyplayerData}
+                monthlyplayerData={monthlyplayerData}
+                genesisData={genesisData}
+                onPremiumClick={() => {
+                  setgetPremiumPopup(true);
+                }}
+              />
             </div>
           </OutsideClickHandler>
         )}
@@ -10501,60 +10484,60 @@ function Dashboard({
                 backgroundSize: "auto",
               }}
             >
-               <div className="d-flex align-items-center justify-content-between">
-                            <h2
-                              className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
-                            style={{fontSize: "24px"}}
-                            >
-                            Global Leaderboards
-                            </h2>
+              <div className="d-flex align-items-center justify-content-between">
+                <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
+                  style={{ fontSize: "24px" }}
+                >
+                  Global Leaderboards
+                </h2>
 
-                            <img
-                              src={xMark}
-                              onClick={() => setGlobalLeaderboard(false)}
-                              alt=""
-                              style={{ cursor: "pointer" }}
-                            />
-                          </div>
-                          <div className="d-flex align-items-center gap-2 mt-3 ">
-                            <button
-                              className={` ${
-                                leaderboardBtn === "weekly"
-                                  ? "getpremium-active-btn"
-                                  : "getpremium-btn"
-                              }  w-100 py-lg-2 py-1`}
-                              onClick={() => {
-                                setleaderboardBtn("weekly");
-                              }}
-                            >
-                              Weekly
-                            </button>
-                            <button
-                              className={` ${
-                                leaderboardBtn === "monthly"
-                                  ? "getpremium-active-btn"
-                                  : "getpremium-btn"
-                              }  w-100 py-lg-2 py-1`}
-                              onClick={() => {
-                                setleaderboardBtn("monthly");
-                              }}
-                            >
-                              Monthly
-                            </button>
-                          </div>
-                          <GlobalLeaderboard
-                            leaderboardBtn={leaderboardBtn}
-                            genesisData={genesisData}
-                            previousgenesisData={previousgenesisData}
-                            previousGenesisVersion={previousGenesisVersion}
-                            allStarData={allStarData}
-                            screen={"dash"}
-                            availableTime={goldenPassRemainingTime}
-                            username={username}
-                            userId={userId}
-                            monthlyPlayers={monthlyPlayers}
-                            percent={percent}
-                          />
+                <img
+                  src={xMark}
+                  onClick={() => setGlobalLeaderboard(false)}
+                  alt=""
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              <div className="d-flex align-items-center gap-2 mt-3 ">
+                <button
+                  className={` ${
+                    leaderboardBtn === "weekly"
+                      ? "getpremium-active-btn"
+                      : "getpremium-btn"
+                  }  w-100 py-lg-2 py-1`}
+                  onClick={() => {
+                    setleaderboardBtn("weekly");
+                  }}
+                >
+                  Weekly
+                </button>
+                <button
+                  className={` ${
+                    leaderboardBtn === "monthly"
+                      ? "getpremium-active-btn"
+                      : "getpremium-btn"
+                  }  w-100 py-lg-2 py-1`}
+                  onClick={() => {
+                    setleaderboardBtn("monthly");
+                  }}
+                >
+                  Monthly
+                </button>
+              </div>
+              <GlobalLeaderboard
+                leaderboardBtn={leaderboardBtn}
+                genesisData={genesisData}
+                previousgenesisData={previousgenesisData}
+                previousGenesisVersion={previousGenesisVersion}
+                allStarData={allStarData}
+                screen={"dash"}
+                availableTime={goldenPassRemainingTime}
+                username={username}
+                userId={userId}
+                monthlyPlayers={monthlyPlayers}
+                percent={percent}
+              />
             </div>
           </OutsideClickHandler>
         )}
@@ -10583,42 +10566,39 @@ function Dashboard({
                 />
               </div>
               <MyRewardsPopupNew
-                            address={userWallet}
-                            userRank2={userRank2}
-                            email={email}
-                            userDataStar={dataAmountStar}
-                            userDataStarWeekly={dataAmountStarWeekly}
-
-                            allChests={allChests}
-                            allSkaleChests={allSkaleChests}
-                            allCoreChests={allCoreChests}
-                            allVictionChests={allVictionChests}
-                            allMantaChests={allMantaChests}
-                            allBaseChests={allBaseChests}
-                            allTaikoChests={allTaikoChests}
-                            allMatChests={allMatChests}
-                            allSeiChests={allSeiChests}
-
-                            availableTime={goldenPassRemainingTime}
-                            userSocialRewards={userSocialRewards}
-                            bnbEarnUsd={bnbEarnUsd}
-                            skaleEarnUsd={skaleEarnUsd}
-                            multiversEarnUsd={multiversEarnUsd}
-                            seiEarnUsd={seiEarnUsd}
-                            victionEarnUsd={victionEarnUsd}
-                            mantaEarnUsd={mantaEarnUsd}
-                            taikoEarnUsd={taikoEarnUsd}
-                            matEarnUsd={matEarnUsd}
-
-                            immutableEarnUsd={immutableEarnUsd}
-                            coreEarnUsd={coreEarnUsd}
-                            userRankRewards={userRankRewards}
-                            cawsPremiumRewards={cawsPremiumRewards}
-                            landPremiumRewards={landPremiumRewards}
-                            genesisRank2={genesisRank2}
-                            cookieEarnUsd={cookieEarnUsd}
-                            baseEarnUSD={baseEarnUSD}
-                          />
+                address={userWallet}
+                userRank2={userRank2}
+                email={email}
+                userDataStar={dataAmountStar}
+                userDataStarWeekly={dataAmountStarWeekly}
+                allChests={allChests}
+                allSkaleChests={allSkaleChests}
+                allCoreChests={allCoreChests}
+                allVictionChests={allVictionChests}
+                allMantaChests={allMantaChests}
+                allBaseChests={allBaseChests}
+                allTaikoChests={allTaikoChests}
+                allMatChests={allMatChests}
+                allSeiChests={allSeiChests}
+                availableTime={goldenPassRemainingTime}
+                userSocialRewards={userSocialRewards}
+                bnbEarnUsd={bnbEarnUsd}
+                skaleEarnUsd={skaleEarnUsd}
+                multiversEarnUsd={multiversEarnUsd}
+                seiEarnUsd={seiEarnUsd}
+                victionEarnUsd={victionEarnUsd}
+                mantaEarnUsd={mantaEarnUsd}
+                taikoEarnUsd={taikoEarnUsd}
+                matEarnUsd={matEarnUsd}
+                immutableEarnUsd={immutableEarnUsd}
+                coreEarnUsd={coreEarnUsd}
+                userRankRewards={userRankRewards}
+                cawsPremiumRewards={cawsPremiumRewards}
+                landPremiumRewards={landPremiumRewards}
+                genesisRank2={genesisRank2}
+                cookieEarnUsd={cookieEarnUsd}
+                baseEarnUSD={baseEarnUSD}
+              />
             </div>
           </OutsideClickHandler>
         )}
@@ -10645,7 +10625,7 @@ function Dashboard({
               </div>
 
               <Portfolio
-              wodBalance={wodBalance}
+                wodBalance={wodBalance}
                 ethTokenData={ethTokenData}
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
@@ -10746,29 +10726,29 @@ function Dashboard({
                   />
                 </div>
                 {discountPercentage > 0 ||
-                            discountPercentageViction > 0 ||
-                            discountPercentageTaiko ||
-                            discountPercentageMat > 0 ||
-                            nftPremium_total > 0 ||
-                            nftPremium_totalViction ||
-                            nftPremium_totalTaiko||
-                            nftPremium_totalMat > 0 ? (
+                discountPercentageViction > 0 ||
+                discountPercentageTaiko ||
+                discountPercentageMat > 0 ||
+                nftPremium_total > 0 ||
+                nftPremium_totalViction ||
+                nftPremium_totalTaiko ||
+                nftPremium_totalMat > 0 ? (
                   <div className="premium-discount-bg mt-3 p-4 position-relative">
                     <div className="premiumRedTag position-absolute">
                       <div className="position-relative d-flex flex-column">
                         <img src={premiumRedTag} alt="" />
                         <div className="d-flex flex-column position-absolute discountwrap">
                           <span className="discount-price2 font-oxanium">
-                          {discountPercentage > 0
-                                          ? discountPercentage
-                                          : discountPercentageViction > 0
-                                          ? discountPercentageViction
-                                          : discountPercentageTaiko > 0
-                                          ? discountPercentageTaiko
-                                          : discountPercentageMat > 0
-                                          ? discountPercentageMat
-                                          : discountPercentage}
-                                        %
+                            {discountPercentage > 0
+                              ? discountPercentage
+                              : discountPercentageViction > 0
+                              ? discountPercentageViction
+                              : discountPercentageTaiko > 0
+                              ? discountPercentageTaiko
+                              : discountPercentageMat > 0
+                              ? discountPercentageMat
+                              : discountPercentage}
+                            %
                           </span>
                           <span className="discount-price-bottom">
                             Discount
@@ -10782,104 +10762,89 @@ function Dashboard({
                           Lifetime plan
                         </h6>
                         {(nftPremium_total > 0 ||
-                                      nftPremium_totalViction > 0 ||
-                                      nftPremium_totalTaiko > 0||
-                                      nftPremium_totalMat > 0) && (
-                                      <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
-                                        Valid until:{" "}
-                                        {new Date(
-                                          nftPremium_total > 0
-                                            ? nftDiscountObject.expiration *
-                                              1000
-                                            : nftPremium_totalTaiko > 0
-                                            ? nftDiscountObjectTaiko.expiration *
-                                              1000
-                                              : nftPremium_totalMat > 0
-                                            ? nftDiscountObjectMat.expiration *
-                                              1000
-                                            : nftDiscountObjectViction.expiration *
-                                              1000
-                                        )
-                                          .toDateString()
-                                          .slice(
-                                            3,
-                                            new Date(
-                                              nftPremium_total > 0
-                                                ? nftDiscountObject.expiration *
-                                                  1000
-                                                : nftPremium_totalTaiko > 0
-                                                ? nftDiscountObjectTaiko.expiration *
-                                                  1000
-                                                  : nftPremium_totalMat > 0
-                                                ? nftDiscountObjectMat.expiration *
-                                                  1000
-                                                : nftDiscountObjectViction.expiration *
-                                                  1000
-                                            ).toDateString().length
-                                          )}
-                                      </h6>
-                                    )}
+                          nftPremium_totalViction > 0 ||
+                          nftPremium_totalTaiko > 0 ||
+                          nftPremium_totalMat > 0) && (
+                          <h6 className="token-amount-placeholder m-0 d-block d-lg-none d-md-none d-sm-none">
+                            Valid until:{" "}
+                            {new Date(
+                              nftPremium_total > 0
+                                ? nftDiscountObject.expiration * 1000
+                                : nftPremium_totalTaiko > 0
+                                ? nftDiscountObjectTaiko.expiration * 1000
+                                : nftPremium_totalMat > 0
+                                ? nftDiscountObjectMat.expiration * 1000
+                                : nftDiscountObjectViction.expiration * 1000
+                            )
+                              .toDateString()
+                              .slice(
+                                3,
+                                new Date(
+                                  nftPremium_total > 0
+                                    ? nftDiscountObject.expiration * 1000
+                                    : nftPremium_totalTaiko > 0
+                                    ? nftDiscountObjectTaiko.expiration * 1000
+                                    : nftPremium_totalMat > 0
+                                    ? nftDiscountObjectMat.expiration * 1000
+                                    : nftDiscountObjectViction.expiration * 1000
+                                ).toDateString().length
+                              )}
+                          </h6>
+                        )}
                       </div>
                       <div className="d-flex align-items-end gap-2">
                         <h6 className="discount-price">
-                        {discountPercentage == 100 ||
-                                      discountPercentageViction == 100 ||
-                                      discountPercentageTaiko == 100||
-                                      discountPercentageMat == 100
-                                        ? "FREE"
-                                        : "$" +
-                                          (100 -
-                                            Number(
-                                              discountPercentage > 0
-                                                ? discountPercentage
-                                                : discountPercentageViction > 0
-                                                ? discountPercentageViction
-                                                : discountPercentageTaiko > 0
-                                                ? discountPercentageTaiko
-                                                : discountPercentageMat > 0
-                                                ? discountPercentageMat
-                                                : discountPercentage
-                                            ))}
+                          {discountPercentage == 100 ||
+                          discountPercentageViction == 100 ||
+                          discountPercentageTaiko == 100 ||
+                          discountPercentageMat == 100
+                            ? "FREE"
+                            : "$" +
+                              (100 -
+                                Number(
+                                  discountPercentage > 0
+                                    ? discountPercentage
+                                    : discountPercentageViction > 0
+                                    ? discountPercentageViction
+                                    : discountPercentageTaiko > 0
+                                    ? discountPercentageTaiko
+                                    : discountPercentageMat > 0
+                                    ? discountPercentageMat
+                                    : discountPercentage
+                                ))}
                         </h6>
                         <h6 className="old-price-text">$100</h6>
                       </div>
                       {(nftPremium_total > 0 ||
-                                    nftPremium_totalViction > 0 ||
-                                    nftPremium_totalTaiko > 0||
-                                    nftPremium_totalMat > 0) && (
-                                    <h6 className="token-amount-placeholder m-0 premium-custom-text">
-                                      Valid until:{" "}
-                                      {new Date(
-                                        nftPremium_total > 0
-                                          ? nftDiscountObject.expiration * 1000
-                                          : nftPremium_totalTaiko > 0
-                                          ? nftDiscountObjectTaiko.expiration *
-                                            1000
-                                            : nftPremium_totalMat > 0
-                                          ? nftDiscountObjectMat.expiration *
-                                            1000
-                                          : nftDiscountObjectViction.expiration *
-                                            1000
-                                      )
-                                        .toDateString()
-                                        .slice(
-                                          3,
-                                          new Date(
-                                            nftPremium_total > 0
-                                              ? nftDiscountObject.expiration *
-                                                1000
-                                              : nftPremium_totalTaiko > 0
-                                              ? nftDiscountObjectTaiko.expiration *
-                                                1000
-                                                : nftPremium_totalMat > 0
-                                              ? nftDiscountObjectMat.expiration *
-                                                1000
-                                              : nftDiscountObjectViction.expiration *
-                                                1000
-                                          ).toDateString().length
-                                        )}
-                                    </h6>
-                                  )}
+                        nftPremium_totalViction > 0 ||
+                        nftPremium_totalTaiko > 0 ||
+                        nftPremium_totalMat > 0) && (
+                        <h6 className="token-amount-placeholder m-0 premium-custom-text">
+                          Valid until:{" "}
+                          {new Date(
+                            nftPremium_total > 0
+                              ? nftDiscountObject.expiration * 1000
+                              : nftPremium_totalTaiko > 0
+                              ? nftDiscountObjectTaiko.expiration * 1000
+                              : nftPremium_totalMat > 0
+                              ? nftDiscountObjectMat.expiration * 1000
+                              : nftDiscountObjectViction.expiration * 1000
+                          )
+                            .toDateString()
+                            .slice(
+                              3,
+                              new Date(
+                                nftPremium_total > 0
+                                  ? nftDiscountObject.expiration * 1000
+                                  : nftPremium_totalTaiko > 0
+                                  ? nftDiscountObjectTaiko.expiration * 1000
+                                  : nftPremium_totalMat > 0
+                                  ? nftDiscountObjectMat.expiration * 1000
+                                  : nftDiscountObjectViction.expiration * 1000
+                              ).toDateString().length
+                            )}
+                        </h6>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -10889,115 +10854,124 @@ function Dashboard({
                       <h6 className="plan-cost mb-0">$100</h6>
                     </div>
                     <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
-                    <div className="premium-chains-wrapper2">
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={
-                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                          .default
-                      }
-                      style={{ width: 18, height: 18 }}
-                      alt=""
-                    />
-                    <span className="subscription-chain mb-0">Ethereum</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={
-                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                          .default
-                      }
-                      style={{ width: 18, height: 18 }}
-                      alt=""
-                    />
-                    <span className="subscription-chain mb-0">BNB Chain</span>
-                  </div>
+                      <div className="premium-chains-wrapper2">
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              require(`../../Images/premium/tokens/ethIcon.svg`)
+                                .default
+                            }
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          <span className="subscription-chain mb-0">
+                            Ethereum
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              require(`../../Images/premium/tokens/wbnbIcon.svg`)
+                                .default
+                            }
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          <span className="subscription-chain mb-0">
+                            BNB Chain
+                          </span>
+                        </div>
 
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={require(`../../../../../components/Header/assets/manta.png`)}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Manta</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={
-                        require(`../../../../../components/Header/assets/taiko.svg`)
-                          .default
-                      }
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Taiko</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={
-                        matchainLogo
-                      }
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Matchain</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={
-                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                          .default
-                      }
-                      style={{ width: 18, height: 18 }}
-                      alt=""
-                    />
-                    <span className="subscription-chain mb-0">Avalanche</span>
-                  </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={require(`../../../../../components/Header/assets/manta.png`)}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">Manta</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              require(`../../../../../components/Header/assets/taiko.svg`)
+                                .default
+                            }
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">Taiko</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={matchainLogo}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            Matchain
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={
+                              require(`../../Images/premium/tokens/wavaxIcon.svg`)
+                                .default
+                            }
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          <span className="subscription-chain mb-0">
+                            Avalanche
+                          </span>
+                        </div>
 
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={baseLogo}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Base</span>
-                  </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={baseLogo}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">Base</span>
+                        </div>
 
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={conflux}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Conflux</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={skaleIcon}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">SKALE</span>
-                  </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={conflux}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            Conflux
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={skaleIcon}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">SKALE</span>
+                        </div>
 
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={coreIcon}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">CORE</span>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={vicitonIcon}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Viction</span>
-                  </div>
-                  
-                </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={coreIcon}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">CORE</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={vicitonIcon}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            Viction
+                          </span>
+                        </div>
+                      </div>
                       <img src={premiumIcon} alt="" />
                     </div>
                   </div>
@@ -11039,7 +11013,6 @@ function Dashboard({
                 {isConnected && (
                   <>
                     <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
-                 
                       {isConnected && (
                         <>
                           <div className="d-flex mt-4 mb-4 align-items-end justify-content-between flex-column-reverse flex-lg-row w-100">
@@ -11128,26 +11101,24 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-                                    {window.WALLET_TYPE !== "binance" &&
-                                          !window.ethereum?.isBinance && (
-                                            <li
-                                              className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                              onClick={handleMatPool}
-                                            >
-                                              <img
-                                                src={
-                                                  matchainLogo
-                                                }
-                                                style={{
-                                                  width: 18,
-                                                  height: 18,
-                                                }}
-                                                alt=""
-                                              />
-                                              Matchain
-                                            </li>
-                                          )}
-                                          
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleMatPool}
+                                      >
+                                        <img
+                                          src={matchainLogo}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        Matchain
+                                      </li>
+                                    )}
+
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                     onClick={handleAvaxPool}
@@ -11241,16 +11212,15 @@ function Dashboard({
                                         Viction
                                       </li>
                                     )}
-                                
                                 </ul>
                               </div>
                             </div>
 
                             {/* <div className="d-flex flex-column gap-3 subscribe-input-container"></div> */}
                             {discountPercentage < 100 &&
-                                    discountPercentageViction < 100 &&
-                                    discountPercentageTaiko < 100 &&
-                                    discountPercentageMat < 100 && (
+                              discountPercentageViction < 100 &&
+                              discountPercentageTaiko < 100 &&
+                              discountPercentageMat < 100 && (
                                 <div className="d-flex flex-column align-items-end gap-3">
                                   <span className="my-premium-balance-text mb-0">
                                     My balance:{" "}
@@ -11324,9 +11294,9 @@ function Dashboard({
                                               : chainId === 167000
                                               ? window.config
                                                   .subscriptiontaiko_tokens
-                                                  : chainId === 698
-                                                  ? window.config
-                                                      .subscriptionmat_tokens
+                                              : chainId === 698
+                                              ? window.config
+                                                  .subscriptionmat_tokens
                                               : chainId === 1116
                                               ? window.config
                                                   .subscriptioncore_tokens
@@ -11387,11 +11357,11 @@ function Dashboard({
                                                           .subscriptiontaiko_tokens[
                                                           t
                                                         ]?.symbol
-                                                        : chainId === 698
-                                                        ? window.config
-                                                            .subscriptionmat_tokens[
-                                                            t
-                                                          ]?.symbol
+                                                      : chainId === 698
+                                                      ? window.config
+                                                          .subscriptionmat_tokens[
+                                                          t
+                                                        ]?.symbol
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens[
@@ -11448,9 +11418,8 @@ function Dashboard({
                                                       ? window.config
                                                           .subscriptiontaiko_tokens
                                                       : chainId === 698
-                                                       ? window.config
-                                                              .subscriptionmat_tokens
-
+                                                      ? window.config
+                                                          .subscriptionmat_tokens
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens
@@ -11522,11 +11491,10 @@ function Dashboard({
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
-                                                      : chainId === 698
-                                                      ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
-                                                          t
-                                                        ]?.symbol.toLowerCase()}Icon.svg`)
-
+                                                    : chainId === 698
+                                                    ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
+                                                        t
+                                                      ]?.symbol.toLowerCase()}Icon.svg`)
                                                     : chainId === 713715
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                                         t
@@ -11582,9 +11550,10 @@ function Dashboard({
                                                 ? window.config
                                                     .subscriptiontaiko_tokens[t]
                                                     ?.symbol
-                                               : chainId === 698
-                                               ? window.config.subscriptionmat_tokens[t]?.symbol
-
+                                                : chainId === 698
+                                                ? window.config
+                                                    .subscriptionmat_tokens[t]
+                                                    ?.symbol
                                                 : chainId === 713715
                                                 ? window.config
                                                     .subscriptionsei_tokens[t]
@@ -11712,646 +11681,610 @@ function Dashboard({
                     </div>
                   </div>
                 )}
-              {isConnected &&
-                            discountPercentage > 0 &&
-                            chainId === 56 ? (
-                              <div className="d-flex align-items-center gap-3 justify-content-center">
-                                <div
-                                  className={` ${
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    disabled={
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={(e) => handleApprove(e)}
-                                  >
-                                    {loadspinner === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "deposit" ||
-                                      approveStatus === "failsubscribe" ||
-                                      approveStatus === "approveAmount" ||
-                                      approveStatus === "successsubscribe") ? (
-                                      <>
-                                        Approve{" "}
-                                        {approveStatus === "approveAmount"
-                                          ? "token"
-                                          : nftPremium_total > 0
-                                          ? "NFT"
-                                          : ""}
-                                      </>
-                                    ) : loadspinner === false &&
-                                      approveStatus === "fail" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                                <div
-                                  className={` ${
-                                    isApproved === false
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      isApproved === false
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    onClick={() => handleSubscribe()}
-                                  >
-                                    {loadspinnerSub === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "fail" ||
-                                      approveStatus === "deposit") ? (
-                                      <>
-                                        {discountPercentage > 0 ||
-                                        nftPremium_total > 0
-                                          ? "Redeem"
-                                          : "Buy"}
-                                      </>
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "successsubscribe" ? (
-                                      "Success"
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "failsubscribe" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            ) : isConnected &&
-                              discountPercentageViction > 0 &&
-                              chainId === 88 ? (
-                              <div className="d-flex align-items-center gap-3 justify-content-center">
-                                <div
-                                  className={` ${
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    disabled={
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={(e) => handleApprove(e)}
-                                  >
-                                    {loadspinner === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "deposit" ||
-                                      approveStatus === "failsubscribe" ||
-                                      approveStatus === "approveAmount" ||
-                                      approveStatus === "successsubscribe") ? (
-                                      <>
-                                        Approve{" "}
-                                        {approveStatus === "approveAmount"
-                                          ? "token"
-                                          : nftPremium_totalViction > 0
-                                          ? "NFT"
-                                          : ""}
-                                      </>
-                                    ) : loadspinner === false &&
-                                      approveStatus === "fail" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                                <div
-                                  className={` ${
-                                    isApproved === false
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      isApproved === false
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    onClick={() => handleSubscribe()}
-                                  >
-                                    {loadspinnerSub === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "fail" ||
-                                      approveStatus === "deposit") ? (
-                                      <>
-                                        {discountPercentageViction > 0 ||
-                                        nftPremium_totalViction > 0
-                                          ? "Redeem"
-                                          : "Buy"}
-                                      </>
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "successsubscribe" ? (
-                                      "Success"
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "failsubscribe" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            ) : isConnected &&
-                              discountPercentageTaiko > 0 &&
-                              chainId === 167000 ? (
-                              <div className="d-flex align-items-center gap-3 justify-content-center">
-                                <div
-                                  className={` ${
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    disabled={
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={(e) => handleApprove(e)}
-                                  >
-                                    {loadspinner === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "deposit" ||
-                                      approveStatus === "failsubscribe" ||
-                                      approveStatus === "approveAmount" ||
-                                      approveStatus === "successsubscribe") ? (
-                                      <>
-                                        Approve{" "}
-                                        {approveStatus === "approveAmount"
-                                          ? "token"
-                                          : nftPremium_totalTaiko > 0
-                                          ? "NFT"
-                                          : ""}
-                                      </>
-                                    ) : loadspinner === false &&
-                                      approveStatus === "fail" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                                <div
-                                  className={` ${
-                                    isApproved === false
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      isApproved === false
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    onClick={() => handleSubscribe()}
-                                  >
-                                    {loadspinnerSub === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "fail" ||
-                                      approveStatus === "deposit") ? (
-                                      <>
-                                        {discountPercentageTaiko > 0 ||
-                                        nftPremium_totalTaiko > 0
-                                          ? "Redeem"
-                                          : "Buy"}
-                                      </>
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "successsubscribe" ? (
-                                      "Success"
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "failsubscribe" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            )  : isConnected &&
-                            discountPercentageMat > 0 &&
-                            chainId === 698  ? (
-                            <div className="d-flex align-items-center gap-3 justify-content-center">
-                              <div
-                                className={` ${
-                                  approveStatus === "fail" ||
-                                  !coinbase ||
-                                  isApproved
-                                    ? "linear-border-disabled"
-                                    : "linear-border"
-                                }`}
-                              >
-                                <button
-                                  className={`btn ${
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? "outline-btn-disabled"
-                                      : "filled-btn"
-                                  } px-4`}
-                                  disabled={
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? true
-                                      : false
-                                  }
-                                  onClick={(e) => handleApprove(e)}
-                                >
-                                  {loadspinner === false &&
-                                  (approveStatus === "initial" ||
-                                    approveStatus === "deposit" ||
-                                    approveStatus === "failsubscribe" ||
-                                    approveStatus === "approveAmount" ||
-                                    approveStatus === "successsubscribe") ? (
-                                    <>
-                                      Approve{" "}
-                                      {approveStatus === "approveAmount"
-                                        ? "token"
-                                        : nftPremium_totalMat > 0
-                                        ? "NFT"
-                                        : ""}
-                                    </>
-                                  ) : loadspinner === false &&
-                                    approveStatus === "fail" ? (
-                                    "Failed"
-                                  ) : (
-                                    <div className="d-flex align-items-center gap-2">
-                                      Processing
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>{" "}
-                                    </div>
-                                  )}
-                                </button>
-                              </div>
-                              <div
-                                className={` ${
-                                  isApproved === false
-                                    ? "linear-border-disabled"
-                                    : "linear-border"
-                                }`}
-                              >
-                                <button
-                                  className={`btn ${
-                                    isApproved === false
-                                      ? "outline-btn-disabled"
-                                      : "filled-btn"
-                                  } px-4`}
-                                  onClick={() => handleSubscribe()}
-                                >
-                                  {loadspinnerSub === false &&
-                                  (approveStatus === "initial" ||
-                                    approveStatus === "fail" ||
-                                    approveStatus === "deposit") ? (
-                                    <>
-                                      {discountPercentageMat > 0 ||
-                                      nftPremium_totalMat > 0
-                                        ? "Redeem"
-                                        : "Buy"}
-                                    </>
-                                  ) : loadspinnerSub === false &&
-                                    approveStatus === "successsubscribe" ? (
-                                    "Success"
-                                  ) : loadspinnerSub === false &&
-                                    approveStatus === "failsubscribe" ? (
-                                    "Failed"
-                                  ) : (
-                                    <div className="d-flex align-items-center gap-2">
-                                      Processing
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>{" "}
-                                    </div>
-                                  )}
-                                </button>
-                              </div>
-                            </div>
-                          ) : isConnected &&
-                              discountPercentage > 0 &&
-                              chainId !== 56 ? (
-                              <div
-                                className={`d-flex align-items-center justify-content-center mb-2`}
-                              >
-                                <button
-                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                  onClick={() => {
-                                    handleBnbPool();
-                                  }}
-                                  style={{
-                                    width: "fit-content",
-                                    whiteSpace: "nowrap",
-                                    fontSize: 14,
-                                  }}
-                                >
-                                  Switch to BNB Chain
-                                </button>
-                              </div>
-                            ) : isConnected &&
-                              discountPercentageViction > 0 &&
-                              chainId !== 88 ? (
-                              <div
-                                className={`d-flex align-items-center justify-content-center mb-2`}
-                              >
-                                <button
-                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                  onClick={() => {
-                                    handleVictionPool();
-                                  }}
-                                  style={{
-                                    width: "fit-content",
-                                    whiteSpace: "nowrap",
-                                    fontSize: 14,
-                                  }}
-                                >
-                                  Switch to Viction
-                                </button>
-                              </div>
-                            ) : isConnected &&
-                              discountPercentageTaiko > 0 &&
-                              chainId !== 167000 ? (
-                              <div
-                                className={`d-flex align-items-center justify-content-center mb-2`}
-                              >
-                                <button
-                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                  onClick={() => {
-                                    handleTaikoPool();
-                                  }}
-                                  style={{
-                                    width: "fit-content",
-                                    whiteSpace: "nowrap",
-                                    fontSize: 14,
-                                  }}
-                                >
-                                  Switch to Taiko
-                                </button>
-                              </div>
-                            ) : isConnected &&
-                            discountPercentageMat > 0 &&
-                            chainId !== 698  ? (
+                {isConnected && discountPercentage > 0 && chainId === 56 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_total > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
                             <div
-                              className={`d-flex align-items-center justify-content-center mb-2`}
-                            >
-                              <button
-                                className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                onClick={() => {
-                                  handleMatPool();
-                                }}
-                                style={{
-                                  width: "fit-content",
-                                  whiteSpace: "nowrap",
-                                  fontSize: 14,
-                                }}
-                              >
-                                Switch to Matchain
-                              </button>
-                            </div>
-                          ) : isConnected && coinbase ? (
-                              <div className="d-flex align-items-center gap-3 justify-content-center">
-                                <div
-                                  className={` ${
-                                    approveStatus === "fail" ||
-                                    !coinbase ||
-                                    isApproved
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    disabled={
-                                      approveStatus === "fail" ||
-                                      !coinbase ||
-                                      isApproved
-                                        ? true
-                                        : false
-                                    }
-                                    onClick={(e) => handleApprove(e)}
-                                  >
-                                    {loadspinner === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "deposit" ||
-                                      approveStatus === "approveAmount" ||
-                                      approveStatus === "failsubscribe" ||
-                                      approveStatus === "successsubscribe") ? (
-                                      <>
-                                        Approve{" "}
-                                        {approveStatus === "approveAmount"
-                                          ? "token"
-                                          : nftPremium_total > 0
-                                          ? "NFT"
-                                          : ""}
-                                      </>
-                                    ) : loadspinner === false &&
-                                      approveStatus === "fail" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        Processing
-                                        <div
-                                          className="spinner-border "
-                                          role="status"
-                                          style={{
-                                            height: "1rem",
-                                            width: "1rem",
-                                          }}
-                                        ></div>{" "}
-                                      </div>
-                                    )}
-                                  </button>
-                                </div>
-                                <div
-                                  className={` ${
-                                    isApproved === false
-                                      ? "linear-border-disabled"
-                                      : "linear-border"
-                                  }`}
-                                >
-                                  <button
-                                    className={`btn ${
-                                      isApproved === false
-                                        ? "outline-btn-disabled"
-                                        : "filled-btn"
-                                    } px-4`}
-                                    onClick={() => handleSubscribe()}
-                                  >
-                                    {loadspinnerSub === false &&
-                                    (approveStatus === "initial" ||
-                                      approveStatus === "fail" ||
-                                      approveStatus === "deposit") ? (
-                                      <>
-                                        {discountPercentage > 0 ||
-                                        nftPremium_total > 0
-                                          ? "Redeem"
-                                          : "Buy"}
-                                      </>
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "successsubscribe" ? (
-                                      "Success"
-                                    ) : loadspinnerSub === false &&
-                                      approveStatus === "failsubscribe" ? (
-                                      "Failed"
-                                    ) : (
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{
-                                          height: "1rem",
-                                          width: "1rem",
-                                        }}
-                                      ></div>
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            ) : (
-                              <div
-                                className={`d-flex align-items-center justify-content-center mb-2`}
-                              >
-                                <button
-                                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
-                                  onClick={() => {
-                                    setshowWalletModal(true);
-                                    setgetPremiumPopup(false);
-                                  }}
-                                  style={{
-                                    width: "fit-content",
-                                    whiteSpace: "nowrap",
-                                    fontSize: 14,
-                                  }}
-                                >
-                                  Connect wallet
-                                </button>
-                              </div>
-                            )}
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentage > 0 || nftPremium_total > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId === 88 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_totalViction > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentageViction > 0 ||
+                            nftPremium_totalViction > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId === 167000 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_totalTaiko > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentageTaiko > 0 ||
+                            nftPremium_totalTaiko > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId === 698 ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_totalMat > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentageMat > 0 ||
+                            nftPremium_totalMat > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleBnbPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to BNB Chain
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageViction > 0 &&
+                  chainId !== 88 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleVictionPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Viction
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageTaiko > 0 &&
+                  chainId !== 167000 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleTaikoPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Taiko
+                    </button>
+                  </div>
+                ) : isConnected &&
+                  discountPercentageMat > 0 &&
+                  chainId !== 698 ? (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        handleMatPool();
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Switch to Matchain
+                    </button>
+                  </div>
+                ) : isConnected && coinbase ? (
+                  <div className="d-flex align-items-center gap-3 justify-content-center">
+                    <div
+                      className={` ${
+                        approveStatus === "fail" || !coinbase || isApproved
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        disabled={
+                          approveStatus === "fail" || !coinbase || isApproved
+                            ? true
+                            : false
+                        }
+                        onClick={(e) => handleApprove(e)}
+                      >
+                        {loadspinner === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "deposit" ||
+                          approveStatus === "approveAmount" ||
+                          approveStatus === "failsubscribe" ||
+                          approveStatus === "successsubscribe") ? (
+                          <>
+                            Approve{" "}
+                            {approveStatus === "approveAmount"
+                              ? "token"
+                              : nftPremium_total > 0
+                              ? "NFT"
+                              : ""}
+                          </>
+                        ) : loadspinner === false &&
+                          approveStatus === "fail" ? (
+                          "Failed"
+                        ) : (
+                          <div className="d-flex align-items-center gap-2">
+                            Processing
+                            <div
+                              className="spinner-border "
+                              role="status"
+                              style={{
+                                height: "1rem",
+                                width: "1rem",
+                              }}
+                            ></div>{" "}
+                          </div>
+                        )}
+                      </button>
+                    </div>
+                    <div
+                      className={` ${
+                        isApproved === false
+                          ? "linear-border-disabled"
+                          : "linear-border"
+                      }`}
+                    >
+                      <button
+                        className={`btn ${
+                          isApproved === false
+                            ? "outline-btn-disabled"
+                            : "filled-btn"
+                        } px-4`}
+                        onClick={() => handleSubscribe()}
+                      >
+                        {loadspinnerSub === false &&
+                        (approveStatus === "initial" ||
+                          approveStatus === "fail" ||
+                          approveStatus === "deposit") ? (
+                          <>
+                            {discountPercentage > 0 || nftPremium_total > 0
+                              ? "Redeem"
+                              : "Buy"}
+                          </>
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "successsubscribe" ? (
+                          "Success"
+                        ) : loadspinnerSub === false &&
+                          approveStatus === "failsubscribe" ? (
+                          "Failed"
+                        ) : (
+                          <div
+                            className="spinner-border "
+                            role="status"
+                            style={{
+                              height: "1rem",
+                              width: "1rem",
+                            }}
+                          ></div>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={`d-flex align-items-center justify-content-center mb-2`}
+                  >
+                    <button
+                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      onClick={() => {
+                        setshowWalletModal(true);
+                        setgetPremiumPopup(false);
+                      }}
+                      style={{
+                        width: "fit-content",
+                        whiteSpace: "nowrap",
+                        fontSize: 14,
+                      }}
+                    >
+                      Connect wallet
+                    </button>
+                  </div>
+                )}
                 <div
                   className={`d-flex align-items-center justify-content-center`}
                 >
@@ -12597,6 +12530,8 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
+
+     
       </div>
     </div>
   );
