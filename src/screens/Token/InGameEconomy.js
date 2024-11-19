@@ -26,7 +26,7 @@ const InGameEconomy = () => {
 
   return (
     <div className="economy-banner d-flex align-items-center justify-content-center py-4">
-      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between  custom-container px-3 px-lg-0">
+      <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between  custom-container ">
         <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-start">
           <span className="amp-benefits-desc text-center text-md-start">
             WOD

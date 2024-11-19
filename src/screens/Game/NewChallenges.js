@@ -462,7 +462,7 @@ const NewChallenges = ({ screen, popupEvent,
           <h2 className="font-montserrat main-hero-title  px-0">
             Events & Challenges
           </h2>
-          <div className="col-12 col-md-8 col-lg-7">
+          <div className="col-12 col-md-8 col-lg-8">
             <div className="challenges-button-grid gap-4">
               <button
                 className={`inactive-challenge-btn ${

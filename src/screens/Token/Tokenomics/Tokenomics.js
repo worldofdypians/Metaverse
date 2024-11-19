@@ -112,7 +112,7 @@ const Tokenomics = () => {
       className="d-flex  flex-column align-items-center gap-4 mt-4"
       id="tokenomics"
     >
-      <div className="custom-container  d-flex flex-column w-100 gap-3 px-3 px-lg-0">
+      <div className="custom-container  d-flex flex-column w-100 gap-3 ">
         <h4
           className="explorer-grid-title font-montserrat text-start mb-0"
         >
@@ -123,7 +123,7 @@ const Tokenomics = () => {
           Dypians ecosystem and help it grow.
         </span>
       </div>
-      <div className="w-100 px-lg-5 py-5 d-flex justify-content-center new-tokenomics-bg">
+      <div className="w-100  py-5 d-flex justify-content-center new-tokenomics-bg">
         <div className="custom-container w-100">
           <div className="row mx-0 align-items-end">
             <div className="col-12 col-lg-6 tablesalewrapper h-100">

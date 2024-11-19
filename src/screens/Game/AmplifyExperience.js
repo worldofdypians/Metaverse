@@ -78,7 +78,7 @@ const AmplifyExperience = () => {
         </div>
       </div>
       <div className="container-fluid amplify-table-wrapper py-5 d-flex align-items-center justify-content-center">
-        <div className="custom-container game-table-container d-flex flex-column mx-3 mx-lg-0 w-100">
+        <div className="custom-container game-table-container d-flex flex-column  w-100">
           <table className="game-table">
             <thead>
               <tr>

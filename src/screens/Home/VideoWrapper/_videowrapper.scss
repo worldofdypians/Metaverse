@@ -215,9 +215,14 @@
   z-index: 1;
 
 
+  @media screen and (max-width: 1600px) {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  }
   @media screen and (max-width: 991px) {
     position: relative;
     margin-top: 8rem;
     margin-bottom: 2rem;
   }
 }
+
