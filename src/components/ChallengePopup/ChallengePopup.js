@@ -99,7 +99,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
         {screen !== "account" && (
           <div className="challenge-popup-button-wrapper p-3 d-flex justify-content-center w-100">
             <NavLink className={"getpremium-btn px-3 py-2"} to={item.link}>
-              Buy
+              Get
             </NavLink>
           </div>
         )}
