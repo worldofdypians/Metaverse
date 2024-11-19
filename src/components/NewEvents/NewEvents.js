@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_newevents.scss";
 
 import TreasureHunt from "../Challenges/TreasureHunt";
-import DragonRuins from "../Challenges/DragonRuins";
-import ScorpionKing from "../Challenges/ScorpionKing";
-import PuzzleMadness from "../Challenges/PuzzleMadness";
-import CriticalHit from "../Challenges/CriticalHit";
-import MazeGarden from "../Challenges/MazeGarden";
-import GoldenPass from "../Challenges/GoldenPass";
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import ChallengePopup from "../ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -38,6 +31,7 @@ import dypIcon from "../Challenges/assets/dypIcon.svg";
 import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
 import syncIcon from "../Challenges/assets/syncIcon.svg";
+import Countdown from "react-countdown";
 
 import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
 import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
@@ -45,8 +39,13 @@ import furyBeastThumb from "./assets/banners/furyBeastThumb.webp";
 import stoneEyeThumb from "./assets/banners/stoneEyeThumb.webp";
 import wingStormThumb from "./assets/banners/wingStormThumb.webp";
 import dragonRuinsThumb from "./assets/banners/dragonRuinsThumb.webp";
-import Countdown from "react-countdown";
 
+import coldBiteActiveThumb from "./assets/banners/coldBiteActiveThumb.webp";
+import scorpionKingActiveThumb from "./assets/banners/scorpionKingActiveThumb.webp";
+import furyBeastActiveThumb from "./assets/banners/furyBeastActiveThumb.webp";
+import stoneEyeActiveThumb from "./assets/banners/stoneEyeActiveThumb.webp";
+import wingStormActiveThumb from "./assets/banners/wingStormActiveThumb.webp";
+import dragonRuinsActiveThumb from "./assets/banners/dragonRuinsActiveThumb.webp";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -63,7 +62,9 @@ const renderer = ({ days, hours, minutes }) => {
       </div>
       <h6 className="mint-time3 mb-0">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <h6 className="mint-time3 mb-0">
+          {minutes < 10 ? "0" + minutes : minutes}
+        </h6>
         <span className="days3">Minutes</span>
       </div>
     </div>
@@ -79,6 +80,8 @@ const NewEvents = ({
   binanceW3WProvider,
   selectedEvent,
 }) => {
+  const [activeThumb, setActiveThumb] = useState("");
+
   const [challenge, setChallenge] = useState("treasure-hunt");
   const [eventDuration, seteventDuration] = useState("Live");
   const [showPopup, setshowPopup] = useState("");
@@ -90,17 +93,22 @@ const NewEvents = ({
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [currentWeek, setCurrentWeek] = useState([]);
 
-  const currentDate = new Date().getDay();
+  const currentDate = new Date().getUTCDay();
+  const utcDayIndex = new Date().getUTCDay();
+
+  const { eventId } = useParams();
+
+ 
 
   const adjustedDay = currentDate === 0 ? 7 : currentDate;
-  // const isMonday = now.getDay() === 1; 
-  const isMonday =true; 
+  // const isMonday = now.getDay() === 1;
+  const isMonday = true;
 
   const getMonday = (date) => {
-    const day = date.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
+    const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
     const diff = (day === 0 ? -6 : 1) - day; // Adjust to Monday
     const monday = new Date(date);
-    monday.setDate(date.getDate() + diff);
+    monday.setDate(date.getUTCDate() + diff);
     return monday;
   };
 
@@ -108,26 +116,21 @@ const NewEvents = ({
     const dates = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(start);
-      date.setDate(start.getDate() + i);
+      date.setDate(start.getUTCDate() + i);
       dates.push(date);
     }
     return dates;
   };
 
-  useEffect(() => {
-    const today = new Date();
-    const monday = getMonday(today);
-    const week = generateWeekDates(monday);
-    setCurrentWeek(week);
-  }, []);
-
   const eventinfos = [
     {
       id: "dragon",
+      challange: "dragon-ruins",
       title: "Dragon Ruins",
       popupImage: dragonRuinsPopup,
       image: dragonRuinsBanner,
       thumbImage: dragonRuinsThumb,
+      thumbImageActive: dragonRuinsActiveThumb,
 
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
@@ -147,12 +150,15 @@ const NewEvents = ({
       ],
       link: "/account/challenges/dragon-ruins",
     },
-
     {
+      challange: "cold-bite",
+
       id: "coldbite",
       image: coldBiteBanner,
       popupImage: coldBitePopup,
       thumbImage: coldBiteThumb,
+      thumbImageActive: coldBiteActiveThumb,
+
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
       dayText: "TUE",
@@ -173,10 +179,13 @@ const NewEvents = ({
       link: "/account/challenges/cold-bite",
     },
     {
+      challange: "fury-beast",
+
       id: "furyBeast",
       image: furyBeastBanner,
       popupImage: furyBeastPopup,
       thumbImage: furyBeastThumb,
+      thumbImageActive: furyBeastActiveThumb,
 
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
@@ -198,10 +207,13 @@ const NewEvents = ({
       link: "/account/challenges/fury-beast",
     },
     {
+      challange: "wing-storm",
+
       id: "wingstorm",
       image: wingStormBanner,
       popupImage: wingStormPopup,
       thumbImage: wingStormThumb,
+      thumbImageActive: wingStormActiveThumb,
 
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
@@ -223,10 +235,13 @@ const NewEvents = ({
       link: "/account/challenges/wing-storm",
     },
     {
+      challange: "scorpion-king",
+
       id: "scorpion",
       popupImage: scorpionKingPopup,
       image: scorpionKingBanner,
       thumbImage: scorpionKingThumb,
+      thumbImageActive: scorpionKingActiveThumb,
 
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
@@ -248,9 +263,13 @@ const NewEvents = ({
       link: "/account/challenges/scorpion-king",
     },
     {
+      challange: "stone-eye",
+
+      id: "stoneEye",
       image: stoneEyeBanner,
       popupImage: stoneEyePopup,
       thumbImage: stoneEyeThumb,
+      thumbImageActive: stoneEyeActiveThumb,
 
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
@@ -353,10 +372,38 @@ const NewEvents = ({
   ];
 
   useEffect(() => {
+    const today = new Date();
+    const monday = getMonday(today);
+    const week = generateWeekDates(monday);
+    setCurrentWeek(week);
+    setActiveEvent(
+      eventinfos.find((item) => {
+        return item.day === utcDayIndex;
+      })
+    );
+    setActiveThumb(
+      eventinfos.find((item) => {
+        return item.day === utcDayIndex;
+      }).id
+    );
+  }, []);
+
+  useEffect(() => {
     if (selectedEvent) {
       setChallenge(selectedEvent);
     }
   }, [selectedEvent]);
+
+  useEffect(()=>{
+    if(eventId && eventId !=='') {
+      setActiveEvent(eventinfos.find((item)=>{return item.challange === eventId}))
+      setActiveThumb(
+        eventinfos.find((item) => {
+          return  item.challange === eventId;
+        }).id
+      );
+    }
+  },[eventId])
 
   const html = document.querySelector("html");
 
@@ -426,17 +473,32 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                      <NavLink to="/account/challenges/dragon-ruins">
+                      <NavLink
+                        to={
+                          eventinfos.find((item) => {
+                            return item.day === utcDayIndex;
+                          }).link
+                        }
+                      >
                         <div
                           className={`${
-                            challenge === "dragon-ruins" ||
-                            selectedEvent === "dragon-ruins"
+                            eventinfos.find((item) => {
+                              return item.day === utcDayIndex;
+                            }) !== undefined
                               ? "active-challenge-item"
                               : "challenge-item"
                           } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
                           onClick={() => {
-                            setChallenge("dragon-ruins");
-                            setActiveEvent(eventinfos[0])
+                            setChallenge(
+                              eventinfos.find((item) => {
+                                return item.day === utcDayIndex;
+                              }).challange
+                            );
+                            setActiveEvent(
+                              eventinfos.find((item) => {
+                                return item.day === utcDayIndex;
+                              })
+                            );
                           }}
                         >
                           {/* <img src={treasureHuntIcon} alt="" /> */}
@@ -600,47 +662,71 @@ const NewEvents = ({
                         eventDuration={eventDuration}
                         onEventClick={onEventClick}
                       />
-                    ) : challenge === "dragon-ruins" ? (
+                    ) : challenge === "dragon-ruins" ||
+                      challenge === "cold-bite" ||
+                      challenge === "fury-beast" ||
+                      challenge === "wing-storm" ||
+                      challenge === "scorpion-king" ||
+                      challenge === "stone-eye" ? (
                       <div className="d-flex flex-column gap-2 w-100">
-                        <div className="d-flex align-items-center gap-4 position-relative">
+                        <div
+                          className="d-flex align-items-center gap-4 position-relative"
+                          onMouseLeave={() => {
+                            setActiveThumb();
+                          }}
+                        >
                           {eventinfos.map((item, index) => (
-                            <div
-                              key={index}
-                              className="beast-challenge-card d-flex flex-column position-relative"
-                              onClick={() => {
-                                // setPopupEvent(item);
-                                setActiveEvent(item);
-                              }}
-                            >
-                              <img
-                                src={item.thumbImage}
-                                className="w-100"
-                                alt=""
-                              />
+                            <NavLink key={index} to={item.link}>
                               <div
-                                className="d-flex align-item-start gap-2 position-absolute"
-                                style={{ top: "-20px", right: "-13px" }}
+                                className="beast-challenge-card d-flex flex-column position-relative"
+                                onClick={() => {
+                                  // setPopupEvent(item);
+                                  setActiveEvent(item);
+                                  setActiveThumb(item.id);
+                                }}
+                                onMouseEnter={() => {
+                                  setActiveThumb(item.id);
+                                }}
                               >
-                                {/* <p className="challenge-beast-desc m-0 ">{item.desc}</p> */}
-                                {/* <span  style={{color: item.day === currentDate ? "gold" : "white" }}>{currentWeek[item.day - 1]?.getDate()}</span> */}
-                                <div className="beast-date d-flex flex-column">
-                                  <div
-                                    className="beast-date-text-holder d-flex align-items-center justify-content-center"
-                                    style={{
-                                      background:
-                                        item.day === adjustedDay
-                                          ? "#e10000"
-                                          : "#08656a",
-                                    }}
-                                  >
-                                    {item.dayText}
-                                  </div>
-                                  <div className="beast-date-holder d-flex align-items-center justify-content-center">
-                                    {currentWeek[item.day - 1]?.getDate()}
+                                <img
+                                  src={
+                                    activeThumb === item.id ||
+                                    activeEvent.id === item.id
+                                      ? item.thumbImageActive
+                                      : item.thumbImage
+                                  }
+                                  className={`w-100 event-thumb-img ${
+                                    (activeThumb === item.id ||
+                                      activeEvent.id === item.id) &&
+                                    "event-thumb-hover"
+                                  } `}
+                                  alt=""
+                                />
+                                <div
+                                  className="d-flex align-item-start gap-2 position-absolute"
+                                  style={{ top: "-20px", right: "-13px" }}
+                                >
+                                  {/* <p className="challenge-beast-desc m-0 ">{item.desc}</p> */}
+                                  {/* <span  style={{color: item.day === currentDate ? "gold" : "white" }}>{currentWeek[item.day - 1]?.getDate()}</span> */}
+                                  <div className="beast-date d-flex flex-column">
+                                    <div
+                                      className="beast-date-text-holder d-flex align-items-center justify-content-center"
+                                      style={{
+                                        background:
+                                          item.day === adjustedDay
+                                            ? "#e10000"
+                                            : "#08656a",
+                                      }}
+                                    >
+                                      {item.dayText}
+                                    </div>
+                                    <div className="beast-date-holder d-flex align-items-center justify-content-center">
+                                      {currentWeek[item.day - 1]?.getDate()}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            </NavLink>
                           ))}
                         </div>
                         <div className="sidebar-separator2 my-2"></div>
@@ -651,7 +737,9 @@ const NewEvents = ({
                                 src={tooltipIcon}
                                 className="new-event-banner-tooltip"
                                 alt=""
-                                onClick={()=>{setshowPopup(activeEvent?.id)}}
+                                onClick={() => {
+                                  setshowPopup(activeEvent?.id);
+                                }}
                               />
                               <img
                                 src={activeEvent?.image}
@@ -660,46 +748,53 @@ const NewEvents = ({
                               />
 
                               <div className="d-flex p-2 p-lg-4 align-items-lg-center justify-content-between gap-2 flex-column flex-lg-row dynamicPosition">
-
-                              <div className="d-flex flex-column gap-2">
-                                <h6 className="mb-0 challenge-popup-secondary-title" style={{color: '#FFC808'}}>
-                                  How it works
-                                </h6>
-                                <div className="d-flex flex-column gap-1">
-                                  {activeEvent?.workList.map((work, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="green-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {work}
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="d-flex flex-column gap-2">
-                                {activeEvent?.tips && (
-                                  <h6 className="mb-0 challenge-popup-secondary-title" style={{color: '#FFC808'}}>
-                                    Tips
+                                <div className="d-flex flex-column gap-2">
+                                  <h6
+                                    className="mb-0 challenge-popup-secondary-title"
+                                    style={{ color: "#FFC808" }}
+                                  >
+                                    How it works
                                   </h6>
-                                )}
-                                <div className="d-flex flex-column gap-1">
-                                  {activeEvent?.tips?.map((tip, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="green-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {tip}
-                                      </span>
-                                    </div>
-                                  ))}
+                                  <div className="d-flex flex-column gap-1">
+                                    {activeEvent?.workList.map(
+                                      (work, index) => (
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          key={index}
+                                        >
+                                          <div className="green-dot"></div>
+                                          <span className="challenge-popup-desc text-white">
+                                            {work}
+                                          </span>
+                                        </div>
+                                      )
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
+
+                                <div className="d-flex flex-column gap-2">
+                                  {activeEvent?.tips && (
+                                    <h6
+                                      className="mb-0 challenge-popup-secondary-title"
+                                      style={{ color: "#FFC808" }}
+                                    >
+                                      Tips
+                                    </h6>
+                                  )}
+                                  <div className="d-flex flex-column gap-1">
+                                    {activeEvent?.tips?.map((tip, index) => (
+                                      <div
+                                        className="d-flex align-items-center gap-2"
+                                        key={index}
+                                      >
+                                        <div className="green-dot"></div>
+                                        <span className="challenge-popup-desc text-white">
+                                          {tip}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
