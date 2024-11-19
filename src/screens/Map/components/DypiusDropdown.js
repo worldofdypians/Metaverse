@@ -59,20 +59,20 @@ const DypiusDropdown = ({
           <img src={teleportsIcon} width={20} height={20} alt="" />
           <span>Teleports</span>
         </div>
-        {/* <div
-          className={`section-switch-btn ${
+        <div
+          className={`section-switch-btn inactive-switch ${
             switches.quests && "section-switch-btn-active"
           } d-flex align-items-center gap-2 p-2 w-100`}
-          onClick={() =>
-            setSwitches((prev) => ({
-              ...prev,
-              quests: !switches.quests,
-            }))
-          }
+          // onClick={() =>
+          //   setSwitches((prev) => ({
+          //     ...prev,
+          //     quests: !switches.quests,
+          //   }))
+          // }
         >
           <img src={questsIcon} width={20} height={20} alt="" />
           <span>Quests</span>
-        </div> */}
+        </div>
       </div>
       <Accordion defaultExpanded>
         <AccordionSummary

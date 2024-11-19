@@ -661,12 +661,12 @@
   line-height: 16px; /* 80% */
 }
 
-.play-icon-wrapper{
+.play-icon-wrapper {
   width: 100%;
   height: 100%;
   position: absolute;
   transition: all 0.25s;
-  img{
+  img {
     opacity: 1;
   }
 }
@@ -678,9 +678,9 @@
 
 .warrior-class-video-wrapper:hover {
   filter: drop-shadow(0px 0px 4px #8bd8ff);
-  .play-icon-wrapper{
+  .play-icon-wrapper {
     background-color: rgba(0, 0, 0, 0.2);
-    img{
+    img {
       opacity: 1;
     }
   }
@@ -690,22 +690,81 @@
   transition: all 0.25s;
 }
 
-.play-icon-wrapper{
+.play-icon-wrapper {
   width: 100%;
   height: 100%;
   position: absolute;
   transition: all 0.25s;
-  img{
+  img {
     opacity: 1;
   }
 }
 
 .mage-class-video-wrapper:hover {
   filter: drop-shadow(0px 0px 4px #ffaeb2);
-  .play-icon-wrapper{
+  .play-icon-wrapper {
     background-color: rgba(0, 0, 0, 0.2);
-    img{
+    img {
       opacity: 1;
     }
   }
+}
+
+/* Fullscreen overlay */
+/* Fullscreen overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Dim the background */
+  backdrop-filter: blur(8px); /* Blurry background effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it’s above all content */
+}
+
+.video-player {
+  pointer-events: auto !important;
+}
+
+/* Content inside the overlay */
+.overlay-content {
+  position: relative;
+  width: 80%;
+  height: 65%; /* Keeps a 16:9 ratio */
+  max-width: 1200px;
+  max-height: 650px;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  @media screen and (max-width: 1024px) {
+    height: 45%;
+    max-width: 800px;
+    max-height: 450px;
+  }
+  @media screen and (max-width: 500px) {
+    height: 20%;
+  }
+}
+
+/* Close button */
+.youtube-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10; /* Ensure it's above the iframe */
 }

@@ -507,6 +507,11 @@
   }
 }
 
+.inactive-switch{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .section-switch-btn:hover {
   background: rgba(73, 71, 115, 0.7);
   border: 1px solid #828fbb;
