@@ -402,7 +402,7 @@ const EarnContent = ({
                           }
                           availableQuota={
                             item.type === "token"
-                              ? "TBA"
+                              ? "--"
                               : item.expired === "Yes"
                               ? "--"
                               : item.pair_name === "Genesis Land"
@@ -650,7 +650,7 @@ const EarnContent = ({
                                 : onHideDetailsClick(item);
                             }}
                           >
-                            <StakeWodDetails2
+                            <StakeWodDetails
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}

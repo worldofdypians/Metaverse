@@ -81,7 +81,7 @@ const CreateProposal = ({ open, onClose }) => {
 
           <div className="d-flex w-100 justify-content-center">
             <button
-              className="getpremium-btn px-3 py-2"
+              className="action-btn px-3 py-2"
               style={{ width: "fit-content" }}
             >
               SUBMIT
