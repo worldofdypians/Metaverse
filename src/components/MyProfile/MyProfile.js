@@ -29,6 +29,23 @@ import wingStorm from "./assets/dailyProgress/wingStorm.png";
 import criticalHit from "./assets/dailyProgress/criticalHit.png";
 import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
 import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
+import prime from "./assets/dailyProgress/prime.png";
+import puzzleMadnessBanner from "./assets/dailyProgress/puzzleMadness.webp";
+
+import coldBiteBanner from "./assets/dailyProgress/coldBiteBanner.webp";
+import dragonRuinsBanner from "./assets/dailyProgress/dragonRuinsBanner.webp";
+import furyBeastBanner from "./assets/dailyProgress/furyBeastBanner.webp";
+import scorpionKingBanner from "./assets/dailyProgress/scorpionKingBanner.webp";
+import stoneEyeBanner from "./assets/dailyProgress/stoneEyeBanner.webp";
+import wingStormBanner from "./assets/dailyProgress/wingStormBanner.webp";
+
+
+
+
+
+
+
+
 import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
 import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
 import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
@@ -555,7 +572,7 @@ const MyProfile = ({
                   )}
                 </div> */}
                 <div className="daily-progress-item position-relative">
-                  <img src={bnbMazeDay} alt="" />
+                  <img src={prime} alt="" />
                   <div className="daily-progress-value-golden">
                     <span>
                       {primeStars === true ? "+ 50 Stars" : "In Progress"}
@@ -903,7 +920,7 @@ const MyProfile = ({
                 <img src={redArrow} width={20} height={20} alt="" />
               </div>
             </div>
-            <div className="col-12 col-lg-8 mt-3">
+            <div className="col-12 col-lg-6 mt-3">
               <div className="limited-offers-wrapper  d-flex flex-column flex-lg-row  align-items-center justify-content-between gap-3 p-3">
                 <div className="d-flex flex-column gap-2">
                   <h6 className="leaderboards-title mb-0">Limited</h6>
@@ -1106,7 +1123,7 @@ const MyProfile = ({
                 )}
               </div>
             </div>
-            <div className="col-12 col-lg-4 mt-3">
+            <div className="col-12 col-lg-6 mt-3">
               <NavLink
                 className="new-stake-nft-wrapper d-flex align-items-center justify-content-between p-3"
                 to={"/earn"}
