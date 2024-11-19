@@ -13,20 +13,29 @@
   text-transform: uppercase;
 }
 
+.coming-soon-event-text {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+}
+
 .event-thumb-img {
   border: 1px solid transparent;
   border-radius: 12px;
   transition: all 0.25s;
-
 }
 
 .event-thumb-hover {
-  border: 1px solid #FFC808;
+  border: 1px solid #ffc808;
   border-radius: 12px;
 }
 
 .event-thumb-img:hover {
-  border: 1px solid #FFC808;
+  border: 1px solid #ffc808;
   border-radius: 12px;
 }
 
@@ -99,7 +108,7 @@
 
 .dynamicPosition {
   position: absolute;
-  @media screen and (max-width: 991px) {
+  @media screen and (max-width: 1024px) {
     position: relative;
   }
 }

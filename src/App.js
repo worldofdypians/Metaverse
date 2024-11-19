@@ -1256,7 +1256,7 @@ function App() {
       is_active: activePlayerStar, //change when apis are ready
     });
   }, [starRecords, prevDataStar, userDataStar, activePlayerStar]);
-  console.log(allStarData);
+  
   const html = document.querySelector("html");
 
   useEffect(() => {
