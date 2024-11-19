@@ -67,7 +67,7 @@ const chainAreas = [
       {
         title: "Maze Garden",
         image: mazeGardenInfo,
-        link: "/account/challenges/maze-garden",
+        link: "/account/challenges/maze-day",
       },
       {
         title: "Leaderboard",
@@ -1261,7 +1261,7 @@ const chainAreas = [
       {
         title: "Maze Garden",
         image: mazeGardenInfo,
-        link: "/account/challenges/maze-garden",
+        link: "/account/challenges/maze-day",
       },
       {
         title: "Leaderboard",
@@ -4871,7 +4871,7 @@ const challenges = [
       "Focus on observation to spot clues, gates, and shortcuts.",
       "Plan your route and mark your path to avoid retracing your steps.",
     ],
-    link: "/account/challenges/maze-garden",
+    link: "/account/challenges/maze-day",
   },
   {
     title: "Puzzle Madness",

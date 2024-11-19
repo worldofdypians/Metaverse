@@ -35,7 +35,7 @@ const GameEvents = () => {
       class: "criticalHitCard",
     },
     {
-      link: "/account/challenges/maze-garden",
+      link: "/account/challenges/maze-day",
       title: "MAZE GARDEN",
       desc: "Explore intricate labyrinths for hidden treasures",
       class: "mazeGardenCard",

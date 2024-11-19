@@ -163,7 +163,7 @@
   border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 140px;
+  height: 145px;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.25s ease;
@@ -385,13 +385,9 @@
   border: 2px solid #015f86;
 }
 .new-stake-nft-wrapper {
-  height: 160px;
+  height: 155px;
   border-radius: 10px;
-  background: radial-gradient(
-    490.81% 196.97% at 100% 100%,
-    #482193 25.5%,
-    #7856c5 100%
-  );
+  background: linear-gradient(90deg, #055F67 0%, #00293E 100%);
   border: 2px solid transparent;
   transition: all 0.25s ease;
   @media screen and (max-width: 786px) {
@@ -399,9 +395,9 @@
   }
 }
 
-.new-stake-nft-wrapper:hover {
-  border: 2px solid #ffa1e5;
-}
+// .new-stake-nft-wrapper:hover {
+//   border: 2px solid #ffa1e5;
+// }
 
 .new-stake-nft-img {
   width: 55%;
@@ -411,7 +407,7 @@
   border-radius: 10px;
   background-image: url(./assets/myRewards.png);
   background-size: cover;
-  height: 140px;
+  height: 145px;
   cursor: pointer;
   border: 2px solid transparent;
   background-repeat: no-repeat;
@@ -603,6 +599,89 @@
 
 .new-profile-img {
   // width: 100px;
+}
+
+.stoneEyeBannerItem {
+  border-radius: 10px;
+background: linear-gradient(90deg, #0B3398 0%, #062663 62%);
+height: 155px;
+}
+
+
+.dragonRuinsBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #2E3842 0%, #121A1E 62%);
+  height: 155px;
+}
+
+
+.coldBiteBannerItem {
+  height: 155px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0097B9 0%, #083C49 62%);
+}
+
+
+
+.furyBeastBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #262F29 0%, #29302C 62%);
+  height: 155px;
+}
+
+
+
+.wingStormBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #004E7F 0%, #073755 62%);
+  height: 155px;
+}
+
+
+
+.scorpionKingBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #732802 0%, #AB621E 62%);
+  height: 155px;
+}
+
+
+
+.mazeDayBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #081C00 0%, #081C00 65%);
+  height: 155px;
+
+}
+
+
+.puzzleMadnessBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #055F67 0%, #00293E 100%);
+  height: 155px;
+
+}
+
+.utcEventTitle {
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+
+.utcEventContent { 
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.eventbannerimg {
+  position: absolute;
+  height: 155px;
+  right: 0;
 }
 
 .score-text-wrapper {
