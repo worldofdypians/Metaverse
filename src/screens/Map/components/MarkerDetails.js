@@ -643,7 +643,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                 className={"getpremium-btn px-3 py-2 mb-3"}
                 to={marker.link}
               >
-                Buy
+                Get
               </NavLink>
             </div>
           </div>
