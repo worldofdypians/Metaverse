@@ -2498,7 +2498,7 @@ const GetPremiumPopup = ({
   return (
     <div className="custom-container mt-5 mt-lg-0">
       {isPremium ? (
-        <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
+        <div className="px-0 pt-5 pt-lg-2 position-relative">
           <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
             <div className="d-flex flex-column w-100 justify-content-center gap-2 align-items-center bgwrapper p-3">
               <h6 className="mb-0 already-premium-title">PRIME ENABLED</h6>
@@ -2536,7 +2536,7 @@ const GetPremiumPopup = ({
           </div>
         </div>
       ) : (
-        <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
+        <div className="px-0 pt-5 pt-lg-2 position-relative">
           <div className="" style={{ background: "#8E97CD" }}></div>
           {discountPercentage > 0 ||
           discountPercentageViction > 0 ||
@@ -2663,7 +2663,7 @@ const GetPremiumPopup = ({
                 <span className="lifetime-plan mb-0">Lifetime plan</span>
                 <h6 className="plan-cost mb-0">$100</h6>
               </div>
-              <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+              <div className="d-flex flex-row align-items-center gap-3">
                 <div className="premium-chains-wrapper">
                   <div className="d-flex align-items-center gap-2">
                     <img
