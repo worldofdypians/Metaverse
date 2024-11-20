@@ -181,6 +181,12 @@
   }
 }
 
+.extra-button-height{
+  @media screen and (max-width: 786px) {
+    height: 48px;
+  }
+}
+
 .getpremium-active-btn:hover{
   border: 1px solid #f3bf09;
   background: #f3bf09;
