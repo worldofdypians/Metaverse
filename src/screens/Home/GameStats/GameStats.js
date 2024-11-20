@@ -92,12 +92,12 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                   className="explore-btn col-lg-4 py-2 d-flex align-items-center gap-2"
                   style={{ whiteSpace: "nowrap" }}
                 >
-                  <img src={epicblack} width={18} height={18} alt="" />
+                  <img src={epicblack} width={24} height={24} alt="" />
                   Join the Fight
                 </NavLink>
                 <NavLink
                   to={"/account"}
-                  className="getpremium-btn col-lg-4 py-2"
+                  className="getpremium-btn extra-button-height col-lg-4 py-2"
                   style={{ whiteSpace: "nowrap" }}
                 >
                   Explore Now
