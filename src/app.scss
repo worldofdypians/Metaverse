@@ -741,6 +741,17 @@ body {
   }
 }
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .join-beta-ribbon:hover {
   background: rgba(123, 216, 176, 0.3);
 }
