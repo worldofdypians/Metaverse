@@ -2106,6 +2106,10 @@
 .package-popup-content-rank {
   max-height: 370px;
   overflow-y: auto;
+
+  @media screen and (max-width: 500px) {
+    max-height: 300px;
+  }
 }
 
 .package-popup-content-map {
@@ -4451,6 +4455,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+   display: none;
+  }
 }
 
 .popup-subtitle {
