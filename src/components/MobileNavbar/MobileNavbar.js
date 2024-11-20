@@ -38,6 +38,7 @@ import epicIcon from "../Header/assets/dropdownAssets/epicIcon.svg";
 import supportIcon from "../Header/assets/dropdownAssets/supportIcon.svg";
 import personIcon from "../Header/assets/personIcon.svg";
 import guestIcon from "../Header/assets/dropdownAssets/guestIcon.svg";
+import tgVerified from "../Header/assets/tgVerified.svg";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -690,9 +691,10 @@ const MobileNavbar = ({
                         }
                         onClick={() => setOpenNavbar(false)}
                       >
-                        <span className={`sidebar-title`}>
+                        {/* <span className={`sidebar-title`}> */}
+                        <img width={20} height={20} src={guestIcon} alt="" />
                           Continue as Guest
-                        </span>
+                        {/* </span> */}
                       </NavLink>
                     )}
                     <hr className="header-divider my-0" />
@@ -976,6 +978,18 @@ const MobileNavbar = ({
                     >
                       <span className={`sidebar-title`}>Game Updates</span>
                     </NavLink>
+                    <NavLink
+                    to={'https://t.me/WorldOfDypians_bot'}
+                    target="_blank"
+                    className={({ isActive }) =>
+                      isActive
+                    ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item text-white"
+                    }
+                  >
+                    Telegram Mini App
+                    <img src={tgVerified} height={20} width={20} alt="" />
+                  </NavLink>
                   </div>
                 </div>
               </div>

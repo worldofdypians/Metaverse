@@ -28,8 +28,11 @@
 
 
 @media screen and (max-width: 786px) {
-  .premium-chains-wrapper,.premium-chains-wrapper2 {
+  .premium-chains-wrapper {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .premium-chains-wrapper2 {
+    grid-template-columns: repeat(5, 1fr);
   }
  
   .custom-marketplace-container{

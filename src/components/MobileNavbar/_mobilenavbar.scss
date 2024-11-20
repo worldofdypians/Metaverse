@@ -4,7 +4,7 @@
   background: #080B2A;;
   width: 100%;
   z-index: 9;
-  height: 59px;
+  height: 65px;
   border-bottom: 2px solid #1E5ED7;
 
   .hb-wrapper {
@@ -88,6 +88,16 @@ clip-path: none;
     transform: rotate(-45deg);
     top: 30px;
     left: 13px;
+  }
+}
+
+
+.subscribe-container {
+  border-radius: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @media screen and (max-width: 991px) {
+    height: 500px;
   }
 }
 
