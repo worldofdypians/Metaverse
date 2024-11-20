@@ -809,3 +809,9 @@
   grid-template-columns: repeat(2,1fr);
   gap: 15px;
 }
+
+.genesis-marker-grid{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
