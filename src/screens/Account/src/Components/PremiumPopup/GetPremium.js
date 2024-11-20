@@ -99,7 +99,7 @@ const GetPremiumPopup = ({
     "Exclusive access to World of Dypians",
     "Access to Daily Bonus Event",
     "Access every Treasure Hunt Event without the need to hold a Beta Pass NFT",
-    "Early access to upcoming features and updates",
+    "Earn extra daily stars to boost your Global Rank",
   ];
 
   const dappsBenefits = [
