@@ -1,18 +1,26 @@
 .mobile-navbar {
   position: fixed;
   top: 0;
-  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+  background: #080B2A;;
   width: 100%;
   z-index: 9;
   height: 59px;
-  border-bottom: 2px solid #525469;
+  border-bottom: 2px solid #1E5ED7;
+
+  .hb-wrapper {
+    border-radius: 8px;
+background: linear-gradient(270deg, #1348AD 0%, #1E5ED7 100%);
+// width: 40px;
+// height: 40px;
+clip-path: none;
+  }
 
   #hamburgermenu span {
     display: block;
     position: absolute;
     height: 2px;
-    width: 30%;
-    background: #080b2a;
+    width: 16px;
+    background: #E7EFFF;
     border-radius: 20px;
     opacity: 1;
     left: 18px;
@@ -84,16 +92,15 @@
 }
 
 .mobile-menu {
-  background: linear-gradient(111.64deg, #080b2a 0%, #8c56ff 100.5%);
+  background: #171B3E;;
   width: 100%;
   position: fixed;
   top: -1000px;
   z-index: 1001;
   transition: all .25s;
   .mobile-nav-item {
-    background: linear-gradient(87.88deg, #585775 0%, #6A43C7 100%);
-    // opacity: 0.3;
-    border-radius: 8px;
+    border-radius: 6px;
+    background: rgba(113, 127, 255, 0.10);
 
     .mobile-nav-link {
       font-style: normal;
@@ -102,6 +109,13 @@
       // line-height: 32px;
       color: #ffffff;
     }
+  }
+
+  .mobile-nav-item-active {
+    border-radius: 6px;
+    border: 0.5px solid #5690FF;
+    background: rgba(30, 94, 215, 0.50);
+   
   }
 }
 

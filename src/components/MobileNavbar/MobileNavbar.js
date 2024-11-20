@@ -55,7 +55,7 @@ const MobileNavbar = ({
   binanceWallet,
   email,
   username,
-  isConnected
+  isConnected,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -362,16 +362,14 @@ const MobileNavbar = ({
     }
   }, [openNavbar]);
 
-
-  const handleState =  ()=>{
-    if(!isConnected) {
-handleSignUp();
-                    setOpenNavbar(false);
-    }
-     else {
+  const handleState = () => {
+    if (!isConnected) {
+      handleSignUp();
       setOpenNavbar(false);
-     }
-  }
+    } else {
+      setOpenNavbar(false);
+    }
+  };
 
   return (
     <>
@@ -573,7 +571,10 @@ handleSignUp();
           )}
 
           {openNavbar === false ? (
-            <div className="linear-border" onClick={() => setOpenNavbar(true)}>
+            <div
+              className="position-relative hb-wrapper linear-border"
+              onClick={() => setOpenNavbar(true)}
+            >
               <button
                 className="px-4 bg-transparent"
                 style={{ clipPath: "none", border: "none" }}
@@ -601,324 +602,16 @@ handleSignUp();
           } d-flex d-lg-none p-3 flex-column gap-3`}
           id="bgmenu"
         >
-          <div className="accordion" id="accordionExample">
-            <div className="">
-              <h2
-                className="mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0"
-                id="headingOne"
-              >
-                <div
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                  className="w-100"
-                >
-                  <div className="d-flex align-items-center w-100 justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title mb-0">WOD</h6>
-                    </div>
-                    <img
-                      src={sidebarArrow}
-                      style={{ position: "relative", right: "5px" }}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </h2>
-              <div
-                id="collapseOne"
-                className={`accordion-collapse collapse
-              
-                
-                `}
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body mt-2 p-0">
-                  <div className="d-flex flex-column gap-2">
-                    <NavLink
-                      to="/token"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`sidebar-title`}>Token</span>
-                      </div>
-                    </NavLink>
-                    <NavLink
-                      to="/staking"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Staking</span>
-                    </NavLink>
-                    <NavLink
-                      to="/bridge"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Bridge</span>
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
-            <NavLink
-              to="/tokenomics"
-              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-              style={{ textDecoration: "none" }}
-              onClick={() => setOpenNavbar(false)}
-            >
-              <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
-            </NavLink>
-          </div> */}
-
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
-            <NavLink
-              to="/game"
-              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-              style={{ textDecoration: "none" }}
-              onClick={() => setOpenNavbar(false)}
-            >
-              <h6 className="mobile-nav-link font-poppins mb-0">Game</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
-            </NavLink>
-          </div>
-
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
-            <NavLink
-              to="/shop"
-              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
-              style={{ textDecoration: "none" }}
-              onClick={() => setOpenNavbar(false)}
-            >
-              <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
-            </NavLink>
-          </div>
-          <div className="accordion" id="accordionExample2">
-            <div className="">
-              <h2
-                className="mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0"
-                id="headingOne"
-              >
-                <div
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="true"
-                  aria-controls="collapseTwo"
-                  className="w-100"
-                >
-                  <div className="d-flex align-items-center w-100 justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title2 mb-0">Community</h6>
-                    </div>
-                    <img
-                      src={sidebarArrow}
-                      style={{ position: "relative", right: "5px" }}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </h2>
-              <div
-                id="collapseTwo"
-                className={`accordion-collapse collapse
-              
-                
-                `}
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body mt-2 p-0">
-                  <div className="d-flex flex-column gap-2">
-                    <NavLink
-                      to="/governance"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`sidebar-title`}>Governance</span>
-                      </div>
-                    </NavLink>
-                    <NavLink
-                      to="/campaigns"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title mb-0`}>
-                        Game Campaigns
-                      </span>
-                    </NavLink>
-                    <NavLink
-                      to="/game-updates"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Game Updates</span>
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="accordion" id="accordionExample3">
-            <div className="">
-              <h2
-                className="mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0"
-                id="headingOne"
-              >
-                <div
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="true"
-                  aria-controls="collapseThree"
-                  className="w-100"
-                >
-                  <div className="d-flex align-items-center w-100 justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title2 mb-0">About</h6>
-                    </div>
-                    <img
-                      src={sidebarArrow}
-                      style={{ position: "relative", right: "5px" }}
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </h2>
-              <div
-                id="collapseThree"
-                className={`accordion-collapse collapse
-              
-                
-                `}
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body mt-2 p-0">
-                  <div className="d-flex flex-column gap-2">
-                    <NavLink
-                      to="/about#tokenomics"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#tokenomics"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Tokenomics</span>
-                    </NavLink>
-                    <NavLink
-                      to="/about#security"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#security"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Security</span>
-                    </NavLink>
-                    <NavLink
-                      to="/about#roadmap"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#roadmap"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title mb-0`}>Roadmap</span>
-                    </NavLink>
-                    <NavLink
-                      to="/about#ourteam"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#ourteam"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Team</span>
-                    </NavLink>
-                    <NavLink
-                      to="/about#partners"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#partners"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <div className="d-flex align-items-center gap-5">
-                        <span className={`sidebar-title`}>Partners</span>
-                      </div>
-                    </NavLink>
-
-                    <NavLink
-                      to="/about#brand"
-                      end
-                      className={({ isActive }) =>
-                        isActive && window.location.hash === "#brand"
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>Brand</span>
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="accordion" id="accordionExample4">
             <div className="">
               <h2
-                className="mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0"
+                className={` ${
+                  (window.location.pathname.includes("/account") ||
+                    window.location.pathname.includes("/auth") ||
+                    window.location.pathname.includes("/join-beta") ||
+                    window.location.pathname.includes("/contact-us")) &&
+                  "mobile-nav-item-active"
+                } mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0`}
                 id="headingOne"
               >
                 <div
@@ -962,34 +655,36 @@ handleSignUp();
                       </NavLink>
                     ) : (
                       <span className="header-wallet-span d-flex align-items-center gap-2">
-                        <img width={20} height={20} src={walletIcon} alt="" />{username}
+                        <img width={20} height={20} src={walletIcon} alt="" />
+                        {username}
                         <span className="header-wallet">
                           {shortAddress(coinbase)}
                         </span>
                       </span>
                     )}
-                    {/*              
-                      <NavLink
-                        to="/account"
-                        end
-                        className={({ isActive }) =>
-                          isActive
-                            ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
-                            : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                        }
-                        onClick={() => setOpenNavbar(false)}
-                      >
-                        <span className={`sidebar-title`}>
-                         {!email ? 'Continue as Guest' : username} 
-                        </span>
-                      </NavLink> */}
+
+                    <NavLink
+                      to="/account"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>
+                        {!email ? "Continue as Guest" : username}
+                      </span>
+                    </NavLink>
                     <hr className="header-divider my-0" />
+
                     <NavLink
                       to="/account/prime"
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : "d-flex px-2 align-items-center gap-2 sidebar-item"
                       }
                       onClick={() => setOpenNavbar(false)}
@@ -1003,7 +698,7 @@ handleSignUp();
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : "d-flex px-2 align-items-center gap-2 sidebar-item"
                       }
                       onClick={() => setOpenNavbar(false)}
@@ -1035,7 +730,7 @@ handleSignUp();
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : `d-flex px-2 align-items-center gap-2 sidebar-item`
                       }
                       onClick={() => setOpenNavbar(false)}
@@ -1051,7 +746,350 @@ handleSignUp();
             </div>
           </div>
 
-          <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
+          <div className="accordion" id="accordionExample">
+            <div className="">
+              <h2
+                className={`${
+                  (window.location.pathname.includes("/token") ||
+                    window.location.pathname.includes("/staking") ||
+                    window.location.pathname.includes("/bridge")) &&
+                  "mobile-nav-item-active"
+                }
+                mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0`}
+                id="headingOne"
+              >
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                  className="w-100"
+                >
+                  <div className="d-flex align-items-center w-100 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <h6 className="sidebar-title mb-0">WOD</h6>
+                    </div>
+                    <img
+                      src={sidebarArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseOne"
+                className={`accordion-collapse collapse
+              
+                
+                `}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body mt-2 p-0">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to="/token"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`sidebar-title`}>Token</span>
+                      </div>
+                    </NavLink>
+                    <NavLink
+                      to="/staking"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Staking</span>
+                    </NavLink>
+                    <NavLink
+                      to="/bridge"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Bridge</span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
+            <NavLink
+              to="/tokenomics"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div> */}
+
+          <div
+            className={`${
+              window.location.pathname.includes("/game") &&
+              "mobile-nav-item-active"
+            } mobile-nav-item d-flex align-items-center justify-content-between p-2`}
+          >
+            <NavLink
+              to="/game"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Game</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+
+          <div
+            className={`${
+              window.location.pathname.includes("/shop") &&
+              "mobile-nav-item-active"
+            } mobile-nav-item d-flex align-items-center justify-content-between p-2`}
+          >
+            <NavLink
+              to="/shop"
+              className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
+              style={{ textDecoration: "none" }}
+              onClick={() => setOpenNavbar(false)}
+            >
+              <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
+              <img src={mobileArrow} alt="arrow" />{" "}
+            </NavLink>
+          </div>
+          <div className="accordion" id="accordionExample2">
+            <div className="">
+              <h2
+                className={`${
+                  (window.location.pathname.includes("/governance") ||
+                    window.location.pathname.includes("/campaigns") ||
+                    window.location.pathname.includes("/game-updates")) &&
+                  "mobile-nav-item-active"
+                } mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0`}
+                id="headingOne"
+              >
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="true"
+                  aria-controls="collapseTwo"
+                  className="w-100"
+                >
+                  <div className="d-flex align-items-center w-100 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <h6 className="sidebar-title2 mb-0">Community</h6>
+                    </div>
+                    <img
+                      src={sidebarArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseTwo"
+                className={`accordion-collapse collapse
+              
+                
+                `}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body mt-2 p-0">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to="/governance"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`sidebar-title`}>Governance</span>
+                      </div>
+                    </NavLink>
+                    <NavLink
+                      to="/campaigns"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title mb-0`}>
+                        Game Campaigns
+                      </span>
+                    </NavLink>
+                    <NavLink
+                      to="/game-updates"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Game Updates</span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="accordion" id="accordionExample3">
+            <div className="">
+              <h2
+                className={`${
+                  window.location.pathname.includes("/about") &&
+                  "mobile-nav-item-active"
+                } mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0`}
+                id="headingOne"
+              >
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree"
+                  aria-expanded="true"
+                  aria-controls="collapseThree"
+                  className="w-100"
+                >
+                  <div className="d-flex align-items-center w-100 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <h6 className="sidebar-title2 mb-0">About</h6>
+                    </div>
+                    <img
+                      src={sidebarArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseThree"
+                className={`accordion-collapse collapse
+              
+                
+                `}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body mt-2 p-0">
+                  <div className="d-flex flex-column gap-2">
+                    <NavLink
+                      to="/about#tokenomics"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#tokenomics"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Tokenomics</span>
+                    </NavLink>
+                    <NavLink
+                      to="/about#security"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#security"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Security</span>
+                    </NavLink>
+                    <NavLink
+                      to="/about#roadmap"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#roadmap"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title mb-0`}>Roadmap</span>
+                    </NavLink>
+                    <NavLink
+                      to="/about#ourteam"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#ourteam"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Team</span>
+                    </NavLink>
+                    <NavLink
+                      to="/about#partners"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#partners"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <div className="d-flex align-items-center gap-5">
+                        <span className={`sidebar-title`}>Partners</span>
+                      </div>
+                    </NavLink>
+
+                    <NavLink
+                      to="/about#brand"
+                      end
+                      className={({ isActive }) =>
+                        isActive && window.location.hash === "#brand"
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Brand</span>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`${
+              window.location.pathname.includes("/map") &&
+              "mobile-nav-item-active"
+            } mobile-nav-item d-flex align-items-center justify-content-between p-2`}
+          >
             <NavLink
               to="/map"
               className="nav-anchor font-poppins d-flex align-items-center justify-content-between w-100"
@@ -1064,21 +1102,19 @@ handleSignUp();
           </div>
 
           <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-            
-              <div className="w-100">
-                <button
-                  className="new-connect-btn p-2 w-100"
-                  style={{minHeight: 30}}
-                  onClick={() => {
-                    handleState()
-                  }}
-                >
-                  {!coinbase ? 'Connect Wallet' : shortAddress(coinbase)}
-               
-                </button>{" "}
-              </div>
-           
-{/* 
+            <div className="w-100">
+              <button
+                className="new-connect-btn p-2 w-100"
+                style={{ minHeight: 30 }}
+                onClick={() => {
+                  handleState();
+                }}
+              >
+                {!coinbase ? "Connect Wallet" : shortAddress(coinbase)}
+              </button>{" "}
+            </div>
+
+            {/* 
             {!coinbase ? (
               <NavLink
                 to={"/account"}

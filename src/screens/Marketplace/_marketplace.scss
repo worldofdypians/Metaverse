@@ -2103,6 +2103,11 @@
   }
 }
 
+.package-popup-content-rank {
+  max-height: 370px;
+  overflow-y: auto;
+}
+
 .package-popup-content-map {
   max-height: 75%;
   overflow-y: auto;

@@ -9988,6 +9988,8 @@ function Dashboard({
           <>
             <MyProfile
               userDataStar={userDataStar}
+              userDataStarWeekly={userDataStarWeekly}
+
               primeStars={primeStars}
               isgoldenPassActive={goldenPassRemainingTime}
               dragonRuinsCountdown={countdown}
