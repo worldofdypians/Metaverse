@@ -152,16 +152,16 @@ const MainHero = ({scrollInto}) => {
         <div className="d-flex flex-column w-100">
           <div className="row mx-0 align-items-center justify-content-between gap-2 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
-              <div className="d-flex flex-column gap-2 align-items-start">
+              <div className="d-flex flex-column gap-2 align-items-center align-items-lg-start">
                 <h4 className="main-hero-title font-montserrat text-start">
                 WOD Token
                 </h4>
-                <span className="market-banner-desc font-montserrat text-start">
+                <span className="market-banner-desc font-montserrat">
                   WOD is a utility token issued on BNB Chain, providing the
                   foundation for the World of Dypians ecosystem, integrating
                   DeFi, NFTs, Gaming, and AI all in one place.
                 </span>
-                <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 mt-2">
+                <div className="d-flex flex-column flex-lg-row align-items-center  gap-3 mt-2">
                   <button className="getpremium-btn px-3 py-2" onClick={()=>{scrollInto('tokenomics')}}>Tokenomics</button>
                   <button className="getpremium-btn px-3 py-2" onClick={()=>{scrollInto('backers&partners')}}>Backers & Partners</button>
                 </div>

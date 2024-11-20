@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import epicwhite from "../../assets/epicwhite.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
 import MapPopup from "../../components/PackagePopups/MapPopup";
@@ -7,10 +6,13 @@ import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
 import { useNavigate } from "react-router-dom";
+import epicwhite from "../../assets/epicwhite.svg";
+import epicblack from "../../assets/epicblack.svg";
 
-const GameHero = ({showPopup, setShowPopup}) => {
+const GameHero = ({ showPopup, setShowPopup }) => {
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
+  const [hoverState, setHoverState] = useState(false);
   const navigate = useNavigate();
 
   var settings = {
@@ -111,17 +113,19 @@ const GameHero = ({showPopup, setShowPopup}) => {
   }, [showPopup]);
 
   console.log(showPopup);
-  
 
   return (
     <>
-      <div className="game-hero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative" style={{borderBottom: "none"}}>
+      <div
+        className="game-hero-wrapper video-wrapper position-relative d-flex align-items-center flex-column justify-content-center mt-5 mt-lg-0 gap-5 position-relative"
+        style={{ borderBottom: "none" }}
+      >
         <div className="custom-container  mt-5 mt-lg-0">
           <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0">
-            <h2 className="font-montserrat main-hero-title  px-0">
+            <h2 className="font-montserrat main-hero-title text-center  px-0">
               {/* What is <br />
               World of Dypians? */}
-               The Biggest Metaverse
+              The Biggest Metaverse
               <br />
               Ever Built
             </h2>
@@ -131,16 +135,20 @@ const GameHero = ({showPopup, setShowPopup}) => {
               a variety of heroes, each with unique abilities, and join forces
               with other players to destroy the enemy's bases.
             </p>
-            <div className="filled-btn m-0 py-1 px-5">
-                <a
-                  className="game-event-download py-1 d-flex align-items-center gap-2"
-                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                  target="_blank"
-                >
-                  <img src={epicwhite} alt="icon" className="epicgame2" />
-                  Download
-                </a>
-              </div>
+            <a
+              className="game-event-download py-2 px-5 d-flex align-items-center gap-2"
+              onMouseEnter={() => setHoverState(true)}
+              onMouseLeave={() => setHoverState(false)}
+              href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+              target="_blank"
+            >
+              <img
+                src={hoverState ? epicwhite : epicblack}
+                alt="icon"
+                className="epicgame2"
+              />
+              Download
+            </a>
           </div>
           {/* {windowSize.width > 992 && ( */}
           <div className="opacitywrapper custom-container custom-wrapper">
@@ -152,12 +160,9 @@ const GameHero = ({showPopup, setShowPopup}) => {
                       ? navigate("/map")
                       : setShowPopup(item.state);
                   }}
-                   key={index}
+                  key={index}
                 >
-                  <BetaEventCardHome
-                    data={item}
-                    isFrontPage={true}
-                  />
+                  <BetaEventCardHome data={item} isFrontPage={true} />
                 </div>
               ))}
             </Slider>

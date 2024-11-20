@@ -19,7 +19,7 @@ const Earn = ({
   const tokenPools = [
     {
       pair_name: "WOD",
-      apy_percent: 20,
+      apy_percent: 7.5,
       lock_time: "30 days",
       chain: "BNB Chain",
       tokenURL: ["wodToken"],
@@ -31,7 +31,7 @@ const Earn = ({
     },
     {
       pair_name: "WOD",
-      apy_percent: 15,
+      apy_percent: 12.5,
       lock_time: "60 days",
       chain: "BNB Chain",
       tokenURL: ["wodToken"],
@@ -45,8 +45,8 @@ const Earn = ({
     },
     {
       pair_name: "WOD",
-      apy_percent: 5,
-      lock_time: "No lock",
+      apy_percent: 20,
+      lock_time: "90 days",
       chain: "Ethereum",
       tokenURL: ["wodToken"],
       chainLogo: "ethIcon.svg",
@@ -55,6 +55,30 @@ const Earn = ({
       expired: 'No',
       id: 'three'
     },
+    {
+      pair_name: "WOD",
+      apy_percent: 35,
+      lock_time: "180 days",
+      chain: "Ethereum",
+      tokenURL: ["wodToken"],
+      chainLogo: "ethIcon.svg",
+      tvl_usd: "--",
+      type: 'token',
+      expired: 'No',
+      id: 'three'
+    },
+    // {
+    //   pair_name: "WOD",
+    //   apy_percent: 50,
+    //   lock_time: "360 days",
+    //   chain: "Ethereum",
+    //   tokenURL: ["wodToken"],
+    //   chainLogo: "ethIcon.svg",
+    //   tvl_usd: "--",
+    //   type: 'token',
+    //   expired: 'No',
+    //   id: 'three'
+    // },
   ];
 
   // const nftPools = [

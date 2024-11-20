@@ -1065,10 +1065,14 @@
 .market-banner-desc {
   font-style: normal;
   font-weight: 400;
+  text-align: start;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.03em;
   color: #ffffff;
+  @media screen and (max-width: 786px) {
+    text-align: center;
+  }
 }
 
 .nft-sidebar-title {

@@ -79,7 +79,7 @@ const Investors = ({ page }) => {
 
   return (
     <div
-      className="container-fluid px-4 px-lg-5 py-4 investors-bg d-flex align-items-center flex-column gap-5"
+      className="container-fluid px-3 px-lg-5 py-4 investors-bg d-flex align-items-center flex-column gap-5"
       id="backers&partners"
     >
       <div

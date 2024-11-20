@@ -107,7 +107,7 @@
 
 .main-hero-title {
   color: #fff;
-  text-align: center;
+  text-align: start;
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.8);
   font-size: 50px !important;
   font-style: normal;
@@ -115,6 +115,7 @@
   line-height: normal;
   @media screen and (max-width: 786px) {
     font-size: 32px !important;
+    text-align: center;
   }
 }
 
@@ -214,10 +215,9 @@
   margin: auto;
   z-index: 1;
 
-
   @media screen and (max-width: 1600px) {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
   @media screen and (max-width: 991px) {
     position: relative;
@@ -226,8 +226,7 @@
   }
 }
 
-.token-launch-wrapper{
-  border: 0.5px solid #525469;
-  background: #0E0F35;
+.token-launch-wrapper {
+  background: linear-gradient(148deg, #ffffff1a, #ffffff0d);
   border-radius: 12px;
 }

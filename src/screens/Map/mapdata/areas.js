@@ -65,7 +65,7 @@ const chainAreas = [
         link: "/account#dailybonus",
       },
       {
-        title: "Maze Garden",
+        title: "Maze Day",
         image: mazeGardenInfo,
         link: "/account/challenges/maze-day",
       },
@@ -881,11 +881,6 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account/challenges/treasure-hunt",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account#dailybonus",
@@ -896,7 +891,13 @@ const chainAreas = [
         link: "/account#leaderboard",
       },
     ],
-    pastEvents: [],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     socials: [
       {
         link: "https://x.com/taikoxyz",
@@ -1093,11 +1094,6 @@ const chainAreas = [
     ],
     events: [
       {
-        title: "Treasure Hunt",
-        image: treasureHuntInfo,
-        link: "/account/challenges/treasure-hunt",
-      },
-      {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account#dailybonus",
@@ -1109,7 +1105,13 @@ const chainAreas = [
         link: "/account#leaderboard",
       },
     ],
-    pastEvents: [],
+    pastEvents: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1465,7 +1467,6 @@ const teleports = [
     desc: "The Teleport Station is a futuristic structure that allows players to instantly travel to different locations on the map. It acts as a hub for fast traversal, saving time and enabling quick access to key areas. Players can interact with the station, select their desired destination, and be transported instantly, often accompanied by visual effects like glowing lights or beams to enhance the immersive experience. Teleport stations are typically strategically placed in major zones, making them essential for exploration and quest progression.",
     subtitle: "Teleport Locations",
     locationPoints: [
-   
       {
         title: "Dragon Ruins",
         image: "dragonMarker.png",

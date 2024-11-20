@@ -517,7 +517,7 @@ const NewChallenges = ({
         <div className="new-challenges-wrapper d-flex justify-content-center w-100 py-3">
           <div className="custom-container d-flex align-items-center justify-content-center">
             <Slider {...settings} ref={sliderRef}>
-              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2  px-lg-0">
                 {challengeBeasts.map((item, index) => (
                   <div
                     key={index}
@@ -549,7 +549,7 @@ const NewChallenges = ({
                   </div>
                 ))}
               </div>
-              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2  px-lg-0">
                 {challengeHunts.map((item, index) => (
                   <div
                     key={index}
@@ -584,7 +584,7 @@ const NewChallenges = ({
                   </div>
                 ))}
               </div>
-              <div className="beast-challenges-grid py-2 px-3 px-lg-0">
+              <div className="beast-challenges-grid py-2  px-lg-0">
                 {challengeDaily.map((item, index) => (
                   <div
                     key={index}
