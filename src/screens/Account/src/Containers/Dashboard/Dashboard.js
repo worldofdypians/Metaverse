@@ -10878,7 +10878,7 @@ function Dashboard({
                       <span className="lifetime-plan mb-0">Lifetime plan</span>
                       <h6 className="plan-cost mb-0">$100</h6>
                     </div>
-                    <div className="d-flex flex-column flex-lg-row align-items-center gap-3">
+                    <div className="d-flex flex-row align-items-center gap-3">
                       <div className="premium-chains-wrapper2">
                         <div className="d-flex align-items-center gap-2">
                           <img

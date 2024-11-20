@@ -4455,6 +4455,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  @media screen and (max-width: 786px) {
+   display: none;
+  }
 }
 
 .popup-subtitle {
