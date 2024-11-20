@@ -97,7 +97,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/earn"
+          to="/staking"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"

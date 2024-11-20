@@ -5749,7 +5749,7 @@ function App() {
           />
           <Route
             exact
-            path="/earn"
+            path="/staking"
             element={
               <Earn
                 isConnected={isConnected}

@@ -4,7 +4,7 @@ import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
 import dappsIcon from "../../Images/premium/dappsIcon.svg";
 import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
 import greenCheck from "../../Images/premium/greenCheck.svg";
-import premiumIcon from "../../Images/premium/premiumIcon.svg";
+import premiumIcon from "../../Images/premium/premiumIcon.webp";
 import Web3 from "web3";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
@@ -32,7 +32,7 @@ const GetPremiumPopup = ({
   binanceWallet,
   authToken,
   isPremium,
-  isConnected
+  isConnected,
 }) => {
   const chainDropdowns = [
     {
@@ -2499,12 +2499,14 @@ const GetPremiumPopup = ({
     <div className="custom-container mt-5 mt-lg-0">
       {isPremium ? (
         <div className="subscribe-container px-0 pt-5 pt-lg-2 position-relative">
-          <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between gap-5 gap-lg-0 p-3">
-            <h6 className="mb-0 already-premium-title">Prime Subscriber</h6>
-            <img src={premiumIcon} className="already-preium-badge" alt="" />
+          <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
+            <div className="d-flex flex-column w-100 justify-content-center gap-2 align-items-center bgwrapper p-3">
+              <h6 className="mb-0 already-premium-title">PRIME ENABLED</h6>
+              <img src={premiumIcon} className="already-preium-badge" alt="" />
+            </div>
           </div>
-          <div className="mt-3 p-3 benefits-title-wrapper">
-            <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+          <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
+            <h6 className="premium-benefits-popup-title text-white mb-0">Benefits</h6>
           </div>
           <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -2544,7 +2546,7 @@ const GetPremiumPopup = ({
           nftPremium_totalViction ||
           nftPremium_totalTaiko > 0 ||
           nftPremium_totalMat > 0 ? (
-            <div className="premium-discount-bg mt-3 p-4 position-relative">
+            <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
               <div className="premiumRedTag position-absolute">
                 <div className="position-relative d-flex flex-column">
                   <img src={premiumRedTag} alt="" />
@@ -2653,6 +2655,7 @@ const GetPremiumPopup = ({
                   </h6>
                 )}
               </div>
+              <img src={premiumIcon} alt="" className="already-preium-badge" />
             </div>
           ) : (
             <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
@@ -2704,16 +2707,14 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">Taiko</span>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  {/* <div className="d-flex align-items-center gap-2">
                     <img
-                      src={
-                        matchainLogo
-                      }
+                      src={matchainLogo}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
                     <span className="subscription-chain mb-0">Matchain</span>
-                  </div>
+                  </div> */}
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
@@ -2779,12 +2780,16 @@ const GetPremiumPopup = ({
                                     </span>
                                   </div> */}
                 </div>
-                <img src={premiumIcon} alt="" />
+                <img
+                  src={premiumIcon}
+                  alt=""
+                  className="already-preium-badge"
+                />
               </div>
             </div>
           )}
-          <div className="mt-3 p-3 benefits-title-wrapper">
-            <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
+          <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
+            <h6 className="premium-benefits-popup-title text-white mb-0">Benefits</h6>
           </div>
           <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -2815,7 +2820,7 @@ const GetPremiumPopup = ({
           {/* <hr className="form-divider my-4" /> */}
           <div className="d-flex align-items-lg-end align-items-start flex-column flex-lg-row justify-content-between mt-3">
             <h6 className="become-premium-new-title mb-0">
-              Become Prime Subscriber
+              Become Prime User
             </h6>
             <span className="my-premium-balance">
               My Balance:{" "}
@@ -2889,22 +2894,20 @@ const GetPremiumPopup = ({
                       Manta
                     </li>
 
-                    {window.WALLET_TYPE !== "binance" &&
+                    {/* {window.WALLET_TYPE !== "binance" &&
                       !window.ethereum?.isBinance && (
                         <li
                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                           onClick={handleMatPool}
                         >
                           <img
-                            src={
-                              matchainLogo
-                            }
+                            src={matchainLogo}
                             style={{ width: 18, height: 18 }}
                             alt=""
                           />
                           Matchain
                         </li>
-                      )}
+                      )} */}
 
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -3350,18 +3353,12 @@ const GetPremiumPopup = ({
             </div>
             {isConnected && discountPercentage > 0 && chainId === 56 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-                <div
-                  className={` ${
-                    approveStatus === "fail" || !coinbase || isApproved
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+              
                   <button
                     className={`btn ${
                       approveStatus === "fail" || !coinbase || isApproved
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     disabled={
                       approveStatus === "fail" || !coinbase || isApproved
@@ -3400,19 +3397,12 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
-                <div
-                  className={` ${
-                    isApproved === false
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+            
                   <button
                     className={`btn ${
                       isApproved === false
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -3445,24 +3435,18 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
+              
               </div>
             ) : isConnected &&
               discountPercentageViction > 0 &&
               chainId === 88 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-                <div
-                  className={` ${
-                    approveStatus === "fail" || !coinbase || isApproved
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+            
                   <button
                     className={`btn ${
                       approveStatus === "fail" || !coinbase || isApproved
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     disabled={
                       approveStatus === "fail" || !coinbase || isApproved
@@ -3501,19 +3485,13 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
-                <div
-                  className={` ${
-                    isApproved === false
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+                  
+               
                   <button
                     className={`btn ${
                       isApproved === false
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -3547,24 +3525,18 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
+         
               </div>
             ) : isConnected &&
               discountPercentageTaiko > 0 &&
               chainId === 167000 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-                <div
-                  className={` ${
-                    approveStatus === "fail" || !coinbase || isApproved
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+         
                   <button
                     className={`btn ${
                       approveStatus === "fail" || !coinbase || isApproved
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     disabled={
                       approveStatus === "fail" || !coinbase || isApproved
@@ -3603,19 +3575,13 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
-                <div
-                  className={` ${
-                    isApproved === false
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+          
+          
                   <button
                     className={`btn ${
                       isApproved === false
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -3649,22 +3615,16 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
+             
               </div>
             ) : isConnected && discountPercentageMat > 0 && chainId === 698 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-                <div
-                  className={` ${
-                    approveStatus === "fail" || !coinbase || isApproved
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+               
                   <button
                     className={`btn ${
                       approveStatus === "fail" || !coinbase || isApproved
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     disabled={
                       approveStatus === "fail" || !coinbase || isApproved
@@ -3703,19 +3663,13 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
-                <div
-                  className={` ${
-                    isApproved === false
-                      ? "linear-border-disabled"
-                      : "linear-border"
-                  }`}
-                >
+         
+         
                   <button
                     className={`btn ${
                       isApproved === false
-                        ? "outline-btn-disabled"
-                        : "filled-btn"
+                        ? "disabled-btn"
+                        : "connectbtn"
                     } px-4`}
                     onClick={() => handleSubscribe()}
                   >
@@ -3748,14 +3702,14 @@ const GetPremiumPopup = ({
                       </div>
                     )}
                   </button>
-                </div>
+             
               </div>
             ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
               <div
                 className={`d-flex align-items-center justify-content-center mb-2`}
               >
                 <button
-                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                   onClick={() => {
                     handleBnbPool();
                   }}
@@ -3775,7 +3729,7 @@ const GetPremiumPopup = ({
                 className={`d-flex align-items-center justify-content-center mb-2`}
               >
                 <button
-                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                   onClick={() => {
                     handleVictionPool();
                   }}
@@ -3795,7 +3749,7 @@ const GetPremiumPopup = ({
                 className={`d-flex align-items-center justify-content-center mb-2`}
               >
                 <button
-                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                   onClick={() => {
                     handleTaikoPool();
                   }}
@@ -3813,7 +3767,7 @@ const GetPremiumPopup = ({
                 className={`d-flex align-items-center justify-content-center mb-2`}
               >
                 <button
-                  className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                  className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                   onClick={() => {
                     handleMatPool();
                   }}
@@ -3831,8 +3785,8 @@ const GetPremiumPopup = ({
                 <button
                   className={`btn ${
                     approveStatus === "fail" || !coinbase || isApproved
-                      ? "stake-wod-btn-inactive"
-                      : "stake-wod-btn"
+                      ? "disabled-btn"
+                      : "connectbtn"
                   } px-4`}
                   disabled={
                     approveStatus === "fail" || !coinbase || isApproved
@@ -3874,9 +3828,7 @@ const GetPremiumPopup = ({
 
                 <button
                   className={`btn ${
-                    isApproved === false
-                      ? "stake-wod-btn-inactive"
-                      : "stake-wod-btn"
+                    isApproved === false ? "disabled-btn" : "connectbtn"
                   } px-4`}
                   disabled={
                     approveStatus === "fail" || !coinbase || !isApproved

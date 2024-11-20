@@ -104,7 +104,7 @@ const VideoWrapper = ({
       class: "tokenClass",
     },
     {
-      link: "/earn",
+      link: "/staking",
       title: "EARN",
       desc: "Earn rewards by staking WOD tokens",
       class: "earnClass",
@@ -230,15 +230,17 @@ const VideoWrapper = ({
                   Download
                 </a>
 
-              <button
+              <NavLink
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
-                onClick={() => {
-                  setmultiplayerModal(true);
-                }}
+                to='/token'
+                // onClick={() => {
+                //   setmultiplayerModal(true);
+                // }}
               >
                 <img src={buyWod} alt="" />
-                Buy WOD
-              </button>
+                {/* Buy  */}
+                WOD
+              </NavLink>
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">

@@ -774,7 +774,7 @@ const NewLeaderBoard = ({
                         style={{ width: 55, height: 55 }}
                       />
                       <div className="d-flex flex-column gap-0">
-                        <span className="user-blue-rank">Extra Rewards</span>
+                        <span className="user-blue-rank">Boost Rewards</span>
                         <span
                           className="user-rank-text"
                           style={{
@@ -815,11 +815,11 @@ const NewLeaderBoard = ({
                         style={{ width: 54, height: 50 }}
                       />
                       <div className="d-flex flex-column gap-0">
-                        <span className="user-blue-rank">
-                          Extra Daily Stars
+                        <span className="user-blue-rank" style={{color: isPremium ? '#F3BF09' :''}}>
+                          {!isPremium ? "Upgrade Status" : "Prime Enabled"}
                         </span>
                         <span className="user-rank-text">
-                          {isPremium ? "Activated" : "Prime Subscription"}
+                          {!isPremium ? "Prime" : ""}
                         </span>
                       </div>
                     </div>
@@ -832,12 +832,13 @@ const NewLeaderBoard = ({
                             background: "#7E52D2",
                           }}
                         >
-                          Buy
+                          Get
                         </NavLink>
                       ) : (
                         <button
                           className="activate-btn2 px-3 py-1"
-                          onClick={onPremiumClick}
+                          style={{background: 'transparent'}}
+                          // onClick={onPremiumClick}
                         >
                           Lifetime
                         </button>

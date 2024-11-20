@@ -2469,7 +2469,7 @@ const NewWalletBalance = ({
                   ) : dummyEvent.id === "event9" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to be{" "}
-                      <b>Prime Subscribers.</b> By actively participating in
+                      <b>Prime Users.</b> By actively participating in
                       the game on a daily basis and exploring the downtown area,
                       players have the opportunity to secure daily rewards in
                       BNB. Remember to log in to the game daily and venture into
@@ -3451,9 +3451,9 @@ const NewWalletBalance = ({
             </div>
 
             <div className="d-flex justify-content-center">
-              <NavLink to={`/earn`}>
+              <NavLink to={`/staking`}>
                 <div className="linear-border">
-                  <button className="btn filled-btn px-5">Stake</button>
+                  <button className="btn filled-btn px-5">Staking</button>
                 </div>
               </NavLink>
             </div>

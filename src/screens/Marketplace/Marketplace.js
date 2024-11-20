@@ -1322,7 +1322,7 @@ const Marketplace = ({
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/earn"}
+                      to={"/staking"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1339,7 +1339,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/earn">
+                    <NavLink to="/staking">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
@@ -1350,7 +1350,7 @@ const Marketplace = ({
                   </div>
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">
                     <NavLink
-                      to={"/earn"}
+                      to={"/staking"}
                       className="w-100 m-0 d-flex flex-column gap-5"
                     >
                       <div className="p-4 mint-wrappernew market-land-stake-bg w-100 m-0 d-flex flex-column gap-4 justify-content-start staking-height staking-height2 h-auto">
@@ -1367,7 +1367,7 @@ const Marketplace = ({
                         </div>
                       </div>
                     </NavLink>
-                    <NavLink to="/earn">
+                    <NavLink to="/staking">
                       <span
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}

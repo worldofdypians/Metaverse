@@ -17,6 +17,7 @@ import mageFinish from "../../screens/Account/src/Components/WalletBalance/asset
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
 import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
 import goldenPassBadge from "./assets/goldenPassBadge.png";
+
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
@@ -77,6 +78,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
+import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -191,6 +193,7 @@ const MyProfile = ({
   userBaseScore,
   userRankTaiko,
   userTaikoScore,
+  onEventCardClick,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -990,7 +993,8 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-4">
+
+              <div className="col-12 col-lg-6 mt-3">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openMyRewards}
@@ -1055,7 +1059,7 @@ const MyProfile = ({
                   <img src={cyanArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-4">
+              <div className="col-12 col-lg-6 mt-3">
                 <div
                   className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openSpecialRewards}
@@ -1070,8 +1074,86 @@ const MyProfile = ({
                   <img src={redArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-4">
-                <NavLink to={dailyEvents[utcDayIndex].link}>
+
+              <div className="col-12 col-lg-6 mt-3">
+                <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={premiumBadge} alt=""  style={{width: 44, height: 44}}/>
+                      <span className="user-blue-rank" style={{color: isPremium ? '#F3BF09' :''}}>
+                          {!isPremium ? "Upgrade Status" : "Prime Enabled"}
+                        </span>
+                        <span className="user-rank-text">
+                          {!isPremium ? "Prime" : ""}
+                        </span>
+                    </div>
+                {!isPremium ? (
+                        <NavLink
+                          className="activate-btn2 px-3 py-1"
+                          to="/account/prime"
+                          style={{
+                            background: "#7E52D2",
+                          }}
+                        >
+                          Get
+                        </NavLink>
+                      ) : (
+                        <button
+                          className="activate-btn2 px-3 py-1"
+                          style={{background: 'transparent'}}
+                          // onClick={onPremiumClick}
+                        >
+                          Lifetime
+                        </button>
+                      )}
+                  </div>
+                </div>
+              </div>
+              <div className="col-12 col-lg-6 mt-3">
+                <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                  <div className="d-flex align-items-center gap-2 justify-content-between w-100">
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={goldenPassBadge} alt=""  style={{width: 44, height: 44}}/>
+                      <div className="d-flex flex-column">
+                        <span className="user-blue-rank">Boost Rewards</span>
+                        <span
+                          className="user-rank-text"
+                          style={{
+                            color: !isgoldenPassActive ? "#F3BF09" : "#00D1B5",
+                          }}
+                        >
+                          {!isgoldenPassActive ? `Golden Pass` : "Activated"}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      {!isgoldenPassActive ? (
+                        <NavLink
+                          className="activate-btn px-3 py-1"
+                          to="/account/challenges/golden-pass"
+                        >
+                          Activate
+                        </NavLink>
+                      ) : (
+                        <Countdown
+                          date={Number(isgoldenPassActive) * 1000}
+                          renderer={renderer2}
+                          // onComplete={() => {
+                          //   setcountdown();
+                          //   setisActive(false);
+                          // }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-12 col-lg-6 mt-3">
+                <NavLink
+                  to={dailyEvents[utcDayIndex].link}
+                  onClick={onEventCardClick}
+                >
                   <div
                     className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
                   >
@@ -1107,10 +1189,11 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-4">
+              <div className="col-12 col-lg-6 mt-3">
                 <NavLink
                   className="new-stake-nft-wrapper position-relative d-flex align-items-center justify-content-between p-3"
                   to={"/account/challenges/puzzle-madness"}
+                  onClick={onEventCardClick}
                 >
                   <div className="d-flex flex-column justify-content-between h-100">
                     <div className="d-flex flex-column">

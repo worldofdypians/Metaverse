@@ -354,7 +354,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               ) : dummyEvent.popupInfo.id === "event9" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to be{" "}
-                  <b>Prime Subscribers.</b> By actively participating in the
+                  <b>Prime Users.</b> By actively participating in the
                   game on a daily basis and exploring the downtown area, players
                   have the opportunity to secure daily rewards in BNB. Remember
                   to log in to the game daily and venture into the downtown area

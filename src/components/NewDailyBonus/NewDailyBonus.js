@@ -12,10 +12,10 @@ import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg";
 import wodIcon from "./assets/wodIcon.png";
-import premiumIcon from "./assets/premiumIcon.png";
+import premiumIcon from "./assets/premiumIcon.webp";
 import cawsRound from "./assets/cawsRound.png";
 import wodRound from "./assets/wodRound.png";
-import premiumRound from "./assets/premiumRound.png";
+import premiumRound from "./assets/premiumIcon.webp";
 import dypRound from "./assets/dypRound.png";
 
 import completedBg from "./assets/completedBg.png";
@@ -295,7 +295,7 @@ const NewDailyBonus = ({
     {
       image: premiumRound,
       holder: false,
-      message: "Prime Subscriber",
+      message: "Prime Users",
       required: true,
     },
     {
@@ -2982,7 +2982,7 @@ const NewDailyBonus = ({
                         <b>
                           There are a total of 20 chests to unlock, with 10
                           chests available to all players for free, and the
-                          remaining 10 exclusive to Prime subscribers.
+                          remaining 10 exclusive to Prime Users.
                         </b>
                         <br />
                         <br />
@@ -3011,7 +3011,7 @@ const NewDailyBonus = ({
                         </div>
                         Some of the rewards opened in the chests might require
                         an action, such as buying a CAWS or Genesis Land NFT, or
-                        purchasing a Prime Subscription, in order to claim the
+                        upgrading to Prime, in order to claim the
                         reward. The deadline for taking the action is 00:00 UTC
                         each day.
                         <br />
@@ -5680,7 +5680,7 @@ const NewDailyBonus = ({
                                 )}
                               </span>{" "}
                               reward will be allocated to you if you become a
-                              Prime Subscriber.
+                              Prime User.
                             </span>
                           </div>
                         </div>
@@ -5936,7 +5936,7 @@ const NewDailyBonus = ({
                             className="desc-title mb-0"
                             style={{ color: "#fff" }}
                           >
-                            Become Prime Subscriber
+                            Become Prime
                           </h6>
                           <span className="chain-desc mb-0">
                             Enjoy extra benefits and unlock more chests for

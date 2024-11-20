@@ -786,7 +786,7 @@ const DailyBonusPopup = ({
                     !isPremium ? (
                     <span className="sync-txt d-flex align-items-center gap-1">
                       <img src={triangle} alt="" />
-                      You need to be a Prime Subscriber in order to unlock the
+                      You need to be a Prime User in order to unlock the
                       Chests
                     </span>
                   ) : !canBuy ? (

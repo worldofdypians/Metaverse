@@ -546,7 +546,7 @@ const Header = ({
             <div
               className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 ${
                 location.pathname === "/token" ||
-                location.pathname === "/earn" ||
+                location.pathname === "/staking" ||
                 location.pathname === "/bridge" ||
                 location.pathname === "/buy"
                   ? "nav-anchor activenavlink"
@@ -576,14 +576,14 @@ const Header = ({
                     Token
                   </NavLink>
                   <NavLink
-                    to={"/earn"}
+                    to={"/staking"}
                     className={({ isActive }) =>
                       isActive
                         ? "dropdown-nav nav-active p-2"
                         : "dropdown-nav p-2"
                     }
                   >
-                    Earn
+                    Staking
                   </NavLink>
                   <NavLink
                     to={"/bridge"}
@@ -1497,8 +1497,18 @@ const Header = ({
                             </Dropdown.Item>
                           </div>
                           <hr className="header-divider my-0" />
+                          <span
+                        className="dropdown-nav p-2 d-flex align-items-center gap-2"
+                        onClick={() => {
+                          handleOpenDomains();
+                          setShowMenu(false);
+                        }}
+                      >
+                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                        Domain Name{" "}
+                      </span>
                           <button
-                            className="sign-out-btn pt-2  d-flex align-items-center gap-2 ms-2 justify-content-start"
+                            className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
                             onClick={() => {
                               manageDisconnect();
                             }}
