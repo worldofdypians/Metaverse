@@ -6,6 +6,7 @@ import groupBannerSmall from "./assets/groupBannerSmall.webp";
 import cityBannerSmall from "./assets/cityBannerSmall.webp";
 import secondCityBannerSmall from "./assets/secondCityBannerSmall.webp";
 import lizardBannerSmall from "./assets/lizardBannerSmall.webp";
+import epicblack from '../../../assets/epicblack.svg'
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 
@@ -88,8 +89,9 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                     "https://store.epicgames.com/en-US/p/world-of-dypians-2e0694"
                   }
                   target="_blank"
-                  className="explore-btn col-lg-4 py-2"
+                  className="explore-btn col-lg-4 py-2 d-flex align-items-center gap-2"
                 >
+                  <img src={epicblack} alt="" />
                   Join the Fight
                 </NavLink>
                 <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
@@ -125,7 +127,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
               </span>
               <div className="d-flex align-items-center gap-3 justify-content-center justify-content-md-end w-100 mt-3">
                 <NavLink
-                  to={"/account/challenges/treasure-hunt"}
+                  to={"/game#challenges"}
                   className="getpremium-btn col-lg-4 py-2"
                 >
                   Challenges
