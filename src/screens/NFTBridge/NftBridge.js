@@ -2038,16 +2038,16 @@ const NFTBridge = ({
 
   return (
     <div
-      className="container-fluid d-flex justify-content-end p-0"
+      className="container-fluid mt-lg-5 pt-lg-5 d-flex justify-content-end p-0"
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
       <div
-        className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
+        className="container-nft  d-flex  align-items-start px-4  position-relative"
         style={{ backgroundSize: "cover" }}
       >
-        <div className="container-lg mt-5 mt-lg-4 mx-0 position-relative">
+        <div className="custom-container mt-5 mt-lg-4 mx-0 position-relative">
           <div className="nft-bridge-hero-wrapper p-3 mt-5 mb-3 mt-lg-0 position-relative">
             <div className="position-absolute ccip-wrapper">
               <a
@@ -2373,7 +2373,7 @@ const NFTBridge = ({
                               </h4>
                               <span className="status-desc">
                                 Select the NFT you wish to bridge, whether from
-                                CAWS or WoD Genesis Land NFTs. After selection,
+                                CAWS or WOD Genesis Land NFTs. After selection,
                                 use the approve button and approve the
                                 transaction in your wallet.
                               </span>

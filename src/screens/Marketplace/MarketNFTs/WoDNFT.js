@@ -771,7 +771,7 @@ const WoDNFT = ({
   }, []);
 
   useEffect(() => {
-    if (wodBought && wodBought.length > 0 && wod && wod.length>0) {
+    if (wodBought && wodBought.length > 0 && wod && wod.length > 0) {
       getListedWod();
     }
   }, [wodBought, nftCount, allwodNfts.length, wod]);
@@ -809,20 +809,20 @@ const WoDNFT = ({
     }
     sortNfts("lth");
   }, [landNfts]);
-  
+
   return (
     <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div
-        className="container-fluid d-flex justify-content-end p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft  d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft2  d-flex  align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 position-relative">
+          <div className="custom-container mx-0 position-relative">
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
@@ -832,13 +832,13 @@ const WoDNFT = ({
 
                   <p className="collection-desc">
                     The Genesis Land offers <b>Access</b> to the metaverse,{" "}
-                    <b>Ownership</b> to land in WoD, participate on different{" "}
+                    <b>Ownership</b> to land in WOD, participate on different{" "}
                     <b>on-chain Events,</b> have a dedicated{" "}
                     <b> NFT Staking Pool,</b> ranking on <b>Leaderboard</b>, and
                     earn multiple <b>Rewards</b> by playing the game.
                   </p>
                   <NavLink to="/land" style={{ width: "fit-content" }}>
-                    <button className="btn pill-btn">Explore</button>
+                    <button className="pill-btn2 px-3 py-2">Explore</button>
                   </NavLink>
                 </div>
               </div>
@@ -982,7 +982,7 @@ const WoDNFT = ({
                     <>
                       {landNfts.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1168,7 +1168,7 @@ const WoDNFT = ({
                     dummyData.map((nft, index) => {
                       return (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1220,7 +1220,7 @@ const WoDNFT = ({
                         .slice(0, next2)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             state={{

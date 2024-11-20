@@ -68,7 +68,7 @@ const MintPopup = ({ active, onClose, data }) => {
                 </h6>
               </div>
               <h6 className="mint-popup-title m-0">
-                $75,000 Premium Subscriptions
+                $75,000 Prime Subscriptions
               </h6>
             </div>
           </div>
@@ -218,7 +218,7 @@ const MintPopup = ({ active, onClose, data }) => {
           <div className="d-flex align-items-center justify-content-center">
             <div className="pulsatingDot"></div>
             <h6 className="mint-popup-title  mb-0" style={{ color: "#18FFFF" }}>
-              150,000 WOD Tokens & 500 Premium Subscriptions
+              150,000 WOD Tokens & 500 Prime Subscriptions
             </h6>
           </div>
           <h6 className="mint-popup-title">Dypius Treasure Hunt</h6>
@@ -325,7 +325,7 @@ const MintPopup = ({ active, onClose, data }) => {
         data.title === "Treasure Hunt" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -334,7 +334,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "DogeCoin" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/doge"}
+            to={"/shop/beta-pass/doge"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -344,7 +344,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Manta" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -353,7 +353,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "Taiko" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -363,7 +363,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "Base" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/events/treasure-hunt"}
+            to={"/account/challenges/treasure-hunt"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -374,7 +374,7 @@ const MintPopup = ({ active, onClose, data }) => {
         : data.title === "CORE" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/core"}
+            to={"/shop/mint/core"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -394,7 +394,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "Immutable" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/mint/immutable"}
+            to={"/shop/mint/immutable"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -412,7 +412,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : data.title === "CoinMarketCap" ? (
           <Link
             onClick={onClose}
-            to={"/marketplace/beta-pass/coinmarketcap"}
+            to={"/shop/beta-pass/coinmarketcap"}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -421,7 +421,7 @@ const MintPopup = ({ active, onClose, data }) => {
         ) : (
           <Link
             onClick={onClose}
-            to={`/marketplace/events/upcoming`}
+            to={`/shop/events/upcoming`}
             state={{ event: data.state }}
             className="linear-border"
           >
@@ -431,7 +431,7 @@ const MintPopup = ({ active, onClose, data }) => {
         // (
         // <Link
         //   onClick={onClose}
-        //   to={`/marketplace/beta-pass/${data.state}`}
+        //   to={`/shop/beta-pass/${data.state}`}
         //   state={{ event: data.state }}
         //   className="linear-border"
         // >

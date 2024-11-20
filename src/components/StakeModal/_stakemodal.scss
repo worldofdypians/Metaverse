@@ -73,8 +73,11 @@
 
 .rewardtxtCawswod {
   color: #fff;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 }
 
 .withdrawbtn {
@@ -83,6 +86,9 @@
   color: #fff;
   font-size: 16px;
   font-weight: 600;
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 }
 
 .cawsimg2 {
@@ -189,6 +195,7 @@
   @media only screen and (max-width: 540px) {
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
+    height: fit-content;
   }
 }
 
@@ -288,8 +295,6 @@
 }
 
 .modal-scroll2 {
-
-
   @media screen and (max-width: 991px) {
     height: 380px;
     overflow-x: hidden;
@@ -303,6 +308,9 @@
   width: 25%;
   @media screen and (max-width: 991px) {
     width: 50%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 }
 
@@ -346,6 +354,9 @@
   color: #ffffff;
   border: none;
   pointer-events: none;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 }
 .disabled-approve-btn:hover {
   background: #292c47;
@@ -354,6 +365,9 @@
   font-size: 16px;
   line-height: 20px;
   color: #ffffff;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 }
 
 .selected-nfts-info {

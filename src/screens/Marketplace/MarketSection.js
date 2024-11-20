@@ -165,7 +165,7 @@ const MarketSection = ({
   return (
     <div className="row px-3 px-lg-5 flex-column justify-content-center text-white gap-4">
       <div className="d-flex justify-content-center align-items-center flex-column gap-2">
-        <h2 className="marketplace-title font-organetto">Marketplace</h2>
+        <h2 className="marketplace-title font-organetto">Shop</h2>
         <p className="marketplace-desc font-poppins">
           Discover the power of NFTs for a unique digital experience
         </p>
@@ -221,7 +221,7 @@ const MarketSection = ({
               eventData.map((item, index) => {
                 return (
                   <NavLink
-                    to={item.eventId === "account" ? `/${item.eventId}` : `/marketplace/events/${item.eventId}`}
+                    to={item.eventId === "account" ? `/${item.eventId}` : `/account/challenges/${item.eventId}`}
                     state={{ package: item.state }}
                     style={{ textDecoration: "none" }}
                     key={index}
@@ -246,7 +246,7 @@ const MarketSection = ({
               wodListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                    to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -276,7 +276,7 @@ const MarketSection = ({
               cawsListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                    to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -305,7 +305,7 @@ const MarketSection = ({
               timepieceListed.slice(0, 4).map((item, index) => {
                 return (
                   <NavLink
-                    to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                    to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                     state={{
                       nft: item,
                       type: item.type,
@@ -338,7 +338,7 @@ const MarketSection = ({
                 eventData.map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/events/${item.eventId}`}
+                      to={`/shop/events/${item.eventId}`}
                       state={{ package: item.state }}
                       style={{ textDecoration: "none" }}
                       key={index}
@@ -363,7 +363,7 @@ const MarketSection = ({
                 wodListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                      to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,
@@ -393,7 +393,7 @@ const MarketSection = ({
                 cawsListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                      to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,
@@ -422,7 +422,7 @@ const MarketSection = ({
                 timepieceListed.slice(0, 4).map((item, index) => {
                   return (
                     <NavLink
-                      to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                      to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                       state={{
                         nft: item,
                         type: item.type,
@@ -451,12 +451,12 @@ const MarketSection = ({
         <NavLink
           to={
             activebtn === "events"
-              ? "/marketplace/events/dragon-ruins"
+              ? "/account/challenges/dragon-ruins"
               : activebtn === "timepiece"
-              ? "/marketplace/timepiece"
+              ? "/shop/timepiece"
               : activebtn === "land"
-              ? "/marketplace/land"
-              : "/marketplace/caws"
+              ? "/shop/land"
+              : "/shop/caws"
           }
         >
           <div

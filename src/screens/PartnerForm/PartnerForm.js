@@ -323,29 +323,29 @@ const PartnerForm = () => {
     <div className="container-fluid d-flex pt-5 px-3 px-lg-0 align-items-center my-5 justify-content-center">
       <div className="partner-main-wrapper py-5 w-100 d-flex align-items-center flex-column gap-4">
         <div className="d-flex flex-column mb-4">
-          <h6 className="partner-title font-organetto d-flex gap-3 justify-content-center">Contact <h6 className="partner-title font-organetto" style={{color: 'rgb(140, 86, 255)'}}>Us</h6></h6>
-           <p className="partner-desc w-100">
+          <h6 className="explorer-grid-title d-flex gap-3 justify-content-center">Contact Us</h6>
+           <p className="ways-to-amplify-desc w-100">
           Reach out to us anytime and we will happily answer all of your
           inquiries.
         </p>
         </div>
        
-        <div className=" col-12 mx-0 my-5 row gap-5 justify-content-around">
+        <div className=" col-12 mx-0 row gap-5 justify-content-around">
           <FormContainer
             title="General Inquiry"
             desc="Get immediate help and support for your inquiries."
-            accordionState={openBusiness}
-            collapse="collapseHelp"
+            accordionState={true}
+            // collapse="collapseHelp"
             emailLink="mailto:helpcenter@dypius.com"
             email="helpcenter@dypius.com"
-            image="business"
+            // image="business"
             onClick={() => {
-              setopenBusiness(!openBusiness);
+              setopenBusiness(true);
             }}
           >
             <div
-              id="collapseHelp"
-              className="accordion-collapse collapse"
+              // id="collapseHelp"
+              className="accordion-collapse show"
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
@@ -530,7 +530,7 @@ const PartnerForm = () => {
                       setbusinessEnableSubmit(!businessEnableSubmit)
                     }
                   />
-                  <span className="checkbox-title">
+                  <span className="ways-to-amplify-desc">
                     I agree to share my email address with Dypius for use in
                     accordance with the World of Dypians privacy policy,
                     including to receive communications.
@@ -571,21 +571,15 @@ const PartnerForm = () => {
                       </button>
                     </div>
                   )}
-                  <div
-                    className={`${
-                      businessEnableSubmit
-                        ? "linear-border"
-                        : "linear-border-disabled"
-                    }`}
-                  >
+               
                     <button
-                      className="btn filled-btn px-5 d-flex align-items-center gap-2"
+                      className="action-btn px-5 d-flex align-items-center gap-2"
                       onClick={handleBusinessSubmit}
                       disabled={!businessEnableSubmit}
+                      style={{filter: businessEnableSubmit ? "none" : "grayscale(0.6)"}}
                     >
                       Submit
                     </button>
-                  </div>
                 </div>
                 <ReCaptchaV2
                   sitekey="6LflZgEgAAAAAO-psvqdoreRgcDdtkQUmYXoHuy2"
@@ -597,7 +591,7 @@ const PartnerForm = () => {
               </div>
             </div>
           </FormContainer>
-          <FormContainer
+          {/* <FormContainer
             title="Build with us"
             desc="Express your creativity and make a mark on the virtual world."
             onClick={() => {
@@ -920,7 +914,7 @@ const PartnerForm = () => {
                 />
               </div>
             </div>
-          </FormContainer>
+          </FormContainer> */}
         </div>
       </div>
       {success && (

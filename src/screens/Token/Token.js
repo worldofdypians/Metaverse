@@ -6,6 +6,7 @@ import Tokenomics from "./Tokenomics/Tokenomics";
 import Utility from "./Utility/Utility";
 import Investors from "./Investors/Investors";
 import WodBuilders from "../Home/WodBuilders/WodBuilders";
+import InGameEconomy from "./InGameEconomy";
 
 const Token = () => {
 
@@ -24,11 +25,12 @@ const Token = () => {
 
   return (
     <div className="container-fluid token-wrapper px-0">
-      <div className="d-flex flex-column gap-5"> 
+      <div className="d-flex flex-column"> 
         <MainHero scrollInto={scrollToView}/>
         <TokenUtility />
         <Tokenomics />
-        <Investors />
+        <InGameEconomy />
+        <Investors page={"token"} />
         {/* <Utility /> */}
       </div>
     </div>

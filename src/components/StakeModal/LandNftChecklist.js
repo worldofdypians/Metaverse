@@ -259,7 +259,6 @@ const LandNftChecklist = ({
               <div className="d-flex gap-2 align-items-center justify-content-between">
                 <h6
                   className="rewardtxtCawswod d-flex align-items-center gap-2 m-0"
-                  style={{ fontSize: 16 }}
                 >
                   <img src={weth} alt="" style={{ height: 20, width: 20 }} />{" "}
                   {getFormattedNumber(EthRewards, 3)} ETH
@@ -272,7 +271,7 @@ const LandNftChecklist = ({
           </div>
           <div className="d-flex align-items-center gap-2 justify-content-between">
             <button
-              className={`pill-btn ${
+              className={`pill-btn-claim ${
                 EthRewards == 0 && "disabled-approve-btn"
               } w-100 p-2`}
               onClick={(e) => {

@@ -1,1 +1,0 @@
-import TypesAssets from "./TypeAssets";

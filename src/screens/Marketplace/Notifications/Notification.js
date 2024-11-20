@@ -169,13 +169,13 @@ const Notification = ({
           <NavLink
             to={
               item.welcome === "yes"
-                ? "/marketplace"
+                ? "/shop"
                 : item.redirect_link
                 ? item.redirect_link.slice(
                     domain.length,
                     item.redirect_link.length
                   )
-                : `/marketplace/nft/${
+                : `/shop/nft/${
                     item.tokenId
                   }/${item.nftAddress.toLowerCase()}`
             }

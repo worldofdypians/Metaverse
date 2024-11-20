@@ -52,7 +52,7 @@ textarea,
 ::placeholder {
     color: #C0CBF7;
     font-size: 14px;
-    font-family: Poppins;
+    /* font-family: Poppins; */
     line-height: 30px;
 }
 

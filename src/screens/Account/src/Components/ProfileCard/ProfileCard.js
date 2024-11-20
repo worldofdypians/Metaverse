@@ -104,6 +104,7 @@ const ProfileCard = ({
   email,
   discountPercentageViction,
   discountPercentageTaiko,
+  discountPercentageMat,
   discountPercentage,
   username,
   balance,
@@ -147,7 +148,9 @@ const ProfileCard = ({
   userRankBase,
   userBaseScore,
   userRankTaiko,
+  userRankMat,
   userTaikoScore,
+  userMatScore,
   authToken
 }) => {
   let id = Math.random().toString(36);
@@ -184,7 +187,8 @@ const ProfileCard = ({
     userVictionScore +
     userMantaScore +
     userBaseScore +
-    userTaikoScore;
+    userTaikoScore+
+    userMatScore;
 
   const handleUserRank = () => {
     let allScore;
@@ -193,37 +197,37 @@ const ProfileCard = ({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 63999999) {
+    if (allScore > 65999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 38999999) {
+    } else if (allScore > 40999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 64000000) * 100);
-    } else if (allScore > 25999999) {
+      setUserProgress((allScore / 66000000) * 100);
+    } else if (allScore > 27999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 39000000) * 100);
-    } else if (allScore > 13999999) {
+      setUserProgress((allScore / 41000000) * 100);
+    } else if (allScore > 15999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 26000000) * 100);
+      setUserProgress((allScore / 28000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 14000000) * 100);
+      setUserProgress((allScore / 16000000) * 100);
     }
   };
 
@@ -300,9 +304,7 @@ const ProfileCard = ({
     ],
   };
 
-  let oneMarch = new Date("2024-03-01 11:11:00 GMT+02:00");
-  let oneApril = new Date("2024-04-01 11:11:00 GMT+02:00");
-  let oneMay = new Date("2024-05-01 11:11:00 GMT+02:00");
+
 
   const countBundle = async () => {
     const result = await axios.get(
@@ -424,9 +426,7 @@ const ProfileCard = ({
     }
   };
 
-  useEffect(() => {
-    updateUserRank();
-  }, [handleUserRank]);
+
 
   useEffect(() => {
     countBundle();
@@ -445,12 +445,11 @@ const ProfileCard = ({
     userRankViction,
     userRankManta,
     userRankBase,
-
     userCoreScore,
     userVictionScore,
     userMantaScore,
     userBaseScore,
-
+    userMatScore,
     userTaikoScore,
   ]);
 
@@ -809,7 +808,8 @@ const ProfileCard = ({
                     {!isPremium &&
                       discountPercentage == 0 &&
                       discountPercentageViction === 0 &&
-                      discountPercentageTaiko === 0 && (
+                      discountPercentageTaiko === 0 &&
+                      discountPercentageMat === 0 && (
                         <div
                           className={` wallet-wrapper-active2 hoveractive position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -817,7 +817,7 @@ const ProfileCard = ({
                         >
                           {/* <div className="table-separator position-absolute"></div> */}
                           <h6 className="become-premium-title mb-0">
-                            Premium Subscription
+                          Prime Subscription
                           </h6>
 
                           <img
@@ -831,7 +831,8 @@ const ProfileCard = ({
                     {!isPremium &&
                       (discountPercentage > 0 ||
                         discountPercentageViction > 0 ||
-                        discountPercentageTaiko > 0) && (
+                        discountPercentageTaiko > 0 ||
+                        discountPercentageMat > 0) && (
                         <div
                           className={` wallet-wrapper-active-discount hoverdiscount position-relative justify-content-between
                     d-flex align-items-center position-relative mt-3 mt-lg-0`}
@@ -852,6 +853,8 @@ const ProfileCard = ({
                                     ? discountPercentageViction
                                     : discountPercentageTaiko > 0
                                     ? discountPercentageTaiko
+                                    : discountPercentageMat > 0
+                                    ? discountPercentageMat
                                     : discountPercentage}
                                   %
                                 </span>
@@ -870,7 +873,8 @@ const ProfileCard = ({
                               <h6 className="discount-price-profile m-0">
                                 {discountPercentage == 100 ||
                                 discountPercentageViction == 100 ||
-                                discountPercentageTaiko == 100
+                                discountPercentageTaiko == 100||
+                                discountPercentageMat == 100
                                   ? "FREE"
                                   : "$" +
                                     (100 -
@@ -881,6 +885,8 @@ const ProfileCard = ({
                                           ? discountPercentageViction
                                           : discountPercentageTaiko > 0
                                           ? discountPercentageTaiko
+                                          : discountPercentageMat > 0
+                                          ? discountPercentageMat
                                           : discountPercentage
                                       ))}
                               </h6>
@@ -1072,6 +1078,34 @@ const ProfileCard = ({
                                       style={{ width: "33%" }}
                                     >
                                       {getFormattedNumber(userTaikoScore, 0)}
+                                    </span>
+                                  </div>
+                                  <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+                                    <div
+                                      className="d-flex align-items-center gap-2"
+                                      style={{ width: "33%" }}
+                                    >
+                                      <img
+                                        src={taikoLogo}
+                                        width={20}
+                                        height={20}
+                                        alt=""
+                                      />
+                                      <span className="rank-dropdown-text">
+                                        Matchain
+                                      </span>
+                                    </div>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      #{userRankMat + 1}
+                                    </span>
+                                    <span
+                                      className="rank-dropdown-text"
+                                      style={{ width: "33%" }}
+                                    >
+                                      {getFormattedNumber(userMatScore, 0)}
                                     </span>
                                   </div>
                                   <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
@@ -1274,24 +1308,24 @@ const ProfileCard = ({
                                       />
                                     )}
                                   </div>
-                                  <span className="rank-current-score">
+                                  {/* <span className="rank-current-score">
                                     {rankData?.multiplier === "yes"
                                       ? getFormattedNumber(
                                           userTotalScore * 4,
                                           0
                                         )
                                       : getFormattedNumber(userTotalScore, 0)}
-                                  </span>
-                                  <span className="rank-current-score">
+                                  </span> */}
+                                  {/* <span className="rank-current-score">
                                     {userRankName?.name === "rookie"
-                                      ? "26M"
+                                      ? "28M"
                                       : userRankName?.name === "underdog"
-                                      ? "39M"
+                                      ? "41M"
                                       : userRankName?.name === "champion"
-                                      ? "64M"
+                                      ? "66M"
                                       : userRankName?.name === "unstoppable"
                                       ? ""
-                                      : "14M"}
+                                      : "16M"}
                                   </span>
                                 </div>
                                 {rankData?.multiplier === "no" && !isPremium ? (
@@ -1367,6 +1401,7 @@ const ProfileCard = ({
                                 </span>
                                 <img src={arrowCircle} alt="" />
                               </div> */}
+                              </div>
                               </div>
                             </OutsideClickHandler>
                           )}
@@ -1651,7 +1686,7 @@ const ProfileCard = ({
                   >
                     My points
                   </span>
-                  <h6
+                  {/* <h6
                     className="mb-0 your-score-text"
                     style={{
                       color:
@@ -1666,7 +1701,7 @@ const ProfileCard = ({
                     <img src={x4rounded} width={30} alt="" />
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </div>
               </div>
               <img
@@ -1704,7 +1739,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 13,999,999</span>
+                    <span className="needed-points mb-0">0 - 15,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1742,7 +1777,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">14,000,000</span>
+                    <span className="needed-points mb-0">16,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1781,7 +1816,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">26,000,000</span>
+                    <span className="needed-points mb-0">28,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1820,7 +1855,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">39,000,000</span>
+                    <span className="needed-points mb-0">41,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1859,7 +1894,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">64,000,000</span>
+                    <span className="needed-points mb-0">66,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1899,7 +1934,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">0 - 13,999,999</span>
+                    <span className="needed-points mb-0">0 - 15,999,999</span>
                   </div>
                   <div
                     className={` ${
@@ -1936,7 +1971,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">14,000,000</span>
+                    <span className="needed-points mb-0">16,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -1973,7 +2008,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">26,000,000</span>
+                    <span className="needed-points mb-0">28,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -2010,7 +2045,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">39,000,000</span>
+                    <span className="needed-points mb-0">41,000,000</span>
                   </div>
                   <div
                     className={` ${
@@ -2047,7 +2082,7 @@ const ProfileCard = ({
                     <span className="needed-points-span mb-0">
                       Points Required
                     </span>
-                    <span className="needed-points mb-0">64,000,000</span>
+                    <span className="needed-points mb-0">66,000,000</span>
                   </div>
                   <div
                     className={` ${

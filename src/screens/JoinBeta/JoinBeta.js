@@ -16,8 +16,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
     "Able to provide an Email Address",
     "Supported Web 3 Wallet available",
     "Screen capturing software ",
-    'Good Communication Skills',
-    'Attention to Detail'
+    "Good Communication Skills",
+    "Attention to Detail",
   ];
 
   const tasks = [
@@ -29,7 +29,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
     "Document game bugs and findings",
     "Provide valuable suggestions",
     "Engage with community",
-    "Share experiences on social media"
+    "Share experiences on social media",
   ];
 
   const benefits = [
@@ -41,8 +41,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
     "Priority on employee openings",
     "Monetary compensation and other special prizes",
     "Gain valuable experience",
-    "Become certified WoD Beta Tester",
-    "Improve your potential employment opportunities"
+    "Become certified WOD Beta Tester",
+    "Improve your potential employment opportunities",
   ];
 
   const [seats, setSeats] = useState();
@@ -72,29 +72,23 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
   useEffect(() => {
     countWhitelist();
     countBeta();
-    window.scrollTo(0,0);
-    document.title = 'Join Beta'
-
+    window.scrollTo(0, 0);
+    document.title = "Join Beta";
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column beta-main-wrapper py-5">
         <div className="row w-100 pt-5 pt-lg-0 px-3 px-lg-5 mx-0 justify-content-between align-items-center">
           <div className="col-12 col-lg-6">
-            <h6 className="beta-tester-title font-organetto">
-              Beta Tester{" "}
-              <span className="beta-tester-title font-organetto" style={{ color: "#8c56ff" }}>
-                Application
-              </span>
-            </h6>
-            <p className="beta-tester-desc">
+            <h6 className="explorer-grid-title">Beta Tester Application</h6>
+            <p className="ways-to-amplify-desc">
               Apply to become a World of Dypians beta tester to gain early
               access to the latest game updates and features, entrance to
               private tester discord channels, provide valuable feedback to
               developers, and earn rewards while enjoying exciting gameplay.
             </p>
-            <p className="beta-tester-desc">
+            <p className="ways-to-amplify-desc">
               If your application is selected to become a beta tester, you will
               have the opportunity to help shape the development of the game and
               make a significant contribution to the success of World of
@@ -103,14 +97,8 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           </div>
           <div className="col-12 col-lg-5">
             <div className="join-beta-banner  d-flex justify-content-center  flex-column gap-2">
-              <h6 className="font-organetto become-tester-title">
-              Apply to become a WoD{" "}
-                <span
-                  className="become-tester-title font-organetto"
-                  style={{ color: "#00fecf" }}
-                >
-                  Beta Tester
-                </span>
+              <h6 className="market-banner-title">
+                Apply to become a WOD Beta Tester
               </h6>
               <div className="d-flex align-items-end justify-content-between">
                 <div className="d-flex flex-column">
@@ -122,21 +110,13 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
                     </h6>
                   </div>
                 </div>
-                <div
-                  className="linear-border"
-                  style={{
-                    width: "fit-content",
-                    zIndex: 5,
-                    position: "relative",
-                  }}
+
+                <button
+                  className="action-btn px-4 px-lg-5 d-flex align-items-center gap-2"
+                  onClick={handleRegister}
                 >
-                  <button
-                    className="btn filled-btn px-4 px-lg-5 d-flex align-items-center gap-2"
-                    onClick={handleRegister}
-                  >
-                    Apply Now
-                  </button>
-                </div>
+                  Apply Now
+                </button>
               </div>
             </div>
           </div>
@@ -145,13 +125,17 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
               <img src={requirementsIcon} alt="requirements" />
-              <h6 className="beta-info-title mb-0">Requirements</h6>
+              <h6 className="market-banner-title mb-0">Requirements</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {requirements.map((item) => (
                 <div className="d-flex align-items-start gap-2">
-                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
-                  <span className="beta-info-item">{item}</span>
+                  <img
+                    src={checkIcon}
+                    alt="check"
+                    style={{ position: "relative", top: "2px" }}
+                  />
+                  <span className="ways-to-amplify-desc">{item}</span>
                 </div>
               ))}
             </div>
@@ -159,13 +143,17 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
               <img src={tasksIcon} alt="requirements" />
-              <h6 className="beta-info-title mb-0">Tasks</h6>
+              <h6 className="market-banner-title mb-0">Tasks</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {tasks.map((item) => (
                 <div className="d-flex align-items-start gap-2">
-                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
-                  <span className="beta-info-item">{item}</span>
+                  <img
+                    src={checkIcon}
+                    alt="check"
+                    style={{ position: "relative", top: "2px" }}
+                  />
+                  <span className="ways-to-amplify-desc">{item}</span>
                 </div>
               ))}
             </div>
@@ -173,13 +161,17 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
               <img src={benefitsIcon} alt="requirements" />
-              <h6 className="beta-info-title mb-0">Benefits</h6>
+              <h6 className="market-banner-title mb-0">Benefits</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {benefits.map((item) => (
                 <div className="d-flex align-items-start gap-2">
-                  <img src={checkIcon} alt="check" style={{position: 'relative', top: '2px'}} />
-                  <span className="beta-info-item">{item}</span>
+                  <img
+                    src={checkIcon}
+                    alt="check"
+                    style={{ position: "relative", top: "2px" }}
+                  />
+                  <span className="ways-to-amplify-desc">{item}</span>
                 </div>
               ))}
             </div>

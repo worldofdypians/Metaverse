@@ -1,0 +1,87 @@
+.announcement-side-wrapper-2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.game-update-card {
+  height: 290px;
+  backdrop-filter: blur(12.5px);
+  border-radius: 12px;
+
+  border: 1px solid gray;
+  overflow: hidden;
+  img{
+    border-radius: 12px;
+    transition: all .25s;
+    transform: scale(1.05);
+  }
+}
+
+
+.first-game-update-card{
+  height: 600px;
+  @media screen and (max-width: 786px) {
+    height: 290px;
+    margin-bottom: 20px;
+  }
+}
+
+.game-update-card:hover{
+  border: 1px solid #f3bf09;
+
+  .events-page-title-home{
+    color: #EEEDFF;
+  }
+  
+  img{
+    transform: scale(1);
+  }
+}
+
+.updates-text-wrapper{
+ position: absolute;
+ bottom: 0;
+}
+
+.other-news-item{
+  border-top: 1px solid #EEEDFF;
+  transition: all .25s;
+  cursor: pointer;
+  img{
+    min-width: 300px;
+    min-height: 170px;
+    border: 1px solid #EEEDFF;
+  }
+
+  .other-news-title{
+    color: #f3bf09;
+font-family: "Montserrat";
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: 27px; /* 135% */
+  }
+  @media screen and (max-width: 786px) {
+    img{
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// color: #EEEDFF;
+
+.other-news-item:hover{
+background: rgba(243, 191, 9, 0.05);
+img{
+  border: 1px solid #f3bf09;
+}
+
+.other-news-title{
+  color: #EEEDFF;
+}
+}

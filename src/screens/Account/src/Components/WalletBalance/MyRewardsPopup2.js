@@ -26,6 +26,8 @@ import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg";
+import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
@@ -82,6 +84,8 @@ const MyRewardsPopupNew = ({
   cookieEarnUsd,
   landPremiumRewards,
   baseEarnUSD,
+  allMatChests,
+  matEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -111,6 +115,8 @@ const MyRewardsPopupNew = ({
   const [treasureRewardMoneyBase, setTreasureRewardMoneyBase] = useState(0);
 
   const [treasureRewardMoneyTaiko, setTreasureRewardMoneyTaiko] = useState(0);
+  const [treasureRewardMoneyMat, setTreasureRewardMoneyMat] = useState(0);
+
 
   const [pasttreasureRewardMoney, setpastTreasureRewardMoney] = useState(0);
   const [pasttreasureRewardNftCaws, setpastTreasureRewardNftCaws] = useState(0);
@@ -408,6 +414,8 @@ const MyRewardsPopupNew = ({
     var moneyResultBase = 0;
 
     var moneyResultTaiko = 0;
+    var moneyResultMat = 0;
+
 
     var moneyResultSei = 0;
 
@@ -544,6 +552,25 @@ const MyRewardsPopupNew = ({
       });
     }
 
+    if (allMatChests && allMatChests.length > 0) {
+      allMatChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResultMat += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
+
     setTreasureRewardMoney(moneyResult);
     setTreasureRewardMoneySkale(moneyResultSkale);
     setTreasureRewardMoneyCore(moneyResultCore);
@@ -551,6 +578,8 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyManta(moneyResultManta);
     setTreasureRewardMoneyBase(moneyResultBase);
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
+    setTreasureRewardMoneyMat(moneyResultMat);
+
   };
 
   const fetchCachedData = () => {
@@ -993,7 +1022,7 @@ const MyRewardsPopupNew = ({
                 : getFormattedNumber(
                     Number(treasureRewardMoney) +
                       Number(treasureRewardMoneyCore) +
-                      Number(treasureRewardMoneySei) +
+                      Number(treasureRewardMoneyMat) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
@@ -1167,6 +1196,13 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
+            {/* <img
+              src={
+                matchainLogo
+              }
+              style={{ width: 16, height: 16 }}
+              alt=""
+            /> */}
             <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
             <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
@@ -1259,6 +1295,12 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(0, 2)}
                   </span>
                 </div>
+                {/* <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="item-name-left">Matchain</span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(0, 2)}
+                  </span>
+                </div> */}
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="item-name-left">Genesis</span>
                   <span className="item-name-right">
@@ -1333,7 +1375,7 @@ const MyRewardsPopupNew = ({
               </div>
 
               <div className="d-flex w-100 justify-content-between gap-2">
-                <span className="item-name-left">WoD Land & CAWS </span>
+                <span className="item-name-left">WOD Land & CAWS </span>
                 <span className="item-name-right">
                   ${getFormattedNumber(wodCawsRewards, 2)}
                 </span>
@@ -1470,6 +1512,16 @@ const MyRewardsPopupNew = ({
                     : getFormattedNumber(treasureRewardMoneyTaiko, 2)}
                 </span>
               </div>
+
+              {/* <div className="d-flex w-100 justify-content-between gap-2">
+                <span className="item-name-left">Matchain</span>
+                <span className="item-name-right">
+                  $
+                  {previousRewards
+                    ? getFormattedNumber(0, 2)
+                    : getFormattedNumber(treasureRewardMoneyMat, 2)}
+                </span>
+              </div> */}
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>

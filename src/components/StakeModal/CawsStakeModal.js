@@ -2,11 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
-import EmptyWodCard from "./EmptyWodCard";
 import greenInfo from "./assets/greenInfo.svg";
 import cawsTag from "./assets/cawsTag.svg";
-import wodTag from "./assets/wodTag.svg";
-import fullWod from "./assets/fullWod.png";
 import ethIcon from "./assets/ethIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
@@ -465,7 +462,7 @@ const CawsStakeModal = ({
           alt=""
         />
       </div>
-      <span className="stake-modal-desc">
+      <span className="stake-modal-desc text-wrap">
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
@@ -648,7 +645,7 @@ const CawsStakeModal = ({
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
           <img src={greenInfo} alt="" />
-          <span className="info-span-text">
+          <span className="info-span-text text-wrap">
             {isStake
               ? `Please select the NFTs to claim your rewards or withdraw them
             from the staking pool.`

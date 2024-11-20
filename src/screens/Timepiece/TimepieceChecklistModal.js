@@ -81,7 +81,7 @@ const TimepieceChecklistModal = ({
           <div className="caw-card2">
             <div className="caw-card2 align-items-center">
               {nftItem.length == 0 ? (
-                [...Array(devicewidth < 500 ? 1 : 8)].map((item, id) => {
+                [...Array(devicewidth < 500 ? 2 : 4)].map((item, id) => {
                   return (
                     <TimepiecePlaceHolder
                       key={id}
@@ -113,8 +113,8 @@ const TimepieceChecklistModal = ({
                   {[
                     ...Array(
                       devicewidth < 500
-                        ? 1
-                        : Math.abs(8 - parseInt(nftItem.length))
+                        ? 2
+                        : Math.abs(4 - parseInt(nftItem.length))
                     ),
                   ].map((item, id) => {
                     return (

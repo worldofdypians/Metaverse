@@ -64,14 +64,14 @@
   }
 }
 
-.info-text {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  color: #939393;
-  gap: 5px;
-}
+// .info-text {
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 14px;
+//   line-height: 22px;
+//   color: #939393;
+//   gap: 5px;
+// }
 
 .to-stake-title {
   font-style: normal;
@@ -163,19 +163,22 @@ box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
   padding: 16.5px 0;
   border-radius: 8px;
   // background: linear-gradient(209.67deg, #ff4229 1.51%, #e30613 98.12%);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   justify-content: center;
-
+gap: 20px;
   @media screen and (max-width: 500px) {
     justify-content: center;
+  grid-template-columns: repeat(1, 1fr);
+  place-items: center;
+  gap: 1rem;
   }
   .nft-img {
     width: 100%;
     border-radius: 8px;
-    @include medium {
-      max-width: 360px;
-    }
+    // @include medium {
+    //   max-width: 360px;
+    // }
   }
   .id {
     display: flex;
@@ -186,13 +189,13 @@ box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
       font-weight: 700;
       font-size: 26px;
       line-height: 33px;
-      color: $white;
+      color: white;
       margin-right: auto;
       margin-bottom: 0;
-      @include medium {
-        font-size: 26px;
-        line-height: 33px;
-      }
+      // @include medium {
+      //   font-size: 26px;
+      //   line-height: 33px;
+      // }
     }
     p {
       font-weight: 500;
@@ -200,14 +203,15 @@ box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
       line-height: 20px;
       opacity: 0.8;
       margin: 0;
-      color: $white;
-      @include medium {
-        font-size: 16px;
-        line-height: 20px;
-      }
+      color: white;
+      // @include medium {
+      //   font-size: 16px;
+      //   line-height: 20px;
+      // }
     }
   }
 }
+
 
 .stakeNft-Title {
   color: $black-26;
@@ -244,7 +248,7 @@ box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
   font-weight: 700;
   font-size: 18px;
   line-height: 23px;
-  color: #e30613;
+  color: #4ed5d2;
 }
 
 .sup-notification {

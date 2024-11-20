@@ -60,7 +60,7 @@ const ForgotPasswordGecko = ({ onResetPass, mintTitle }) => {
         <div className="d-flex flex-column gap-3">
           <span className="footertxt-coingecko mt-1">
             Users who have claimed the {mintTitle} NFT are required to create a
-            WoD Account to receive the NFT and participate in the exclusive
+            WOD Account to receive the NFT and participate in the exclusive
             event.
           </span>
           <div className="summaryseparator"></div>
@@ -101,7 +101,7 @@ const ForgotPasswordGecko = ({ onResetPass, mintTitle }) => {
       />
 
       <span className="footertxt-coingecko mt-1">
-        Users who have claimed the {mintTitle} NFT are required to create a WoD
+        Users who have claimed the {mintTitle} NFT are required to create a WOD
         Account to receive the NFT and participate in the exclusive event.
       </span>
       <div className="summaryseparator"></div>

@@ -49,18 +49,16 @@ const MakeOffer = ({
 
   const [wethBalance, setWethBalance] = useState(0);
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
-  const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
-
   const [bestOffer, setbestOffer] = useState([]);
 
   const { BigNumber } = window;
 
   const getListedNtsAsc = async () => {
-    const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+    // const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
 
-    let dypNftsAsc = dypNfts.sort((a, b) => {
-      return a.price - b.price;
-    });
+    // let dypNftsAsc = dypNfts.sort((a, b) => {
+    //   return a.price - b.price;
+    // });
 
     const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
 
@@ -69,7 +67,7 @@ const MakeOffer = ({
     });
     setlowestPriceNftListed(ethNftsAsc[0].price);
 
-    setlowestPriceNftListedDYP(dypNftsAsc[0].price);
+    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
   };
 
   const getOffer = async () => {
@@ -113,34 +111,35 @@ const MakeOffer = ({
           }, 3000);
         });
     } else if (window.WALLET_TYPE === "binance") {
-      if (pricetype === 1) {
-        const contract = new ethers.Contract(
-          tokenType === "dypv2"
-            ? window.config.token_dypius_new_address
-            : window.config.dyp_token_address,
-          window.DYP_ABI,
-          binanceW3WProvider.getSigner()
-        );
+      // if (pricetype === 1) {
+      //   const contract = new ethers.Contract(
+      //     tokenType === "dypv2"
+      //       ? window.config.token_dypius_new_address
+      //       : window.config.dyp_token_address,
+      //     window.DYP_ABI,
+      //     binanceW3WProvider.getSigner()
+      //   );
 
-        await contract
-          .approve(window.config.nft_marketplace_address, newPrice, {
-            from: coinbase,
-          })
-          .then(() => {
-            setisApprove(true);
-            setapprovestatus("success");
-            setTimeout(() => {
-              setapprovestatus("initial");
-            }, 3000);
-          })
-          .catch((e) => {
-            console.error(e);
-            setapprovestatus("fail");
-            setTimeout(() => {
-              setapprovestatus("initial");
-            }, 3000);
-          });
-      } else if (pricetype === 0) {
+      //   await contract
+      //     .approve(window.config.nft_marketplace_address, newPrice, {
+      //       from: coinbase,
+      //     })
+      //     .then(() => {
+      //       setisApprove(true);
+      //       setapprovestatus("success");
+      //       setTimeout(() => {
+      //         setapprovestatus("initial");
+      //       }, 3000);
+      //     })
+      //     .catch((e) => {
+      //       console.error(e);
+      //       setapprovestatus("fail");
+      //       setTimeout(() => {
+      //         setapprovestatus("initial");
+      //       }, 3000);
+      //     });
+      // } else 
+      if (pricetype === 0) {
         const contract = new ethers.Contract(
           window.config.weth2_address,
           window.TOKEN_ABI,
@@ -254,8 +253,9 @@ const MakeOffer = ({
   useEffect(() => {
     if (coinbase) {
       getOffer();
-      getDypBalance();
+      // getDypBalance();
       getListedNtsAsc();
+      isapprovedMakeOffer(price, 0, "weth");
     }
   }, [coinbase, nftCount]);
 
@@ -263,7 +263,7 @@ const MakeOffer = ({
     if (offerData.length > 0) {
       setprice(getFormattedNumber(offerData[0].offer[0] / 1e18, 2));
       setFilter1(
-        offerData[0].offer.payment.priceType === "0" ? "weth" : "dypv1"
+          "weth"  
       );
     }
   }, [offerData.length]);
@@ -321,22 +321,12 @@ const MakeOffer = ({
                 <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-xxl-end align-items-lg-end align-items-center">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                     {getFormattedNumber(nft.price / 1e18, 2)}{" "}
-                    {nft.payment_priceType === 0
-                      ? "ETH"
-                      : nft.payment_tokenAddress ===
-                        window.config.token_dypius_new_address
-                      ? "DYPv2"
-                      : "DYPv1"}
+                    ETH
                   </span>
                   <span className="itemcollectionName">
                     $
-                    {getFormattedNumber(
-                      nft?.payment_priceType === 0
-                        ? ethTokenData * (nft?.price / 1e18)
-                        : nft?.payment_tokenAddress ===
-                          window.config.dyp_token_address
-                        ? dyptokenData_old * (nft?.price / 1e18)
-                        : dypTokenData * (nft?.price / 1e18),
+                    {getFormattedNumber( ethTokenData * (nft?.price / 1e18)
+                        ,
                       2
                     )}
                   </span>
@@ -349,28 +339,20 @@ const MakeOffer = ({
               <div className="d-flex w-100 align-items-center gap-3 justify-content-between">
                 <span className="itemchain">Balance</span>
                 <span className="itemchain">
-                  {filter1 === "weth"
-                    ? getFormattedNumber(wethBalance, 2)
-                    : filter1 === "dypv2"
-                    ? getFormattedNumber(dypBalance_new, 2)
-                    : getFormattedNumber(dypBalance, 2)}{" "}
-                  {filter1 === "weth"
-                    ? "WETH"
-                    : filter1 === "dypv2"
-                    ? "DYPv2"
-                    : "DYPv1"}
+                  {getFormattedNumber(wethBalance, 2)
+                    }{" "}
+                  WETH
                 </span>
               </div>
               <div className="d-flex w-100 align-items-center gap-3 justify-content-between">
                 <span className="itemchain">Floor price</span>
                 <span className="itemchain">
                   {getFormattedNumber(
-                    filter1 === "weth"
-                      ? lowestPriceNftListed / 1e18
-                      : lowestPriceNftListedDYP / 1e18,
+                    lowestPriceNftListed / 1e18
+                      ,
                     2
                   )}{" "}
-                  {filter1 === "weth" ? "ETH" : "DYPv1"}
+                 ETH
                 </span>
               </div>
               {offerData.length > 0 && (
@@ -378,12 +360,7 @@ const MakeOffer = ({
                   <span className="itemchain">Best offer</span>
                   <span className="itemchain">
                     {getFormattedNumber(bestOffer.offer.price / 1e18, 2)}{" "}
-                    {bestOffer.offer.payment.priceType === "0"
-                      ? "ETH"
-                      : bestOffer.offer.payment.tokenAddress ===
-                        window.config.token_dypius_new_address
-                      ? "DYPv2"
-                      : "DYPv1"}
+                    ETH
                   </span>
                 </div>
               )}
@@ -399,23 +376,13 @@ const MakeOffer = ({
                 <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
                     {getFormattedNumber(offerData[0].offer[0] / 1e18, 2)}{" "}
-                    {offerData[0].offer.payment.priceType === "0"
-                      ? "ETH"
-                      : offerData[0].offer.payment.tokenAddress ===
-                        window.config.token_dypius_new_address
-                      ? "DYPv2"
-                      : "DYPv1"}
+                    ETH
                   </span>
                   <span className="itemcollectionName">
                     $
                     {getFormattedNumber(
-                      offerData[0].offer.payment.priceType === "0"
-                        ? ethTokenData * (offerData[0].offer[0] / 1e18)
-                        : offerData[0].offer.payment.tokenAddress ===
-                          window.config.token_dypius_new_address
-                        ? dypTokenData * (offerData[0].offer[0] / 1e18)
-                        : dyptokenData_old * (offerData[0].offer[0] / 1e18),
-                      offerData[0].offer.payment.priceType === "0" ? 3 : 3
+                      ethTokenData * (offerData[0].offer[0] / 1e18)
+                        ,3
                     )}
                   </span>
                 </div>
@@ -438,7 +405,7 @@ const MakeOffer = ({
                   setprice(e.target.value === "" ? "" : Number(e.target.value));
                   isapprovedMakeOffer(
                     Number(e.target.value),
-                    filter1 === "weth" ? 0 : 1,
+                     0,
                     filter1
                   );
                 }}
@@ -446,11 +413,8 @@ const MakeOffer = ({
               <span className="itemcollectionName">
                 $
                 {getFormattedNumber(
-                  filter1 === "weth"
-                    ? ethTokenData * price
-                    : filter1 === "dypv2"
-                    ? dypTokenData * price
-                    : dyptokenData_old * price,
+                  ethTokenData * price
+                   ,
                   3
                 )}
               </span>
@@ -483,7 +447,7 @@ const MakeOffer = ({
                 >
                   <span>WETH</span>
                 </li>
-                <li
+                {/* <li
                   className="nft-dropdown-item"
                   onClick={() => {
                     setFilter1("dypv1");
@@ -500,7 +464,7 @@ const MakeOffer = ({
                   }}
                 >
                   <span>DYPv2</span>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -514,10 +478,10 @@ const MakeOffer = ({
               style={{ width: "fit-content" }}
               onClick={() => {
                 isApprove
-                  ? handleMakeOffer(price, filter1 === "weth" ? 0 : 1, filter1)
+                  ? handleMakeOffer(price, 0, filter1)
                   : approveMakeOffer(
                       price,
-                      filter1 === "weth" ? 0 : 1,
+                      0,
                       filter1
                     );
               }}
@@ -593,7 +557,7 @@ const MakeOffer = ({
                 onClick={() => {
                   handleUpdateOffer(
                     price,
-                    filter1 === "weth" ? 0 : 1,
+                   0,
                     offerData[0].index,
                     filter1
                   );

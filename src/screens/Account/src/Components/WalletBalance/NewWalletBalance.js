@@ -306,6 +306,14 @@ const NewWalletBalance = ({
   cookieEarnToken,
   cookiePoints,
   authToken,
+  matEarnUsd,
+  claimedMatChests,
+  claimedMatPremiumChests,
+  openedMatChests,
+  matPoints,
+  matEarnToken,
+  treasureRewardMoney,
+  allClaimedChests
 }) => {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
@@ -322,6 +330,8 @@ const NewWalletBalance = ({
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let matLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
 
@@ -513,6 +523,32 @@ const NewWalletBalance = ({
     status: "Expired",
   };
 
+  const dummyMatchain = {
+    title: "Matchain",
+    logo: taikoLogo,
+    eventStatus: "Live",
+    totalRewards: "$20,000 in BNB Rewards",
+    myEarnings: 0.0,
+    eventDate: "Aug 19, 2024",
+    date: "Aug 19, 2024",
+    id: "event22",
+    eventType: "Explore & Mine",
+    eventDuration: matLastDay,
+    backgroundImage: taikoBg,
+
+    minRewards: "0.5",
+    maxRewards: "20",
+    minPoints: "5,000",
+    maxPoints: "50,000",
+    learnMore: "",
+
+    chain: "Matchain",
+    linkState: "matchain",
+    rewards: "BNB",
+    status: "Live",
+  };
+
+
   const dummyBNB = {
     title: "BNB Chain",
     chain: "BNB Chain",
@@ -683,27 +719,27 @@ const NewWalletBalance = ({
       totalRewards: "$20,000 in IMX Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2024",
-      backgroundImage: immutableBg,
+      eventDate: "Aug 19, 2024",
+      backgroundImage: taikoBg,
       popupInfo: {
-        title: "Immutable",
-        chain: "Immutable",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Expired",
-        logo: immutableLogo,
-        date: "Aug 15, 2024",
-        id: "event15",
+        title: "Matchain",
+        chain: "Matchain",
+        linkState: "matchain",
+        rewards: "BNB",
+        status: "Coming Soon",
+        logo: taikoLogo,
+        date: "Aug 19, 2024",
+        id: "event25",
         eventType: "Explore & Mine",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: immutableLastDay,
-        backgroundImage: immutableBg,
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: matLastDay,
+        backgroundImage: taikoBg,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
-        eventDate: "Aug 15, 2024",
+        learnMore: "",
+        eventDate: "Aug 19, 2024",
       },
     },
     {
@@ -1117,8 +1153,7 @@ const NewWalletBalance = ({
 
   const [EthRewards, setEthRewards] = useState(0);
   const [EthRewardsLandPool, setEthRewardsLandPool] = useState(0);
-  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0);
-  const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [EthRewardsCawsPool, setEthRewardsCawsPool] = useState(0); 
 
   const slider = useRef(null);
   const [showFirstNext, setShowFirstNext] = useState(false);
@@ -1150,17 +1185,9 @@ const NewWalletBalance = ({
   // const skaleClaimed = claimedSkaleChests + claimedSkalePremiumChests;
   // const skalePercentage = (skaleClaimed / 20) * 100;
 
-  const totalClaimedChests =
-    claimedChests +
-    claimedPremiumChests +
-    openedSkaleChests.length +
-    openedCoreChests.length +
-    openedVictionChests.length +
-    openedTaikoChests.length +
-    openedMantaChests.length +
-    openedBaseChests.length;
+  const totalClaimedChests =allClaimedChests
 
-  const chestPercentage = (totalClaimedChests / 140) * 100;
+  const chestPercentage = (totalClaimedChests / 160) * 100;
 
   const dummyEvents = [
     {
@@ -1235,144 +1262,7 @@ const NewWalletBalance = ({
     return errors;
   };
 
-  const getTreasureChestsInfo = async () => {
-    var moneyResult = 0;
 
-    if (openedChests && openedChests.length > 0) {
-      openedChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedSkaleChests && openedSkaleChests.length > 0) {
-      openedSkaleChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedCoreChests && openedCoreChests.length > 0) {
-      openedCoreChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedVictionChests && openedVictionChests.length > 0) {
-      openedVictionChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedMantaChests && openedMantaChests.length > 0) {
-      openedMantaChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedBaseChests && openedBaseChests.length > 0) {
-      openedBaseChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    if (openedTaikoChests && openedTaikoChests.length > 0) {
-      openedTaikoChests.forEach((chest) => {
-        if (chest.isOpened === true) {
-          if (chest.rewards.length > 1) {
-            chest.rewards.forEach((innerChest) => {
-              if (
-                innerChest.rewardType === "Money" &&
-                innerChest.status !== "Unclaimed" &&
-                innerChest.status !== "Unclaimable" &&
-                innerChest.status === "Claimed"
-              ) {
-                moneyResult += Number(innerChest.reward);
-              }
-            });
-          }
-        }
-      });
-    }
-
-    setTreasureRewardMoney(moneyResult);
-  };
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -1717,19 +1607,6 @@ const NewWalletBalance = ({
     }
   }, [address]);
 
-  useEffect(() => {
-    getTreasureChestsInfo();
-  }, [
-    openedChests,
-    address,
-    openedCoreChests,
-    openedVictionChests,
-    openedSkaleChests,
-    openedMantaChests,
-    ,
-    openedBaseChests,
-    openedTaikoChests,
-  ]);
 
   useEffect(() => {
     fetchUsersocialRewards();
@@ -1867,6 +1744,8 @@ const NewWalletBalance = ({
                           ? mantaEarnUsd
                           : item.title === "Taiko"
                           ? taikoEarnUsd
+                          : item.title === "Matchain"
+                          ? matEarnUsd
                           : item.title === "Cookie3"
                           ? cookieEarnUsd
                           : item.title === "Immutable"
@@ -2163,7 +2042,7 @@ const NewWalletBalance = ({
                   </ul>
                 </p>
                 <p className="popup-paragraph mb-4">
-                  The WoD Team will review the quality of the content, the
+                  The WOD Team will review the quality of the content, the
                   engagement of the post, and other details. If you are
                   eligible, they will determine the reward, which is distributed
                   in BNB on a monthly basis.
@@ -2289,6 +2168,8 @@ const NewWalletBalance = ({
                       ? mantaEarnUsd
                       : item.title === "Taiko"
                       ? taikoEarnUsd
+                      : item.title === "Matchain"
+                      ? matEarnUsd
                       : item.title === "Cookie3"
                       ? cookieEarnUsd
                       : item.title === "Immutable"
@@ -2381,6 +2262,8 @@ const NewWalletBalance = ({
                         ? mantaThumb
                         : dummyEvent.linkState === "taiko"
                         ? taikoThumb
+                        : dummyEvent.linkState === "matchain"
+                        ? taikoThumb
                         : dummyEvent.linkState === "cookie3"
                         ? cookie3Thumb
                         : eventPopupImage
@@ -2468,7 +2351,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Conflux Beta Pass NFT</b>. You can get the
                       Conflux Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the Conflux area, players not only stand a
                       chance to secure daily rewards in CFX, but also earn
                       points for their placement on the global leaderboard.
@@ -2479,7 +2362,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
-                      Chain Beta Pass NFT from the World of Dypians Marketplace.
+                      Chain Beta Pass NFT from the World of Dypians Shop.
                       By engaging in the game on a daily basis and exploring the
                       BNB Chain area, players not only stand a chance to secure
                       daily rewards in BNB, but also earn points for their
@@ -2491,7 +2374,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Coin98 Beta Pass NFT</b>. You can get the Coin98
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       Coin98 area, players not only stand a chance to secure
                       daily rewards in C98, but also earn points for their
@@ -2504,7 +2387,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a CoinGecko Beta Pass NFT</b>. You can get the
                       CoinGecko Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the CoinGecko area, players not only stand a
                       chance to secure daily rewards in BNB, but also earn
                       points for their placement on the global leaderboard.
@@ -2525,7 +2408,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Gate Beta Pass NFT</b>. You can get the Gate
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       Gate.io area, players not only stand a chance to secure
                       daily rewards in BNB, but also earn points for their
@@ -2537,7 +2420,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a SKALE Beta Pass NFT</b>. You can get the SKALE
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       SKALE area, players not only stand a chance to secure
                       daily rewards in SKL, but also earn points for their
@@ -2550,7 +2433,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Dogecoin Beta Pass NFT</b>. You can get the
                       Dogecoin Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the Dogecoin area, players not only stand a
                       chance to secure daily rewards in DOGE, but also earn
                       points for their placement on the global leaderboard.
@@ -2562,7 +2445,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a CoinMarketCap Beta Pass NFT</b>. You can get the
                       CoinMarketCap Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the CoinMarketCap area, players not only stand a
                       chance to secure daily rewards in BNB, but also earn
                       points for their placement on the global leaderboard.
@@ -2586,7 +2469,7 @@ const NewWalletBalance = ({
                   ) : dummyEvent.id === "event9" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to be{" "}
-                      <b>Premium Subscribers.</b> By actively participating in
+                      <b>Prime Users.</b> By actively participating in
                       the game on a daily basis and exploring the downtown area,
                       players have the opportunity to secure daily rewards in
                       BNB. Remember to log in to the game daily and venture into
@@ -2597,7 +2480,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Viction Beta Pass NFT</b>. You can get the
                       Viction Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the Viction area, players not only stand a
                       chance to secure daily rewards in VIC, but also earn
                       points for their placement on the global leaderboard.
@@ -2609,7 +2492,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Immutable Beta Pass NFT</b>. You can get the
                       Immutable Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the Immutable area, players not only stand a
                       chance to secure daily rewards in IMX, but also earn
                       points for their placement on the global leaderboard.
@@ -2620,7 +2503,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a SEI Beta Pass NFT</b>. You can get the SEI Beta
-                      Pass NFT from the World of Dypians Marketplace. By
+                      Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       SEI area, players not only stand a chance to secure daily
                       rewards in SEI, but also earn points for their placement
@@ -2632,7 +2515,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a CORE Beta Pass NFT</b>. You can get the CORE
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       CORE area, players not only stand a chance to secure daily
                       rewards in CORE, but also earn points for their placement
@@ -2645,7 +2528,7 @@ const NewWalletBalance = ({
                       To participate in the event, players are required to&nbsp;
                       <b>hold a MultiversX Beta Pass NFT</b>. You can get the
                       MultiversX Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the MultiversX area, players not only stand a
                       chance to secure daily rewards in EGLD, but also earn
                       points for their placement on the global leaderboard.
@@ -2656,7 +2539,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Manta Beta Pass NFT</b>. You can get the Manta
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       Manta area, players not only stand a chance to secure
                       daily rewards in MANTA, but also earn points for their
@@ -2668,7 +2551,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Taiko Beta Pass NFT</b>. You can get the Taiko
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       Taiko area, players not only stand a chance to secure
                       daily rewards in TAIKO, but also earn points for their
@@ -2676,12 +2559,24 @@ const NewWalletBalance = ({
                       the game daily and venture into the Taiko area to uncover
                       hidden treasures.
                     </p>
+                  ) : dummyEvent.id === "event25" ? (
+                    <p className="popup-event-desc">
+                      To participate in the event, players are required to&nbsp;
+                      <b>hold a Matchain Beta Pass NFT</b>. You can get the Matchain
+                      Beta Pass NFT from the World of Dypians Shop. By
+                      engaging in the game on a daily basis and exploring the
+                      Matchain area, players not only stand a chance to secure
+                      daily rewards in BNB, but also earn points for their
+                      placement on the global leaderboard. Remember to log in to
+                      the game daily and venture into the Matchain area to uncover
+                      hidden treasures.
+                    </p>
                   ) : dummyEvent.id === "event23" ? (
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Cookie3 Beta Pass NFT</b>. You can get the
                       Cookie3 Beta Pass NFT from the World of Dypians
-                      Marketplace. By engaging in the game on a daily basis and
+                      Shop. By engaging in the game on a daily basis and
                       exploring the Cookie3 area, players not only stand a
                       chance to secure daily rewards in COOKIE, but also earn
                       points for their placement on the global leaderboard.
@@ -2692,7 +2587,7 @@ const NewWalletBalance = ({
                     <p className="popup-event-desc">
                       To participate in the event, players are required to&nbsp;
                       <b>hold a Base Beta Pass NFT</b>. You can get the Base
-                      Beta Pass NFT from the World of Dypians Marketplace. By
+                      Beta Pass NFT from the World of Dypians Shop. By
                       engaging in the game on a daily basis and exploring the
                       downtown area, players not only stand a chance to secure
                       daily rewards in ETH, but also earn points for their
@@ -2738,7 +2633,8 @@ const NewWalletBalance = ({
                           : dummyEvent.id === "event6" ||
                             dummyEvent.id === "event8" ||
                             dummyEvent.id === "event9" ||
-                            dummyEvent.id === "event20"
+                            dummyEvent.id === "event20" ||
+                            dummyEvent.id === "event25"
                           ? "BNB"
                           : dummyEvent.id === "event7"
                           ? "DOGE"
@@ -2815,6 +2711,8 @@ const NewWalletBalance = ({
                 ? "Manta"
                 : dummyEvent.id === "event22"
                 ? "Taiko"
+                : dummyEvent.id === "event25"
+                ? "Matchain"
                 : dummyEvent.id === "event23"
                 ? "Cookie3"
                 : "Base Network"}
@@ -2831,7 +2729,14 @@ const NewWalletBalance = ({
                 connectivity for creators, communities, and markets across
                 different borders and protocols.
               </p>
-            ) : dummyEvent.id === "event2" ? (
+            ) : dummyEvent.id === "event25" ? (
+              <p
+                className="popup-event-desc"
+                // style={{ fontSize: "12px", fontWeight: "500" }}
+              >
+                Matchain is a decentralized AI blockchain focused on data and identity sovereignty, utilizing advanced AI for data aggregation, analytics, and user profiling to enhance decentralized identity solutions and data management.
+              </p>
+            )  : dummyEvent.id === "event2" ? (
               <p
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
@@ -3070,6 +2975,8 @@ const NewWalletBalance = ({
                     ? "https://x.com/mantanetwork"
                     : dummyEvent.id === "event22"
                     ? "https://x.com/taikoxyz"
+                    : dummyEvent.id === "event25"
+                    ? "https://x.com/matchain_io"
                     : dummyEvent.id === "event23"
                     ? "https://x.com/cookie3_com"
                     : "https://twitter.com/buildonbase"
@@ -3115,6 +3022,8 @@ const NewWalletBalance = ({
                     ? "https://t.me/TaikoEcosystem"
                     : dummyEvent.id === "event23"
                     ? "https://t.me/cookie3_co"
+                    : dummyEvent.id === "event25"
+                    ? "https://t.me/matchain_fam"
                     : "https://base.org/discord"
                 }
                 target="_blank"
@@ -3173,6 +3082,8 @@ const NewWalletBalance = ({
                     ? "https://taiko.xyz/"
                     : dummyEvent.id === "event23"
                     ? "https://www.cookie3.com/"
+                    : dummyEvent.id === "event25"
+                    ? "https://www.matchain.io/"
                     : "https://base.org/"
                 }
                 target="_blank"
@@ -3228,6 +3139,8 @@ const NewWalletBalance = ({
                         ? immutablePoints
                         : dummyEvent.id === "event23"
                         ? cookiePoints
+                        : dummyEvent.id === "event25"
+                        ? matPoints
                         : 0,
                       0
                     )}
@@ -3282,6 +3195,8 @@ const NewWalletBalance = ({
                         ? immutableEarnUsd
                         : dummyEvent.id === "event23"
                         ? cookieEarnUsd
+                        : dummyEvent.id === "event25"
+                        ? matEarnUsd
                         : 0,
                       2
                     )}
@@ -3322,6 +3237,8 @@ const NewWalletBalance = ({
                               ? immutableEarnToken
                               : dummyEvent.id === "event23"
                               ? cookieEarnToken
+                              : dummyEvent.id === "event25"
+                              ? matEarnToken
                               : 0,
                             2
                           )}
@@ -3336,7 +3253,8 @@ const NewWalletBalance = ({
                             : dummyEvent.id === "event6" ||
                               dummyEvent.id === "event8" ||
                               dummyEvent.id === "event9" ||
-                              dummyEvent.id === "event20"
+                              dummyEvent.id === "event20"||
+                              dummyEvent.id === "event25"
                             ? "BNB"
                             : dummyEvent.id === "event7"
                             ? "DOGE"
@@ -3378,7 +3296,7 @@ const NewWalletBalance = ({
               dummyEvent.id !== "event22" && (
                 <div className="w-100 d-flex justify-content-end mt-3">
                   <NavLink
-                    to={`/marketplace/beta-pass/${dummyEvent.linkState}`}
+                    to={`/Shop/beta-pass/${dummyEvent.linkState}`}
                   >
                     <button className="btn get-beta-btn">Get Beta Pass</button>
                   </NavLink>
@@ -3438,7 +3356,7 @@ const NewWalletBalance = ({
             </div>
 
             <div className="d-flex justify-content-center">
-              <NavLink to={`/marketplace/events/${selectedEvent.id}`}>
+              <NavLink to={`/shop/events/${selectedEvent.id}`}>
                 <div className="linear-border">
                   <button className="btn filled-btn px-5">
                     {selectedEvent.button}
@@ -3453,11 +3371,7 @@ const NewWalletBalance = ({
         <OutsideClickHandler onOutsideClick={() => setStakePopup(false)}>
           <div
             className="popup-wrapper popup-active nft-wrapper-popup p-3"
-            style={{
-              width: "fit-content",
-              height: windowSize.width < 500 ? "80%" : "fit-content",
-              overflow: "auto",
-            }}
+            style={{ width: "fit-content", height: windowSize.width < 500 ? '80%' : 'fit-content', overflow: 'auto' }}
           >
             <div className="d-flex align-items-center justify-content-between w-100 mb-4">
               <h6 className="popup-title-2 mb-0">Stake NFT</h6>
@@ -3537,9 +3451,9 @@ const NewWalletBalance = ({
             </div>
 
             <div className="d-flex justify-content-center">
-              <NavLink to={`/marketplace/stake`}>
+              <NavLink to={`/staking`}>
                 <div className="linear-border">
-                  <button className="btn filled-btn px-5">Stake</button>
+                  <button className="btn filled-btn px-5">Staking</button>
                 </div>
               </NavLink>
             </div>

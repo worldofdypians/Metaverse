@@ -198,7 +198,7 @@ const CawsWodNftChecklist = ({
                     color: "#B8B8E0",
                   }}
                 >
-                  WoD Land {landNft?.name} <br />
+                  WOD Land {landNft?.name} <br />
                   {nft?.name}
                 </p>
                 {isStake ? (
@@ -240,7 +240,6 @@ const CawsWodNftChecklist = ({
           <div className="d-flex gap-2 align-items-center justify-content-between">
             <h6
               className="rewardtxtCawswod d-flex align-items-center gap-2 m-0"
-              style={{ fontSize: 16 }}
             >
               <img src={weth} alt="" style={{ height: 20, width: 20 }} />{" "}
               {getFormattedNumber(EthRewards, 3)} ETH

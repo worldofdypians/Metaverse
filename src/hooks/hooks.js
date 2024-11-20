@@ -63,6 +63,18 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://basescan.org"],
   };
 
+  const MATPARAMS = {
+    chainId: "0x2ba", // A 0x-prefixed hexadecimal string
+    chainName: "Matchain",
+    nativeCurrency: {
+      name: "BNB",
+      symbol: "BNB", // 2-6 characters long
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc.matchain.io"],
+    blockExplorerUrls: ["https://matchscan.io"],
+  };
+
   const CONFLUXPARAMS = {
     chainId: "0x406", // A 0x-prefixed hexadecimal string
     chainName: "Conflux eSpace",
@@ -96,7 +108,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       symbol: "CORE", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://rpc.coredao.org/"],
+    rpcUrls: ["https://core.drpc.org"],
     blockExplorerUrls: ["https://scan.coredao.org"],
   };
   const VICTIONPARAMS = {
@@ -178,7 +190,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xae3f3" && switchError.code.toString().includes("32603"))||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0xa9" && switchError.code.toString().includes("32603"))||
+      (chainID === "0x2ba" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
       (switchError.code === 4902 &&
@@ -198,8 +211,10 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [OPBNBPARAMS]
               : chainID === "0x2105"
               ? [BASEPARAMS]
-              : chainID === "0x406"
+              : chainID === "0x2ba"
               ? [CONFLUXPARAMS]
+              : chainID === "0x406"
+              ? [MATPARAMS]
               : chainID === "0x585eb4b1"
               ? [SKALE_MAINNET]
               : chainID === "0x45c"

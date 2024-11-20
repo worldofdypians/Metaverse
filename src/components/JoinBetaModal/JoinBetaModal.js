@@ -123,7 +123,7 @@ const JoinBetaModal = ({
           .catch(function (error) {
             console.error(error);
           });
-          
+
         if (emailCheck && emailCheck.status === 1) {
           setStatus("Already joined");
         } else {
@@ -139,16 +139,14 @@ const JoinBetaModal = ({
             .catch(function (error) {
               console.error(error);
             });
-     
 
           if (emailBetaCheck && emailBetaCheck.status === 1) {
             setStatus("Already joined");
           } else {
             setStatus("");
             // if (allErrors.email === undefined && allErrors.discord) {
-              handleSubmit();
+            handleSubmit();
             // }
-            
           }
         }
       }
@@ -163,7 +161,6 @@ const JoinBetaModal = ({
       ...values,
       [name]: value,
     });
-    
   };
 
   const addProducts = (product) => {
@@ -181,10 +178,7 @@ const JoinBetaModal = ({
 
     // if (!status === "Already joined") {
     if (allErrors.email === undefined && allErrors.discord === undefined) {
-      if (
-        values.discord !== "" &&
-        values.email !== ""
-      ) {
+      if (values.discord !== "" && values.email !== "") {
         setLoading(true);
         let signature = "";
         await window
@@ -327,9 +321,8 @@ const JoinBetaModal = ({
         {status === "" && (
           <div>
             <div className="d-flex justify-content-between gap-1">
-              <h2 className="font-organetto d-flex align-items-start align-items-lg-center flex-column flex-lg-row register-grid-title px-0">
-                Tester{" "}
-                <mark className="font-organetto register-tag">Application</mark>
+              <h2 className="market-banner-title d-flex align-items-start align-items-lg-center flex-column flex-lg-row px-0">
+                Tester Application
               </h2>
               <img
                 src={X}
@@ -555,20 +548,15 @@ const JoinBetaModal = ({
                   </div>
                 </div>
 
-                <div
-                  className="linear-border"
-                  style={{
-                    width: "fit-content",
-                    margin: "2rem auto auto auto",
-                  }}
-                >
-                  <button
-                    className="btn filled-btn px-5"
+             
+              <div className="d-flex w-100 justify-content-center mt-2">
+              <button
+                    className="action-btn px-5"
                     onClick={() => checkInput(values.email, values.discord)}
                   >
                     {loading === true ? (
                       <div
-                      className="spinner-border spinner-border-sm text-light"
+                        className="spinner-border spinner-border-sm text-light"
                         role="status"
                       >
                         <span className="visually-hidden">Loading...</span>
@@ -579,8 +567,8 @@ const JoinBetaModal = ({
                       "Success"
                     )}
                   </button>
-                </div>
               </div>
+                </div>
             )}
           </div>
         )}
@@ -590,7 +578,7 @@ const JoinBetaModal = ({
               <h2 className="font-organetto register-grid-title px-0">
                 {"Successfully applied as"}{" "}
                 <mark className="font-organetto register-tag">
-                  WoD Beta Tester
+                  WOD Beta Tester
                 </mark>
               </h2>
               {/* <img

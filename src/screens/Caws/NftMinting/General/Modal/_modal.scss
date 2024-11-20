@@ -1,38 +1,32 @@
-@import '../../../responsive';
+@import "../../../responsive";
 
 .modal {
-    .modal-dialog {
-        // margin-top: 260px;
-        max-width: fit-content;
-        padding: 0 16px;
+  .modal-dialog {
+    // max-width: 907px;
+    /* margin: 1.75rem auto; */
+    // height: inherit;
+    // overflow: auto;
+    /* height: auto; */
+    pointer-events: auto;
+    padding: 0 16px;
+    margin: auto;
 
-        .modal-content {
-            padding: 0;
-            border: none;
-            border-radius: 8px;
-            padding-top: 66px;
-            @include medium {
-                padding-top: 88px;
-            }
-
-            .close {
-                transition: 0.3s;
-                cursor: pointer;
-                position: absolute;
-                right: 23px;
-                top: 23px;
-                height: fit-content;
-                opacity: 1;
-                width: 18.6px;
-                height: 18.6px;
-                &:hover {
-                    opacity: 1;
-                }
-                @include medium {
-                    top: 38px;
-                    right: 38px;
-                }
-            }
-        }
-    }
+    // .modal-content {
+    //     border-radius: 8px;
+    //     padding: 16px;
+    //     // background: #312f69 !important;
+    //     display: flex;
+    //     flex-direction: column;
+    //     gap: 10px;
+    //     max-height: 600px;
+    //     height: fit-content;
+    //     margin: auto;
+    //     position: absolute;
+    //     top: auto;
+    //     bottom: auto;
+    //     right: 0;
+    //     left: 0;
+    //     width: 50%;
+    //   }
+  }
 }

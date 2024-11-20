@@ -24,7 +24,7 @@ const ChestFlyout = () => {
 
   return (
     <div
-      className={`fly-position3 ${show && "fly-active2"} ${window.location.href.includes("marketplace") ? "marketplace-flyout" : ""}`}
+      className={`fly-position3 ${show && "fly-active2"} ${window.location.href.includes("shop") ? "marketplace-flyout" : ""}`}
       onMouseEnter={() => {
         setshowText(true);
       }}

@@ -76,8 +76,8 @@ const NftPopup = ({
           alt=""
         />
       </div>
-      <span className="stake-modal-desc">
-        Select the NFT you wish to bridge, whether from CAWS or WoD Genesis Land
+      <span className="stake-modal-desc text-wrap">
+        Select the NFT you wish to bridge, whether from CAWS or WOD Genesis Land
         NFTs.
       </span>
 
@@ -115,7 +115,7 @@ const NftPopup = ({
         <div className="col-12">
           <div className="nft-modal-grid2">
             {nftItem.length === 0 ? (
-              [...Array(devicewidth < 500 ? 2 : 8)].map((item, id) => {
+              [...Array(devicewidth < 500 ? 2 : 4)].map((item, id) => {
                 return showLands ? (
                   <EmptyWodCard key={id} />
                 ) : (
@@ -127,7 +127,7 @@ const NftPopup = ({
                 {nftItem.map((item, id) => {
                   let nftId = showLands
                     ? item.name?.slice(1, nftItem.name?.length)
-                    : item.name?.slice(6, item.name?.length);
+                    : item.name?.slice(4, item.name?.length);
                   nftIds.push(nftId);
 
                   return (
@@ -173,7 +173,7 @@ const NftPopup = ({
                   ...Array(
                     devicewidth < 500
                       ? 1
-                      : Math.abs(8 - parseInt(nftItem.length))
+                      : Math.abs(4 - parseInt(nftItem.length))
                   ),
                 ].map((item, id) => {
                   return showLands ? (
@@ -231,7 +231,7 @@ const NftPopup = ({
                   ...Array(
                     devicewidth < 500
                       ? 1
-                      : Math.abs(8 - parseInt(nftItem.length))
+                      : Math.abs(4 - parseInt(nftItem.length))
                   ),
                 ].map((item, id) => {
                   return showLands ? (
