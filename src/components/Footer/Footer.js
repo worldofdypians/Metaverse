@@ -92,7 +92,7 @@ const Footer = () => {
     },
     {
       icon: "github",
-      link: "https://github.com/worldofdypians/Metaverse",
+      link: "https://github.com/worldofdypians/",
     },
     {
       icon: "instagram",
