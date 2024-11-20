@@ -721,7 +721,7 @@ const Header = ({
                       <img src={discordHeader} width={25} alt="" />
                     </a>
                     <a
-                      href="https://github.com/worldofdypians/Metaverse"
+                      href="https://github.com/worldofdypians/"
                       target="_blank"
                       rel="noreferrer"
                     >
