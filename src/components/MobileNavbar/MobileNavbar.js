@@ -36,6 +36,8 @@ import premiumIcon from "../Header/assets/dropdownAssets/premiumIcon.svg";
 import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBetaIcon.svg";
 import epicIcon from "../Header/assets/dropdownAssets/epicIcon.svg";
 import supportIcon from "../Header/assets/dropdownAssets/supportIcon.svg";
+import personIcon from "../Header/assets/personIcon.svg";
+import guestIcon from "../Header/assets/dropdownAssets/guestIcon.svg";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -623,7 +625,11 @@ const MobileNavbar = ({
                 >
                   <div className="d-flex align-items-center w-100 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title2 mb-0">Account</h6>
+                      <h6 className="sidebar-title mb-0 d-flex align-items-center gap-2">
+                        {" "}
+                        <img src={personIcon} alt="" />
+                        Account
+                      </h6>
                     </div>
                     <img
                       src={sidebarArrow}
@@ -654,6 +660,15 @@ const MobileNavbar = ({
                         Log In
                       </NavLink>
                     ) : (
+                      <NavLink
+                      to="/account"
+                      end
+                      className={({ isActive }) =>
+                        "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                      
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
                       <span className="header-wallet-span d-flex align-items-center gap-2">
                         <img width={20} height={20} src={walletIcon} alt="" />
                         {username}
@@ -661,22 +676,25 @@ const MobileNavbar = ({
                           {shortAddress(coinbase)}
                         </span>
                       </span>
+                      </NavLink>
                     )}
 
-                    <NavLink
-                      to="/account"
-                      end
-                      className={({ isActive }) =>
-                        isActive
-                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className={`sidebar-title`}>
-                        {!email ? "Continue as Guest" : username}
-                      </span>
-                    </NavLink>
+                    {!email && (
+                      <NavLink
+                        to="/account"
+                        end
+                        className={({ isActive }) =>
+                          isActive
+                            ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                            : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                        }
+                        onClick={() => setOpenNavbar(false)}
+                      >
+                        <span className={`sidebar-title`}>
+                          Continue as Guest
+                        </span>
+                      </NavLink>
+                    )}
                     <hr className="header-divider my-0" />
 
                     <NavLink
@@ -897,7 +915,7 @@ const MobileNavbar = ({
                 >
                   <div className="d-flex align-items-center w-100 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title2 mb-0">Community</h6>
+                      <h6 className="sidebar-title mb-0">Community</h6>
                     </div>
                     <img
                       src={sidebarArrow}
@@ -982,7 +1000,7 @@ const MobileNavbar = ({
                 >
                   <div className="d-flex align-items-center w-100 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
-                      <h6 className="sidebar-title2 mb-0">About</h6>
+                      <h6 className="sidebar-title mb-0">About</h6>
                     </div>
                     <img
                       src={sidebarArrow}

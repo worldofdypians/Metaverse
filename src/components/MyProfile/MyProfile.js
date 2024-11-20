@@ -606,7 +606,7 @@ const MyProfile = ({
                       <span className="user-data-item-left">Collected</span>
                     </div>
                     <div className="d-flex">
-                      <span className="user-data-item-right">---</span>
+                      <span className="user-data-item-right">Upcoming</span>
                     </div>
                   </div>
                 </div>
