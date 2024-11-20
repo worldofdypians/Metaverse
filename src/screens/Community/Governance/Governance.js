@@ -22,7 +22,7 @@ const Governance = () => {
               setCreateProposalPopup(true);
             }}
           />
-          <GovernanceContent />
+          {/* <GovernanceContent /> */}
         </div>
       </div>
       {createProposalPopup && (

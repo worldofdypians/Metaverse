@@ -198,7 +198,7 @@ const Footer = () => {
             <NavLink to="/earn" className="new-footer-link">
               Earn
             </NavLink>
-            <NavLink to="/team" className="new-footer-link">
+            <NavLink to="/about#ourteam" className="new-footer-link">
               Team
             </NavLink>
             <a

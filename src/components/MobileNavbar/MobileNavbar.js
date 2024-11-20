@@ -31,6 +31,11 @@ import error from "../Header/assets/error.svg";
 import dropdown from "../Header/assets/dropdown.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import sidebarArrow from "../MarketSidebar/assets/sidebarArrow.svg";
+import walletIcon from "../Header/assets/dropdownAssets/walletIcon.svg";
+import premiumIcon from "../Header/assets/dropdownAssets/premiumIcon.svg";
+import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBetaIcon.svg";
+import epicIcon from "../Header/assets/dropdownAssets/epicIcon.svg";
+import supportIcon from "../Header/assets/dropdownAssets/supportIcon.svg";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -48,6 +53,9 @@ const MobileNavbar = ({
   handleOpenDomains,
   handleSwitchChainBinanceWallet,
   binanceWallet,
+  email,
+  username,
+  isConnected
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [tooltip, setTooltip] = useState(false);
@@ -137,7 +145,7 @@ const MobileNavbar = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      } 
+      }
       // else if (chainId === 698) {
       //   setAvaxState(false);
       //   setBnbState(false);
@@ -153,7 +161,7 @@ const MobileNavbar = ({
       //   setTaikoState(false);
       //   setMatState(true);
       // }
-       else if (chainId === 204) {
+      else if (chainId === 204) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -353,6 +361,17 @@ const MobileNavbar = ({
       html.classList.remove("hidescroll");
     }
   }, [openNavbar]);
+
+
+  const handleState =  ()=>{
+    if(!isConnected) {
+handleSignUp();
+                    setOpenNavbar(false);
+    }
+     else {
+      setOpenNavbar(false);
+     }
+  }
 
   return (
     <>
@@ -896,6 +915,142 @@ const MobileNavbar = ({
             </div>
           </div>
 
+          <div className="accordion" id="accordionExample4">
+            <div className="">
+              <h2
+                className="mobile-nav-item d-flex align-items-center justify-content-between p-2 mb-0"
+                id="headingOne"
+              >
+                <div
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseFour"
+                  aria-expanded="true"
+                  aria-controls="collapseFour"
+                  className="w-100"
+                >
+                  <div className="d-flex align-items-center w-100 justify-content-between">
+                    <div className="d-flex align-items-center gap-2">
+                      <h6 className="sidebar-title2 mb-0">Account</h6>
+                    </div>
+                    <img
+                      src={sidebarArrow}
+                      style={{ position: "relative", right: "5px" }}
+                      alt=""
+                    />
+                  </div>
+                </div>
+              </h2>
+              <div
+                id="collapseFour"
+                className={`accordion-collapse collapse
+              
+                
+                `}
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div className="accordion-body mt-2 p-0">
+                  <div className="d-flex flex-column gap-2">
+                    {!email ? (
+                      <NavLink
+                        to={"/auth"}
+                        className="header-log-btn py-2"
+                        style={{ minHeight: 30 }}
+                        onClick={() => setOpenNavbar(false)}
+                      >
+                        Log In
+                      </NavLink>
+                    ) : (
+                      <span className="header-wallet-span d-flex align-items-center gap-2">
+                        <img width={20} height={20} src={walletIcon} alt="" />{username}
+                        <span className="header-wallet">
+                          {shortAddress(coinbase)}
+                        </span>
+                      </span>
+                    )}
+                    {/*              
+                      <NavLink
+                        to="/account"
+                        end
+                        className={({ isActive }) =>
+                          isActive
+                            ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                            : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                        }
+                        onClick={() => setOpenNavbar(false)}
+                      >
+                        <span className={`sidebar-title`}>
+                         {!email ? 'Continue as Guest' : username} 
+                        </span>
+                      </NavLink> */}
+                    <hr className="header-divider my-0" />
+                    <NavLink
+                      to="/account/prime"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <img width={20} height={20} src={premiumIcon} alt="" />
+
+                      <span className={`sidebar-title`}>Prime</span>
+                    </NavLink>
+                    <NavLink
+                      to="/join-beta"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <img width={20} height={20} src={joinBetaIcon} alt="" />
+
+                      <span className={`sidebar-title mb-0`}>
+                        Become Beta Tester
+                      </span>
+                    </NavLink>
+                    <a
+                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                      target="_blank"
+                      rel="noreferrer"
+                      className={
+                        "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span
+                        className={`sidebar-title mb-0 d-flex align-items-center gap-2`}
+                      >
+                        <img width={20} height={20} src={epicIcon} alt="" />
+                        Download
+                      </span>
+                    </a>
+                    <NavLink
+                      to="/contact-us"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active2 nft-active"
+                          : `d-flex px-2 align-items-center gap-2 sidebar-item`
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <img width={20} height={20} src={supportIcon} alt="" />
+                        <span className={`sidebar-title`}>Contact Us</span>
+                      </div>
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="mobile-nav-item d-flex align-items-center justify-content-between p-2">
             <NavLink
               to="/map"
@@ -909,83 +1064,21 @@ const MobileNavbar = ({
           </div>
 
           <div className="w-100 d-flex align-items-center justify-content-center gap-3">
-            {!coinbase ? (
-              <div className="linearborder2">
+            
+              <div className="w-100">
                 <button
-                  className="btn connectwallet px-3"
+                  className="new-connect-btn p-2 w-100"
+                  style={{minHeight: 30}}
                   onClick={() => {
-                    handleSignUp();
-                    setOpenNavbar(false);
+                    handleState()
                   }}
                 >
-                  Connect Wallet
+                  {!coinbase ? 'Connect Wallet' : shortAddress(coinbase)}
+               
                 </button>{" "}
               </div>
-            ) : coinbase && !domainName ? (
-              <div className="d-flex align-items-center gap-3">
-                <Clipboard
-                  component="div"
-                  data-event="click"
-                  data-for={id}
-                  data-tip="Copied To Clipboard!"
-                  data-clipboard-text={coinbase}
-                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-                >
-                  <div
-                    className="btn connected px-3"
-                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                    onClick={() => {
-                      setTooltip(true);
-                      setTimeout(() => setTooltip(false), 2000);
-                    }}
-                  >
-                    {shortAddress(coinbase)}{" "}
-                    <img src={tooltip ? check : copy} alt="" />
-                  </div>
-                  <div
-                    className="btn pill-btn px-3"
-                    style={{ fontSize: 12 }}
-                    onClick={() => {
-                      handleOpenDomains();
-                      setOpenNavbar(false);
-                    }}
-                  >
-                    Domain Name
-                  </div>
-                </Clipboard>
-              </div>
-            ) : domainName ? (
-              <div
-                className="d-flex align-items-center gap-3"
-                onClick={() => {
-                  handleOpenDomains();
-                  setOpenNavbar(false);
-                }}
-              >
-                <Clipboard
-                  component="div"
-                  data-event="click"
-                  data-for={id}
-                  data-tip="Copied To Clipboard!"
-                  data-clipboard-text={coinbase}
-                  className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative bg-transparent"
-                >
-                  <div
-                    className="btn connected px-3"
-                    style={{ color: tooltip ? "#82DAAB" : "#FFFFFF" }}
-                    onClick={() => {
-                      setTooltip(true);
-                      setTimeout(() => setTooltip(false), 2000);
-                    }}
-                  >
-                    {domainName}{" "}
-                  </div>
-                </Clipboard>
-              </div>
-            ) : (
-              <></>
-            )}
-
+           
+{/* 
             {!coinbase ? (
               <NavLink
                 to={"/account"}
@@ -1012,7 +1105,7 @@ const MobileNavbar = ({
                   }}
                 />
               </NavLink>
-            )}
+            )} */}
           </div>
         </div>
       </OutsideClickHandler>
