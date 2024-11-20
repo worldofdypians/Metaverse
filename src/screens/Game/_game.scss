@@ -797,3 +797,10 @@ transition: all .25s;
   cursor: pointer;
   z-index: 10; /* Ensure it's above the iframe */
 }
+
+.game-hero-content-wrapper{
+  bottom: 60px;
+  @media screen and (max-width: 786px) {
+    bottom: 0;
+  }
+}

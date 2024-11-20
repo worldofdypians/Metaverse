@@ -121,7 +121,7 @@ const GameHero = ({ showPopup, setShowPopup }) => {
         style={{ borderBottom: "none" }}
       >
         <div className="custom-container  mt-5 mt-lg-0">
-          <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0">
+          <div className="d-flex w-100 flex-column align-items-center gap-2 px-3 px-lg-0 position-relative game-hero-content-wrapper"  >
             <h2 className="font-montserrat main-hero-title text-center  px-0">
               {/* What is <br />
               World of Dypians? */}
