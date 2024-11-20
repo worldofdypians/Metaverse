@@ -326,6 +326,11 @@ const WodBuilders = ({ page }) => {
       icon: "kols",
       banner: "kucoinBanner.png",
       backer: false,
+    },, {
+      name: "MintPad",
+      icon: "mintpad",
+      banner: "kucoinBanner.png",
+      backer: false,
     },
   ];
 

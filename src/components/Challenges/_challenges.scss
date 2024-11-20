@@ -13,6 +13,16 @@
   letter-spacing: 0.08px;
 }
 
+.treasurehunt-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  @media only screen and (max-width: 1224px) {
+  grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .new-treasure-hunt-rewards {
   color: #fff;
   font-family: "Montserrat";
@@ -106,111 +116,109 @@
   line-height: normal;
 }
 
-.purchase-package-title{
-    color: #EEEDFF;
-    font-family: "Montserrat";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+.purchase-package-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.available-on{
-    color: #8B8CA2;
-    font-family: "Montserrat";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.available-on {
+  color: #8b8ca2;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.purchase-chain{
-    color: #EEEDFF;
-    font-family: "Montserrat";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    text-transform: uppercase;
+.purchase-chain {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
-.time-remaining{
-    color: #EEEDFF;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+.time-remaining {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-.sync-desc{
-    color: #8B8CA2;
-    font-family: "Montserrat";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+.sync-desc {
+  color: #8b8ca2;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 
-
-.event-price-wrapper{
-    border-radius: 12px;
-    border: 0.5px solid #8B8CA2;
-    background: rgba(24, 25, 60, 0.10);
+.event-price-wrapper {
+  border-radius: 12px;
+  border: 0.5px solid #8b8ca2;
+  background: rgba(24, 25, 60, 0.1);
 }
 
-.event-price-span{
-    color: #EEEDFF;
-font-family: "Montserrat";
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+.event-price-span {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.event-price-coin{
-    color: #FFF;
-    font-family: "Montserrat";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 0.8px;
-    text-transform: capitalize;
+.event-price-coin {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  text-transform: capitalize;
 }
 
-.event-price-usd{
-    color: #FFC808;
-    font-family: "Montserrat";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0.6px;
-    text-transform: capitalize;
+.event-price-usd {
+  color: #ffc808;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.6px;
+  text-transform: capitalize;
 }
 
-
-.event-coming-soon{
-    color: #EEEDFF;
-font-family: "Montserrat";
-font-size: 18px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
-text-transform: uppercase;
+.event-coming-soon {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
 }
 
-.event-price-dropdown{
+.event-price-dropdown {
   border-radius: 8px;
-  border: 0.5px solid #8B8CA2;
+  border: 0.5px solid #8b8ca2;
   cursor: pointer;
   width: 80px;
 }
 
-.event-price-dropdown-2{
+.event-price-dropdown-2 {
   border-radius: 8px;
-  border: 0.5px solid #8B8CA2;
+  border: 0.5px solid #8b8ca2;
   background: #212246;
   position: absolute;
   width: 100%;
@@ -218,39 +226,36 @@ text-transform: uppercase;
   left: 0;
   opacity: 0;
   pointer-events: none;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
-.active-dropdown{
+.active-dropdown {
   pointer-events: auto !important;
   opacity: 1;
 }
 
-.critical-hit-img{
+.critical-hit-img {
   width: auto;
   @media screen and (max-width: 786px) {
     width: 100%;
   }
 }
 
-.event-price-dropdown-item{
+.event-price-dropdown-item {
   border-radius: 8px;
-  transition: all .25s;
+  transition: all 0.25s;
   cursor: pointer;
 }
 
-.event-price-dropdown-item:hover{
-  background: rgba(255,255,255, 0.3);
+.event-price-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
-
-
-.event-price-text{
-  color: #FFC808;
-font-family: "Montserrat";
-font-size: 12px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.event-price-text {
+  color: #ffc808;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
-
