@@ -893,7 +893,7 @@ const Header = ({
                     }`}
                   >
                     <div className="position-relative d-flex flex-column gap-2">
-                      <div className="triangle" style={{ top: "-32.5px" }}></div>
+                      <div className="triangle" style={{ top: "-40px" }}></div>
                       {account.logged === false ? (
                         <>
                           <NavLink to={"/auth"} className="header-log-btn py-2">
@@ -1400,7 +1400,7 @@ const Header = ({
                     style={{left: "0", top: "62px", width: "315px"}}
                   >
                      <div className="d-flex flex-column position-relative gap-2">
-                      <div className="triangle" style={{top: "-30px"}}></div>
+                      <div className="triangle" style={{top: "-38px"}}></div>
                           <span className="select-gray-txt ">
                             SELECT A NETWORK
                           </span>

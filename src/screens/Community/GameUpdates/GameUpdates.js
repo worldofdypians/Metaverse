@@ -258,8 +258,7 @@ const GameUpdates = () => {
                     key={index}
                   >
                     <div
-                      className="game-update-card position-relative"
-                      style={{ height: "600px" }}
+                      className="game-update-card first-game-update-card position-relative"
                     >
                       <img
                         src={item.image_second}

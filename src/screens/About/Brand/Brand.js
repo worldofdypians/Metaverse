@@ -46,7 +46,7 @@ const Brand = () => {
             <a
               className="buy-wod-btn px-4 py-2 d-flex algin-items-center gap-1"
               style={{ width: "fit-content" }}
-              href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
+              href="https://drive.google.com/drive/folders/18CTr6sfumvQXhy_XWve4IECEhBBk-esH?usp=sharing"
               target="_blank"
               rel="noreferrer"
             >
