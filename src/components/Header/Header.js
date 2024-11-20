@@ -41,6 +41,7 @@ import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBet
 import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
 import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
 import domainIcon from "./assets/domainIcon.svg";
+import tgVerified from "./assets/tgVerified.svg";
 import popupXmark from "./assets/popupXmark.svg";
 import searchIconDomain from "./assets/searchIconDomain.svg";
 import registerDomainIcon from "./assets/registerDomainIcon.svg";
@@ -64,6 +65,10 @@ import discordHeader from "./assets/discordHeader.svg";
 import instagramHeader from "./assets/instagramHeader.svg";
 import youtubeHeader from "./assets/youtubeHeader.svg";
 import mediumHeader from "./assets/mediumHeader.svg";
+import facebookHeader from "./assets/facebookHeader.svg";
+import linkedinHeader from "./assets/linkedinHeader.svg";
+import githubHeader from "./assets/githubHeader.svg";
+import emailHeader from "./assets/emailHeader.svg";
 import error from "./assets/error.svg";
 import personIcon from "./assets/personIcon.svg";
 import dropdownicon from "./assets/dropdown.svg";
@@ -680,6 +685,18 @@ const Header = ({
                   >
                     Game Updates
                   </NavLink>
+                  <NavLink
+                    to={'https://t.me/WorldOfDypians_bot'}
+                    target="_blank"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                        : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                    }
+                  >
+                    Telegram Mini App
+                    <img src={tgVerified} height={20} width={20} alt="" />
+                  </NavLink>
                   <hr className="header-divider my-0" />
                   <div className="d-flex align-items-center justify-content-between px-2 mb-2">
                     <a
@@ -703,14 +720,29 @@ const Header = ({
                     >
                       <img src={discordHeader} width={25} alt="" />
                     </a>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                    <a
+                      href="https://github.com/worldofdypians/Metaverse"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={githubHeader} width={25} alt="" />
+                    </a>
                     <a
                       href="https://www.instagram.com/worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
                       <img src={instagramHeader} width={25} alt="" />
+                    </a>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-between px-2 mb-2">
+                   
+                    <a
+                      href="https://www.facebook.com/worldofdypians"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={facebookHeader} width={25} alt="" />
                     </a>
                     <a
                       href="https://www.youtube.com/@Dypius"
@@ -725,6 +757,20 @@ const Header = ({
                       rel="noreferrer"
                     >
                       <img src={mediumHeader} width={25} alt="" />
+                    </a>
+                    <a
+                      href="mailto:contact@worldofdypians.com"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={emailHeader} width={25} alt="" />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/company/worldofdypians"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img src={linkedinHeader} width={25} alt="" />
                     </a>
                   </div>
                 </div>
