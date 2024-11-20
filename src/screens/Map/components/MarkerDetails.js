@@ -647,7 +647,78 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </NavLink>
             </div>
           </div>
-        ) : (
+        ) 
+        : type === "genesis" ? (
+          <div className="d-flex flex-column justify-content-between h-100">
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex flex-column">
+                <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
+                  <h6 className="map-sidebar-title mb-0">{marker.title}</h6>
+                  <a
+                    href="javascript:void(0)"
+                    class="closebtn-3"
+                    onClick={onClose}
+                  >
+                    ×
+                  </a>
+                </div>
+                <img
+                  src={marker.image}
+                  className="mx-3 my-3"
+                  alt={marker.title}
+                />
+              </div>
+              <div className="d-flex flex-column gap-3 px-3">
+                <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
+               
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="mb-0 challenge-popup-secondary-title">
+                    Benefits
+                  </h6>
+                  <div className="genesis-marker-grid">
+                    {marker.benefits.map((benefit, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{benefit}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="d-flex flex-column gap-2">
+                  {marker?.landInfo && (
+                    <h6 className="mb-0 challenge-popup-secondary-title">
+                      Land Information
+                    </h6>
+                  )}
+                  <div className="genesis-marker-grid">
+                    {marker?.landInfo?.map((tip, index) => (
+                      <div
+                        className="d-flex align-items-center gap-2"
+                        key={index}
+                      >
+                        <div className="green-dot"></div>
+                        <span className="custom-marker-content">{tip}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex w-100 justify-content-center">
+              <NavLink
+                className={"getpremium-btn px-3 py-2 mb-3"}
+                to={marker.link}
+              >
+                Get
+              </NavLink>
+            </div>
+          </div>
+        )
+        : (
           <> </>
         )}
       </>

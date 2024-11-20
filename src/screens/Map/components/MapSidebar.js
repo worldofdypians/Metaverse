@@ -12,6 +12,7 @@ import genesisIcon from "../assets/sidebarIcons/genesisIcon.svg";
 import minimize from "../assets/sidebarIcons/minimize.svg";
 import searchIcon from "../assets/sidebarIcons/searchIcon.svg";
 import useWindowSize from "../../../hooks/useWindowSize";
+import genesisPopup from "../assets/chainImages/genesisPopup.webp";
 const Sidebar = ({
   switches,
   setSwitches,
@@ -59,7 +60,27 @@ const Sidebar = ({
   const genesisLocation = {
     title: "Genesis Land",
     special: true,
+    type: "genesis",
     location: [-0.05965231771451968, 0.09518623352050783],
+    image: genesisPopup,
+    link: "/shop/land",
+    popupDesc:
+      "The World of Dypians Land NFT Collection offers a unique opportunity for players to own and develop virtual land within the game. Only a limited edition of 1,000 NFTs, called Genesis Lands, representing prime virtual areas with exclusive benefits, has been launched. The total Land NFT supply will be 100,000, where each NFT in the collection allows players to build and develop their land, customize the area, bring their business to the game, unlock special in-game features, participate in dedicated events, and earn different rewards. The entire Land NFT collection presents an exciting opportunity for players looking to leave their mark on the game world.",
+    benefits: [
+      "Build and Develop",
+      "Monetize Land",
+      "Exclusive Events",
+      "Special Rewards",
+      "Creative Freedom",
+      "Strategic Advantage",
+    ],
+    landInfo: [
+      "Total WOD Area: 2,000 km2",
+      "Total Land NFTs: 100,000",
+      "Parcel size: 15,625 m2",
+      "Land Tiers: 5",
+      "Blockchain: Ethereum",
+    ],
   };
 
   return (
@@ -210,7 +231,7 @@ const Sidebar = ({
               <div
                 className="switch-btn d-flex flex-column align-items-center py-2"
                 onClick={() => {
-                  handleMarkerClick(genesisLocation, 15, "area");
+                  handleMarkerClick(genesisLocation, 15, "genesis");
                   setContent(genesisLocation.title);
                 }}
               >
