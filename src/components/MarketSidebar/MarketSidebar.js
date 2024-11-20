@@ -244,7 +244,7 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/earn"
+            to="/staking"
             end
             className={({ isActive }) =>
               isActive
@@ -260,7 +260,7 @@ const MarketSidebar = () => {
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
-                  <span className={`sidebar-title`}>Stake</span>
+                  <span className={`sidebar-title`}>Staking</span>
                 </>
               );
             }}

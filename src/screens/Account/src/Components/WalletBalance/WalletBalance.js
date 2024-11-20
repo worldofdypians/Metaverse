@@ -2018,7 +2018,7 @@ const WalletBalance = ({
                         key={index}
                         to={
                           item.isStaked === true
-                            ? `/earn`
+                            ? `/staking`
                             : `/shop/nft/${item.tokenId}/${item.nftAddress}`
                         }
                         style={{ textDecoration: "none" }}
@@ -2248,7 +2248,7 @@ const WalletBalance = ({
                     landStaked.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/earn`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2277,7 +2277,7 @@ const WalletBalance = ({
                     myCawsWodStakes.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/earn`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -3064,7 +3064,7 @@ const WalletBalance = ({
                         <NavLink
                           to={
                             nft.isStaked === true
-                              ? `/earn`
+                              ? `/staking`
                               : `/shop/nft/${nft.tokenId}/${nft.nftAddress}`
                           }
                           style={{ textDecoration: "none" }}
@@ -3841,7 +3841,7 @@ const WalletBalance = ({
                         .slice(stakedPageSlice - 9, stakedPageSlice)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/earn`}
+                            to={`/staking`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3883,7 +3883,7 @@ const WalletBalance = ({
                       landStaked.length > 0 &&
                       landStaked.map((nft, index) => (
                         <NavLink
-                          to={`/earn`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3913,7 +3913,7 @@ const WalletBalance = ({
                       nftItems.length > 0 &&
                       nftItems.map((nft, index) => (
                         <NavLink
-                          to={`/earn`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
                           key={index}

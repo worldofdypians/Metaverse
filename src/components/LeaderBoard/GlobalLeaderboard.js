@@ -244,7 +244,7 @@ const GlobalLeaderboard = ({
                     that will boost your global ranking.
                     <br />
                     <br />
-                    Prime Subscribers earn extra STARS from Daily Leaderboards,
+                    Prime Users earn extra STARS from Daily Leaderboards,
                     improving competitiveness and progression.
                     <br />
                     <br />

@@ -1074,11 +1074,11 @@ const NewEvents = ({
                             <h6 className="mb-0 purchase-package-title">
                               Activate
                             </h6>
-                            <div className="d-flex align-items-end gap-2">
+                            {/* <div className="d-flex align-items-end gap-2">
                               <span className="available-on">Available on</span>
                               <img src={bnb} width={20} height={20} alt="" />
                               <span className="purchase-chain">BNB Chain</span>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                             <span
@@ -1292,11 +1292,11 @@ const NewEvents = ({
                           <h6 className="mb-0 purchase-package-title">
                           Activate
                           </h6>
-                          <div className="d-flex align-items-end gap-2">
+                          {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
                             <span className="purchase-chain">BNB Chain</span>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                           <span

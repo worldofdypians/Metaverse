@@ -15,6 +15,7 @@ import LandDetailsPremium from "./pools/landPremium";
 import TopPoolsListCard from "./TopPoolsListCard";
 import StakeWodDetails from "./pools/stakingWod";
 import StakeWodDetails2 from "./pools/stakingWod2";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -221,15 +222,17 @@ const EarnContent = ({
                           </div>
                         </div>
                         {Number(wodBalance) === 0 && (
-                          <button
+                          <NavLink
                             className="btn multiplayer-btn py-1 px-3 d-flex align-items-center gap-2 justify-content-center"
+                            to='/token'
                             // onClick={() => {
                             //   setmultiplayerModal(true);
                             // }}
                           >
                             {/* <img src={buyWod} alt="" /> */}
-                            Buy WOD
-                          </button>
+                            {/* Buy */}
+                             WOD
+                          </NavLink>
                         )}
                       </div>
                     )}

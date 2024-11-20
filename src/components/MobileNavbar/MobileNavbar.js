@@ -652,7 +652,7 @@ handleSignUp();
                       </div>
                     </NavLink>
                     <NavLink
-                      to="/earn"
+                      to="/staking"
                       end
                       className={({ isActive }) =>
                         isActive
@@ -661,7 +661,7 @@ handleSignUp();
                       }
                       onClick={() => setOpenNavbar(false)}
                     >
-                      <span className={`sidebar-title`}>Earn</span>
+                      <span className={`sidebar-title`}>Staking</span>
                     </NavLink>
                     <NavLink
                       to="/bridge"

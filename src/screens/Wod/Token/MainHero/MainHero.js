@@ -13,7 +13,7 @@ import newToken from "../../../../assets/wodAssets/newToken.svg";
 const MainHero = () => {
   const dypProducts = [
     {
-      link: "/earn",
+      link: "/staking",
       title: "Earn",
       desc: "Earn rewards by staking WOD tokens",
       class: "tokenEarnClass",

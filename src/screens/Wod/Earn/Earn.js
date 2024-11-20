@@ -165,7 +165,7 @@ const Earn = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Earn";
+    document.title = "Staking";
   }, []);
 
   useEffect(() => {

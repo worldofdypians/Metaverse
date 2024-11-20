@@ -1911,7 +1911,7 @@ const Portfolio = ({
                         key={index}
                         to={
                           item.isStaked === true
-                            ? `/earn`
+                            ? `/staking`
                             : `/shop/nft/${item.tokenId}/${item.nftAddress}`
                         }
                         style={{ textDecoration: "none" }}
@@ -2141,7 +2141,7 @@ const Portfolio = ({
                     landStaked.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/earn`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2170,7 +2170,7 @@ const Portfolio = ({
                     myCawsWodStakes.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/earn`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -3022,7 +3022,7 @@ const Portfolio = ({
                         <NavLink
                           to={
                             nft.isStaked === true
-                              ? `/earn`
+                              ? `/staking`
                               : `/shop/nft/${nft.tokenId}/${nft.nftAddress}`
                           }
                           style={{ textDecoration: "none" }}
@@ -3809,7 +3809,7 @@ const Portfolio = ({
                         .slice(stakedPageSlice - 9, stakedPageSlice)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/earn`}
+                            to={`/staking`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3851,7 +3851,7 @@ const Portfolio = ({
                       landStaked.length > 0 &&
                       landStaked.map((nft, index) => (
                         <NavLink
-                          to={`/earn`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3881,7 +3881,7 @@ const Portfolio = ({
                       nftItems.length > 0 &&
                       nftItems.map((nft, index) => (
                         <NavLink
-                          to={`/earn`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
                           key={index}

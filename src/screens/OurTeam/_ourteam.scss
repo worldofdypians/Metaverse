@@ -19,12 +19,12 @@
   .team-container {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    place-items: baseline center;
+    place-items: self-start center;
     @media screen and (max-width: 1650px) {
       grid-template-columns: repeat(3, 1fr);
     }
     @media screen and (max-width: 500px) {
-      place-items: baseline center;
+      place-items: self-start center;
     }
 
     .team-card {

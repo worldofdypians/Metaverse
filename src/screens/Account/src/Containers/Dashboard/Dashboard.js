@@ -22,7 +22,7 @@ import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
 import dappsIcon from "../../Images/premium/dappsIcon.svg";
 import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
 import greenCheck from "../../Images/premium/greenCheck.svg";
-import premiumIcon from "../../Images/premium/premiumIcon.svg";
+import premiumIcon from "../../Images/premium/premiumIcon.webp";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -957,6 +957,7 @@ function Dashboard({
   const [monthlyDataAmountSkale, setMonthlyDataAmountSkale] = useState([]);
   const [userRankSkale, setUserRankSkale] = useState("");
   const [userSkaleScore, setUserSkaleScore] = useState(0);
+  const [eventCardCount, seteventCardCount] = useState(0);
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
@@ -9359,7 +9360,7 @@ function Dashboard({
     } else {
       window.scrollTo(0, 0);
     }
-  }, [eventId]);
+  }, [eventId, eventCardCount]);
 
   const updateUserRank = async () => {
     if (rankData && userRankName) {
@@ -10082,6 +10083,9 @@ function Dashboard({
               userRankTaiko={userRankTaiko}
               userTaikoScore={userTaikoScore}
               userSkaleScore={userSkaleScore}
+              onEventCardClick={() => {
+                seteventCardCount(eventCardCount + 1);
+              }}
             />
             <NewEvents
               events={dummyBetaPassData2}
@@ -10733,7 +10737,7 @@ function Dashboard({
                 nftPremium_totalViction ||
                 nftPremium_totalTaiko ||
                 nftPremium_totalMat > 0 ? (
-                  <div className="premium-discount-bg mt-3 p-4 position-relative">
+                  <div className="premium-gold-popup mt-3 p-3 position-relative d-flex align-items-center justify-content-between">
                     <div className="premiumRedTag position-absolute">
                       <div className="position-relative d-flex flex-column">
                         <img src={premiumRedTag} alt="" />
@@ -10846,9 +10850,11 @@ function Dashboard({
                         </h6>
                       )}
                     </div>
+                    <img src={premiumIcon} alt="" className="already-preium-badge"/>
+
                   </div>
                 ) : (
-                  <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
+                  <div className="premium-gold-popup d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
                     <div className="d-flex flex-column gap-2">
                       <span className="lifetime-plan mb-0">Lifetime plan</span>
                       <h6 className="plan-cost mb-0">$100</h6>
@@ -10901,7 +10907,7 @@ function Dashboard({
                           />
                           <span className="subscription-chain mb-0">Taiko</span>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
+                        {/* <div className="d-flex align-items-center gap-2">
                           <img
                             src={matchainLogo}
                             alt=""
@@ -10910,7 +10916,7 @@ function Dashboard({
                           <span className="subscription-chain mb-0">
                             Matchain
                           </span>
-                        </div>
+                        </div> */}
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -10972,7 +10978,7 @@ function Dashboard({
                           </span>
                         </div>
                       </div>
-                      <img src={premiumIcon} alt="" />
+                      <img src={premiumIcon} alt="" className="already-preium-badge"/>
                     </div>
                   </div>
                 )}
@@ -11101,7 +11107,7 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-                                  {window.WALLET_TYPE !== "binance" &&
+                                  {/* {window.WALLET_TYPE !== "binance" &&
                                     !window.ethereum?.isBinance && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11117,7 +11123,7 @@ function Dashboard({
                                         />
                                         Matchain
                                       </li>
-                                    )}
+                                    )} */}
 
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11683,18 +11689,12 @@ function Dashboard({
                 )}
                 {isConnected && discountPercentage > 0 && chainId === 56 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    <div
-                      className={` ${
-                        approveStatus === "fail" || !coinbase || isApproved
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                   
                       <button
                         className={`btn ${
                           approveStatus === "fail" || !coinbase || isApproved
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         disabled={
                           approveStatus === "fail" || !coinbase || isApproved
@@ -11734,19 +11734,13 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
-                    <div
-                      className={` ${
-                        isApproved === false
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                  
+                  
                       <button
                         className={`btn ${
                           isApproved === false
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         onClick={() => handleSubscribe()}
                       >
@@ -11779,24 +11773,19 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
+                  
                   </div>
                 ) : isConnected &&
                   discountPercentageViction > 0 &&
                   chainId === 88 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    <div
-                      className={` ${
-                        approveStatus === "fail" || !coinbase || isApproved
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                   
+                   
                       <button
                         className={`btn ${
                           approveStatus === "fail" || !coinbase || isApproved
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         disabled={
                           approveStatus === "fail" || !coinbase || isApproved
@@ -11836,19 +11825,14 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
-                    <div
-                      className={` ${
-                        isApproved === false
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                  
+                  
+                  
                       <button
                         className={`btn ${
                           isApproved === false
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         onClick={() => handleSubscribe()}
                       >
@@ -11882,24 +11866,18 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
+               
                   </div>
                 ) : isConnected &&
                   discountPercentageTaiko > 0 &&
                   chainId === 167000 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    <div
-                      className={` ${
-                        approveStatus === "fail" || !coinbase || isApproved
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+             
                       <button
                         className={`btn ${
                           approveStatus === "fail" || !coinbase || isApproved
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         disabled={
                           approveStatus === "fail" || !coinbase || isApproved
@@ -11939,19 +11917,13 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
-                    <div
-                      className={` ${
-                        isApproved === false
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                
+                 
                       <button
                         className={`btn ${
                           isApproved === false
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         onClick={() => handleSubscribe()}
                       >
@@ -11985,24 +11957,18 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
+                
                   </div>
                 ) : isConnected &&
                   discountPercentageMat > 0 &&
                   chainId === 698 ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    <div
-                      className={` ${
-                        approveStatus === "fail" || !coinbase || isApproved
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+             
                       <button
                         className={`btn ${
                           approveStatus === "fail" || !coinbase || isApproved
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         disabled={
                           approveStatus === "fail" || !coinbase || isApproved
@@ -12042,19 +12008,13 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
-                    <div
-                      className={` ${
-                        isApproved === false
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                  
+                   
                       <button
                         className={`btn ${
                           isApproved === false
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         onClick={() => handleSubscribe()}
                       >
@@ -12088,14 +12048,14 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
+                 
                   </div>
                 ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
                   <div
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
                     <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
                         handleBnbPool();
                       }}
@@ -12115,7 +12075,7 @@ function Dashboard({
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
                     <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
                         handleVictionPool();
                       }}
@@ -12135,7 +12095,7 @@ function Dashboard({
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
                     <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
                         handleTaikoPool();
                       }}
@@ -12155,7 +12115,7 @@ function Dashboard({
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
                     <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
                         handleMatPool();
                       }}
@@ -12170,18 +12130,12 @@ function Dashboard({
                   </div>
                 ) : isConnected && coinbase ? (
                   <div className="d-flex align-items-center gap-3 justify-content-center">
-                    <div
-                      className={` ${
-                        approveStatus === "fail" || !coinbase || isApproved
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                   
                       <button
                         className={`btn ${
                           approveStatus === "fail" || !coinbase || isApproved
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         disabled={
                           approveStatus === "fail" || !coinbase || isApproved
@@ -12221,19 +12175,13 @@ function Dashboard({
                           </div>
                         )}
                       </button>
-                    </div>
-                    <div
-                      className={` ${
-                        isApproved === false
-                          ? "linear-border-disabled"
-                          : "linear-border"
-                      }`}
-                    >
+                 
+               
                       <button
                         className={`btn ${
                           isApproved === false
-                            ? "outline-btn-disabled"
-                            : "filled-btn"
+                            ? "disabled-btn"
+                            : "connectbtn"
                         } px-4`}
                         onClick={() => handleSubscribe()}
                       >
@@ -12263,14 +12211,14 @@ function Dashboard({
                           ></div>
                         )}
                       </button>
-                    </div>
+                
                   </div>
                 ) : (
                   <div
                     className={`d-flex align-items-center justify-content-center mb-2`}
                   >
                     <button
-                      className="d-flex gap-2 px-3 py-1 align-items-center pill-btn"
+                      className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
                         setshowWalletModal(true);
                         setgetPremiumPopup(false);
@@ -12530,8 +12478,6 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-
-     
       </div>
     </div>
   );
