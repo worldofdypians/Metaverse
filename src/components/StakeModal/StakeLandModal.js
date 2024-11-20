@@ -450,7 +450,7 @@ const StakeLandModal = ({
           alt=""
         />
       </div>
-      <span className="stake-modal-desc">
+      <span className="stake-modal-desc text-wrap">
         A list of your NFT collection that can be added and removed from the
         staking pools
       </span>
@@ -618,7 +618,7 @@ const StakeLandModal = ({
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
           <img src={greenInfo} alt="" />
-          <span className="info-span-text">
+          <span className="info-span-text text-wrap">
             Please choose the NFTs that you wish to stake. Once you have made
             your selection, you will be required to approve the process before
             depositing the NFTs.
@@ -650,7 +650,7 @@ const StakeLandModal = ({
                   style={{ top: "-30px", right: "-175px" }}
                 >
                   <p className="tooltip-content2 m-0">
-                    You can select a maximum of 50 WoD Land NFTs
+                    You can select a maximum of 50 WOD Land NFTs
                   </p>
                 </div>
               </div>

@@ -387,6 +387,28 @@ input[type="range"]:focus::-ms-fill-upper {
   color: #ffffff;
 }
 
+.mint-time3 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 40px;
+  color: #ffffff;
+
+  @media screen and (max-width: 786px) {
+    font-size: 30px;
+  }
+}
+.days3 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  color: #ffffff;
+  @media screen and (max-width: 786px) {
+    font-size: 10px;
+  }
+}
+
 .timerwrapper2 {
   background: #2e2853;
   border: 2px solid #2e2853;
@@ -627,46 +649,89 @@ input[type="range"]:focus::-ms-fill-upper {
   border: none;
 }
 
-.pill-btn2 {
+.pill-btn-claim {
   background: linear-gradient(90deg, #7bd8af -10.16%, #d9fa86 129.3%);
-  border-radius: 8px;
+  border-radius: 20px;
+  font-weight: 600;
   font-size: 16px;
-  font-style: normal;
-font-weight: 600;
-line-height: normal;
-border: none;
+  line-height: 20px;
   color: #080b2a;
   border: none;
 
   @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+}
+
+.pill-btn2 {
+  border-radius: 12px;
+  border: 1px solid #f3bf09;
+  color: #f3bf09 !important;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
+  text-align: center;
+  font-size: 17.28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background: transparent;
+  transition: all 0.25s;
+  padding: 12px 30px !important;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
     font-size: 13px;
   }
 }
 
+.pill-btn2:hover {
+  background: #f3bf09;
+  color: #49291c !important;
+}
+
 .signinbtn {
   border-radius: 8px;
-background: linear-gradient(90deg, #760F5A -10.16%, #624592 129.3%);
+background: linear-gradient(270deg, #760F5A, #624592, #624592, #760F5A);
+  background-size: 300%;
+  background-position: 0 0;
 color: #FFF;
 font-size: 12px;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
 border: none;
+transition: all .25s;
 
+}
+
+.signinbtn:hover {
+  background-position: 100% 0 !important;
 }
 
 .signinbtn2 {
-  border-radius: 8px;
-background: linear-gradient(90deg, #760F5A -10.16%, #624592 129.3%);
-color: #FFF;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
-border: none;
-@media screen and (max-width: 500px) {
-  font-size: 13px;
+  border-radius: 12px;
+  background: linear-gradient(270deg, #066d90, #0ab5c9, #0ab5c9, #066d90);
+  background-size: 300%;
+  background-position: 0 0;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
+  color: #eeedff !important;
+  color: #eeedff !important;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  transition: all 0.25s;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
 }
+
+.signinbtn2:hover {
+  background-position: 100% 0 !important;
 }
 
 .rewards-btn {

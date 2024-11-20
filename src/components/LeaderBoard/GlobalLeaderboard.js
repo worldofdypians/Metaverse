@@ -141,13 +141,15 @@ const GlobalLeaderboard = ({
       className={`d-flex flex-column gap-3 leaderboard-wrapper ${
         screen === "dash" && "global-leaderboard-wrapper"
       } mt-4 position-relative`}
-      style={{
-        alignSelf: !location.pathname.includes("account") && "baseline",
-        minWidth: !location.pathname.includes("account") && "92%",
-        maxWidth: !location.pathname.includes("account") && "92%",
-      }}
+      style={
+        {
+          // alignSelf: !location.pathname.includes("account") && "baseline",
+          // minWidth: !location.pathname.includes("account") && "92%",
+          // maxWidth: !location.pathname.includes("account") && "92%",
+        }
+      }
     >
-      {!location.pathname.includes("account") && (
+      {/* {!location.pathname.includes("account") && (
         <div className="nft-hover d">
           <div className="d-flex flex-column align-items-center gap-2">
             <div className="nft-hover-wrapper d-flex flex-column align-items-center">
@@ -202,7 +204,7 @@ const GlobalLeaderboard = ({
             </a>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* <div className="grandPrices-wrapper position-relative"></div> */}
       <div
@@ -213,9 +215,12 @@ const GlobalLeaderboard = ({
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
-              <span className={`text-white ${screen !== "dash" && 'invisible'} `} style={{ fontSize: 14 }}>
-                (Top 100)
-              </span>
+                <span
+                  className={`text-white ${screen !== "dash" && "invisible"} `}
+                  style={{ fontSize: 14 }}
+                >
+                  (Top 100)
+                </span>
                 <img
                   src={tooltipIcon}
                   alt=""
@@ -239,8 +244,8 @@ const GlobalLeaderboard = ({
                     that will boost your global ranking.
                     <br />
                     <br />
-                    Premium Subscribers earn extra STARS from Daily
-                    Leaderboards, improving competitiveness and progression.
+                    Prime Users earn extra STARS from Daily Leaderboards,
+                    improving competitiveness and progression.
                     <br />
                     <br />
                     Golden Pass Bundle owners earn extra rewards based on their
@@ -271,7 +276,7 @@ const GlobalLeaderboard = ({
               </span>
             </div>
           )}
-          
+
           <img
             src={globalIcon}
             alt=""
@@ -676,7 +681,8 @@ const GlobalLeaderboard = ({
                         className="playerScore col-2 text-center font-montserrat"
                         style={{ color: "#09F3D2" }}
                       >
-                     ${getFormattedNumber(
+                        $
+                        {getFormattedNumber(
                           allStarData.rewardsWeekly[index],
                           0
                         )}
@@ -686,7 +692,8 @@ const GlobalLeaderboard = ({
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                          +${getFormattedNumber(
+                          +$
+                          {getFormattedNumber(
                             allStarData.premium_rewards_weekly[index],
                             0
                           )}
@@ -808,7 +815,7 @@ const GlobalLeaderboard = ({
         </div>
       ) : (
         <NavLink
-          to={"/account"}
+          to={"/account#leaderboard"}
           className="view-chains-wrapper p-2 d-flex align-items-center justify-content-between"
         >
           <span>View Chain Leaderboards</span>

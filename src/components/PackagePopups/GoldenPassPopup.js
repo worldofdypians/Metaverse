@@ -2,14 +2,14 @@ import React from "react";
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import popupLinear from "./assets/popupLinear.png";
 import goldenPopup from "./assets/goldenPopup.webp";
+import { NavLink } from "react-router-dom";
 
 const GoldenPassPopup = ({ onClosePopup }) => {
   return (
     <div className="package-popup-wrapper">
-      <div className="package-popup golden-pass-popup px-4 py-5 py-lg-5 px-lg-5">
-        <img src={popupLinear} alt="" className="popup-linear" />
-        <div className="position-relative mb-3">
-          <img src={goldenPopup} alt="" style={{ width: "100%" }} />
+      <div className="package-popup golden-pass-popup p-4">
+        <div className=" package-popup-title-wrapper d-flex align-items-center position-relative justify-content-between mb-2">
+          <div className="package-popup-title mb-0">Golden Pass</div>{" "}
           <img
             src={popupXmark}
             className="popup-closer"
@@ -17,86 +17,50 @@ const GoldenPassPopup = ({ onClosePopup }) => {
             alt=""
           />
         </div>
-        <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2">
-          <div className="package-popup-title mb-0">Golden Pass</div>
+        <div className="position-relative mb-3">
+          <img src={goldenPopup} alt="" style={{ width: "100%" }} />
         </div>
+
         <div className="package-popup-content p-1">
-          <p className="package-popup-desc mt-3">
-            The Golden Pass event offers an exciting opportunity for players to
-            double their rewards, climb the leaderboards, and earn unique
-            prizes. Here’s how it works:
+          <p className="package-popup-desc">
+            The Golden Pass Event lets players earn extra rewards from the
+            leaderboards. The pass is valid for one calendar month, regardless
+            of purchase date.
+            <br />
+            <br />
+            <b>Example:</b> If you buy the Golden Pass on the 7th, it remains
+            active until the end of the month (e.g., from the 7th to the
+            30th/31st). However, it will reset on the 1st of the following month
+            and must be repurchased to stay active.
           </p>
 
-          <span className="popup-secondary-title">How it works:</span>
+          <h6 className="text-white">How it works:</h6>
           <ul className="package-popup-desc">
             <li className="package-popup-desc">
-              <b>Purchase:</b> To participate, buy the Golden Pass bundle from
-              the Marketplace using DYP tokens on either the BNB Chain or
-              Ethereum Chain.
+              Purchase the bundle from the Challenge Center
             </li>
             <li className="package-popup-desc">
-              <b>Duration:</b> The Golden Pass is valid for one calendar month,
-              regardless of the purchase date.
+              The golden pass is valid for one calendar month, resetting on the
+              1st, regardless of the purchase date
             </li>
+
             <li className="package-popup-desc">
-              <b>Example:</b> If a player buys the Golden Pass on the 7th, it
-              will remain active until the end of that month (e.g., from the 7th
-              to the 30th/31st). However, the pass will reset on the 1st of the
-              next month. This means the pass is not active on the 7th of the
-              next month; it must be repurchased.
-            </li>
-            <li className="package-popup-desc">
-              <b>Leaderboard Rewards:</b> Extra rewards are given based on your
-              leaderboard ranking when the leaderboard resets. The pass must be
-              active during this reset to earn the rewards.
-            </li>
-            <li className="package-popup-desc">
-              <b>Weekly Rewards Example:</b> If you purchased the Golden Pass on
-              July 31st, it was active for that day only and reset on August
-              1st. To receive weekly rewards, the Golden Pass must be active
-              during the week’s leaderboard reset. Therefore, if the pass wasn't
-              repurchased after July 31st, you wouldn't receive rewards on
-              August 5th.
-            </li>
-          </ul>
-          <span className="popup-secondary-title">
-            Benefits of the Golden Pass:
-          </span>
-          <ul className="package-popup-desc">
-            <li className="package-popup-desc">
-              <b>Double Rewards:</b> Earn extra rewards on the leaderboards,
-              boosting your rank and chances to win exclusive prizes.
-            </li>
-            <li className="package-popup-desc">
-              <b>Unique Prizes:</b> Access unique rewards and prizes only
-              available during the Golden Pass event.
-            </li>
-            <li className="package-popup-desc">
-              <b>Competitive Edge:</b> The Golden Pass adds an extra layer of
-              competition, encouraging you to perform your best and rise to the
-              top of the leaderboards.
+              Extra rewards are given based on leaderboard rank as long as the
+              golden pass is active
             </li>
           </ul>
 
-          <p className="package-popup-desc mt-3">
-            The Golden Pass resets on the 1st of each month, no matter the
-            purchase date. Ensure your pass is active during the leaderboard
-            reset to maximize your rewards!
-          </p>
-
-          <span className="popup-secondary-title">
-            Example: Leaderboard Reward Distribution
-          </span>
+          <h6 className="text-white">Leaderboard Reward Distribution</h6>
           <div className="table-responsive">
-            <table className="table">
+            <table className="table bgtable">
               <thead>
                 <tr>
                   <th
                     scope="col popup-table-header"
                     style={{
-                      color: "#b8b8e0",
-                      fontSize: "16px",
-                      fontWeight: "600",
+                      color: "#828FBB",
+                      fontSize: "14px",
+                      fontWeight: "500",
                     }}
                   >
                     Rank
@@ -104,9 +68,9 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <th
                     scope="col popup-table-header"
                     style={{
-                      color: "#b8b8e0",
-                      fontSize: "16px",
-                      fontWeight: "600",
+                      color: "#828FBB",
+                      fontSize: "14px",
+                      fontWeight: "500",
                       textAlign: "center",
                     }}
                   >
@@ -115,9 +79,9 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <th
                     scope="col popup-table-header"
                     style={{
-                      color: "#b8b8e0",
-                      fontSize: "16px",
-                      fontWeight: "600",
+                      color: "#828FBB",
+                      fontSize: "14px",
+                      fontWeight: "500",
                       textAlign: "center",
                     }}
                   >
@@ -126,9 +90,9 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <th
                     scope="col popup-table-header"
                     style={{
-                      color: "#b8b8e0",
-                      fontSize: "16px",
-                      fontWeight: "600",
+                      color: "#828FBB",
+                      fontSize: "14px",
+                      fontWeight: "500",
                       textAlign: "center",
                     }}
                   >
@@ -160,7 +124,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -169,7 +133,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -199,7 +163,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -208,7 +172,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -238,7 +202,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -247,7 +211,7 @@ const GoldenPassPopup = ({ onClosePopup }) => {
                   <td
                     style={{
                       fontSize: "16px",
-                      color: "#7DD9AF",
+                      color: "#2DF5F2",
                       textAlign: "center",
                     }}
                   >
@@ -258,6 +222,12 @@ const GoldenPassPopup = ({ onClosePopup }) => {
             </table>
           </div>
         </div>
+        <button
+          className="stake-wod-btn px-4 py-2 my-3 d-flex m-auto"
+          // to={"/account/challenges/golden-pass"}
+        >
+          Coming Soon
+        </button>
       </div>
     </div>
   );

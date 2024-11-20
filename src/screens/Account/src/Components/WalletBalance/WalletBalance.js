@@ -122,6 +122,7 @@ const WalletBalance = ({
   myMantaNfts,
   myTaikoNfts,
   myCookieNfts,
+  myMatNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -476,6 +477,7 @@ const WalletBalance = ({
     let multiversNftsArray = [];
     let mantaNftsArray = [];
     let taikoNftsArray = [];
+    let matNftsArray = [];
     let cookieNftsArray = [];
 
     // console.log(allListed, "allListed");
@@ -849,6 +851,22 @@ const WalletBalance = ({
         );
       }
 
+      if (myMatNfts && myMatNfts.length > 0) {
+        await Promise.all(
+          myMatNfts.map(async (i) => {
+            matNftsArray.push({
+              nftAddress: window.config.nft_mat_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "mat",
+              chain: 698,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
       if (myCookieNfts && myCookieNfts.length > 0) {
         await Promise.all(
           myCookieNfts.map(async (i) => {
@@ -1044,6 +1062,7 @@ const WalletBalance = ({
         ...immutableNftsArray,
         ...mantaNftsArray,
         ...taikoNftsArray,
+        ...matNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1498,11 +1517,7 @@ const WalletBalance = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
-  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
-  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
-  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+
 
   const [dummyEvent, setDummyEvent] = useState({});
   const [reqModal, setReqModal] = useState(false);
@@ -1768,7 +1783,7 @@ const WalletBalance = ({
                     favoriteItems.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -1890,7 +1905,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -1931,7 +1946,7 @@ const WalletBalance = ({
                     myOffers.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -2003,8 +2018,8 @@ const WalletBalance = ({
                         key={index}
                         to={
                           item.isStaked === true
-                            ? `/marketplace/stake`
-                            : `/marketplace/nft/${item.tokenId}/${item.nftAddress}`
+                            ? `/staking`
+                            : `/shop/nft/${item.tokenId}/${item.nftAddress}`
                         }
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -2083,6 +2098,8 @@ const WalletBalance = ({
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+50.png`
                                   : item.type === "taiko"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                  : item.type === "mat"
+                                  ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                   : item.type === "cookie3"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                   : item.type === "base"
@@ -2132,6 +2149,8 @@ const WalletBalance = ({
                                   ? "MNBP"
                                   : item.type === "taiko"
                                   ? "TKBP"
+                                  : item.type === "mat"
+                                  ? "MCBP"
                                   : item.type === "cookie3"
                                   ? "CKBP"
                                   : item.type === "gate"
@@ -2182,7 +2201,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -2229,7 +2248,7 @@ const WalletBalance = ({
                     landStaked.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/stake`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2258,7 +2277,7 @@ const WalletBalance = ({
                     myCawsWodStakes.slice(0, 4).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/stake`}
+                        to={`/staking`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2319,7 +2338,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-6 mb-3"
                       >
@@ -2362,7 +2381,7 @@ const WalletBalance = ({
                     listedItems.slice(0, 6).map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace/nft/${item.tokenId}/${item.nftAddress}`}
+                        to={`/shop/nft/${item.tokenId}/${item.nftAddress}`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                         state={{
@@ -2434,7 +2453,7 @@ const WalletBalance = ({
                     .map((item, index) => (
                       <NavLink
                         key={index}
-                        to={`/marketplace`}
+                        to={`/shop`}
                         style={{ textDecoration: "none" }}
                         className="col-12 col-lg-6 col-xxl-4 mb-3"
                       >
@@ -3045,8 +3064,8 @@ const WalletBalance = ({
                         <NavLink
                           to={
                             nft.isStaked === true
-                              ? `/marketplace/stake`
-                              : `/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`
+                              ? `/staking`
+                              : `/shop/nft/${nft.tokenId}/${nft.nftAddress}`
                           }
                           style={{ textDecoration: "none" }}
                           key={index}
@@ -3118,6 +3137,9 @@ const WalletBalance = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                window.config.nft_mat_address
+                              ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3191,6 +3213,9 @@ const WalletBalance = ({
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
+                                      window.config.nft_mat_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
@@ -3287,6 +3312,9 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? "TKBP"
                                     : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
+                                    : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
@@ -3334,7 +3362,7 @@ const WalletBalance = ({
                       .slice(offersPageSlice - 9, offersPageSlice)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3402,7 +3430,7 @@ const WalletBalance = ({
                       .slice(favoritesSliceValue - 9, favoritesSliceValue)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3474,6 +3502,9 @@ const WalletBalance = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
+                                  window.config.nft_mat_address
+                                ? "mat"
+                                : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : "timepiece",
@@ -3569,6 +3600,9 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
                                     : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
@@ -3647,6 +3681,9 @@ const WalletBalance = ({
                                       window.config.nft_taiko_address
                                     ? "TKBP"
                                     : nft.nftAddress ===
+                                      window.config.nft_mat_address
+                                    ? "MCBP"
+                                    : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : "CAWS Timepiece"}{" "}
@@ -3694,7 +3731,7 @@ const WalletBalance = ({
                       .slice(listedPageSlice - 9, listedPageSlice)
                       .map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3804,7 +3841,7 @@ const WalletBalance = ({
                         .slice(stakedPageSlice - 9, stakedPageSlice)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/stake`}
+                            to={`/staking`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3846,7 +3883,7 @@ const WalletBalance = ({
                       landStaked.length > 0 &&
                       landStaked.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/stake`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
@@ -3876,7 +3913,7 @@ const WalletBalance = ({
                       nftItems.length > 0 &&
                       nftItems.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/stake`}
+                          to={`/staking`}
                           style={{ textDecoration: "none" }}
                           className="col-12 col-lg-6 col-xxl-4 mb-3"
                           key={index}

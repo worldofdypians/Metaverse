@@ -40,7 +40,9 @@ const TimepieceNFT = ({
   timepieceBought,
   handleRefreshListing,
   nftCount,
-  binanceW3WProvider,chainId,timepiece
+  binanceW3WProvider,
+  chainId,
+  timepiece,
 }) => {
   const override = {
     display: "block",
@@ -567,7 +569,6 @@ const TimepieceNFT = ({
   };
 
   const getListedTimepiece = async () => {
- 
     const timepieceArray = [...timepiece, ...timepieceBought];
     const timepieceArray2 = [...timepiece];
 
@@ -784,7 +785,7 @@ const TimepieceNFT = ({
   }, [timepieceNFTS, totalSupply]);
 
   useEffect(() => {
-    if (timepieceBought && timepiece && timepiece.length>0) {
+    if (timepieceBought && timepiece && timepiece.length > 0) {
       getListedTimepiece();
     }
   }, [timepieceBought, nftCount, alltimepieceNfts.length, timepiece]);
@@ -822,16 +823,16 @@ const TimepieceNFT = ({
   return (
     <div id="header" onScroll={onScroll} ref={listInnerRef}>
       <div
-        className="container-fluid d-flex justify-content-end p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft d-flex  align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft2 d-flex  align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 position-relative">
+          <div className="custom-container mx-0 position-relative">
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
@@ -851,13 +852,13 @@ const TimepieceNFT = ({
                       to="/caws-timepiece"
                       style={{ width: "fit-content" }}
                     >
-                      <button className="btn pill-btn">Explore</button>
+                      <button className="pill-btn2 px-3 py-2">Explore</button>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/mint/timepiece"
+                      to="/shop/mint/timepiece"
                       style={{ textDecoration: "none" }}
                     >
-                      <button className="btn mint-now-btn gap-2">
+                      <button className="signinbtn2 px-3 py-2 d-flex align-items-center gap-2">
                         <img src={mintNowIcon} alt="" />
                         Available minting
                       </button>
@@ -1005,7 +1006,7 @@ const TimepieceNFT = ({
                     <>
                       {timepieceNFTS.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1042,7 +1043,6 @@ const TimepieceNFT = ({
                             handleRefreshListing={handleRefreshListing}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       ))}
@@ -1194,7 +1194,7 @@ const TimepieceNFT = ({
                     dummyData.map((nft, index) => {
                       return (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1229,7 +1229,6 @@ const TimepieceNFT = ({
                             soldPriceType={nft.soldPriceType}
                             binanceW3WProvider={binanceW3WProvider}
                             chainId={chainId}
-
                           />
                         </NavLink>
                       );
@@ -1247,7 +1246,7 @@ const TimepieceNFT = ({
                         .slice(0, next2)
                         .map((nft, index) => (
                           <NavLink
-                            to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                            to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                             style={{ textDecoration: "none" }}
                             key={index}
                             state={{
@@ -1284,8 +1283,7 @@ const TimepieceNFT = ({
                               isListed={nft.isListed}
                               soldPriceType={nft.soldPriceType}
                               binanceW3WProvider={binanceW3WProvider}
-                            chainId={chainId}
-
+                              chainId={chainId}
                             />
                           </NavLink>
                         ))}

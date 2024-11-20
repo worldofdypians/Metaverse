@@ -19,7 +19,7 @@ const EmptyGenesisCard = () => {
       className="genesis-desc position-relative"
       style={{ bottom: "5px" }}
     >
-      <h6 className="land-desc">Get your Genesis Land NFT and use it in WoD.</h6>
+      <h6 className="land-desc">Get your Genesis Land NFT and use it in WOD.</h6>
     </div>
   </div>
   )

@@ -146,14 +146,14 @@ const OurTeam = () => {
       link: "https://www.linkedin.com/in/afatuliaj/",
       content: `Co-Founder of Simplicity Group, a tokenomics and research consultancy with a VC arm. Alex is a specialist in behaviour economics, guiding projects from ideation to a launch.`,
     },
-    {
-      id: "jeff",
-      name: "Jeff Nowak",
-      position: "Advisor",
-      photo: jeff,
-      link: "",
-      content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
-    },
+    // {
+    //   id: "jeff",
+    //   name: "Jeff Nowak",
+    //   position: "Advisor",
+    //   photo: jeff,
+    //   link: "",
+    //   content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
+    // },
     {
       id: "wei",
       name: "Wee Yao Liang",
@@ -171,14 +171,14 @@ const OurTeam = () => {
       link: "https://x.com/sidrevocx",
       content: `Yavuz Sağlam brings over 10 years of experience in the blockchain and Web3 industry to his role as a Strategic Advisor for World of Dypians. As a key figure at Castrum Capital, Turkey's largest Web3 venture capital firm, Yavuz has a proven track record of guiding innovative projects toward success. His deep expertise in investment strategies, market analysis, and scaling Web3 ventures empowers World of Dypians to accelerate growth and navigate the ever-evolving landscape of gaming and blockchain with confidence. Yavuz’s strategic insights are instrumental in helping us identify new opportunities and achieve our ambitious goals.`,
     },
-    {
-      id: "navid",
-      name: "Navid Shokriyan",
-      position: "Advisor",
-      photo: navid,
-      link: "https://x.com/navidshokriyan",
-      content: `Navid Shokriyan is a seasoned investor and influential leader in the KOL space, known for his pivotal roles in the crypto space. With a proven track record of attracting over $15 million for 11 projects, Navid is set to play a crucial role in expanding our KOL services and driving further success`,
-    },
+    // {
+    //   id: "navid",
+    //   name: "Navid Shokriyan",
+    //   position: "Advisor",
+    //   photo: navid,
+    //   link: "https://x.com/navidshokriyan",
+    //   content: `Navid Shokriyan is a seasoned investor and influential leader in the KOL space, known for his pivotal roles in the crypto space. With a proven track record of attracting over $15 million for 11 projects, Navid is set to play a crucial role in expanding our KOL services and driving further success`,
+    // },
     {
       id: "soni",
       name: "Soni Seli",
@@ -214,7 +214,8 @@ const OurTeam = () => {
       position: "Project Coordinator",
       photo: teja,
       link: "",
-      content: "Hey, I'm Teja Charan! I've been into crypto since 2019 and have worked in cool companies dealing with virtual stuff and decentralized finance. I'm always up for learning new things and exploring the crypto world. Come along for the ride!",
+      content:
+        "Hey, I'm Teja Charan! I've been into crypto since 2019 and have worked in cool companies dealing with virtual stuff and decentralized finance. I'm always up for learning new things and exploring the crypto world. Come along for the ride!",
     },
     {
       id: "bogdan",
@@ -232,26 +233,46 @@ const OurTeam = () => {
   }, []);
 
   return (
-    <div className="container-fluid our-team my-5 px-0" id="ourteam">
-      <div className="px-3 px-lg-5 d-flex flex-column justify-content-center align-items-center">
+    <div
+      className="container-fluid  pt-lg-5 d-flex flex-column justify-content-center justify-content-lg-end p-0"
+      id="ourteam"
+    >
+   
+      <div className="our-team d-flex flex-column align-items-center justify-content-center py-4" style={{borderBottom: "3px solid black"}}>
+      <div className="px-3 px-lg-5 d-flex  flex-column justify-content-center align-items-center">
         <div className="row w-100 justify-content-center align-items-center">
           <div className="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center">
-            <h2 className="font-organetto explorer-grid-title px-0">
-              Our <mark className="font-organetto explore-tag">Team</mark>
+            <h2 className="font-montserrat explorer-grid-title  text-center px-0">
+              Team
             </h2>
             <p className="text-white text-center">
-              World of Dypians is made up of a global team of experts with
-              decades of experience in crypto, gaming, business, engineering,
-              development, finance, and more. Furthermore, each team member's
-              background and contributions are available to the public.
+              Our dedicated team at World of Dypians is comprised of experienced
+              professionals passionate about gaming, blockchain, and innovation.
+              With a diverse skill set and a shared vision, we work tirelessly
+              to bring you an exceptional gaming experience and continuous
+              advancements in the World of Dypians ecosystem. Meet the talented
+              individuals driving our project's success!
             </p>
           </div>
         </div>
-        <div className="team-container w-100 d-grid">
-          {windowSize.width < 786
-            ? bios
-                .slice(0, slice)
-                .map((person, index) => (
+      </div>{" "}
+        <div className="custom-container">
+          <div className="team-container w-100 d-grid">
+            {windowSize.width < 786
+              ? bios
+                  .slice(0, slice)
+                  .map((person, index) => (
+                    <TeamCard
+                      key={index}
+                      id={person.id}
+                      name={person.name}
+                      position={person.position}
+                      content={person.content}
+                      photo={person.photo}
+                      link={person.link}
+                    />
+                  ))
+              : bios.map((person, index) => (
                   <TeamCard
                     key={index}
                     id={person.id}
@@ -261,26 +282,26 @@ const OurTeam = () => {
                     photo={person.photo}
                     link={person.link}
                   />
-                ))
-            : bios.map((person, index) => (
-                <TeamCard
-                  key={index}
-                  id={person.id}
-                  name={person.name}
-                  position={person.position}
-                  content={person.content}
-                  photo={person.photo}
-                  link={person.link}
-                />
-              ))}
-        </div>
-        <div
-          className={`row mt-4  justify-content-center ${
-            windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
-          }`}
-        >
-          <div className="linear-border" onClick={loadMore}>
-            <button className={`btn filled-btn px-5 `}>Load More</button>
+                ))}
+          </div>
+          <div
+            className={`row mt-4 mx-0  justify-content-center ${
+              windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+            }`}
+          >
+            <div
+              className={`linear-border `}
+              onClick={loadMore}
+              style={{ width: "fit-content" }}
+            >
+              <button
+                className={`btn filled-btn px-5 ${
+                  windowSize.width > 786 || slice >= bios.length ? "d-none" : ""
+                }`}
+              >
+                Load More
+              </button>
+            </div>
           </div>
         </div>
       </div>

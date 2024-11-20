@@ -179,7 +179,7 @@ function SignUpGecko({
         />
         <span className="footertxt-coingecko mt-1">
           Users who have claimed the {mintTitle} NFT are required to create a
-          WoD Account to receive the NFT and participate in the exclusive event.
+          WOD Account to receive the NFT and participate in the exclusive event.
         </span>
 
         <div className="summaryseparator"></div>
@@ -246,7 +246,7 @@ function SignUpGecko({
         uppercase letters.
       </span>
       <span className="footertxt-coingecko mt-1">
-        Users who have claimed the {mintTitle} NFT are required to create a WoD
+        Users who have claimed the {mintTitle} NFT are required to create a WOD
         Account to receive the NFT and participate in the exclusive event.
       </span>
 

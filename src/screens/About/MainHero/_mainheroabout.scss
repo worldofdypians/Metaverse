@@ -1,0 +1,48 @@
+.about-wrapper{
+    background-image: url(../../../assets/aboutAssets/aboutBanner.webp) !important;
+    min-height: 100vh;
+
+    @media only screen and (max-width: 991px) {
+        min-height: auto;
+        background-size: cover;
+      }
+      
+}
+
+.about-hero-desc{
+    color: #EEEDFF;
+text-align: center;
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+font-family: "Montserrat";
+font-size: 16px;
+text-align: center;
+font-style: normal;
+font-weight: 500;
+line-height: 20px; /* 125% */
+width: 50%;
+@media screen and (max-width: 786px) {
+    width: 100%;
+}
+}
+
+.anchors-wrapper{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    @media screen and (max-width: 786px) {
+        position: relative;
+    }
+}
+
+.anchor-title{
+    color: #DCFB85;
+text-align: right;
+font-family: "Montserrat";
+font-size: 16px;
+font-style: normal;
+font-weight: 300;
+line-height: 18px; /* 112.5% */
+letter-spacing: -0.288px;
+}

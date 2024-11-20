@@ -265,7 +265,7 @@
   line-height: 24px;
   letter-spacing: -0.018em;
   color: #f7f7fc;
-
+width: 75%;
   p {
     margin-bottom: 0 !important;
     span, strong {
@@ -280,6 +280,10 @@
   span {
     color: #dbd9ff !important;
   }
+
+  @media only screen and (max-width: 600px) {
+   width: 100%;
+  }
 }
 
 .ql-align-center {
@@ -289,8 +293,8 @@
 
 .announcement-side-wrapper {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  grid-template-columns: repeat(1, 1fr);
   @media only screen and (max-width: 600px) {
     grid-template-columns: repeat(1, 1fr);
   }

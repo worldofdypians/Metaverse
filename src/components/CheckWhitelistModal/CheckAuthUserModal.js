@@ -74,30 +74,30 @@ const CheckAuthUserModal = ({
   const [status, setStatus] = useState();
   const [nftresult, setResult] = useState(0);
 
-  const checkData = async () => {
-    if (coinbase) {
-      let result = window.checkWhitelistWod(coinbase);
+  // const checkData = async () => {
+  //   if (coinbase) {
+  //     let result = window.checkWhitelistWod(coinbase);
  
 
-      if (result === 1 || nftresult > 0 || isPremium) {
-        setactiveUser(true);
-        handleActiveUser(true);
-        setLoading(false);
-        navigate("/auth");
-        if (donwloadSelected === true)
-          window.location.href =
-            "https://store.epicgames.com/p/world-of-dypians-2e0694";
-        else {
-          // handleRedirect();
-          onClose();
-        }
-      } else {
-        setactiveUser(false);
-        handleActiveUser(false);
-        setLoading(false);
-      }
-    }
-  };
+  //     if (result === 1 || nftresult > 0 || isPremium) {
+  //       setactiveUser(true);
+  //       handleActiveUser(true);
+  //       setLoading(false);
+  //       navigate("/auth");
+  //       if (donwloadSelected === true)
+  //         window.location.href =
+  //           "https://store.epicgames.com/p/world-of-dypians-2e0694";
+  //       else {
+  //         // handleRedirect();
+  //         onClose();
+  //       }
+  //     } else {
+  //       setactiveUser(false);
+  //       handleActiveUser(false);
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
 
   const checkBetaTester = async () => {
     if (coinbase) {
@@ -121,9 +121,9 @@ const CheckAuthUserModal = ({
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      checkData();
-    }, 3000);
+    // setTimeout(() => {
+    //   checkData();
+    // }, 3000);
     checkBetaTester();
   }, [coinbase, nftresult]);
 

@@ -38,7 +38,7 @@ const MobileNav = () => {
         className="mobile-nav d-flex justify-content-between align-items-center justify-content-between py-3 px-4"
       >
         <NavLink
-          to="/marketplace"
+          to="/shop"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -79,7 +79,7 @@ const MobileNav = () => {
           />
         </div>
         <NavLink
-          to="/marketplace/events/treasure-hunt"
+          to="/account/challenges/treasure-hunt"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -97,7 +97,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/marketplace/stake"
+          to="/staking"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -115,7 +115,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/marketplace/mint/timepiece"
+          to="/shop/mint/timepiece"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -132,8 +132,8 @@ const MobileNav = () => {
             );
           }}
         />
-        <NavLink
-          to="/marketplace/nft-bridge"
+        {/* <NavLink
+          to="/shop/nft-bridge"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
@@ -149,7 +149,7 @@ const MobileNav = () => {
               </>
             );
           }}
-        />
+        /> */}
         {email && <NavLink
           to="/loyalty-program"
           end
@@ -197,7 +197,7 @@ const MobileNav = () => {
           } nft-outer-wrapper-1 mobile-nft-wrapper d-flex flex-column p-3 gap-3 w-100`}
         >
           <NavLink
-            to={"/marketplace/beta-pass/base"}
+            to={"/shop/beta-pass/base"}
             className={({ isActive }) =>
               isActive
                 ? "nft-link-active d-flex align-items-center justify-content-between"
@@ -210,7 +210,7 @@ const MobileNav = () => {
             </div>
           </NavLink>
           <NavLink
-            to={"/marketplace/land"}
+            to={"/shop/land"}
             className={({ isActive }) =>
               isActive ? "nft-link-active" : "nft-link"
             }
@@ -218,7 +218,7 @@ const MobileNav = () => {
             <h6 className="mobile-nft-title">Land</h6>
           </NavLink>
           <NavLink
-            to={"/marketplace/caws"}
+            to={"/shop/caws"}
             className={({ isActive }) =>
               isActive ? "nft-link-active" : "nft-link"
             }
@@ -227,7 +227,7 @@ const MobileNav = () => {
           </NavLink>
 
           <NavLink
-            to={"/marketplace/timepiece"}
+            to={"/shop/timepiece"}
             className={({ isActive }) =>
               isActive ? "nft-link-active" : "nft-link"
             }

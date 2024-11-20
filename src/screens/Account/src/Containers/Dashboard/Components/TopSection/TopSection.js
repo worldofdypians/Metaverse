@@ -349,7 +349,7 @@ const TopSection = ({
               className="dashboard-goldenpass-wrapper w-100 p-2"
               style={{ height: "120px" }}
             >
-              <NavLink to="/marketplace/events/golden-pass">
+              <NavLink to="/account/challenges/golden-pass">
                 <div className="d-flex flex-column h-100 justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="dashboard-main-white-text">
@@ -452,13 +452,13 @@ const TopSection = ({
                     alt=""
                     onClick={() => {
                       item.title === "goldenPass"
-                        ? navigate("/marketplace/events/golden-pass")
+                        ? navigate("/account/challenges/golden-pass")
                         : item.title === "dragon"
-                        ? navigate("/marketplace/events/dragon-ruins")
+                        ? navigate("/account/challenges/dragon-ruins")
                         : item.title === "critical-hit"
-                        ? navigate("/marketplace/events/critical-hit")
+                        ? navigate("/account/challenges/critical-hit")
                         : item.title === "land"
-                        ? navigate("/marketplace/land")
+                        ? navigate("/shop/land")
                         : handleShowPopup(item.title);
                     }}
                     key={index}
@@ -573,7 +573,7 @@ const TopSection = ({
               className="dashboard-goldenpass-wrapper w-100 p-2"
               style={{ height: "100px" }}
             >
-              <NavLink to="/marketplace/events/golden-pass">
+              <NavLink to="/account/challenges/golden-pass">
                 <div className="d-flex flex-column h-100 justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="dashboard-main-white-text">

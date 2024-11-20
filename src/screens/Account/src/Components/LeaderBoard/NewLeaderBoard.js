@@ -47,10 +47,15 @@ import coreInactive from "./assets/coreInactive.svg";
 import baseActive from "./assets/baseActive.svg";
 import baseInactive from "./assets/baseInactive.svg";
 
+import matchainActive from "../../../../../components/Header/assets/matchain.svg";
+
+
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
 import taikoActive from "./assets/taikoActive.svg";
 import taikoInactive from "./assets/taikoInactive.svg";
+import matchainInactive from "./assets/matchainInactive.svg";
+
 import taikoWhite from "./assets/taikoWhite.svg";
 import multiversxActive from "./assets/multiversxActive.svg";
 import seiActive from "./assets/seiActive.svg";
@@ -80,6 +85,8 @@ import goldenPremiumPlayer from "./assets/goldenPremiumPlayer.png";
 import bnbWhite from "./assets/bnbWhite.svg";
 import victionWhite from "./assets/victionWhite.svg";
 import coreWhite from "./assets/coreWhite.svg";
+import matchainWhite from "./assets/matchainWhite.svg";
+
 import baseWhite from "./assets/baseWhite.svg";
 
 import skaleWhite from "./assets/skaleWhite.svg";
@@ -151,12 +158,8 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const NewLeaderBoard = ({
   username,
-  userId,
-  dypBalancebnb,
-  address,
   availableTime,
   email,
-  coinbase,
   isPremium,
   dailyplayerData,
   weeklyplayerData,
@@ -169,7 +172,9 @@ const NewLeaderBoard = ({
   allMantaData,
   allBaseData,
   allTaikoData,
+  allMatData,
   onPremiumClick,
+  onGoldenpassClick
 }) => {
   const chainItems = [
     {
@@ -284,7 +289,6 @@ const NewLeaderBoard = ({
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
-  const [bundlesBought, setbundlesBought] = useState(0);
   const [allData, setAllData] = useState([]);
   const [selectedChain, setSelectedChain] = useState(chainItems[0]);
   const sliderRef = useRef(null);
@@ -303,18 +307,6 @@ const NewLeaderBoard = ({
     setOptionText2(item);
   };
 
-  const getBundles = async () => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
-
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
 
   const handlePrevChain = () => {
     if (selectedChain.id === 0) {
@@ -392,12 +384,11 @@ const NewLeaderBoard = ({
   }, [availableTime]);
 
   useEffect(() => {
-    getBundles();
-  }, [address]);
-
-  useEffect(() => {
-    setOptionText2("bnb");
-  }, []);
+    if (allBnbData && allBnbData.length > 0) {
+      setOptionText2("bnb");
+      setAllData(allBnbData);
+    }
+  }, [allBnbData]);
 
   // useEffect(() => {
   //   if (countdown === null || countdown === undefined || countdown === "0") {
@@ -408,7 +399,7 @@ const NewLeaderBoard = ({
   useEffect(() => {
     setAllData(allBnbData);
   }, []);
-
+  
   return (
     <>
       <div
@@ -551,6 +542,47 @@ const NewLeaderBoard = ({
                           ? "Taiko"
                           : ""}
                       </button>
+
+                      {/* <button
+                        onMouseEnter={() => handleMouseEnter("matchain")}
+                        onMouseLeave={handleMouseLeave}
+                        className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "matchain" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("matchain");
+                          setAllData(allMatData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "matchain"
+                              ? matchainActive
+                              : optionText2 !== "matchain" &&
+                                hoverState === "matchain"
+                              ? matchainWhite
+                              : matchainInactive
+                          }
+                          className={`${
+                            optionText2 === "matchain"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Matchain"
+                          : windowSize.width < 786 && optionText2 === "matchain"
+                          ? "Matchain"
+                          : ""}
+                      </button> */}
+
+
 
                       <button
                         onMouseEnter={() => handleMouseEnter("base")}
@@ -743,7 +775,7 @@ const NewLeaderBoard = ({
                         style={{ width: 55, height: 55 }}
                       />
                       <div className="d-flex flex-column gap-0">
-                        <span className="user-blue-rank">Extra Rewards</span>
+                        <span className="user-blue-rank">Boost Rewards</span>
                         <span
                           className="user-rank-text"
                           style={{
@@ -757,12 +789,12 @@ const NewLeaderBoard = ({
 
                     <div className="d-flex align-items-center gap-2">
                       {!availableTime ? (
-                        <NavLink
+                        <button
                           className="activate-btn px-3 py-1"
-                          to="/marketplace/events/golden-pass"
+                          onClick={onGoldenpassClick}
                         >
                           Activate
-                        </NavLink>
+                        </button>
                       ) : (
                         <Countdown
                           date={Number(availableTime) * 1000}
@@ -784,11 +816,11 @@ const NewLeaderBoard = ({
                         style={{ width: 54, height: 50 }}
                       />
                       <div className="d-flex flex-column gap-0">
-                        <span className="user-blue-rank">
-                          Extra Daily Stars
+                        <span className="user-blue-rank" style={{color: isPremium ? '#F3BF09' :''}}>
+                          {!isPremium ? "Upgrade Status" : "Prime Enabled"}
                         </span>
                         <span className="user-rank-text">
-                          {isPremium ? "Activated" : "Premium Subscription"}
+                          {!isPremium ? "Prime" : ""}
                         </span>
                       </div>
                     </div>
@@ -796,17 +828,18 @@ const NewLeaderBoard = ({
                       {!isPremium ? (
                         <NavLink
                           className="activate-btn2 px-3 py-1"
-                          to="/account#premium"
+                          to="/account/prime"
                           style={{
                             background: "#7E52D2",
                           }}
                         >
-                          Buy
+                          Get
                         </NavLink>
                       ) : (
                         <button
                           className="activate-btn2 px-3 py-1"
-                          onClick={onPremiumClick}
+                          style={{background: 'transparent'}}
+                          // onClick={onPremiumClick}
                         >
                           Lifetime
                         </button>
@@ -837,6 +870,13 @@ const NewLeaderBoard = ({
               )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
+                     {optionText2 === "matchain" ? (
+                <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                  <h6 className="mb-0">Coming Soon</h6>
+                </div>
+              ) : (
+                <></>
+              )}
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
@@ -862,7 +902,7 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={`leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
+                            className={`${optionText2 === 'matchain' && 'blur-leaderboard'} leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
@@ -1130,7 +1170,58 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? playerAvatar15
                                                         : playerAvatar16
-                                                      : index + 1 <= 10
+                                                        : optionText2 === "matchain"
+                                                        ? index + 1 <= 10
+                                                          ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
+                                                              index + 1
+                                                            }.png`)
+                                                          : index + 1 >= 11 &&
+                                                            index + 1 <= 15
+                                                          ? playerAvatar1
+                                                          : index + 1 >= 16 &&
+                                                            index + 1 <= 20
+                                                          ? playerAvatar2
+                                                          : index + 1 >= 21 &&
+                                                            index + 1 <= 25
+                                                          ? playerAvatar3
+                                                          : index + 1 >= 26 &&
+                                                            index + 1 <= 30
+                                                          ? playerAvatar4
+                                                          : index + 1 >= 31 &&
+                                                            index + 1 <= 35
+                                                          ? playerAvatar5
+                                                          : index + 1 >= 36 &&
+                                                            index + 1 <= 40
+                                                          ? playerAvatar6
+                                                          : index + 1 >= 41 &&
+                                                            index + 1 <= 45
+                                                          ? playerAvatar7
+                                                          : index + 1 >= 46 &&
+                                                            index + 1 <= 50
+                                                          ? playerAvatar8
+                                                          : index + 1 >= 51 &&
+                                                            index + 1 <= 55
+                                                          ? playerAvatar9
+                                                          : index + 1 >= 56 &&
+                                                            index + 1 <= 60
+                                                          ? playerAvatar10
+                                                          : index + 1 >= 61 &&
+                                                            index + 1 <= 65
+                                                          ? playerAvatar11
+                                                          : index + 1 >= 66 &&
+                                                            index + 1 <= 70
+                                                          ? playerAvatar12
+                                                          : index + 1 >= 71 &&
+                                                            index + 1 <= 75
+                                                          ? playerAvatar13
+                                                          : index + 1 >= 76 &&
+                                                            index + 1 <= 80
+                                                          ? playerAvatar14
+                                                          : index + 1 >= 81 &&
+                                                            index + 1 <= 85
+                                                          ? playerAvatar15
+                                                          : playerAvatar16
+                                                        : index + 1 <= 10
                                                       ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
                                                           index + 1
                                                         }.png`)

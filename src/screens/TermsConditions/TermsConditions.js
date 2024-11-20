@@ -8,10 +8,10 @@ const TermsConditions = () => {
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column news-main-wrapper">
         <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-          <div className="update-title font-organetto">Terms of Service</div>
+          <div className="explorer-grid-title my-4">Terms of Service</div>
           <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
             <p className="text-white m-0">Last Revised on October 01, 2024</p>
             <p className="text-white m-0">
@@ -92,8 +92,8 @@ const TermsConditions = () => {
               business judgment.
             </p>
             <p className="text-white m-0">
-              1.3. Game Items. The Services provide a marketplace (the
-              “Marketplace”) for you to purchase, transfer, and trade
+              1.3. Game Items. The Services provide a shop (the
+              “Shop”) for you to purchase, transfer, and trade
               Game-related items such as resources, and other items (“Game
               Items”); provided that any Game Items that we indicate are
               “soulbound” to you shall be non-transferable and non-tradable
@@ -120,21 +120,21 @@ const TermsConditions = () => {
               your use of the Game NFTs via the Services.
             </p>
             <p className="text-white m-0">
-              1.5. Marketplace. We provide the Marketplace to be able to sell
+              1.5. Shop. We provide the Shop to be able to sell
               Game Items and other Services-related offerings (collectively,
-              “Offerings”) to you directly from us. The Marketplace will also
+              “Offerings”) to you directly from us. The Shop will also
               facilitate peer-to-peer sales conducted via decentralized or
               third-party exchanges or protocols whereby buyers and sellers can
               buy, sell, and trade Game NFTs (other than Soulbound Items) with
               each other. We may charge a transaction fee on all peer-to-peer
-              sales that occur via the Marketplace or that otherwise involve
+              sales that occur via the Shop or that otherwise involve
               Game NFTs (which may be calculated as a percentage of the overall
               sale price of the Game Items). We may offer ways to receive a
               discount on such transaction fees, such as by holding or staking
               certain Services-related tokens and assets. The scope of, and
               pre-requisitions for receiving any, such discount offers are
               subject to change by us in our sole discretion at any time. To
-              facilitate transactions via the Marketplace, we have integrated
+              facilitate transactions via the Shop, we have integrated
               with one or more third-party exchanges and services or other
               decentralized smart contract protocols. These protocols
               facilitate, on a peer-to-peer basis, the exchange of
@@ -143,17 +143,17 @@ const TermsConditions = () => {
               we do not control the transfer of cryptocurrency or digital
               assets, including Game NFTs, using these third-party services or
               decentralized services, and we do not have the ability to cancel
-              or reverse transactions via the Marketplace. Except as may
+              or reverse transactions via the Shop. Except as may
               otherwise be provided in these Terms, we do not control or endorse
               purchases or sales of Game NFTs or other Offerings outside of the
-              Services, including the Marketplace. With respect to Game NFTs
+              Services, including the Shop. With respect to Game NFTs
               that are not sold directly by us, we are not a party to any
               agreement entered into between an end user buyer and a seller on
-              the Marketplace. Other than with respect to items sold directly by
+              the Shop. Other than with respect to items sold directly by
               us, we have no control over the conduct of buyers, sellers, and
-              any other users of the Marketplace. We accept no liability for any
+              any other users of the Shop. We accept no liability for any
               aspect of the buyer and seller peer-to-peer interaction on the
-              Marketplace.
+              Shop.
             </p>
             <p className="text-white m-0">
               1.6. Digital Wallet. To use certain of the Services, you need to
@@ -232,7 +232,7 @@ const TermsConditions = () => {
             <p className="text-white m-0">
               1.9. Purchases Made for Consumptive Use. You acknowledge and
               affirm that you are acquiring Offerings, whether through the
-              Marketplace or otherwise through the Services, for purposes of use
+              Shop or otherwise through the Services, for purposes of use
               in connection with the Services and, in the case of the Game NFTs,
               to play the Game or for other collectible purposes, and in each
               case not for any investment or speculative purposes. Any economic
@@ -347,8 +347,8 @@ const TermsConditions = () => {
               otherwise in conflict with these Terms or any other
               Services-related policies (e.g., not to create and sell
               merchandise related to such Content); (b) as part of the
-              Marketplace and any other marketplace that permits the purchase
-              and sale of your Game NFTs, provided that the marketplace
+              Shop and any other Shop that permits the purchase
+              and sale of your Game NFTs, provided that the Shop
               cryptographically verifies that only the actual owner can display
               the Content in connection with their sale of their Game NFT; or
               (c) as part of a third-party website or application that permits
@@ -426,7 +426,7 @@ const TermsConditions = () => {
             </p>
             <p className="text-white m-0">
               e. engage in any manipulative activity that violates the integrity
-              of the prices of assets on the Marketplace, including (but not
+              of the prices of assets on the Shop, including (but not
               limited to) the manipulative tactics commonly known as spoofing
               and wash trading;
             </p>

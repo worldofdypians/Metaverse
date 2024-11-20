@@ -2,11 +2,15 @@
   // min-width: 100%;
   // margin: auto;
   max-width: 2400px;
+  height: 350px;
+  background-image: url('./footerBg.webp') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   position: relative;
   bottom: 0;
   overflow: hidden;
   background: #080b2a;
-  z-index: 8;
+  z-index: 6;
 
   .footer-link {
     font-style: normal;
@@ -46,14 +50,34 @@
   }
 }
 
+.footerlink-wrapper {
+  @media screen and (max-width: 767px) {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%; 
+  }
+}
 .poweredtext {
   font-size: 12px;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 991px) {
   .footer-socials {
     grid-template-columns: repeat(7, 1fr) !important;
-    display: grid !important
+    display: grid !important;
+  }
+
+  .footer-container {
+    max-width: 2400px;
+    height: 650px;
+    background-image: url('./footerBgMobile.webp') !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    position: relative;
+    bottom: 0;
+    overflow: hidden;
+    background: #080b2a;
+    z-index: 8;
   }
 }
 
@@ -65,6 +89,12 @@
     row-gap: 10px !important;
     column-gap: 70px !important;
     margin-bottom: 1rem;
+  }
+
+  .footer-socials-wrapper {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    place-items: center;
   }
 
   .epic-logo-footer-wrapper {
@@ -96,4 +126,112 @@
   .extra-padding {
     padding-bottom: 50px;
   }
+}
+
+.new-footer-desc {
+  color: #fff;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  width: 75%;
+}
+
+.footer-email {
+  color: #fff !important;
+  transition: all 0.25s;
+}
+
+.footer-email-wrapper:hover {
+  .footer-email {
+    color: #5b4a93 !important;
+  }
+}
+
+.footer-newsletter-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-column-title {
+  color: #fff;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.footer-column-link {
+  color: #fff !important;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.new-footer-link {
+  color: #eeedff !important;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  // text-transform: uppercase;
+}
+
+.epic-games-btn {
+  background: linear-gradient(270deg, #b936f5, #c64c85, #c64c85, #b936f5);
+  background-size: 300%;
+  background-position: 0 0;
+  border-radius: 8px;
+  border: none;
+  color: #eeedff !important;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  transition: all .25s;
+}
+
+.epic-games-btn:hover{
+  background-position: 100% 0 !important;
+}
+
+.fullBtn {
+  @media screen and (max-width: 786px) {
+  width: 100%;
+  justify-content: center;
+  }
+}
+
+.copyright-text{
+  color: #A2ADC8;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 200% */
+}
+
+.trademark-text{
+  color: #A2ADC8;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 200% */
+}
+
+.gray-footer-link{
+  color: #A2ADC8 !important;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 200% */
+  text-transform: uppercase;
 }

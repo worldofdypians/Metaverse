@@ -781,16 +781,16 @@ const CawsNFT = ({
       style={{ overflow: "auto" }}
     >
       <div
-        className="container-fluid d-flex justify-content-end p-0"
+        className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
         style={{ minHeight: "72vh", maxWidth: "2400px" }}
       >
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft d-flex align-items-start px-3 px-lg-5 position-relative"
+          className="container-nft2 d-flex align-items-start px-3 px-lg-5 position-relative"
           style={{ backgroundSize: "cover" }}
         >
-          <div className="container-lg mx-0 position-relative">
+          <div className="custom-container mx-0 position-relative">
             <div className="row align-items-center justify-content-between mt-4 gap-4 gap-lg-0">
               <div className="col-12 col-lg-6">
                 <div className="d-flex flex-column gap-3">
@@ -805,7 +805,8 @@ const CawsNFT = ({
                     earn multiple <b>Rewards</b>.
                   </p>
                   <NavLink to="/caws" style={{ width: "fit-content" }}>
-                    <button className="btn pill-btn">Explore</button>
+                  <button className="pill-btn2 px-3 py-2">Explore</button>
+
                   </NavLink>
                 </div>
               </div>
@@ -950,7 +951,7 @@ const CawsNFT = ({
                     <>
                       {cawsNFTS.map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1136,7 +1137,7 @@ const CawsNFT = ({
                     dummyData.map((nft, index) => {
                       return (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{
@@ -1186,7 +1187,7 @@ const CawsNFT = ({
                     <>
                       {cawsNFTS2.slice(0, next2).map((nft, index) => (
                         <NavLink
-                          to={`/marketplace/nft/${nft.tokenId}/${nft.nftAddress}`}
+                          to={`/shop/nft/${nft.tokenId}/${nft.nftAddress}`}
                           style={{ textDecoration: "none" }}
                           key={index}
                           state={{

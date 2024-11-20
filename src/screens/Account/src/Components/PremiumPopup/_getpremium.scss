@@ -1,0 +1,57 @@
+.become-premium-new-title{
+    color: #FFC808;
+font-family: "Montserrat";
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 200% */
+text-transform: uppercase;
+}
+
+.my-premium-balance{
+    color: #5690FF;
+text-align: right;
+font-family: "Montserrat";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.216px;
+}
+
+.already-premium-title{
+    color: #F3BF09;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-style: normal;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 24px; /* 120% */
+}
+
+.is-premium-gold-bg{
+    background-image: url('./assets/premiumBg.webp');
+    border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    @media screen and (max-width: 786px) {
+        background-image: url('./assets/premiumBgMobile.webp');
+    }
+}
+
+.already-preium-badge{
+    position: relative;
+    width: 88px;
+    // right: 4%;
+    @media screen and (max-width: 786px) {
+        right: 0;
+    }
+}
+
+.bgwrapper { 
+background: linear-gradient(180deg, rgba(18, 18, 53, 0.80) 0%, rgba(18, 18, 53, 0.00) 133.46%);
+}
+

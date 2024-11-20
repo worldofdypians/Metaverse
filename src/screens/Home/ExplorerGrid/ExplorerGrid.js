@@ -1,58 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./_explorergrid.scss";
-import playIcon from "../../../assets/playIcon.svg";
+import getFormattedNumber from "../../Caws/functions/get-formatted-number";
+import dappRadarFull from './dappradarFull.svg'
+// import playIcon from "../../../assets/playIcon.svg";
 
-const ExplorerGrid = () => {
-  const explorerCards = [
-    {
-      title: "Play",
-      content:
-        "Experience unique gameplay and explore a world without end in a quest to form your destiny. Players can create their own  tools and armors to assist in their journey. The opportunities are endless ensuring infinite possibilities.",
-      icon: "playIcon",
-    },
-    {
-      title: "Build",
-      content:
-        "The World of dypians offers a robust set of creative tools so players can design the gameplay experience of their choice. Users can create gear, tools, weapons, and skins to use on never-ending quests!",
-      icon: "buildIcon",
-    },
-    {
-      title: "Discover",
-      content:
-        "Players can discover new areas of the world as the map continuously grows and expands. As your journey continues, you will get access to new areas to explore and create in. An evolving world ready to be discovered.",
-      icon: "discoverIcon",
-    },
-    {
-      title: "Connect",
-      content:
-        "Connect with other players, join clans, complete  quests, develop areas, trade items, and much more! The world of dypians provides a venue of collaboration limited only by the imagination.",
-      icon: "connectIcon",
-    },
-  ];
+const ExplorerGrid = ({ totalSupply, monthlyPlayers }) => {
+  const [totalTx2, setTotalTx] = useState(0);
+  const [totalvolume2, setTotalVolume] = useState(0);
+  const fetchCachedData = () => {
+    const cachedVolume = localStorage.getItem("cachedVolume");
+    const cachedTvl = localStorage.getItem("cachedTvl");
+
+    if (cachedTvl && cachedVolume) {
+      setTotalTx(cachedTvl);
+      setTotalVolume(cachedVolume);
+    }
+  };
+
+  useEffect(() => {
+    fetchCachedData();
+  }, []);
 
   return (
-    <div className="px-3 px-lg-5" id="explorer">
-      <div className="w-100">
-        <h2 className="font-organetto explorer-grid-title px-0 w-50">
-          The world is yours to{" "}
-          <mark className="font-organetto explore-tag">shape</mark>
-        </h2>
-      </div>
-      <div className="explorer-grid mt-5">
-        {explorerCards.map((card, index) => (
-          <div className="d-flex flex-column gap-3" key={index}>
-            <div className="d-flex flex-row flex-lg-column align-items-center align-items-lg-start gap-3">
-              <img
-                src={require(`../../../assets/${card.icon}.svg`)}
-                alt="play icon"
-                height={56}
-                width={56}
-              />
-              <h6 className="explorer-card-title mb-0">{card.title}</h6>
+    <div
+      className="px-3 px-lg-5 py-4 stats-wrapper d-flex justify-content-center" 
+      id="explorer"
+    >
+      <div className="custom-container">
+        <div className="row">
+        <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center position-relative gap-2">
+             <a href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"  className="dappRadar-full" target="_blank">
+             <img src={dappRadarFull} className="w-100" alt="" />
+             </a>
+              <h6 className="mb-0 new-stats-value">
+                {" "}
+                {getFormattedNumber(monthlyPlayers,0)}
+              </h6>
+              <span className="new-stats-type">
+                Monthly on-chain Players
+              </span>
             </div>
-            <p className="explorer-card-content">{card.content}</p>
           </div>
-        ))}
+          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
+              <h6 className="mb-0 new-stats-value">
+                {" "}
+                {getFormattedNumber(totalTx2).slice(
+                  0,
+                  getFormattedNumber(totalTx2).length - 3
+                )}
+              </h6>
+              <span className="new-stats-type">
+                Total on-chain transactions
+              </span>
+            </div>
+          </div>
+          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
+              <h6 className="mb-0 new-stats-value">
+                ${getFormattedNumber(totalvolume2, 0)}
+              </h6>
+              <span className="new-stats-type">Total Volume (USD)</span>
+            </div>
+          </div>
+          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
+              <h6 className="mb-0 new-stats-value">
+                {getFormattedNumber(totalSupply, 0)}
+              </h6>
+              <span className="new-stats-type">Sold NFTs</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -37,7 +37,8 @@ const getListedNftResult = async () => {
     console.log(e);
   });
 
-  return result;
+  let result2 = result.filter((item)=>{return item.payment_priceType === 0})
+  return result2;
 };
 
 getDypPrice();
@@ -49,10 +50,10 @@ const convertToUSD = async (price, payment_priceType) => {
     return ethPrice.toFixed(5);
   }
 
-  if (payment_priceType === 1) {
-    const usdPrice = price * dyp_Price;
-    return usdPrice.toFixed(2);
-  }
+  // if (payment_priceType === 1) {
+  //   const usdPrice = price * dyp_Price;
+  //   return usdPrice.toFixed(2);
+  // }
 
   return null;
 };

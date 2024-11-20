@@ -663,7 +663,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
   const dummyBanner2 = {
     title: "BNB Chain Game Expedition",
     status: "Expired",
-    desc: "Join the World of Dypians (WoD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WoD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
+    desc: "Join the World of Dypians (WOD) Dypians Discovery Quest Campaign from May 29 to June 12 for a chance to win a share of the 200,000 WOD Tokens & 750 Premium Subscription prize pool! World of Dypians (WOD) is a revolutionary MMORPG available on Epic Games in a Closed Beta version, set in a connected virtual world, featuring advanced AI, stunning graphics, and immersive gameplay.",
     start_date: "June 12, 2024",
     end_date: "June 28, 2024",
     image: bnbExpedition,
@@ -1051,7 +1051,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                 {active ? (
                   <div className="w-100 d-flex flex-column justify-content-between mt-5">
                     <div className="new-packages-grid community-packages-grid mt-3 mt-lg-0 w-100">
-                      <NavLink to="/marketplace/events/dragon-ruins">
+                      <NavLink to="/account/challenges/dragon-ruins">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1068,7 +1068,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/golden-pass">
+                      <NavLink to="/account/challenges/golden-pass">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1085,7 +1085,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/puzzle-madness">
+                      <NavLink to="/account/challenges/puzzle-madness">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1102,7 +1102,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                           </div>
                         </div>
                       </NavLink>
-                      <NavLink to="/marketplace/events/critical-hit">
+                      <NavLink to="/account/challenges/critical-hit">
                         <div className="">
                           <div
                             className={`nft-event-package p-2 d-flex align-items-center flex-column gap-2`}
@@ -1127,7 +1127,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                       {dummyBetaPassData2.slice(0, 4).map((item, index) => (
                         <ActiveProfileEvent
                           onOpenEvent={() => {
-                            navigate("/marketplace/events/treasure-hunt");
+                            navigate("/account/challenges/treasure-hunt");
                           }}
                           data={item}
                           event={item}
@@ -1142,7 +1142,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                       .map((item, index) => (
                         <ExpiredProfileEvent
                           onOpenEvent={() => {
-                            navigate("/marketplace/events/past");
+                            navigate("/account/challenges/treasure-hunt");
                           }}
                           data={item}
                           event={item}

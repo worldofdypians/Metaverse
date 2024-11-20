@@ -6,6 +6,9 @@ import discordIcon from "./assets/discordIcon.svg";
 import sidebarArrow from "./assets/sidebarArrow.svg";
 import { useLocation } from "react-router-dom";
 import dypiansLogo from "./assets/dypiansLogo.png";
+import buildLogo from "./assets/buildIcon.svg";
+import supportIcon from "./assets/supportIcon.svg";
+
 import { useEffect } from "react";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import { useQuery } from "@apollo/client";
@@ -49,8 +52,8 @@ const MarketSidebar = () => {
         style={{ height: "90%" }}
       >
         <div className="d-flex flex-column  gap-2">
-          <NavLink
-            to="/marketplace"
+          {/* <NavLink
+            to="/shop"
             end
             className={({ isActive }) =>
               isActive
@@ -70,8 +73,8 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
-
+          /> */}
+          {/* <div className="sidebar-separator my-2"></div> */}
           <div className="accordion" id="accordionExample">
             <div className="">
               <h2 className="sidebar-item p-2 mb-0" id="headingOne">
@@ -101,10 +104,9 @@ const MarketSidebar = () => {
               <div
                 id="collapseOne"
                 className={`accordion-collapse collapse ${
-                  location.pathname.includes("marketplace/caws") ||
-                  location.pathname.includes("marketplace/land") ||
-                  location.pathname.includes("marketplace/timepiece") ||
-                  location.pathname.includes("marketplace/beta-pass")
+                  location.pathname.includes("shop") ||
+                  location.pathname.includes("loyalty") ||
+                  location.pathname.includes("challenges")
                     ? "show"
                     : null
                 }`}
@@ -114,12 +116,12 @@ const MarketSidebar = () => {
                 <div className="accordion-body">
                   <div className="d-flex flex-column gap-2">
                     <NavLink
-                      to="/marketplace/beta-pass/base"
+                      to="/shop/beta-pass/base"
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item ${
                               location.pathname.includes("conflux") ||
                               location.pathname.includes("coin98") ||
                               location.pathname.includes("coingecko") ||
@@ -139,48 +141,46 @@ const MarketSidebar = () => {
                             }`
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <div className="d-flex align-items-center gap-5">
                         <span className={`nft-sidebar-title`}>Beta Pass</span>
-                        <div className="new-beta-sidebar">
-                          <span className="new-beta-text">New</span>
-                        </div>
+                      
                       </div>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/caws"
+                      to="/shop/caws"
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item"
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>CAWS</span>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/land"
+                      to="/shop/land"
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item"
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>Land</span>
                     </NavLink>
                     <NavLink
-                      to="/marketplace/timepiece"
+                      to="/shop/timepiece"
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item`
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item`
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>
                         CAWS Timepiece
                       </span>
@@ -190,8 +190,9 @@ const MarketSidebar = () => {
               </div>
             </div>
           </div>
-          <NavLink
-            to="/marketplace/events/treasure-hunt"
+
+          {/* <NavLink
+            to="/shop/events/treasure-hunt"
             end
             className={({ isActive }) =>
               isActive
@@ -219,9 +220,31 @@ const MarketSidebar = () => {
                 </>
               );
             }}
+          /> */}
+          <NavLink
+            to="/account/challenges/treasure-hunt"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "eventsIconActive" : "eventsIcon";
+              return (
+                <>
+                  <img
+                    src={require(`./assets/${icon}.svg`)}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Challenges</span>
+                </>
+              );
+            }}
           />
           <NavLink
-            to="/marketplace/stake"
+            to="/staking"
             end
             className={({ isActive }) =>
               isActive
@@ -237,13 +260,13 @@ const MarketSidebar = () => {
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
-                  <span className={`sidebar-title`}>Stake</span>
+                  <span className={`sidebar-title`}>Staking</span>
                 </>
               );
             }}
           />
           <NavLink
-            to="/marketplace/mint/timepiece"
+            to="/shop/mint/timepiece"
             end
             className={({ isActive }) =>
               isActive
@@ -264,8 +287,8 @@ const MarketSidebar = () => {
               );
             }}
           />
-          <NavLink
-            to="/marketplace/nft-bridge"
+          {/* <NavLink
+            to="/shop/nft-bridge"
             end
             className={({ isActive }) =>
               isActive
@@ -285,59 +308,75 @@ const MarketSidebar = () => {
                 </>
               );
             }}
-          />
-          {email
-          //  &&
-          //   data &&
-          //   data.getPlayer &&
-          //   data.getPlayer.displayName &&
-          //   data.getPlayer.playerId &&
-          //   data.getPlayer.wallet &&
-          //   data.getPlayer.wallet.publicAddress
-             && (
-              <NavLink
-                to="/loyalty-program"
-                end
-                className={({ isActive }) =>
-                  isActive
-                    ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                    : "d-flex p-2 align-items-center gap-2 sidebar-item"
-                }
-                children={({ isActive }) => {
-                  const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
-                  return (
-                    <>
-                      <img
-                        src={require(`./assets/${icon}.svg`)}
-                        // style={{ width: "20px", height: "20px" }}
-                        alt=""
-                      />
-                      <span className={`sidebar-title`}>Loyalty Program</span>
-                    </>
-                  );
-                }}
-              />
-            )}
-        </div>
-        <div
-          className={`join-now-wrapper ${
-            isSticky && "join-up"
-          } p-3 d-flex flex-column align-items-center gap-4`}
-        >
-          <div className="d-flex flex-column align-items-center gap-2">
-            <img src={dypiansLogo} alt="" />
-            <h6 className="build-wod-title mb-0">Build in WoD</h6>
-            <p className="build-wod-desc mb-0">
-              Become a valued part of our ecosystem by bringing your business to
-              World of Dypians
-            </p>
-          </div>
+          /> */}
+          {email && (
+            //  &&
+            //   data &&
+            //   data.getPlayer &&
+            //   data.getPlayer.displayName &&
+            //   data.getPlayer.playerId &&
+            //   data.getPlayer.wallet &&
+            //   data.getPlayer.wallet.publicAddress
+            <NavLink
+              to="/loyalty-program"
+              end
+              className={({ isActive }) =>
+                isActive
+                  ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                  : "d-flex p-2 align-items-center gap-2 sidebar-item"
+              }
+              children={({ isActive }) => {
+                const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
+                return (
+                  <>
+                    <img
+                      src={require(`./assets/${icon}.svg`)}
+                      // style={{ width: "20px", height: "20px" }}
+                      alt=""
+                    />
+                    <span className={`sidebar-title`}>Loyalty Program</span>
+                  </>
+                );
+              }}
+            />
+          )}
+
+          {/* <div className="sidebar-separator my-2"></div>
           <a
             href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
             target="_blank"
+            rel="noreferrer"
+            className={"d-flex p-2 align-items-center gap-2 sidebar-item"}
           >
-            <button className="btn join-now-btn">Apply</button>
+            <img
+              src={buildLogo}
+              style={{ width: "20px", height: "20px" }}
+              alt=""
+            />
+            <span className={`sidebar-title`}>Partners</span>
           </a>
+          <NavLink
+            to="/contact-us"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
+              return (
+                <>
+                  <img
+                    src={supportIcon}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Support</span>
+                </>
+              );
+            }}
+          /> */}
         </div>
       </div>
     </div>

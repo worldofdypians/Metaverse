@@ -1,0 +1,790 @@
+.profile-card-wrapper {
+  border-radius: 10px;
+  background: linear-gradient(107deg, #28165c 0%, #5c1640 100%);
+}
+
+.my-profile-username {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.user-data-item-left {
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.user-data-item-right {
+  color: #ffd37e;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.loginbtn-profile {
+  border-radius: 7px;
+  background: linear-gradient(90deg, #b936f5 0%, #c64c85 100%);
+  background-position: 0 0;
+  color: #eeedff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.loginbtn-profile:hover {
+  background: linear-gradient(90deg, #c64c85 0%, #b936f5 100%);
+  background-position: 0 0;
+  color: #eeedff !important;
+
+}
+.my-profile-email {
+  color: #b8b8e0;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 100% */
+}
+
+.current-rank-text {
+  color: #ffd37e;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.wallet-address-wrapper {
+  border-radius: 4px;
+  background: rgba(128, 32, 96, 0.2);
+}
+
+.wallet-address-wrapper2 {
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.wallet-address-wrapper2:hover {
+  background: rgba(255, 129, 104, 0.4);
+}
+
+.wallet-address-wrapper-error {
+  border-radius: 4px;
+  background: rgba(255, 129, 104, 0.2);
+}
+
+.profile-wallet-span {
+  color: #b8b8e0;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 8px; /* 100% */
+}
+
+.wallet-addr {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px;
+}
+.wallet-addr-error {
+  color: #ff8168;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px;
+}
+.domain-name-wrapper {
+  background: linear-gradient(
+    172deg,
+    rgba(0, 0, 0, 1) 20%,
+    rgba(238, 237, 255, 0.1) 100%
+  );
+  width: 25px;
+  height: 25px;
+}
+
+.sidebar-separator2 {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(238, 237, 255, 0) 0%,
+    rgba(238, 237, 255, 0.5) 50%,
+    rgba(238, 237, 255, 0) 100%
+  );
+}
+
+.rank-card-wrapper {
+  border-radius: 8px;
+  height: 120px;
+  width: 120px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s;
+
+  img {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.rank-card-wrapper:hover {
+  border: 1px solid #c23f62;
+  background: rgba(194, 63, 98, 0.2);
+}
+
+.rank-card-span {
+  color: #afa8ba;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 100% */
+}
+
+.rank-card-value {
+  color: #eeedff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 100% */
+}
+
+.new-special-rewards-wrapper {
+  background-image: url(./assets/specialRewardsBg.png);
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 145px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  background-position: center;
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+}
+
+.new-special-rewards-wrapper:hover {
+  border: 2px solid #9e3c7a;
+}
+.special-rewards-title {
+  color: #9e3c7a;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.special-rewards-span {
+  color: #9e3c7a;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.game-leaderboards-wrapper {
+  background-image: url(./assets/leaderboardsBg.png);
+  background-size: 100% 100%;
+  border-radius: 10px;
+  @media screen and (max-width: 991px) {
+    height: 155px !important;
+  }
+}
+
+.leaderboards-title {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.leaderboards-flag-wrapper {
+  position: absolute;
+  right: 5%;
+  top: -30px;
+  width: 60%;
+  @media screen and (max-width: 786px) {
+    width: 100%;
+    top: -20px;
+    right: 0px;
+    justify-content: center;
+  }
+}
+
+.new-flag-wrapper {
+  position: relative;
+  cursor: pointer;
+  width: 33%;
+  transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    width: 22%;
+  }
+}
+
+.new-flag-wrapper:hover {
+  transform: scale(1.1);
+}
+
+.treasure-hunt-wrapper {
+  border-radius: 10px;
+  background: radial-gradient(
+    49.92% 49.92% at 50.08% 50%,
+    #8262d0 0%,
+    #482293 100%
+  );
+  cursor: pointer;
+}
+
+.new-treasure-hunt-card {
+  border-radius: 10px;
+  border: 0.5px solid #9c89b3;
+  background: #321a61;
+}
+.new-treasure-hunt-card-expired {
+  border-radius: 10px;
+  border: 0.5px solid #b8b8e0;
+  background: #342a3f;
+}
+
+.treasure-hunt-top {
+  border-bottom: 0.5px solid #9c89b3;
+  background: #3f1f7e;
+  border-radius: 10px 10px 0 0;
+}
+
+.treasure-hunt-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+}
+
+.treasure-hunt-rewards {
+  color: #fdf7ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 125% */
+}
+
+.treasure-hunt-info {
+  border-radius: 4px;
+  background: rgba(133, 88, 221, 0.2);
+}
+
+.treasure-hunt-info-span {
+  color: #fdf7ff;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 10px; /* 125% */
+}
+
+.events-page-status-tag-upcoming {
+  border-radius: 3px;
+  background: #ec8123;
+  span {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+.events-page-status-tag-expired {
+  background: #b8b8e0;
+  border-radius: 3px;
+  span {
+    color: #404040;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}
+
+.all-treasure-wrapper {
+  border-radius: 10px;
+  background: #18193c;
+}
+
+.profile-placeholder {
+  border-radius: 10px;
+  background: #18193c;
+  height: 140px;
+  width: 100%;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
+}
+
+.special-rewards-total {
+  color: #3b5896;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.special-rewards-total-span {
+  color: #3b5896;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.limited-offers-wrapper {
+  border-radius: 10px;
+  background: radial-gradient(
+    358.71% 141.42% at 100% 100%,
+    #092e4b 0%,
+    #18193c 100%
+  );
+
+  height: 160px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+
+  .slick-slider {
+    width: 100%;
+  }
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
+}
+
+.limited-offers-wrapper:hover {
+  border: 2px solid #015f86;
+}
+.new-stake-nft-wrapper {
+  height: 155px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+ 
+    .utcEventContent {
+       
+
+      @media screen and (max-width: 786px) {
+         width: 50% !important;
+    }
+  }
+}
+
+.extraRewardsGolden {
+  right: 50%;
+  left: 50%;
+  width: fit-content;
+  align-items: center;
+}
+
+// .new-stake-nft-wrapper:hover {
+//   border: 2px solid #ffa1e5;
+// }
+
+.new-stake-nft-img {
+  width: 55%;
+}
+
+.my-rewards-wrapper-new {
+  border-radius: 10px;
+  background-image: url(./assets/myRewards.png);
+  background-size: cover;
+  height: 145px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: all 0.25s ease;
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+}
+
+.my-rewards-wrapper-new:hover, .new-stake-nft-wrapper:hover, .furyBeastBannerItem:hover, .wingStormBannerItem:hover
+, .scorpionKingBannerItem:hover
+, .mazeDayBannerItem:hover, .coldBiteBannerItem:hover, .dragonRuinsBannerItem:hover, .stoneEyeBannerItem:hover {
+  border: 2px solid #11fed2;
+}
+
+.miner-img {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  width: 22%;
+}
+
+.daily-progress-wrapper {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.progress-line {
+  height: 1px;
+  background: linear-gradient(to right, #ffd37e00, #ffd37e80);
+  width: 100%;
+}
+.progress-line-2 {
+  height: 1px;
+  background: linear-gradient(to left, #ffd37e00, #ffd37e80);
+  width: 100%;
+}
+
+.daily-progress-span {
+  color: #ffd37e;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.daily-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px 20px;
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px 0px;
+  }
+}
+
+.daily-progress-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 80px;
+    height: auto;
+  }
+
+  @media screen and (max-width: 1650px) {
+    img {
+      width: 55px;
+      height: auto;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    img {
+      width: 70px;
+      height: auto;
+    }
+  }
+}
+.daily-progress-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  width: fit-content;
+  height: 20px;
+  position: absolute;
+  right: 50%;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  @media screen and (max-width: 500px) {
+    width: 38px;
+    height: 15px;
+  }
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+
+    @media screen and (max-width: 500px) {
+      font-size: 10px;
+    }
+  }
+}
+.daily-progress-value-golden {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f1118;
+  border: 1px solid #c09645;
+  border-radius: 4px;
+  height: 20px;
+  width: fit-content;
+  margin: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  right: 50%;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 48px;
+  @media screen and (max-width: 500px) {
+    height: 15px;
+  }
+  span {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    white-space: nowrap;
+    @media screen and (max-width: 500px) {
+      font-size: 10px;
+    }
+  }
+}
+
+.bundle-title-bottom {
+  color: #ffd37e;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 50%;
+  width: 100%;
+
+  @media screen and (max-width: 500px) {
+    white-space: nowrap;
+    font-size: 9px;
+  }
+}
+
+.daily-progress-status {
+  position: absolute;
+  width: 55px !important;
+  bottom: -45%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.portfolio-wrapper {
+  border-radius: 8px;
+  border: 0.5px solid #c23f62;
+  background: rgba(128, 32, 96, 0.2);
+  cursor: pointer;
+  h6 {
+    color: #eeedff;
+    font-family: "Montserrat";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px; /* 100% */
+  }
+}
+
+.new-profile-img {
+  // width: 100px;
+}
+
+.stoneEyeBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0b3398 0%, #062663 62%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.dragonRuinsBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #2e3842 0%, #121a1e 62%);
+  height: 155px;
+  border: 2px solid transparent;
+  
+}
+
+.coldBiteBannerItem {
+  height: 155px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+
+  background: linear-gradient(90deg, #003bb9 0%, #0a0849 62%);
+}
+
+.furyBeastBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #262f29 0%, #29302c 62%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.wingStormBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #004e7f 0%, #073755 62%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.scorpionKingBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #732802 0%, #ab621e 62%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.mazeDayBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #081c00 0%, #081c00 65%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.puzzleMadnessBannerItem {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
+  height: 155px;
+  border: 2px solid transparent;
+
+}
+
+.utcEventTitle {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.utcEventContent {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.eventbannerimg {
+  position: absolute;
+  height: 151px;
+  right: 0;
+  top: 0;
+}
+
+.score-text-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  h6 {
+    color: #ffd37e;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 10px */
+  }
+
+  span {
+    color: #bea5a9;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 8px */
+    text-transform: uppercase;
+  }
+}
+
+.limited-offer-card {
+  background: #092e4b;
+  // height: 160px;
+  width: 120px;
+  // transform: matrix(1, 0, -0.18, 0.98, 0, 0);
+  // border-left: 2px solid #015f86;
+  // border-bottom: 2px solid #015f86;
+
+  // @media screen and (max-width: 786px) {
+  //   transform: none;
+  //   border: 2px solid #015f86;
+  // }
+}
+
+.limited-offer-reward {
+  color: #daf3ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 11px;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.limited-offer-img {
+  width: 120px;
+  height: 80px;
+}
+
+.limited-offer-purchase {
+  color: #f7f7ff;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 600;
+  line-height: normal;
+}

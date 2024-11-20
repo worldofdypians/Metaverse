@@ -3,7 +3,6 @@ import "./_timepiece.scss";
 import timepieceBanner from "./assets/timePieceBanner.webp";
 import TimepieceHero from "./TimepieceHero";
 import TimePieceSticker from "./TimePieceSticker";
-import cawsBanner from "../../screens/Caws/assets/Nft/nft-main-image2.jpg";
 import TimePieceTraits from "../../components/TimepieceBenefits/TimepieceTraits";
 import TimepieceBenefits from "../../components/TimepieceBenefits/TimepieceBenefits";
 import TimePieceMint from "../../components/TimepieceMint/TimepieceMint";
@@ -38,7 +37,7 @@ const TimePiece = ({
   }, []);
 
   return (
-    <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
+    <div className="container-fluid px-0 d-flex mt-lg-5 pt-lg-5 align-items-center justify-content-center">
       {viewCollection === true && (
         <TimepieceChecklistModal
         coinbase={coinbase}
