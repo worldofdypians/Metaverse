@@ -195,6 +195,7 @@ const MyProfile = ({
   userRankTaiko,
   userTaikoScore,
   onEventCardClick,
+  userDataStarWeekly,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -560,21 +561,29 @@ const MyProfile = ({
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between">
+                    <span className="user-data-item-left">My Progress</span>
                     <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Global</span>
-                      <span className="user-data-item-left">Rank</span>
+                      <div className="d-flex">
+                        <span className="user-data-item-right">
+                          #
+                          {userDataStar.position
+                            ? userDataStar.position + 1
+                            : "---"}
+                        </span>
+                      </div>
+                      <span className="user-data-item-left">Global Rank</span>
                     </div>
-                    <div className="d-flex">
-                      <span className="user-data-item-right">
-                        #
-                        {userDataStar.position
-                          ? userDataStar.position + 1
-                          : "---"}
-                      </span>
+                    <div className="d-flex flex-column">
+                      <div className="d-flex">
+                        <span className="user-data-item-right">
+                        {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
+                        </span>
+                      </div>
+                      <span className="user-data-item-left">Stars</span>
                     </div>
                   </div>
                 </div>
-                <div
+                {/* <div
                   className="wallet-address-wrapper2 p-2 w-100"
                   onClick={openGlobalLeaderboard}
                 >
@@ -589,7 +598,7 @@ const MyProfile = ({
                       </span>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="wallet-address-wrapper2 p-2 w-100">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex flex-column">
@@ -606,6 +615,7 @@ const MyProfile = ({
                     onClose={() => {
                       setRankDropdown(false);
                     }}
+                    primeStars={primeStars}
                     userRank={userRank}
                     userRankSkale={userRankSkale}
                     userBnbScore={userBnbScore}
@@ -627,6 +637,15 @@ const MyProfile = ({
                       onOpenRankPopup();
                       setRankDropdown(false);
                     }}
+                    globalMonthly={
+                      userDataStar.position ? userDataStar.position + 1 : "---"
+                    }
+                    globalWeekly={
+                      userDataStarWeekly.position
+                        ? userDataStarWeekly.position + 1
+                        : "---"
+                    }
+                    isPremium={isPremium}
                   />
                 )}
               </div>
@@ -1002,11 +1021,11 @@ const MyProfile = ({
                 >
                   <img src={myRewardsMiner} className="miner-img" alt="" />
                   <div className="d-flex flex-column position-absolute extraRewardsGolden">
-                    <img
+                    {/* <img
                       src={goldenPassBadge}
                       alt=""
                       style={{ width: 60, height: 60 }}
-                    />
+                    /> */}
                     {/* <h6
                       className="special-rewards-total-span"
                       style={{
@@ -1077,19 +1096,26 @@ const MyProfile = ({
               </div>
 
               <div className="col-12 col-lg-6 mt-3">
-              <NavLink to='/account/prime'>
-                <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
-                  <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={premiumBadge} alt=""  style={{width: 44, height: 44}}/>
-                      <span className="user-blue-rank" style={{color: isPremium ? '#F3BF09' :''}}>
+                <NavLink to="/account/prime">
+                  <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                    <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
+                      <div className="d-flex align-items-center gap-2">
+                        <img
+                          src={premiumBadge}
+                          alt=""
+                          style={{ width: 44, height: 44 }}
+                        />
+                        <span
+                          className="user-blue-rank"
+                          style={{ color: isPremium ? "#F3BF09" : "" }}
+                        >
                           {!isPremium ? "Upgrade Status" : "Prime Enabled"}
                         </span>
                         <span className="user-rank-text">
                           {!isPremium ? "Prime" : ""}
                         </span>
-                    </div>
-                {!isPremium ? (
+                      </div>
+                      {!isPremium ? (
                         <NavLink
                           className="activate-btn2 px-3 py-1"
                           to="/account/prime"
@@ -1102,23 +1128,26 @@ const MyProfile = ({
                       ) : (
                         <button
                           className="activate-btn2 px-3 py-1"
-                          style={{background: 'transparent'}}
+                          style={{ background: "transparent" }}
                           // onClick={onPremiumClick}
                         >
                           Lifetime
                         </button>
                       )}
+                    </div>
                   </div>
-                </div>
                 </NavLink>
               </div>
-
 
               <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">
-                      <img src={goldenPassBadge} alt=""  style={{width: 44, height: 44}}/>
+                      <img
+                        src={goldenPassBadge}
+                        alt=""
+                        style={{ width: 44, height: 44 }}
+                      />
                       <div className="d-flex flex-column">
                         <span className="user-blue-rank">Boost Rewards</span>
                         <span

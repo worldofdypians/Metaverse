@@ -894,6 +894,80 @@
 //   }
 // }
 
+.bigTextYellow {
+  color: #f3bf09;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.smallTextYellow {
+  color: #ffefca;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.rank-premium-status-wrapper {
+  border-radius: 6px;
+  border: 1px solid #2c2d52;
+}
+
+.rank-premium-status-wrapper:hover {
+  border: 1px solid #f3bf09;
+
+}
+
+.rank-upgrade-status {
+  color: #f7f7ff;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.rank-upgrade-status-bottom {
+  color: #f3bf09;
+  font-family: Montserrat;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.144px;
+}
+
+.starscontentwrapper {
+  border-radius: 2px;
+  background: #2c2d52;
+  height: fit-content;
+  display: flex;
+}
+
+.chainstatustxt {
+  color: #edeeff;
+  font-family: Montserrat;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 240% */
+}
+
+.startext {
+  color: #ffd37e;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  // line-height: 16px; /* 160% */
+}
+
 .total-stars-wrapper {
   background-image: url("./assets/totalStarsBg.svg");
   border-radius: 12px;
@@ -1036,16 +1110,38 @@
   line-height: normal;
 }
 .rank-dropdown-item {
-  border-radius: 6px;
-  background: #272746;
+  border-radius: 10px;
+  background: #2c2d52;
+  position: relative;
 }
 
 .rank-dropdown-text {
-  color: #b8b8e0;
-  white-space: nowrap;
+  color: #fff;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 10px */
+}
+
+.rank-dropdown-text-yellow {
+  color: #ffd37e;
+  text-align: center;
   font-size: 12px;
   font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  text-align: center;
+  font-weight: 700;
+  line-height: 100%; /* 12px */
+}
+
+.rank-item-wrapper {
+  border-radius: 6px;
+  background: #35365e;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rankChain {
+  position: absolute;
+  left: -10px;
 }
