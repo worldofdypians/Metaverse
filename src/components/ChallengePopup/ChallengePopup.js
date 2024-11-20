@@ -45,6 +45,9 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
           </div>  
         }
           <div className="d-flex flex-column gap-3 p-3">
+          <h6 className="mb-0 challenge-popup-secondary-title">
+               {item.title}
+              </h6>
             <p className="challenge-popup-desc mb-0">{item.popupDesc}</p>
             {item.title === "Puzzle Madness" ||
             item.title === "Golden Pass" ||

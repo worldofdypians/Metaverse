@@ -10,8 +10,6 @@
 .game-update-card {
   height: 290px;
   backdrop-filter: blur(12.5px);
-  transform: scale(1.05);
-
   border-radius: 12px;
 
   border: 1px solid gray;
@@ -19,6 +17,7 @@
   img{
     border-radius: 12px;
     transition: all .25s;
+    transform: scale(1.05);
   }
 }
 

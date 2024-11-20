@@ -11,7 +11,7 @@ const TermsConditions = () => {
     <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
       <div className="d-flex w-100 flex-column news-main-wrapper">
         <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
-          <div className="update-title font-organetto">Terms of Service</div>
+          <div className="explorer-grid-title my-4">Terms of Service</div>
           <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
             <p className="text-white m-0">Last Revised on October 01, 2024</p>
             <p className="text-white m-0">

@@ -43,7 +43,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
           <div className="new-game-stats-wrapper seventh-banner d-flex align-items-center justify-content-center ">
             <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
               <div className="d-flex flex-column-reverse flex-lg-row align-items-center justify-content-end gap-3 gap-lg-5 mb-3 mb-lg-0">
-                <img src={cawsAmplify} alt="" />
+                <img src={cawsAmplify} className="d-none d-lg-flex" alt="" />
                 <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
                   <span className="amp-benefits-desc text-center text-md-end">
                     Cats and Watches Society
@@ -121,7 +121,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
                     </button>
                   </div>
                 </div>
-                <img src={landAmplify} alt="" />
+                <img src={landAmplify} className="d-none d-lg-flex" alt="" />
               </div>
             </div>
           </div>

@@ -374,7 +374,7 @@ const NewChallenges = ({
       desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
       day: 5,
       dayText: "FRI",
-      title: "Maze Day",
+      title: "BNB Chain Maze Day",
       popupDesc:
         "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
       workList: [

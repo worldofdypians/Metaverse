@@ -240,9 +240,8 @@ const GameUpdates = () => {
     <div className="container-fluid d-flex flex-column align-items-center justify-content-center mt-5">
       <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
         <h2 className="font-montserrat main-hero-title px-0 mb-0">
-          Updates, Stories and Announcements From World of Dypians
+          Updates, Stories and Announcements
         </h2>
-      
       </div>
       <div className="custom-container mt-5">
         <div className="row">
@@ -313,7 +312,7 @@ const GameUpdates = () => {
         <div className="d-grid news-grid px-0 mt-3" ref={showAll}>
           {announcementsNews &&
             announcementsNews.length > 0 &&
-            announcementsNews.slice(2,5).map((item, index) => {
+            announcementsNews.slice(2, 5).map((item, index) => {
               return (
                 <NavLink
                   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
@@ -358,9 +357,7 @@ const GameUpdates = () => {
                           ),
                         }}
                       ></span>
-                      <span
-                        className="mainNews-date"
-                      >
+                      <span className="mainNews-date">
                         {item.date.toLocaleDateString("en-US", options)}
                       </span>
                     </div>

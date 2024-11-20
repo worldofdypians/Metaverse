@@ -10281,10 +10281,10 @@ function Dashboard({
             >
               <div className="d-flex align-items-center justify-content-between">
                 <h2
-                  className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
+                  style={{fontSize: "24px"}}
                 >
-                  <mark className={`font-organetto bundletag`}>WOD</mark>{" "}
-                  Leaderboard
+                WOD Leaderboard
                 </h2>
                 {/* {windowSize.width > 786 && (
                       <div className="d-flex align-items-center gap-2">
@@ -10442,11 +10442,11 @@ function Dashboard({
               style={{ width: "35%", pointerEvents: "auto" }}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+              <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
+                  style={{fontSize: "24px"}}
                 >
-                  <mark className={`font-organetto bundletag`}>Genesis</mark>{" "}
-                  Rewards
+                Genesis Rewards
                 </h2>
 
                 <img
@@ -10614,10 +10614,11 @@ function Dashboard({
               style={{ width: "60%", pointerEvents: "auto" }}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`font-organetto mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
+              <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
+                  style={{fontSize: "24px"}}
                 >
-                  My Portfolio
+                My Portfolio
                 </h2>
 
                 <img
