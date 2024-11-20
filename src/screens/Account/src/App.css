@@ -28,10 +28,8 @@
 
 
 @media screen and (max-width: 786px) {
-  .premium-chains-wrapper {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .premium-chains-wrapper2 {
+ 
+  .premium-chains-wrapper2, .premium-chains-wrapper {
     grid-template-columns: repeat(5, 1fr);
   }
  
