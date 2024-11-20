@@ -15,7 +15,6 @@ const MarketPlace = () => {
   const [videoPopup, setVideoPopup] = useState(false);
   const [videoLink, setVideoLink] = useState(null);
 
-
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const MarketPlace = () => {
       html.classList.remove("hidescroll");
     }
   }, [videoPopup]);
-
 
   var settings = {
     dots: true,
@@ -198,12 +196,12 @@ const MarketPlace = () => {
   return (
     <>
       <div
-        className="d-flex container-fluid justify-content-center px-3 px-lg-5 mt-4"
+        className="d-flex container-fluid justify-content-center mt-4"
         id="marketplace"
       >
-        <div className="custom-container ">
+        <div className="custom-container">
           <div className="flex-column justify-content-center text-white gap-4 mx-2">
-            <div className="d-flex justify-content-start align-items-center flex-column gap-2">
+            <div className="d-flex justify-content-start align-items-center  gap-2">
               <h2 className=" builders-title explorer-grid-title px-0 mb-4">
                 Gallery
               </h2>

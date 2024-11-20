@@ -483,11 +483,15 @@
   background-size: 100%;
   background-repeat: no-repeat;
   border-bottom: 3px solid black;
+  transition: all .25s;
   @media screen and (max-width: 786px) {
     width: 100%;
     overflow: hidden;
     background-size: 100% 100%;
   }
+}
+.leaderboards-game-wrapper:hover{
+  filter: drop-shadow(0px 0px 5px #f3bf09);
 }
 
 .golden-pass-game-wrapper {
@@ -497,12 +501,17 @@
   background-size: 100% 100%;
   border-bottom: 3px solid black;
   background-repeat: no-repeat;
-
+transition: all .25s;
   @media screen and (max-width: 786px) {
     width: 100%;
     background-size: 100% 100%;
     overflow: hidden;
   }
+}
+
+.golden-pass-game-wrapper:hover{
+  filter: drop-shadow(0px 0px 5px #f3bf09);
+
 }
 
 .game-feature-title {

@@ -240,9 +240,8 @@ const GameUpdates = () => {
     <div className="container-fluid d-flex flex-column align-items-center justify-content-center mt-5">
       <div className="d-flex w-100 flex-column align-items-center justify-content-center mt-5 py-4 game-updates-title-wrapper">
         <h2 className="font-montserrat main-hero-title px-0 mb-0">
-          Updates, Stories and Announcements From World of Dypians
+          Updates, Stories and Announcements
         </h2>
-      
       </div>
       <div className="custom-container mt-5">
         <div className="row">
@@ -261,7 +260,7 @@ const GameUpdates = () => {
                       style={{ height: "600px" }}
                     >
                       <img
-                        src={item.image}
+                        src={item.image_second}
                         className="w-100 h-100"
                         style={{ objectFit: "cover" }}
                         alt=""
@@ -313,7 +312,7 @@ const GameUpdates = () => {
         <div className="d-grid news-grid px-0 mt-3" ref={showAll}>
           {announcementsNews &&
             announcementsNews.length > 0 &&
-            announcementsNews.slice(2,5).map((item, index) => {
+            announcementsNews.slice(2, 5).map((item, index) => {
               return (
                 <NavLink
                   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
@@ -344,9 +343,12 @@ const GameUpdates = () => {
             announcementsNews.length > 0 &&
             announcementsNews.map((item, index) => {
               return (
-                <div className="other-news-item py-4" key={index}>
+                <NavLink
+                to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                
+                className="other-news-item py-4 ps-3" key={index}>
                   <div className="d-flex flex-column flex-lg-row align-items-start gap-3">
-                    <img src={item.image} height={170} width={300} alt="" />
+                    <img src={item.image_second} height={170} width={300} alt="" />
                     <div className="d-flex flex-column gap-3">
                       <h6 className="other-news-title mb-0">{item.title}</h6>
                       <span
@@ -358,14 +360,12 @@ const GameUpdates = () => {
                           ),
                         }}
                       ></span>
-                      <span
-                        className="mainNews-date"
-                      >
+                      <span className="mainNews-date">
                         {item.date.toLocaleDateString("en-US", options)}
                       </span>
                     </div>
                   </div>
-                </div>
+                </NavLink>
               );
             })}
         </div>
