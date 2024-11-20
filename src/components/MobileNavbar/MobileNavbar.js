@@ -687,7 +687,7 @@ const MobileNavbar = ({
                         className={({ isActive }) =>
                           isActive
                             ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                            : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                            : "d-flex px-2 align-items-center gap-2 sidebar-item text-white"
                         }
                         onClick={() => setOpenNavbar(false)}
                       >
