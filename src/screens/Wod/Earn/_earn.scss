@@ -34,8 +34,18 @@
 .earn-hero-wrapper{
   margin-top: 150px;
   margin-bottom: 50px;
+  
   @media screen and (max-width: 786px) {
     margin-top: 40px;
+    background-image: linear-gradient(
+      0deg,
+       #080b2a 0%,
+       rgba(8, 11, 42, 0.6) 100%
+     ),
+     url("./assets/earnHeroBgMobile.webp") !important;
+   background-position: top;
+   background-repeat: no-repeat;
+   background-size: cover;
   }
 }
 

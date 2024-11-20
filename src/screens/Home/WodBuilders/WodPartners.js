@@ -215,6 +215,10 @@ const WodPartners = ({ full }) => {
       name: "MPC Education",
       icon: "mpceducation.svg",
     },
+    {
+      name: "Mintpad",
+      icon: "mintpad.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

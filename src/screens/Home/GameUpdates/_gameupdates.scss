@@ -21,6 +21,15 @@
   }
 }
 
+
+.first-game-update-card{
+  height: 600px;
+  @media screen and (max-width: 786px) {
+    height: 290px;
+    margin-bottom: 20px;
+  }
+}
+
 .game-update-card:hover{
   border: 1px solid #f3bf09;
 

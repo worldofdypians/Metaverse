@@ -202,7 +202,7 @@ const Footer = () => {
               Team
             </NavLink>
             <a
-              href="https://drive.google.com/drive/folders/1GvrV3iDooxFZhbiDGUMZcjNbi5TcR2i5?usp=sharing"
+              href="https://drive.google.com/drive/folders/18CTr6sfumvQXhy_XWve4IECEhBBk-esH?usp=sharing"
               className="new-footer-link"
               target="_blank"
               rel="noreferrer"
