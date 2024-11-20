@@ -414,7 +414,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                         </span>
                       </div>
                     </div>
-                    <div className="map-stars-wrapper d-flex align-items-center justify-content-between w-100 p-2">
+                    {/* <div className="map-stars-wrapper d-flex align-items-center justify-content-between w-100 p-2">
                       <img src={myStar} alt="star" />
                       <div className="d-flex flex-column align-items-end">
                         <span className="collected-stars-span">
@@ -422,7 +422,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                         </span>
                         <h6 className="collected-stars-value mb-0">4,201</h6>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -643,7 +643,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                 className={"getpremium-btn px-3 py-2 mb-3"}
                 to={marker.link}
               >
-                Buy
+                Get
               </NavLink>
             </div>
           </div>

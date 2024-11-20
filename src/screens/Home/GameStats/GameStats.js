@@ -6,7 +6,7 @@ import groupBannerSmall from "./assets/groupBannerSmall.webp";
 import cityBannerSmall from "./assets/cityBannerSmall.webp";
 import secondCityBannerSmall from "./assets/secondCityBannerSmall.webp";
 import lizardBannerSmall from "./assets/lizardBannerSmall.webp";
-import epicblack from '../../../assets/epicblack.svg'
+import epicblack from "../../../assets/epicblack.svg";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 
@@ -90,11 +90,16 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                   }
                   target="_blank"
                   className="explore-btn col-lg-4 py-2 d-flex align-items-center gap-2"
+                  style={{ whiteSpace: "nowrap" }}
                 >
-                  <img src={epicblack} alt="" />
+                  <img src={epicblack} width={18} height={18} alt="" />
                   Join the Fight
                 </NavLink>
-                <NavLink to={"/account"} className="getpremium-btn col-lg-4 py-2">
+                <NavLink
+                  to={"/account"}
+                  className="getpremium-btn col-lg-4 py-2"
+                  style={{ whiteSpace: "nowrap" }}
+                >
                   Explore Now
                 </NavLink>
               </div>
@@ -137,7 +142,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           </div>
         </div>
       </div>
-     
+
       <div>
         <div className="container-fluid d-flex  p-0">
           <img

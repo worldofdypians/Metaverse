@@ -65,8 +65,8 @@ const AmplifyExperience = () => {
   return (
     <>
      <div className="container-fluid d-flex align-items-center justify-content-center">
-        <div className="custom-container d-flex flex-column  mt-5 w-100">
-          <h2 className="font-montserrat builders-title explorer-grid-title px-0">
+        <div className="custom-container d-flex flex-column align-items-center align-items-lg-start  mt-5 w-100">
+          <h2 className="explorer-grid-title px-0" style={{width: "fit-content"}}>
             Amplify Experience
           </h2>
           <span
