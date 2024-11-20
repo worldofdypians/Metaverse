@@ -11,6 +11,9 @@ import OutsideClickHandler from "react-outside-click-handler";
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 import x4 from "./assets/4x.svg";
 import arrowCircle from "./assets/arrowCircle.svg";
+import popupXmark from "../../../../Marketplace/assets/popupXmark.svg";
+import goldenPopup from "./assets/rankBanner.webp";
+
 
 const RankSmallPopup = ({
   onClose,
@@ -106,82 +109,93 @@ const RankSmallPopup = ({
   ]);
 
   return (
-    <OutsideClickHandler onOutsideClick={onClose}>
-      <div
-        className="player-rank-dropdown p-3 d-flex flex-column gap-2 w-75"
-        style={{ left: 0 }}
-      >
-        <div className="d-flex flex-column gap-1">
-          <div className="d-flex align-items-center justify-content-between">
-            <div style={{ width: "33%" }}></div>
-            <span className="rank-dropdown-span" style={{ width: "33%" }}>
-              Rank
-            </span>
-            <span className="rank-dropdown-span" style={{ width: "33%" }}>
-              Score
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={bnbActive} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">BNB Chain</span>
+    <div className="package-popup-wrapper">
+      <div className="package-popup golden-pass-popup p-4">
+        <div className=" package-popup-title-wrapper d-flex align-items-center position-relative justify-content-between mb-2">
+          <div className="package-popup-title mb-0">My Rank</div>{" "}
+          <img
+            src={popupXmark}
+            className="popup-closer"
+            onClick={onClose}
+            alt=""
+          />
+        </div>
+        <div className="position-relative mb-3">
+          <img src={goldenPopup} alt="" style={{ width: "100%" }} />
+        </div>
+
+        <div className="package-popup-content p-1">
+          <div className="d-flex flex-column gap-1">
+            <div className="d-flex align-items-center justify-content-between">
+              <div style={{ width: "33%" }}></div>
+              <span className="rank-dropdown-span" style={{ width: "33%" }}>
+                Rank
+              </span>
+              <span className="rank-dropdown-span" style={{ width: "33%" }}>
+                Score
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRank + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userBnbScore, 0)}
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={mantaActive} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">Manta</span>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={bnbActive} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">BNB Chain</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRank + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userBnbScore, 0)}
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankManta + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userMantaScore, 0)}
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={baseLogo} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">Base</span>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={mantaActive} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">Manta</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankManta + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userMantaScore, 0)}
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankBase + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userBaseScore, 0)}
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={taikoLogo} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">Taiko</span>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={baseLogo} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">Base</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankBase + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userBaseScore, 0)}
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankTaiko + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userTaikoScore, 0)}
-            </span>
-          </div>
-          {/* <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={taikoLogo} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">Taiko</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankTaiko + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userTaikoScore, 0)}
+              </span>
+            </div>
+            {/* <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
             <div
               className="d-flex align-items-center gap-2"
               style={{ width: "33%" }}
@@ -196,155 +210,151 @@ const RankSmallPopup = ({
               {getFormattedNumber(userMatScore, 0)}
             </span>
           </div> */}
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={skaleActive} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">SKALE</span>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={skaleActive} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">SKALE</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankSkale + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userSkaleScore, 0)}
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankSkale + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userSkaleScore, 0)}
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={coreActive} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">CORE</span>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={coreActive} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">CORE</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankCore + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userCoreScore, 0)}
+              </span>
             </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankCore + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userCoreScore, 0)}
-            </span>
-          </div>
-          <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
-            <div
-              className="d-flex align-items-center gap-2"
-              style={{ width: "33%" }}
-            >
-              <img src={victionActive} width={20} height={20} alt="" />
-              <span className="rank-dropdown-text">VICTION</span>
-            </div>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              #{userRankViction + 1}
-            </span>
-            <span className="rank-dropdown-text" style={{ width: "33%" }}>
-              {getFormattedNumber(userVictionScore, 0)}
-            </span>
-          </div>
-        </div>
-        <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
-          <img src={star} style={{ width: "30px", height: "30px" }} alt="" />
-          <div className="d-flex align-items-center gap-4">
-            <div className="d-flex flex-column align-items-end">
-              <span className="total-stars-span">Collected Stars</span>
-              <h6 className="total-stars-amount mb-0">
-                {getFormattedNumber(userDataStar, 0)}
-              </h6>
+            <div className="rank-dropdown-item p-2 d-flex align-items-center justify-content-between">
+              <div
+                className="d-flex align-items-center gap-2"
+                style={{ width: "33%" }}
+              >
+                <img src={victionActive} width={20} height={20} alt="" />
+                {/* <span className="rank-dropdown-text">VICTION</span> */}
+              </div>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                #{userRankViction + 1}
+              </span>
+              <span className="rank-dropdown-text" style={{ width: "33%" }}>
+                {getFormattedNumber(userVictionScore, 0)}
+              </span>
             </div>
           </div>
-        </div>
-        <hr className="new-rank-divider my-2" />
-        <div className="d-flex align-items-center justify-content-between">
-          <span className="current-rank" style={{ textTransform: "uppercase" }}>
-            {userRankName.name}
+          <div className="total-stars-wrapper d-flex align-items-center justify-content-between p-2">
+            <img src={star} style={{ width: "30px", height: "30px" }} alt="" />
+            <div className="d-flex align-items-center gap-4">
+              <div className="d-flex flex-column align-items-end">
+                {/* <span className="total-stars-span">Collected Stars</span> */}
+                <h6 className="total-stars-amount mb-0">
+                  {getFormattedNumber(userDataStar, 0)}
+                </h6>
+              </div>
+            </div>
+          </div>
+          <hr className="new-rank-divider my-2" />
+          <div className="d-flex align-items-center justify-content-between">
             <span
               className="current-rank"
-              style={{
-                color: rankData?.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
-              }}
+              style={{ textTransform: "uppercase" }}
             >
-              (
-              {userRankName?.name === "rookie"
-                ? "$5"
-                : userRankName?.name === "underdog"
-                ? "$10"
-                : userRankName?.name === "champion"
-                ? "$25"
-                : userRankName?.name === "unstoppable"
-                ? "$100"
-                : "$0"}
-              )
+              {userRankName.name}
+              <span
+                className="current-rank"
+                style={{
+                  color: rankData?.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
+                }}
+              >
+                (
+                {userRankName?.name === "rookie"
+                  ? "$5"
+                  : userRankName?.name === "underdog"
+                  ? "$10"
+                  : userRankName?.name === "champion"
+                  ? "$25"
+                  : userRankName?.name === "unstoppable"
+                  ? "$100"
+                  : "$0"}
+                )
+              </span>
             </span>
-          </span>
-          <span className="current-rank" style={{ textTransform: "uppercase" }}>
-            {userRankName.name === "rookie"
-              ? "underdog"
-              : userRankName.name === "underdog"
-              ? "champion"
-              : userRankName.name === "champion"
-              ? "unstoppable"
-              : userRankName.name === "unstoppable"
-              ? ""
-              : "rookie"}
             <span
               className="current-rank"
-              style={{
-                color: rankData?.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
-              }}
+              style={{ textTransform: "uppercase" }}
             >
-              (
-              {userRankName?.name === "rookie"
-                ? "$10"
-                : userRankName?.name === "underdog"
-                ? "$25"
-                : userRankName?.name === "champion"
-                ? "$100"
-                : userRankName?.name === "unstoppable"
+              {userRankName.name === "rookie"
+                ? "underdog"
+                : userRankName.name === "underdog"
+                ? "champion"
+                : userRankName.name === "champion"
+                ? "unstoppable"
+                : userRankName.name === "unstoppable"
                 ? ""
-                : "$5"}
-              )
+                : "rookie"}
+              <span
+                className="current-rank"
+                style={{
+                  color: rankData?.multiplier === "yes" ? "#FFC700" : "#1BF5FF",
+                }}
+              >
+                (
+                {userRankName?.name === "rookie"
+                  ? "$10"
+                  : userRankName?.name === "underdog"
+                  ? "$25"
+                  : userRankName?.name === "champion"
+                  ? "$100"
+                  : userRankName?.name === "unstoppable"
+                  ? ""
+                  : "$5"}
+                )
+              </span>
             </span>
-          </span>
-        </div>
-        <div
-          className={`${
-            rankData?.multiplier === "yes"
-              ? "rank-progress-bar-active"
-              : "rank-progress-bar"
-          } d-flex align-items-center px-2 justify-content-between position-relative`}
-        >
-          <div
-            className={` ${
-              rankData?.multiplier === "yes"
-                ? "rank-current-progress-active"
-                : "rank-current-progress"
-            } d-flex align-items-center justify-content-end`}
-            style={{ width: `${userProgress}%` }}
-          >
-            {rankData?.multiplier === "yes" && (
-              <img
-                src={x4}
-                style={{ marginRight: "5px" }}
-                width={25}
-                height={17}
-                alt=""
-              />
-            )}
           </div>
-        </div>
-        <div className="rank-popup-btn p-2 d-flex align-items-center justify-content-between">
           <div
-            className="d-flex align-items-center justify-content-center gap-2"
-            onClick={() => {
-              onRankPopupClick();
-            }}
+            className={`${
+              rankData?.multiplier === "yes"
+                ? "rank-progress-bar-active"
+                : "rank-progress-bar"
+            } d-flex align-items-center px-2 justify-content-between position-relative`}
           >
-            <span className="open-ranks-text mb-0">Rankings and Rewards</span>
-            <img src={arrowCircle} alt="" />
+            <div
+              className={` ${
+                rankData?.multiplier === "yes"
+                  ? "rank-current-progress-active"
+                  : "rank-current-progress"
+              } d-flex align-items-center justify-content-end`}
+              style={{ width: `${userProgress}%` }}
+            >
+              {rankData?.multiplier === "yes" && (
+                <img
+                  src={x4}
+                  style={{ marginRight: "5px" }}
+                  width={25}
+                  height={17}
+                  alt=""
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </OutsideClickHandler>
+    </div>
   );
 };
 

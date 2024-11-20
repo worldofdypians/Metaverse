@@ -205,10 +205,10 @@ window.config = {
       decimals: 18,
     },
 
-    "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
-      symbol: "DYPv2",
-      decimals: 18,
-    },
+    // "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4": {
+    //   symbol: "DYPv2",
+    //   decimals: 18,
+    // },
   },
 
   subscriptioncfx_tokens: {

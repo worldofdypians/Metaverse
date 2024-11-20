@@ -1014,7 +1014,7 @@ handleSignUp();
                         Become Beta Tester
                       </span>
                     </NavLink>
-                    <a
+                    {/* <a
                       href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                       target="_blank"
                       rel="noreferrer"
@@ -1029,7 +1029,7 @@ handleSignUp();
                         <img width={20} height={20} src={epicIcon} alt="" />
                         Download
                       </span>
-                    </a>
+                    </a> */}
                     <NavLink
                       to="/contact-us"
                       end

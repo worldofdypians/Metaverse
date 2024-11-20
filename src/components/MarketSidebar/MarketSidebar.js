@@ -120,8 +120,8 @@ const MarketSidebar = () => {
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item ${
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item ${
                               location.pathname.includes("conflux") ||
                               location.pathname.includes("coin98") ||
                               location.pathname.includes("coingecko") ||
@@ -141,7 +141,7 @@ const MarketSidebar = () => {
                             }`
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <div className="d-flex align-items-center gap-5">
                         <span className={`nft-sidebar-title`}>Beta Pass</span>
                       
@@ -152,11 +152,11 @@ const MarketSidebar = () => {
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item"
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>CAWS</span>
                     </NavLink>
                     <NavLink
@@ -164,11 +164,11 @@ const MarketSidebar = () => {
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : "d-flex p-2 align-items-center gap-2 sidebar-item"
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item"
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>Land</span>
                     </NavLink>
                     <NavLink
@@ -176,11 +176,11 @@ const MarketSidebar = () => {
                       end
                       className={({ isActive }) =>
                         isActive
-                          ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                          : `d-flex p-2 align-items-center gap-2 sidebar-item`
+                          ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item`
                       }
                     >
-                      <div className="icon-wrapper"></div>
+                      {/* <div className="icon-wrapper"></div> */}
                       <span className={`nft-sidebar-title`}>
                         CAWS Timepiece
                       </span>
