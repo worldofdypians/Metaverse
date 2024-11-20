@@ -63,6 +63,9 @@ font-style: normal;
 font-weight: 700;
 line-height: 24px; /* 171.429% */
 white-space: nowrap;
+@media screen and (max-width: 786px) {
+  font-size: 14px;
+}
 }
 
 @media screen and (max-width: 450px) {
@@ -97,8 +100,8 @@ white-space: nowrap;
   gap: 20px 16px;
   overflow-x: auto;
   @media screen and (max-width: 991px) {
-    grid-template-columns: repeat(15, 1fr);
-    height: 280px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     width: 100%;
   }
 }

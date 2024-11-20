@@ -274,7 +274,7 @@ text-decoration: underline;
 }
 .tvl-earn-wrapper {
   border-radius: 12px;
-  background: linear-gradient(90deg, #bd185d 0%, #ba18bd 100%);
+  border: 1px solid #f3bf09;
   width: auto;
 
   // @media only screen and (max-width: 991px) {
@@ -283,7 +283,7 @@ text-decoration: underline;
 }
 
 .tvl-earn-title {
-  color: #ebb9d3;
+  color: #f3bf09;
   text-align: right;
   font-size: 14px;
   font-style: normal;
@@ -292,7 +292,7 @@ text-decoration: underline;
 }
 
 .tvl-earn-amount {
-  color: #fff;
+  color: #f3bf09;
   text-align: right;
   font-size: 20px;
   font-style: normal;

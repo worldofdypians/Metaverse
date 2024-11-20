@@ -181,7 +181,8 @@ const Campaigns = () => {
                 dangerouslySetInnerHTML={{ __html: dummyBanner.desc }}
               ></p>
 
-              <NavLink
+            <div className="d-flex w-100 justify-content-center justify-content-lg-start">
+            <NavLink
                 to={dummyBanner.link}
                 target="_blank"
                 className="explore-btn px-4 py-2 mt-4"
@@ -189,6 +190,7 @@ const Campaigns = () => {
               >
                 Explore
               </NavLink>
+            </div>
             </div>
           </div>
         </div>

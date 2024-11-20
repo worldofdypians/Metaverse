@@ -9,7 +9,8 @@ import { TextField } from "@mui/material";
 import validateEmail from "../../hooks/validateEmail";
 import axios from "axios";
 import styled from "styled-components";
-import epicgames from "../../assets/footerIcons/epicgames.svg";
+import epicwhite from "../../assets/epicwhite.svg";
+import epicblack from "../../assets/epicblack.svg";
 
 const theme = createTheme({
   palette: {
@@ -73,6 +74,7 @@ const Footer = () => {
   const [padding, setPadding] = useState(false);
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
+  const [hoverState, setHoverState] = useState(false)
 
   const socials = [
     {
@@ -212,13 +214,15 @@ const Footer = () => {
             </NavLink>
           </div>
           <a
-            className="epic-games-btn fullBtn p-2 d-flex align-items-center gap-2"
-            href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-            target="_blank"
-          >
-            <img src={epicgames} width={26} alt="" />
-            Download
-          </a>
+                  className="game-event-download py-2 px-3 d-flex align-items-center gap-2"
+                  onMouseEnter={() => setHoverState(true)}
+                  onMouseLeave={() => setHoverState(false)}
+                  href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                  target="_blank"
+                >
+                  <img src={hoverState ? epicwhite : epicblack} alt="icon" className="epicgame2" />
+                  Download
+                </a>
         </div>
         <hr className="footer-divider my-4" />
         <div className="d-flex flex-column-reverse flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">

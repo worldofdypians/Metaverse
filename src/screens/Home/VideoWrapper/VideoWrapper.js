@@ -78,6 +78,7 @@ const VideoWrapper = ({
   const betaSlider = useRef(null);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
+  const [hoverState, setHoverState] = useState(false);
 
   const downloader = useRef();
   const windowSize = useWindowSize();
@@ -204,8 +205,8 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-start custom-container">
-            <h4 className="main-hero-title font-montserrat text-start">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-start custom-container">
+            <h4 className="main-hero-title font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
@@ -218,16 +219,16 @@ const VideoWrapper = ({
               <Countdown date={releaseDate} renderer={renderer} />
             </div>
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
-              <div className="filled-btn m-0 py-1 px-5">
                 <a
-                  className="game-event-download py-1 d-flex align-items-center gap-2"
+                  className="game-event-download py-2 px-5 d-flex align-items-center gap-2"
+                  onMouseEnter={() => setHoverState(true)}
+                  onMouseLeave={() => setHoverState(false)}
                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
                 >
-                  <img src={epicblack} alt="icon" className="epicgame2" />
+                  <img src={hoverState ? epicwhite : epicblack} alt="icon" className="epicgame2" />
                   Download
                 </a>
-              </div>
 
               <button
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
