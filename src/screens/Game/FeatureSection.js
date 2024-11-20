@@ -47,7 +47,7 @@ const FeatureSection = ({
 
   return (
     <>
-      <div className="d-flex flex-column flex-lg-row gap-0 gap-lg-5 gap-lg-0 align-items-center justify-content-between mt-5 px-0">
+      <div className="d-flex flex-column flex-lg-row gap-0 gap-lg-5 gap-lg-0 align-items-center justify-content-between mt-0 mt-lg-5 px-0">
         <div
           className="leaderboards-game-wrapper d-flex align-items-center justify-content-between p-3 p-lg-5"
           style={{ cursor: "pointer" }}

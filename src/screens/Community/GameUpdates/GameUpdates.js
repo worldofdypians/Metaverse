@@ -187,6 +187,7 @@ const GameUpdates = () => {
     fetchNews();
     fetchReleases();
     fetchAllNews();
+    fetchOtherNews();
   }, [newsId]);
 
   const handlemodalClick = (itemId, itemIndex) => {
@@ -235,6 +236,7 @@ const GameUpdates = () => {
   useEffect(() => {
     handleNewsWithParams();
   }, [newsId, allNews.length]);
+
 
   return (
     <div className="container-fluid d-flex flex-column align-items-center justify-content-center mt-5">
@@ -312,7 +314,7 @@ const GameUpdates = () => {
         <div className="d-grid news-grid px-0 mt-3" ref={showAll}>
           {announcementsNews &&
             announcementsNews.length > 0 &&
-            announcementsNews.slice(2, 5).map((item, index) => {
+            announcementsNews.slice(3, 6).map((item, index) => {
               return (
                 <NavLink
                   to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
@@ -341,40 +343,52 @@ const GameUpdates = () => {
         <div className="d-flex flex-column w-100 mt-4">
           {announcementsNews &&
             announcementsNews.length > 0 &&
-            announcementsNews.map((item, index) => {
-              return (
-                <NavLink
-                to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
-                
-                className="other-news-item py-4 ps-3" key={index}>
-                  <div className="d-flex flex-column flex-lg-row align-items-start gap-3">
-                    <img src={item.image_second} height={170} width={300} alt="" />
-                    <div className="d-flex flex-column gap-3">
-                      <h6 className="other-news-title mb-0">{item.title}</h6>
-                      <span
-                        className="announcement-side-content font-poppins gap-1 mb-0"
-                        dangerouslySetInnerHTML={{
-                          __html: item.content.slice(
-                            0,
-                            windowSize.width > 786 ? 300 : 215
-                          ),
-                        }}
-                      ></span>
-                      <span className="mainNews-date">
-                        {item.date.toLocaleDateString("en-US", options)}
-                      </span>
+            announcementsNews
+              .slice(6, announcementsNews.length)
+              .map((item, index) => {
+                return (
+                  <NavLink
+                    to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                    className="other-news-item py-4 ps-3"
+                    key={index}
+                  >
+                    <div className="d-flex flex-column flex-lg-row align-items-start gap-3">
+                      <img
+                        src={item.image_second}
+                        height={170}
+                        width={300}
+                        alt=""
+                      />
+                      <div className="d-flex flex-column gap-3">
+                        <h6 className="other-news-title mb-0">{item.title}</h6>
+                        <span
+                          className="announcement-side-content font-poppins gap-1 mb-0"
+                          dangerouslySetInnerHTML={{
+                            __html: item.content.slice(
+                              0,
+                              windowSize.width > 786 ? 300 : 215
+                            ),
+                          }}
+                        ></span>
+                        <span className="mainNews-date">
+                          {item.date.toLocaleDateString("en-US", options)}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </NavLink>
-              );
-            })}
+                  </NavLink>
+                );
+              })}
+        </div>
+        <div className="d-flex w-100 mt-3 justify-content-center">
+          <button className="action-btn" onClick={fetchOtherNews}>
+            Load More
+          </button>
         </div>
         <div className="mt-5">
           <div className="row w-100  mx-0 news-container">
             <div className="d-flex flex-column flex-lg-row align-items-start gap-3 gap-lg-0 align-items-lg-center justify-content-between px-0">
-              <h2 className="font-montserrat builders-title explorer-grid-title px-0">
-                PATCH{" "}
-                <mark className="font-montserrat explore-tag pe-2">NOTES</mark>
+              <h2 className="explorer-grid-title px-0">
+                Patch Notes
               </h2>
               <div
                 className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0"
