@@ -150,6 +150,7 @@ const MyProfile = ({
   address,
   coinbase,
   totalScore,
+  onGoldenpassClick,
   openChainsLeaderboard,
   openGlobalLeaderboard,
   openGenesisLeaderboard,
@@ -256,7 +257,7 @@ const MyProfile = ({
       image: bnbMazeDay, // Friday
       title: "BNB Maze Day",
       bannerImg: bnbMazeBanner,
-      titleColor: "#3B1F00",
+      titleColor: "#081C01",
       contentColor: "#FFFFFF",
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
@@ -764,8 +765,8 @@ const MyProfile = ({
 
                   <div className="daily-progress-item position-relative">
                     <img src={criticalHit} alt="" />
-                    <div className="daily-progress-value">
-                      <span>0</span>
+                    <div className="daily-progress-value-golden">
+                      <span>Ready</span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -777,7 +778,7 @@ const MyProfile = ({
 
                   <div className="daily-progress-item position-relative">
                     <img src={treasureHunt} alt="" />
-                    <div className="daily-progress-value">
+                    <div className="daily-progress-value-golden">
                       <span>
                         {userActiveEvents === 2
                           ? "Completed"
@@ -1006,7 +1007,7 @@ const MyProfile = ({
                       alt=""
                       style={{ width: 60, height: 60 }}
                     />
-                    <h6
+                    {/* <h6
                       className="special-rewards-total-span"
                       style={{
                         color: "#F3BF09",
@@ -1022,7 +1023,7 @@ const MyProfile = ({
                       ) : (
                         "Extra Rewards"
                       )}
-                    </h6>
+                    </h6> */}
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <h6
@@ -1076,6 +1077,7 @@ const MyProfile = ({
               </div>
 
               <div className="col-12 col-lg-6 mt-3">
+              <NavLink to='/account/prime'>
                 <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                     <div className="d-flex align-items-center gap-2">
@@ -1108,8 +1110,11 @@ const MyProfile = ({
                       )}
                   </div>
                 </div>
+                </NavLink>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+
+
+              <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">
@@ -1128,12 +1133,12 @@ const MyProfile = ({
                     </div>
                     <div className="d-flex align-items-center gap-2">
                       {!isgoldenPassActive ? (
-                        <NavLink
+                        <button
                           className="activate-btn px-3 py-1"
-                          to="/account/challenges/golden-pass"
+                          onClick={onGoldenpassClick}
                         >
                           Activate
-                        </NavLink>
+                        </button>
                       ) : (
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}

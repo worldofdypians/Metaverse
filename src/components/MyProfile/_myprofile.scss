@@ -47,6 +47,8 @@
 .loginbtn-profile:hover {
   background: linear-gradient(90deg, #c64c85 0%, #b936f5 100%);
   background-position: 0 0;
+  color: #eeedff !important;
+
 }
 .my-profile-email {
   color: #b8b8e0;
@@ -403,7 +405,7 @@
   height: 155px;
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
-  // border: 2px solid transparent;
+  border: 2px solid transparent;
   transition: all 0.25s ease;
  
     .utcEventContent {
@@ -445,7 +447,9 @@
   }
 }
 
-.my-rewards-wrapper-new:hover {
+.my-rewards-wrapper-new:hover, .new-stake-nft-wrapper:hover, .furyBeastBannerItem:hover, .wingStormBannerItem:hover
+, .scorpionKingBannerItem:hover
+, .mazeDayBannerItem:hover, .coldBiteBannerItem:hover, .dragonRuinsBannerItem:hover, .stoneEyeBannerItem:hover {
   border: 2px solid #11fed2;
 }
 
@@ -638,17 +642,23 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #0b3398 0%, #062663 62%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .dragonRuinsBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #2e3842 0%, #121a1e 62%);
   height: 155px;
+  border: 2px solid transparent;
+  
 }
 
 .coldBiteBannerItem {
   height: 155px;
   border-radius: 10px;
+  border: 2px solid transparent;
+
   background: linear-gradient(90deg, #003bb9 0%, #0a0849 62%);
 }
 
@@ -656,30 +666,40 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #262f29 0%, #29302c 62%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .wingStormBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #004e7f 0%, #073755 62%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .scorpionKingBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #732802 0%, #ab621e 62%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .mazeDayBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #081c00 0%, #081c00 65%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .puzzleMadnessBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   height: 155px;
+  border: 2px solid transparent;
+
 }
 
 .utcEventTitle {
@@ -701,7 +721,7 @@
 
 .eventbannerimg {
   position: absolute;
-  height: 155px;
+  height: 151px;
   right: 0;
   top: 0;
 }

@@ -222,12 +222,12 @@ const GoldenPassPopup = ({ onClosePopup }) => {
             </table>
           </div>
         </div>
-        <NavLink
+        <button
           className="stake-wod-btn px-4 py-2 my-3 d-flex m-auto"
-          to={"/account/challenges/golden-pass"}
+          // to={"/account/challenges/golden-pass"}
         >
-          Get Golden Pass
-        </NavLink>
+          Coming Soon
+        </button>
       </div>
     </div>
   );

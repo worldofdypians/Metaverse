@@ -612,14 +612,12 @@ const NewEvents = ({
                         to={
                           eventinfos.find((item) => {
                             return item.day === utcDayIndex;
-                          }).link
+                          }).link ?? eventinfos[0].link
                         }
                       >
                         <div
                           className={`${
-                            eventinfos.find((item) => {
-                              return item.day === utcDayIndex;
-                            }) !== undefined &&
+                            
                             eventId !== "treasure-hunt" &&
                             eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
@@ -634,12 +632,14 @@ const NewEvents = ({
                             setChallenge(
                               eventinfos.find((item) => {
                                 return item.day === utcDayIndex;
-                              }).challange
+                              }) !==undefined ? eventinfos.find((item) => {
+                                return item.day === utcDayIndex;
+                              }).challange  : eventinfos[0].challange
                             );
                             setActiveEvent(
                               eventinfos.find((item) => {
                                 return item.day === utcDayIndex;
-                              })
+                              }) ?? eventinfos[0]
                             );
                           }}
                         >
@@ -681,7 +681,7 @@ const NewEvents = ({
                         </div>
                       </NavLink>
 
-                      <NavLink to="/account/challenges/golden-pass">
+                      {/* <NavLink to="/account/challenges/golden-pass">
                         <div
                           className={`${
                             challenge === "golden-pass" ||
@@ -694,10 +694,9 @@ const NewEvents = ({
                             setActiveEvent(goldenPassInfo);
                           }}
                         >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
                           <h6 className="mb-0">Golden Pass</h6>
                         </div>
-                      </NavLink>
+                      </NavLink> */}
                       <NavLink to="/account/challenges/puzzle-madness">
                         <div
                           className={`${

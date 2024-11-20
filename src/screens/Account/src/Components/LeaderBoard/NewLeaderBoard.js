@@ -174,6 +174,7 @@ const NewLeaderBoard = ({
   allTaikoData,
   allMatData,
   onPremiumClick,
+  onGoldenpassClick
 }) => {
   const chainItems = [
     {
@@ -788,12 +789,12 @@ const NewLeaderBoard = ({
 
                     <div className="d-flex align-items-center gap-2">
                       {!availableTime ? (
-                        <NavLink
+                        <button
                           className="activate-btn px-3 py-1"
-                          to="/account/challenges/golden-pass"
+                          onClick={onGoldenpassClick}
                         >
                           Activate
-                        </NavLink>
+                        </button>
                       ) : (
                         <Countdown
                           date={Number(availableTime) * 1000}
