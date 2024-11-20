@@ -617,7 +617,7 @@ const EarnContent = ({
                           </div>
                         )}
 
-                        {(item?.id === "one" || item?.id === "two" || item?.id === "three" || item?.id === "four") && (
+                        {(item?.id === "one"  || item?.id === "three" || item?.id === "four") && (
                           <div
                             onClick={() => {
                               isHover !== undefined
