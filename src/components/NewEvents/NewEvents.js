@@ -1072,7 +1072,7 @@ const NewEvents = ({
                           </div>
                           <div className="d-flex align-items-end justify-content-between">
                             <h6 className="mb-0 purchase-package-title">
-                              Purchase
+                              Activate
                             </h6>
                             <div className="d-flex align-items-end gap-2">
                               <span className="available-on">Available on</span>
@@ -1290,7 +1290,7 @@ const NewEvents = ({
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
                           <h6 className="mb-0 purchase-package-title">
-                            Purchase
+                          Activate
                           </h6>
                           <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>

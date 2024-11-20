@@ -18,9 +18,9 @@ const GovernanceHero = ({ onCreateProposal }) => {
                 </span>
                 <button
                   className="getpremium-btn px-3 py-2 mt-3"
-                  onClick={onCreateProposal}
+                  // onClick={onCreateProposal}
                 >
-                  Create Proposal
+                  Coming Soon
                 </button>
                 {/* <div className="d-flex align-items-center gap-3">
                   <button

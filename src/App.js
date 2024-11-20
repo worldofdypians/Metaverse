@@ -4503,6 +4503,8 @@ function App() {
           loginListener={loginListener}
         />
         <MobileNavbar
+        isConnected={isConnected}
+        email={email}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -4514,7 +4516,6 @@ function App() {
           myOffers={myNftsOffer}
           handleRefreshList={handleRefreshList}
           nftCount={nftCount}
-          isConnected={isConnected}
           chainId={networkId}
           handleSwitchNetwork={handleSwitchNetwork}
           handleSwitchChainGateWallet={handleSwitchNetwork}
@@ -4522,6 +4523,7 @@ function App() {
           domainName={domainName}
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
           binanceWallet={coinbase}
+          username={data?.getPlayer?.displayName}
         />
 
         <Routes>
@@ -4600,7 +4602,7 @@ function App() {
               />
             }
           />
-          <Route exact path="/team" element={<OurTeam />} />
+          {/* <Route exact path="/team" element={<OurTeam />} /> */}
           <Route
             exact
             path="/explorer"
