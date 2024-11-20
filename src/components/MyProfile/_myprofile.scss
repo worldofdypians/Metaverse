@@ -505,6 +505,12 @@
     height: auto;
   }
 
+  @media screen and (max-width: 1650px) {
+    img {
+      width: 55px;
+      height: auto;
+    }
+  }
   @media screen and (max-width: 500px) {
     img {
       width: 70px;
@@ -519,7 +525,7 @@
   background: #0f1118;
   border: 1px solid #c09645;
   border-radius: 4px;
-  width: 48px;
+  width: fit-content;
   height: 20px;
   position: absolute;
   right: 50%;

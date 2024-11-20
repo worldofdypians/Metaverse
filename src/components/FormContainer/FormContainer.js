@@ -36,12 +36,12 @@ const FormContainer = ({
             />
           )}
           <div className="d-flex gap-3 justify-content-between align-items-end align-items-lg-start mb-4 pb-2 pb-lg-0 ms-0 mb-lg-0">
-            <h6 className="market-banner-title">{title}</h6>{" "}
+            {/* <h6 className="market-banner-title">{title}</h6>{" "} */}
           
           </div>
           <div className="row w-100 position-relative justify-content-between align-items-center">
             <div className="col-12">
-              <p className="ways-to-amplify-desc mb-0 ">{desc}</p>
+              {/* <p className="ways-to-amplify-desc mb-0 ">{desc}</p> */}
             </div>
           </div>
         </div>

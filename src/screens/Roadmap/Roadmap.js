@@ -784,46 +784,29 @@ const Roadmap = () => {
             community events, stay informed on the exciting journey ahead.
           </span>
           <div className="d-flex align-items-center justify-content-center gap-3">
-            <div
-              className="linear-border-roadmap"
-              style={{
-                width: "fit-content",
+            <button
+              className={`btn ${
+                title === "2024" ? "getpremium-active-btn" : "getpremium-btn"
+              } px-5`}
+              onClick={() => {
+                setRoadmapItems(roadmapItems2024);
+                setTitle("2024");
               }}
             >
-              <button
-                className={`btn ${
-                  title === "2024"
-                    ? "filled-btn-roadmap"
-                    : "outline-btn-roadmap"
-                } px-5`}
-                onClick={() => {
-                  setRoadmapItems(roadmapItems2024);
-                  setTitle("2024");
-                }}
-              >
-                2024
-              </button>
-            </div>
-            <div
-              className="linear-border-roadmap"
-              style={{
-                width: "fit-content",
+              2024
+            </button>
+
+            <button
+              className={`btn ${
+                title === "2023" ? "getpremium-active-btn" : "getpremium-btn"
+              } px-5`}
+              onClick={() => {
+                setRoadmapItems(roadmapItems2023);
+                setTitle("2023");
               }}
             >
-              <button
-                className={`btn ${
-                  title === "2023"
-                    ? "filled-btn-roadmap"
-                    : "outline-btn-roadmap"
-                } px-5`}
-                onClick={() => {
-                  setRoadmapItems(roadmapItems2023);
-                  setTitle("2023");
-                }}
-              >
-                2023
-              </button>
-            </div>
+              2023
+            </button>
           </div>
         </div>
         <div className="row justify-content-center custom-container align-items-center w-100 mx-0 px-3 px-lg-5">
