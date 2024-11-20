@@ -471,7 +471,7 @@ const NewChallenges = ({
 
   return (
     <>
-      <div className="d-flex flex-column">
+      <div className="d-flex flex-column" id="challenges">
         <div className="new-challenges-hero w-100 p-5 d-flex flex-column gap-5 align-items-center">
           <h2 className="font-montserrat main-hero-title  px-0">
             Events & Challenges

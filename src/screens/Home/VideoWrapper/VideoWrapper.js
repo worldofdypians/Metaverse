@@ -110,8 +110,8 @@ const VideoWrapper = ({
       class: "earnClass",
     },
     {
-      link: "/account/challenges/treasure-hunt",
-      title: "EVENTS",
+      link: "/game#challenges",
+      title: "EVENTS & CHALLENGES",
       desc: "Join exciting in-game challenges",
       class: "eventClass",
     },

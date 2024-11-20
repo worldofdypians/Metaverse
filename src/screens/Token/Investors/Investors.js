@@ -62,9 +62,9 @@ const Investors = ({ page }) => {
       link: "https://www.viction.xyz/",
     },
     {
-      title: "Cookie3",
-      logo: "cookie3Backers.svg",
-      link: "https://www.cookie3.com/",
+      title: "Easy2Stake",
+      logo: "easy2stakeBackers.svg",
+      link: "https://www.easy2stake.com/",
     },
   ];
 

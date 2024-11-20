@@ -10,6 +10,7 @@ import NewChallenges from "./NewChallenges";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import VideoPopup from "./VideoPopup";
+import { useLocation } from "react-router-dom";
 
 const Game = ({ allStarData }) => {
   useEffect(() => {
@@ -33,6 +34,23 @@ const Game = ({ allStarData }) => {
       html.classList.remove("hidescroll");
     }
   }, [videoPopup]);
+
+  const location = useLocation();
+
+  const scrollToElement = () => {
+    const element = document.getElementById(
+      location.hash.slice(1, location.hash.length)
+    );
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+
+  useEffect(() => {
+    scrollToElement();
+  }, [location]);
 
   return (
     <>

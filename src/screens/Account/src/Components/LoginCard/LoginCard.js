@@ -7,11 +7,12 @@ function LoginCard({ children, containerStyles, cardStyles }) {
     return (
         <div
             style={{
-                backgroundImage: `url(${outlineBorder})`,
-                backgroundRepeat: 'inherit',
+                background: "#12133f",
+                border: ".5px solid #c0c9ff",
+                borderRadius: "12px",
                 padding: '15px',
                 width: '100%',
-                maxWidth: '500px',
+                maxWidth: '600px',
                 ...containerStyles
             }
             }

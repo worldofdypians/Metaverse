@@ -50,10 +50,7 @@ const Sidebar = ({
     });
   }, [sidebar]);
 
-  useEffect(() => {
-    
-   closeNav();
-  }, [])
+ 
   
 
 const genesisLocation = {

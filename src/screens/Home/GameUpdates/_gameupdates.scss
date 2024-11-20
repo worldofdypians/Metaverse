@@ -10,6 +10,8 @@
 .game-update-card {
   height: 290px;
   backdrop-filter: blur(12.5px);
+  transform: scale(1.05);
+
   border-radius: 12px;
 
   border: 1px solid gray;
@@ -22,7 +24,7 @@
 
 .game-update-card:hover{
   img{
-    transform: scale(1.2);
+    transform: scale(1);
   }
 }
 
