@@ -260,7 +260,7 @@ const GameUpdates = () => {
                       style={{ height: "600px" }}
                     >
                       <img
-                        src={item.image}
+                        src={item.image_second}
                         className="w-100 h-100"
                         style={{ objectFit: "cover" }}
                         alt=""
@@ -343,9 +343,12 @@ const GameUpdates = () => {
             announcementsNews.length > 0 &&
             announcementsNews.map((item, index) => {
               return (
-                <div className="other-news-item py-4" key={index}>
+                <NavLink
+                to={`/news/${item.id}/${item.title.replace(/\s/g, "-")}`}
+                
+                className="other-news-item py-4 ps-3" key={index}>
                   <div className="d-flex flex-column flex-lg-row align-items-start gap-3">
-                    <img src={item.image} height={170} width={300} alt="" />
+                    <img src={item.image_second} height={170} width={300} alt="" />
                     <div className="d-flex flex-column gap-3">
                       <h6 className="other-news-title mb-0">{item.title}</h6>
                       <span
@@ -362,7 +365,7 @@ const GameUpdates = () => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </NavLink>
               );
             })}
         </div>
