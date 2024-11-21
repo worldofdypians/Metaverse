@@ -1105,6 +1105,7 @@ const MyProfile = ({
                           alt=""
                           style={{ width: 44, height: 44 }}
                         />
+                        <div className="d-flex flex-column">
                         <span
                           className="user-blue-rank"
                           style={{ color: isPremium ? "#F3BF09" : "" }}
@@ -1113,7 +1114,7 @@ const MyProfile = ({
                         </span>
                         <span className="user-rank-text">
                           {!isPremium ? "Prime" : ""}
-                        </span>
+                        </span></div>
                       </div>
                       {!isPremium ? (
                         <NavLink

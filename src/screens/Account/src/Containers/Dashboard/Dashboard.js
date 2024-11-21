@@ -10103,6 +10103,7 @@ function Dashboard({
               chainId={chainId}
               binanceW3WProvider={binanceW3WProvider}
               selectedEvent={eventId}
+              eventCardCount={eventCardCount}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
