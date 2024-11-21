@@ -9345,7 +9345,7 @@ function Dashboard({
 
   const scrollToElement = () => {
     const element = document.getElementById(eventId);
-    if (element && element!=='golden-pass') {
+    if (element && element !== "golden-pass") {
       element.scrollIntoView({
         behavior: "smooth",
         // block: "end",
@@ -9989,7 +9989,6 @@ function Dashboard({
             <MyProfile
               userDataStar={userDataStar}
               userDataStarWeekly={userDataStarWeekly}
-
               primeStars={primeStars}
               isgoldenPassActive={goldenPassRemainingTime}
               dragonRuinsCountdown={countdown}
@@ -10104,6 +10103,7 @@ function Dashboard({
               chainId={chainId}
               binanceW3WProvider={binanceW3WProvider}
               selectedEvent={eventId}
+              eventCardCount={eventCardCount}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -10287,9 +10287,9 @@ function Dashboard({
               <div className="d-flex align-items-center justify-content-between">
                 <h2
                   className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{fontSize: "24px"}}
+                  style={{ fontSize: "24px" }}
                 >
-                WOD Leaderboard
+                  WOD Leaderboard
                 </h2>
                 {/* {windowSize.width > 786 && (
                       <div className="d-flex align-items-center gap-2">
@@ -10383,7 +10383,11 @@ function Dashboard({
                 onPremiumClick={() => {
                   setgetPremiumPopup(true);
                 }}
-                onGoldenpassClick={()=>{setgoldenPassPopup(true)}}
+                onGoldenpassClick={() => {
+                  setgoldenPassPopup(true);
+                  setLeaderboard(false);
+                  window.location.hash = "";
+                }}
               />
             </div>
           </OutsideClickHandler>
@@ -10448,11 +10452,11 @@ function Dashboard({
               style={{ width: "35%", pointerEvents: "auto" }}
             >
               <div className="d-flex align-items-center justify-content-between">
-              <h2
+                <h2
                   className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{fontSize: "24px"}}
+                  style={{ fontSize: "24px" }}
                 >
-                Genesis Rewards
+                  Genesis Rewards
                 </h2>
 
                 <img
@@ -10552,7 +10556,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {goldenPassPopup  && (
+        {goldenPassPopup && (
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
@@ -10629,11 +10633,11 @@ function Dashboard({
               style={{ width: "60%", pointerEvents: "auto" }}
             >
               <div className="d-flex align-items-center justify-content-between">
-              <h2
+                <h2
                   className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{fontSize: "24px"}}
+                  style={{ fontSize: "24px" }}
                 >
-                My Portfolio
+                  My Portfolio
                 </h2>
 
                 <img

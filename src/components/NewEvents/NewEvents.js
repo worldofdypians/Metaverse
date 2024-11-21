@@ -101,7 +101,8 @@ const NewEvents = ({
   chainId,
   binanceW3WProvider,
   selectedEvent,
-  availableTime
+  availableTime,
+  eventCardCount,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
 
@@ -116,13 +117,12 @@ const NewEvents = ({
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [currentWeek, setCurrentWeek] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
-  const [showFirstNext, setShowFirstNext] = useState();
 
   const sliderRef = useRef();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
 
-  const { eventId } = useParams();
+  let eventId = selectedEvent;
   const windowSize = useWindowSize();
 
   const adjustedDay = currentDate === 0 ? 7 : currentDate;
@@ -535,9 +535,27 @@ const NewEvents = ({
       setChallenge(selectedEvent);
     }
   }, [selectedEvent]);
-
   useEffect(() => {
-    if (
+    if (eventId === undefined) {
+      const filteredEvent =
+        eventinfos.find((item) => {
+          return item.day === utcDayIndex;
+        }) ?? eventinfos[0];
+      setActiveEvent(filteredEvent);
+      setActiveThumb(filteredEvent.id);
+      if (sliderRef.current) {
+        sliderRef?.current?.innerSlider?.slickGoTo(
+          eventinfos.findIndex(
+            (item) => item.challange === filteredEvent.challange
+          ) === 5
+            ? 3.5
+            : eventinfos.findIndex(
+                (item) => item.challange === filteredEvent.challange
+              ) - 0.5
+        );
+      }
+      setChallenge(filteredEvent.challange);
+    } else if (
       eventId &&
       eventId !== "" &&
       eventId !== "treasure-hunt" &&
@@ -578,7 +596,7 @@ const NewEvents = ({
     } else if (eventId !== "" && eventId === "golden-pass") {
       setActiveEvent(goldenPassInfo);
     }
-  }, [eventId, sliderRef?.current]);
+  }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
   const html = document.querySelector("html");
 
@@ -602,7 +620,6 @@ const NewEvents = ({
             <div className="d-flex flex-column">
               <div className="new-events-top-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
                 <h6 className="challenges-text mb-0">CHALLENGES & EVENTS</h6>
-            
               </div>
               <div className="new-events-bottom-wrapper p-3 mb-4">
                 <div className="row gap-2 gap-lg-0">
@@ -617,7 +634,6 @@ const NewEvents = ({
                       >
                         <div
                           className={`${
-                            
                             eventId !== "treasure-hunt" &&
                             eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
@@ -632,9 +648,11 @@ const NewEvents = ({
                             setChallenge(
                               eventinfos.find((item) => {
                                 return item.day === utcDayIndex;
-                              }) !==undefined ? eventinfos.find((item) => {
-                                return item.day === utcDayIndex;
-                              }).challange  : eventinfos[0].challange
+                              }) !== undefined
+                                ? eventinfos.find((item) => {
+                                    return item.day === utcDayIndex;
+                                  }).challange
+                                : eventinfos[0].challange
                             );
                             setActiveEvent(
                               eventinfos.find((item) => {
@@ -870,47 +888,47 @@ const NewEvents = ({
                     </div>
                   </div>
                   <div className="col-12 col-lg-10">
-                  {(challenge === "treasure-hunt" ||
-                  selectedEvent === "treasure-hunt") && (
-                  <div className="d-flex align-items-center gap-2 mb-3">
-                    <div
-                      className={`${
-                        eventDuration === "Live"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      }   px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Live");
-                      }}
-                    >
-                      <span>Live</span>
-                    </div>
-                    <div
-                      className={`${
-                        eventDuration === "Coming Soon"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      } px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Coming Soon");
-                      }}
-                    >
-                      <span>Upcoming</span>
-                    </div>
-                    <div
-                      className={`${
-                        eventDuration === "Expired"
-                          ? "active-challenge-tab"
-                          : "challenge-tab"
-                      } px-4 py-2 d-flex align-items-center justify-content-center`}
-                      onClick={() => {
-                        seteventDuration("Expired");
-                      }}
-                    >
-                      <span>Past</span>
-                    </div>
-                  </div>
-                )}
+                    {(challenge === "treasure-hunt" ||
+                      selectedEvent === "treasure-hunt") && (
+                      <div className="d-flex align-items-center gap-2 mb-3">
+                        <div
+                          className={`${
+                            eventDuration === "Live"
+                              ? "active-challenge-tab"
+                              : "challenge-tab"
+                          }   px-4 py-2 d-flex align-items-center justify-content-center`}
+                          onClick={() => {
+                            seteventDuration("Live");
+                          }}
+                        >
+                          <span>Live</span>
+                        </div>
+                        <div
+                          className={`${
+                            eventDuration === "Coming Soon"
+                              ? "active-challenge-tab"
+                              : "challenge-tab"
+                          } px-4 py-2 d-flex align-items-center justify-content-center`}
+                          onClick={() => {
+                            seteventDuration("Coming Soon");
+                          }}
+                        >
+                          <span>Upcoming</span>
+                        </div>
+                        <div
+                          className={`${
+                            eventDuration === "Expired"
+                              ? "active-challenge-tab"
+                              : "challenge-tab"
+                          } px-4 py-2 d-flex align-items-center justify-content-center`}
+                          onClick={() => {
+                            seteventDuration("Expired");
+                          }}
+                        >
+                          <span>Past</span>
+                        </div>
+                      </div>
+                    )}
                     {challenge === "treasure-hunt" ? (
                       <TreasureHunt
                         events={events}
@@ -1289,7 +1307,7 @@ const NewEvents = ({
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
                           <h6 className="mb-0 purchase-package-title">
-                          Activate
+                            Activate
                           </h6>
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>

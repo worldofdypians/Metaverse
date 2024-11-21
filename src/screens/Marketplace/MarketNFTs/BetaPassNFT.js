@@ -1907,7 +1907,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className=" text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2023,7 +2023,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className=" text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2141,7 +2141,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className=" text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2258,7 +2258,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2375,7 +2375,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2492,7 +2492,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2609,7 +2609,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2739,7 +2739,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2866,7 +2866,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -2999,7 +2999,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -3116,7 +3116,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -3234,7 +3234,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -3352,7 +3352,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -3479,7 +3479,7 @@ const BetaPassNFT = ({
                               <div className="d-flex align-items-center gap-2 justify-content-between">
                                 <div className="opacitywrapper4 m-0">
                                   <a
-                                    className="game-event-download text-white  d-flex align-items-center gap-2"
+                                    className="text-white  d-flex align-items-center gap-2"
                                     href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                     target="_blank"
                                   >
@@ -3737,7 +3737,7 @@ const BetaPassNFT = ({
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <div className="opacitywrapper4 m-0">
                                 <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  className="text-white  d-flex align-items-center gap-2"
                                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                 >
@@ -3837,7 +3837,7 @@ const BetaPassNFT = ({
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <div className="opacitywrapper4 m-0">
                                 <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  className="text-white  d-flex align-items-center gap-2"
                                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                 >
@@ -3937,7 +3937,7 @@ const BetaPassNFT = ({
                             <div className="d-flex align-items-center gap-2 justify-content-between">
                               <div className="opacitywrapper4 m-0">
                                 <a
-                                  className="game-event-download text-white  d-flex align-items-center gap-2"
+                                  className="text-white  d-flex align-items-center gap-2"
                                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                                   target="_blank"
                                 >
