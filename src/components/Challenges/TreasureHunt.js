@@ -19,7 +19,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
             key={index}
             onClick={() => onEventClick(item)}
           >
-            <div className="ps-lg-5 d-flex align-items-center gap-3">
+            <div className="ps-lg-3 d-flex align-items-center gap-3">
               <img src={item.logo} height={36} width={36} alt="" />
               <div className="d-flex flex-column gap-2 position-relative">
                 <h6 className="mb-0 d-flex align-items-center gap-2 new-treasure-hunt-title text-uppercase">
