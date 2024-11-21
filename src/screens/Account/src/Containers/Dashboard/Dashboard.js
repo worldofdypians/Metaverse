@@ -4230,9 +4230,9 @@ function Dashboard({
       // fetchWeeklyRecordsTaiko();
       fetchMonthlyRecordsTaiko();
 
-      fetchDailyRecordsMat();
+      // fetchDailyRecordsMat();
       // fetchWeeklyRecordsMat();
-      fetchMonthlyRecordsMat();
+      // fetchMonthlyRecordsMat();
 
       fetchDailyRecordsSkale();
       // fetchWeeklyRecordsSkale();
@@ -4293,12 +4293,12 @@ function Dashboard({
     }
   }, [taikocount]);
 
-  useEffect(() => {
-    if (matcount !== 0) {
-      fetchDailyRecordsMat();
-      getAllMatChests(email);
-    }
-  }, [matcount]);
+  // useEffect(() => {
+  //   if (matcount !== 0) {
+  //     fetchDailyRecordsMat();
+  //     getAllMatChests(email);
+  //   }
+  // }, [matcount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -9902,7 +9902,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      getAllMatChests(email);
+      // getAllMatChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
@@ -10381,7 +10381,10 @@ function Dashboard({
                 monthlyplayerData={monthlyplayerData}
                 genesisData={genesisData}
                 onPremiumClick={() => {
-                  setgetPremiumPopup(true);
+                  // setgetPremiumPopup(true);
+                  setLeaderboard(false);
+                  window.location.hash = "";
+
                 }}
                 onGoldenpassClick={() => {
                   setgoldenPassPopup(true);
@@ -10930,7 +10933,7 @@ function Dashboard({
                           />
                           <span className="subscription-chain mb-0">Taiko</span>
                         </div>
-                        {/* <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-2">
                           <img
                             src={matchainLogo}
                             alt=""
@@ -10939,7 +10942,7 @@ function Dashboard({
                           <span className="subscription-chain mb-0">
                             Matchain
                           </span>
-                        </div> */}
+                        </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -11134,7 +11137,7 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-                                  {/* {window.WALLET_TYPE !== "binance" &&
+                                  {window.WALLET_TYPE !== "binance" &&
                                     !window.ethereum?.isBinance && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11150,7 +11153,7 @@ function Dashboard({
                                         />
                                         Matchain
                                       </li>
-                                    )} */}
+                                    )}
 
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -12150,12 +12153,7 @@ function Dashboard({
                         approveStatus === "failsubscribe" ||
                         approveStatus === "successsubscribe") ? (
                         <>
-                          Approve{" "}
-                          {approveStatus === "approveAmount"
-                            ? "token"
-                            : nftPremium_total > 0
-                            ? "NFT"
-                            : ""}
+                          Approve token
                         </>
                       ) : loadspinner === false && approveStatus === "fail" ? (
                         "Failed"
@@ -12185,9 +12183,7 @@ function Dashboard({
                         approveStatus === "fail" ||
                         approveStatus === "deposit") ? (
                         <>
-                          {discountPercentage > 0 || nftPremium_total > 0
-                            ? "Redeem"
-                            : "Buy"}
+                          Buy
                         </>
                       ) : loadspinnerSub === false &&
                         approveStatus === "successsubscribe" ? (

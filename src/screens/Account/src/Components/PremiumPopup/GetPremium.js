@@ -2707,14 +2707,14 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">Taiko</span>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
+                  <div className="d-flex align-items-center gap-2">
                     <img
                       src={matchainLogo}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
                     <span className="subscription-chain mb-0">Matchain</span>
-                  </div> */}
+                  </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
@@ -2894,7 +2894,7 @@ const GetPremiumPopup = ({
                       Manta
                     </li>
 
-                    {/* {window.WALLET_TYPE !== "binance" &&
+                    {window.WALLET_TYPE !== "binance" &&
                       !window.ethereum?.isBinance && (
                         <li
                           className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -2907,7 +2907,7 @@ const GetPremiumPopup = ({
                           />
                           Matchain
                         </li>
-                      )} */}
+                      )}
 
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -3802,12 +3802,7 @@ const GetPremiumPopup = ({
                     approveStatus === "failsubscribe" ||
                     approveStatus === "successsubscribe") ? (
                     <>
-                      Approve{" "}
-                      {approveStatus === "approveAmount"
-                        ? "token"
-                        : nftPremium_total > 0
-                        ? "NFT"
-                        : ""}
+                      Approve token
                     </>
                   ) : loadspinner === false && approveStatus === "fail" ? (
                     "Failed"
@@ -3842,9 +3837,7 @@ const GetPremiumPopup = ({
                     approveStatus === "fail" ||
                     approveStatus === "deposit") ? (
                     <>
-                      {discountPercentage > 0 || nftPremium_total > 0
-                        ? "Redeem"
-                        : "Buy"}
+                      Buy
                     </>
                   ) : loadspinnerSub === false &&
                     approveStatus === "successsubscribe" ? (
