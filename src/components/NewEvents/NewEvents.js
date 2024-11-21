@@ -415,16 +415,13 @@ const NewEvents = ({
     },
     {
       challange: "wing-storm",
-
       id: "wingstorm",
       image: wingStormBanner,
       popupImage: wingStormPopup,
       thumbImage: wingStormThumb,
       thumbImageActive: wingStormActiveThumb,
-
       mobileThumbImage: wingStormThumbMobile,
       mobileThumbImageActive: wingStormActiveThumbMobile,
-
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -446,16 +443,13 @@ const NewEvents = ({
     },
     {
       challange: "scorpion-king",
-
       id: "scorpion",
       popupImage: scorpionKingPopup,
       image: scorpionKingBanner,
       thumbImage: scorpionKingThumb,
       thumbImageActive: scorpionKingActiveThumb,
-
       mobileThumbImage: scorpionKingThumbMobile,
       mobileThumbImageActive: scorpionKingActiveThumbMobile,
-
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -477,16 +471,13 @@ const NewEvents = ({
     },
     {
       challange: "stone-eye",
-
       id: "stoneEye",
       image: stoneEyeBanner,
       popupImage: stoneEyePopup,
       thumbImage: stoneEyeThumb,
       thumbImageActive: stoneEyeActiveThumb,
-
       mobileThumbImage: stoneEyeThumbMobile,
       mobileThumbImageActive: stoneEyeActiveThumbMobile,
-
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -516,17 +507,21 @@ const NewEvents = ({
     setActiveEvent(
       eventinfos.find((item) => {
         return item.day === utcDayIndex;
-      })
+      }) ?? eventinfos[0]
     );
     setActiveThumb(
       eventinfos.find((item) => {
         return item.day === utcDayIndex;
-      }).id
+      }) !==undefined ? eventinfos.find((item) => {
+        return item.day === utcDayIndex;
+      }).id : eventinfos[0].id
     );
     setChallenge(
       eventinfos.find((item) => {
         return item.day === utcDayIndex;
-      }).challange
+      }) !==undefined ? eventinfos.find((item) => {
+        return item.day === utcDayIndex;
+      }).challange : eventinfos[0].challange 
     );
   }, []);
 
@@ -629,7 +624,9 @@ const NewEvents = ({
                         to={
                           eventinfos.find((item) => {
                             return item.day === utcDayIndex;
-                          }).link ?? eventinfos[0].link
+                          }) !==undefined ? eventinfos.find((item) => {
+                            return item.day === utcDayIndex;
+                          }).link : eventinfos[0].link
                         }
                       >
                         <div
