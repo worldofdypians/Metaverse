@@ -59,7 +59,7 @@ const Investors = ({ page }) => {
     {
       title: "IBC Group",
       logo: "ibcBacker.svg",
-      link: "https://www.viction.xyz/",
+      link: "https://www.ibcgroup.io/",
     },
     {
       title: "Easy2Stake",

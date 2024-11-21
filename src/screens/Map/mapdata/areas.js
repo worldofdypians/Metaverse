@@ -1,4 +1,4 @@
-import { markers } from "./markers";
+import { activeMarkers, markers } from "./markers";
 import questDummy1 from "../assets/banners/questDummy1.webp";
 import questDummy2 from "../assets/banners/questDummy2.webp";
 import questDummy3 from "../assets/banners/questDummy3.webp";
@@ -55,6 +55,7 @@ const chainAreas = [
   {
     title: "BNB Chain Area",
     marker: markers.bnbMarker,
+    activeMarker: activeMarkers.bnbMarker,
     icon: bnbIcon,
     location: [-0.06735561726792588, 0.08666753768920898],
     banner: "bnbBanner.png",
@@ -124,6 +125,8 @@ const chainAreas = [
   {
     title: "CORE Area",
     marker: markers.coreMarker,
+    activeMarker: activeMarkers.coreMarker,
+
     icon: coreIcon,
     location: [-0.06862698344579729, 0.08752048015594482],
     banner: "coreBanner.png",
@@ -192,6 +195,7 @@ const chainAreas = [
   {
     title: "Coingecko Area",
     marker: markers.coingeckoMarker,
+    activeMarker: activeMarkers.coingeckoMarker,
     icon: coingeckoIcon,
     location: [-0.06883619559843743, 0.08705377578735353],
     banner: "coingeckoBanner.png",
@@ -245,6 +249,8 @@ const chainAreas = [
   {
     title: "Base Area",
     marker: markers.baseMarker,
+    activeMarker: activeMarkers.baseMarker,
+    
     icon: baseIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
     banner: "baseBanner.png",
@@ -308,6 +314,8 @@ const chainAreas = [
   {
     title: "Coin98 Area",
     marker: markers.coin98Marker,
+    activeMarker: activeMarkers.coin98Marker,
+
     icon: coin98Icon,
     location: [-0.06973741716847187, 0.08653879165649415],
     banner: "coin98Banner.png",
@@ -354,6 +362,8 @@ const chainAreas = [
   {
     title: "Immutable Area",
     marker: markers.immutableMarker,
+    activeMarker: activeMarkers.immutableMarker,
+    
     icon: immutable,
     location: [-0.0671697067836984, 0.08526742458343507],
     banner: "immutableBanner.png",
@@ -406,6 +416,7 @@ const chainAreas = [
   {
     title: "SKALE Area",
     marker: markers.skaleMarker,
+    activeMarker: activeMarkers.skaleMarker,
     icon: skaleIcon,
     location: [-0.0673360036280549, 0.08455395698547363],
     banner: "skaleBanner.png",
@@ -474,6 +485,8 @@ const chainAreas = [
   {
     title: "MEXC Area",
     marker: markers.mexcMarker,
+    activeMarker: activeMarkers.mexcMarker,
+
     icon: mexcIcon,
     location: [-0.06727163065611323, 0.0842052698135376],
     banner: "mexcBanner.png",
@@ -522,6 +535,8 @@ const chainAreas = [
   {
     title: "Midle Area",
     marker: markers.midleMarker,
+    activeMarker: activeMarkers.midleMarker,
+
     icon: midle,
     location: [-0.06773297028649591, 0.08424818515777588],
     banner: "midleBanner.png",
@@ -568,6 +583,8 @@ const chainAreas = [
   {
     title: "KuCoin Area",
     marker: markers.kucoinMarker,
+    activeMarker: activeMarkers.kucoinMarker,
+    
     icon: kucoinIcon,
     location: [-0.06778661442929296, 0.08464515209198],
     banner: "kucoinBanner.png",
@@ -614,6 +631,8 @@ const chainAreas = [
   {
     title: "Avalanche Area",
     marker: markers.avaxMarker,
+    activeMarker: activeMarkers.avaxMarker,
+
     icon: avaxIcon,
     location: [-0.06854299683618559, 0.08485436439514162],
     banner: "avalancheBanner.png",
@@ -660,6 +679,8 @@ const chainAreas = [
   {
     title: "GateIo Area",
     marker: markers.gateMarker,
+    activeMarker: activeMarkers.gateMarker,
+
     icon: gateIcon,
     location: [-0.06845180179486188, 0.08445203304290771],
     banner: "gateioBanner.png",
@@ -712,6 +733,8 @@ const chainAreas = [
   {
     title: "Easy2Stake Area",
     marker: markers.easy2stakeMarker,
+    activeMarker: activeMarkers.easy2stakeMarker,
+
     icon: easy2stakeIcon,
     location: [-0.06881121754499282, 0.08454322814941408],
     banner: "easy2stakeBanner.png",
@@ -758,6 +781,8 @@ const chainAreas = [
   {
     title: "Chainlink Area",
     marker: markers.chainlinkMarker,
+    activeMarker: activeMarkers.chainlinkMarker,
+
     icon: chainlinkIcon,
     location: [-0.06912771797944854, 0.0847846269607544],
     banner: "chainlinkBanner.png",
@@ -804,6 +829,8 @@ const chainAreas = [
   {
     title: "Viction Area",
     marker: markers.victionMarker,
+    activeMarker: activeMarkers.victionMarker,
+
     icon: victionIcon,
     location: [-0.07002709552661193, 0.08453786373138428],
     banner: "victionBanner.png",
@@ -868,6 +895,8 @@ const chainAreas = [
   {
     title: "Taiko Area",
     marker: markers.taikoMarker,
+    activeMarker: activeMarkers.taikoMarker,
+
     icon: taikoIcon,
     location: [-0.06942812516951939, 0.08510112762451173],
     banner: "taikoBanner.png",
@@ -931,6 +960,8 @@ const chainAreas = [
   {
     title: "Cookie3 Area",
     marker: markers.cookieMarker,
+    activeMarker: activeMarkers.cookieMarker,
+
     icon: cookie3,
     location: [-0.0680959064388685, 0.0843554735183716],
     banner: "cookie3Banner.png",
@@ -983,6 +1014,8 @@ const chainAreas = [
   {
     title: "MultiversX Area",
     marker: markers.multiversxMarker,
+    activeMarker: activeMarkers.multiversxMarker,
+
     icon: multiversx,
     location: [-0.0696194000590765, 0.08443593978881837],
     banner: "multiversxBanner.png",
@@ -1029,6 +1062,8 @@ const chainAreas = [
   {
     title: "Conflux Area",
     marker: markers.confluxMarker,
+    activeMarker: activeMarkers.confluxMarker,
+
     icon: confluxIcon,
     location: [-0.06990907841795445, 0.08591651916503908],
     banner: "confluxBanner.png",
@@ -1081,6 +1116,8 @@ const chainAreas = [
   {
     title: "Manta Area",
     marker: markers.mantaMarker,
+    activeMarker: activeMarkers.mantaMarker,
+
     icon: mantaIcon,
     location: [-0.07001821071588557, 0.08503675460815431],
     banner: "mantaBanner.png",
@@ -1145,6 +1182,8 @@ const chainAreas = [
   {
     title: "BabyDoge Area",
     marker: markers.babydogeMarker,
+    activeMarker: activeMarkers.babydogeMarker,
+    
     icon: babydogeIcon,
     location: [-0.06669579430174531, 0.08574485778808595],
     banner: "babyDogeBanner.png",
@@ -1191,6 +1230,8 @@ const chainAreas = [
   {
     title: "DogeCoin Area",
     marker: markers.dogecoinMarker,
+    activeMarker: activeMarkers.dogecoinMarker,
+
     icon: dogecoin,
     location: [-0.06900249243705621, 0.08157670497894287],
     banner: "dogecoinBanner.png",
@@ -1243,6 +1284,8 @@ const chainAreas = [
   {
     title: "CoinMarketCap Area",
     marker: markers.cmcMarker,
+    activeMarker: activeMarkers.cmcMarker,
+
     icon: cmcIcon,
     location: [-0.06756482942607475, 0.08595407009124757],
     banner: "coinmarketcapBanner.png",
@@ -1254,23 +1297,7 @@ const chainAreas = [
         [-0.06770430419767781, 0.08635640144348145],
       ],
     ],
-    events: [
-      {
-        title: "Daily Bonus",
-        image: dailyBonusInfo,
-        link: "/account#dailybonus",
-      },
-      {
-        title: "Maze Garden",
-        image: mazeGardenInfo,
-        link: "/account/challenges/maze-day",
-      },
-      {
-        title: "Leaderboard",
-        image: leaderboardInfo,
-        link: "/account#leaderboard",
-      },
-    ],
+    events: [],
     pastEvents: [
       {
         title: "Treasure Hunt",
@@ -1311,6 +1338,8 @@ const chainAreas = [
   {
     title: "Ordify Area",
     marker: markers.ordifyMarker,
+    activeMarker: activeMarkers.ordifyMarker,
+
     icon: ordifyIcon,
     location: [-0.06787060104021504, 0.08728981018066406],
     banner: "ordifyBanner.png",
