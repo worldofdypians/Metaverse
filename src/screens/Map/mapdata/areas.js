@@ -194,6 +194,54 @@ const chainAreas = [
     ],
   },
   {
+    title: "Matchain Area",
+    marker: markers.matchainMarker,
+    activeMarker: activeMarkers.matchainMarker,
+
+    icon: matchainIcon,
+    location: [-0.06703375240749239, 0.08581995964050293],
+    banner: "matchainBanner.png",
+    area: [
+      [
+        [-0.0668191758326784, 0.08607208728790285],
+        [-0.06696937943514361, 0.0854766368865967],
+        [-0.06716249835192278, 0.08551955223083497],
+        [-0.06697474384951874, 0.08613646030426027],
+      ],
+    ],
+    events: [],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/matchain_io",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/matchain_fam",
+        icon: telegram,
+      },
+      // {
+      //   link: "https://discord.com/invite/X3fHfpvpCM",
+      //   icon: discord,
+      // },
+      {
+        link: "https://www.matchain.io/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    size: "250x250",
+    rewards: "N/A",
+    desc: "Matchain is an AI-powered blockchain advancing data and identity sovereignty through data aggregation, analytics, and profiling for improved decentralized identity solutions. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
+  {
     title: "Coingecko Area",
     marker: markers.coingeckoMarker,
     activeMarker: activeMarkers.coingeckoMarker,
@@ -1384,54 +1432,7 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
-  {
-    title: "Matchain Area",
-    marker: markers.matchainMarker,
-    activeMarker: activeMarkers.matchainMarker,
 
-    icon: matchainIcon,
-    location: [-0.06703375240749239, 0.08581995964050293],
-    banner: "matchainBanner.png",
-    area: [
-      [
-        [-0.0668191758326784, 0.08607208728790285],
-        [-0.06696937943514361, 0.0854766368865967],
-        [-0.06716249835192278, 0.08551955223083497],
-        [-0.06697474384951874, 0.08613646030426027],
-      ],
-    ],
-    events: [],
-    pastEvents: [],
-    socials: [
-      {
-        link: "https://x.com/matchain_io",
-        icon: twitter,
-      },
-      {
-        link: "https://t.me/matchain_fam",
-        icon: telegram,
-      },
-      // {
-      //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: discord,
-      // },
-      {
-        link: "https://www.matchain.io/",
-        icon: website,
-      },
-    ],
-    city: "Dypians",
-    size: "250x250",
-    rewards: "N/A",
-    desc: "Matchain is an AI-powered blockchain advancing data and identity sovereignty through data aggregation, analytics, and profiling for improved decentralized identity solutions. ",
-    benefits: [
-      "Participate in exclusive quests and events",
-      "Participate in daily challenges",
-      "Explore an immersive environment",
-      "Experience real-time interactions",
-      "Join community-driven contests",
-    ],
-  },
 ];
 
 const bearAreas = [

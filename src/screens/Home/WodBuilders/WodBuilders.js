@@ -16,7 +16,13 @@ const WodBuilders = ({ page }) => {
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
-
+    {
+      name: "Matchain",
+      icon: "matchainIcon",
+      banner: "matchainBanner.webp",
+      // link: "",
+      backer: true,
+    },
     {
       name: "CORE",
       icon: "core",
@@ -401,7 +407,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 2 ? setSlice(24) : setSlice(2))}
+                onClick={() => (slice === 2 ? setSlice(25) : setSlice(2))}
                 style={{bottom: "0"}}
               >
                 <span className="view-all-partners ">
@@ -415,7 +421,7 @@ const WodBuilders = ({ page }) => {
             <div className="d-flex justify-content-center mt-3">
               <div
                 className="d-flex align-items-center gap-2 view-more-partners position-relative"
-                onClick={() => (slice === 8 ? setSlice(24) : setSlice(8))}
+                onClick={() => (slice === 8 ? setSlice(25) : setSlice(8))}
                 style={{bottom: "0"}}
               >
                 <span className="view-all-partners ">
