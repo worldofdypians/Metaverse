@@ -12,6 +12,11 @@ const Investors = ({ page }) => {
       link: "https://www.bnbchain.org/en",
     },
     {
+      title: "Matchain",
+      logo: "matchainBackers.svg",
+      link: "https://www.matchain.io/",
+    },
+    {
       title: "CORE",
       logo: "coreBackers.svg",
       link: "https://coredao.org/",
@@ -41,11 +46,11 @@ const Investors = ({ page }) => {
       logo: "mpcEducation.svg",
       link: "https://meuplanocrypto.com/",
     },
-    {
-      title: "Crypto Adventure",
-      logo: "cryptoAdventure.svg",
-      link: "https://cryptoadventure.com/",
-    },
+    // {
+    //   title: "Crypto Adventure",
+    //   logo: "cryptoAdventure.svg",
+    //   link: "https://cryptoadventure.com/",
+    // },
     {
       title: "Conflux",
       logo: "confluxBackers.svg",

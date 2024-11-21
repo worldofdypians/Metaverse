@@ -3505,8 +3505,7 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={24}
-                                  height={24}
+                                  style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -4363,8 +4362,7 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={24}
-                                  height={24}
+                                  style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -4458,8 +4456,7 @@ const NewDailyBonus = ({
                               {" "}
                               <img
                                 src={victionIcon}
-                                width={24}
-                                height={24}
+                                style={{ width: 20, height: 20 }}
                                 alt=""
                               />{" "}
                               VICTION

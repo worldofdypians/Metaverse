@@ -496,6 +496,13 @@ const MobileNavbar = ({
                   <img src={bnb} alt="" />
                   BNB Chain
                 </Dropdown.Item>
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <Dropdown.Item onClick={() => switchNetwork("0x2ba", 698)}>
+                      <img src={matchain} width={20} height={20} alt="" />
+                      Matchain
+                    </Dropdown.Item>
+                  )}
                 <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
                   <img src={manta} alt="" />
                   Manta
@@ -513,13 +520,7 @@ const MobileNavbar = ({
                       Taiko
                     </Dropdown.Item>
                   )}
-                {window.WALLET_TYPE !== "binance" &&
-                  !window.ethereum?.isBinance && (
-                    <Dropdown.Item onClick={() => switchNetwork("0x2ba", 698)}>
-                      <img src={matchain} width={20} height={20} alt="" />
-                      Matchain
-                    </Dropdown.Item>
-                  )}
+             
                 {window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
