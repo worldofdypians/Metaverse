@@ -466,6 +466,44 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
+                        onMouseEnter={() => handleMouseEnter("matchain")}
+                        onMouseLeave={handleMouseLeave}
+                        className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "matchain" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("matchain");
+                          setAllData(allMatData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "matchain"
+                              ? matchainActive
+                              : optionText2 !== "matchain" &&
+                                hoverState === "matchain"
+                              ? matchainWhite
+                              : matchainInactive
+                          }
+                          className={`${
+                            optionText2 === "matchain"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Matchain"
+                          : windowSize.width < 786 && optionText2 === "matchain"
+                          ? "Matchain"
+                          : ""}
+                      </button>
+                      <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -543,44 +581,7 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
 
-                      {/* <button
-                        onMouseEnter={() => handleMouseEnter("matchain")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "matchain" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("matchain");
-                          setAllData(allMatData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "matchain"
-                              ? matchainActive
-                              : optionText2 !== "matchain" &&
-                                hoverState === "matchain"
-                              ? matchainWhite
-                              : matchainInactive
-                          }
-                          className={`${
-                            optionText2 === "matchain"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Matchain"
-                          : windowSize.width < 786 && optionText2 === "matchain"
-                          ? "Matchain"
-                          : ""}
-                      </button> */}
+                  
 
 
 
@@ -836,13 +837,14 @@ const NewLeaderBoard = ({
                           Get
                         </NavLink>
                       ) : (
-                        <button
+                        <NavLink
                           className="activate-btn2 px-3 py-1"
+                          to="/account/prime"
                           style={{background: 'transparent'}}
-                          // onClick={onPremiumClick}
+                          onClick={onPremiumClick}
                         >
                           Lifetime
-                        </button>
+                        </NavLink>
                       )}
                     </div>
                   </div>

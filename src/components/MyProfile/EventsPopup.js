@@ -446,7 +446,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   Beta Pass NFT from the World of Dypians Shop. By
                   engaging in the game on a daily basis and exploring the
                   Matchain area, players not only stand a chance to secure
-                  daily rewards in BNB, but also earn points for their
+                  daily rewards in MAT, but also earn points for their
                   placement on the global leaderboard. Remember to log in to
                   the game daily and venture into the Matchain area to uncover
                   hidden treasures.
@@ -500,11 +500,12 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                         dummyEvent.popupInfo.id === "event8" ||
                         dummyEvent.popupInfo.id === "event9" ||
                         dummyEvent.popupInfo.id === "event20" ||
-                        dummyEvent.popupInfo.id === "event3" ||
-                        dummyEvent.popupInfo.id === "event25"
+                        dummyEvent.popupInfo.id === "event3" 
                       ? "BNB"
                       : dummyEvent.popupInfo.id === "event7"
                       ? "DOGE"
+                      : dummyEvent.popupInfo.id === "event25"
+                      ? "MAT"
                       : dummyEvent.popupInfo.id === "event11"
                       ? "SKL"
                       : dummyEvent.popupInfo.id === "event14"
@@ -999,11 +1000,12 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                         : dummyEvent.popupInfo.id === "event6" ||
                           dummyEvent.popupInfo.id === "event8" ||
                           dummyEvent.popupInfo.id === "event9" ||
-                          dummyEvent.popupInfo.id === "event3"||
-                          dummyEvent.popupInfo.id === "event25"
+                          dummyEvent.popupInfo.id === "event3" 
                         ? "BNB"
                         : dummyEvent.popupInfo.id === "event7"
                         ? "DOGE"
+                         : dummyEvent.popupInfo.id === "event25"
+                        ? "MAT"
                         : dummyEvent.popupInfo.id === "event11"
                         ? "SKL"
                         : dummyEvent.popupInfo.id === "event20"

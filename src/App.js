@@ -481,6 +481,8 @@ function App() {
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
+  let matchainLastDay = new Date("2025-03-28T14:00:00.000+02:00");
+
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -3438,43 +3440,43 @@ function App() {
         eventDate: "Aug 26, 2024",
       },
     },
-    // {
-    //   title: "Matchain",
-    //   logo: matchainLogo,
-    //   eventStatus: "Coming Soon",
-    //   rewardType: "BNB",
-    //   rewardAmount: "$20,000",
-    //   location: [-0.12891758531392564, 0.059008598327636726],
-    //   image: "cookie3Banner.png",
-    //   type: "Treasure Hunt",
-    //   infoType: "Treasure Hunt",
-    //   marker: markers.treasureMarker,
-    //   totalRewards: "$20,000 in BNB Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Nov 12, 2024",
-    //   backgroundImage: upcomingMatchain,
-    //   userEarnUsd: matEarnUsd,
-    //   userEarnCrypto: matEarnToken,
-    //   userEarnPoints: matPoints,
-    //   popupInfo: {
-    //     title: "Matchain",
-    //     chain: "Matchain",
-    //     linkState: "matchain",
-    //     rewards: "BNB",
-    //     status: "Coming Soon",
-    //     id: "event25",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in BNB Rewards",
-    //     eventDuration: cookieLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Nov 12, 2024",
-    //   },
-    // },
+    {
+      title: "Matchain",
+      logo: matchainLogo,
+      eventStatus: "Coming Soon",
+      rewardType: "MAT",
+      rewardAmount: "$20,000",
+      location: [-0.12891758531392564, 0.059008598327636726],
+      image: "cookie3Banner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in MAT Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 28, 2024",
+      backgroundImage: upcomingMatchain,
+      userEarnUsd: matEarnUsd,
+      userEarnCrypto: matEarnToken,
+      userEarnPoints: matPoints,
+      popupInfo: {
+        title: "Matchain",
+        chain: "Matchain",
+        linkState: "matchain",
+        rewards: "MAT",
+        status: "Coming Soon",
+        id: "event25",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in MAT Rewards",
+        eventDuration: matchainLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Nov 28, 2024",
+      },
+    },
 
     // {
     //   title: "SEI",
@@ -4995,7 +4997,7 @@ function App() {
             }
           />
 
-          {/* <Route
+          <Route
             exact
             path="/shop/beta-pass/matchain"
             element={
@@ -5022,7 +5024,7 @@ function App() {
                 cawsArray={allCawsForTimepieceMint}
               />
             }
-          /> */}
+          />
 
           <Route
             exact
