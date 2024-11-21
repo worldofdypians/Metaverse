@@ -130,6 +130,10 @@ import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/
 import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
+import Whitelist from "./screens/Whitelist/Whitelist.js";
+
+
+
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -4593,6 +4597,7 @@ function App() {
               />
             }
           />
+          
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route
             exact
