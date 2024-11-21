@@ -1,7 +1,7 @@
 import React from 'react'
 import { Polygon, useMap } from 'react-leaflet';
 
-const ChainPolygon = ({item, handleMarkerClick}) => {
+const ChainPolygon = ({item, handleMarkerClick, setActiveMarker}) => {
 
     useMap().createPane('pane');
     useMap().getPane('pane').style.zIndex = 650;
@@ -18,6 +18,7 @@ const ChainPolygon = ({item, handleMarkerClick}) => {
       click: (e) => {
         e.originalEvent.stopPropagation();
         handleMarkerClick(item, 18, "chain");
+        setActiveMarker(item.title);
       }
     }}
   />

@@ -310,13 +310,19 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                     alt={marker.title}
                     className="w-75"
                   />
-                  <div className="d-flex align-items-center justify-content-between chain-marker-info-wrapper p-3 w-100">
-                    <span className="ends-in-span">Ends in</span>
-                    <Countdown
-                      renderer={renderer}
-                      date={marker.popupInfo.eventDuration}
-                    />
-                  </div>
+                  {marker.eventStatus === "Live" ? (
+                    <div className="d-flex align-items-center justify-content-between chain-marker-info-wrapper p-3 w-100">
+                      <span className="ends-in-span">Ends in</span>
+                      <Countdown
+                        renderer={renderer}
+                        date={marker.popupInfo.eventDuration}
+                      />
+                    </div>
+                  ) : (
+                    <div className="d-flex align-items-center justify-content-center chain-marker-info-wrapper p-3 w-100">
+                      <span className="ends-in-span">Coming Soon</span>
+                    </div>
+                  )}
                 </div>
                 <div className="d-flex flex-column gap-2 px-3 h-100 mb-3 justify-content-between">
                   <div className="chain-marker-info-wrapper chain-marker-info-grid-2 p-2">
@@ -647,8 +653,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </NavLink>
             </div>
           </div>
-        ) 
-        : type === "genesis" ? (
+        ) : type === "genesis" ? (
           <div className="d-flex flex-column justify-content-between h-100">
             <div className="d-flex flex-column gap-2">
               <div className="d-flex flex-column">
@@ -670,7 +675,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </div>
               <div className="d-flex flex-column gap-3 px-3">
                 <p className="custom-marker-content mb-0">{marker.popupDesc}</p>
-               
+
                 <div className="d-flex flex-column gap-2">
                   <h6 className="mb-0 challenge-popup-secondary-title">
                     Benefits
@@ -717,8 +722,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
               </NavLink>
             </div>
           </div>
-        )
-        : (
+        ) : (
           <> </>
         )}
       </>

@@ -32,6 +32,7 @@ import bearIcon from "../assets/bearIcon.svg";
 import boarIcon from "../assets/boarIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
 import landIcon from "../assets/landIcon.png";
+import matchainIcon from "../assets/matchainIcon.svg";
 import questIcon from "../assets/sidebarIcons/questsIcon.svg";
 import craftingIcon from "../assets/sidebarIcons/craftIcon.svg";
 import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
@@ -61,6 +62,7 @@ const iconData = [
   { name: "bnbMarker", url: bnbIcon, size: 24, chain: true,  },
   { name: "coreMarker", url: coreIcon, size: 24, chain: true,  },
   { name: "mantaMarker", url: mantaIcon, size: 24, chain: true,  },
+  { name: "matchainMarker", url: matchainIcon, size: 24, chain: true,  },
   { name: "dypMarker", url: dypIcon, size: 24, chain: true,  },
   { name: "skaleMarker", url: skaleIcon, size: 24, chain: true,  },
   { name: "taikoMarker", url: taikoIcon, size: 24, chain: true,  },

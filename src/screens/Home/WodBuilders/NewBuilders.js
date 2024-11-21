@@ -10,6 +10,13 @@ const NewBuilders = () => {
       link: "https://x.com/BNBCHAIN/status/1821018678550306906",
       backer: true,
     },
+    {
+      name: "Matchain",
+      icon: "matchainIcon",
+      // banner: "bnbBanner.png",
+      link: "https://x.com/BNBCHAIN/status/1821018678550306906",
+      backer: false,
+    },
 
     {
       name: "CORE",

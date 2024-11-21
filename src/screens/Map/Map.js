@@ -86,7 +86,7 @@ const Map = ({ dummyBetaPassData2 }) => {
   const [events, setEvents] = useState(false);
 
   const liveTreasureHunts = dummyBetaPassData2.filter((item) => {
-    return item.eventStatus === "Live";
+    return item.eventStatus === "Live" || item.eventStatus === "Coming Soon";
   });
 
   // Memoize large data to avoid re-renders
