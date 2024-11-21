@@ -3,6 +3,33 @@
   background: #28285a;
 }
 
+
+.migration-banner-title{
+  color: #F7F7FC !important;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.migration-banner-desc {
+  color: #f7f7fc;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 166.667% */
+  letter-spacing: -0.216px;
+}
+
+.migration-status-text-2 {
+  color: #C0C9FF !important;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .commiting-amount {
   color: #4ed5d2 !important; 
   text-align: center;

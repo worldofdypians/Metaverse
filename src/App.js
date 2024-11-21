@@ -4597,7 +4597,21 @@ function App() {
               />
             }
           />
-          
+                        <Route
+                    exact
+                    path="/whitelist"
+                    element={
+                      <Whitelist
+                      chainId={networkId}
+                        isConnected={isConnected}
+                        handleConnection={handleConnectWallet}
+                        coinbase={coinbase}
+                        isPremium={isPremium}
+                        // userPools={userPools} 
+                      />
+                    }
+                  />
+
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route
             exact

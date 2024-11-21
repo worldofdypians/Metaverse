@@ -146,6 +146,22 @@ window.config = {
   metamask_message2: "I want to login to DYP TOOLS, let me in!",
   metamask_admin_account: "0x471ad9812b2537ffc66eba4d474cc55c32dec4f8",
 
+
+
+  
+  commitmenteth_tokens: [
+    {
+      symbol: "USDT",
+      decimals: 6,
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    },
+    {
+      symbol: "USDC",
+      decimals: 6,
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    },
+  ],
+  
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
   subscription_tokens: {
