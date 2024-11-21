@@ -1,22 +1,28 @@
-.new-game-stats-wrapper{
-position: relative;
-    background-size: 100%;
-    aspect-ratio: 5/1;
-    background-repeat: no-repeat;
+.new-game-stats-wrapper {
+    position: relative;
+    width: 100%; /* Ensure the wrapper spans the full width */
+    height: clamp(300px, 25vw, 480px); /* Responsive height */
+    background-size: cover; /* Maintain aspect ratio of the image, cutting excess parts */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repetition */
     border-bottom: 3px solid black;
- @media screen and (max-width: 1300px) {
-    background-size: cover;
-    background-position: right;
- }
- @media screen and (max-width: 900px) {
-    background-image: none !important;
-    background-color: rgba(81, 84, 111, 0.2);
- }
-}
-
-.first-banner{
-  background-image: url("./assets/transactionsBanner2.webp");
-}
+    overflow: hidden; /* Ensure no content spills out */
+  
+    @media screen and (max-width: 1300px) {
+      background-position: right; /* Optional: shift the image focus */
+    }
+  
+    @media screen and (max-width: 900px) {
+      background-image: none !important;
+      background-color: rgba(81, 84, 111, 0.2);
+      height: 300px;
+    }
+  }
+  
+  .first-banner {
+    background-image: url("./assets/transactionsBanner.webp");
+  }
+  
 
 .second-banner{
     background-image: url("./assets/darkLordSpaceBanner.webp");
@@ -24,7 +30,7 @@ position: relative;
 }
 
 .third-banner{
-    background-image: url("./assets/lizardBanner.webp");
+    background-image: url("./assets/lizardBanner2.webp");
     
 
 }
@@ -36,23 +42,18 @@ position: relative;
     background-image: url("./assets/groupBanner.webp");
 }
 .sixth-banner{
-    background-image: url("./assets/secondCityBanner.webp");
+    background-image: url("./assets/secondCityBanner2.webp");
 }
 .seventh-banner{
-    background-image: url("../../../assets/gameAssets/cawsGameBanner.webp");
+    background-image: url("../../../assets/gameAssets/cawsGameBanner2.webp");
 }
-.seventh-banner{
-    background-image: url("../../../assets/gameAssets/cawsGameBanner.webp");
-}
+
 .eightth-banner{
-    background-image: url("../../../assets/gameAssets/exploreGameBanner.webp");
+    background-image: url("../../../assets/gameAssets/exploreGameBanner2.webp");
 }
 
 
-.amplify-game-banner{
-    background-image: url("../../../assets/gameAssets/amplifyBanner.webp");
 
-}
 
 .small-transaction-banner{
     width: 100%;
