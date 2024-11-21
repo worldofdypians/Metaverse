@@ -51,6 +51,7 @@ import magnifier from "../assets/magnifier.svg";
 import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
 import minerIcon from "../assets/sidebarIcons/minesIcon.svg";
 import markerPin from '../assets/markerPin.svg'
+import markerPinRed from '../assets/markerPinRed.svg'
 
 // Consolidated icon data array
 const iconData = [
@@ -127,6 +128,21 @@ iconData.forEach(({ name, url, size, chain }) => {
   });
 });
 
+const activeMarkers = {};
+
+
+iconData.forEach(({ name, url, size, chain }) => {
+  activeMarkers[name] = L.divIcon({
+    className: `custom-chain-icon`,
+    html: `<div>
+    <img class="marker-pin ${!chain && "d-none"}" src="${markerPinRed}" alt="marker-pin" />
+    <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
+  });
+});
+
 // Generic Text Marker Component
 const TextMarker = ({ area, position, className, color, size }) => {
   const textIcon = L.divIcon({
@@ -155,6 +171,7 @@ const SeaTextMarker = (props) => (
 // Exporting the markers and text markers
 export {
   markers, // Exports all dynamically created markers
+  activeMarkers,
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,
