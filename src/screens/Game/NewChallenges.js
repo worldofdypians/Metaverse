@@ -44,15 +44,15 @@ const NewChallenges = ({
   const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
 
-  const currentDate = new Date().getDay();
+  const currentDate = new Date().getUTCDay();
 
   const adjustedDay = currentDate === 0 ? 7 : currentDate;
 
   const getMonday = (date) => {
-    const day = date.getDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
+    const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
     const diff = (day === 0 ? -6 : 1) - day; // Adjust to Monday
     const monday = new Date(date);
-    monday.setDate(date.getDate() + diff);
+    monday.setDate(date.getUTCDate() + diff);
     return monday;
   };
 
@@ -60,7 +60,7 @@ const NewChallenges = ({
     const dates = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(start);
-      date.setDate(start.getDate() + i);
+      date.setDate(start.getUTCDate() + i);
       dates.push(date);
     }
     return dates;

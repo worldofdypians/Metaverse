@@ -146,14 +146,14 @@ const OurTeam = () => {
       link: "https://www.linkedin.com/in/afatuliaj/",
       content: `Co-Founder of Simplicity Group, a tokenomics and research consultancy with a VC arm. Alex is a specialist in behaviour economics, guiding projects from ideation to a launch.`,
     },
-    // {
-    //   id: "jeff",
-    //   name: "Jeff Nowak",
-    //   position: "Advisor",
-    //   photo: jeff,
-    //   link: "",
-    //   content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
-    // },
+    {
+      id: "jeff",
+      name: "Jeff Nowak",
+      position: "Advisor",
+      photo: jeff,
+      link: "",
+      content: `Jeff, the Founder of Maven Capital, is a seasoned software engineer boasting over a decade of expertise in cutting-edge technologies such as AI, IoT, and Web3. Leveraging his extensive experience, Jeff provides founders with invaluable strategic advisory services and unparalleled expertise in Go-To-Market (GTM) strategies. His impressive portfolio includes collaborations with leading blockchain projects like Filecoin, IPFS, R3, Polygon, KCC, Telos, among others. Jeff is dedicated to fostering collaborative innovation aimed at achieving widespread adoption within the industry.`,
+    },
     {
       id: "wei",
       name: "Wee Yao Liang",
