@@ -12,6 +12,7 @@ import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
 import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
 import victionIcon from "../assets/chainIcons/victionIcon.svg";
 import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
+import matchainIcon from "../assets/chainIcons/matchainIcon.svg";
 import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
 import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
 import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
@@ -250,7 +251,7 @@ const chainAreas = [
     title: "Base Area",
     marker: markers.baseMarker,
     activeMarker: activeMarkers.baseMarker,
-    
+
     icon: baseIcon,
     location: [-0.0694799252930712, 0.08724689483642578],
     banner: "baseBanner.png",
@@ -363,7 +364,7 @@ const chainAreas = [
     title: "Immutable Area",
     marker: markers.immutableMarker,
     activeMarker: activeMarkers.immutableMarker,
-    
+
     icon: immutable,
     location: [-0.0671697067836984, 0.08526742458343507],
     banner: "immutableBanner.png",
@@ -584,7 +585,7 @@ const chainAreas = [
     title: "KuCoin Area",
     marker: markers.kucoinMarker,
     activeMarker: activeMarkers.kucoinMarker,
-    
+
     icon: kucoinIcon,
     location: [-0.06778661442929296, 0.08464515209198],
     banner: "kucoinBanner.png",
@@ -1183,7 +1184,7 @@ const chainAreas = [
     title: "BabyDoge Area",
     marker: markers.babydogeMarker,
     activeMarker: activeMarkers.babydogeMarker,
-    
+
     icon: babydogeIcon,
     location: [-0.06669579430174531, 0.08574485778808595],
     banner: "babyDogeBanner.png",
@@ -1375,6 +1376,54 @@ const chainAreas = [
     size: "125x125",
     rewards: "N/A",
     desc: "Ordify is a curated collection designed to enhance user experience across various blockchains, connecting businesses with the community in the Bitcoin and EVM ecosystems. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
+  {
+    title: "Matchain Area",
+    marker: markers.matchainMarker,
+    activeMarker: activeMarkers.matchainMarker,
+
+    icon: matchainIcon,
+    location: [-0.06703375240749239, 0.08581995964050293],
+    banner: "matchainBanner.png",
+    area: [
+      [
+        [-0.0668191758326784, 0.08607208728790285],
+        [-0.06696937943514361, 0.0854766368865967],
+        [-0.06716249835192278, 0.08551955223083497],
+        [-0.06697474384951874, 0.08613646030426027],
+      ],
+    ],
+    events: [],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/matchain_io",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/matchain_fam",
+        icon: telegram,
+      },
+      // {
+      //   link: "https://discord.com/invite/X3fHfpvpCM",
+      //   icon: discord,
+      // },
+      {
+        link: "https://www.matchain.io/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    size: "250x250",
+    rewards: "N/A",
+    desc: "Matchain is an AI-powered blockchain advancing data and identity sovereignty through data aggregation, analytics, and profiling for improved decentralized identity solutions. ",
     benefits: [
       "Participate in exclusive quests and events",
       "Participate in daily challenges",
