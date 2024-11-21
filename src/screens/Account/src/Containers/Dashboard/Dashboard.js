@@ -4230,9 +4230,9 @@ function Dashboard({
       // fetchWeeklyRecordsTaiko();
       fetchMonthlyRecordsTaiko();
 
-      fetchDailyRecordsMat();
+      // fetchDailyRecordsMat();
       // fetchWeeklyRecordsMat();
-      fetchMonthlyRecordsMat();
+      // fetchMonthlyRecordsMat();
 
       fetchDailyRecordsSkale();
       // fetchWeeklyRecordsSkale();
@@ -4293,12 +4293,12 @@ function Dashboard({
     }
   }, [taikocount]);
 
-  useEffect(() => {
-    if (matcount !== 0) {
-      fetchDailyRecordsMat();
-      getAllMatChests(email);
-    }
-  }, [matcount]);
+  // useEffect(() => {
+  //   if (matcount !== 0) {
+  //     fetchDailyRecordsMat();
+  //     getAllMatChests(email);
+  //   }
+  // }, [matcount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -9902,7 +9902,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      getAllMatChests(email);
+      // getAllMatChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
@@ -10381,7 +10381,10 @@ function Dashboard({
                 monthlyplayerData={monthlyplayerData}
                 genesisData={genesisData}
                 onPremiumClick={() => {
-                  setgetPremiumPopup(true);
+                  // setgetPremiumPopup(true);
+                  setLeaderboard(false);
+                  window.location.hash = "";
+
                 }}
                 onGoldenpassClick={() => {
                   setgoldenPassPopup(true);
@@ -10910,6 +10913,16 @@ function Dashboard({
                             BNB Chain
                           </span>
                         </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={matchainLogo}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            Matchain
+                          </span>
+                        </div>
 
                         <div className="d-flex align-items-center gap-2">
                           <img
@@ -10930,16 +10943,7 @@ function Dashboard({
                           />
                           <span className="subscription-chain mb-0">Taiko</span>
                         </div>
-                        {/* <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={matchainLogo}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">
-                            Matchain
-                          </span>
-                        </div> */}
+                    
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -11102,6 +11106,23 @@ function Dashboard({
                                     />
                                     BNB Chain
                                   </li>
+   {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleMatPool}
+                                      >
+                                        <img
+                                          src={matchainLogo}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        Matchain
+                                      </li>
+                                    )}
 
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11134,24 +11155,7 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-                                  {/* {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
-                                      <li
-                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                        onClick={handleMatPool}
-                                      >
-                                        <img
-                                          src={matchainLogo}
-                                          style={{
-                                            width: 18,
-                                            height: 18,
-                                          }}
-                                          alt=""
-                                        />
-                                        Matchain
-                                      </li>
-                                    )} */}
-
+                               
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                     onClick={handleAvaxPool}
@@ -12150,12 +12154,7 @@ function Dashboard({
                         approveStatus === "failsubscribe" ||
                         approveStatus === "successsubscribe") ? (
                         <>
-                          Approve{" "}
-                          {approveStatus === "approveAmount"
-                            ? "token"
-                            : nftPremium_total > 0
-                            ? "NFT"
-                            : ""}
+                          Approve token
                         </>
                       ) : loadspinner === false && approveStatus === "fail" ? (
                         "Failed"
@@ -12185,9 +12184,7 @@ function Dashboard({
                         approveStatus === "fail" ||
                         approveStatus === "deposit") ? (
                         <>
-                          {discountPercentage > 0 || nftPremium_total > 0
-                            ? "Redeem"
-                            : "Buy"}
+                          Buy
                         </>
                       ) : loadspinnerSub === false &&
                         approveStatus === "successsubscribe" ? (

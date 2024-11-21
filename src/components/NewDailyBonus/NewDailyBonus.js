@@ -3505,8 +3505,7 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={24}
-                                  height={24}
+                                  style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -3891,7 +3890,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        {/* <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
                           } w-100`}
@@ -3937,7 +3936,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                             <div className="d-flex align-items-center gap-2">
-                              <div className="d-flex align-items-center">
+                              {/* <div className="d-flex align-items-center">
                                 <img
                                   className="percent-img"
                                   src={
@@ -3988,15 +3987,15 @@ const NewDailyBonus = ({
                                   height={8}
                                   alt=""
                                 />
-                              </div>
+                              </div> */}
                               <span className="percentage-span">
-                                {parseInt(matPercentage)}%
+                                {/* {parseInt(matPercentage)}% */}
                                 Coming Soon
                               </span>
                             </div>
                           </div>
-                        </div> */}
- <div className={`position-relative chain-item w-100`}>
+                        </div>
+ {/* <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon}
                             className={`chain-img`}
@@ -4011,7 +4010,7 @@ const NewDailyBonus = ({
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className={`position-relative chain-item w-100`}>
                           <img
@@ -4213,7 +4212,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        {/* <div
+                        <div
                           className={`position-relative chain-item ${
                             chain === "matchain" && "chain-item-active"
                           } w-100`}
@@ -4260,7 +4259,7 @@ const NewDailyBonus = ({
                               </button>
                             </div>
                           </div>
-                        </div> */}
+                        </div>
 
                         <div
                           className={`position-relative chain-item ${
@@ -4363,8 +4362,7 @@ const NewDailyBonus = ({
                                 {" "}
                                 <img
                                   src={coreIcon}
-                                  width={24}
-                                  height={24}
+                                  style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
                                 CORE
@@ -4458,8 +4456,7 @@ const NewDailyBonus = ({
                               {" "}
                               <img
                                 src={victionIcon}
-                                width={24}
-                                height={24}
+                                style={{ width: 20, height: 20 }}
                                 alt=""
                               />{" "}
                               VICTION
