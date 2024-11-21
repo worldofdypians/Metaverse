@@ -43,7 +43,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     ) : item.eventStatus === "Coming Soon" ? (
                       <div
                         className={`position-absolute  events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: '-15px', left: 50, whiteSpace: 'pre' }}
+                        style={{ top: "-15px", left: 50, whiteSpace: "pre" }}
                       >
                         {/* <div
                                     className="pulsatingDot"
@@ -59,11 +59,10 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     ) : (
                       <div
                         className={`position-absolute  events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: '-15px', left: 50 }}
+                        style={{ top: "-15px", left: 50 }}
                       >
                         <span>Expired</span>
                       </div>
-                     
                     )}
                   </h6>
 
@@ -105,7 +104,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
       {events.filter((obj) => {
         return obj.eventStatus === eventDuration;
       }).length === 0 && (
-        <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+        <div className="new-stake-info-wrapper flex-column gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
           <span className="upcoming-stake">New events are coming...</span>
           <span className="upcoming-stake-desc">Check back soon!</span>
         </div>
