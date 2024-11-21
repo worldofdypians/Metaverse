@@ -10,6 +10,10 @@ const WodPartners = ({ full }) => {
       icon: "bnb.svg",
     },
     {
+      name: "Matchain",
+      icon: "matchainIcon.svg",
+    },
+    {
       name: "Core",
       icon: "core.svg",
     },

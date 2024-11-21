@@ -1062,7 +1062,7 @@ const MyProfile = ({
                   <div className="d-flex flex-column">
                     <h6
                       className="special-rewards-total mb-0"
-                      style={{ color: "#FFE8D2" }}
+                      style={{ color: isPremium ? '#F3BF09' : "#FFE8D2" }}
                     >
                       $
                       {getFormattedNumber(

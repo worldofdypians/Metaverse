@@ -32,21 +32,26 @@ const renderer = ({ days, hours, minutes }) => {
   );
 };
 
-const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, liveTreasureHunts }) => {
- 
+const EventsBar = ({
+  onClose,
+  show,
+  handleMarkerClick,
+  setSwitches,
+  switches,
+  liveTreasureHunts,
+}) => {
   const today = new Date().getDay();
 
-  const objectsWithDay = challenges.filter(item => item.day !== undefined);
-  const objectsWithoutDay = challenges.filter(item => item.day === undefined);
+  const objectsWithDay = challenges.filter((item) => item.day !== undefined);
+  const objectsWithoutDay = challenges.filter((item) => item.day === undefined);
 
-  const todayObject = objectsWithDay.find(item => item.day === today);
+  const todayObject = objectsWithDay.find((item) => item.day === today);
 
   if (todayObject) {
     objectsWithoutDay.unshift(todayObject);
   }
-  const allChallenges = [...objectsWithoutDay, ...liveTreasureHunts]
+  const allChallenges = [...objectsWithoutDay, ...liveTreasureHunts];
 
- 
   return (
     <div
       className={`marker-details-2 ${
@@ -90,7 +95,10 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
               className="d-flex align-items-center justify-content-between w-100 map-event-item"
             >
               <div className="d-flex p-3 flex-column gap-5">
-                <h6 className="map-event-title mb-0">{item.title}{" "}{item.type === "Treasure Hunt" && "Treasure Hunt"}</h6>
+                <h6 className="map-event-title mb-0">
+                  {item.title}{" "}
+                  {item.type === "Treasure Hunt" && "Treasure Hunt"}
+                </h6>
                 <div className="d-flex align-items-center gap-3">
                   <div
                     className="map-event-type p-1 d-flex align-items-center justify-content-center"
@@ -109,13 +117,13 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                       className="map-event-type-span"
                       style={{
                         color:
-                        item.infoType === "Daily Opportunity"
-                        ? "#f3bf09"
-                        : item.infoType === "Legendary Beast Siege"
-                        ? "#8C56FF"
-                        : item.infoType === "The Great Hunt"
-                        ? "#00cc4e"
-                        : "#35F3FF",
+                          item.infoType === "Daily Opportunity"
+                            ? "#f3bf09"
+                            : item.infoType === "Legendary Beast Siege"
+                            ? "#8C56FF"
+                            : item.infoType === "The Great Hunt"
+                            ? "#00cc4e"
+                            : "#35F3FF",
                       }}
                     >
                       {item.infoType}
@@ -123,8 +131,15 @@ const EventsBar = ({ onClose, show, handleMarkerClick, setSwitches, switches, li
                   </div>
                   {item?.popupInfo?.eventDuration === "--" ? (
                     <></>
+                  ) : item?.eventStatus === "Live" ? (
+                    <Countdown
+                      renderer={renderer}
+                      date={item?.popupInfo?.eventDuration}
+                    />
+                  ) : item?.eventStatus === "Coming Soon" ? (
+                    <h6 className="profile-time-number mb-0">Coming Soon</h6>
                   ) : (
-                    <Countdown renderer={renderer} date={item?.popupInfo?.eventDuration} />
+                    <></>
                   )}
                 </div>
               </div>

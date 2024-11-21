@@ -226,21 +226,21 @@ const Header = ({
         setMantaState(false);
         setTaikoState(false);
       }
-      //  else if (chainId === 698) {
-      //   setAvaxState(false);
-      //   setBnbState(false);
-      //   setEthState(false);
-      //   setBaseState(false);
-      //   setopBnbState(false);
-      //   setSkaleState(false);
-      //   setCoreState(false);
-      //   setVictionState(false);
-      //   setSeiState(false);
-      //   setImmutableState(false);
-      //   setMantaState(false);
-      //   setTaikoState(false);
-      //   setMatState(true);
-      // } 
+       else if (chainId === 698) {
+        setAvaxState(false);
+        setBnbState(false);
+        setEthState(false);
+        setBaseState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(false);
+        setImmutableState(false);
+        setMantaState(false);
+        setTaikoState(false);
+        setMatState(true);
+      } 
       else if (chainId === 204) {
         setMatState(false);
         setAvaxState(false);
@@ -1424,6 +1424,21 @@ const Header = ({
                               <img src={bnb} alt="" width={20} height={20} />
                               opBNB Chain
                             </Dropdown.Item>
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
+                                <Dropdown.Item
+                                  onClick={() => switchNetwork("0x2ba", 698)}
+                                >
+                                  <img
+                                    src={matchain}
+                                    width={20}
+                                    height={20}
+                                    alt=""
+                                  />
+                                  Matchain
+                                </Dropdown.Item>
+                              )}
+                              
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa9", 169)}
                             >
@@ -1446,20 +1461,7 @@ const Header = ({
                                   Taiko
                                 </Dropdown.Item>
                               )}
-                            {/* {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
-                                <Dropdown.Item
-                                  onClick={() => switchNetwork("0x2ba", 698)}
-                                >
-                                  <img
-                                    src={matchain}
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
-                                  Matchain
-                                </Dropdown.Item>
-                              )} */}
+                       
                             {window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item

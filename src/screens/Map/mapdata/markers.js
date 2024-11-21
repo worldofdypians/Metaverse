@@ -32,6 +32,7 @@ import bearIcon from "../assets/bearIcon.svg";
 import boarIcon from "../assets/boarIcon.svg";
 import deerIcon from "../assets/deerIcon.svg";
 import landIcon from "../assets/landIcon.png";
+import matchainIcon from "../assets/matchainIcon.svg";
 import questIcon from "../assets/sidebarIcons/questsIcon.svg";
 import craftingIcon from "../assets/sidebarIcons/craftIcon.svg";
 import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
@@ -51,6 +52,7 @@ import magnifier from "../assets/magnifier.svg";
 import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
 import minerIcon from "../assets/sidebarIcons/minesIcon.svg";
 import markerPin from '../assets/markerPin.svg'
+import markerPinRed from '../assets/markerPinRed.svg'
 
 // Consolidated icon data array
 const iconData = [
@@ -60,6 +62,7 @@ const iconData = [
   { name: "bnbMarker", url: bnbIcon, size: 24, chain: true,  },
   { name: "coreMarker", url: coreIcon, size: 24, chain: true,  },
   { name: "mantaMarker", url: mantaIcon, size: 24, chain: true,  },
+  { name: "matchainMarker", url: matchainIcon, size: 24, chain: true,  },
   { name: "dypMarker", url: dypIcon, size: 24, chain: true,  },
   { name: "skaleMarker", url: skaleIcon, size: 24, chain: true,  },
   { name: "taikoMarker", url: taikoIcon, size: 24, chain: true,  },
@@ -127,6 +130,21 @@ iconData.forEach(({ name, url, size, chain }) => {
   });
 });
 
+const activeMarkers = {};
+
+
+iconData.forEach(({ name, url, size, chain }) => {
+  activeMarkers[name] = L.divIcon({
+    className: `custom-chain-icon`,
+    html: `<div>
+    <img class="marker-pin ${!chain && "d-none"}" src="${markerPinRed}" alt="marker-pin" />
+    <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
+  });
+});
+
 // Generic Text Marker Component
 const TextMarker = ({ area, position, className, color, size }) => {
   const textIcon = L.divIcon({
@@ -155,6 +173,7 @@ const SeaTextMarker = (props) => (
 // Exporting the markers and text markers
 export {
   markers, // Exports all dynamically created markers
+  activeMarkers,
   AreaTextMarker,
   CityTextMarker,
   SeaTextMarker,

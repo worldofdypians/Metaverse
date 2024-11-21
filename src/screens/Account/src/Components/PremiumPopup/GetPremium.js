@@ -2506,7 +2506,9 @@ const GetPremiumPopup = ({
             </div>
           </div>
           <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
-            <h6 className="premium-benefits-popup-title text-white mb-0">Benefits</h6>
+            <h6 className="premium-benefits-popup-title text-white mb-0">
+              Benefits
+            </h6>
           </div>
           <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -2687,6 +2689,14 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">BNB Chain</span>
                   </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <img
+                      src={matchainLogo}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">Matchain</span>
+                  </div>
 
                   <div className="d-flex align-items-center gap-2">
                     <img
@@ -2707,14 +2717,7 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">Taiko</span>
                   </div>
-                  {/* <div className="d-flex align-items-center gap-2">
-                    <img
-                      src={matchainLogo}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                    <span className="subscription-chain mb-0">Matchain</span>
-                  </div> */}
+
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
@@ -2789,7 +2792,9 @@ const GetPremiumPopup = ({
             </div>
           )}
           <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
-            <h6 className="premium-benefits-popup-title text-white mb-0">Benefits</h6>
+            <h6 className="premium-benefits-popup-title text-white mb-0">
+              Benefits
+            </h6>
           </div>
           <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
             <div className="d-flex flex-column gap-2">
@@ -2819,9 +2824,7 @@ const GetPremiumPopup = ({
           </div>
           {/* <hr className="form-divider my-4" /> */}
           <div className="d-flex align-items-lg-end align-items-start flex-column flex-lg-row justify-content-between mt-3">
-            <h6 className="become-premium-new-title mb-0">
-              Become Prime User
-            </h6>
+            <h6 className="become-premium-new-title mb-0">Become Prime User</h6>
             <span className="my-premium-balance">
               My Balance:{" "}
               {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
@@ -2879,6 +2882,21 @@ const GetPremiumPopup = ({
                       />
                       BNB Chain
                     </li>
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleMatPool}
+                        >
+                          <img
+                            src={matchainLogo}
+                            style={{ width: 18, height: 18 }}
+                            alt=""
+                          />
+                          Matchain
+                        </li>
+                      )}
+
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                       onClick={handleMantaPool}
@@ -2893,21 +2911,6 @@ const GetPremiumPopup = ({
                       />
                       Manta
                     </li>
-
-                    {/* {window.WALLET_TYPE !== "binance" &&
-                      !window.ethereum?.isBinance && (
-                        <li
-                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                          onClick={handleMatPool}
-                        >
-                          <img
-                            src={matchainLogo}
-                            style={{ width: 18, height: 18 }}
-                            alt=""
-                          />
-                          Matchain
-                        </li>
-                      )} */}
 
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -3353,356 +3356,336 @@ const GetPremiumPopup = ({
             </div>
             {isConnected && discountPercentage > 0 && chainId === 56 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-              
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_total > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-            
-                  <button
-                    className={`btn ${
-                      isApproved === false
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentage > 0 || nftPremium_total > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-              
+                <button
+                  className={`btn ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "disabled-btn"
+                      : "connectbtn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={(e) => handleApprove(e)}
+                >
+                  {loadspinner === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "deposit" ||
+                    approveStatus === "failsubscribe" ||
+                    approveStatus === "approveAmount" ||
+                    approveStatus === "successsubscribe") ? (
+                    <>
+                      Approve{" "}
+                      {approveStatus === "approveAmount"
+                        ? "token"
+                        : nftPremium_total > 0
+                        ? "NFT"
+                        : ""}
+                    </>
+                  ) : loadspinner === false && approveStatus === "fail" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  className={`btn ${
+                    isApproved === false ? "disabled-btn" : "connectbtn"
+                  } px-4`}
+                  onClick={() => handleSubscribe()}
+                >
+                  {loadspinnerSub === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "fail" ||
+                    approveStatus === "deposit") ? (
+                    <>
+                      {discountPercentage > 0 || nftPremium_total > 0
+                        ? "Redeem"
+                        : "Buy"}
+                    </>
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "successsubscribe" ? (
+                    "Success"
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "failsubscribe" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
               </div>
             ) : isConnected &&
               discountPercentageViction > 0 &&
               chainId === 88 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-            
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalViction > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-                  
-               
-                  <button
-                    className={`btn ${
-                      isApproved === false
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageViction > 0 ||
-                        nftPremium_totalViction > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-         
+                <button
+                  className={`btn ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "disabled-btn"
+                      : "connectbtn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={(e) => handleApprove(e)}
+                >
+                  {loadspinner === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "deposit" ||
+                    approveStatus === "failsubscribe" ||
+                    approveStatus === "approveAmount" ||
+                    approveStatus === "successsubscribe") ? (
+                    <>
+                      Approve{" "}
+                      {approveStatus === "approveAmount"
+                        ? "token"
+                        : nftPremium_totalViction > 0
+                        ? "NFT"
+                        : ""}
+                    </>
+                  ) : loadspinner === false && approveStatus === "fail" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  className={`btn ${
+                    isApproved === false ? "disabled-btn" : "connectbtn"
+                  } px-4`}
+                  onClick={() => handleSubscribe()}
+                >
+                  {loadspinnerSub === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "fail" ||
+                    approveStatus === "deposit") ? (
+                    <>
+                      {discountPercentageViction > 0 ||
+                      nftPremium_totalViction > 0
+                        ? "Redeem"
+                        : "Buy"}
+                    </>
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "successsubscribe" ? (
+                    "Success"
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "failsubscribe" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
               </div>
             ) : isConnected &&
               discountPercentageTaiko > 0 &&
               chainId === 167000 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-         
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalTaiko > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-          
-          
-                  <button
-                    className={`btn ${
-                      isApproved === false
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageTaiko > 0 ||
-                        nftPremium_totalTaiko > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-             
+                <button
+                  className={`btn ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "disabled-btn"
+                      : "connectbtn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={(e) => handleApprove(e)}
+                >
+                  {loadspinner === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "deposit" ||
+                    approveStatus === "failsubscribe" ||
+                    approveStatus === "approveAmount" ||
+                    approveStatus === "successsubscribe") ? (
+                    <>
+                      Approve{" "}
+                      {approveStatus === "approveAmount"
+                        ? "token"
+                        : nftPremium_totalTaiko > 0
+                        ? "NFT"
+                        : ""}
+                    </>
+                  ) : loadspinner === false && approveStatus === "fail" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  className={`btn ${
+                    isApproved === false ? "disabled-btn" : "connectbtn"
+                  } px-4`}
+                  onClick={() => handleSubscribe()}
+                >
+                  {loadspinnerSub === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "fail" ||
+                    approveStatus === "deposit") ? (
+                    <>
+                      {discountPercentageTaiko > 0 || nftPremium_totalTaiko > 0
+                        ? "Redeem"
+                        : "Buy"}
+                    </>
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "successsubscribe" ? (
+                    "Success"
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "failsubscribe" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
               </div>
             ) : isConnected && discountPercentageMat > 0 && chainId === 698 ? (
               <div className="d-flex align-items-center gap-3 justify-content-center">
-               
-                  <button
-                    className={`btn ${
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    disabled={
-                      approveStatus === "fail" || !coinbase || isApproved
-                        ? true
-                        : false
-                    }
-                    onClick={(e) => handleApprove(e)}
-                  >
-                    {loadspinner === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "deposit" ||
-                      approveStatus === "failsubscribe" ||
-                      approveStatus === "approveAmount" ||
-                      approveStatus === "successsubscribe") ? (
-                      <>
-                        Approve{" "}
-                        {approveStatus === "approveAmount"
-                          ? "token"
-                          : nftPremium_totalMat > 0
-                          ? "NFT"
-                          : ""}
-                      </>
-                    ) : loadspinner === false && approveStatus === "fail" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-         
-         
-                  <button
-                    className={`btn ${
-                      isApproved === false
-                        ? "disabled-btn"
-                        : "connectbtn"
-                    } px-4`}
-                    onClick={() => handleSubscribe()}
-                  >
-                    {loadspinnerSub === false &&
-                    (approveStatus === "initial" ||
-                      approveStatus === "fail" ||
-                      approveStatus === "deposit") ? (
-                      <>
-                        {discountPercentageMat > 0 || nftPremium_totalMat > 0
-                          ? "Redeem"
-                          : "Buy"}
-                      </>
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "successsubscribe" ? (
-                      "Success"
-                    ) : loadspinnerSub === false &&
-                      approveStatus === "failsubscribe" ? (
-                      "Failed"
-                    ) : (
-                      <div className="d-flex align-items-center gap-2">
-                        Processing
-                        <div
-                          className="spinner-border "
-                          role="status"
-                          style={{
-                            height: "1rem",
-                            width: "1rem",
-                          }}
-                        ></div>{" "}
-                      </div>
-                    )}
-                  </button>
-             
+                <button
+                  className={`btn ${
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? "disabled-btn"
+                      : "connectbtn"
+                  } px-4`}
+                  disabled={
+                    approveStatus === "fail" || !coinbase || isApproved
+                      ? true
+                      : false
+                  }
+                  onClick={(e) => handleApprove(e)}
+                >
+                  {loadspinner === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "deposit" ||
+                    approveStatus === "failsubscribe" ||
+                    approveStatus === "approveAmount" ||
+                    approveStatus === "successsubscribe") ? (
+                    <>
+                      Approve{" "}
+                      {approveStatus === "approveAmount"
+                        ? "token"
+                        : nftPremium_totalMat > 0
+                        ? "NFT"
+                        : ""}
+                    </>
+                  ) : loadspinner === false && approveStatus === "fail" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  className={`btn ${
+                    isApproved === false ? "disabled-btn" : "connectbtn"
+                  } px-4`}
+                  onClick={() => handleSubscribe()}
+                >
+                  {loadspinnerSub === false &&
+                  (approveStatus === "initial" ||
+                    approveStatus === "fail" ||
+                    approveStatus === "deposit") ? (
+                    <>
+                      {discountPercentageMat > 0 || nftPremium_totalMat > 0
+                        ? "Redeem"
+                        : "Buy"}
+                    </>
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "successsubscribe" ? (
+                    "Success"
+                  ) : loadspinnerSub === false &&
+                    approveStatus === "failsubscribe" ? (
+                    "Failed"
+                  ) : (
+                    <div className="d-flex align-items-center gap-2">
+                      Processing
+                      <div
+                        className="spinner-border "
+                        role="status"
+                        style={{
+                          height: "1rem",
+                          width: "1rem",
+                        }}
+                      ></div>{" "}
+                    </div>
+                  )}
+                </button>
               </div>
             ) : isConnected && discountPercentage > 0 && chainId !== 56 ? (
               <div
@@ -3801,14 +3784,7 @@ const GetPremiumPopup = ({
                     approveStatus === "approveAmount" ||
                     approveStatus === "failsubscribe" ||
                     approveStatus === "successsubscribe") ? (
-                    <>
-                      Approve{" "}
-                      {approveStatus === "approveAmount"
-                        ? "token"
-                        : nftPremium_total > 0
-                        ? "NFT"
-                        : ""}
-                    </>
+                    <>Approve token</>
                   ) : loadspinner === false && approveStatus === "fail" ? (
                     "Failed"
                   ) : (
@@ -3841,11 +3817,7 @@ const GetPremiumPopup = ({
                   (approveStatus === "initial" ||
                     approveStatus === "fail" ||
                     approveStatus === "deposit") ? (
-                    <>
-                      {discountPercentage > 0 || nftPremium_total > 0
-                        ? "Redeem"
-                        : "Buy"}
-                    </>
+                    <>Buy</>
                   ) : loadspinnerSub === false &&
                     approveStatus === "successsubscribe" ? (
                     "Success"

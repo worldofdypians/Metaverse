@@ -427,7 +427,7 @@ const NewChestItem = ({
           binanceW3WProvider.getSigner()
         );
         if (rewardTypes === "premium" && isPremium) {
-         const txResponse =  await daily_bonus_contract_opbnb_binance
+          const txResponse = await daily_bonus_contract_opbnb_binance
             .openPremiumChest()
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -443,11 +443,15 @@ const NewChestItem = ({
             });
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "opbnb"
+            );
           }
-
         } else if (rewardTypes === "standard") {
-         const txResponse =  await daily_bonus_contract_opbnb_binance
+          const txResponse = await daily_bonus_contract_opbnb_binance
             .openChest()
             .catch((e) => {
               console.error(e);
@@ -463,17 +467,44 @@ const NewChestItem = ({
 
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "opbnb");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "opbnb"
+            );
           }
-
         }
       }
     } else if (chainId === 1116) {
       if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.coreWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_core.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
         await daily_bonus_contract_core.methods
           .openPremiumChest()
           .send({
             from: address,
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -495,10 +526,33 @@ const NewChestItem = ({
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.coreWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_core.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
         await daily_bonus_contract_core.methods
           .openChest()
           .send({
             from: address,
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -509,7 +563,6 @@ const NewChestItem = ({
             );
           })
           .catch((e) => {
-            console.error(e);
             window.alertify.error(e?.message);
             onChestStatus("error");
             setTimeout(() => {
@@ -518,6 +571,7 @@ const NewChestItem = ({
             onLoadingChest(false);
             setLoading(false);
             setClaimingChest(false);
+            console.error(e);
           });
       }
     } else if (chainId === 88) {
@@ -692,14 +746,13 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_manta_binance.estimateGas.openPremiumChest();
+            gasLimit =
+              await daily_bonus_contract_manta_binance.estimateGas.openPremiumChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
             console.error(error);
           }
-
-
 
           // await daily_bonus_contract_manta.methods
           //   .openPremiumChest()
@@ -713,7 +766,7 @@ const NewChestItem = ({
           // console.log(transactionParameters);
 
           const txResponse = await daily_bonus_contract_manta_binance
-            .openPremiumChest({...transactionParameters})
+            .openPremiumChest({ ...transactionParameters })
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -728,9 +781,13 @@ const NewChestItem = ({
 
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "manta");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "manta"
+            );
           }
-
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
           const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
@@ -745,16 +802,16 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_manta_binance.estimateGas.openChest();
+            gasLimit =
+              await daily_bonus_contract_manta_binance.estimateGas.openChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
             console.error(error);
           }
 
-
           const txResponse = await daily_bonus_contract_manta_binance
-            .openChest({...transactionParameters})
+            .openChest({ ...transactionParameters })
             .catch((e) => {
               console.error(e);
               window.alertify.error(e?.message);
@@ -769,13 +826,16 @@ const NewChestItem = ({
 
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "manta");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "manta"
+            );
           }
-
-
         }
       }
-    }  else if (chainId === 8453) {
+    } else if (chainId === 8453) {
       if (window.WALLET_TYPE !== "binance") {
         if (rewardTypes === "premium" && isPremium) {
           const web3 = new Web3(window.ethereum);
@@ -895,14 +955,13 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_base_binance.estimateGas.openPremiumChest();
+            gasLimit =
+              await daily_bonus_contract_base_binance.estimateGas.openPremiumChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
             console.error(error);
           }
-
-
 
           // await daily_bonus_contract_manta.methods
           //   .openPremiumChest()
@@ -916,7 +975,7 @@ const NewChestItem = ({
           // console.log(transactionParameters);
 
           const txResponse = await daily_bonus_contract_base_binance
-            .openPremiumChest({...transactionParameters})
+            .openPremiumChest({ ...transactionParameters })
             .catch((e) => {
               window.alertify.error(e?.message);
               onChestStatus("error");
@@ -931,9 +990,13 @@ const NewChestItem = ({
 
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "base");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "base"
+            );
           }
-
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
           const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
@@ -948,16 +1011,16 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_base_binance.estimateGas.openChest();
+            gasLimit =
+              await daily_bonus_contract_base_binance.estimateGas.openChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
             console.error(error);
           }
 
-
           const txResponse = await daily_bonus_contract_base_binance
-            .openChest({...transactionParameters})
+            .openChest({ ...transactionParameters })
             .catch((e) => {
               console.error(e);
               window.alertify.error(e?.message);
@@ -972,15 +1035,17 @@ const NewChestItem = ({
 
           const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "base");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "base"
+            );
           }
-
-
         }
       }
     } else if (chainId === 167000) {
       if (rewardTypes === "premium" && isPremium) {
-
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.taikoWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
@@ -1007,7 +1072,7 @@ const NewChestItem = ({
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1029,7 +1094,6 @@ const NewChestItem = ({
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
-
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.taikoWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
@@ -1052,13 +1116,11 @@ const NewChestItem = ({
           });
         console.log(transactionParameters);
 
-
-
         await daily_bonus_contract_taiko.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1080,9 +1142,8 @@ const NewChestItem = ({
             setClaimingChest(false);
           });
       }
-    }  else if (chainId === 698) {
+    } else if (chainId === 698) {
       if (rewardTypes === "premium" && isPremium) {
-
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.matWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
@@ -1109,7 +1170,7 @@ const NewChestItem = ({
           .openPremiumChest()
           .send({
             from: address,
-            ...transactionParameters
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1131,7 +1192,6 @@ const NewChestItem = ({
             console.error(e);
           });
       } else if (rewardTypes === "standard") {
-
         const web3 = new Web3(window.ethereum);
         const gasPrice = await window.matWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
@@ -1154,13 +1214,11 @@ const NewChestItem = ({
           });
         console.log(transactionParameters);
 
-
-
         await daily_bonus_contract_mat.methods
           .openChest()
           .send({
             from: address,
-            ...transactionParameters
+            ...transactionParameters,
           })
           .then((data) => {
             handleCheckIfTxExists(
@@ -1313,15 +1371,16 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
+            gasLimit =
+              await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
             console.error(error);
           }
 
-         const txResponse =  await daily_bonus_contract_bnb_binance
-            .openPremiumChest({...transactionParameters})
+          const txResponse = await daily_bonus_contract_bnb_binance
+            .openPremiumChest({ ...transactionParameters })
             // .send({
             //   from: address,
             //   ...transactionParameters,
@@ -1348,11 +1407,15 @@ const NewChestItem = ({
               console.error(e);
             });
 
-            const txReceipt = await txResponse.wait();
+          const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "bnb"
+            );
           }
-
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
           const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
@@ -1367,7 +1430,8 @@ const NewChestItem = ({
 
           let gasLimit;
           try {
-            gasLimit = await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
+            gasLimit =
+              await daily_bonus_contract_bnb_binance.estimateGas.openPremiumChest();
             transactionParameters.gasLimit = gasLimit;
             console.log("transactionParameters", transactionParameters);
           } catch (error) {
@@ -1375,7 +1439,7 @@ const NewChestItem = ({
           }
 
           const txResponse = await daily_bonus_contract_bnb_binance
-            .openChest({...transactionParameters})
+            .openChest({ ...transactionParameters })
             // .send({
             //   from: address,
             //   ...transactionParameters,
@@ -1392,9 +1456,14 @@ const NewChestItem = ({
               setClaimingChest(false);
             });
 
-            const txReceipt = await txResponse.wait();
+          const txReceipt = await txResponse.wait();
           if (txReceipt) {
-            getUserRewardsByChest(email, txResponse.hash, chestIndex - 1, "bnb");
+            getUserRewardsByChest(
+              email,
+              txResponse.hash,
+              chestIndex - 1,
+              "bnb"
+            );
           }
         }
       }
@@ -1567,7 +1636,7 @@ const NewChestItem = ({
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
-            chain !== "skale" 
+            chain !== "skale"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
                   open ? image + "open" : image
                 }.png`)
@@ -1588,7 +1657,7 @@ const NewChestItem = ({
             loading ? (chain === "skale" ? "chest-pulsate" : "chest-shake") : ""
           }`}
           src={
-            chain !== "skale"  
+            chain !== "skale"
               ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
                   open
                     ? chestIndex % 2 === 1
