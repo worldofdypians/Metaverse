@@ -10913,6 +10913,16 @@ function Dashboard({
                             BNB Chain
                           </span>
                         </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={matchainLogo}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            Matchain
+                          </span>
+                        </div>
 
                         <div className="d-flex align-items-center gap-2">
                           <img
@@ -10933,16 +10943,7 @@ function Dashboard({
                           />
                           <span className="subscription-chain mb-0">Taiko</span>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={matchainLogo}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">
-                            Matchain
-                          </span>
-                        </div>
+                    
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -11105,6 +11106,23 @@ function Dashboard({
                                     />
                                     BNB Chain
                                   </li>
+   {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleMatPool}
+                                      >
+                                        <img
+                                          src={matchainLogo}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        Matchain
+                                      </li>
+                                    )}
 
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11137,24 +11155,7 @@ function Dashboard({
                                         Taiko
                                       </li>
                                     )}
-                                  {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
-                                      <li
-                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                        onClick={handleMatPool}
-                                      >
-                                        <img
-                                          src={matchainLogo}
-                                          style={{
-                                            width: 18,
-                                            height: 18,
-                                          }}
-                                          alt=""
-                                        />
-                                        Matchain
-                                      </li>
-                                    )}
-
+                               
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                     onClick={handleAvaxPool}
