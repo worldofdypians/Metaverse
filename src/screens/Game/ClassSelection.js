@@ -33,7 +33,7 @@ const ClassSelection = ({ setVideoPopup, setVideoLink }) => {
               className="d-flex flex-column gap-1 warrior-class-video-wrapper"
               onClick={() => {
                 setVideoPopup(true);
-                setVideoLink("HuQ10vG1DnU");
+                setVideoLink("v5Um-Q8l9z8");
               }}
             >
               <span className="warrior-class-title">01</span>
@@ -48,7 +48,7 @@ const ClassSelection = ({ setVideoPopup, setVideoLink }) => {
               className="d-flex flex-column gap-1 warrior-class-video-wrapper"
               onClick={() => {
                 setVideoPopup(true);
-                setVideoLink("HuQ10vG1DnU");
+                setVideoLink("v5Um-Q8l9z8");
               }}
             >
               <span className="warrior-class-title">02</span>
