@@ -247,10 +247,11 @@ const Marketplace = ({
       localStorage.setItem("cachedVolume", result2.data);
     }
   };
-  const fetchCachedData = () => {
+
     const cachedVolume = localStorage.getItem("cachedVolume");
     const cachedTvl = localStorage.getItem("cachedTvl");
 
+  const fetchCachedData = () => {
     if (cachedTvl && cachedVolume) {
       setTotalTx(cachedTvl);
       setTotalVolume(cachedVolume);
@@ -313,6 +314,11 @@ const Marketplace = ({
     window.scrollTo(0, 0);
     document.title = "Shop";
   }, []);
+
+  
+  useEffect(() => { 
+    fetchCachedData(); 
+  }, [cachedVolume, cachedTvl]);
 
   const updateFavs = () => {
     setfavItems(favItems + 1);
