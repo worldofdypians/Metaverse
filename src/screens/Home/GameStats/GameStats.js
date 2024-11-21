@@ -142,7 +142,6 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
           </div>
         </div>
       </div>
-
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
