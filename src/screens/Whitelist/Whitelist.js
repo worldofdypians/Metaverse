@@ -56,6 +56,7 @@ const Whitelist = ({
   const [depositStatus, setdepositStatus] = useState("initial");
   const [selectedToken, setselectedToken] = useState();
   const [totalCommitmentValue, settotalCommitmentValue] = useState(0);
+  const [cliffTime, setcliffTime] = useState(0);
 
   const [allUserCommitments, setAllUserCommitments] = useState([]);
   let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
@@ -82,6 +83,100 @@ const Whitelist = ({
     "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
     "0xFdD3CFF22CF846208E3B37b47Bc36b2c61D2cA8b",
   ];
+
+  const getInfo = async (startIndex, endIndex) => {
+    const vestingSc = new window.bscTestWeb3.eth.Contract(
+      window.VESTING_ABI,
+      window.config.vesting_address
+    );
+
+    //  cliff -> Lock time until TGE release.
+    //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
+
+    const amountCliffTime = await vestingSc.methods
+      .cliff()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //  releaseProcent -> Procent (%) of the Amount Vested which will be available at TGE -> after 'cliff' has passed;
+    const releaseProcent = await vestingSc.methods
+      .releaseProcent()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const isstartVesting = await vestingSc.methods
+      .startVesting()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //lockDuration -> Vesting period, this will start and release tokens, once 'cliff' has passed;
+    const lockDuration = await vestingSc.methods
+      .lockDuration()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //availableTGE -> If 1, he has to claim 'releaseProcent' at TGE (end of 'cliff'), if 0, he has already claimed 'releaseProcent';
+    const availableTGE = await vestingSc.methods
+      .availableTGE()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //getPendingUnlocked(address _holder) -> It will give you the pending tokens that are available to Claim;
+
+    const tokensToClaimAmount = await vestingSc.methods
+      .getPendingUnlocked(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //getTotalClaimedTokens() -> Return total WOD tokens Claimed in general by ppl;
+
+    const totalWodTokensClaimed = await vestingSc.methods
+      .getTotalClaimedTokens()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    //getStakersList(uint startIndex, uint endIndex) -> Return list of Adress that are in the Vesting including info as 'lastClaimed', 'VestedTokens', 'ClaimedTokens so far'.;
+
+    const stakersList = await vestingSc.methods
+      .getStakersList(startIndex, endIndex)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+
+      //getNumberOfWallets() -> Return the number of Adresses that are in the vesting;
+
+    const addressesInVesting = await vestingSc.methods
+    .getNumberOfWallets(startIndex, endIndex)
+    .call()
+    .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+  };
 
   const checkStakedPools = () => {
     const dypResult = userPools.filter((item) => {
