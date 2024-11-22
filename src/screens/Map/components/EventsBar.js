@@ -40,7 +40,7 @@ const EventsBar = ({
   switches,
   liveTreasureHunts,
 }) => {
-  const today = new Date().getDay();
+  const today = new Date().getUTCDay();
 
   const objectsWithDay = challenges.filter((item) => item.day !== undefined);
   const objectsWithoutDay = challenges.filter((item) => item.day === undefined);
