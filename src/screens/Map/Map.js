@@ -84,6 +84,7 @@ const Map = ({ dummyBetaPassData2 }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [markerType, setMarkerType] = useState(null);
   const [events, setEvents] = useState(false);
+  const [activeMarker, setActiveMarker] = useState(null);
 
   const liveTreasureHunts = dummyBetaPassData2.filter((item) => {
     return item.eventStatus === "Live" || item.eventStatus === "Coming Soon";
@@ -153,18 +154,36 @@ const Map = ({ dummyBetaPassData2 }) => {
   const ChainMarkers = useCallback(
     () =>
       chainsVisible &&
-      memoizedChainAreas.map((item) => (
+      memoizedChainAreas.filter((item) => {return item.title !== activeMarker}).map((item) => (
         <React.Fragment key={item.title}>
-          <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} />
+          <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} setActiveMarker={setActiveMarker} />
           <CustomMarker
             item={item}
             icon={item.marker}
             type="chain"
             handleMarkerClick={handleMarkerClick}
+            setActiveMarker={setActiveMarker}
           />
         </React.Fragment>
       )),
-    [chainsVisible, memoizedChainAreas, handleMarkerClick]
+    [chainsVisible, memoizedChainAreas, handleMarkerClick, activeMarker]
+  );
+  const ActiveChainMarkers = useCallback(
+    () =>
+      chainsVisible &&
+      memoizedChainAreas.filter((item) => {return item.title === activeMarker}).map((item) => (
+        <React.Fragment key={item.title}>
+          <ChainPolygon item={item} handleMarkerClick={handleMarkerClick} setActiveMarker={setActiveMarker} />
+          <CustomMarker
+            item={item}
+            icon={item.activeMarker}
+            type="chain"
+            handleMarkerClick={handleMarkerClick}
+            setActiveMarker={setActiveMarker}
+          />
+        </React.Fragment>
+      )),
+    [chainsVisible, memoizedChainAreas, handleMarkerClick, activeMarker]
   );
 
   return (
@@ -178,6 +197,8 @@ const Map = ({ dummyBetaPassData2 }) => {
           chainAreas={chainAreas}
           setContent={setAreaContent}
           setInfo={areaContent}
+          activeMarker={activeMarker}
+          setActiveMarker={setActiveMarker}
         />
       </Suspense>
       <MapContainer
@@ -199,6 +220,7 @@ const Map = ({ dummyBetaPassData2 }) => {
         <TileLayer url="https://cdn.worldofdypians.com/MapTiles/{z}/{x}/{y}.webp" />
 
         <ChainMarkers />
+        <ActiveChainMarkers />
 
         {switches.regions &&
           areasVisible &&
@@ -219,6 +241,7 @@ const Map = ({ dummyBetaPassData2 }) => {
               type={"quest"}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
             />
           ))}
         {switches.boar &&
@@ -229,6 +252,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.bear &&
@@ -239,6 +264,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
 
@@ -250,6 +277,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.challenges &&
@@ -260,6 +289,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               type={item.type}
               item={item}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.leaderboards &&
@@ -270,6 +301,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.teleports &&
@@ -281,6 +314,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               type={item.type}
               showMarker={true}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.mines &&
@@ -291,6 +326,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {switches.craftingTables &&
@@ -301,6 +338,8 @@ const Map = ({ dummyBetaPassData2 }) => {
               item={item}
               showMarker={false}
               handleMarkerClick={handleMarkerClick}
+              setActiveMarker={setActiveMarker}
+
             />
           ))}
         {/* <MarkerClusterGroup

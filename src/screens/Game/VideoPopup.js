@@ -1,11 +1,13 @@
 import React from 'react'
 import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import OutsideClickHandler from 'react-outside-click-handler';
+import videoBorder from '../../assets/videoBorder.png'
 
 const VideoPopup = ({videoLink, closeOverlay}) => {
   return (
     <div className="overlay">
     <div className="overlay-content">
+        {/* <img src={videoBorder} alt="" className="video-border" /> */}
       <iframe
       className='video-player'
         src={`https://www.youtube.com/embed/${videoLink}`}

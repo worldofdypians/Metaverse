@@ -21,6 +21,8 @@ const DypiusDropdown = ({
   onZoomIn,
   switches,
   setSwitches,
+  activeMarker,
+  setActiveMarker,
 }) => {
   return (
     <div className="d-flex px-3 flex-column gap-2">
@@ -97,8 +99,8 @@ const DypiusDropdown = ({
             {options.map((item, index) => (
               <div
                 key={index}
-                className="areas-grid-item py-1 d-flex align-items-center gap-1 justify-content-start ps-1"
-                onClick={() => onZoomIn(item, 18, "chain")}
+                className={`areas-grid-item ${activeMarker === item.title && "areas-grid-item-active"} py-1 d-flex align-items-center gap-1 justify-content-start ps-1`}
+                onClick={() => {onZoomIn(item, 18, "chain"); setActiveMarker(item.title)}}
               >
                 <img src={item.icon} width={20} height={20} alt="" />
                 <span>{item.title.slice(0, item.title.length - 5)}</span>
