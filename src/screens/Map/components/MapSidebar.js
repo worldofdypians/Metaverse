@@ -19,6 +19,8 @@ const Sidebar = ({
   chainAreas,
   handleMarkerClick,
   setContent,
+  activeMarker,
+setActiveMarker
 }) => {
   const [search, setSearch] = useState("");
   const [sidebar, setSidebar] = useState(true);
@@ -246,6 +248,9 @@ const Sidebar = ({
               onZoomIn={handleMarkerClick}
               switches={switches}
               setSwitches={setSwitches}
+              activeMarker={activeMarker}
+              setActiveMarker={setActiveMarker}
+    
             />
             <IslandDropdown
               parent={"Island Zero"}

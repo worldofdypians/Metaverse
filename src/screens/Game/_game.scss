@@ -804,3 +804,14 @@ transition: all .25s;
     bottom: 0;
   }
 }
+
+.video-border{
+  position: absolute;
+  height: 105%;
+  width: 105%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0px;
+  pointer-events: none;
+}
