@@ -15,11 +15,11 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
         .map((item, index) => {
           return (
             <div
-              className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-between"
+              className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-lg-start justify-content-between"
               key={index}
               onClick={() => onEventClick(item)}
             >
-              <div className="ps-lg-5 d-flex align-items-center gap-3">
+              <div className="ps-lg-2 d-flex align-items-center gap-3">
                 <img src={item.logo} height={36} width={36} alt="" />
                 <div className="d-flex flex-column gap-2 position-relative">
                   <h6 className="mb-0 d-flex align-items-center gap-2 new-treasure-hunt-title text-uppercase">
@@ -43,7 +43,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     ) : item.eventStatus === "Coming Soon" ? (
                       <div
                         className={`position-absolute  events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: '-15px', left: 50, whiteSpace: 'pre' }}
+                        style={{ top: "-15px", left: 50, whiteSpace: "pre" }}
                       >
                         {/* <div
                                     className="pulsatingDot"
@@ -59,11 +59,10 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     ) : (
                       <div
                         className={`position-absolute  events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: '-15px', left: 50 }}
+                        style={{ top: "-15px", left: 50 }}
                       >
                         <span>Expired</span>
                       </div>
-                     
                     )}
                   </h6>
 
@@ -72,7 +71,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                   </span>
                 </div>
               </div>
-              <div className="d-flex flex-column gap-2 gap-lg-4">
+              <div className="d-flex flex-column gap-2 gap-lg-4" style={{zIndex: '1'}}>
                 {/* <img src={totalEarningsIcon} alt="" /> */}
                 <div className="d-flex flex-column gap-2">
                   <span className="total-earnings-amount">
@@ -92,12 +91,13 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     <span className="treasure-hunt-type">{item.eventDate}</span>
                   </div>
                 </div>
-                <img
+             
+              </div>
+              <img
                   src={item.backgroundImage}
                   className="upcoming-mint-img-new d-none d-lg-flex"
                   alt=""
                 />
-              </div>
             </div>
           );
         })}
@@ -105,7 +105,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
       {events.filter((obj) => {
         return obj.eventStatus === eventDuration;
       }).length === 0 && (
-        <div className="new-stake-info-wrapper flex-column flex-lg-row gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+        <div className="new-stake-info-wrapper flex-column gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
           <span className="upcoming-stake">New events are coming...</span>
           <span className="upcoming-stake-desc">Check back soon!</span>
         </div>

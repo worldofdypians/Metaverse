@@ -507,7 +507,7 @@
   }
 }
 
-.inactive-switch{
+.inactive-switch {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -567,6 +567,14 @@
   }
 }
 .areas-grid-item:hover {
+  background: rgba(73, 71, 115, 0.7);
+  border: 1px solid #828fbb;
+  span {
+    color: #f1edff;
+  }
+}
+
+.areas-grid-item-active {
   background: rgba(73, 71, 115, 0.7);
   border: 1px solid #828fbb;
   span {
@@ -780,14 +788,14 @@
   background: rgba(130, 143, 187, 0.5);
 }
 
-.map-stars-wrapper{
-  background-image: url('./assets/myStarsBg.png');
+.map-stars-wrapper {
+  background-image: url("./assets/myStarsBg.png");
   background-size: 100% 100%;
   border-radius: 12px;
 }
 
-.collected-stars-span{
-  color: #FFEFCA;
+.collected-stars-span {
+  color: #ffefca;
   text-align: right;
   font-size: 10px;
   font-style: normal;
@@ -795,8 +803,8 @@
   line-height: normal;
 }
 
-.collected-stars-value{
-  color: #F3BF09;
+.collected-stars-value {
+  color: #f3bf09;
   text-align: right;
   font-size: 16px;
   font-style: normal;
@@ -804,14 +812,14 @@
   line-height: normal;
 }
 
-.marker-teleports-grid{
+.marker-teleports-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
-.genesis-marker-grid{
+.genesis-marker-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
