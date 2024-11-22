@@ -11,7 +11,7 @@ const BetaEventCard = ({
   onOpenPopup,
   userEarnUsd,
   isFrontPage,
-  addRatio,
+  addRatio
 }) => {
   return (
     <div
