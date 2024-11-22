@@ -67,6 +67,8 @@ const Whitelist = ({
   const [selectedToken, setselectedToken] = useState();
   const [totalCommitmentValue, settotalCommitmentValue] = useState(0);
   const [cliffTime, setcliffTime] = useState(0);
+  const [timerFinished, settimerFinished] = useState(false);
+
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
   const [startedVesting, setstartedVesting] = useState(false);
@@ -195,13 +197,13 @@ const Whitelist = ({
 
     //getNumberOfWallets() -> Return the number of Adresses that are in the vesting;
 
-    const addressesInVesting = await vestingSc.methods
-      .getNumberOfWallets(startIndex, endIndex)
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const addressesInVesting = await vestingSc.methods
+    //   .getNumberOfWallets(startIndex, endIndex)
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
   };
 
   const getInfoTimer = async () => {
@@ -238,10 +240,11 @@ const Whitelist = ({
 
   const handleClaim = async () => {
     setclaimLoading(true);
-
-    const vestingSc = new window.bscTestWeb3.eth.Contract(
+    let web3 = new Web3(window.ethereum);
+    const vestingSc = new web3.eth.Contract(
       VESTING_ABI,
-      window.config.vesting_address
+      window.config.vesting_address,
+      { from:  await window.getCoinbase() }
     );
 
     await vestingSc.methods
@@ -257,6 +260,8 @@ const Whitelist = ({
       })
       .catch((e) => {
         console.error(e);
+        window.alertify.error(e?.message)
+        console.log(window.getCoinbase())
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -970,7 +975,7 @@ const Whitelist = ({
                 <span className="commitment-text d-flex align-items-center gap-3">
                   Available time until claim{" "}
                   {cliffTime !== 0 && (
-                    <Countdown date={cliffTime * 1000} renderer={renderer2} />
+                    <Countdown date={cliffTime * 1000} renderer={renderer2} onComplete={()=>{settimerFinished(true)}}/>
                   )}
                 </span>
                 {!isConnected && (
@@ -998,7 +1003,7 @@ const Whitelist = ({
                 <button
                   className={`connectbtn px-3 ${
                     (claimStatus === "claimed" &&
-                      claimStatus === "initial") && (startedVesting === false || canClaim === false)
+                      claimStatus === "initial") && (startedVesting === false || canClaim === false|| timerFinished === false)
                       ? "disabled-btn"
                       : claimStatus === "failed"
                       ? "fail-button"
@@ -1007,7 +1012,7 @@ const Whitelist = ({
                       : null
                   }`}
                   disabled={
-                    startedVesting === false || canClaim === false
+                    startedVesting === false || canClaim === false|| timerFinished === false
                       ? true
                       : false
                   }
