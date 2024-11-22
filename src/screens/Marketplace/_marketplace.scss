@@ -1258,7 +1258,9 @@
 }
 
 .upcoming-mint-img-new {
-  height: 140px;
+  height: 138px;
+  position: absolute;
+  right: 0;
   @media screen and (max-width: 786px) {
     height: auto !important;
     width: 100% !important;
