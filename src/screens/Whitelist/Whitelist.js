@@ -246,7 +246,7 @@ const Whitelist = ({
 
     await vestingSc.methods
       .claim()
-      .send({ from: coinbase })
+      .send({ from: await window.getCoinbase() })
       .then(() => {
         setclaimStatus("success");
         setclaimLoading(false);
@@ -996,14 +996,37 @@ const Whitelist = ({
 
             {isConnected && chainId === 97 &&
                 <button
-                  className="connectbtn"
+                  className={`connectbtn px-3 ${
+                    (claimStatus === "claimed" &&
+                      claimStatus === "initial") && (startedVesting === false || canClaim === false)
+                      ? "disabled-btn"
+                      : claimStatus === "failed"
+                      ? "fail-button"
+                      : claimStatus === "success"
+                      ? "success-button"
+                      : null
+                  }`}
                   disabled={
                     startedVesting === false || canClaim === false
                       ? true
                       : false
                   }
+                  onClick={handleClaim}
                 >
-                  Claim
+                 {claimLoading ? (
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      ) : claimStatus === "failed" ? (
+                        <>Failed</>
+                      ) : claimStatus === "success" ? (
+                        <>Success</>
+                      ) : (
+                        <>Claim</>
+                      )}
                 </button>}
               </div>
             </div>
