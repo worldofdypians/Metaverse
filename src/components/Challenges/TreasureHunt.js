@@ -15,7 +15,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
         .map((item, index) => {
           return (
             <div
-              className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-start"
+              className="new-treasure-hunt-wrapper gap-lg-4 p-3 p-lg-0 upcoming-mint-wrapper2 d-flex align-items-center justify-content-lg-start justify-content-between"
               key={index}
               onClick={() => onEventClick(item)}
             >
