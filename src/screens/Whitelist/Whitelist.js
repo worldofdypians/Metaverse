@@ -19,9 +19,19 @@ import Web3 from "web3";
 // import wallet from "../FARMINNG/assets/wallet.svg";
 import moment from "moment";
 import axios from "axios";
+import { TOKEN_LOCK_ABI, VESTING_ABI } from "./abis";
+import Countdown from "react-countdown";
+
+const renderer2 = ({ hours, minutes }) => {
+  return (
+    <h6 className="timer-text mb-0">
+      {hours}h:{minutes}m
+    </h6>
+  );
+};
 
 const Whitelist = ({
-  networkId,
+  chainId,
   isConnected,
   handleConnection,
   coinbase,
@@ -57,8 +67,14 @@ const Whitelist = ({
   const [selectedToken, setselectedToken] = useState();
   const [totalCommitmentValue, settotalCommitmentValue] = useState(0);
   const [cliffTime, setcliffTime] = useState(0);
-
+  const [releaseProcent, setreleaseProcent] = useState(0);
+  const [pendingTokens, setpendingTokens] = useState(0);
+  const [startedVesting, setstartedVesting] = useState(false);
+  const [canClaim, setcanClaim] = useState(false);
+  const [claimLoading, setclaimLoading] = useState(false);
+  const [claimStatus, setclaimStatus] = useState("initial");
   const [allUserCommitments, setAllUserCommitments] = useState([]);
+
   let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
 
   const poolCap = 20000;
@@ -86,20 +102,16 @@ const Whitelist = ({
 
   const getInfo = async (startIndex, endIndex) => {
     const vestingSc = new window.bscTestWeb3.eth.Contract(
-      window.VESTING_ABI,
+      VESTING_ABI,
       window.config.vesting_address
     );
 
+    const tokenLockSc = new window.bscTestWeb3.eth.Contract(
+      TOKEN_LOCK_ABI,
+      window.config.token_lock_address
+    );
     //  cliff -> Lock time until TGE release.
     //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
-
-    const amountCliffTime = await vestingSc.methods
-      .cliff()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
 
     //  releaseProcent -> Procent (%) of the Amount Vested which will be available at TGE -> after 'cliff' has passed;
     const releaseProcent = await vestingSc.methods
@@ -110,6 +122,8 @@ const Whitelist = ({
         return 0;
       });
 
+    setreleaseProcent(releaseProcent / 100);
+
     const isstartVesting = await vestingSc.methods
       .startVesting()
       .call()
@@ -118,6 +132,7 @@ const Whitelist = ({
         return 0;
       });
 
+    setstartedVesting(isstartVesting);
     //lockDuration -> Vesting period, this will start and release tokens, once 'cliff' has passed;
     const lockDuration = await vestingSc.methods
       .lockDuration()
@@ -128,23 +143,35 @@ const Whitelist = ({
       });
 
     //availableTGE -> If 1, he has to claim 'releaseProcent' at TGE (end of 'cliff'), if 0, he has already claimed 'releaseProcent';
-    const availableTGE = await vestingSc.methods
-      .availableTGE()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    let availableTGE = 0;
+    if (coinbase) {
+      availableTGE = await vestingSc.methods
+        .availableTGE(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
 
+    setcanClaim(Number(availableTGE) === 1 ? true : false);
     //getPendingUnlocked(address _holder) -> It will give you the pending tokens that are available to Claim;
+    let tokensToClaimAmount = 0;
+    if (coinbase) {
+      tokensToClaimAmount = await vestingSc.methods
+        .getPendingUnlocked(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
 
-    const tokensToClaimAmount = await vestingSc.methods
-      .getPendingUnlocked(coinbase)
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    const tokensToClaimAmount_formatted = new window.BigNumber(
+      tokensToClaimAmount / 1e18
+    ).toFixed(0);
+
+    setpendingTokens(tokensToClaimAmount_formatted);
 
     //getTotalClaimedTokens() -> Return total WOD tokens Claimed in general by ppl;
 
@@ -158,24 +185,84 @@ const Whitelist = ({
 
     //getStakersList(uint startIndex, uint endIndex) -> Return list of Adress that are in the Vesting including info as 'lastClaimed', 'VestedTokens', 'ClaimedTokens so far'.;
 
-    const stakersList = await vestingSc.methods
-      .getStakersList(startIndex, endIndex)
+    // const stakersList = await vestingSc.methods
+    //   .getStakersList(startIndex, endIndex)
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
+
+    //getNumberOfWallets() -> Return the number of Adresses that are in the vesting;
+
+    const addressesInVesting = await vestingSc.methods
+      .getNumberOfWallets(startIndex, endIndex)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+  };
+
+  const getInfoTimer = async () => {
+    const vestingSc = new window.bscTestWeb3.eth.Contract(
+      VESTING_ABI,
+      window.config.vesting_address
+    );
+
+    const tokenLockSc = new window.bscTestWeb3.eth.Contract(
+      TOKEN_LOCK_ABI,
+      window.config.token_lock_address
+    );
+    //  cliff -> Lock time until TGE release.
+    //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
+
+    const amountCliffTime = await vestingSc.methods
+      .cliff()
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
 
+    const deployTime = await tokenLockSc.methods
+      .unlockTime()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
 
-      //getNumberOfWallets() -> Return the number of Adresses that are in the vesting;
+    setcliffTime(Number(deployTime) + Number(amountCliffTime));
+  };
 
-    const addressesInVesting = await vestingSc.methods
-    .getNumberOfWallets(startIndex, endIndex)
-    .call()
-    .catch((e) => {
-      console.error(e);
-      return 0;
-    });
+  const handleClaim = async () => {
+    setclaimLoading(true);
+
+    const vestingSc = new window.bscTestWeb3.eth.Contract(
+      VESTING_ABI,
+      window.config.vesting_address
+    );
+
+    await vestingSc.methods
+      .claim()
+      .send({ from: coinbase })
+      .then(() => {
+        setclaimStatus("success");
+        setclaimLoading(false);
+
+        setTimeout(() => {
+          setclaimStatus("initial");
+        }, 5000);
+      })
+      .catch((e) => {
+        console.error(e);
+        setclaimStatus("failed");
+        setclaimLoading(false);
+        setTimeout(() => {
+          setclaimStatus("initial");
+        }, 5000);
+      });
   };
 
   const checkStakedPools = () => {
@@ -256,7 +343,7 @@ const Whitelist = ({
       let tokenBalance = await window.getTokenHolderBalanceAll(
         coinbase,
         token.address,
-        networkId === 1 ? 1 : networkId === 56 ? 3 : 1
+        chainId === 1 ? 1 : chainId === 56 ? 3 : 1
       );
 
       const balance_formatted = new window.BigNumber(tokenBalance)
@@ -427,7 +514,7 @@ const Whitelist = ({
   };
   // console.log("userPools", userPools);
   const checkApproval = async (amount) => {
-    if (networkId === 56) {
+    if (chainId === 56) {
       const result = await window
         .checkapproveStakePool(
           coinbase,
@@ -451,7 +538,7 @@ const Whitelist = ({
       } else {
         setdepositStatus("initial");
       }
-    } else if (networkId === 1) {
+    } else if (chainId === 1) {
       const result = await window
         .checkapproveStakePool(
           coinbase,
@@ -501,7 +588,7 @@ const Whitelist = ({
   };
 
   const handleStake = async () => {
-    if (networkId === 56) {
+    if (chainId === 56) {
       setdepositLoading(true);
 
       let amount = depositAmount;
@@ -557,7 +644,7 @@ const Whitelist = ({
             seterrorMsg("");
           }, 10000);
         });
-    } else if (networkId === 1) {
+    } else if (chainId === 1) {
       setdepositLoading(true);
 
       let amount = depositAmount;
@@ -630,7 +717,7 @@ const Whitelist = ({
       .toFixed(0);
     await token_contract.methods
       .approve(
-        networkId === 56
+        chainId === 56
           ? window.config.commitment_address
           : window.config.commitment_eth_address,
         amount
@@ -673,7 +760,7 @@ const Whitelist = ({
   }, [depositAmount, totalDeposited, poolCap]);
 
   useEffect(() => {
-    if (networkId === 1) {
+    if (chainId === 1) {
       setSelectedChain({
         icon: eth,
         chain: "Ethereum",
@@ -685,7 +772,7 @@ const Whitelist = ({
       });
       getUserBalanceForToken(window.config.commitmenteth_tokens[0]);
       setselectedToken(window.config.commitmenteth_tokens[0]);
-    } else if (networkId === 56) {
+    } else if (chainId === 56) {
       setSelectedChain({
         icon: bnb,
         chain: "BNB Chain",
@@ -712,15 +799,27 @@ const Whitelist = ({
       setTokenBalance(0);
       setselectedToken(window.config.commitmenteth_tokens[0]);
     }
-  }, [isConnected, networkId, coinbase]);
+  }, [isConnected, chainId, coinbase]);
 
-  useEffect(() => {
-    if (isConnected && coinbase) {
-      getUserCommitment();
-    } else {
-      setAllUserCommitments([]);
-    }
-  }, [isConnected, coinbase]);
+  // useEffect(() => {
+  //   if (isConnected && coinbase) {
+  //     getUserCommitment();
+  //   } else {
+  //     setAllUserCommitments([]);
+  //   }
+  // }, [isConnected, coinbase]);
+
+  
+  const handleEthPool = async () => {
+    await handleSwitchNetworkhook("0x61")
+      .then(() => {
+        handleSwitchNetwork("97");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
 
   useEffect(() => {
     if (userPools && userPools.length > 0) {
@@ -731,10 +830,15 @@ const Whitelist = ({
     }
   }, [userPools]);
 
-  useEffect(() => {
-    getTotalCommitment();
-  }, []);
+  // useEffect(() => {
+  //   getTotalCommitment();
+  // }, []);
 
+  useEffect(() => {
+    getInfo();
+    getInfoTimer();
+  }, [coinbase]);
+  
   return (
     <div className="container-lg p-0">
       <div className="whitelist-banner d-flex flex-column flex-lg-row p-4 gap-3 gap-lg-0 align-items-center mb-4">
@@ -818,22 +922,6 @@ const Whitelist = ({
         <div className="col-12 col-lg-7">
           <div className="whitelist-info-item d-flex flex-column w-100 p-3 h-100 justify-content-between">
             <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center gap-2">
-                <h6 className="mb-0 whitelist-deposit-title">Whitelist</h6>
-                <span className="whitelist-days-left">
-                  {/* {moment
-                    .duration(expireDay.getTime() - Date.now())
-                    .humanize(true)
-                    .slice(
-                      3,
-                      moment
-                        .duration(expireDay.getTime() - Date.now())
-                        .humanize(true).length
-                    )}{" "}
-                  left */}
-                  Ended
-                </span>
-              </div>
               {/* <Tooltip
                 title={
                   <>
@@ -863,20 +951,63 @@ const Whitelist = ({
               </Tooltip> */}
             </div>
             <h6 className="mb-0 whitelist-deposit-title text-center">
-              Private Round ended.
+              {startedVesting ? "Vesting has Started" : "Vesting upcoming"}
             </h6>
 
-            {/* <div className="whitelist-deposit-wrapper mt-3  d-flex flex-column gap-2">
+            <div className="whitelist-deposit-wrapper mt-3  d-flex flex-column gap-3">
               <div className="whitelist-deposit-wrapper-header p-2 d-flex align-items-center justify-content-between">
                 <span className="commitment-text">Commitment</span>
                 <div className="d-flex align-items-center gap-1">
-                  <span className="whitelist-my-balance">My Balance</span>
+                  <span className="whitelist-my-balance">
+                    Available to claim
+                  </span>
                   <span className="whitelist-my-balance-value">
-                    {getFormattedNumber(tokenBalance, 4)} {selectedCoin.coin}
+                    {getFormattedNumber(pendingTokens)} WOD
                   </span>
                 </div>
               </div>
-              <div className="d-flex flex-column gap-2 w-100 p-3">
+              <div className="px-2 d-flex w-100 justify-content-between gap-2 align-items-center">
+                <span className="commitment-text d-flex align-items-center gap-3">
+                  Available time until claim{" "}
+                  {cliffTime !== 0 && (
+                    <Countdown date={cliffTime * 1000} renderer={renderer2} />
+                  )}
+                </span>
+                {!isConnected && (
+              <button
+                className={`btn connectbtn  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleConnection();
+                }}
+              >
+                Connect Wallet
+              </button>
+            )}
+            {isConnected && chainId !== 97 && (
+              <button
+                className={`btn  fail-button  d-flex justify-content-center align-items-center`}
+                onClick={() => {
+                  handleEthPool();
+                }}
+              >
+                Switch to BSC Testnet
+              </button>
+            )}
+
+            {isConnected && chainId === 97 &&
+                <button
+                  className="connectbtn"
+                  disabled={
+                    startedVesting === false || canClaim === false
+                      ? true
+                      : false
+                  }
+                >
+                  Claim
+                </button>}
+              </div>
+            </div>
+            {/*   <div className="d-flex flex-column gap-2 w-100 p-3">
                 <div className="d-flex flex-column flex-lg-row align-items-center w-100 gap-2">
                   <div className="d-flex flex-column gap-1 commitment-deposit-wrapper">
                     <span className="commitment-input-span">Deposit</span>
@@ -887,9 +1018,9 @@ const Whitelist = ({
                             onOutsideClick={() => setCoinDropdown(false)}
                           >
                             <div className="coins-dropdown-list d-flex flex-column ">
-                              {(networkId === 1
+                              {(chainId === 1
                                 ? window.config.commitmenteth_tokens
-                                : networkId === 56
+                                : chainId === 56
                                 ? window.config.commitmentbnb_tokens
                                 : window.config.commitmenteth_tokens
                               ).map((item, index) => {
@@ -1046,7 +1177,7 @@ const Whitelist = ({
                 </div>
               </div>
               <div className="d-flex w-100 justify-content-center mb-3">
-                {isConnected && (networkId === 1 || networkId === 56) ? (
+                {isConnected && (chainId === 1 || chainId === 56) ? (
                   <button
                     disabled={
                       depositAmount === "" ||
