@@ -1,6 +1,8 @@
 .new-treasure-hunt-wrapper {
   border-radius: 12px;
   background: #212246;
+  position: relative;
+  min-height: 140px;
 }
 
 .new-treasure-hunt-title {
@@ -15,7 +17,7 @@
 
 .treasurehunt-wrapper {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 
   @media only screen and (max-width: 1224px) {
@@ -53,7 +55,8 @@
 }
 
 .treasure-type-date {
-  position: absolute;
+  position: relative;
+  z-index: 1;
 }
 
 .treasure-hunt-type {
