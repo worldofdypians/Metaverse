@@ -28,13 +28,23 @@ const Security = () => {
                 protection.
               </span>
               <div className="d-flex align-items-center gap-3">
-                <button className="explore-btn px-4 py-2 d-flex algin-items-center gap-1">
+                <a
+                  className="explore-btn px-4 py-2 d-flex algin-items-center gap-1"
+                  href="https://github.com/worldofdypians"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={github} alt="" /> Github
-                </button>
-                <button className="explore-btn px-4 py-2 d-flex algin-items-center gap-1">
+                </a>
+                <a
+                  className="explore-btn px-4 py-2 d-flex algin-items-center gap-1"
+                  href="https://skynet.certik.com/projects/world-of-dypians"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <img src={certik} alt="" />
                   CertiK Score
-                </button>
+                </a>
               </div>
             </div>
             <div className="circlewrapper d-none d-lg-flex align-items-center justify-content-center">

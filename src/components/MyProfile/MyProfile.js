@@ -258,7 +258,7 @@ const MyProfile = ({
       image: bnbMazeDay, // Friday
       title: "BNB Maze Day",
       bannerImg: bnbMazeBanner,
-      titleColor: "#081C01",
+      titleColor: "#DDF8D7",
       contentColor: "#FFFFFF",
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
