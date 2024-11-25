@@ -4,41 +4,38 @@ import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 
-const WhitelistHero = ({onSelectRound}) => {
-
-  const [activeRound, setActiveRound] = useState('seed')
+const WhitelistHero = ({ onSelectRound }) => {
+  const [activeRound, setActiveRound] = useState("seed");
 
   const betaSlider = useRef(null);
 
   const dummyBetaPassData2 = [
     {
-      id: 'seed',
+      id: "seed",
       title: "Seed Round",
-      class: activeRound === 'seed' ? "seedClassActive": "seedClass", 
-      tokenPrice: '0.0250',
-      cliff: '6 Months',
-      cliffInTimestamp: '1748357606000',
-      vesting: '19 Months'
-
+      class: activeRound === "seed" ? "seedClassActive" : "seedClass",
+      tokenPrice: "0.0250",
+      cliff: "6 Months",
+      cliffInTimestamp: "1748357606000",
+      vesting: "19 Months",
     },
     {
-      id: 'private',
-      title: "Private Round", 
-      class: activeRound === 'private' ? "privateClassActive": "privateClass", 
-      tokenPrice: '0.0325',
-      cliff: '3 Months',
-      cliffInTimestamp: '1740668006000',
-      vesting: '16 Months'
-
+      id: "private",
+      title: "Private Round",
+      class: activeRound === "private" ? "privateClassActive" : "privateClass",
+      tokenPrice: "0.0325",
+      cliff: "3 Months",
+      cliffInTimestamp: "1740668006000",
+      vesting: "16 Months",
     },
     {
-      id: 'kol',
+      id: "kol",
       title: "KOL Round",
-      class: activeRound === 'kol' ? "kolClassActive": "kolClass",
-      tokenPrice: '0.03825', 
-      cliff: '1 Month',
-      cliffInTimestamp: '1735311206000',
-      vesting: '8 Months'
+      class: activeRound === "kol" ? "kolClassActive" : "kolClass",
+      tokenPrice: "0.03825",
+      cliff: "1 Month",
+      cliffInTimestamp: "1735311206000",
+      vesting: "8 Months",
     },
   ];
 
@@ -108,9 +105,9 @@ const WhitelistHero = ({onSelectRound}) => {
     ],
   };
 
-  useEffect(()=>{
-    onSelectRound(dummyBetaPassData2[0])
-  },[])
+  useEffect(() => {
+    onSelectRound(dummyBetaPassData2[0]);
+  }, []);
 
   return (
     <div className="whitelist-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
@@ -129,18 +126,21 @@ const WhitelistHero = ({onSelectRound}) => {
                 </span>
               </div>
             </div>
-            <div
-              className="opacitywrapper position-relative"
-              style={{ width: "90%" }}
-            >
+            <div className="opacitywrapper-release col-lg-8 position-relative">
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                  <div key={index} onClick={()=>{setActiveRound(item.id); onSelectRound(item)}} >
-                  <BetaEventCardHome
-                    data={item}
-                    isFrontPage={true}
-                    addRatio={false}
-                  />
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setActiveRound(item.id);
+                      onSelectRound(item);
+                    }}
+                  >
+                    <BetaEventCardHome
+                      data={item}
+                      isFrontPage={true}
+                      addRatio={false}
+                    />
                   </div>
                 ))}
               </Slider>

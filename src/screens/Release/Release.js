@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./release.css";
-import dyp from "./assets/dyp.svg";
-import idyp from "./assets/idyp.svg";
-import premium from "./assets/premium.png";
-import tooltipIcon from "./assets/tooltipIcon.svg";
-import usdt from "./assets/usdt.svg";
-import eth from "./assets/eth.svg";
-import bnb from "./assets/bnb.svg";
-import dropArrow from "./assets/dropArrow.svg";
-import { shortAddress } from "../Caws/functions/shortAddress";
-import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import { Tooltip } from "@material-ui/core";
-import checkIcon from "./assets/checkIcon.svg";
-import OutsideClickHandler from "react-outside-click-handler";
-import buyToken from "./assets/buyToken.svg";
+
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
 // import wallet from "../FARMINNG/assets/wallet.svg";
