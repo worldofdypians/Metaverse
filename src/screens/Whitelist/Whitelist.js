@@ -58,7 +58,6 @@ const Whitelist = ({
   const [slice, setSlice] = useState(5);
   const [loading, setLoading] = useState(false);
   const [cliffTime, setcliffTime] = useState(0);
-  const [timerFinished, settimerFinished] = useState(false);
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
   const [startedVesting, setstartedVesting] = useState(false);

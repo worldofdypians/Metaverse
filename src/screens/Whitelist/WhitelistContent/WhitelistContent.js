@@ -72,9 +72,12 @@ const WhitelistContent = ({
   wodBalance,
   handleClaim,
   claimStatus,
-  claimLoading
+  claimLoading,
+  startedVesting,
+  canClaim,
+  selectedRound,
 }) => {
- 
+  const [timerFinished, settimerFinished] = useState(false);
 
   return (
     <div
@@ -87,25 +90,25 @@ const WhitelistContent = ({
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Token Distribution</span>
-                <span className="whitelist-white-txt">Seed Round</span>
+                <span className="whitelist-white-txt">{selectedRound?.title}</span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Token Price</span>
-                <span className="whitelist-white-txt">$ 0.0250</span>
+                <span className="whitelist-white-txt">$ {selectedRound?.tokenPrice}</span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Cliff Period</span>
-                <span className="whitelist-white-txt">6 Months</span>
+                <span className="whitelist-white-txt">{selectedRound?.cliff}</span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Vesting Period</span>
-                <span className="whitelist-white-txt">19 Months</span>
+                <span className="whitelist-white-txt">{selectedRound?.vesting}</span>
               </div>
             </div>
           </div>
@@ -173,7 +176,44 @@ const WhitelistContent = ({
               </button>
             )}
             {isConnected && (chainId === 56 || chainId === 97) && (
-              <button className={`connectbtn w-100 py-2`}>Claim</button>
+              <button
+                className={`connectbtn w-100 py-2
+                
+                ${
+                  claimStatus === "claimed" &&
+                  claimStatus === "initial" &&
+                  (startedVesting === false ||
+                    canClaim === false ||
+                    timerFinished === false)
+                    ? "disabled-btn"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : null
+                }`}
+                // disabled={
+                //   startedVesting === false ||
+                //   canClaim === false ||
+                //   timerFinished === false
+                //     ? true
+                //     : false
+                // }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    class="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
             )}
           </div>
         </div>

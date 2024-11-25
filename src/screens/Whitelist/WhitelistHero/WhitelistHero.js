@@ -9,8 +9,6 @@ const WhitelistHero = ({onSelectRound}) => {
   const [activeRound, setActiveRound] = useState('seed')
 
   const betaSlider = useRef(null);
-  //private: cliff = 3 monyyhd,vesting 16 months, price: 0.0325
-  //kol: cliff 1months, vesting 8 months, price 0.03825
 
   const dummyBetaPassData2 = [
     {
