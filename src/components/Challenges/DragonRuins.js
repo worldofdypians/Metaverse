@@ -158,10 +158,10 @@ const DragonRuins = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupCli
         });
       handleRefreshCountdown();
     } else if (window.WALLET_TYPE === "binance") {
-      const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
 
       const dragonsc = new ethers.Contract(
-        wod_address,
+        dragonRuins_address,
         WOD_ABI,
         binanceW3WProvider.getSigner()
       );
