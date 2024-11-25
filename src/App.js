@@ -3406,7 +3406,7 @@ function App() {
     {
       title: "Cookie3",
       logo: cookie3Logo,
-      eventStatus: "Live",
+      eventStatus: "Expired",
       rewardType: "COOKIE",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -3428,7 +3428,7 @@ function App() {
         chain: "BNB Chain",
         linkState: "cookie3",
         rewards: "Cookie3",
-        status: "Live",
+        status: "Expired",
         id: "event23",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in COOKIE Rewards",
