@@ -23,6 +23,7 @@ import { TOKEN_LOCK_ABI, VESTING_ABI } from "./abis";
 import Countdown from "react-countdown";
 import ReleaseHero from "./ReleaseHero/ReleaseHero";
 import ReleaseContent from "./ReleaseContent/ReleaseContent";
+import StakingBanner from "./StakingBanner/StakingBanner";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -43,33 +44,17 @@ const Release = ({
   hasDypBalance,
   hasiDypBalance,
 }) => {
-  const [coinDropdown, setCoinDropdown] = useState(false);
-  const [chainDropdown, setChainDropdown] = useState(false);
-  const [selectedCoin, setSelectedCoin] = useState({
-    coin: "USDT",
-    icon: usdt,
-    address: "",
-  });
-  const [selectedChain, setSelectedChain] = useState({
-    chain: "BNB Chain",
-    icon: bnb,
-  });
-
-  const [slice, setSlice] = useState(5);
-  const [loading, setLoading] = useState(false);
+   
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
   const [userClaimedTokens, setuserClaimedTokens] = useState(0);
   const [userVestedTokens, setuserVestedTokens] = useState(0);
 
-  const [pendingTokensPrivate, setpendingTokensPrivate] = useState(0);
-  const [userClaimedTokensPrivate, setuserClaimedTokensPrivate] = useState(0);
-  const [userVestedTokensPrivate, setuserVestedTokensPrivate] = useState(0);
-
-  const [pendingTokensKOL, setpendingTokensKOL] = useState(0);
-  const [userClaimedTokensKOL, setuserClaimedTokensKOL] = useState(0);
-  const [userVestedTokensKOL, setuserVestedTokensKOL] = useState(0);
+  const [pendingTokensIDO, setpendingTokensIDO] = useState(0);
+  const [userClaimedTokensIDO, setuserClaimedTokensIDO] = useState(0);
+  const [userVestedTokensIDO, setuserVestedTokensPrivate] = useState(0);
+ 
 
   const [startedVesting, setstartedVesting] = useState(false);
   const [canClaim, setcanClaim] = useState(false);
@@ -82,26 +67,7 @@ const Release = ({
 
   const poolCap = 20000;
 
-  const idyp_pools = [
-    "0x41b8a58f4307ea722ad0a964966caa18a6011d93",
-    "0xf6DC9E51D4E0FCc19ca6426fB5422f1E9a24F2eE",
-    "0xFBe84Af34CdC22455f82e18B76Ca50D21d3aBF84",
-    "0x525cb0f6b5dae73965046bcb4c6f45ce74fb1b5d",
-    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
-    "0xe026fb242d9523dc8e8d8833f7309dbdbed59d3d",
-  ];
-
-  const dyp_pools = [
-    "0x92A84052Fe6945949A295AF14a7506e3dc085492",
-    "0xbE030A667d9ee75a9FCdF2162A2C14ccCAB573dD",
-    "0x0fafe78e471b52bc4003984a337948ed55284573",
-    "0xC9075092Cc46E176B1F3c0D0EB8223F1e46555B0",
-    "0x998A9F0DF7DAF20c2B0Bb379Dcae394636926a96",
-    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
-    "0x9845a667b1A603FF21596FDdec51968a2bccAc11",
-    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
-    "0xFdD3CFF22CF846208E3B37b47Bc36b2c61D2cA8b",
-  ];
+ 
 
   const getInfo = async () => {
     const vestingSc = new window.bscTestWeb3.eth.Contract(
@@ -299,7 +265,7 @@ const Release = ({
       });
   };
 
-  const handleClaimPrivate = async () => {
+  const handleClaimIDO = async () => {
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
     const vestingSc = new web3.eth.Contract(
@@ -332,7 +298,7 @@ const Release = ({
       });
   };
 
-  const handleClaimKol = async () => {
+  const handleRefund = async () => {
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
     const vestingSc = new web3.eth.Contract(
@@ -381,13 +347,14 @@ const Release = ({
   }, [coinbase]);
 
   return (
-    <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
+    <div className="container-fluid release-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
         <ReleaseHero
           onSelectRound={(value) => {
             setselectedRound(value);
           }}
         />
+        <StakingBanner />
         <ReleaseContent
           isConnected={isConnected}
           chainId={chainId}
