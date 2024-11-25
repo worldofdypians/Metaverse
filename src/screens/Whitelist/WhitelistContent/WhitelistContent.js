@@ -70,11 +70,11 @@ const WhitelistContent = ({
   onConnect,
   handleSwitchChain,
   wodBalance,
+  handleClaim,
+  claimStatus,
+  claimLoading
 }) => {
-  const [sourceChainButton, setsourceChainButton] = useState("");
-  const [depositAmount, setdepositAmount] = useState("");
-  const [status, setstatus] = useState("");
-  const [txHash, settxHash] = useState("");
+ 
 
   return (
     <div
@@ -173,7 +173,7 @@ const WhitelistContent = ({
               </button>
             )}
             {isConnected && (chainId === 56 || chainId === 97) && (
-              <button className="connectbtn w-100 py-2">Claim</button>
+              <button className={`connectbtn w-100 py-2`}>Claim</button>
             )}
           </div>
         </div>

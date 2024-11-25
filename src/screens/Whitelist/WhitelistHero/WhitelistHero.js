@@ -1,31 +1,46 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./_whitelisthero.scss";
 import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 
-const WhitelistHero = () => {
+const WhitelistHero = ({onSelectRound}) => {
 
   const [activeRound, setActiveRound] = useState('seed')
 
   const betaSlider = useRef(null);
+  //private: cliff = 3 monyyhd,vesting 16 months, price: 0.0325
+  //kol: cliff 1months, vesting 8 months, price 0.03825
 
   const dummyBetaPassData2 = [
     {
       id: 'seed',
       title: "Seed Round",
       class: activeRound === 'seed' ? "seedClassActive": "seedClass", 
+      tokenPrice: '0.0250',
+      cliff: '6 Months',
+      cliffInTimestamp: '1748357606000',
+      vesting: '19 Months'
+
     },
     {
       id: 'private',
       title: "Private Round", 
       class: activeRound === 'private' ? "privateClassActive": "privateClass", 
+      tokenPrice: '0.0325',
+      cliff: '3 Months',
+      cliffInTimestamp: '1740668006000',
+      vesting: '16 Months'
 
     },
     {
       id: 'kol',
       title: "KOL Round",
-      class: activeRound === 'kol' ? "kolClassActive": "kolClass", 
+      class: activeRound === 'kol' ? "kolClassActive": "kolClass",
+      tokenPrice: '0.03825', 
+      cliff: '1 Month',
+      cliffInTimestamp: '1735311206000',
+      vesting: '8 Months'
     },
   ];
 
@@ -95,6 +110,10 @@ const WhitelistHero = () => {
     ],
   };
 
+  useEffect(()=>{
+    onSelectRound(dummyBetaPassData2[0])
+  },[])
+
   return (
     <div className="whitelist-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
@@ -118,7 +137,7 @@ const WhitelistHero = () => {
             >
               <Slider {...settings} ref={betaSlider}>
                 {dummyBetaPassData2.slice(0, 4).map((item, index) => (
-                  <div key={index} onClick={()=>{setActiveRound(item.id)}} >
+                  <div key={index} onClick={()=>{setActiveRound(item.id); onSelectRound(item)}} >
                   <BetaEventCardHome
                     data={item}
                     isFrontPage={true}

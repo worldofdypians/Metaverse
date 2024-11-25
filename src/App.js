@@ -4604,7 +4604,9 @@ function App() {
                       <Whitelist
                       chainId={networkId}
                         isConnected={isConnected}
-                        handleConnection={handleConnectWallet}
+                        handleConnection={() => {
+                          setwalletModal(true);
+                        }}
                         coinbase={coinbase}
                         isPremium={isPremium}
                         // userPools={userPools} 

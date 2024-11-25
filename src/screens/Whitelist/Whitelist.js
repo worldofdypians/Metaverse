@@ -57,20 +57,8 @@ const Whitelist = ({
 
   const [slice, setSlice] = useState(5);
   const [loading, setLoading] = useState(false);
-  const [tokenBalance, setTokenBalance] = useState(0);
-  const [depositAmount, setDepositAmount] = useState();
-  const [canDeposit, setCanDeposit] = useState(true);
-  const [hasDypStaked, sethasDypStaked] = useState(false);
-  const [hasiDypStaked, sethasiDypStaked] = useState(false);
-  const [errorMsg, seterrorMsg] = useState("");
-  const [totalDeposited, setTotalDeposited] = useState(0);
-  const [depositLoading, setdepositLoading] = useState(false);
-  const [depositStatus, setdepositStatus] = useState("initial");
-  const [selectedToken, setselectedToken] = useState();
-  const [totalCommitmentValue, settotalCommitmentValue] = useState(0);
   const [cliffTime, setcliffTime] = useState(0);
   const [timerFinished, settimerFinished] = useState(false);
-
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
   const [startedVesting, setstartedVesting] = useState(false);
@@ -78,6 +66,7 @@ const Whitelist = ({
   const [claimLoading, setclaimLoading] = useState(false);
   const [claimStatus, setclaimStatus] = useState("initial");
   const [allUserCommitments, setAllUserCommitments] = useState([]);
+  const [selectedRound, setselectedRound] = useState()
 
   let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
 
@@ -264,550 +253,7 @@ const Whitelist = ({
         }, 5000);
       });
   };
-
-  const checkStakedPools = () => {
-    const dypResult = userPools.filter((item) => {
-      return dyp_pools.includes(item.contract_address.toLowerCase());
-    });
-    const idypResult = userPools.filter((item) => {
-      return idyp_pools.includes(item.contract_address.toLowerCase());
-    });
-    if (idypResult.length > 0) {
-      sethasiDypStaked(true);
-    }
-    if (dypResult.length > 0) {
-      sethasDypStaked(true);
-    }
-  };
-
-  const getTotalCommitment = async () => {
-    const result = await axios
-      .get("https://api.worldofdypians.com/api/latest-commitments")
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    if (result && result.status === 200) {
-      const total = result.data.total;
-      settotalCommitmentValue(total);
-    }
-  };
-
-  const requirements = [
-    {
-      icon: dyp,
-      coin: "DYP Token",
-      value: "Holder/Staker",
-      active: hasDypStaked || hasDypBalance,
-    },
-    {
-      icon: idyp,
-      coin: "iDYP Token",
-      value: "Holder/Staker",
-      active: hasiDypStaked || hasiDypBalance,
-    },
-    {
-      icon: premium,
-      coin: "Premium",
-      value: "Subscriber",
-      active: isPremium,
-    },
-  ];
-
-  const handleViewMore = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (slice >= allUserCommitments.length) {
-        setSlice(5);
-      } else {
-        setSlice(slice + 3);
-      }
-    }, 2000);
-  };
-
-  const handleChangeChain = async (hexChain, chain) => {
-    await handleSwitchNetworkhook(hexChain)
-      .then(() => {
-        handleSwitchNetwork(chain);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const getUserBalanceForToken = async (token) => {
-    if (coinbase) {
-      //1 is for eth chain, 2 for avax and 3 for bnb chain
-      let tokenBalance = await window.getTokenHolderBalanceAll(
-        coinbase,
-        token.address,
-        chainId === 1 ? 1 : chainId === 56 ? 3 : 1
-      );
-
-      const balance_formatted = new window.BigNumber(tokenBalance)
-        .div(10 ** token.decimals)
-        .toString(10);
-      setTokenBalance(balance_formatted);
-    } else setTokenBalance(0);
-  };
-
-  const getUserCommitment = async () => {
-    let commitment_contract = new window.bscWeb3.eth.Contract(
-      window.COMMITMENT_ABI,
-      window.config.commitment_address
-    );
-
-    let commitment_contract_eth = new window.infuraWeb3.eth.Contract(
-      window.COMMITMENT_ETH_ABI,
-      window.config.commitment_eth_address
-    );
-
-    const total_commitments = await commitment_contract.methods
-      .commitmentCountForUser(
-        coinbase,
-        window.config.commitmentbnb_tokens[0].address
-      )
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
-
-    const total_commitments_eth_usdt = await commitment_contract_eth.methods
-      .commitmentCountForUser(
-        coinbase,
-        window.config.commitmenteth_tokens[0].address
-      )
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
-
-    const total_commitments_eth_usdc = await commitment_contract_eth.methods
-      .commitmentCountForUser(
-        coinbase,
-        window.config.commitmenteth_tokens[1].address
-      )
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
-    let totalTokenDeposited = 0;
-    let totalCommitmentArray_bnb = [];
-    let totalCommitmentArray_eth_usdt = [];
-    let totalCommitmentArray_eth_usdc = [];
-
-    if (total_commitments && total_commitments > 0) {
-      const finalResult = await Promise.all(
-        window.range(0, total_commitments - 1).map(async (i) => {
-          const commitment_list = await commitment_contract.methods
-            .commitments(
-              coinbase,
-              window.config.commitmentbnb_tokens[0].address,
-              i
-            )
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return [];
-            });
-          if (commitment_list) {
-            totalTokenDeposited += commitment_list.amount / 1e18;
-            return {
-              commitment_list,
-              network: "BNB Chain",
-              token: "USDT",
-            };
-          }
-        })
-      );
-      const finalResult_sorted = finalResult.sort(function (a, b) {
-        return a.commitment_list.timestamp - b.commitment_list.timestamp;
-      });
-      totalCommitmentArray_bnb = finalResult_sorted;
-    }
-    if (total_commitments_eth_usdt && total_commitments_eth_usdt > 0) {
-      const finalResult = await Promise.all(
-        window.range(0, total_commitments_eth_usdt - 1).map(async (i) => {
-          const commitment_list = await commitment_contract_eth.methods
-            .commitments(
-              coinbase,
-              window.config.commitmenteth_tokens[0].address,
-              i
-            )
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return [];
-            });
-          if (commitment_list) {
-            totalTokenDeposited += commitment_list.amount / 1e6;
-            return {
-              commitment_list,
-              network: "Ethereum",
-              token: "USDT",
-            };
-          }
-        })
-      );
-      const finalResult_sorted = finalResult.sort(function (a, b) {
-        return a.commitment_list.timestamp - b.commitment_list.timestamp;
-      });
-
-      totalCommitmentArray_eth_usdt = finalResult_sorted;
-    }
-    if (total_commitments_eth_usdc && total_commitments_eth_usdc > 0) {
-      const finalResult = await Promise.all(
-        window.range(0, total_commitments_eth_usdc - 1).map(async (i) => {
-          const commitment_list = await commitment_contract_eth.methods
-            .commitments(
-              coinbase,
-              window.config.commitmenteth_tokens[1].address,
-              i
-            )
-            .call()
-            .catch((e) => {
-              console.error(e);
-              return [];
-            });
-          if (commitment_list) {
-            totalTokenDeposited += commitment_list.amount / 1e6;
-            return {
-              commitment_list,
-              network: "Ethereum",
-              token: "USDC",
-            };
-          }
-        })
-      );
-      const finalResult_sorted = finalResult.sort(function (a, b) {
-        return a.commitment_list.timestamp - b.commitment_list.timestamp;
-      });
-      totalCommitmentArray_eth_usdc = finalResult_sorted;
-    } else if (
-      total_commitments &&
-      total_commitments === 0 &&
-      total_commitments_eth_usdt &&
-      total_commitments_eth_usdt === 0 &&
-      total_commitments_eth_usdc &&
-      total_commitments_eth_usdc === 0
-    ) {
-      setAllUserCommitments([]);
-      setTotalDeposited(0);
-    }
-    const finalCommitmentArray = [
-      ...totalCommitmentArray_bnb,
-      ...totalCommitmentArray_eth_usdc,
-      ...totalCommitmentArray_eth_usdt,
-    ];
-    if (finalCommitmentArray && finalCommitmentArray.length > 0) {
-      const finalResult_sorted = finalCommitmentArray.sort(function (a, b) {
-        return a.commitment_list.timestamp - b.commitment_list.timestamp;
-      });
-      setAllUserCommitments(finalResult_sorted);
-      setTotalDeposited(totalTokenDeposited);
-    } else setAllUserCommitments([]);
-  };
-  // console.log("userPools", userPools);
-  const checkApproval = async (amount) => {
-    if (chainId === 56) {
-      const result = await window
-        .checkapproveStakePool(
-          coinbase,
-          selectedCoin.address,
-          window.config.commitment_address
-        )
-        .then((data) => {
-          return data;
-        });
-
-      let result_formatted = new window.BigNumber(result)
-        .div(10 ** selectedToken.decimals)
-        .toFixed(6);
-
-      if (
-        Number(result_formatted) >= Number(amount) &&
-        Number(result_formatted) !== 0 &&
-        Number(amount) >= 100
-      ) {
-        setdepositStatus("deposit");
-      } else {
-        setdepositStatus("initial");
-      }
-    } else if (chainId === 1) {
-      const result = await window
-        .checkapproveStakePool(
-          coinbase,
-          selectedCoin.address,
-          window.config.commitment_eth_address
-        )
-        .then((data) => {
-          return data;
-        });
-
-      let result_formatted = new window.BigNumber(result)
-        .div(10 ** selectedToken.decimals)
-        .toFixed(6);
-      console.log(Number(result_formatted), result, Number(amount));
-      if (
-        Number(result_formatted) >= Number(amount) &&
-        Number(result_formatted) !== 0 &&
-        Number(amount) >= 100
-      ) {
-        setdepositStatus("deposit");
-      } else {
-        setdepositStatus("initial");
-      }
-    }
-  };
-
-  const handleUserMaxDeposit = () => {
-    const depositAmount = tokenBalance;
-    if (depositAmount >= poolCap) {
-      setDepositAmount(poolCap);
-      checkApproval(poolCap);
-
-      seterrorMsg(
-        "Maximum amount allowed to commit is" + poolCap + selectedCoin.coin
-      );
-      setCanDeposit(true);
-    } else if (depositAmount < poolCap && depositAmount >= 100) {
-      setDepositAmount(tokenBalance);
-      checkApproval(tokenBalance);
-      setCanDeposit(true);
-    } else if (depositAmount < 100 && depositAmount >= 0) {
-      checkApproval(tokenBalance);
-      setDepositAmount(tokenBalance);
-      seterrorMsg("Deposit amount is lower than minimum amount required.");
-      setCanDeposit(false);
-    }
-  };
-
-  const handleStake = async () => {
-    if (chainId === 56) {
-      setdepositLoading(true);
-
-      let amount = depositAmount;
-      amount = new window.BigNumber(amount)
-        .times(10 ** selectedToken.decimals)
-        .toFixed(0);
-
-      window.web3 = new Web3(window.ethereum);
-      let commitment_contract = new window.web3.eth.Contract(
-        window.COMMITMENT_ABI,
-        window.config.commitment_address
-      );
-
-      const gasPrice = await window.web3.eth.getGasPrice();
-      console.log("gasPrice", gasPrice);
-      const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-
-      const transactionParameters = {
-        gasPrice: window.web3.utils.toWei(currentGwei.toString(), "gwei"),
-      };
-
-      await commitment_contract.methods
-        .commit(selectedToken.address, amount)
-        .estimateGas({ from: coinbase })
-        .then((gas) => {
-          transactionParameters.gas = window.web3.utils.toHex(gas);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      console.log(transactionParameters);
-
-      await commitment_contract.methods
-        .commit(selectedToken.address, amount)
-        .send({ from: coinbase, ...transactionParameters })
-        .then(() => {
-          setdepositLoading(false);
-          setdepositStatus("success");
-          getUserBalanceForToken(selectedToken);
-          getUserCommitment();
-          setTimeout(() => {
-            setdepositStatus("initial");
-            setDepositAmount("");
-          }, 5000);
-        })
-        .catch((e) => {
-          setdepositLoading(false);
-          setdepositStatus("fail");
-          seterrorMsg(e?.message);
-          setTimeout(() => {
-            setDepositAmount("");
-            setdepositStatus("initial");
-            seterrorMsg("");
-          }, 10000);
-        });
-    } else if (chainId === 1) {
-      setdepositLoading(true);
-
-      let amount = depositAmount;
-      amount = new window.BigNumber(amount)
-        .times(10 ** selectedToken.decimals)
-        .toFixed(0);
-
-      window.web3 = new Web3(window.ethereum);
-      let commitment_contract = new window.web3.eth.Contract(
-        window.COMMITMENT_ETH_ABI,
-        window.config.commitment_eth_address
-      );
-
-      const gasPrice = await window.web3.eth.getGasPrice();
-      console.log("gasPrice", gasPrice);
-      const currentGwei = window.web3.utils.fromWei(gasPrice, "gwei");
-
-      const transactionParameters = {
-        gasPrice: window.web3.utils.toWei(currentGwei.toString(), "gwei"),
-      };
-
-      await commitment_contract.methods
-        .commit(selectedToken.address, amount)
-        .estimateGas({ from: coinbase })
-        .then((gas) => {
-          transactionParameters.gas = window.web3.utils.toHex(gas);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      console.log(transactionParameters);
-
-      await commitment_contract.methods
-        .commit(selectedToken.address, amount)
-        .send({ from: coinbase, ...transactionParameters })
-        .then(() => {
-          setdepositLoading(false);
-          setdepositStatus("success");
-          getUserBalanceForToken(selectedToken);
-          getUserCommitment();
-          setTimeout(() => {
-            setdepositStatus("initial");
-            setDepositAmount("");
-          }, 5000);
-        })
-        .catch((e) => {
-          setdepositLoading(false);
-          setdepositStatus("fail");
-          seterrorMsg(e?.message);
-          setTimeout(() => {
-            setDepositAmount("");
-            setdepositStatus("initial");
-            seterrorMsg("");
-          }, 10000);
-        });
-    }
-  };
-
-  const handleApprove = async () => {
-    setdepositLoading(true);
-    window.web3 = new Web3(window.ethereum);
-    let token_contract = new window.web3.eth.Contract(
-      window.TOKEN_ABI,
-      selectedCoin.address
-    );
-
-    let amount = depositAmount;
-    amount = new window.BigNumber(amount)
-      .times(10 ** selectedToken.decimals)
-      .toFixed(0);
-    await token_contract.methods
-      .approve(
-        chainId === 56
-          ? window.config.commitment_address
-          : window.config.commitment_eth_address,
-        amount
-      )
-      .send({ from: coinbase })
-      .then(() => {
-        setdepositLoading(false);
-        setdepositStatus("deposit");
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("fail");
-        seterrorMsg(e?.message);
-        setTimeout(() => {
-          setDepositAmount("");
-          setdepositStatus("initial");
-          seterrorMsg("");
-        }, 10000);
-      });
-  };
-
-  useEffect(() => {
-    if (depositAmount > 0) {
-      const result = Number(depositAmount) + Number(totalDeposited);
-      if (result > poolCap) {
-        seterrorMsg(
-          "Deposit amount is greater than available quota. Please add another amount."
-        );
-        setCanDeposit(false);
-      } else if (depositAmount < 100) {
-        setCanDeposit(false);
-        seterrorMsg("Minimum deposit amount is 100" + " " + selectedCoin.coin);
-      } else {
-        seterrorMsg("");
-        setCanDeposit(true);
-      }
-    } else if (depositAmount === 0) {
-      setCanDeposit(false);
-    }
-  }, [depositAmount, totalDeposited, poolCap]);
-
-  useEffect(() => {
-    if (chainId === 1) {
-      setSelectedChain({
-        icon: eth,
-        chain: "Ethereum",
-      });
-      setSelectedCoin({
-        icon: require(`./assets/${window.config.commitmenteth_tokens[0].symbol.toLowerCase()}.svg`),
-        coin: window.config.commitmenteth_tokens[0].symbol,
-        address: window.config.commitmenteth_tokens[0].address,
-      });
-      getUserBalanceForToken(window.config.commitmenteth_tokens[0]);
-      setselectedToken(window.config.commitmenteth_tokens[0]);
-    } else if (chainId === 56) {
-      setSelectedChain({
-        icon: bnb,
-        chain: "BNB Chain",
-      });
-
-      setSelectedCoin({
-        icon: require(`./assets/${window.config.commitmentbnb_tokens[0].symbol.toLowerCase()}.svg`),
-        coin: window.config.commitmentbnb_tokens[0].symbol,
-        address: window.config.commitmentbnb_tokens[0].address,
-      });
-      getUserBalanceForToken(window.config.commitmentbnb_tokens[0]);
-      setselectedToken(window.config.commitmentbnb_tokens[0]);
-    } else {
-      setSelectedChain({
-        icon: eth,
-        chain: "Ethereum",
-      });
-
-      setSelectedCoin({
-        icon: require(`./assets/${window.config.commitmenteth_tokens[0].symbol.toLowerCase()}.svg`),
-        coin: window.config.commitmenteth_tokens[0].symbol,
-        address: window.config.commitmenteth_tokens[0].address,
-      });
-      setTokenBalance(0);
-      setselectedToken(window.config.commitmenteth_tokens[0]);
-    }
-  }, [isConnected, chainId, coinbase]);
-
-  // useEffect(() => {
-  //   if (isConnected && coinbase) {
-  //     getUserCommitment();
-  //   } else {
-  //     setAllUserCommitments([]);
-  //   }
-  // }, [isConnected, coinbase]);
+ 
 
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x61")
@@ -818,19 +264,7 @@ const Whitelist = ({
         console.log(e);
       });
   };
-
-  useEffect(() => {
-    if (userPools && userPools.length > 0) {
-      checkStakedPools();
-    } else {
-      sethasDypStaked(false);
-      sethasiDypStaked(false);
-    }
-  }, [userPools]);
-
-  // useEffect(() => {
-  //   getTotalCommitment();
-  // }, []);
+ 
 
   useEffect(() => {
     getInfo();
@@ -840,7 +274,7 @@ const Whitelist = ({
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
-        <WhitelistHero />
+        <WhitelistHero onSelectRound={(value)=>{setselectedRound(value)}}/>
         <WhitelistContent
           isConnected={isConnected}
           chainId={chainId}
@@ -848,6 +282,12 @@ const Whitelist = ({
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
           wodBalance={pendingTokens}
+          handleClaim={handleClaim}
+          claimStatus={claimStatus}
+          claimLoading={claimLoading}
+          startedVesting={startedVesting}
+          canClaim={canClaim}
+          selectedRound={selectedRound}
         />
         <div className="container-lg p-0">
           {allUserCommitments && allUserCommitments.length > 0 && (
@@ -1019,7 +459,7 @@ const Whitelist = ({
                       </div>
                     </div>
                   )}
-                  {allUserCommitments && allUserCommitments.length > 5 && (
+                  {/* {allUserCommitments && allUserCommitments.length > 5 && (
                     <div className="d-flex my-3 w-100 align-items-center justify-content-center">
                       <button
                         className="btn filledbtn"
@@ -1030,7 +470,7 @@ const Whitelist = ({
                           : "View More"}
                       </button>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
