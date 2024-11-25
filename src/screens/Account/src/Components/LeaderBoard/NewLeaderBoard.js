@@ -768,7 +768,8 @@ const NewLeaderBoard = ({
                   <span className="new-leaderboard-desc-title">
                     Boost Experience
                   </span>
-                  <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
+                  <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2"
+                  onClick={onGoldenpassClick}>
                     <div className="d-flex align-items-center gap-2">
                       <img
                         src={goldenPassBadge}
@@ -792,7 +793,7 @@ const NewLeaderBoard = ({
                       {!availableTime ? (
                         <button
                           className="activate-btn px-3 py-1"
-                          onClick={onGoldenpassClick}
+                          
                         >
                           Activate
                         </button>
