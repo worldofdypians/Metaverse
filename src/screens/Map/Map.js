@@ -435,6 +435,7 @@ const Map = ({ dummyBetaPassData2 }) => {
           onClose={() => {
             setSelectedMarker(null);
             setMarkerType(null);
+            setActiveMarker(null);
             setShow(false);
           }}
         />
