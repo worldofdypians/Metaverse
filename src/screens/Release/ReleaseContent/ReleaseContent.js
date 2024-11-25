@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./_whitelistcontent.scss";
+import "./_releasecontent.scss";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
@@ -72,7 +72,7 @@ const renderer2 = ({ hours, minutes }) => {
   );
 };
 
-const WhitelistContent = ({
+const ReleaseContent = ({
   isConnected,
   chainId,
   coinbase,
@@ -105,40 +105,37 @@ const WhitelistContent = ({
     >
       <div className="container-fluid d-flex align-items-center justify-content-center">
         <div className="row w-100 justify-content-center gap-3">
-          <div className="d-flex flex-column gap-3 col-lg-2">
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Token Distribution</span>
-                <span className="whitelist-white-txt">
-                  {selectedRound?.title}
-                </span>
+          {selectedRound?.id === "ido" && (
+            <div className="d-flex flex-column gap-3 col-lg-2 justify-content-between">
+              <div className="whitelist-input-wrapper p-3 h-100">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-green-txt">
+                    Token Distribution
+                  </span>
+                  <span className="whitelist-white-txt">
+                    {selectedRound?.title}
+                  </span>
+                </div>
+              </div>
+              <div className="whitelist-input-wrapper p-3 h-100">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-green-txt">Token Price</span>
+                  <span className="whitelist-white-txt">
+                    $ {selectedRound?.tokenPrice}
+                  </span>
+                </div>
+              </div>
+
+              <div className="whitelist-input-wrapper p-3 h-100">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-green-txt">Vesting Period</span>
+                  <span className="whitelist-white-txt">
+                    {selectedRound?.vesting}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Token Price</span>
-                <span className="whitelist-white-txt">
-                  $ {selectedRound?.tokenPrice}
-                </span>
-              </div>
-            </div>
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Cliff Period</span>
-                <span className="whitelist-white-txt">
-                  {selectedRound?.cliff}
-                </span>
-              </div>
-            </div>
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Vesting Period</span>
-                <span className="whitelist-white-txt">
-                  {selectedRound?.vesting}
-                </span>
-              </div>
-            </div>
-          </div>
+          )}
           <div className="new-whitelist-wrapper col-lg-7 d-flex flex-column gap-3 p-3 mt-4 mt-lg-0 justify-content-between">
             <div className="whitelist-input-wrapper d-flex flex-column gap-2">
               <div className="whitelist-input-upper-wrapper  d-flex align-items-center justify-content-between">
@@ -159,45 +156,46 @@ const WhitelistContent = ({
                   Available to claim
                 </span>
                 <span className="whitelist-balance-amount">
-                  {getFormattedNumber(wodBalance)} WOD
+                  {getFormattedNumber(0)} WOD
                 </span>
               </div>
             </div>
             <div className="d-flex justify-content-center w-100">
               {/* <img src={bridgeIcon} width={30} height={30} alt="" /> */}
             </div>
-            <div className="whitelist-input-wrapper d-flex flex-column gap-2 p-3">
-              <div className="d-flex align-items-center gap-2 justify-content-between">
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(totalVestedTokens)
-                      : 0}
-                  </span>
-                  <span className="whitelist-bottom-txt">Total WOD</span>
+            {selectedRound?.id === "ido" && (
+              <div className="whitelist-input-wrapper d-flex flex-column gap-2 p-3">
+                <div className="d-flex align-items-center gap-2 justify-content-between">
+                  <div className="d-flex flex-column">
+                    <span className="whitelist-upper-txt">
+                      {selectedRound?.id === "seed"
+                        ? getFormattedNumber(totalVestedTokens)
+                        : 0}
+                    </span>
+                    <span className="whitelist-bottom-txt">Total WOD</span>
+                  </div>
+
+                  <div className="d-flex flex-column">
+                    <span className="whitelist-upper-txt">
+                      {selectedRound?.id === "seed"
+                        ? getFormattedNumber(userClaimedTokens, 2)
+                        : 0}
+                    </span>
+                    <span className="whitelist-bottom-txt">WOD Withdrew</span>
+                  </div>
+                  <div className="d-flex flex-column">
+                    <span className="whitelist-upper-txt">
+                      {selectedRound?.id === "seed"
+                        ? getFormattedNumber(
+                            totalVestedTokens - userClaimedTokens
+                          )
+                        : 0}
+                    </span>
+                    <span className="whitelist-bottom-txt">WOD Remaining</span>
+                  </div>
                 </div>
 
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(userClaimedTokens, 2)
-                      : 0}
-                  </span>
-                  <span className="whitelist-bottom-txt">WOD Withdrew</span>
-                </div>
-                <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(
-                          totalVestedTokens - userClaimedTokens
-                        )
-                      : 0}
-                  </span>
-                  <span className="whitelist-bottom-txt">WOD Remaining</span>
-                </div>
-              </div>
-
-              <div className="whitelist-input-upper-wrapper p-2">
+                {/* <div className="whitelist-input-upper-wrapper p-2">
                 <div className="d-flex align-items-center gap-2 justify-content-between">
                   <span className="whitelist-timer-txt">Next withdraw in</span>
                   <span className="whitelist-timer">
@@ -220,8 +218,9 @@ const WhitelistContent = ({
                     )}
                   </span>
                 </div>
+              </div> */}
               </div>
-            </div>
+            )}
             {!isConnected && (
               <button className="connectbtn w-100 py-2" onClick={onConnect}>
                 Connect Wallet
@@ -235,47 +234,107 @@ const WhitelistContent = ({
                 Switch to BNB Chain
               </button>
             )}
-            {isConnected && (chainId === 56 || chainId === 97) && (
-              <button
-                className={` w-100 py-2
+            {isConnected &&
+              (chainId === 56 || chainId === 97) &&
+              selectedRound?.id === "airdrop" && (
+                <button
+                  className={` w-100 py-2 connectbtn
                 
-                ${
-                  ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  startedVesting === false ||
-                  canClaim === false ||
-                  timerFinished === false
-                    ? "disabled-btn2"
-                    : claimStatus === "failed"
-                    ? "fail-button"
-                    : claimStatus === "success"
-                    ? "success-button"
-                    : "connectbtn"
-                }`}
-                disabled={
-                  startedVesting === false ||
-                  canClaim === false ||
-                  timerFinished === false ||
-                  Number(wodBalance) === 0
-                    ? true
-                    : false
-                }
-                onClick={handleClaim}
-              >
-                {claimLoading ? (
-                  <div
-                    class="spinner-border spinner-border-sm text-light"
-                    role="status"
-                  ></div>
-                ) : claimStatus === "failed" ? (
-                  <>Failed</>
-                ) : claimStatus === "success" ? (
-                  <>Success</>
-                ) : (
-                  <>Claim</>
-                )}
-              </button>
-            )}
+              
+                `}
+                  disabled={
+                    // startedVesting === false ||
+                    // canClaim === false ||
+                    // timerFinished === false ||
+                    // Number(wodBalance) === 0
+                    //   ? true
+                    //   :
+                    false
+                  }
+                  // onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      class="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+            {isConnected &&
+              (chainId === 56 || chainId === 97) &&
+              selectedRound?.id === "ido" && (
+                <div className="d-flex align-items-center gap-3">
+                  <button
+                    className={` w-100 py-2 connectbtn
+                
+              
+                `}
+                    disabled={
+                      // startedVesting === false ||
+                      // canClaim === false ||
+                      // timerFinished === false ||
+                      // Number(wodBalance) === 0
+                      //   ? true
+                      //   :
+                      false
+                    }
+                    // onClick={handleClaim}
+                  >
+                    {claimLoading ? (
+                      <div
+                        class="spinner-border spinner-border-sm text-light"
+                        role="status"
+                      ></div>
+                    ) : claimStatus === "failed" ? (
+                      <>Failed</>
+                    ) : claimStatus === "success" ? (
+                      <>Success</>
+                    ) : (
+                      <>Claim</>
+                    )}
+                  </button>
+
+                  <button
+                    disabled={
+                      // pendingDivs > 0 ?
+                      false
+                      //  : true
+                    }
+                    className={`btn w-100 outline-btn-stake 
+                       
+                        d-flex justify-content-center align-items-center gap-2`}
+                    style={{ height: "fit-content" }}
+                    // onClick={handleReinvest}
+                  >
+                    {/* {reInvestLoading ? (
+                          <div
+                            class="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        ) : reInvestStatus === "failed" ? (
+                          <>
+                            <img src={failMark} alt="" />
+                            Failed
+                          </>
+                        ) : reInvestStatus === "success" ? (
+                          <>Success</>
+                        ) : (
+                          <>Reinvest</>
+                        )} */}
+                    Refund
+                  </button>
+                </div>
+              )}
           </div>
         </div>
       </div>
@@ -582,4 +641,4 @@ const WhitelistContent = ({
   );
 };
 
-export default WhitelistContent;
+export default ReleaseContent;

@@ -131,6 +131,7 @@ import conflux from "./screens/Account/src/Components/WalletBalance/assets/confl
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
+import Release from "./screens/Release/Release.js";
 
 
 
@@ -4602,6 +4603,23 @@ function App() {
                     path="/cliff-and-vesting"
                     element={
                       <Whitelist
+                      chainId={networkId}
+                        isConnected={isConnected}
+                        handleConnection={() => {
+                          setwalletModal(true);
+                        }}
+                        coinbase={coinbase}
+                        isPremium={isPremium}
+                        // userPools={userPools} 
+                      />
+                    }
+                  />
+
+<Route
+                    exact
+                    path="/token-claim"
+                    element={
+                      <Release
                       chainId={networkId}
                         isConnected={isConnected}
                         handleConnection={() => {

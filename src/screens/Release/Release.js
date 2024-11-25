@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./whitelist.css";
+import "./release.css";
 import dyp from "./assets/dyp.svg";
 import idyp from "./assets/idyp.svg";
 import premium from "./assets/premium.png";
@@ -21,8 +21,8 @@ import moment from "moment";
 import axios from "axios";
 import { TOKEN_LOCK_ABI, VESTING_ABI } from "./abis";
 import Countdown from "react-countdown";
-import WhitelistHero from "./WhitelistHero/WhitelistHero";
-import WhitelistContent from "./WhitelistContent/WhitelistContent";
+import ReleaseHero from "./ReleaseHero/ReleaseHero";
+import ReleaseContent from "./ReleaseContent/ReleaseContent";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -32,7 +32,7 @@ const renderer2 = ({ hours, minutes }) => {
   );
 };
 
-const Whitelist = ({
+const Release = ({
   chainId,
   isConnected,
   handleConnection,
@@ -81,6 +81,27 @@ const Whitelist = ({
   let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
 
   const poolCap = 20000;
+
+  const idyp_pools = [
+    "0x41b8a58f4307ea722ad0a964966caa18a6011d93",
+    "0xf6DC9E51D4E0FCc19ca6426fB5422f1E9a24F2eE",
+    "0xFBe84Af34CdC22455f82e18B76Ca50D21d3aBF84",
+    "0x525cb0f6b5dae73965046bcb4c6f45ce74fb1b5d",
+    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
+    "0xe026fb242d9523dc8e8d8833f7309dbdbed59d3d",
+  ];
+
+  const dyp_pools = [
+    "0x92A84052Fe6945949A295AF14a7506e3dc085492",
+    "0xbE030A667d9ee75a9FCdF2162A2C14ccCAB573dD",
+    "0x0fafe78e471b52bc4003984a337948ed55284573",
+    "0xC9075092Cc46E176B1F3c0D0EB8223F1e46555B0",
+    "0x998A9F0DF7DAF20c2B0Bb379Dcae394636926a96",
+    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
+    "0x9845a667b1A603FF21596FDdec51968a2bccAc11",
+    "0x8cee06119fffecdd560ee83b26cccfe8e2fe6603",
+    "0xFdD3CFF22CF846208E3B37b47Bc36b2c61D2cA8b",
+  ];
 
   const getInfo = async () => {
     const vestingSc = new window.bscTestWeb3.eth.Contract(
@@ -263,7 +284,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -296,7 +317,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -329,7 +350,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -343,7 +364,6 @@ const Whitelist = ({
         }, 5000);
       });
   };
-
 
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x61")
@@ -363,12 +383,12 @@ const Whitelist = ({
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
-        <WhitelistHero
+        <ReleaseHero
           onSelectRound={(value) => {
             setselectedRound(value);
           }}
         />
-        <WhitelistContent
+        <ReleaseContent
           isConnected={isConnected}
           chainId={chainId}
           coinbase={coinbase}
@@ -384,10 +404,9 @@ const Whitelist = ({
           canClaim={canClaim}
           selectedRound={selectedRound}
         />
-      
       </div>
     </div>
   );
 };
 
-export default Whitelist;
+export default Release;
