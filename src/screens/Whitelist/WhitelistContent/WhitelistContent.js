@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./_whitelistcontent.scss";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
@@ -88,7 +88,15 @@ const WhitelistContent = ({
   userClaimedTokens,
   totalVestedTokens,
 }) => {
-  const [timerFinished, settimerFinished] = useState(true);
+  const [timerFinished, settimerFinished] = useState(false);
+
+  useEffect(() => {
+    if (selectedRound && selectedRound.id === "seed") {
+      if (Number(userClaimedTokens) === 0) {
+        settimerFinished(true);
+      }
+    }
+  }, [selectedRound, userClaimedTokens]);
 
   return (
     <div

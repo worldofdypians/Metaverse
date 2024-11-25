@@ -63,7 +63,6 @@ const Whitelist = ({
   const [userClaimedTokens, setuserClaimedTokens] = useState(0);
   const [userVestedTokens, setuserVestedTokens] = useState(0);
 
-
   const [startedVesting, setstartedVesting] = useState(false);
   const [canClaim, setcanClaim] = useState(false);
   const [claimLoading, setclaimLoading] = useState(false);
@@ -96,7 +95,7 @@ const Whitelist = ({
     "0xFdD3CFF22CF846208E3B37b47Bc36b2c61D2cA8b",
   ];
 
-  const getInfo = async (startIndex, endIndex) => {
+  const getInfo = async () => {
     const vestingSc = new window.bscTestWeb3.eth.Contract(
       VESTING_ABI,
       window.config.vesting_address
@@ -123,13 +122,13 @@ const Whitelist = ({
 
     setstartedVesting(isstartVesting);
     //lockDuration -> Vesting period, this will start and release tokens, once 'cliff' has passed;
-    const lockDuration = await vestingSc.methods
-      .lockDuration()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const lockDuration = await vestingSc.methods
+    //   .lockDuration()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
     //availableTGE -> If 1, he has to claim 'releaseProcent' at TGE (end of 'cliff'), if 0, he has already claimed 'releaseProcent';
     let availableTGE = 0;
@@ -164,50 +163,47 @@ const Whitelist = ({
 
     //getTotalClaimedTokens() -> Return total WOD tokens Claimed in general by ppl;
 
-    const totalWodTokensClaimed = await vestingSc.methods
-      .getTotalClaimedTokens()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    // const totalWodTokensClaimed = await vestingSc.methods
+    //   .getTotalClaimedTokens()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
 
-
-      
     //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
     let totalClaimedTokensByUser = 0;
     if (coinbase) {
-    totalClaimedTokensByUser = await vestingSc.methods
-    .claimedTokens(coinbase)
-    .call()
-    .catch((e) => {
-      console.error(e);
-      return 0;
-    });
-    const totalClaimedTokensByUser_formatted = new window.BigNumber(
-      totalClaimedTokensByUser / 1e18
-    ).toFixed(0);
+      totalClaimedTokensByUser = await vestingSc.methods
+        .claimedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUser_formatted = new window.BigNumber(
+        totalClaimedTokensByUser / 1e18
+      ).toFixed(0);
 
-    setuserClaimedTokens(totalClaimedTokensByUser_formatted);
-  }
+      setuserClaimedTokens(totalClaimedTokensByUser_formatted);
+    }
 
-   //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
-   let totalVestedTokensPerUser = 0;
-   if (coinbase) {
-    totalVestedTokensPerUser = await vestingSc.methods
-   .vestedTokens(coinbase)
-   .call()
-   .catch((e) => {
-     console.error(e);
-     return 0;
-   });
-   const totalClaimedTokensByUser_formatted = new window.BigNumber(
-    totalVestedTokensPerUser / 1e18
-   ).toFixed(0);
+    //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
+    let totalVestedTokensPerUser = 0;
+    if (coinbase) {
+      totalVestedTokensPerUser = await vestingSc.methods
+        .vestedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUser_formatted = new window.BigNumber(
+        totalVestedTokensPerUser / 1e18
+      ).toFixed(0);
 
-   setuserVestedTokens(totalClaimedTokensByUser_formatted);
- }
-
+      setuserVestedTokens(totalClaimedTokensByUser_formatted);
+    }
 
     //getStakersList(uint startIndex, uint endIndex) -> Return list of Adress that are in the Vesting including info as 'lastClaimed', 'VestedTokens', 'ClaimedTokens so far'.;
 
@@ -280,6 +276,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
+          getInfo()
         }, 5000);
       })
       .catch((e) => {
