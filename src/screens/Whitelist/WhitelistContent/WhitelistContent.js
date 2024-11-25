@@ -7,6 +7,7 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import ethIcon from "../assets/eth.svg";
 import bnbIcon from "../assets/bnb.svg";
 import wodIcon from "../../../screens/Wod/Bridge/assets/wodIcon.svg";
+import Countdown from "react-countdown";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -63,6 +64,14 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const renderer2 = ({ hours, minutes }) => {
+  return (
+    <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+      {hours}d:{hours}h:{minutes}m
+    </h6>
+  );
+};
+
 const WhitelistContent = ({
   isConnected,
   chainId,
@@ -76,8 +85,10 @@ const WhitelistContent = ({
   startedVesting,
   canClaim,
   selectedRound,
+  userClaimedTokens,
+  totalVestedTokens,
 }) => {
-  const [timerFinished, settimerFinished] = useState(false);
+  const [timerFinished, settimerFinished] = useState(true);
 
   return (
     <div
@@ -90,29 +101,37 @@ const WhitelistContent = ({
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Token Distribution</span>
-                <span className="whitelist-white-txt">{selectedRound?.title}</span>
+                <span className="whitelist-white-txt">
+                  {selectedRound?.title}
+                </span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Token Price</span>
-                <span className="whitelist-white-txt">$ {selectedRound?.tokenPrice}</span>
+                <span className="whitelist-white-txt">
+                  $ {selectedRound?.tokenPrice}
+                </span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Cliff Period</span>
-                <span className="whitelist-white-txt">{selectedRound?.cliff}</span>
+                <span className="whitelist-white-txt">
+                  {selectedRound?.cliff}
+                </span>
               </div>
             </div>
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Vesting Period</span>
-                <span className="whitelist-white-txt">{selectedRound?.vesting}</span>
+                <span className="whitelist-white-txt">
+                  {selectedRound?.vesting}
+                </span>
               </div>
             </div>
           </div>
-          <div className="new-whitelist-wrapper col-lg-7 d-flex flex-column gap-3 p-3 mt-4 mt-lg-0">
+          <div className="new-whitelist-wrapper col-lg-7 d-flex flex-column gap-3 p-3 mt-4 mt-lg-0 justify-content-between">
             <div className="whitelist-input-wrapper d-flex flex-column gap-2">
               <div className="whitelist-input-upper-wrapper  d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center p-3 gap-2">
@@ -142,23 +161,56 @@ const WhitelistContent = ({
             <div className="whitelist-input-wrapper d-flex flex-column gap-2 p-3">
               <div className="d-flex align-items-center gap-2 justify-content-between">
                 <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">26,548,220</span>
+                  <span className="whitelist-upper-txt">
+                    {selectedRound?.id === "seed"
+                      ? getFormattedNumber(totalVestedTokens)
+                      : 0}
+                  </span>
                   <span className="whitelist-bottom-txt">Total WOD</span>
                 </div>
 
                 <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">250,000</span>
+                  <span className="whitelist-upper-txt">
+                    {selectedRound?.id === "seed"
+                      ? getFormattedNumber(userClaimedTokens, 2)
+                      : 0}
+                  </span>
                   <span className="whitelist-bottom-txt">WOD Withdrew</span>
                 </div>
                 <div className="d-flex flex-column">
-                  <span className="whitelist-upper-txt">25,200,850</span>
+                  <span className="whitelist-upper-txt">
+                    {selectedRound?.id === "seed"
+                      ? getFormattedNumber(
+                          totalVestedTokens - userClaimedTokens
+                        )
+                      : 0}
+                  </span>
                   <span className="whitelist-bottom-txt">WOD Remaining</span>
                 </div>
               </div>
+
               <div className="whitelist-input-upper-wrapper p-2">
                 <div className="d-flex align-items-center gap-2 justify-content-between">
                   <span className="whitelist-timer-txt">Next withdraw in</span>
-                  <span className="whitelist-timer">22D:12H:56M</span>
+                  <span className="whitelist-timer">
+                    {" "}
+                    {userClaimedTokens && Number(userClaimedTokens) > 0 ? (
+                      <Countdown
+                        date={Number(selectedRound?.cliffInTimestamp)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinished(true);
+                        }}
+                      />
+                    ) : (
+                      <h6
+                        className="rewardstxtwod mb-0"
+                        style={{ color: "#F3BF09" }}
+                      >
+                        00d:00h:00m
+                      </h6>
+                    )}
+                  </span>
                 </div>
               </div>
             </div>
@@ -177,11 +229,11 @@ const WhitelistContent = ({
             )}
             {isConnected && (chainId === 56 || chainId === 97) && (
               <button
-                className={`connectbtn w-100 py-2
+                className={` w-100 py-2
                 
                 ${
-                  claimStatus === "claimed" &&
-                  claimStatus === "initial" &&
+                  (claimStatus === "claimed" || claimStatus === "initial") &&
+                  Number(wodBalance) === 0 &&
                   (startedVesting === false ||
                     canClaim === false ||
                     timerFinished === false)
@@ -190,15 +242,16 @@ const WhitelistContent = ({
                     ? "fail-button"
                     : claimStatus === "success"
                     ? "success-button"
-                    : null
+                    : "connectbtn"
                 }`}
-                // disabled={
-                //   startedVesting === false ||
-                //   canClaim === false ||
-                //   timerFinished === false
-                //     ? true
-                //     : false
-                // }
+                disabled={
+                  startedVesting === false ||
+                  canClaim === false ||
+                  timerFinished === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
                 onClick={handleClaim}
               >
                 {claimLoading ? (

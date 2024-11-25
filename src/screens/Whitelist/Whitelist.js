@@ -60,6 +60,10 @@ const Whitelist = ({
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
+  const [userClaimedTokens, setuserClaimedTokens] = useState(0);
+  const [userVestedTokens, setuserVestedTokens] = useState(0);
+
+
   const [startedVesting, setstartedVesting] = useState(false);
   const [canClaim, setcanClaim] = useState(false);
   const [claimLoading, setclaimLoading] = useState(false);
@@ -167,6 +171,43 @@ const Whitelist = ({
         console.error(e);
         return 0;
       });
+
+
+      
+    //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
+    let totalClaimedTokensByUser = 0;
+    if (coinbase) {
+    totalClaimedTokensByUser = await vestingSc.methods
+    .claimedTokens(coinbase)
+    .call()
+    .catch((e) => {
+      console.error(e);
+      return 0;
+    });
+    const totalClaimedTokensByUser_formatted = new window.BigNumber(
+      totalClaimedTokensByUser / 1e18
+    ).toFixed(0);
+
+    setuserClaimedTokens(totalClaimedTokensByUser_formatted);
+  }
+
+   //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
+   let totalVestedTokensPerUser = 0;
+   if (coinbase) {
+    totalVestedTokensPerUser = await vestingSc.methods
+   .vestedTokens(coinbase)
+   .call()
+   .catch((e) => {
+     console.error(e);
+     return 0;
+   });
+   const totalClaimedTokensByUser_formatted = new window.BigNumber(
+    totalVestedTokensPerUser / 1e18
+   ).toFixed(0);
+
+   setuserVestedTokens(totalClaimedTokensByUser_formatted);
+ }
+
 
     //getStakersList(uint startIndex, uint endIndex) -> Return list of Adress that are in the Vesting including info as 'lastClaimed', 'VestedTokens', 'ClaimedTokens so far'.;
 
@@ -283,6 +324,8 @@ const Whitelist = ({
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
           wodBalance={pendingTokens}
+          userClaimedTokens={userClaimedTokens}
+          totalVestedTokens={userVestedTokens}
           handleClaim={handleClaim}
           claimStatus={claimStatus}
           claimLoading={claimLoading}
