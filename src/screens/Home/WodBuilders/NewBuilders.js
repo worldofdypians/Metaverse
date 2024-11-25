@@ -174,12 +174,12 @@ const NewBuilders = () => {
       link: "https://x.com/midle_official/status/1819705076966940996",
       backer: false,
     },
-    {
-      name: "DogeCoin",
-      icon: "dogecoinIcon",
-      banner: "dogecoinBanner.png",
-      backer: false,
-    },
+    // {
+    //   name: "DogeCoin",
+    //   icon: "dogecoinIcon",
+    //   banner: "dogecoinBanner.png",
+    //   backer: false,
+    // },
     {
       name: "Binance Web3",
       icon: "binanceWeb3",
