@@ -10066,7 +10066,6 @@ function Dashboard({
                 Number(taikoEarnUsd) +
                 Number(matEarnUsd) +
                 Number(immutableEarnUsd) +
-                Number(cookieEarnUsd) +
                 Number(baseEarnUSD)
               }
               specialRewards={userSocialRewardsCached}

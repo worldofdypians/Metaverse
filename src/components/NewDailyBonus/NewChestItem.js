@@ -482,13 +482,12 @@ const NewChestItem = ({
         const gasPrice = await window.coreWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        // const increasedGwei = parseInt(currentGwei) + 0.01;
-        // console.log("increasedGwei", increasedGwei);
+        const increasedGwei = parseInt(currentGwei) + 1.3;
+        console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
         };
-
         await daily_bonus_contract_core.methods
           .openPremiumChest()
           .estimateGas({ from: address })
@@ -530,11 +529,11 @@ const NewChestItem = ({
         const gasPrice = await window.coreWeb3.eth.getGasPrice();
         console.log("gasPrice", gasPrice);
         const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-        // const increasedGwei = parseInt(currentGwei) + 0.01;
-        // console.log("increasedGwei", increasedGwei);
+        const increasedGwei = parseInt(currentGwei) + 2;
+        console.log("increasedGwei", increasedGwei);
 
         const transactionParameters = {
-          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+          gasPrice: web3.utils.toWei(increasedGwei.toString(), "gwei"),
         };
 
         await daily_bonus_contract_core.methods

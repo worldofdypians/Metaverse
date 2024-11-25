@@ -793,6 +793,7 @@ const MyRewardsPopupNew = ({
                       Number(immutableEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(victionEarnUsd) +
+                      Number(cookieEarnUsd) +
                       Number(taikoEarnUsd) +
                       Number(mantaEarnUsd),
                     2
@@ -808,7 +809,6 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(cookieEarnUsd) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
@@ -1093,14 +1093,14 @@ const MyRewardsPopupNew = ({
                       Number(coreEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(taikoEarnUsd) +
+                      Number(cookieEarnUsd) +
                       Number(victionEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(skaleEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(multiversEarnUsd) +
-                      Number(cookieEarnUsd),
+                      Number(multiversEarnUsd),
                     2
                   )}
             </span>
@@ -1561,22 +1561,6 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={cookieIcon}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Cookie3
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(cookieEarnUsd, 2)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
                       src={baseLogo}
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1682,7 +1666,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dypPremiumUSD, 2)}
                   </span>
                 </div>
-
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={cookieIcon}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Cookie3
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(cookieEarnUsd, 2)}
+                  </span>
+              </div>
               
               </div>
 
