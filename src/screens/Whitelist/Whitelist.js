@@ -65,7 +65,7 @@ const Whitelist = ({
   const [claimLoading, setclaimLoading] = useState(false);
   const [claimStatus, setclaimStatus] = useState("initial");
   const [allUserCommitments, setAllUserCommitments] = useState([]);
-  const [selectedRound, setselectedRound] = useState()
+  const [selectedRound, setselectedRound] = useState();
 
   let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
 
@@ -252,7 +252,6 @@ const Whitelist = ({
         }, 5000);
       });
   };
- 
 
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x61")
@@ -263,7 +262,6 @@ const Whitelist = ({
         console.log(e);
       });
   };
- 
 
   useEffect(() => {
     getInfo();
@@ -273,7 +271,11 @@ const Whitelist = ({
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
       <div className="d-flex flex-column">
-        <WhitelistHero onSelectRound={(value)=>{setselectedRound(value)}}/>
+        <WhitelistHero
+          onSelectRound={(value) => {
+            setselectedRound(value);
+          }}
+        />
         <WhitelistContent
           isConnected={isConnected}
           chainId={chainId}

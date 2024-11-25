@@ -45,13 +45,13 @@ border-bottom: none !important;
 
 .seedClassActive,.seedClass:hover {
   border-radius: 10px;
-  border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(../assets/seedActive.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border: 1px solid #F3BF09;
 }
 
 .privateClass {
@@ -68,13 +68,13 @@ border-bottom: none !important;
 
 .privateClassActive, .privateClass:hover {
   border-radius: 10px;
-  border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(../assets/privateActive.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border: 1px solid #F3BF09;
 }
 
 .kolClass {
@@ -91,11 +91,11 @@ border-bottom: none !important;
 
 .kolClassActive, .kolClass:hover {
   border-radius: 10px;
-  border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
   background: url(../assets/kolActive.webp);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  border: 1px solid #F3BF09;
 }
