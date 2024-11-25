@@ -4599,7 +4599,7 @@ function App() {
           />
                         <Route
                     exact
-                    path="/whitelist"
+                    path="/cliff-and-vesting"
                     element={
                       <Whitelist
                       chainId={networkId}
