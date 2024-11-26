@@ -133,9 +133,6 @@ import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
 
-
-
-
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
 
@@ -333,7 +330,8 @@ function App() {
 
   const [isConnected, setIsConnected] = useState(false);
   const [loginListener, setloginListener] = useState(0);
-
+  const [totalVolumeNew, setTotalVolumeNew] = useState(0);
+  const [wodHolders, setWodHolders] = useState(0);
   const [coinbase, setCoinbase] = useState();
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
@@ -487,7 +485,6 @@ function App() {
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let matchainLastDay = new Date("2025-03-28T14:00:00.000+02:00");
-
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -1040,6 +1037,29 @@ function App() {
     fillRecordsStar(result.data.data.leaderboard);
   };
 
+  const fetchTotalVolume = async () => {
+    await axios
+      .get(`https://api.dyp.finance/api/getWodVolume`)
+      .then((res) => {
+        setTotalVolumeNew(res.data.volume);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchTotalWodHolders = async () => {
+    await axios
+      .get(`https://api.dyp.finance/api/getWodHolders`)
+      .then((res) => {
+        setWodHolders(res.data.holders);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  
+
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
     let timepiece_contract = new infura_web3.eth.Contract(
@@ -1263,7 +1283,7 @@ function App() {
       is_active: activePlayerStar, //change when apis are ready
     });
   }, [starRecords, prevDataStar, userDataStar, activePlayerStar]);
-  
+
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -3452,7 +3472,7 @@ function App() {
       eventStatus: "Coming Soon",
       rewardType: "MAT",
       rewardAmount: "$20,000",
-      location:  [-0.06787060104021504, 0.08728981018066406],
+      location: [-0.06787060104021504, 0.08728981018066406],
       image: "matchainBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
@@ -4391,6 +4411,8 @@ function App() {
 
   useEffect(() => {
     getAllData();
+    fetchTotalVolume();
+    fetchTotalWodHolders();
   }, [coinbase, count55, isConnected]);
 
   useEffect(() => {
@@ -4511,8 +4533,8 @@ function App() {
           loginListener={loginListener}
         />
         <MobileNavbar
-        isConnected={isConnected}
-        email={email}
+          isConnected={isConnected}
+          email={email}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -4569,6 +4591,8 @@ function App() {
               <Home
                 handleRegister={handleRegister}
                 allStarData={allStarData}
+                wodHolders={wodHolders}
+                totalVolumeNew={totalVolumeNew}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
@@ -4598,39 +4622,39 @@ function App() {
               />
             }
           />
-                        <Route
-                    exact
-                    path="/cliff-and-vesting"
-                    element={
-                      <Whitelist
-                      chainId={networkId}
-                        isConnected={isConnected}
-                        handleConnection={() => {
-                          setwalletModal(true);
-                        }}
-                        coinbase={coinbase}
-                        isPremium={isPremium}
-                        // userPools={userPools} 
-                      />
-                    }
-                  />
+          <Route
+            exact
+            path="/cliff-and-vesting"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                // userPools={userPools}
+              />
+            }
+          />
 
-<Route
-                    exact
-                    path="/token-claim"
-                    element={
-                      <Release
-                      chainId={networkId}
-                        isConnected={isConnected}
-                        handleConnection={() => {
-                          setwalletModal(true);
-                        }}
-                        coinbase={coinbase}
-                        isPremium={isPremium}
-                        // userPools={userPools} 
-                      />
-                    }
-                  />
+          <Route
+            exact
+            path="/token-claim"
+            element={
+              <Release
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                // userPools={userPools}
+              />
+            }
+          />
 
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route
@@ -4927,6 +4951,8 @@ function App() {
               <Marketplace
                 totalSupply={totalSupply}
                 count={count2}
+                wodHolders={wodHolders}
+                totalVolumeNew={totalVolumeNew}
                 ethTokenData={ethTokenData}
                 dypTokenData={dypTokenData}
                 dypTokenData_old={dypTokenData_old}
