@@ -350,6 +350,12 @@ window.config = {
 
   /*WOD Stake Contracts*/
   constant_staking_wod_address: "0x998A9F0DF7DAF20c2B0Bb379Dcae394636926a96",
+
+  constant_staking_wod1_address: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+  constant_staking_wod2_address: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+  constant_staking_wod3_address: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+  constant_staking_wod4_address: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   USDC_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
 };
@@ -374,7 +380,12 @@ window.victionWeb3 = new Web3(window.config.viction_endpoint);
 window.seiWeb3 = new Web3(window.config.sei_endpoint);
 
 window.REWARD_TOKEN_WOD_ABI = window.TOKEN_ABI;
-window.CONSTANT_STAKING_WOD_ABI = window.CONSTANT_STAKING_DYPIUS_ABI;
+window.CONSTANT_STAKING_WOD_ABI = window.CONSTANT_STAKING_WOD_ABI;
+
+window.CONSTANT_STAKING_WOD1_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD2_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD3_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD4_ABI = window.CONSTANT_STAKING_WOD_ABI;
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -480,7 +491,7 @@ class CONSTANT_STAKING_WOD {
       this[fn_name] = async function (...args) {
         window.web3 = new Web3(window.ethereum);
         let contract = new window.web3.eth.Contract(
-          window.CONSTANT_STAKING_DYPIUS_ABI,
+          window.CONSTANT_STAKING_WOD_ABI,
           address
         );
         // getContract({ key: this.ticker });
@@ -493,7 +504,7 @@ class CONSTANT_STAKING_WOD {
         this[fn_name] = async function (...args) {
           // let contract = await getContract({ key: this.ticker });
           let contract = new window.web3.eth.Contract(
-            window.CONSTANT_STAKING_DYPIUS_ABI,
+            window.CONSTANT_STAKING_WOD_ABI,
             address
           );
 
@@ -553,6 +564,11 @@ class CONSTANT_STAKING_WOD {
 
 window.reward_token_wod = new TOKEN("REWARD_TOKEN_WOD");
 window.constant_staking_wod = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD");
+window.constant_staking_wod1 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD1");
+window.constant_staking_wod2 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD2");
+window.constant_staking_wod3 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD3");
+window.constant_staking_wod4 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD4");
+
 
 /**
  *
@@ -4201,9 +4217,7 @@ window.WOD_TOKEN_TESTNET_ABI = [
   },
 ];
 
-
-
-window.CONSTANT_STAKING_DYPIUS_ABI = [
+window.CONSTANT_STAKING_WOD_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
@@ -31584,6 +31598,19 @@ function wait(ms) {
   );
 }
 
+
+const checkapproveStakePool = async (useraddr, tokenaddr, stakingaddr) => {
+  window.web3 = new Web3(window.ethereum);
+  let token_contract = new window.web3.eth.Contract(
+    window.TOKEN_ABI,
+    tokenaddr
+  );
+
+  return await token_contract.methods.allowance(useraddr, stakingaddr).call();
+};
+
+window.checkapproveStakePool = checkapproveStakePool;
+
 async function getTokenHolderBalance(token, holder) {
   let tokenContract = await getContract({ address: token, ABI: ERC20_ABI });
   if (tokenContract) {
@@ -31975,7 +32002,11 @@ Object.keys(window.config)
     (k) =>
       k.startsWith("token_") ||
       k.startsWith("reward_token_wod") ||
-      k.startsWith("constant_staking_wod")
+      k.startsWith("constant_staking_wod")  ||
+      k.startsWith("constant_staking_wod1") ||
+      k.startsWith("constant_staking_wod2") ||
+      k.startsWith("constant_staking_wod3") ||
+      k.startsWith("constant_staking_wod4")
   )
   .forEach((k) => {
     window[k.replace("_address", "_ABI").toUpperCase()] = k.startsWith("token_")
@@ -31985,6 +32016,14 @@ Object.keys(window.config)
       : k.startsWith("reward_token_wod")
       ? window.TOKEN_ABI
       : k.startsWith("constant_staking_wod")
-      ? window.CONSTANT_STAKING_DYPIUS_ABI
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod1")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod2")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod3")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod4")
+      ? window.CONSTANT_STAKING_WOD_ABI
       : window.TOKEN_ABI;
   });

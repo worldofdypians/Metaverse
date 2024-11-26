@@ -17,9 +17,6 @@ import StakeWodDetails from "./pools/stakingWod";
 import StakeWodDetails2 from "./pools/stakingWod2";
 import { NavLink } from "react-router-dom";
 
-
-
-
 const EarnContent = ({
   isConnected,
   coinbase,
@@ -39,6 +36,7 @@ const EarnContent = ({
   onViewStakedOnlyPools,
   tvl,
   wodBalance,
+  userPools
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -224,14 +222,14 @@ const EarnContent = ({
                         {Number(wodBalance) === 0 && (
                           <NavLink
                             className="btn multiplayer-btn py-1 px-3 d-flex align-items-center gap-2 justify-content-center"
-                            to='/token'
+                            to="/token"
                             // onClick={() => {
                             //   setmultiplayerModal(true);
                             // }}
                           >
                             {/* <img src={buyWod} alt="" /> */}
                             {/* Buy */}
-                             WOD
+                            WOD
                           </NavLink>
                         )}
                       </div>
@@ -405,7 +403,7 @@ const EarnContent = ({
                           }
                           availableQuota={
                             item.type === "token"
-                              ? "--"
+                              ? item.poolCap - item.tvl_usd
                               : item.expired === "Yes"
                               ? "--"
                               : item.pair_name === "Genesis Land"
@@ -429,10 +427,12 @@ const EarnContent = ({
                               : false
                           }
                           isNewPool={item.new_pool === "Yes" ? true : false}
-                          isStaked={false}
+                          isStaked={ (userPools && userPools.length > 0 && userPools.find((obj)=>{return obj
+                            .contract_address.toLowerCase() === item.id.toLowerCase()}) !==undefined)}
                           isAccount={true}
                           expired={item.expired === "Yes" ? true : false}
-                          isHover={isHover === index}
+                          isHover={isHover === index }
+                          
                         />
                       </button>
                     </div>
@@ -617,7 +617,8 @@ const EarnContent = ({
                           </div>
                         )}
 
-                        {(item?.id === "one"  || item?.id === "three" || item?.id === "four") && (
+                        {item?.id ===
+                          "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C" && (
                           <div
                             onClick={() => {
                               isHover !== undefined
@@ -625,27 +626,28 @@ const EarnContent = ({
                                 : onHideDetailsClick(item);
                             }}
                           >
-                            <StakeWodDetails
+                            <StakeWodDetails2
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
                               handleConnection={onConnectWallet}
                               expired={false}
-                              staking={window.constant_staking_wod}
-                              apr={20}
-                              expiration_time={"07 Jun 2025"}
-                              poolCap={1000000}
-                              start_date={"28 Nov 2024"}
-                              fee={0}
+                              staking={window.constant_staking_wod1}
+                              apr={item.apy_percent}
+                              expiration_time={"27 Nov 2025"}
+                              poolCap={item.poolCap}
+                              start_date={"27 Nov 2024"}
+                              fee={item.performancefee}
                               binanceW3WProvider={binanceW3WProvider}
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
-                              lockTime={"30 days"}
+                              lockTime={item.lock_time}
                             />
                           </div>
                         )}
 
-                        {item?.id === "two" && (
+                        {item?.id ===
+                          "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e" && (
                           <div
                             onClick={() => {
                               isHover !== undefined
@@ -653,22 +655,80 @@ const EarnContent = ({
                                 : onHideDetailsClick(item);
                             }}
                           >
-                            <StakeWodDetails
+                            <StakeWodDetails2
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
                               handleConnection={onConnectWallet}
                               expired={false}
-                              staking={window.constant_staking_wod}
-                              apr={20}
-                              expiration_time={"07 Jun 2025"}
-                              poolCap={1000000}
-                              start_date={"28 Nov 2024"}
-                              fee={0}
+                              staking={window.constant_staking_wod2}
+                              apr={item.apy_percent}
+                              expiration_time={"27 Nov 2025"}
+                              poolCap={item.poolCap}
+                              start_date={"27 Nov 2024"}
+                              fee={item.performancefee}
                               binanceW3WProvider={binanceW3WProvider}
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
-                              lockTime={"30 days"}
+                              lockTime={item.lock_time}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod3}
+                              apr={item.apy_percent}
+                              expiration_time={"27 Nov 2025"}
+                              poolCap={item.poolCap}
+                              start_date={"27 Nov 2024"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                            />
+                          </div>
+                        )}
+
+                        {item?.id ===
+                          "0x0675B497f52a0426874151c1e3267801fAA15C18" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod4}
+                              apr={item.apy_percent}
+                              expiration_time={"27 Nov 2025"}
+                              poolCap={item.poolCap}
+                              start_date={"27 Nov 2024"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
                             />
                           </div>
                         )}

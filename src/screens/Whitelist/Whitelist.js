@@ -23,6 +23,7 @@ import { TOKEN_LOCK_ABI, VESTING_ABI } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
 import WhitelistContent from "./WhitelistContent/WhitelistContent";
+import StakingBanner from "../Release/StakingBanner/StakingBanner";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -368,6 +369,7 @@ const Whitelist = ({
             setselectedRound(value);
           }}
         />
+        <StakingBanner />
         <WhitelistContent
           isConnected={isConnected}
           chainId={chainId}

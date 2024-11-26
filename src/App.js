@@ -654,6 +654,9 @@ function App() {
   const [userEvents, setuserEvents] = useState(0);
   const [wodBalance, setwodBalance] = useState(0);
   const [nftPools, setnftPools] = useState([]);
+  const [tokenPools, settokenPools] = useState([]);
+  const [userPools, setUserPools] = useState([]);
+
   const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
@@ -665,10 +668,55 @@ function App() {
         console.log(err);
       });
 
-    if (eth_result && eth_result.status === 200) {
+    const bnb_result = await axios
+      .get(`https://api.dyp.finance/api/get_staking_info_wod_bnb`)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (
+      eth_result &&
+      eth_result.status === 200 &&
+      bnb_result &&
+      bnb_result.status === 200
+    ) {
+      let resultWodToken = bnb_result.data.stakingInfoWODBnb;
+      let resultWodTokenTVL = bnb_result.data.totalTVL;
+
       let resultCaws = eth_result.data.stakingInfoCAWS;
       let resultLand = eth_result.data.stakingInfoLAND;
       let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
+
+      const poolcapArray = [
+        {
+          id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+          poolCap: 13000000,
+        },
+        {
+          id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+          poolCap: 12000000,
+        },
+        {
+          id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+          poolCap: 20000000,
+        },
+        {
+          id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+          poolCap: 9000000,
+        },
+      ];
+
+      let resultWodToken2 = resultWodToken.map((item) => {
+        return {
+          ...item,
+          type: "token",
+          chain: "bnb",
+          tokenURL: ["wodToken"],
+          poolCap: poolcapArray.find((item2) => {
+            return item2.id.toLowerCase() === item.id.toLowerCase();
+          })?.poolCap,
+        };
+      });
 
       let resultCaws2 = resultCaws.map((item) => {
         return {
@@ -699,9 +747,23 @@ function App() {
       allPools.forEach((item) => {
         tvl += Number(item.tvl_usd);
       });
-      localStorage.setItem("tvl", tvl);
-      setnftTvl(tvl);
+      localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
+      setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
+      settokenPools(resultWodToken2);
+    }
+  };
+
+  const fetchUserPools = async (addr) => {
+    const userpools_result = await axios
+      .get(`https://api.dyp.finance/api/user_pools_wod/${addr}`)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (userpools_result && userpools_result.status === 200) {
+      const allpools = userpools_result.data.PoolsUserIn;
+      setUserPools(allpools);
     }
   };
 
@@ -1057,8 +1119,6 @@ function App() {
         console.log(err);
       });
   };
-
-  
 
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
@@ -4461,6 +4521,8 @@ function App() {
 
   useEffect(() => {
     if (coinbase) {
+      fetchUserPools(coinbase);
+
       // getNotifications(coinbase);
       addNewUserIfNotExists(
         coinbase,
@@ -5828,10 +5890,12 @@ function App() {
                   setwalletModal(true);
                 }}
                 nftPools={nftPools}
+                tokenPools={tokenPools}
                 binanceW3WProvider={library}
                 isPremium={isPremium}
                 tvl={nftTvl}
                 wodBalance={wodBalance}
+                userPools={userPools}
               />
             }
           />

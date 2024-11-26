@@ -687,7 +687,7 @@ const StakeWodDetails = ({
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
       const stakingSc = new window.infuraWeb3.eth.Contract(
-        window.CONSTANT_STAKING_DYPIUS_ABI,
+        window.CONSTANT_STAKING_WOD_ABI,
         staking._address
       );
       const totalDeposited = await stakingSc.methods
