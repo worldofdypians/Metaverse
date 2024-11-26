@@ -91,6 +91,7 @@ const WhitelistContent = ({
   const [timerFinished, settimerFinished] = useState(false);
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
   const [timerFinishedKol, settimerFinishedKol] = useState(false);
+  const [timerFinishedAdvisors, settimerFinishedAdvisors] = useState(false);
 
   const today = new Date();
 
@@ -114,6 +115,12 @@ const WhitelistContent = ({
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedKol(true);
         }
+      } else if (selectedRound.id == "advisors") {
+        if (today.getTime() > selectedRound.cliffInTimestamp) {
+          settimerFinishedAdvisors(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedAdvisors(true);
+        }
       }
     }
   }, [selectedRound, userClaimedTokens]);
@@ -134,14 +141,16 @@ const WhitelistContent = ({
                 </span>
               </div>
             </div>
-            <div className="whitelist-input-wrapper p-3">
-              <div className="d-flex flex-column">
-                <span className="whitelist-green-txt">Token Price</span>
-                <span className="whitelist-white-txt">
-                  $ {selectedRound?.tokenPrice}
-                </span>
+            {selectedRound?.tokenPrice && (
+              <div className="whitelist-input-wrapper p-3">
+                <div className="d-flex flex-column">
+                  <span className="whitelist-green-txt">Token Price</span>
+                  <span className="whitelist-white-txt">
+                    $ {selectedRound?.tokenPrice}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Cliff Period</span>
@@ -250,6 +259,16 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedKol(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "advisors" ? (
+                      <Countdown
+                        date={Number(selectedRound?.cliffInTimestamp)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedAdvisors(true);
                         }}
                       />
                     ) : (
@@ -387,6 +406,50 @@ const WhitelistContent = ({
                     startedVesting === false ||
                     canClaim === false ||
                     timerFinishedKol === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
+                  onClick={handleClaim}
+                >
+                  {claimLoading ? (
+                    <div
+                      class="spinner-border spinner-border-sm text-light"
+                      role="status"
+                    ></div>
+                  ) : claimStatus === "failed" ? (
+                    <>Failed</>
+                  ) : claimStatus === "success" ? (
+                    <>Success</>
+                  ) : (
+                    <>Claim</>
+                  )}
+                </button>
+              )}
+
+{isConnected &&
+              (chainId === 56 || chainId === 97) &&
+              selectedRound?.id === "advisors" && (
+                <button
+                  className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  startedVesting === false ||
+                  canClaim === false ||
+                  timerFinishedAdvisors === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                  disabled={
+                    startedVesting === false ||
+                    canClaim === false ||
+                    timerFinishedAdvisors === false ||
                     Number(wodBalance) === 0
                       ? true
                       : false

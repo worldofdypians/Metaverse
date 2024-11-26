@@ -37,6 +37,15 @@ const WhitelistHero = ({ onSelectRound }) => {
       cliffInTimestamp: "1735311206000",
       vesting: "8 Months",
     },
+    {
+      id: "advisors",
+      title: "Advisors",
+      class: activeRound === "advisors" ? "advisorsClassActive" : "advisorsClass",
+      // tokenPrice: "0.03825",
+      cliff: "9 Month",
+      cliffInTimestamp: "1756304809000",
+      vesting: "30 Months",
+    },
   ];
 
   var settings = {
@@ -45,7 +54,7 @@ const WhitelistHero = ({ onSelectRound }) => {
     dotsClass: "button__bar",
     infinite: false,
     speed: 300,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
     initialSlide: 0,
@@ -58,7 +67,7 @@ const WhitelistHero = ({ onSelectRound }) => {
       {
         breakpoint: 1600,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -66,7 +75,7 @@ const WhitelistHero = ({ onSelectRound }) => {
       {
         breakpoint: 1500,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -79,6 +88,7 @@ const WhitelistHero = ({ onSelectRound }) => {
           initialSlide: 0,
           infinite: true,
           autoplay: true,
+          dots: true,
         },
       },
       {
@@ -89,6 +99,8 @@ const WhitelistHero = ({ onSelectRound }) => {
           initialSlide: 0,
           infinite: true,
           autoplay: true,
+          dots: true,
+
         },
       },
       {
@@ -100,6 +112,8 @@ const WhitelistHero = ({ onSelectRound }) => {
           dots: false,
           infinite: true,
           autoplay: true,
+          dots: true,
+
         },
       },
     ],
@@ -126,9 +140,9 @@ const WhitelistHero = ({ onSelectRound }) => {
                 </span>
               </div>
             </div>
-            <div className="opacitywrapper-release col-lg-8 position-relative">
+            <div className="opacitywrapper-release col-lg-10 position-relative">
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                {dummyBetaPassData2.map((item, index) => (
                   <div
                     key={index}
                     onClick={() => {
