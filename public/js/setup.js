@@ -150,7 +150,13 @@ window.config = {
 
   token_lock_address: "0xB569f25C8b4a2A6713bB4E99C01B572572BA8cDd",
   wod_token_testnet_address: "0x7FcDfeCeE90c6A428FE13fE48641D58807B74873",
-  vesting_address: "0xA9EaFD6B898dfac3913B1B4bf10b7A377E34cD87",
+  vesting_address: "0xD62FC589701C1FC54675124C42fe1D7fF4e0204C",
+  private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
+  kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
+  advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
+
+
+
 
   commitmenteth_tokens: [
     {

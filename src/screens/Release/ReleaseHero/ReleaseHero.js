@@ -62,8 +62,8 @@ const ReleaseHero = ({ onSelectRound }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          infinite: true,
-          autoplay: true,
+          infinite: false,
+          autoplay: false,
         },
       },
       {
@@ -72,8 +72,8 @@ const ReleaseHero = ({ onSelectRound }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          infinite: true,
-          autoplay: true,
+          infinite: false,
+          autoplay: false,
         },
       },
       {
@@ -83,8 +83,8 @@ const ReleaseHero = ({ onSelectRound }) => {
           slidesToScroll: 1,
           initialSlide: 0,
           dots: false,
-          infinite: true,
-          autoplay: true,
+          infinite: false,
+          autoplay: false,
         },
       },
     ],
@@ -98,7 +98,7 @@ const ReleaseHero = ({ onSelectRound }) => {
     <div className="release-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
         <div className="d-flex flex-column w-100">
-          <div className="row mx-0 align-items-center justify-content-center gap-4 mt-5 mt-lg-0">
+          <div className="row flex-column mx-0 align-items-center justify-content-center gap-4 mt-5 mt-lg-0">
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-center">
                 <h6 className="market-banner-title text-center">
@@ -112,7 +112,7 @@ const ReleaseHero = ({ onSelectRound }) => {
               </div>
             </div>
             <div
-              className="opacitywrapper-release col-lg-6 position-relative"
+              className="opacitywrapper-release col-lg-3 position-relative"
        
             >
               <Slider {...settings} ref={betaSlider}>

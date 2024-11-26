@@ -218,17 +218,17 @@ const ReleaseContent = ({
               (chainId === 56 || chainId === 97) &&
               selectedRound?.id === "airdrop" && (
                 <button
-                  className={` w-100 py-2 connectbtn
+                  className={` w-100 py-2 disabled-btn2
                 
               
                 `}
                   disabled={
-                    // startedVesting === false ||
-                    // canClaim === false ||
-                    // timerFinished === false ||
-                    // Number(wodBalance) === 0
-                    //   ? true
-                    //   :
+                    startedVesting === false ||
+                    canClaim === false ||
+                    timerFinished === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      :
                     false
                   }
                   // onClick={handleClaim}

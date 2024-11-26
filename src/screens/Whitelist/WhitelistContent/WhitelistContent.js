@@ -105,19 +105,19 @@ const WhitelistContent = ({
           settimerFinished(true);
         }
       } else if (selectedRound.id == "private") {
-        if (today.getTime() > selectedRound.cliffInTimestamp) {
+        if (today.getTime() > cliffTime) {
           settimerFinishedPrivate(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedPrivate(true);
         }
       } else if (selectedRound.id == "kol") {
-        if (today.getTime() > selectedRound.cliffInTimestamp) {
+        if (today.getTime() > cliffTime) {
           settimerFinishedKol(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedKol(true);
         }
       } else if (selectedRound.id == "advisors") {
-        if (today.getTime() > selectedRound.cliffInTimestamp) {
+        if (today.getTime() > cliffTime) {
           settimerFinishedAdvisors(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedAdvisors(true);
@@ -200,28 +200,25 @@ const WhitelistContent = ({
               <div className="d-flex align-items-center gap-2 justify-content-between">
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(totalVestedTokens)
-                      : 0}
+                    { getFormattedNumber(totalVestedTokens)
+                      }
                   </span>
                   <span className="whitelist-bottom-txt">Total WOD</span>
                 </div>
 
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(userClaimedTokens, 2)
-                      : 0}
+                    { getFormattedNumber(userClaimedTokens, 2)
+                      }
                   </span>
                   <span className="whitelist-bottom-txt">WOD Withdrew</span>
                 </div>
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    {selectedRound?.id === "seed"
-                      ? getFormattedNumber(
+                    { getFormattedNumber(
                           totalVestedTokens - userClaimedTokens
                         )
-                      : 0}
+                      }
                   </span>
                   <span className="whitelist-bottom-txt">WOD Remaining</span>
                 </div>
@@ -236,7 +233,7 @@ const WhitelistContent = ({
                     Number(userClaimedTokens) > 0 &&
                     selectedRound?.id === "seed" ? (
                       <Countdown
-                        date={cliffTime}
+                        date={Number(cliffTime)}
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinished(true);
@@ -246,7 +243,7 @@ const WhitelistContent = ({
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "private" ? (
                       <Countdown
-                        date={Number(selectedRound?.cliffInTimestamp)}
+                        date={Number(cliffTime)}
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedPrivate(true);
@@ -256,7 +253,7 @@ const WhitelistContent = ({
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "kol" ? (
                       <Countdown
-                        date={Number(selectedRound?.cliffInTimestamp)}
+                        date={Number(cliffTime)}
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedKol(true);
@@ -266,7 +263,7 @@ const WhitelistContent = ({
                       Number(userClaimedTokens) > 0 &&
                       selectedRound?.id === "advisors" ? (
                       <Countdown
-                        date={Number(selectedRound?.cliffInTimestamp)}
+                        date={Number(cliffTime)}
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedAdvisors(true);

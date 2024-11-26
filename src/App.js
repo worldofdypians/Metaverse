@@ -656,112 +656,14 @@ function App() {
   const [nftPools, setnftPools] = useState([]);
   const [tokenPools, settokenPools] = useState([]);
   const [userPools, setUserPools] = useState([]);
-  const [totalDeposited1, settotalDeposited1] = useState(0);
-  const [totalDeposited2, settotalDeposited2] = useState(0);
-  const [totalDeposited3, settotalDeposited3] = useState(0);
-  const [totalDeposited4, settotalDeposited4] = useState(0);
+ 
   const [stakeCount, setstakeCount] = useState(0);
 
   const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
+ 
 
-  const getTotalDepositedPerSc = async () => {
-    const stakingSc1 = new window.bscWeb3.eth.Contract(
-      window.CONSTANT_STAKING_WOD_ABI,
-      window.constant_staking_wod1._address
-    );
-    const totaldesposited_wod1 = await stakingSc1.methods
-      .totalDeposited()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
-    const totaldesposited_wod1_formatted = new window.BigNumber(
-      totaldesposited_wod1
-    )
-      .div(1e18)
-      .toFixed(6);
-
-    settotalDeposited1(totaldesposited_wod1_formatted);
-
-    const stakingSc2 = new window.bscWeb3.eth.Contract(
-      window.CONSTANT_STAKING_WOD_ABI,
-      window.constant_staking_wod2._address
-    );
-    const totaldesposited_wod2 = await stakingSc2.methods
-      .totalDeposited()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
-    const totaldesposited_wod2_formatted = new window.BigNumber(
-      totaldesposited_wod2
-    )
-      .div(1e18)
-      .toFixed(6);
-
-    settotalDeposited2(totaldesposited_wod2_formatted);
-
-    const stakingSc3 = new window.bscWeb3.eth.Contract(
-      window.CONSTANT_STAKING_WOD_ABI,
-      window.constant_staking_wod3._address
-    );
-    const totaldesposited_wod3 = await stakingSc3.methods
-      .totalDeposited()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
-    const totaldesposited_wod3_formatted = new window.BigNumber(
-      totaldesposited_wod3
-    )
-      .div(1e18)
-      .toFixed(6);
-
-    settotalDeposited3(totaldesposited_wod3_formatted);
-
-    const stakingSc4 = new window.bscWeb3.eth.Contract(
-      window.CONSTANT_STAKING_WOD_ABI,
-      window.constant_staking_wod4._address
-    );
-    const totaldesposited_wod4 = await stakingSc4.methods
-      .totalDeposited()
-      .call()
-      .catch((e) => {
-        console.error(e);
-      });
-    const totaldesposited_wod4_formatted = new window.BigNumber(
-      totaldesposited_wod4
-    )
-      .div(1e18)
-      .toFixed(6);
-
-    settotalDeposited4(totaldesposited_wod4_formatted);
-  };
-
-  const poolcapArray = [
-    {
-      id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
-      poolCap: 13000000,
-      totaldeposited: totalDeposited1,
-    },
-    {
-      id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
-      poolCap: 12000000,
-      totaldeposited: totalDeposited2,
-    },
-    {
-      id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
-      poolCap: 20000000,
-      totaldeposited: totalDeposited3,
-    },
-    {
-      id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
-      poolCap: 9000000,
-      totaldeposited: totalDeposited4,
-    },
-  ];
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
@@ -782,6 +684,97 @@ function App() {
       bnb_result &&
       bnb_result.status === 200
     ) {
+
+      const stakingSc1 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod1._address
+      );
+      const totaldesposited_wod1 = await stakingSc1.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod1_formatted = new window.BigNumber(
+        totaldesposited_wod1
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+      const stakingSc2 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod2._address
+      );
+      const totaldesposited_wod2 = await stakingSc2.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod2_formatted = new window.BigNumber(
+        totaldesposited_wod2
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+  
+      const stakingSc3 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod3._address
+      );
+      const totaldesposited_wod3 = await stakingSc3.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod3_formatted = new window.BigNumber(
+        totaldesposited_wod3
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+  
+      const stakingSc4 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod4._address
+      );
+      const totaldesposited_wod4 = await stakingSc4.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod4_formatted = new window.BigNumber(
+        totaldesposited_wod4
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+
+        const poolcapArray = [
+          {
+            id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+            poolCap: 13000000,
+            totaldeposited: totaldesposited_wod1_formatted,
+          },
+          {
+            id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+            poolCap: 12000000,
+            totaldeposited: totaldesposited_wod2_formatted,
+          },
+          {
+            id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+            poolCap: 20000000,
+            totaldeposited: totaldesposited_wod3_formatted,
+          },
+          {
+            id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+            poolCap: 9000000,
+            totaldeposited: totaldesposited_wod4_formatted,
+          },
+        ];
+
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
       let resultWodTokenTVL = bnb_result.data.totalTVL;
 
@@ -4571,10 +4564,7 @@ function App() {
     getWodBalance(coinbase);
   }, [coinbase, isConnected, networkId]);
 
-  useEffect(() => {
-    getTotalDepositedPerSc();
-  }, [stakeCount]);
-
+ 
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
@@ -4649,7 +4639,7 @@ function App() {
 
   useEffect(() => {
     fetchEthStaking();
-  }, [totalDeposited1, totalDeposited2, totalDeposited3, totalDeposited4]);
+  }, [stakeCount]);
 
   return (
     <>

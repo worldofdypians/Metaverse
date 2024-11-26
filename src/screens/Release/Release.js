@@ -243,7 +243,7 @@ const Release = ({
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        console.log(window.getCoinbase());
+       
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -276,7 +276,7 @@ const Release = ({
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        console.log(window.getCoinbase());
+       
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -309,7 +309,7 @@ const Release = ({
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        console.log(window.getCoinbase());
+       
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -319,19 +319,19 @@ const Release = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x61")
+    await handleSwitchNetworkhook("0x38")
       .then(() => {
-        handleSwitchNetwork("97");
+        handleSwitchNetwork("56");
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
-  useEffect(() => {
-    getInfo();
-    getInfoTimer();
-  }, [coinbase]);
+  // useEffect(() => {
+  //   getInfo();
+  //   getInfoTimer();
+  // }, [coinbase]);
 
   return (
     <div className="container-fluid release-mainhero-wrapper token-wrapper px-0">
@@ -348,14 +348,14 @@ const Release = ({
           coinbase={coinbase}
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
-          wodBalance={pendingTokens}
-          userClaimedTokens={userClaimedTokens}
-          totalVestedTokens={userVestedTokens}
+          wodBalance={0}
+          userClaimedTokens={0}
+          totalVestedTokens={0}
           handleClaim={handleClaim}
           claimStatus={claimStatus}
           claimLoading={claimLoading}
-          startedVesting={startedVesting}
-          canClaim={canClaim}
+          startedVesting={false}
+          canClaim={false}
           selectedRound={selectedRound}
         />
       </div>
