@@ -11,6 +11,13 @@ const NewBuilders = () => {
       backer: true,
     },
     {
+      name: "Trust Wallet",
+      icon: "trustWallet",
+      banner: "victionBanner.png",
+      link: "https://x.com/VictionEco/status/1789987120083562640",
+      backer: true,
+    },
+    {
       name: "Matchain",
       icon: "matchainIcon",
       // banner: "bnbBanner.png",
@@ -53,6 +60,7 @@ const NewBuilders = () => {
       link: "https://twitter.com/coingecko/status/1702286607846682909",
       backer: false,
     },
+
     {
       name: "Viction",
       icon: "viction",
