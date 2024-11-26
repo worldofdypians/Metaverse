@@ -44,6 +44,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.gate.io/trade/WOD_USDT",
     },
     {
+      title: "MEXC Global",
+      logo: "mexc.svg",
+      link: "https://www.mexc.com/exchange/WOD_USDT",
+    },
+    {
       title: "",
       logo: "unknown.svg",
       // link: "https://www.gate.io/trade/WOD_USDT",
@@ -210,7 +215,7 @@ const MainHero = ({ scrollInto }) => {
           </div>
           <div className="d-flex flex-column gap-3 mb-4">
             <h6 className="mb-0 investors-title">Exchanges</h6>
-            <div className="investors-grid">
+            <div className="exchanges-grid">
               {exchanges.map((item, index) => (
                 <a
                   href={item.link}
