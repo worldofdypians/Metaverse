@@ -36,7 +36,8 @@ const EarnContent = ({
   onViewStakedOnlyPools,
   tvl,
   wodBalance,
-  userPools
+  userPools,
+  onSuccessfulStake
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -403,7 +404,7 @@ const EarnContent = ({
                           }
                           availableQuota={
                             item.type === "token"
-                              ? item.poolCap - item.tvl_usd
+                              ? item.poolCap - item.totalDeposited
                               : item.expired === "Yes"
                               ? "--"
                               : item.pair_name === "Genesis Land"
@@ -642,6 +643,7 @@ const EarnContent = ({
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
                             />
                           </div>
                         )}
@@ -671,6 +673,8 @@ const EarnContent = ({
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+
                             />
                           </div>
                         )}
@@ -700,6 +704,8 @@ const EarnContent = ({
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+
                             />
                           </div>
                         )}
@@ -729,6 +735,8 @@ const EarnContent = ({
                               handleSwitchNetwork={handleSwitchNetwork}
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+
                             />
                           </div>
                         )}

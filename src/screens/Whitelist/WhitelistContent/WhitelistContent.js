@@ -289,7 +289,7 @@ const WhitelistContent = ({
                 Connect Wallet
               </button>
             )}
-            {isConnected && chainId !== 56 && chainId !== 97 && (
+            {isConnected && chainId !== 56 && (
               <button
                 className="fail-button w-100 py-2"
                 onClick={handleSwitchChain}
@@ -298,7 +298,7 @@ const WhitelistContent = ({
               </button>
             )}
             {isConnected &&
-              (chainId === 56 || chainId === 97) &&
+              (chainId === 56 ) &&
               selectedRound?.id === "seed" && (
                 <button
                   className={` w-100 py-2
@@ -341,7 +341,7 @@ const WhitelistContent = ({
                 </button>
               )}
             {isConnected &&
-              (chainId === 56 || chainId === 97) &&
+              (chainId === 56) &&
               selectedRound?.id === "private" && (
                 <button
                   className={` w-100 py-2
@@ -385,7 +385,7 @@ const WhitelistContent = ({
               )}
 
             {isConnected &&
-              (chainId === 56 || chainId === 97) &&
+              (chainId === 56) &&
               selectedRound?.id === "kol" && (
                 <button
                   className={` w-100 py-2
@@ -429,7 +429,7 @@ const WhitelistContent = ({
               )}
 
             {isConnected &&
-              (chainId === 56 || chainId === 97) &&
+              (chainId === 56) &&
               selectedRound?.id === "advisors" && (
                 <button
                   className={` w-100 py-2

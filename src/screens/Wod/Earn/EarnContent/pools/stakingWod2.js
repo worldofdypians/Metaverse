@@ -62,6 +62,7 @@ const StakeWodDetails2 = ({
   poolCap,
   isConnected,
   start_date,
+  onSuccessfulStake
 }) => {
   let { reward_token_wod, BigNumber, alertify, reward_token_idyp, token_dyps } =
     window;
@@ -453,6 +454,7 @@ const StakeWodDetails2 = ({
         setdepositStatus("success");
         refreshBalance();
         getApprovedAmount()
+        onSuccessfulStake()
         setTimeout(() => {
           setdepositStatus("initial");
           setdepositAmount("");
@@ -481,6 +483,7 @@ const StakeWodDetails2 = ({
         setwithdrawLoading(false);
         setwithdrawStatus("success");
         refreshBalance();
+        onSuccessfulStake()
         setTimeout(() => {
           setwithdrawStatus("initial");
           setwithdrawAmount("");

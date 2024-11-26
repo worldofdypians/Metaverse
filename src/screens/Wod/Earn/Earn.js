@@ -16,7 +16,8 @@ const Earn = ({
   tvl,
   wodBalance,
   tokenPools,
-  userPools
+  userPools,
+  onSuccessfulStake
 }) => {
  
 
@@ -149,6 +150,7 @@ const Earn = ({
             tvl={tvl}
             wodBalance={wodBalance}
             userPools={userPools}
+            onSuccessfulStake={onSuccessfulStake}
           />
         </div>
       </div>

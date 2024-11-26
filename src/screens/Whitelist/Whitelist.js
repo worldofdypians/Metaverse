@@ -379,9 +379,9 @@ const Whitelist = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x61")
+    await handleSwitchNetworkhook("0x38")
       .then(() => {
-        handleSwitchNetwork("97");
+        handleSwitchNetwork("56");
       })
       .catch((e) => {
         console.log(e);
@@ -408,7 +408,7 @@ const Whitelist = ({
           coinbase={coinbase}
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
-          wodBalance={pendingTokens}
+          wodBalance={selectedRound?.id === 'seed' ? pendingTokens : 0}
           userClaimedTokens={userClaimedTokens}
           totalVestedTokens={userVestedTokens}
           handleClaim={handleClaim}
