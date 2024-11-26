@@ -2463,13 +2463,13 @@ const NewEvents = ({
                             <>
                               <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                                 <span
-                                  className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                                  className="available-day-text mb-0 text-white w-100 d-flex justify-content-center text-center"
                                   style={{
                                     fontWeight: "700",
                                     fontSize: "18px",
                                   }}
                                 >
-                                  Event Available on {activeEvent.dayTextLong}
+                                  Challenge Available on {activeEvent.dayTextLong}
                                 </span>
                               </div>
                             </>
