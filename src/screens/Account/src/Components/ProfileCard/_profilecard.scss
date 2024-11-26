@@ -897,20 +897,26 @@
 .bigTextYellow {
   color: #f3bf09;
   text-align: center;
-  font-size: 16px;
+  font-size: 25px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  @media screen and (max-width: 500px) {
+    font-size: 20px;
+  }
 }
 
 .smallTextYellow {
   color: #ffefca;
   text-align: center;
   font-family: Poppins;
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 }
 
 .rank-premium-status-wrapper {
@@ -926,7 +932,7 @@
 .rank-upgrade-status {
   color: #f7f7ff;
   font-family: Montserrat;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -936,7 +942,7 @@
 .rank-upgrade-status-bottom {
   color: #f3bf09;
   font-family: Montserrat;
-  font-size: 8px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -953,7 +959,7 @@
 .chainstatustxt {
   color: #edeeff;
   font-family: Montserrat;
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px; /* 240% */
@@ -962,7 +968,7 @@
 .startext {
   color: #ffd37e;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   // line-height: 16px; /* 160% */
@@ -1117,7 +1123,7 @@
 
 .rank-dropdown-text {
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 10px */
@@ -1126,7 +1132,7 @@
 .rank-dropdown-text-yellow {
   color: #ffd37e;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%; /* 12px */
