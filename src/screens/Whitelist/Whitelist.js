@@ -130,7 +130,6 @@ const Whitelist = ({
         });
     }
 
-    setcanClaim(Number(availableTGE) === 1 ? true : false);
     //getPendingUnlocked(address _holder) -> It will give you the pending tokens that are available to Claim;
     let tokensToClaimAmount = 0;
     if (coinbase) {
@@ -146,7 +145,7 @@ const Whitelist = ({
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
     ).toFixed(0);
-
+    setcanClaim(tokensToClaimAmount_formatted > 0);
     setpendingTokens(tokensToClaimAmount_formatted);
 
     //getTotalClaimedTokens() -> Return total WOD tokens Claimed in general by ppl;
@@ -227,23 +226,37 @@ const Whitelist = ({
     //  cliff -> Lock time until TGE release.
     //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
 
-    const amountCliffTime = await vestingSc.methods
-      .cliff()
+    // const amountCliffTime = await vestingSc.methods
+    //   .cliff()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
+
+    // const deployTime = await tokenLockSc.methods
+    //   .unlockTime()
+    //   .call()
+    //   .catch((e) => {
+    //     console.error(e);
+    //     return 0;
+    //   });
+
+    const lastClaimedTime = await vestingSc.methods
+      .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
 
-    const deployTime = await tokenLockSc.methods
-      .unlockTime()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    const today = new Date();
 
-    setcliffTime(Number(deployTime) + Number(amountCliffTime));
+    if (lastClaimedTime && Number(lastClaimedTime * 1000) > today.getTime()) {
+      setcliffTime(Number(lastClaimedTime * 1000));
+    } else {
+      setcliffTime(0);
+    }
   };
 
   const handleClaim = async () => {
@@ -255,16 +268,36 @@ const Whitelist = ({
       { from: await window.getCoinbase() }
     );
 
+    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
+    console.log("gasPrice", gasPrice);
+    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+    // const increasedGwei = parseInt(currentGwei) + 2;
+    // console.log("increasedGwei", increasedGwei);
+
+    const transactionParameters = {
+      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+    };
+
     await vestingSc.methods
       .claim()
-      .send({ from: await window.getCoinbase() })
+      .estimateGas({ from: await window.getCoinbase() })
+      .then((gas) => {
+        transactionParameters.gas = web3.utils.toHex(gas);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await vestingSc.methods
+      .claim()
+      .send({ from: await window.getCoinbase(), ...transactionParameters })
       .then(() => {
         setclaimStatus("success");
         setclaimLoading(false);
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -297,7 +330,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -330,7 +363,7 @@ const Whitelist = ({
 
         setTimeout(() => {
           setclaimStatus("initial");
-          getInfo()
+          getInfo();
         }, 5000);
       })
       .catch((e) => {
@@ -344,7 +377,6 @@ const Whitelist = ({
         }, 5000);
       });
   };
-
 
   const handleEthPool = async () => {
     await handleSwitchNetworkhook("0x61")
@@ -385,8 +417,8 @@ const Whitelist = ({
           startedVesting={startedVesting}
           canClaim={canClaim}
           selectedRound={selectedRound}
+          cliffTime={cliffTime}
         />
-      
       </div>
     </div>
   );

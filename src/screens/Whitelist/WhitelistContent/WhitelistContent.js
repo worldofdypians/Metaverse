@@ -87,6 +87,7 @@ const WhitelistContent = ({
   selectedRound,
   userClaimedTokens,
   totalVestedTokens,
+  cliffTime,
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
@@ -98,7 +99,7 @@ const WhitelistContent = ({
   useEffect(() => {
     if (selectedRound) {
       if (selectedRound.id == "seed") {
-        if (today.getTime() > selectedRound.cliffInTimestamp) {
+        if (today.getTime() > cliffTime) {
           settimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinished(true);
@@ -123,8 +124,8 @@ const WhitelistContent = ({
         }
       }
     }
-  }, [selectedRound, userClaimedTokens]);
-
+  }, [selectedRound, userClaimedTokens, cliffTime]);
+ 
   return (
     <div
       className="whitelist-ecosystem-wrapper py-5 position-relative d-flex justify-content-center align-items-center mb-5"
@@ -235,7 +236,7 @@ const WhitelistContent = ({
                     Number(userClaimedTokens) > 0 &&
                     selectedRound?.id === "seed" ? (
                       <Countdown
-                        date={Number(selectedRound?.cliffInTimestamp)}
+                        date={cliffTime}
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinished(true);
@@ -427,7 +428,7 @@ const WhitelistContent = ({
                 </button>
               )}
 
-{isConnected &&
+            {isConnected &&
               (chainId === 56 || chainId === 97) &&
               selectedRound?.id === "advisors" && (
                 <button
