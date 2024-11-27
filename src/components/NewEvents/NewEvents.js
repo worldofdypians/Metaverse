@@ -69,11 +69,35 @@ import wingStormActiveThumbMobile from "./assets/banners/wingStormActiveThumbMob
 import dragonRuinsActiveThumbMobile from "./assets/banners/dragonRuinsActiveThumbMobile.webp";
 import Slider from "react-slick";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { wodAddress } from "../../screens/Account/src/web3";
+import {
+  coldBiteAddress,
+  dragonRuinsAddress,
+  furyBeastAddress,
+  scorpionKingAddress,
+  stoneEyeAddress,
+  wingStormAddress,
+  wod_token_abi,
+} from "../../screens/Account/src/web3";
 import { WOD_ABI } from "../../screens/Account/src/web3/abis";
 import { token_abi } from "../../screens/Account/src/web3";
 import { wod_abi } from "../../screens/Account/src/web3";
 import { ethers } from "ethers";
+import {
+  COLD_BITE_ABI,
+  cold_bite_address,
+  DRAGON_RUINS_ABI,
+  dragon_ruins_address,
+  FURY_BEAST_ABI,
+  fury_beast_address,
+  SCORPION_KING_ABI,
+  scorpion_king_address,
+  STONE_EYE_ABI,
+  stone_eye_address,
+  WING_STORM_ABI,
+  wing_storm_address,
+} from "./abi";
+import Web3 from "web3";
+import { CircularProgress } from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -109,6 +133,7 @@ const NewEvents = ({
   selectedEvent,
   availableTime,
   eventCardCount,
+  wodPrice,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -247,22 +272,30 @@ const NewEvents = ({
   //DRAGON RUINS
 
   const getBundlePrizesDragon = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
 
-    const result_dragon = await dragonContract.methods
-      .getEstimatedBundleDYPAmount()
+    const result_dragon_ruins = await dragonRuinsContract.methods
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setDragonRuinsWodAmount(result_dragon / 1e18);
+    if (result_dragon_ruins) {
+      setDragonRuinsWodAmount(result_dragon_ruins / 1e18);
     }
   };
 
   const handleRefreshCountdownDragon = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
+
+    const purchaseTimestamp = await dragonRuinsContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -291,8 +324,8 @@ const NewEvents = ({
 
   const checkApprovalDragon = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, wodAddress)
+      await wod_token_abi.methods
+        .allowance(coinbase, dragonRuinsAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -314,8 +347,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(dragonRuinsAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -330,11 +363,17 @@ const NewEvents = ({
   };
 
   const handleDepositDragon = async () => {
+    let web3 = new Web3(window.ethereum);
+    const dragonRuinsContract = new web3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
+
     setDragonDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await dragonRuinsContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -353,11 +392,9 @@ const NewEvents = ({
         });
       handleRefreshCountdownDragon();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
       const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+        dragon_ruins_address,
+        DRAGON_RUINS_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -411,22 +448,30 @@ const NewEvents = ({
   //COLD BITE
 
   const getBundlePrizesBear = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const coldBiteContract = new window.bscWeb3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
 
-    const result_dragon = await dragonContract.methods
+    const result_cold_bite = await coldBiteContract.methods
       .getEstimatedBundleDYPAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setColdBiteWodAmount(result_dragon / 1e18);
+    if (result_cold_bite) {
+      setColdBiteWodAmount(result_cold_bite / 1e18);
     }
   };
 
   const handleRefreshCountdownBear = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const coldBiteContract = new window.bscWeb3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
+
+    const purchaseTimestamp = await coldBiteContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -456,7 +501,7 @@ const NewEvents = ({
   const checkApprovalBear = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await token_abi.methods
-        .allowance(coinbase, wodAddress)
+        .allowance(coinbase, coldBiteAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -478,8 +523,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(coldBiteAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -494,11 +539,16 @@ const NewEvents = ({
   };
 
   const handleDepositBear = async () => {
+    let web3 = new Web3(window.ethereum);
+    const coldBiteContract = new web3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
     setBearDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await coldBiteContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -517,11 +567,9 @@ const NewEvents = ({
         });
       handleRefreshCountdownBear();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
-      const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+      const bearsc = new ethers.Contract(
+        cold_bite_address,
+        COLD_BITE_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -550,7 +598,7 @@ const NewEvents = ({
       //   console.error(error);
       // }
 
-      const txResponse = await dragonsc
+      const txResponse = await bearsc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -573,22 +621,30 @@ const NewEvents = ({
 
   //FURY BEAST
   const getBundlePrizesBeast = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const furyBeastContract = new window.bscWeb3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
 
-    const result_dragon = await dragonContract.methods
-      .getEstimatedBundleDYPAmount()
+    const result_fury_beast = await furyBeastContract.methods
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setFuryBeastWodAmount(result_dragon / 1e18);
+    if (result_fury_beast) {
+      setFuryBeastWodAmount(result_fury_beast / 1e18);
     }
   };
 
   const handleRefreshCountdownBeast = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const furyBeastContract = new window.bscWeb3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
+
+    const purchaseTimestamp = await furyBeastContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -617,8 +673,8 @@ const NewEvents = ({
 
   const checkApprovalBeast = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, wodAddress)
+      await wod_token_abi.methods
+        .allowance(coinbase, furyBeastAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -640,8 +696,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(furyBeastAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -656,11 +712,17 @@ const NewEvents = ({
   };
 
   const handleDepositBeast = async () => {
+    let web3 = new Web3(window.ethereum);
+    const furyBeastContract = new web3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
+
     setBeastDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await furyBeastContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -679,11 +741,9 @@ const NewEvents = ({
         });
       handleRefreshCountdownBeast();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
-      const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+      const beastsc = new ethers.Contract(
+        fury_beast_address,
+        FURY_BEAST_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -712,7 +772,7 @@ const NewEvents = ({
       //   console.error(error);
       // }
 
-      const txResponse = await dragonsc
+      const txResponse = await beastsc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -736,22 +796,30 @@ const NewEvents = ({
   //WING STORM
 
   const getBundlePrizesEagle = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const wingStormContract = new window.bscWeb3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
 
-    const result_dragon = await dragonContract.methods
-      .getEstimatedBundleDYPAmount()
+    const result_wing_storm = await wingStormContract.methods
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setWingStormWodAmount(result_dragon / 1e18);
+    if (result_wing_storm) {
+      setWingStormWodAmount(result_wing_storm / 1e18);
     }
   };
 
   const handleRefreshCountdownEagle = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const wingStormContract = new window.bscWeb3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
+
+    const purchaseTimestamp = await wingStormContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -780,8 +848,8 @@ const NewEvents = ({
 
   const checkApprovalEagle = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, wodAddress)
+      await wod_token_abi.methods
+        .allowance(coinbase, wingStormAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -803,8 +871,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(wingStormAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -819,11 +887,17 @@ const NewEvents = ({
   };
 
   const handleDepositEagle = async () => {
+    let web3 = new Web3(window.ethereum);
+    const wingStormContract = new web3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
+
     setEagleDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await wingStormContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -842,11 +916,9 @@ const NewEvents = ({
         });
       handleRefreshCountdownEagle();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
-      const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+      const eaglesc = new ethers.Contract(
+        wing_storm_address,
+        WING_STORM_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -875,7 +947,7 @@ const NewEvents = ({
       //   console.error(error);
       // }
 
-      const txResponse = await dragonsc
+      const txResponse = await eaglesc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -899,22 +971,30 @@ const NewEvents = ({
   //SCORPION KING
 
   const getBundlePrizesScorpion = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const scorpionKingContract = new window.bscWeb3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
 
-    const result_dragon = await dragonContract.methods
-      .getEstimatedBundleDYPAmount()
+    const result_scorpion_king = await scorpionKingContract.methods
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setScorpionKingWodAmount(result_dragon / 1e18);
+    if (result_scorpion_king) {
+      setScorpionKingWodAmount(result_scorpion_king / 1e18);
     }
   };
 
   const handleRefreshCountdownScorpion = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const scorpionKingContract = new window.bscWeb3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
+
+    const purchaseTimestamp = await scorpionKingContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -943,8 +1023,8 @@ const NewEvents = ({
 
   const checkApprovalScorpion = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, wodAddress)
+      await wod_token_abi.methods
+        .allowance(coinbase, scorpionKingAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -966,8 +1046,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(scorpionKingAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -982,11 +1062,16 @@ const NewEvents = ({
   };
 
   const handleDepositScorpion = async () => {
+    let web3 = new Web3(window.ethereum);
+    const scorpionKingContract = new web3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
     setScorpionDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await scorpionKingContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -1007,9 +1092,9 @@ const NewEvents = ({
     } else if (window.WALLET_TYPE === "binance") {
       const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
 
-      const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+      const scorpionsc = new ethers.Contract(
+        scorpion_king_address,
+        SCORPION_KING_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -1038,7 +1123,7 @@ const NewEvents = ({
       //   console.error(error);
       // }
 
-      const txResponse = await dragonsc
+      const txResponse = await scorpionsc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -1062,22 +1147,30 @@ const NewEvents = ({
   //STONE EYE
 
   const getBundlePrizesCyclops = async () => {
-    const dragonContract = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const stoneEyeContract = new window.bscWeb3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
 
-    const result_dragon = await dragonContract.methods
-      .getEstimatedBundleDYPAmount()
+    const result_stone_eye = await stoneEyeContract.methods
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
       });
 
-    if (result_dragon) {
-      setStoneEyeWodAmount(result_dragon / 1e18);
+    if (result_stone_eye) {
+      setStoneEyeWodAmount(result_stone_eye / 1e18);
     }
   };
 
   const handleRefreshCountdownCyclops = async () => {
-    const purchaseTimestamp = await wod_abi.methods
+    const stoneEyeContract = new window.bscWeb3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
+
+    const purchaseTimestamp = await stoneEyeContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
     if (purchaseTimestamp === 0) {
@@ -1106,8 +1199,8 @@ const NewEvents = ({
 
   const checkApprovalCyclops = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
-        .allowance(coinbase, wodAddress)
+      await wod_token_abi.methods
+        .allowance(coinbase, stoneEyeAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -1129,8 +1222,8 @@ const NewEvents = ({
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
 
-    await token_abi.methods
-      .approve(wodAddress, "500000000000000000000000000")
+    await wod_token_abi.methods
+      .approve(stoneEyeAddress, "500000000000000000000000000")
       .send({ from: coinbase })
       .then(() => {
         setStatus("Succesfully approved!");
@@ -1145,11 +1238,17 @@ const NewEvents = ({
   };
 
   const handleDepositCyclops = async () => {
+    let web3 = new Web3(window.ethereum);
+    const stoneEyeContract = new web3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
+
     setCyclopsDepositState("loading-deposit");
     setStatus("Confirm to complete purchase");
     setStatusColor("#00FECF");
     if (window.WALLET_TYPE !== "binance") {
-      await wod_abi.methods
+      await stoneEyeContract.methods
         .deposit()
         .send({ from: coinbase })
         .then(() => {
@@ -1168,11 +1267,9 @@ const NewEvents = ({
         });
       handleRefreshCountdownCyclops();
     } else if (window.WALLET_TYPE === "binance") {
-      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-
-      const dragonsc = new ethers.Contract(
-        dragonRuins_address,
-        WOD_ABI,
+      const cyclopssc = new ethers.Contract(
+        stone_eye_address,
+        STONE_EYE_ABI,
         binanceW3WProvider.getSigner()
       );
       const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -1201,7 +1298,7 @@ const NewEvents = ({
       //   console.error(error);
       // }
 
-      const txResponse = await dragonsc
+      const txResponse = await cyclopssc
         .deposit({ from: coinbase, ...transactionParameters })
         .catch((e) => {
           setStatusColor("#FE7A00");
@@ -2207,7 +2304,11 @@ const NewEvents = ({
                                       </h6>
                                     </div>
                                     <span className="event-price-usd">
-                                      ($3.75)
+                                      ($
+                                      {getFormattedNumber(
+                                        activeEvent.wodAmount * wodPrice
+                                      )}
+                                      )
                                     </span>
                                   </div>
                                 </div>
@@ -2224,31 +2325,68 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          dragonBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          dragonBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !dragonShowApproval
-                                              ? handleDepositDragon()
-                                              : handleApprovalDragon();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            dragonBundleState === "deposit" ||
+                                            dragonBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!dragonShowApproval
-                                          ? "Buy"
-                                          : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            dragonBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleApprovalDragon()}
+                                        >
+                                          {dragonBundleState === "loading" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            dragonBundleState === "deposit" ||
+                                            dragonDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            dragonBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleDepositDragon()}
+                                        >
+                                          {dragonDepositState ===
+                                          "loading-deposit" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : adjustedDay === 2 ? (
@@ -2264,29 +2402,68 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          bearBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          bearBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !bearShowApproval
-                                              ? handleDepositBear()
-                                              : handleApprovalBear();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            bearBundleState === "deposit" ||
+                                            bearBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!bearShowApproval ? "Buy" : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            bearBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleApprovalBear()}
+                                        >
+                                          {bearBundleState === "loading" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            bearBundleState === "deposit" ||
+                                            bearDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            bearBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleDepositBear()}
+                                        >
+                                          {bearDepositState ===
+                                          "loading-deposit" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : adjustedDay === 3 ? (
@@ -2302,29 +2479,68 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          beastBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          beastBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !beastShowApproval
-                                              ? handleDepositBeast()
-                                              : handleApprovalBeast();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            beastBundleState === "deposit" ||
+                                            beastBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!beastShowApproval ? "Buy" : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            beastBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleApprovalBeast()}
+                                        >
+                                          {beastBundleState === "loading" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            beastBundleState === "deposit" ||
+                                            beastDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            beastBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleDepositBeast()}
+                                        >
+                                          {beastDepositState ===
+                                          "loading-deposit" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : adjustedDay === 4 ? (
@@ -2340,29 +2556,66 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          eagleBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          eagleBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !eagleShowApproval
-                                              ? handleDepositEagle()
-                                              : handleApprovalEagle();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            eagleBundleState === "deposit" ||
+                                            eagleBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!eagleShowApproval ? "Buy" : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            eagleBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleApprovalEagle()}
+                                        >
+                                          {eagleBundleState === "loading" ? (
+                                            <CircularProgress
+                                              size={20}
+                                              style={{
+                                                alignSelf: "center",
+                                                margin: "auto",
+                                              }}
+                                            />
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            eagleBundleState === "deposit" ||
+                                            eagleDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            eagleBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleDepositEagle()}
+                                        >
+                                          {eagleDepositState ===
+                                          "loading-deposit" ? (
+                                            <CircularProgress
+                                              size={20}
+                                              style={{
+                                                alignSelf: "center",
+                                                margin: "auto",
+                                              }}
+                                            />
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : adjustedDay === 6 ? (
@@ -2378,31 +2631,70 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          scorpionBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          scorpionBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !scorpionShowApproval
-                                              ? handleDepositScorpion()
-                                              : handleApprovalScorpion();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            scorpionBundleState === "deposit" ||
+                                            scorpionBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!scorpionShowApproval
-                                          ? "Buy"
-                                          : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            scorpionBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() =>
+                                            handleApprovalScorpion()
+                                          }
+                                        >
+                                          {scorpionBundleState === "loading" ? (
+                                            <CircularProgress
+                                              size={20}
+                                              style={{
+                                                alignSelf: "center",
+                                                margin: "auto",
+                                              }}
+                                            />
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            scorpionBundleState === "deposit" ||
+                                            scorpionDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            scorpionBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() =>
+                                            handleDepositScorpion()
+                                          }
+                                        >
+                                          {scorpionDepositState ===
+                                          "loading-deposit" ? (
+                                            <CircularProgress
+                                              size={20}
+                                              style={{
+                                                alignSelf: "center",
+                                                margin: "auto",
+                                              }}
+                                            />
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : adjustedDay === 0 ? (
@@ -2418,31 +2710,70 @@ const NewEvents = ({
                                         />
                                       </div>
                                     ) : (
-                                      <button
-                                        disabled={
-                                          cyclopsBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? true
-                                            : false
-                                        }
-                                        className={` ${
-                                          cyclopsBundleState === "deposit" ||
-                                          checkWallet === false
-                                            ? "stake-wod-btn-inactive"
-                                            : "stake-wod-btn"
-                                        }  py-2 px-4`}
-                                        onClick={() => {
-                                          {
-                                            !cyclopsShowApproval
-                                              ? handleDepositCyclops()
-                                              : handleApprovalCyclops();
+                                      <div className="d-flex align-items-center gap-2">
+                                        <button
+                                          disabled={
+                                            cyclopsBundleState === "deposit" ||
+                                            cyclopsBundleState === "loading" ||
+                                            checkWallet === false
+                                              ? true
+                                              : false
                                           }
-                                        }}
-                                      >
-                                        {!cyclopsShowApproval
-                                          ? "Buy"
-                                          : "Approve"}
-                                      </button>
+                                          className={` ${
+                                            cyclopsBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn"
+                                          }  py-2 px-4`}
+                                          onClick={() =>
+                                            handleApprovalCyclops()
+                                          }
+                                        >
+                                          {cyclopsBundleState === "loading" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Approve"
+                                          )}
+                                        </button>
+                                        <button
+                                          disabled={
+                                            cyclopsBundleState === "deposit" ||
+                                            cyclopsDepositState ===
+                                              "loading-deposit" ||
+                                            checkWallet === true
+                                              ? false
+                                              : true
+                                          }
+                                          className={` ${
+                                            cyclopsBundleState === "deposit" ||
+                                            checkWallet === false
+                                              ? "stake-wod-btn"
+                                              : "stake-wod-btn-inactive d-none"
+                                          }  py-2 px-4`}
+                                          onClick={() => handleDepositCyclops()}
+                                        >
+                                          {cyclopsDepositState ===
+                                          "loading-deposit" ? (
+                                            <div
+                                              class="spinner-border spinner-border-sm text-light"
+                                              role="status"
+                                            >
+                                              <span class="visually-hidden">
+                                                Loading...
+                                              </span>
+                                            </div>
+                                          ) : (
+                                            "Buy"
+                                          )}
+                                        </button>
+                                      </div>
                                     )}
                                   </>
                                 ) : (
@@ -2469,7 +2800,8 @@ const NewEvents = ({
                                     fontSize: "18px",
                                   }}
                                 >
-                                  Challenge Available on {activeEvent.dayTextLong}
+                                  Challenge Available on{" "}
+                                  {activeEvent.dayTextLong}
                                 </span>
                               </div>
                             </>

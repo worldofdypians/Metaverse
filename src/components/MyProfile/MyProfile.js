@@ -141,6 +141,13 @@ const renderer3 = ({ days, hours }) => {
     </span>
   );
 };
+const renderer4 = ({ hours, minutes }) => {
+  return (
+    <span className="beast-siege-timer">
+      {hours}H:{minutes}M
+    </span>
+  );
+};
 
 const MyProfile = ({
   canBuy,
@@ -202,6 +209,10 @@ const MyProfile = ({
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
   const utcDayIndex = new Date().getUTCDay();
+
+
+
+
 
   const dailyEvents = [
     {
@@ -576,7 +587,10 @@ const MyProfile = ({
                     <div className="d-flex flex-column">
                       <div className="d-flex">
                         <span className="user-data-item-right">
-                        {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
+                          {getFormattedNumber(
+                            userDataStar.statValue ?? "---",
+                            0
+                          )}
                         </span>
                       </div>
                       <span className="user-data-item-left">Stars</span>
@@ -1062,7 +1076,7 @@ const MyProfile = ({
                   <div className="d-flex flex-column">
                     <h6
                       className="special-rewards-total mb-0"
-                      style={{ color: isPremium ? '#F3BF09' : "#FFE8D2" }}
+                      style={{ color: isPremium ? "#F3BF09" : "#FFE8D2" }}
                     >
                       $
                       {getFormattedNumber(
@@ -1106,15 +1120,16 @@ const MyProfile = ({
                           style={{ width: 44, height: 44 }}
                         />
                         <div className="d-flex flex-column">
-                        <span
-                          className="user-blue-rank"
-                          style={{ color: isPremium ? "#F3BF09" : "" }}
-                        >
-                          {!isPremium ? "Upgrade Status" : "Prime Enabled"}
-                        </span>
-                        <span className="user-rank-text">
-                          {!isPremium ? "Prime" : ""}
-                        </span></div>
+                          <span
+                            className="user-blue-rank"
+                            style={{ color: isPremium ? "#F3BF09" : "" }}
+                          >
+                            {!isPremium ? "Upgrade Status" : "Prime Enabled"}
+                          </span>
+                          <span className="user-rank-text">
+                            {!isPremium ? "Prime" : ""}
+                          </span>
+                        </div>
                       </div>
                       {!isPremium ? (
                         <NavLink
@@ -1200,14 +1215,19 @@ const MyProfile = ({
                         >
                           {dailyEvents[utcDayIndex].title}
                         </span>
-                        <span
+                        {/* <span
                           className={`utcEventContent`}
                           style={{
                             color: dailyEvents[utcDayIndex].contentColor,
                           }}
                         >
                           Coming Soon
-                        </span>
+                        </span> */}
+                       <div className="d-flex flex-column gap-1">
+                       <span className="beast-siege-ends-in">Ends in:</span>
+                       <Countdown renderer={renderer4} date={midnight} />
+                       </div>
+                        
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}

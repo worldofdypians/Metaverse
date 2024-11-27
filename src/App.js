@@ -451,7 +451,7 @@ function App() {
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
-
+  const [wodPrice, setWodPrice] = useState(0);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -1402,6 +1402,14 @@ function App() {
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
   };
+
+  const fetchWodPrice = async () => {
+    await axios.get(`https://pro-api.coingecko.com/api/v3/simple/price?ids=world-of-dypians&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`).then((res) => {
+      if (res.data["world-of-dypians"] && res.data["world-of-dypians"] !== NaN) {
+        setWodPrice(res.data["world-of-dypians"].usd);
+      }
+    })
+  }
 
   const fetchDogeCoinPrice = async () => {
     await axios
@@ -4463,6 +4471,7 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
+    fetchWodPrice();
     fetchCawsNfts();
     fetchLandNfts();
     fetchTimepieceNfts();
@@ -4743,6 +4752,7 @@ function App() {
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
+                wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
@@ -4805,6 +4815,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
@@ -5530,6 +5541,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);

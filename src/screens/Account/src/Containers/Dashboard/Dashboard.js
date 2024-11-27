@@ -49,7 +49,7 @@ import {
   dyp700Address,
   dyp700v1Address,
   idyp3500Address,
-  wodAddress,
+  dragonRuinsAddress,
 } from "../../web3";
 import { NavLink, useLocation } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
@@ -172,6 +172,7 @@ function Dashboard({
   authToken,
   matEarnUsd,
   wodBalance,
+  wodPrice,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -5155,7 +5156,7 @@ function Dashboard({
       DYP_700V1_ABI,
       dyp700v1Address
     );
-    const dragonsc = new window.bscWeb3.eth.Contract(WOD_ABI, wodAddress);
+    const dragonsc = new window.bscWeb3.eth.Contract(WOD_ABI, dragonRuinsAddress);
     const remainingTime = await dragonsc.methods
       .getTimeOfExpireBuff(coinbase)
       .call();
@@ -10100,6 +10101,7 @@ function Dashboard({
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
               chainId={chainId}
+              wodPrice={wodPrice}
               binanceW3WProvider={binanceW3WProvider}
               selectedEvent={eventId}
               eventCardCount={eventCardCount}
