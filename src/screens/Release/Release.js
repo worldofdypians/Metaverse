@@ -6,7 +6,7 @@ import Web3 from "web3";
 // import wallet from "../FARMINNG/assets/wallet.svg";
 import moment from "moment";
 import axios from "axios";
-import { TOKEN_LOCK_ABI, VESTING_ABI } from "./abis";
+import { TOKEN_LOCK_ABI, IDO_ABI } from "./abis";
 import Countdown from "react-countdown";
 import ReleaseHero from "./ReleaseHero/ReleaseHero";
 import ReleaseContent from "./ReleaseContent/ReleaseContent";
@@ -31,7 +31,6 @@ const Release = ({
   hasDypBalance,
   hasiDypBalance,
 }) => {
-   
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
@@ -41,7 +40,6 @@ const Release = ({
   const [pendingTokensIDO, setpendingTokensIDO] = useState(0);
   const [userClaimedTokensIDO, setuserClaimedTokensIDO] = useState(0);
   const [userVestedTokensIDO, setuserVestedTokensPrivate] = useState(0);
- 
 
   const [startedVesting, setstartedVesting] = useState(false);
   const [canClaim, setcanClaim] = useState(false);
@@ -54,34 +52,12 @@ const Release = ({
 
   const poolCap = 20000;
 
- 
-
   const getInfo = async () => {
-    const vestingSc = new window.bscTestWeb3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address
+    const vestingSc = new window.bscWeb3.eth.Contract(
+      IDO_ABI,
+      window.config.ido_address
     );
 
-    //  releaseProcent -> Procent (%) of the Amount Vested which will be available at TGE -> after 'cliff' has passed;
-    const releaseProcent = await vestingSc.methods
-      .releaseProcent()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    setreleaseProcent(releaseProcent / 100);
-
-    const isstartVesting = await vestingSc.methods
-      .startVesting()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    setstartedVesting(isstartVesting);
     //lockDuration -> Vesting period, this will start and release tokens, once 'cliff' has passed;
     // const lockDuration = await vestingSc.methods
     //   .lockDuration()
@@ -103,7 +79,8 @@ const Release = ({
         });
     }
 
-    setcanClaim(Number(availableTGE) === 1 ? true : false);
+    setcanClaim(Number(availableTGE) === 1);
+
     //getPendingUnlocked(address _holder) -> It will give you the pending tokens that are available to Claim;
     let tokensToClaimAmount = 0;
     if (coinbase) {
@@ -119,7 +96,7 @@ const Release = ({
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
     ).toFixed(0);
-
+    setcanClaim(tokensToClaimAmount_formatted > 0);
     setpendingTokens(tokensToClaimAmount_formatted);
 
     //getTotalClaimedTokens() -> Return total WOD tokens Claimed in general by ppl;
@@ -188,82 +165,64 @@ const Release = ({
   };
 
   const getInfoTimer = async () => {
-    const vestingSc = new window.bscTestWeb3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address
+    const vestingSc = new window.bscWeb3.eth.Contract(
+      IDO_ABI,
+      window.config.ido_address
     );
 
-    const tokenLockSc = new window.bscTestWeb3.eth.Contract(
-      TOKEN_LOCK_ABI,
-      window.config.token_lock_address
-    );
     //  cliff -> Lock time until TGE release.
     //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
 
-    const amountCliffTime = await vestingSc.methods
-      .cliff()
+    const lastClaimedTime = await vestingSc.methods
+      .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
 
-    const deployTime = await tokenLockSc.methods
-      .unlockTime()
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
+    const today = new Date();
 
-    setcliffTime(Number(deployTime) + Number(amountCliffTime));
+    if (lastClaimedTime && Number(lastClaimedTime * 1000) > today.getTime()) {
+      setcliffTime(Number(lastClaimedTime * 1000));
+    } else {
+      setcliffTime(0);
+    }
   };
 
   const handleClaim = async () => {
+    console.log("seed");
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
     const vestingSc = new web3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address,
+      IDO_ABI,
+      window.config.ido_address,
       { from: await window.getCoinbase() }
     );
 
+    const gasPrice = await window.bscWeb3.eth.getGasPrice();
+    console.log("gasPrice", gasPrice);
+    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+    // const increasedGwei = parseInt(currentGwei) + 2;
+    // console.log("increasedGwei", increasedGwei);
+
+    const transactionParameters = {
+      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+    };
+
     await vestingSc.methods
       .claim()
-      .send({ from: await window.getCoinbase() })
-      .then(() => {
-        setclaimStatus("success");
-        setclaimLoading(false);
-
-        setTimeout(() => {
-          setclaimStatus("initial");
-          getInfo();
-        }, 5000);
+      .estimateGas({ from: await window.getCoinbase() })
+      .then((gas) => {
+        transactionParameters.gas = web3.utils.toHex(gas);
       })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
-       
-        setclaimStatus("failed");
-        setclaimLoading(false);
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
+      .catch(function (error) {
+        console.log(error);
       });
-  };
-
-  const handleClaimIDO = async () => {
-    setclaimLoading(true);
-    let web3 = new Web3(window.ethereum);
-    const vestingSc = new web3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address,
-      { from: await window.getCoinbase() }
-    );
 
     await vestingSc.methods
       .claim()
-      .send({ from: await window.getCoinbase() })
+      .send({ from: await window.getCoinbase(), ...transactionParameters })
       .then(() => {
         setclaimStatus("success");
         setclaimLoading(false);
@@ -271,45 +230,13 @@ const Release = ({
         setTimeout(() => {
           setclaimStatus("initial");
           getInfo();
+          getInfoTimer();
         }, 5000);
       })
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-       
-        setclaimStatus("failed");
-        setclaimLoading(false);
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
-      });
-  };
 
-  const handleRefund = async () => {
-    setclaimLoading(true);
-    let web3 = new Web3(window.ethereum);
-    const vestingSc = new web3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address,
-      { from: await window.getCoinbase() }
-    );
-
-    await vestingSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase() })
-      .then(() => {
-        setclaimStatus("success");
-        setclaimLoading(false);
-
-        setTimeout(() => {
-          setclaimStatus("initial");
-          getInfo();
-        }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
-       
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -348,15 +275,20 @@ const Release = ({
           coinbase={coinbase}
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
-          wodBalance={0}
-          userClaimedTokens={0}
-          totalVestedTokens={0}
-          handleClaim={handleClaim}
-          claimStatus={claimStatus}
-          claimLoading={claimLoading}
-          startedVesting={false}
-          canClaim={false}
+          wodBalance={selectedRound?.id === "ido" ? pendingTokens : 0}
+          userClaimedTokens={
+            selectedRound?.id === "ido" ? userClaimedTokens : 0
+          }
+          totalVestedTokens={selectedRound?.id === "ido" ? userVestedTokens : 0}
+          handleClaim={() => {
+            selectedRound?.id === "ido" ? handleClaim() : console.log("");
+          }}
+          claimStatus={selectedRound?.id === "ido" ? claimStatus : "initial"}
+          claimLoading={selectedRound?.id === "ido" ? claimLoading : false}
+          startedVesting={selectedRound?.id === "ido" ? startedVesting : false}
+          canClaim={selectedRound?.id === "ido" ? canClaim : false}
           selectedRound={selectedRound}
+          cliffTime={cliffTime}
         />
       </div>
     </div>
