@@ -1,0 +1,327 @@
+.release-ecosystem-wrapper {
+  background: #14153f;
+}
+
+.release-token-wrapper {
+  background: linear-gradient(
+    148deg,
+    rgba(170, 20, 240, 0.1) 0%,
+    rgba(170, 20, 240, 0.05) 100%
+  );
+  border-radius: 12px;
+}
+
+.release-btn-inactive {
+  border-radius: 10px;
+  background: linear-gradient(90deg, #d4cde3 0.23%, #bcadc7 99.72%);
+  border: none;
+  color: #464555;
+  text-align: center;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  transition: all 0.25s;
+}
+
+.release-btn-inactive:hover {
+  background: linear-gradient(240deg, #7b2eb0 0%, #2647c9 100%);
+  color: #eeedff;
+}
+
+.release-btn-active {
+  border-radius: 10px;
+  background: linear-gradient(240deg, #7b2eb0 0%, #2647c9 100%);
+  border: none;
+  color: #eeedff;
+  text-align: center;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.release-wallet-btn {
+  border-radius: 10px;
+  background: none !important;
+  border: none;
+  color: #eeedff;
+  text-align: center;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  border: 2px solid #7b2eb0;
+}
+
+.release-balance-wrapper {
+  background: #2f0b5c;
+  border-radius: 10px;
+}
+
+.user-release-balance {
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  font-family: "Montserrat";
+  font-weight: 500;
+}
+
+.pool-release-balance {
+  color: #fff;
+  font-size: 16px;
+  line-height: 18px;
+  font-family: "Montserrat";
+  font-weight: 600;
+}
+
+.max-deposit-btn {
+  font-size: 14px;
+  font-family: "Montserrat";
+  background: #272450;
+  border-radius: 8px;
+  border: 1px solid #aaa5eb;
+  color: #fff;
+  height: 37px;
+  transition: all 0.25s;
+}
+
+.max-deposit-btn:hover {
+  background: #aaa5eb;
+}
+
+.release-guide-title {
+  color: #f7f7fc;
+  font-size: 20px;
+  font-style: normal;
+  font-family: "Montserrat";
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.release-divider {
+  background: #ffffff;
+  border-radius: 50px;
+  height: 1px;
+  opacity: 1 !important;
+}
+
+.release-guide-pointer-active {
+  min-width: 30px;
+  min-height: 30px;
+  background-color: #48b4bd !important;
+  border-radius: 50%;
+  background: url("../../../assets/bridgeAssets/greendot.svg");
+}
+.release-guide-pointer-inactive {
+  min-width: 30px;
+  min-height: 30px;
+  background: #565891 !important;
+  border-radius: 50%;
+}
+
+.release-guide-item-title {
+  color: #f7f7fc;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  font-family: "Montserrat";
+}
+
+.release-guide-desc {
+  color: #c0cbf7;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  font-family: "Montserrat";
+}
+
+.new-release-wrapper {
+  border-radius: 12px;
+  border: 0.5px solid #c0c9ff;
+  background: #12133f;
+  box-shadow: 0px 32px 64px 0px rgba(17, 17, 17, 0.12);
+  width: 480px;
+
+  @media screen and (max-width: 520px) {
+    width: 100%;
+  }
+}
+
+
+.release-input-wrapper {
+  border-radius: 8px;
+  background: #262859;
+}
+
+.release-input-upper-wrapper {
+  border-radius: 8px;
+  background: #2d3065;
+}
+
+.release-wod-title {
+  color: #f7f7fc;
+  font-family: "Poppins";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.396px;
+}
+
+.release-network-wrapper {
+  border-left: 2px solid #12133f;
+}
+
+.release-network-span {
+  color: #c0c9ff;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.216px;
+}
+
+.release-network-title {
+  color: #f7f7fc;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.36px;
+  @media screen and (max-width: 520px) {
+    font-size: 16px;
+  }
+}
+
+.release-max-btn {
+  border-radius: 8px;
+  border: 1px solid #7770e0;
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  background: transparent;
+}
+
+.release-amount-input {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px; /* 118.182% */
+  letter-spacing: -0.396px;
+  width: 50%;
+}
+
+.release-amount-input:focus-visible {
+  border: none !important;
+  outline: none;
+}
+
+.release-amount-input::placeholder {
+  color: #c0c9ff;
+  font-family: "Poppins";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: -0.396px;
+}
+
+.release-balance-txt {
+  color: #c0c9ff;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.release-balance-span {
+  color: #c0c9ff;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.release-balance-amount {
+  color: #00e5ff;
+  font-family: "Poppins";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.release-upper-txt {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.release-bottom-txt {
+  color: #c0c9ff;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.release-timer-txt {
+  color: #c0c9ff;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.release-timer {
+  color: #f3bf09;
+  text-align: right;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.release-green-txt {
+  color: #00e5ff;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.252px;
+}
+
+.release-white-txt {
+  color: #fff;
+  font-family: Poppins;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

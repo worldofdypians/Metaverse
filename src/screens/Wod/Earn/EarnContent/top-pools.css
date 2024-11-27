@@ -71,6 +71,18 @@
  border-bottom: none;
 }
 
+
+.pools-card-staked {
+  /* border: 2px solid #00b7cc; */
+  background-image: url("../assets/toppools-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+  /* border: 2px solid #00b7cc; */
+ border-bottom: none;
+}
+
 .accHeaderBorder {
   border: 2px solid #00b7cc;
   border-top: none;
@@ -260,7 +272,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  width: 65px;
+  width: 50px;
 }
 
 .new-pool2 {
