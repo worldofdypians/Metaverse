@@ -154,6 +154,7 @@ window.config = {
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
+  ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
 
 
 

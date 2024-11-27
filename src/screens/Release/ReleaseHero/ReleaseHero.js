@@ -15,13 +15,13 @@ const ReleaseHero = ({ onSelectRound }) => {
       title: "Campaign Airdrop",
       class: activeRound === "airdrop" ? "airdropClassActive" : "airdropClass",
     },
-    // {
-    //   id: "ido",
-    //   title: "IDO",
-    //   class: activeRound === "ido" ? "idoClassActive" : "idoClass",
-    //   tokenPrice: "0.0425",
-    //   vesting: "6 Months",
-    // },
+    {
+      id: "ido",
+      title: "IDO",
+      class: activeRound === "ido" ? "idoClassActive" : "idoClass",
+      tokenPrice: "0.0425",
+      vesting: "6 Months",
+    },
   ];
 
   var settings = {
@@ -30,7 +30,7 @@ const ReleaseHero = ({ onSelectRound }) => {
     dotsClass: "button__bar",
     infinite: false,
     speed: 300,
-    slidesToShow: 1,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: false,
     initialSlide: 0,
@@ -43,7 +43,7 @@ const ReleaseHero = ({ onSelectRound }) => {
       {
         breakpoint: 1600,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -51,7 +51,7 @@ const ReleaseHero = ({ onSelectRound }) => {
       {
         breakpoint: 1500,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -59,7 +59,7 @@ const ReleaseHero = ({ onSelectRound }) => {
       {
         breakpoint: 1400,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
           infinite: false,
@@ -69,7 +69,7 @@ const ReleaseHero = ({ onSelectRound }) => {
       {
         breakpoint: 1050,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 0,
           infinite: false,
@@ -82,8 +82,8 @@ const ReleaseHero = ({ onSelectRound }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: false,
-          infinite: false,
+          dots: true,
+          infinite: true,
           autoplay: false,
         },
       },
@@ -112,11 +112,11 @@ const ReleaseHero = ({ onSelectRound }) => {
               </div>
             </div>
             <div
-              className="opacitywrapper-release col-lg-3 position-relative"
+              className="opacitywrapper-release col-lg-6 position-relative"
        
             >
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.slice(0, 4).map((item, index) => (
+                {dummyBetaPassData2.slice(0, 2).map((item, index) => (
                   <div
                     key={index}
                     onClick={() => {
