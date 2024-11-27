@@ -1,0 +1,90 @@
+.release-mainhero-wrapper {
+  min-height: 65vh !important;
+  background-image: url("../assets/releaseBg.webp") !important;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-bottom: none !important;
+  @media only screen and (max-width: 991px) {
+    min-height: auto !important;
+  }
+
+
+
+  // @media only screen and (max-width: 450px) {
+  //   background-image: linear-gradient(
+  //       180deg,
+  //       #080b2a 0%,
+  //       rgba(8, 11, 42, 0.6) 100%
+  //     ),
+  //     url("../../../../assets/bridgeAssets/whitelistBgMobile.webp") !important;
+  //   background-position: center -150px;
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+  // }
+}
+
+.release-hero-wrapper {
+  margin-top: 150px;
+  margin-bottom: 50px;
+  @media screen and (max-width: 786px) {
+    margin-top: 40px;
+  }
+}
+.opacitywrapper-release {
+  border-radius: 15px;
+  padding: 0px; 
+  cursor: pointer;
+  position: absolute;
+  z-index: 5; 
+  bottom: 1%;
+  // width: 100%;
+  // left: 50%;
+  // transform: translate(-50%, 0);
+}
+
+.airdropClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../assets/airdropInactive.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.airdropClassActive,
+.airdropClass:hover {
+  border-radius: 10px;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../assets/airdropActive.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid #f3bf09;
+}
+
+.idoClass {
+  border-radius: 10px;
+  border: 1px solid #b8b8e0;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../assets/idoInactive.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.idoClassActive,
+.idoClass:hover {
+  border-radius: 10px;
+  backdrop-filter: blur(12.5px);
+  min-height: 160px;
+  background: url(../assets/idoActive.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid #f3bf09;
+}

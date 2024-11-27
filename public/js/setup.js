@@ -93,6 +93,8 @@ window.config = {
   infura_endpoint:
     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e",
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
+  bsc_testnet_endpoint: "https://bsc-testnet-rpc.publicnode.com",
+
   manta_endpoint: "https://pacific-rpc.manta.network/http",
   taiko_endpoint: "https://rpc.taiko.xyz",
 
@@ -145,6 +147,30 @@ window.config = {
   metamask_message: "I want to login, let me in!",
   metamask_message2: "I want to login to DYP TOOLS, let me in!",
   metamask_admin_account: "0x471ad9812b2537ffc66eba4d474cc55c32dec4f8",
+
+  token_lock_address: "0xB569f25C8b4a2A6713bB4E99C01B572572BA8cDd",
+  wod_token_testnet_address: "0x7FcDfeCeE90c6A428FE13fE48641D58807B74873",
+  vesting_address: "0xD62FC589701C1FC54675124C42fe1D7fF4e0204C",
+  private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
+  kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
+  advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
+  ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
+
+
+
+
+  commitmenteth_tokens: [
+    {
+      symbol: "USDT",
+      decimals: 6,
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    },
+    {
+      symbol: "USDC",
+      decimals: 6,
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    },
+  ],
 
   // add supported subscription tokens here, lowercase
   // THESE TOKENS MUST HAVE BEEN ALREADY ADDED TO SMART CONTRACT!
@@ -331,12 +357,20 @@ window.config = {
 
   /*WOD Stake Contracts*/
   constant_staking_wod_address: "0x998A9F0DF7DAF20c2B0Bb379Dcae394636926a96",
+
+  constant_staking_wod1_address: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+  constant_staking_wod2_address: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+  constant_staking_wod3_address: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+  constant_staking_wod4_address: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   USDC_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
 window.bscWeb3 = new Web3(window.config.bsc_endpoint);
+window.bscTestWeb3 = new Web3(window.config.bsc_testnet_endpoint);
+
 window.mantaWeb3 = new Web3(window.config.manta_endpoint);
 window.taikoWeb3 = new Web3(window.config.taiko_endpoint);
 window.skaleWeb3 = new Web3(window.config.skale_endpoint);
@@ -353,7 +387,12 @@ window.victionWeb3 = new Web3(window.config.viction_endpoint);
 window.seiWeb3 = new Web3(window.config.sei_endpoint);
 
 window.REWARD_TOKEN_WOD_ABI = window.TOKEN_ABI;
-window.CONSTANT_STAKING_WOD_ABI = window.CONSTANT_STAKING_DYPIUS_ABI;
+window.CONSTANT_STAKING_WOD_ABI = window.CONSTANT_STAKING_WOD_ABI;
+
+window.CONSTANT_STAKING_WOD1_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD2_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD3_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD4_ABI = window.CONSTANT_STAKING_WOD_ABI;
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -459,7 +498,7 @@ class CONSTANT_STAKING_WOD {
       this[fn_name] = async function (...args) {
         window.web3 = new Web3(window.ethereum);
         let contract = new window.web3.eth.Contract(
-          window.CONSTANT_STAKING_DYPIUS_ABI,
+          window.CONSTANT_STAKING_WOD_ABI,
           address
         );
         // getContract({ key: this.ticker });
@@ -472,7 +511,7 @@ class CONSTANT_STAKING_WOD {
         this[fn_name] = async function (...args) {
           // let contract = await getContract({ key: this.ticker });
           let contract = new window.web3.eth.Contract(
-            window.CONSTANT_STAKING_DYPIUS_ABI,
+            window.CONSTANT_STAKING_WOD_ABI,
             address
           );
 
@@ -532,6 +571,11 @@ class CONSTANT_STAKING_WOD {
 
 window.reward_token_wod = new TOKEN("REWARD_TOKEN_WOD");
 window.constant_staking_wod = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD");
+window.constant_staking_wod1 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD1");
+window.constant_staking_wod2 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD2");
+window.constant_staking_wod3 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD3");
+window.constant_staking_wod4 = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD4");
+
 
 /**
  *
@@ -3832,7 +3876,355 @@ async function myNftList(address) {
   });
 }
 
-window.CONSTANT_STAKING_DYPIUS_ABI = [
+window.TOKEN_LOCK_ABI = [
+  {
+    inputs: [
+      { internalType: "uint256", name: "initialUnlockTime", type: "uint256" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "MAX_EXTENSION_ALLOWED",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "claim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "claimLegacyToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claimOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "extendedUnlockTimestamp",
+        type: "uint256",
+      },
+    ],
+    name: "extendLock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isOwner",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isUnlocked",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pendingOwner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "unlockTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
+window.WOD_TOKEN_TESTNET_ABI = [
+  {
+    inputs: [
+      { internalType: "uint256", name: "MAX_SUPPLY_TOKEN", type: "uint256" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "allowance", type: "uint256" },
+      { internalType: "uint256", name: "needed", type: "uint256" },
+    ],
+    name: "ERC20InsufficientAllowance",
+    type: "error",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "sender", type: "address" },
+      { internalType: "uint256", name: "balance", type: "uint256" },
+      { internalType: "uint256", name: "needed", type: "uint256" },
+    ],
+    name: "ERC20InsufficientBalance",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "approver", type: "address" }],
+    name: "ERC20InvalidApprover",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "receiver", type: "address" }],
+    name: "ERC20InvalidReceiver",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "sender", type: "address" }],
+    name: "ERC20InvalidSender",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "spender", type: "address" }],
+    name: "ERC20InvalidSpender",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "MAX_SUPPLY",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+    ],
+    name: "allowance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "value", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "tokenLockAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "value", type: "uint256" },
+    ],
+    name: "transfer",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "value", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.CONSTANT_STAKING_WOD_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
@@ -31213,6 +31605,19 @@ function wait(ms) {
   );
 }
 
+
+const checkapproveStakePool = async (useraddr, tokenaddr, stakingaddr) => {
+  window.web3 = new Web3(window.ethereum);
+  let token_contract = new window.web3.eth.Contract(
+    window.TOKEN_ABI,
+    tokenaddr
+  );
+
+  return await token_contract.methods.allowance(useraddr, stakingaddr).call();
+};
+
+window.checkapproveStakePool = checkapproveStakePool;
+
 async function getTokenHolderBalance(token, holder) {
   let tokenContract = await getContract({ address: token, ABI: ERC20_ABI });
   if (tokenContract) {
@@ -31604,7 +32009,11 @@ Object.keys(window.config)
     (k) =>
       k.startsWith("token_") ||
       k.startsWith("reward_token_wod") ||
-      k.startsWith("constant_staking_wod")
+      k.startsWith("constant_staking_wod")  ||
+      k.startsWith("constant_staking_wod1") ||
+      k.startsWith("constant_staking_wod2") ||
+      k.startsWith("constant_staking_wod3") ||
+      k.startsWith("constant_staking_wod4")
   )
   .forEach((k) => {
     window[k.replace("_address", "_ABI").toUpperCase()] = k.startsWith("token_")
@@ -31614,6 +32023,14 @@ Object.keys(window.config)
       : k.startsWith("reward_token_wod")
       ? window.TOKEN_ABI
       : k.startsWith("constant_staking_wod")
-      ? window.CONSTANT_STAKING_DYPIUS_ABI
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod1")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod2")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod3")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod4")
+      ? window.CONSTANT_STAKING_WOD_ABI
       : window.TOKEN_ABI;
   });

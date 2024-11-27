@@ -24,7 +24,7 @@ import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
-
+import opensea from '../../assets/opensea.svg'
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
@@ -2558,14 +2558,35 @@ const NewEvents = ({
                             <span className="purchase-chain">BNB Chain</span>
                           </div> */}
                         </div>
-                        <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                          <span
-                            className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                            style={{ fontWeight: "700", fontSize: "18px" }}
-                          >
-                            Event Coming Soon
-                          </span>
-                        </div>
+                        {activeEvent?.id === "critical" ? (
+                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
+                                <NavLink
+                                  to={"/shop/land"}
+                                  className="getpremium-btn col-lg-4 py-2"
+                                >
+                                  Buy on Shop
+                                </NavLink>
+                                <NavLink
+                                  to={
+                                    "https://opensea.io/collection/worldofdypians"
+                                  }
+                                  target="_blank"
+                                  className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                                >
+                                  <img src={opensea} alt="" />
+                                  Buy on Opensea
+                                </NavLink>
+                              </div>
+                            ) : (
+                             <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                               <span
+                                className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                                style={{ fontWeight: "700", fontSize: "18px" }}
+                              >
+                                Event Coming Soon
+                              </span>
+                             </div>
+                            )}
                         {eventId === "golden-pass" &&
                           availableTime !== 0 &&
                           availableTime !== undefined && (

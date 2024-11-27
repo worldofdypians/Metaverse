@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./_videowrapper.scss";
 import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import epicwhite from "../../../assets/epicwhite.svg";
 import epicblack from "../../../assets/epicblack.svg";
 import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
@@ -38,6 +38,14 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import axios from "axios";
 import wodToken from "../../../assets/wodAssets/wodToken.svg";
 import Countdown from "react-countdown";
+import gate from './assets/buyWodAssets/gate.svg'
+import kucoin from './assets/buyWodAssets/kucoin.svg'
+import mexc from './assets/buyWodAssets/mexc.svg'
+import pancakeSwap from './assets/buyWodAssets/pancakeSwap.svg'
+import trustWallet from './assets/buyWodAssets/trustWallet.svg'
+import xMarkBuyWod from './assets/buyWodAssets/xMark.svg'
+import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
+import { set } from "lodash";
 
 
 
@@ -79,6 +87,7 @@ const VideoWrapper = ({
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
   const [hoverState, setHoverState] = useState(false);
+  const [buyWodPopup, setBuyWodPopup] = useState(false);
 
   const downloader = useRef();
   const windowSize = useWindowSize();
@@ -89,11 +98,47 @@ const VideoWrapper = ({
     setIcons(false);
   });
 
+
+  const location = useLocation();
+
   const reqmodal = document.querySelector("#reqmodal");
   const html = document.querySelector("html");
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
-  let releaseDate = new Date("2024-11-27T12:00:00.000+00:00");
+  let releaseDate = new Date("2024-11-27T11:00:00.000+00:00");
+
+
+  console.log(window.location.hash);
+  
+
+
+  const exchanges = [
+    {
+      title: "Kucoin",
+      logo: "kucoin.svg",
+      link: "https://www.kucoin.com/trade/WOD-USDT",
+    },
+    {
+      title: "Gate.io",
+      logo: "gate.svg",
+      link: "https://www.gate.io/trade/WOD_USDT",
+    },
+    {
+      title: "MEXC Global",
+      logo: "mexc.svg",
+      link: "https://www.mexc.com/exchange/WOD_USDT",
+    },
+    {
+      title: "PancakeSwap",
+      logo: "pancakeSwap.svg",
+      link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
+    },
+    {
+      title: "TrustWallet",
+      logo: "trustWallet.svg",
+      link: "https://short.trustwallet.com/app-download",
+    },
+  ];
 
 
   const dummyBetaPassData2 = [
@@ -190,12 +235,22 @@ const VideoWrapper = ({
   };
 
   useEffect(() => {
-    if (modal === true) {
+    if (modal === true || buyWodPopup === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [modal]);
+  }, [modal, buyWodPopup]);
+
+
+
+  useEffect(() => {
+  if(window.location.hash === "#buy-wod"){
+    setBuyWodPopup(true);
+  }
+  }, [])
+  
+
 
   return (
     <>
@@ -205,19 +260,19 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-start custom-container">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
             <h4 className="main-hero-title font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
               Shaping the Future of Gaming, DeFi, NFTs and AI
             </h4>
-            <div className="d-flex flex-column gap-2 p-3 token-launch-wrapper">
+            {/* <div className="d-flex flex-column gap-2 p-3 token-launch-wrapper">
               <h6 className="release-date-title mb-0" >
                 Token Launch in:
               </h6>
               <Countdown date={releaseDate} renderer={renderer} />
-            </div>
+            </div> */}
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
                 <a
                   className="game-event-download py-2 px-5 d-flex align-items-center gap-2"
@@ -230,17 +285,16 @@ const VideoWrapper = ({
                   Download
                 </a>
 
-              <NavLink
+              <button
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
-                to='/token'
-                // onClick={() => {
-                //   setmultiplayerModal(true);
-                // }}
+                onClick={() => {
+                  setBuyWodPopup(true);
+                }}
               >
                 <img src={buyWod} alt="" />
                 {/* Buy  */}
-                WOD
-              </NavLink>
+                Buy WOD
+              </button>
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">
@@ -333,7 +387,23 @@ const VideoWrapper = ({
       ) : (
         <></>
       )}
-
+      {buyWodPopup &&
+      <OutsideClickHandler onOutsideClick={() => {setBuyWodPopup(false); window.location.hash = ""}}>
+          <div className="challenge-popup-wrapper popup-active p-3">
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <h6 className="mb-0 buy-wod-popup-title">
+                Buy WOD
+              </h6>
+              <img src={xMarkBuyWod} width={22} height={22} style={{cursor: "pointer"}} onClick={() => {setBuyWodPopup(false); window.location.hash = ""}} alt="" />
+            </div>
+            <div className="d-flex flex-column gap-2">
+              {exchanges.map((item, index) => (
+                <BuyWodCard item={item} key={index} />
+              ))}
+            </div>
+          </div>
+      </OutsideClickHandler>
+      }
       {/* {multiplayerModal === true ? (
         <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
           <div className="system-requirements-modal p-3" id="reqmodal">
