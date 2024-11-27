@@ -10106,6 +10106,8 @@ function Dashboard({
               selectedEvent={eventId}
               eventCardCount={eventCardCount}
               email={email}
+              isConnected={isConnected}
+
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (

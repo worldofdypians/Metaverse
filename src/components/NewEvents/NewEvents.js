@@ -134,7 +134,7 @@ const NewEvents = ({
   availableTime,
   eventCardCount,
   wodPrice,
-  email,
+  email,isConnected
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -678,6 +678,7 @@ const NewEvents = ({
         .allowance(wallet, furyBeastAddress)
         .call()
         .then((data) => {
+          console.log("ddddddd", data)
           if (data === "0" || data < 150000000000000000000) {
             setBeastShowApproval(true);
             setBeastBundleState("initial");
@@ -1381,7 +1382,6 @@ const NewEvents = ({
       setScorpionBundleState("initial");
     }
   }, [wallet, chainId, email]);
-
   const eventinfos = [
     {
       id: "dragon",
@@ -2503,17 +2503,18 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
+                                         
                                         <button
                                           disabled={
                                             beastBundleState === "deposit" ||
                                             beastBundleState === "loading" ||
-                                            checkWallet === false
+                                            checkWallet === false || !isConnected || !email
                                               ? true
                                               : false
                                           }
                                           className={` ${
                                             beastBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || beastShowApproval === false || !isConnected || !email
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2534,20 +2535,18 @@ const NewEvents = ({
                                         </button>
                                         <button
                                           disabled={
-                                            beastBundleState === "deposit" ||
-                                            beastDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
+                                            beastBundleState === "deposit"  &&
+                                            checkWallet === true&& isConnected&& email
                                               ? false
                                               : true
                                           }
                                           className={` ${
-                                            beastShowApproval === false &&
+                                            beastShowApproval === true &&
                                             checkWallet === true
-                                              ? "stake-wod-btn"
-                                              : beastShowApproval === true &&
-                                                checkWallet === true
                                               ? "stake-wod-btn-inactive d-none"
+                                              : beastShowApproval === false && 
+                                              checkWallet === true && isConnected&& email
+                                              ? "stake-wod-btn"
                                               : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositBeast()}
@@ -2593,7 +2592,7 @@ const NewEvents = ({
                                           }
                                           className={` ${
                                             eagleBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || eagleShowApproval === false
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
