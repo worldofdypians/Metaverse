@@ -64,14 +64,13 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const renderer2 = ({ hours, minutes }) => {
+const renderer2 = ({ days, hours, minutes }) => {
   return (
     <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
-      {hours}d:{hours}h:{minutes}m
+      {days}D:{hours}H:{minutes}M
     </h6>
   );
 };
-
 const ReleaseContent = ({
   isConnected,
   chainId,
