@@ -735,7 +735,7 @@ const Whitelist = ({
               : selectedRound?.id === "private"
               ? userVestedTokensPrivate
               : selectedRound?.id === "kol"
-              ? userClaimedTokensKOL
+              ? userVestedTokensKOL
               : selectedRound?.id === "advisors"
               ? userVestedTokensAdvisors
               : 0
