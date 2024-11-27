@@ -235,25 +235,11 @@
     line-height: 18px;
     color: #f7f7fc !important;
     padding: 10px 8px;
-  }
-  
-  .dropdown-item:nth-child(1) {
     border-bottom: 1px solid #3b3c68 !important;
+
   }
   
-  .dropdown-item:nth-child(2) {
-    border-bottom: 1px solid #3b3c68 !important;
-  }
-  
-  .dropdown-item:nth-child(3),
-  .dropdown-item:nth-child(4),
-  .dropdown-item:nth-child(5),
-  .dropdown-item:nth-child(6),
-  .dropdown-item:nth-child(7),
-  .dropdown-item:nth-child(8) {
-    border-bottom: 1px solid #3b3c68 !important;
-  }
-  
+ 
   .dropdown-item:hover {
     background: #3b3883;
   }

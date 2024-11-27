@@ -12,6 +12,11 @@ const Investors = ({ page }) => {
       link: "https://www.bnbchain.org/en",
     },
     {
+      title: "Trust Wallet",
+      logo: "trustBackers.svg",
+      link: "https://trustwallet.com/",
+    },
+    {
       title: "Matchain",
       logo: "matchainBackers.svg",
       link: "https://www.matchain.io/",
