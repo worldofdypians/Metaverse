@@ -213,8 +213,7 @@ const ReleaseContent = ({
                 
               
                 `}
-                  disabled={
-                    startedVesting === false ||
+                  disabled={ 
                     canClaim === false ||
                     timerFinished === false ||
                     Number(wodBalance) === 0
@@ -244,8 +243,7 @@ const ReleaseContent = ({
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  startedVesting === false ||
+                    Number(wodBalance) === 0)||
                   canClaim === false ||
                   timerFinished === false
                     ? "disabled-btn2"
