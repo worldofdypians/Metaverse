@@ -89,7 +89,6 @@ const Whitelist = ({
 
   const [selectedRound, setselectedRound] = useState();
 
- 
   const getInfo = async () => {
     const vestingSc = new window.bscWeb3.eth.Contract(
       VESTING_ABI,
@@ -429,7 +428,6 @@ const Whitelist = ({
       window.config.vesting_address
     );
 
-
     const privateSc = new window.bscWeb3.eth.Contract(
       PRIVATE_ABI,
       window.config.private_address
@@ -445,11 +443,9 @@ const Whitelist = ({
       window.config.advisors_address
     );
 
-
     //  cliff -> Lock time until TGE release.
     //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
 
-  
     const lastClaimedTime = await vestingSc.methods
       .lastClaimedTime(coinbase)
       .call()
@@ -458,7 +454,7 @@ const Whitelist = ({
         return 0;
       });
 
-      const lastClaimedTimePrivate = await privateSc.methods
+    const lastClaimedTimePrivate = await privateSc.methods
       .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
@@ -466,7 +462,7 @@ const Whitelist = ({
         return 0;
       });
 
-      const lastClaimedTimeKol = await kolSc.methods
+    const lastClaimedTimeKol = await kolSc.methods
       .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
@@ -474,7 +470,7 @@ const Whitelist = ({
         return 0;
       });
 
-      const lastClaimedTimeAdvisors = await advisorsSc.methods
+    const lastClaimedTimeAdvisors = await advisorsSc.methods
       .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
@@ -490,22 +486,28 @@ const Whitelist = ({
       setcliffTime(0);
     }
 
-
-    if (lastClaimedTimePrivate && Number(lastClaimedTimePrivate * 1000) > today.getTime()) {
+    if (
+      lastClaimedTimePrivate &&
+      Number(lastClaimedTimePrivate * 1000) > today.getTime()
+    ) {
       setcliffTimePrivate(Number(lastClaimedTimePrivate * 1000));
     } else {
       setcliffTimePrivate(0);
     }
 
-
-    if (lastClaimedTimeKol && Number(lastClaimedTimeKol * 1000) > today.getTime()) {
+    if (
+      lastClaimedTimeKol &&
+      Number(lastClaimedTimeKol * 1000) > today.getTime()
+    ) {
       setcliffTimeKol(Number(lastClaimedTimeKol * 1000));
     } else {
       setcliffTimeKol(0);
     }
 
-
-    if (lastClaimedTimeAdvisors && Number(lastClaimedTimeAdvisors * 1000) > today.getTime()) {
+    if (
+      lastClaimedTimeAdvisors &&
+      Number(lastClaimedTimeAdvisors * 1000) > today.getTime()
+    ) {
       setcliffTimeAdvisors(Number(lastClaimedTimeAdvisors * 1000));
     } else {
       setcliffTimeAdvisors(0);
@@ -513,7 +515,7 @@ const Whitelist = ({
   };
 
   const handleClaim = async () => {
-    console.log('seed')
+    console.log("seed");
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
     const vestingSc = new web3.eth.Contract(
@@ -552,12 +554,13 @@ const Whitelist = ({
         setTimeout(() => {
           setclaimStatus("initial");
           getInfo();
+          getInfoTimer();
         }, 5000);
       })
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        
+
         setclaimStatus("failed");
         setclaimLoading(false);
         setTimeout(() => {
@@ -567,7 +570,7 @@ const Whitelist = ({
   };
 
   const handleClaimPrivate = async () => {
-    console.log('private')
+    console.log("private");
 
     setclaimLoadingPrivate(true);
     let web3 = new Web3(window.ethereum);
@@ -587,12 +590,13 @@ const Whitelist = ({
         setTimeout(() => {
           setclaimStatusPrivate("initial");
           getInfo();
+          getInfoTimer();
         }, 5000);
       })
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        
+
         setclaimStatusPrivate("failed");
         setclaimLoadingPrivate(false);
         setTimeout(() => {
@@ -602,7 +606,7 @@ const Whitelist = ({
   };
 
   const handleClaimKol = async () => {
-    console.log('kol')
+    console.log("kol");
 
     setclaimLoadingKol(true);
     let web3 = new Web3(window.ethereum);
@@ -620,12 +624,13 @@ const Whitelist = ({
         setTimeout(() => {
           setclaimStatusKol("initial");
           getInfo();
+          getInfoTimer();
         }, 5000);
       })
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        
+
         setclaimStatusKol("failed");
         setclaimLoadingKol(false);
         setTimeout(() => {
@@ -635,7 +640,7 @@ const Whitelist = ({
   };
 
   const handleClaimAdvisors = async () => {
-    console.log('advisors')
+    console.log("advisors");
 
     setclaimLoadingAdvisors(true);
     let web3 = new Web3(window.ethereum);
@@ -657,12 +662,13 @@ const Whitelist = ({
         setTimeout(() => {
           setclaimStatusAdvisors("initial");
           getInfo();
+          getInfoTimer();
         }, 5000);
       })
       .catch((e) => {
         console.error(e);
         window.alertify.error(e?.message);
-        
+
         setclaimStatusAdvisors("failed");
         setclaimLoadingAdvisors(false);
         setTimeout(() => {
