@@ -847,6 +847,18 @@ const MobileNavbar = ({
                     >
                       <span className={`sidebar-title`}>Bridge</span>
                     </NavLink>
+                    <NavLink
+                      to="/token-claim"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Claim</span>
+                    </NavLink>
                   </div>
                 </div>
               </div>

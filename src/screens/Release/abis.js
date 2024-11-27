@@ -119,7 +119,7 @@ export const TOKEN_LOCK_ABI = [
   ];
 
 
-  export const VESTING_ABI = [
+  export const IDO_ABI = [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
       inputs: [{ internalType: "address", name: "owner", type: "address" }],

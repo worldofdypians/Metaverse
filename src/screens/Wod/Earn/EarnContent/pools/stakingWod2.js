@@ -16,6 +16,7 @@ import axios from "axios";
 import Countdown from "react-countdown";
 import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
+import { ethers } from "ethers";
 
 const renderer = ({ days, hours, minutes, seconds }) => {
   return (
@@ -62,7 +63,8 @@ const StakeWodDetails2 = ({
   poolCap,
   isConnected,
   start_date,
-  onSuccessfulStake
+  onSuccessfulStake,
+  binanceW3WProvider,
 }) => {
   let { reward_token_wod, BigNumber, alertify, reward_token_idyp, token_dyps } =
     window;
@@ -250,10 +252,16 @@ const StakeWodDetails2 = ({
       //   .call();
       // _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
       // _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
+  let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+          window.TOKEN_ABI,
+         reward_token_wod._address
+        );
 
       let _bal;
       if (chainId === "56" && coinbase && isConnected) {
-        _bal = reward_token_wod.balanceOf(coinbase);
+      
+        _bal = await reward_token_wod_sc.methods.balanceOf(coinbase).call().catch((e)=>{console.error(e)});
+       
       }
       if (staking && coinbase !== undefined && coinbase !== null) {
         let _pDivs = staking.getTotalPendingDivs(coinbase);
@@ -262,7 +270,7 @@ const StakeWodDetails2 = ({
         let _stakingTime = staking.stakingTime(coinbase);
         let _dTokens = staking.depositedTokens(coinbase);
         let _lClaimTime = staking.lastClaimedTime(coinbase);
-        let _tvl = reward_token_wod.balanceOf(staking._address);
+        let _tvl = await reward_token_wod_sc.methods.balanceOf(staking._address).call().catch((e)=>{console.error(e)});
         // console.log('tvl', _tvl)
         let _rFeeEarned = staking.totalReferralFeeEarned(coinbase);
         let tStakers = staking.getNumberOfHolders();
@@ -409,58 +417,116 @@ const StakeWodDetails2 = ({
   const handleApprove = async (e) => {
     // e.preventDefault();
     setdepositLoading(true);
+    if (window.WALLET_TYPE !== "binance") {
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+      await reward_token_wod
+        .approve(staking._address, amount)
+        .then(() => {
+          setdepositLoading(false);
+          setdepositStatus("deposit");
+          refreshBalance();
+          getApprovedAmount();
+        })
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("fail");
+          seterrorMsg(e?.message);
+          setTimeout(() => {
+            setdepositAmount("");
+            setdepositStatus("initial");
+            seterrorMsg("");
+          }, 10000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+      let reward_token_Sc = new ethers.Contract(
+        reward_token_wod._address,
+        window.TOKEN_ABI,
+        binanceW3WProvider.getSigner()
+      );
 
-    let amount = depositAmount;
-    amount = new BigNumber(amount).times(1e18).toFixed(0);
-    await reward_token_wod
-      .approve(staking._address, amount)
-      .then(() => {
+      const txResponse = await reward_token_Sc
+        .approve(staking._address, amount)
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("fail");
+          seterrorMsg(e?.message);
+          setTimeout(() => {
+            setdepositAmount("");
+            setdepositStatus("initial");
+            seterrorMsg("");
+          }, 10000);
+        });
+
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setdepositLoading(false);
         setdepositStatus("deposit");
         refreshBalance();
-        getApprovedAmount()
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("fail");
-        seterrorMsg(e?.message);
-        setTimeout(() => {
-          setdepositAmount("");
-          setdepositStatus("initial");
-          seterrorMsg("");
-        }, 10000);
-      });
+        getApprovedAmount();
+      }
+    }
   };
   // console.log(staking)
   const handleStake = async (e) => {
     setdepositLoading(true);
-
-    if (other_info) {
-      window.$.alert("This pool no longer accepts deposits!");
-      setdepositLoading(false);
-
-      return;
-    }
-
-    let amount = depositAmount;
-    amount = new BigNumber(amount).times(1e18).toFixed(0);
-
-    let referrer = window.config.ZERO_ADDRESS;
-
-    await staking
-      .stake(amount, referrer)
-      .then(() => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (other_info) {
+        window.$.alert("This pool no longer accepts deposits!");
         setdepositLoading(false);
-        setdepositStatus("success");
-        refreshBalance();
-        getApprovedAmount()
-        onSuccessfulStake()
-        setTimeout(() => {
-          setdepositStatus("initial");
-          setdepositAmount("");
-        }, 5000);
-      })
-      .catch((e) => {
+
+        return;
+      }
+
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+
+      let referrer = window.config.ZERO_ADDRESS;
+
+      await staking
+        .stake(amount, referrer)
+        .then(() => {
+          setdepositLoading(false);
+          setdepositStatus("success");
+          refreshBalance();
+          getApprovedAmount();
+          onSuccessfulStake();
+          setTimeout(() => {
+            setdepositStatus("initial");
+            setdepositAmount("");
+          }, 5000);
+        })
+        .catch((e) => {
+          setdepositLoading(false);
+          setdepositStatus("fail");
+          seterrorMsg(e?.message);
+          setTimeout(() => {
+            setdepositAmount("");
+            setdepositStatus("fail");
+            seterrorMsg("");
+          }, 10000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      if (other_info) {
+        window.$.alert("This pool no longer accepts deposits!");
+        setdepositLoading(false);
+
+        return;
+      }
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      let amount = depositAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+
+      let referrer = window.config.ZERO_ADDRESS;
+
+      const txResponse = await staking_Sc.stake(amount, referrer).catch((e) => {
         setdepositLoading(false);
         setdepositStatus("fail");
         seterrorMsg(e?.message);
@@ -470,26 +536,61 @@ const StakeWodDetails2 = ({
           seterrorMsg("");
         }, 10000);
       });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setdepositLoading(false);
+        setdepositStatus("success");
+        refreshBalance();
+        getApprovedAmount();
+        onSuccessfulStake();
+        setTimeout(() => {
+          setdepositStatus("initial");
+          setdepositAmount("");
+        }, 5000);
+      }
+    }
   };
 
   const handleWithdraw = async (e) => {
     // e.preventDefault();
-    let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
-    setwithdrawLoading(true);
+    if (window.WALLET_TYPE !== "binance") {
+      let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
+      setwithdrawLoading(true);
 
-    staking
-      .unstake(amount)
-      .then(() => {
-        setwithdrawLoading(false);
-        setwithdrawStatus("success");
-        refreshBalance();
-        onSuccessfulStake()
-        setTimeout(() => {
-          setwithdrawStatus("initial");
-          setwithdrawAmount("");
-        }, 5000);
-      })
-      .catch((e) => {
+      staking
+        .unstake(amount)
+        .then(() => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("success");
+          refreshBalance();
+          onSuccessfulStake();
+          setTimeout(() => {
+            setwithdrawStatus("initial");
+            setwithdrawAmount("");
+          }, 5000);
+        })
+        .catch((e) => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("failed");
+          seterrorMsg3(e?.message);
+
+          setTimeout(() => {
+            setwithdrawStatus("initial");
+            seterrorMsg3("");
+            setwithdrawAmount("");
+          }, 10000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
+      setwithdrawLoading(true);
+
+      const txResponse = staking_Sc.unstake(amount).catch((e) => {
         setwithdrawLoading(false);
         setwithdrawStatus("failed");
         seterrorMsg3(e?.message);
@@ -500,24 +601,53 @@ const StakeWodDetails2 = ({
           setwithdrawAmount("");
         }, 10000);
       });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setwithdrawLoading(false);
+        setwithdrawStatus("success");
+        refreshBalance();
+        onSuccessfulStake();
+        setTimeout(() => {
+          setwithdrawStatus("initial");
+          setwithdrawAmount("");
+        }, 5000);
+      }
+    }
   };
 
   const handleClaimDivs = async (e) => {
     // e.preventDefault();
     setclaimLoading(true);
+    if (window.WALLET_TYPE !== "binance") {
+      staking
+        .claim()
+        .then(() => {
+          setclaimStatus("success");
+          setclaimLoading(false);
+          setpendingDivs(getFormattedNumber(0, 6));
+          refreshBalance();
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        })
+        .catch((e) => {
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          seterrorMsg2(e?.message);
 
-    staking
-      .claim()
-      .then(() => {
-        setclaimStatus("success");
-        setclaimLoading(false);
-        setpendingDivs(getFormattedNumber(0, 6));
-        refreshBalance();
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
-      })
-      .catch((e) => {
+          setTimeout(() => {
+            setclaimStatus("initial");
+            seterrorMsg2("");
+          }, 10000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = staking_Sc.claim().catch((e) => {
         setclaimStatus("failed");
         setclaimLoading(false);
         seterrorMsg2(e?.message);
@@ -527,6 +657,17 @@ const StakeWodDetails2 = ({
           seterrorMsg2("");
         }, 10000);
       });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setclaimStatus("success");
+        setclaimLoading(false);
+        setpendingDivs(getFormattedNumber(0, 6));
+        refreshBalance();
+        setTimeout(() => {
+          setclaimStatus("initial");
+        }, 5000);
+      }
+    }
   };
 
   const handleSetMaxDeposit = (e) => {
@@ -578,19 +719,36 @@ const StakeWodDetails2 = ({
     // e.preventDefault();
     setreInvestStatus("invest");
     setreInvestLoading(true);
+    if (window.WALLET_TYPE !== "binance") {
+      staking
+        .reInvest()
+        .then(() => {
+          setreInvestStatus("success");
+          setreInvestLoading(false);
+          setpendingDivs(getFormattedNumber(0, 6));
+          refreshBalance();
+          setTimeout(() => {
+            setreInvestStatus("initial");
+          }, 10000);
+        })
+        .catch((e) => {
+          setreInvestStatus("failed");
+          setreInvestLoading(false);
+          seterrorMsg2(e?.message);
 
-    staking
-      .reInvest()
-      .then(() => {
-        setreInvestStatus("success");
-        setreInvestLoading(false);
-        setpendingDivs(getFormattedNumber(0, 6));
-        refreshBalance();
-        setTimeout(() => {
-          setreInvestStatus("initial");
-        }, 10000);
-      })
-      .catch((e) => {
+          setTimeout(() => {
+            setreInvestStatus("initial");
+            seterrorMsg2("");
+          }, 10000);
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      let staking_Sc = new ethers.Contract(
+        staking._address,
+        window.CONSTANT_STAKING_WOD_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      const txResponse = staking_Sc.reInvest().catch((e) => {
         setreInvestStatus("failed");
         setreInvestLoading(false);
         seterrorMsg2(e?.message);
@@ -600,6 +758,17 @@ const StakeWodDetails2 = ({
           seterrorMsg2("");
         }, 10000);
       });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setreInvestStatus("success");
+        setreInvestLoading(false);
+        setpendingDivs(getFormattedNumber(0, 6));
+        refreshBalance();
+        setTimeout(() => {
+          setreInvestStatus("initial");
+        }, 10000);
+      }
+    }
   };
 
   const handleEthPool = async () => {
@@ -1016,147 +1185,146 @@ const StakeWodDetails2 = ({
               </div> */}
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
-            {depositedTokens > 0 &&
-            <div className="stake-separator"></div>
-            }
+            {depositedTokens > 0 && <div className="stake-separator"></div>}
             {depositedTokens > 0 && (
-            <div
-              className={`otherside-border ${
-                listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(expired === true || chainId !== "56") && "blurrypool"} `}
-            >
-              <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
-                <h6
-                  className={
-                    listType === "list"
-                      ? "m-0 withdraw-txt align-items-center d-flex gap-2"
-                      : "m-0 deposit-txt d-flex flex-column gap-2"
-                  }
-                >
-                  Earnings
-                </h6>
-                <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
-                  <Tooltip
-                    placement="top"
-                    title={
-                      <div className="tooltip-text">
-                        {
-                          "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
-                        }
-                      </div>
+              <div
+                className={`otherside-border ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
+                }  ${(expired === true || chainId !== "56") && "blurrypool"} `}
+              >
+                <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
+                  <h6
+                    className={
+                      listType === "list"
+                        ? "m-0 withdraw-txt align-items-center d-flex gap-2"
+                        : "m-0 deposit-txt d-flex flex-column gap-2"
                     }
                   >
-                    <img src={moreinfo} alt="" />
-                  </Tooltip>
-                </h6>
-              </div>
-              <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
-                <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                  <h6 className="m-0 rewardstxtwod w-100 d-flex align-items-center gap-2">
-                    {/* <img
+                    Earnings
+                  </h6>
+                  <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <div className="tooltip-text">
+                          {
+                            "Rewards earned by your deposit to the staking smart contract are displayed in real-time. The reinvest function does not reset the lock-in period."
+                          }
+                        </div>
+                      }
+                    >
+                      <img src={moreinfo} alt="" />
+                    </Tooltip>
+                  </h6>
+                </div>
+                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                  {/* <h6 className={"m-0 mybalance-text d-flex"}>Rewards</h6> */}
+                  <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                    <h6 className="m-0 rewardstxtwod w-100 d-flex align-items-center gap-2">
+                      {/* <img
                       src={wodToken}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />{" "} */}
-                    {getFormattedNumber(pendingDivs, pendingDivs > 0 ? 6 : 2)} WOD
-                  </h6>
-                  <div className="d-flex w-100 align-items-center gap-2">
-                    <button
-                      disabled={
-                        claimStatus === "claimed" ||
-                        claimStatus === "success" ||
-                        pendingDivs <= 0
-                          ? //
-                            true
-                          : false
-                      }
-                      className={`btn w-100 outline-btn-stake ${
-                        (claimStatus === "claimed" &&
-                          claimStatus === "initial") ||
-                        pendingDivs <= 0
-                          ? //
-                            "disabled-btn"
-                          : claimStatus === "failed"
-                          ? "fail-button"
-                          : claimStatus === "success"
-                          ? "success-button"
-                          : null
-                      } d-flex justify-content-center align-items-center gap-2`}
-                      style={{ height: "fit-content" }}
-                      onClick={() => {
-                        handleClaimDivs();
-                      }}
-                    >
-                      {claimLoading ? (
-                        <div
-                          class="spinner-border spinner-border-sm text-light"
-                          role="status"
-                        >
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                      ) : claimStatus === "failed" ? (
-                        <>
-                          <img src={failMark} alt="" />
-                          Failed
-                        </>
-                      ) : claimStatus === "success" ? (
-                        <>Success</>
-                      ) : (
-                        <>Claim</>
-                      )}
-                    </button>
-                    <button
-                      disabled={pendingDivs > 0 ? false : true}
-                      className={`btn w-100 outline-btn-stake ${
-                        reInvestStatus === "invest" || pendingDivs <= 0
-                          ? "disabled-btn"
-                          : reInvestStatus === "failed"
-                          ? "fail-button"
-                          : reInvestStatus === "success"
-                          ? "success-button"
-                          : null
-                      } d-flex justify-content-center align-items-center gap-2`}
-                      style={{ height: "fit-content" }}
-                      onClick={handleReinvest}
-                    >
-                      {reInvestLoading ? (
-                        <div
-                          class="spinner-border spinner-border-sm text-light"
-                          role="status"
-                        >
-                          <span class="visually-hidden">Loading...</span>
-                        </div>
-                      ) : reInvestStatus === "failed" ? (
-                        <>
-                          <img src={failMark} alt="" />
-                          Failed
-                        </>
-                      ) : reInvestStatus === "success" ? (
-                        <>Success</>
-                      ) : (
-                        <>Reinvest</>
-                      )}
-                    </button>
+                      {getFormattedNumber(pendingDivs, pendingDivs > 0 ? 6 : 2)}{" "}
+                      WOD
+                    </h6>
+                    <div className="d-flex w-100 align-items-center gap-2">
+                      <button
+                        disabled={
+                          claimStatus === "claimed" ||
+                          claimStatus === "success" ||
+                          pendingDivs <= 0
+                            ? //
+                              true
+                            : false
+                        }
+                        className={`btn w-100 outline-btn-stake ${
+                          (claimStatus === "claimed" &&
+                            claimStatus === "initial") ||
+                          pendingDivs <= 0
+                            ? //
+                              "disabled-btn"
+                            : claimStatus === "failed"
+                            ? "fail-button"
+                            : claimStatus === "success"
+                            ? "success-button"
+                            : null
+                        } d-flex justify-content-center align-items-center gap-2`}
+                        style={{ height: "fit-content" }}
+                        onClick={() => {
+                          handleClaimDivs();
+                        }}
+                      >
+                        {claimLoading ? (
+                          <div
+                            class="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        ) : claimStatus === "failed" ? (
+                          <>
+                            <img src={failMark} alt="" />
+                            Failed
+                          </>
+                        ) : claimStatus === "success" ? (
+                          <>Success</>
+                        ) : (
+                          <>Claim</>
+                        )}
+                      </button>
+                      <button
+                        disabled={pendingDivs > 0 ? false : true}
+                        className={`btn w-100 outline-btn-stake ${
+                          reInvestStatus === "invest" || pendingDivs <= 0
+                            ? "disabled-btn"
+                            : reInvestStatus === "failed"
+                            ? "fail-button"
+                            : reInvestStatus === "success"
+                            ? "success-button"
+                            : null
+                        } d-flex justify-content-center align-items-center gap-2`}
+                        style={{ height: "fit-content" }}
+                        onClick={handleReinvest}
+                      >
+                        {reInvestLoading ? (
+                          <div
+                            class="spinner-border spinner-border-sm text-light"
+                            role="status"
+                          >
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        ) : reInvestStatus === "failed" ? (
+                          <>
+                            <img src={failMark} alt="" />
+                            Failed
+                          </>
+                        ) : reInvestStatus === "success" ? (
+                          <>Success</>
+                        ) : (
+                          <>Reinvest</>
+                        )}
+                      </button>
+                    </div>
                   </div>
+                  {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
                 </div>
-                {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
               </div>
-            </div>
             )}
             {depositedTokens && depositedTokens > 0 && (
-            <div className="stake-separator"></div>
+              <div className="stake-separator"></div>
             )}
             {depositedTokens && depositedTokens > 0 && (
-            <div
-              className={`otherside-border  ${
-                listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-              } ${chainId !== "56" && "blurrypool"} `}
-            >
-              <div className="d-flex flex-column gap-2">
-                <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
-                  My Deposit
-                  {/* <Tooltip
+              <div
+                className={`otherside-border  ${
+                  listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
+                } ${chainId !== "56" && "blurrypool"} `}
+              >
+                <div className="d-flex flex-column gap-2">
+                  <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
+                    My Deposit
+                    {/* <Tooltip
                     placement="top"
                     title={
                       <div className="tooltip-text">
@@ -1168,39 +1336,39 @@ const StakeWodDetails2 = ({
                   >
                     <img src={moreinfo} alt="" />
                   </Tooltip> */}
-                </h6>
-                <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                  <div className="d-flex align-items-center gap-2 justify-content-center">
-                    <div className="d-flex flex-column w-100">
-                      <h6 className={"m-0 mybalance-text d-flex"}>
-                        Unlocks in
-                      </h6>
-                      <div className="form-row d-flex gap-2 align-items-center justify-content-between">
-                        <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
-                          <Countdown
-                            date={
-                              (Number(stakingTime) + Number(cliffTime)) * 1000
-                              // today.getTime()
-                            }
-                            renderer={renderer2}
-                          />
+                  </h6>
+                  <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
+                    <div className="d-flex align-items-center gap-2 justify-content-center">
+                      <div className="d-flex flex-column w-100">
+                        <h6 className={"m-0 mybalance-text d-flex"}>
+                          Unlocks in
                         </h6>
+                        <div className="form-row d-flex gap-2 align-items-center justify-content-between">
+                          <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
+                            <Countdown
+                              date={
+                                (Number(stakingTime) + Number(cliffTime)) * 1000
+                                // today.getTime()
+                              }
+                              renderer={renderer2}
+                            />
+                          </h6>
+                        </div>
                       </div>
-                    </div>
 
-                    <button
-                      disabled={false}
-                      className={"outline-btn-stake btn"}
-                      onClick={() => {
-                        setshowWithdrawModal(true);
-                      }}
-                    >
-                      Withdraw
-                    </button>
+                      <button
+                        disabled={false}
+                        className={"outline-btn-stake btn"}
+                        onClick={() => {
+                          setshowWithdrawModal(true);
+                        }}
+                      >
+                        Withdraw
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             )}
             <div
               className={`info-pool-wrapper2 p-1 d-flex ${
