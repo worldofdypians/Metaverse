@@ -19,7 +19,7 @@ const erc20Address = "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17";
 const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
 const idyptoken_address = "0xBD100d061E120b2c67A24453CF6368E63f1Be056";
 
-const wod_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
 const landNft_address = "0xcd60d912655281908ee557ce1add61e983385a03";
 const landNftStake_address = "0x6821710b0d6e9e10acfd8433ad023f874ed782f1";
 const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9";
@@ -67,7 +67,7 @@ export const idyptoken_abi = new cawsContractWeb3.eth.Contract(
     TOKEN_ABI,
     idyptoken_address
   ); 
-export const wod_abi = new cawsContractWeb3.eth.Contract(WOD_ABI, wod_address);
+export const wod_abi = new cawsContractWeb3.eth.Contract(WOD_ABI, dragonRuins_address);
 export const landNft_contract = new caws_Contract.eth.Contract(
   LANDNFT_ABI,
   landNft_address
@@ -92,7 +92,7 @@ export const idyp3500_abi = new cawsContractWeb3.eth.Contract(
   idyp3500_address
 );
 
-export const wodAddress = wod_address;
+export const wodAddress = dragonRuins_address;
 export const dyp700Address = dyp700_address;
 export const dyp700v1Address = dyp700v1_address;
 
