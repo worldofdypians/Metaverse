@@ -2349,6 +2349,8 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
+                                          {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                          {isConnected && email && <>
                                         <button
                                           disabled={
                                             dragonBundleState === "deposit" ||
@@ -2359,7 +2361,7 @@ const NewEvents = ({
                                           }
                                           className={` ${
                                             dragonBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || dragonShowApproval === false
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2388,10 +2390,15 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            dragonBundleState === "deposit" ||
-                                            checkWallet === false
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                        
+                                              dragonShowApproval === true &&
+                                              checkWallet === true
+                                                ? "stake-wod-btn-inactive d-none"
+                                                : dragonShowApproval === false && 
+                                                checkWallet === true  
+                                                ? "stake-wod-btn"
+                                                : "stake-wod-btn-inactive"
+
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositDragon()}
                                         >
@@ -2409,6 +2416,7 @@ const NewEvents = ({
                                             "Buy"
                                           )}
                                         </button>
+                                        </>}
                                       </div>
                                     )}
                                   </>
@@ -2426,6 +2434,8 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
+                                           {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                    {isConnected && email && <>
                                         <button
                                           disabled={
                                             bearBundleState === "deposit" ||
@@ -2436,7 +2446,7 @@ const NewEvents = ({
                                           }
                                           className={` ${
                                             bearBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || bearShowApproval === false
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2465,10 +2475,13 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            bearBundleState === "deposit" ||
-                                            checkWallet === false
+                                            bearShowApproval === true &&
+                                            checkWallet === true
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : bearShowApproval === false && 
+                                              checkWallet === true  
                                               ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositBear()}
                                         >
@@ -2485,7 +2498,7 @@ const NewEvents = ({
                                           ) : (
                                             "Buy"
                                           )}
-                                        </button>
+                                        </button></>}
                                       </div>
                                     )}
                                   </>
@@ -2503,18 +2516,19 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                         
+                                        {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                         {isConnected && email && <>
                                         <button
                                           disabled={
                                             beastBundleState === "deposit" ||
                                             beastBundleState === "loading" ||
-                                            checkWallet === false || !isConnected || !email
+                                            checkWallet === false  
                                               ? true
                                               : false
                                           }
                                           className={` ${
                                             beastBundleState === "deposit" ||
-                                            checkWallet === false || beastShowApproval === false || !isConnected || !email
+                                            checkWallet === false || beastShowApproval === false  
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2536,7 +2550,7 @@ const NewEvents = ({
                                         <button
                                           disabled={
                                             beastBundleState === "deposit"  &&
-                                            checkWallet === true&& isConnected&& email
+                                            checkWallet === true 
                                               ? false
                                               : true
                                           }
@@ -2545,7 +2559,7 @@ const NewEvents = ({
                                             checkWallet === true
                                               ? "stake-wod-btn-inactive d-none"
                                               : beastShowApproval === false && 
-                                              checkWallet === true && isConnected&& email
+                                              checkWallet === true  
                                               ? "stake-wod-btn"
                                               : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
@@ -2564,7 +2578,7 @@ const NewEvents = ({
                                           ) : (
                                             "Buy"
                                           )}
-                                        </button>
+                                        </button></>}
                                       </div>
                                     )}
                                   </>
@@ -2582,7 +2596,8 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        <button
+                                         {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                         {isConnected && email && <>  <button
                                           disabled={
                                             eagleBundleState === "deposit" ||
                                             eagleBundleState === "loading" ||
@@ -2620,10 +2635,15 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            eagleBundleState === "deposit" ||
-                                            checkWallet === false
+                                            eagleShowApproval === true &&
+                                            checkWallet === true
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : eagleShowApproval === false && 
+                                              checkWallet === true  
                                               ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn-inactive"
+
+                                            
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositEagle()}
                                         >
@@ -2640,6 +2660,8 @@ const NewEvents = ({
                                             "Buy"
                                           )}
                                         </button>
+                                        </>}
+
                                       </div>
                                     )}
                                   </>
@@ -2657,6 +2679,8 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
+                                         {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                         {isConnected && email && <>
                                         <button
                                           disabled={
                                             scorpionBundleState === "deposit" ||
@@ -2667,7 +2691,7 @@ const NewEvents = ({
                                           }
                                           className={` ${
                                             scorpionBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || scorpionShowApproval === false
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2697,10 +2721,13 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            scorpionBundleState === "deposit" ||
-                                            checkWallet === false
+                                            scorpionShowApproval === true &&
+                                            checkWallet === true
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : scorpionShowApproval === false && 
+                                              checkWallet === true  
                                               ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
                                           onClick={() =>
                                             handleDepositScorpion()
@@ -2718,7 +2745,7 @@ const NewEvents = ({
                                           ) : (
                                             "Buy"
                                           )}
-                                        </button>
+                                        </button></>}
                                       </div>
                                     )}
                                   </>
@@ -2736,6 +2763,8 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
+                                              {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
+                                              {isConnected && email && <>
                                         <button
                                           disabled={
                                             cyclopsBundleState === "deposit" ||
@@ -2746,7 +2775,7 @@ const NewEvents = ({
                                           }
                                           className={` ${
                                             cyclopsBundleState === "deposit" ||
-                                            checkWallet === false
+                                            checkWallet === false || cyclopsShowApproval === false
                                               ? "stake-wod-btn-inactive d-none"
                                               : "stake-wod-btn"
                                           }  py-2 px-4`}
@@ -2777,10 +2806,13 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            cyclopsBundleState === "deposit" ||
-                                            checkWallet === false
+                                            cyclopsShowApproval === true &&
+                                            checkWallet === true
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : cyclopsShowApproval === false && 
+                                              checkWallet === true  
                                               ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositCyclops()}
                                         >
@@ -2797,7 +2829,7 @@ const NewEvents = ({
                                           ) : (
                                             "Buy"
                                           )}
-                                        </button>
+                                        </button></>}
                                       </div>
                                     )}
                                   </>
