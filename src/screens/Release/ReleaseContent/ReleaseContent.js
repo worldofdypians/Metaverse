@@ -129,7 +129,14 @@ const ReleaseContent = ({
                   </span>
                 </div>
               </div>
-
+              <div className="release-input-wrapper p-3 h-100">
+                <div className="d-flex flex-column">
+                  <span className="release-green-txt">Cliff Period</span>
+                  <span className="release-white-txt">
+                    {selectedRound?.cliff}
+                  </span>
+                </div>
+              </div>
               <div className="release-input-wrapper p-3 h-100">
                 <div className="d-flex flex-column">
                   <span className="release-green-txt">Vesting Period</span>
@@ -190,6 +197,32 @@ const ReleaseContent = ({
                     <span className="release-bottom-txt">WOD Remaining</span>
                   </div>
                 </div>
+                <div className="whitelist-input-upper-wrapper p-2">
+                <div className="d-flex align-items-center gap-2 justify-content-between">
+                  <span className="whitelist-timer-txt">Next withdraw in</span>
+                  <span className="whitelist-timer">
+                    {" "}
+                    {userClaimedTokens &&
+                    Number(userClaimedTokens) > 0 &&
+                    selectedRound?.id === "ido" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinished(true);
+                        }}
+                      />
+                    ) : (
+                      <h6
+                        className="rewardstxtwod mb-0"
+                        style={{ color: "#F3BF09" }}
+                      >
+                        00d:00h:00m
+                      </h6>
+                    )}
+                  </span>
+                </div>
+              </div>
               </div>
             )}
             {!isConnected && (
@@ -239,7 +272,7 @@ const ReleaseContent = ({
 
             {isConnected && chainId === 56 && selectedRound?.id === "ido" && (
               <button
-                className={` w-100 py-2
+              className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
@@ -253,6 +286,13 @@ const ReleaseContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
+                  disabled={
+                    canClaim === false ||
+                    timerFinished === false ||
+                    Number(wodBalance) === 0
+                      ? true
+                      : false
+                  }
                 onClick={handleClaim}
               >
                 {claimLoading ? (
