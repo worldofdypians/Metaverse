@@ -303,7 +303,6 @@ const WhitelistContent = ({
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
-                  startedVesting === false ||
                   canClaim === false ||
                   timerFinished === false
                     ? "disabled-btn2"
@@ -314,7 +313,7 @@ const WhitelistContent = ({
                     : "connectbtn"
                 }`}
                   disabled={
-                    startedVesting === false ||
+                  
                     canClaim === false ||
                     timerFinished === false ||
                     Number(wodBalance) === 0
@@ -345,8 +344,7 @@ const WhitelistContent = ({
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0) ||
-                  startedVesting === false ||
+                    Number(wodBalance) === 0)  ||
                   canClaim === false ||
                   timerFinishedPrivate === false
                     ? "disabled-btn2"
@@ -356,8 +354,7 @@ const WhitelistContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={
-                    startedVesting === false ||
+                  disabled={ 
                     canClaim === false ||
                     timerFinishedPrivate === false ||
                     Number(wodBalance) === 0
@@ -390,7 +387,6 @@ const WhitelistContent = ({
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
-                  startedVesting === false ||
                   canClaim === false ||
                   timerFinishedKol === false
                     ? "disabled-btn2"
@@ -401,7 +397,6 @@ const WhitelistContent = ({
                     : "connectbtn"
                 }`}
                   disabled={
-                    startedVesting === false ||
                     canClaim === false ||
                     timerFinishedKol === false ||
                     Number(wodBalance) === 0
@@ -434,7 +429,6 @@ const WhitelistContent = ({
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
-                  startedVesting === false ||
                   canClaim === false ||
                   timerFinishedAdvisors === false
                     ? "disabled-btn2"
@@ -445,7 +439,6 @@ const WhitelistContent = ({
                     : "connectbtn"
                 }`}
                   disabled={
-                    startedVesting === false ||
                     canClaim === false ||
                     timerFinishedAdvisors === false ||
                     Number(wodBalance) === 0
