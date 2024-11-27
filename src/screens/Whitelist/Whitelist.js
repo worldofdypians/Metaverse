@@ -524,7 +524,7 @@ const Whitelist = ({
       { from: await window.getCoinbase() }
     );
 
-    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
+    const gasPrice = await window.bscWeb3.eth.getGasPrice();
     console.log("gasPrice", gasPrice);
     const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
     // const increasedGwei = parseInt(currentGwei) + 2;
