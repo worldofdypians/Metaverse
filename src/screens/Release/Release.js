@@ -255,10 +255,10 @@ const Release = ({
       });
   };
 
-  // useEffect(() => {
-  //   getInfo();
-  //   getInfoTimer();
-  // }, [coinbase]);
+  useEffect(() => {
+    getInfo();
+    getInfoTimer();
+  }, [coinbase]);
 
   return (
     <div className="container-fluid release-mainhero-wrapper token-wrapper px-0">

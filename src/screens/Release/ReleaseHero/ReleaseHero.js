@@ -17,10 +17,13 @@ const ReleaseHero = ({ onSelectRound }) => {
     },
     {
       id: "ido",
-      title: "IDO",
+      title: "Private",
       class: activeRound === "ido" ? "idoClassActive" : "idoClass",
-      tokenPrice: "0.0425",
-      vesting: "6 Months",
+      tokenPrice: "0.0325",
+      vesting: "16 Months",
+      cliff: "6 Months",
+
+      
     },
   ];
 
