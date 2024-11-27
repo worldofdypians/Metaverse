@@ -127,7 +127,7 @@ const RankSmallPopup = ({
         </div>
         <div className="position-relative mb-3 d-flex align-items-center justify-content-center">
           <img src={goldenPopup} alt="" style={{ width: "100%" }} />
-          <div className="d-flex w-100 justify-content-center gap-2 align-items-center position-absolute">
+          <div className="d-flex w-100 justify-content-center gap-2 gap-lg-4 align-items-center position-absolute">
             <div className="d-flex flex-column align-items-center justify-content-center">
               <span className="bigTextYellow">#{globalMonthly}</span>
               <span className="smallTextYellow">Global Monthly</span>

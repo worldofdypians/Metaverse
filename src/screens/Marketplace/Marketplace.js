@@ -64,6 +64,8 @@ const Marketplace = ({
   totalSupply,
   binanceW3WProvider,
   chainId,
+  wodHolders,
+  totalVolumeNew,
 }) => {
   const override = {
     display: "block",
@@ -638,7 +640,7 @@ const Marketplace = ({
                   <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
                       {/* {abbreviateNumber(totalvolume,4)}+ */}$
-                      {getFormattedNumber(totalvolume2, 0)}
+                      {getFormattedNumber(totalVolumeNew, 0)}
                     </h6>
                     <span className="stats-desc">Total Volume (USD)</span>
                   </div>
@@ -647,9 +649,9 @@ const Marketplace = ({
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
                       {" "}
-                      {getFormattedNumber(totalSupply, 0)}
+                      {getFormattedNumber(wodHolders, 0)}
                     </h6>
-                    <span className="stats-desc">Sold NFTs</span>
+                    <span className="stats-desc">WOD Holders</span>
                   </div>
                 </div>
               </div>

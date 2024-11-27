@@ -211,7 +211,7 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      } else if (chainId === 56) {
+      } else if (chainId === 56 || chainId === 97) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(true);
@@ -550,7 +550,7 @@ const Header = ({
             </NavLink>
             <div
               className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 ${
-                location.pathname === "/token" ||
+                location.pathname === "/token" || location.pathname === "/token-claim" ||
                 location.pathname === "/staking" ||
                 location.pathname === "/bridge" ||
                 location.pathname === "/buy"
@@ -570,6 +570,7 @@ const Header = ({
               >
                 <div className="position-relative d-flex flex-column gap-2">
                   <div className="triangle"></div>
+               
                   <NavLink
                     to={"/token"}
                     className={({ isActive }) =>
@@ -599,6 +600,16 @@ const Header = ({
                     }
                   >
                     Bridge
+                  </NavLink>
+                  <NavLink
+                    to={"/token-claim"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2"
+                        : "dropdown-nav p-2"
+                    }
+                  >
+                    Claim
                   </NavLink>
                 </div>
               </div>

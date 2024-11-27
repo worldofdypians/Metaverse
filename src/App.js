@@ -130,6 +130,8 @@ import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/
 import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
+import Whitelist from "./screens/Whitelist/Whitelist.js";
+import Release from "./screens/Release/Release.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -328,7 +330,8 @@ function App() {
 
   const [isConnected, setIsConnected] = useState(false);
   const [loginListener, setloginListener] = useState(0);
-
+  const [totalVolumeNew, setTotalVolumeNew] = useState(0);
+  const [wodHolders, setWodHolders] = useState(0);
   const [coinbase, setCoinbase] = useState();
   const [networkId, setChainId] = useState();
   const [currencyAmount, setCurrencyAmount] = useState(0);
@@ -482,7 +485,6 @@ function App() {
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let matchainLastDay = new Date("2025-03-28T14:00:00.000+02:00");
-
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -652,9 +654,16 @@ function App() {
   const [userEvents, setuserEvents] = useState(0);
   const [wodBalance, setwodBalance] = useState(0);
   const [nftPools, setnftPools] = useState([]);
+  const [tokenPools, settokenPools] = useState([]);
+  const [userPools, setUserPools] = useState([]);
+ 
+  const [stakeCount, setstakeCount] = useState(0);
+
   const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
+ 
+
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
@@ -663,10 +672,130 @@ function App() {
         console.log(err);
       });
 
-    if (eth_result && eth_result.status === 200) {
+    const bnb_result = await axios
+      .get(`https://api.dyp.finance/api/get_staking_info_wod_bnb`)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (
+      eth_result &&
+      eth_result.status === 200 &&
+      bnb_result &&
+      bnb_result.status === 200
+    ) {
+
+      const stakingSc1 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod1._address
+      );
+      const totaldesposited_wod1 = await stakingSc1.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod1_formatted = new window.BigNumber(
+        totaldesposited_wod1
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+      const stakingSc2 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod2._address
+      );
+      const totaldesposited_wod2 = await stakingSc2.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod2_formatted = new window.BigNumber(
+        totaldesposited_wod2
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+  
+      const stakingSc3 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod3._address
+      );
+      const totaldesposited_wod3 = await stakingSc3.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod3_formatted = new window.BigNumber(
+        totaldesposited_wod3
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+  
+      const stakingSc4 = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
+        window.constant_staking_wod4._address
+      );
+      const totaldesposited_wod4 = await stakingSc4.methods
+        .totalDeposited()
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+      const totaldesposited_wod4_formatted = new window.BigNumber(
+        totaldesposited_wod4
+      )
+        .div(1e18)
+        .toFixed(6);
+   
+
+        const poolcapArray = [
+          {
+            id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+            poolCap: 13000000,
+            totaldeposited: totaldesposited_wod1_formatted,
+          },
+          {
+            id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+            poolCap: 12000000,
+            totaldeposited: totaldesposited_wod2_formatted,
+          },
+          {
+            id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+            poolCap: 20000000,
+            totaldeposited: totaldesposited_wod3_formatted,
+          },
+          {
+            id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+            poolCap: 9000000,
+            totaldeposited: totaldesposited_wod4_formatted,
+          },
+        ];
+
+      let resultWodToken = bnb_result.data.stakingInfoWODBnb;
+      let resultWodTokenTVL = bnb_result.data.totalTVL;
+
       let resultCaws = eth_result.data.stakingInfoCAWS;
       let resultLand = eth_result.data.stakingInfoLAND;
       let resultCawsLand = eth_result.data.stakinginfoCAWSLAND;
+
+      let resultWodToken2 = resultWodToken.map((item) => {
+        return {
+          ...item,
+          type: "token",
+          chain: "bnb",
+          tokenURL: ["wodToken"],
+          poolCap: poolcapArray.find((item2) => {
+            return item2.id.toLowerCase() === item.id.toLowerCase();
+          })?.poolCap,
+          totalDeposited: poolcapArray.find((item2) => {
+            return item2.id.toLowerCase() === item.id.toLowerCase();
+          })?.totaldeposited,
+        };
+      });
 
       let resultCaws2 = resultCaws.map((item) => {
         return {
@@ -697,9 +826,23 @@ function App() {
       allPools.forEach((item) => {
         tvl += Number(item.tvl_usd);
       });
-      localStorage.setItem("tvl", tvl);
-      setnftTvl(tvl);
+      localStorage.setItem("tvl", Number(tvl) + Number(resultWodTokenTVL));
+      setnftTvl(Number(tvl) + Number(resultWodTokenTVL));
       setnftPools([...resultCaws2, ...resultLand2, ...resultCawsLand2]);
+      settokenPools(resultWodToken2);
+    }
+  };
+ 
+  const fetchUserPools = async (addr) => {
+    const userpools_result = await axios
+      .get(`https://api.dyp.finance/api/user_pools_wod/${addr}`)
+      .catch((err) => {
+        console.log(err);
+      });
+
+    if (userpools_result && userpools_result.status === 200) {
+      const allpools = userpools_result.data.PoolsUserIn;
+      setUserPools(allpools);
     }
   };
 
@@ -1035,6 +1178,27 @@ function App() {
     fillRecordsStar(result.data.data.leaderboard);
   };
 
+  const fetchTotalVolume = async () => {
+    await axios
+      .get(`https://api.dyp.finance/api/getWodVolume`)
+      .then((res) => {
+        setTotalVolumeNew(res.data.volume);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const fetchTotalWodHolders = async () => {
+    await axios
+      .get(`https://api.dyp.finance/api/getWodHolders`)
+      .then((res) => {
+        setWodHolders(res.data.holders);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getTotalSupply = async () => {
     const infura_web3 = window.infuraWeb3;
     let timepiece_contract = new infura_web3.eth.Contract(
@@ -1258,7 +1422,7 @@ function App() {
       is_active: activePlayerStar, //change when apis are ready
     });
   }, [starRecords, prevDataStar, userDataStar, activePlayerStar]);
-  
+
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -3455,7 +3619,7 @@ function App() {
       eventStatus: "Coming Soon",
       rewardType: "MAT",
       rewardAmount: "$20,000",
-      location:  [-0.06787060104021504, 0.08728981018066406],
+      location: [-0.06787060104021504, 0.08728981018066406],
       image: "matchainBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
@@ -4394,6 +4558,8 @@ function App() {
 
   useEffect(() => {
     getAllData();
+    fetchTotalVolume();
+    fetchTotalWodHolders();
   }, [coinbase, count55, isConnected]);
 
   useEffect(() => {
@@ -4406,6 +4572,7 @@ function App() {
     getWodBalance(coinbase);
   }, [coinbase, isConnected, networkId]);
 
+ 
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
@@ -4442,6 +4609,8 @@ function App() {
 
   useEffect(() => {
     if (coinbase) {
+      fetchUserPools(coinbase);
+
       // getNotifications(coinbase);
       addNewUserIfNotExists(
         coinbase,
@@ -4462,7 +4631,6 @@ function App() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     fetchSocialData();
-    fetchEthStaking();
     fetchRecordsStar();
     fetchMonthlyPlayers();
     getTotalSupply();
@@ -4477,6 +4645,10 @@ function App() {
     fetchTimepieceNfts();
     checkNetworkId();
   }, []);
+
+  useEffect(() => {
+    fetchEthStaking();
+  }, [stakeCount]);
 
   return (
     <>
@@ -4515,8 +4687,8 @@ function App() {
           loginListener={loginListener}
         />
         <MobileNavbar
-        isConnected={isConnected}
-        email={email}
+          isConnected={isConnected}
+          email={email}
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
           coinbase={coinbase}
@@ -4573,6 +4745,8 @@ function App() {
               <Home
                 handleRegister={handleRegister}
                 allStarData={allStarData}
+                wodHolders={wodHolders}
+                totalVolumeNew={totalVolumeNew}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}
                 dyptokenDatabnb={dyptokenDatabnb}
@@ -4602,6 +4776,40 @@ function App() {
               />
             }
           />
+          <Route
+            exact
+            path="/cliff-and-vesting"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                // userPools={userPools}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/token-claim"
+            element={
+              <Release
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                // userPools={userPools}
+              />
+            }
+          />
+
           <Route exact path="/roadmap" element={<Roadmap />} />
           <Route
             exact
@@ -4899,6 +5107,8 @@ function App() {
               <Marketplace
                 totalSupply={totalSupply}
                 count={count2}
+                wodHolders={wodHolders}
+                totalVolumeNew={totalVolumeNew}
                 ethTokenData={ethTokenData}
                 dypTokenData={dypTokenData}
                 dypTokenData_old={dypTokenData_old}
@@ -5775,10 +5985,15 @@ function App() {
                   setwalletModal(true);
                 }}
                 nftPools={nftPools}
+                tokenPools={tokenPools}
                 binanceW3WProvider={library}
                 isPremium={isPremium}
                 tvl={nftTvl}
                 wodBalance={wodBalance}
+                userPools={userPools}
+                onSuccessfulStake={() => {
+                  setstakeCount(stakeCount + 1);
+                }}
               />
             }
           />

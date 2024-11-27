@@ -62,7 +62,9 @@ const Home = ({
   monthlyPlayers,
   percent,
   allStarData,
-  totalSupply
+  totalSupply,
+  wodHolders,
+totalVolumeNew
 }) => {
   const mantaInfo = {
     title: "Manta",
@@ -127,7 +129,10 @@ const Home = ({
             dyptokenDatabnb={dyptokenDatabnb}
             idyptokenDatabnb={idyptokenDatabnb}
           /> */}
-          <ExplorerGrid totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}/>
+          <ExplorerGrid totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}
+             wodHolders={wodHolders}
+             totalVolumeNew={totalVolumeNew}
+          />
           <Investors page={"home"} />
           {/* <GameUpdates /> */}
           {/* <LandNft /> */}
