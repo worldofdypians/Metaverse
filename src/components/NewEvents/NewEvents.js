@@ -24,7 +24,7 @@ import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
-import opensea from '../../assets/opensea.svg'
+import opensea from "../../assets/opensea.svg";
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
@@ -102,11 +102,11 @@ import { CircularProgress } from "@mui/material";
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
-      <div className="d-flex flex-column gap-1 align-items-center">
+      {/* <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time3 mb-0">{days < 10 ? "0" + days : days}</h6>
         <span className="days3">Days</span>
       </div>
-      <h6 className="mint-time3 mb-0">:</h6>
+      <h6 className="mint-time3 mb-0">:</h6> */}
 
       <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time3 mb-0">{hours < 10 ? "0" + hours : hours}</h6>
@@ -134,6 +134,7 @@ const NewEvents = ({
   availableTime,
   eventCardCount,
   wodPrice,
+  email,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -296,7 +297,7 @@ const NewEvents = ({
     );
 
     const purchaseTimestamp = await dragonRuinsContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(wallet)
       .call();
     if (purchaseTimestamp === 0) {
       setHasBoughtDragon(false); // User hasn't bought it
@@ -325,7 +326,7 @@ const NewEvents = ({
   const checkApprovalDragon = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await wod_token_abi.methods
-        .allowance(coinbase, dragonRuinsAddress)
+        .allowance(wallet, dragonRuinsAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -472,7 +473,7 @@ const NewEvents = ({
     );
 
     const purchaseTimestamp = await coldBiteContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(wallet)
       .call();
     if (purchaseTimestamp === 0) {
       setHasBoughtBear(false); // User hasn't bought it
@@ -501,7 +502,7 @@ const NewEvents = ({
   const checkApprovalBear = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await token_abi.methods
-        .allowance(coinbase, coldBiteAddress)
+        .allowance(wallet, coldBiteAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -645,7 +646,7 @@ const NewEvents = ({
     );
 
     const purchaseTimestamp = await furyBeastContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(wallet)
       .call();
     if (purchaseTimestamp === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
@@ -674,11 +675,12 @@ const NewEvents = ({
   const checkApprovalBeast = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await wod_token_abi.methods
-        .allowance(coinbase, furyBeastAddress)
+        .allowance(wallet, furyBeastAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
             setBeastShowApproval(true);
+            setBeastBundleState("initial");
           } else {
             setBeastShowApproval(false);
             setBeastBundleState("deposit");
@@ -820,7 +822,7 @@ const NewEvents = ({
     );
 
     const purchaseTimestamp = await wingStormContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(wallet)
       .call();
     if (purchaseTimestamp === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
@@ -849,7 +851,7 @@ const NewEvents = ({
   const checkApprovalEagle = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await wod_token_abi.methods
-        .allowance(coinbase, wingStormAddress)
+        .allowance(wallet, wingStormAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -1024,7 +1026,7 @@ const NewEvents = ({
   const checkApprovalScorpion = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await wod_token_abi.methods
-        .allowance(coinbase, scorpionKingAddress)
+        .allowance(wallet, scorpionKingAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -1171,7 +1173,7 @@ const NewEvents = ({
     );
 
     const purchaseTimestamp = await stoneEyeContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfDeposit(wallet)
       .call();
     if (purchaseTimestamp === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
@@ -1200,7 +1202,7 @@ const NewEvents = ({
   const checkApprovalCyclops = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
       await wod_token_abi.methods
-        .allowance(coinbase, stoneEyeAddress)
+        .allowance(wallet, stoneEyeAddress)
         .call()
         .then((data) => {
           if (data === "0" || data < 150000000000000000000) {
@@ -1329,6 +1331,8 @@ const NewEvents = ({
       ) {
         setCheckWallet(true);
       }
+    } else if (wallet) {
+      setCheckWallet(true);
     } else setCheckWallet(false);
   };
 
@@ -1343,7 +1347,7 @@ const NewEvents = ({
 
   useEffect(() => {
     checkWalletAddr();
-    if (coinbase && wallet && chainId === 56) {
+    if (email && wallet && chainId === 56) {
       handleRefreshCountdownDragon();
       checkApprovalDragon();
       handleRefreshCountdownBear();
@@ -1356,8 +1360,27 @@ const NewEvents = ({
       checkApprovalScorpion();
       handleRefreshCountdownCyclops();
       checkApprovalCyclops();
+    } else {
+      setHasBoughtBear(false);
+      setHasBoughtBeast(false);
+      setHasBoughtCyclops(false);
+      setHasBoughtDragon(false);
+      setHasBoughtEagle(false);
+      setHasBoughtScorpion(false);
+      setDragonShowApproval(false);
+      setDragonBundleState("initial");
+      setBeastShowApproval(false);
+      setBeastBundleState("initial");
+      setBearShowApproval(false);
+      setBearBundleState("initial");
+      setCyclopsShowApproval(false);
+      setCyclopsBundleState("initial");
+      setEagleShowApproval(false);
+      setEagleBundleState("initial");
+      setScorpionShowApproval(false);
+      setScorpionBundleState("initial");
     }
-  }, [wallet, chainId, coinbase]);
+  }, [wallet, chainId, email]);
 
   const eventinfos = [
     {
@@ -2519,10 +2542,13 @@ const NewEvents = ({
                                               : true
                                           }
                                           className={` ${
-                                            beastBundleState === "deposit" ||
-                                            checkWallet === false
+                                            beastShowApproval === false &&
+                                            checkWallet === true
                                               ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive d-none"
+                                              : beastShowApproval === true &&
+                                                checkWallet === true
+                                              ? "stake-wod-btn-inactive d-none"
+                                              : "stake-wod-btn-inactive"
                                           }  py-2 px-4`}
                                           onClick={() => handleDepositBeast()}
                                         >
@@ -2891,34 +2917,34 @@ const NewEvents = ({
                           </div> */}
                         </div>
                         {activeEvent?.id === "critical" ? (
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
-                                <NavLink
-                                  to={"/shop/land"}
-                                  className="getpremium-btn col-lg-4 py-2"
-                                >
-                                  Buy on Shop
-                                </NavLink>
-                                <NavLink
-                                  to={
-                                    "https://opensea.io/collection/worldofdypians"
-                                  }
-                                  target="_blank"
-                                  className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
-                                >
-                                  <img src={opensea} alt="" />
-                                  Buy on Opensea
-                                </NavLink>
-                              </div>
-                            ) : (
-                             <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                               <span
-                                className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                                style={{ fontWeight: "700", fontSize: "18px" }}
-                              >
-                                Event Coming Soon
-                              </span>
-                             </div>
-                            )}
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
+                            <NavLink
+                              to={"/shop/land"}
+                              className="getpremium-btn col-lg-4 py-2"
+                            >
+                              Buy on Shop
+                            </NavLink>
+                            <NavLink
+                              to={
+                                "https://opensea.io/collection/worldofdypians"
+                              }
+                              target="_blank"
+                              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                            >
+                              <img src={opensea} alt="" />
+                              Buy on Opensea
+                            </NavLink>
+                          </div>
+                        ) : (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <span
+                              className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                              style={{ fontWeight: "700", fontSize: "18px" }}
+                            >
+                              Event Coming Soon
+                            </span>
+                          </div>
+                        )}
                         {eventId === "golden-pass" &&
                           availableTime !== 0 &&
                           availableTime !== undefined && (
