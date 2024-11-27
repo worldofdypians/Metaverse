@@ -38,6 +38,13 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import axios from "axios";
 import wodToken from "../../../assets/wodAssets/wodToken.svg";
 import Countdown from "react-countdown";
+import gate from './assets/buyWodAssets/gate.svg'
+import kucoin from './assets/buyWodAssets/kucoin.svg'
+import mexc from './assets/buyWodAssets/mexc.svg'
+import pancakeSwap from './assets/buyWodAssets/pancakeSwap.svg'
+import trustWallet from './assets/buyWodAssets/trustWallet.svg'
+import xMarkBuyWod from './assets/buyWodAssets/xMark.svg'
+import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
 
 
 
@@ -79,6 +86,7 @@ const VideoWrapper = ({
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
   const [hoverState, setHoverState] = useState(false);
+  const [buyWodPopup, setBuyWodPopup] = useState(false);
 
   const downloader = useRef();
   const windowSize = useWindowSize();
@@ -94,6 +102,35 @@ const VideoWrapper = ({
 
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let releaseDate = new Date("2024-11-27T11:00:00.000+00:00");
+
+
+  const exchanges = [
+    {
+      title: "Kucoin",
+      logo: "kucoin.svg",
+      link: "https://www.kucoin.com/trade/WOD-USDT",
+    },
+    {
+      title: "Gate.io",
+      logo: "gate.svg",
+      link: "https://www.gate.io/trade/WOD_USDT",
+    },
+    {
+      title: "MEXC Global",
+      logo: "mexc.svg",
+      link: "https://www.mexc.com/exchange/WOD_USDT",
+    },
+    {
+      title: "PancakeSwap",
+      logo: "pancakeSwap.svg",
+      link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
+    },
+    {
+      title: "TrustWallet",
+      logo: "trustWallet.svg",
+      link: "https://short.trustwallet.com/app-download",
+    },
+  ];
 
 
   const dummyBetaPassData2 = [
@@ -190,12 +227,12 @@ const VideoWrapper = ({
   };
 
   useEffect(() => {
-    if (modal === true) {
+    if (modal === true || buyWodPopup === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [modal]);
+  }, [modal, buyWodPopup]);
 
   return (
     <>
@@ -230,17 +267,16 @@ const VideoWrapper = ({
                   Download
                 </a>
 
-              <NavLink
+              <button
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
-                to='/token'
-                // onClick={() => {
-                //   setmultiplayerModal(true);
-                // }}
+                onClick={() => {
+                  setBuyWodPopup(true);
+                }}
               >
                 <img src={buyWod} alt="" />
                 {/* Buy  */}
-                WOD
-              </NavLink>
+                Buy WOD
+              </button>
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">
@@ -333,7 +369,23 @@ const VideoWrapper = ({
       ) : (
         <></>
       )}
-
+      {buyWodPopup &&
+      <OutsideClickHandler onOutsideClick={() => setBuyWodPopup(false)}>
+          <div className="challenge-popup-wrapper popup-active p-3">
+            <div className="d-flex align-items-center justify-content-between mb-3">
+              <h6 className="mb-0 buy-wod-popup-title">
+                Buy WOD
+              </h6>
+              <img src={xMarkBuyWod} width={22} height={22} style={{cursor: "pointer"}} onClick={() => setBuyWodPopup(false)} alt="" />
+            </div>
+            <div className="d-flex flex-column gap-2">
+              {exchanges.map((item, index) => (
+                <BuyWodCard item={item} key={index} />
+              ))}
+            </div>
+          </div>
+      </OutsideClickHandler>
+      }
       {/* {multiplayerModal === true ? (
         <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
           <div className="system-requirements-modal p-3" id="reqmodal">

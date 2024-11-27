@@ -1339,7 +1339,7 @@ const Header = ({
                       //   setshowChainDropdown(false);
                       // }}
                       onMouseEnter={() => handleDropdown("chains")}
-                      onMouseLeave={() => handleDropdown(null)}
+                      // onMouseLeave={() => handleDropdown(null)}
                     >
                       <DropdownButton
                         id="dropdown-basic-button"
