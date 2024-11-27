@@ -260,19 +260,19 @@ const VideoWrapper = ({
          
         > */}
         <div className="">
-          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-start custom-container">
+          <div className="d-flex download-buttons-wrapper flex-column gap-4 align-items-center align-items-lg-center custom-container">
             <h4 className="main-hero-title font-montserrat">
               {/* The Biggest Metaverse
               <br />
               Ever Built */}
               Shaping the Future of Gaming, DeFi, NFTs and AI
             </h4>
-            <div className="d-flex flex-column gap-2 p-3 token-launch-wrapper">
+            {/* <div className="d-flex flex-column gap-2 p-3 token-launch-wrapper">
               <h6 className="release-date-title mb-0" >
                 Token Launch in:
               </h6>
               <Countdown date={releaseDate} renderer={renderer} />
-            </div>
+            </div> */}
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
                 <a
                   className="game-event-download py-2 px-5 d-flex align-items-center gap-2"

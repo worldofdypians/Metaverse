@@ -9,8 +9,6 @@ import bnbIcon from "../assets/bnb.svg";
 import wodIcon from "../../../screens/Wod/Bridge/assets/wodIcon.svg";
 import Countdown from "react-countdown";
 
-
-
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#fff",
@@ -89,32 +87,35 @@ const ReleaseContent = ({
   selectedRound,
   userClaimedTokens,
   totalVestedTokens,
+  cliffTime
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
+  const today = new Date();
 
   useEffect(() => {
-    if (selectedRound && selectedRound.id === "seed") {
-      if (Number(userClaimedTokens) === 0) {
-        settimerFinished(true);
-      }
+    if (selectedRound) {
+      if (selectedRound.id == "ido") {
+        if (today.getTime() > cliffTime) {
+          settimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinished(true);
+        }
+      } 
     }
-  }, [selectedRound, userClaimedTokens]);
-
+  }, [selectedRound, userClaimedTokens, cliffTime]);
+ 
   return (
     <div
       className="release-ecosystem-wrapper py-5 position-relative d-flex justify-content-center align-items-center mb-5"
       id="release"
     >
       <div className="container-fluid d-flex align-items-center justify-content-center">
-       
         <div className="row w-100 justify-content-center gap-3">
           {selectedRound?.id === "ido" && (
             <div className="d-flex flex-column gap-3 col-lg-2 justify-content-between">
               <div className="release-input-wrapper p-3 h-100">
                 <div className="d-flex flex-column">
-                  <span className="release-green-txt">
-                    Token Distribution
-                  </span>
+                  <span className="release-green-txt">Token Distribution</span>
                   <span className="release-white-txt">
                     {selectedRound?.title}
                   </span>
@@ -155,11 +156,9 @@ const ReleaseContent = ({
                 </div>
               </div>
               <div className="d-flex align-items-center gap-2 justify-content-between p-3">
-                <span className="release-balance-txt">
-                  Available to claim
-                </span>
+                <span className="release-balance-txt">Available to claim</span>
                 <span className="release-balance-amount">
-                  {getFormattedNumber(0)} WOD
+                  {getFormattedNumber(wodBalance)} WOD
                 </span>
               </div>
             </div>
@@ -171,34 +170,26 @@ const ReleaseContent = ({
                 <div className="d-flex align-items-center gap-2 justify-content-between">
                   <div className="d-flex flex-column">
                     <span className="release-upper-txt">
-                      {selectedRound?.id === "seed"
-                        ? getFormattedNumber(totalVestedTokens)
-                        : 0}
+                      {getFormattedNumber(totalVestedTokens)}
                     </span>
                     <span className="release-bottom-txt">Total WOD</span>
                   </div>
 
                   <div className="d-flex flex-column">
                     <span className="release-upper-txt">
-                      {selectedRound?.id === "seed"
-                        ? getFormattedNumber(userClaimedTokens, 2)
-                        : 0}
+                      {getFormattedNumber(userClaimedTokens, 2)}
                     </span>
                     <span className="release-bottom-txt">WOD Withdrew</span>
                   </div>
                   <div className="d-flex flex-column">
                     <span className="release-upper-txt">
-                      {selectedRound?.id === "seed"
-                        ? getFormattedNumber(
-                            totalVestedTokens - userClaimedTokens
-                          )
-                        : 0}
+                      {getFormattedNumber(
+                        totalVestedTokens - userClaimedTokens
+                      )}
                     </span>
                     <span className="release-bottom-txt">WOD Remaining</span>
                   </div>
                 </div>
-
-           
               </div>
             )}
             {!isConnected && (
@@ -206,7 +197,7 @@ const ReleaseContent = ({
                 Connect Wallet
               </button>
             )}
-            {isConnected && chainId !== 56 && chainId !== 97 && (
+            {isConnected && chainId !== 56 && (
               <button
                 className="fail-button w-100 py-2"
                 onClick={handleSwitchChain}
@@ -215,7 +206,7 @@ const ReleaseContent = ({
               </button>
             )}
             {isConnected &&
-              (chainId === 56 || chainId === 97) &&
+              chainId === 56 &&
               selectedRound?.id === "airdrop" && (
                 <button
                   className={` w-100 py-2 disabled-btn2
@@ -228,8 +219,7 @@ const ReleaseContent = ({
                     timerFinished === false ||
                     Number(wodBalance) === 0
                       ? true
-                      :
-                    false
+                      : false
                   }
                   // onClick={handleClaim}
                 >
@@ -248,73 +238,39 @@ const ReleaseContent = ({
                 </button>
               )}
 
-            {isConnected &&
-              (chainId === 56 || chainId === 97) &&
-              selectedRound?.id === "ido" && (
-                <div className="d-flex align-items-center gap-3">
-                  <button
-                    className={` w-100 py-2 connectbtn
+            {isConnected && chainId === 56 && selectedRound?.id === "ido" && (
+              <button
+                className={` w-100 py-2
                 
-              
-                `}
-                    disabled={
-                      // startedVesting === false ||
-                      // canClaim === false ||
-                      // timerFinished === false ||
-                      // Number(wodBalance) === 0
-                      //   ? true
-                      //   :
-                      false
-                    }
-                    // onClick={handleClaim}
-                  >
-                    {claimLoading ? (
-                      <div
-                        class="spinner-border spinner-border-sm text-light"
-                        role="status"
-                      ></div>
-                    ) : claimStatus === "failed" ? (
-                      <>Failed</>
-                    ) : claimStatus === "success" ? (
-                      <>Success</>
-                    ) : (
-                      <>Claim</>
-                    )}
-                  </button>
-
-                  <button
-                    disabled={
-                      // pendingDivs > 0 ?
-                      false
-                      //  : true
-                    }
-                    className={`btn w-100 outline-btn-stake 
-                       
-                        d-flex justify-content-center align-items-center gap-2`}
-                    style={{ height: "fit-content" }}
-                    // onClick={handleReinvest}
-                  >
-                    {/* {reInvestLoading ? (
-                          <div
-                            class="spinner-border spinner-border-sm text-light"
-                            role="status"
-                          >
-                            <span class="visually-hidden">Loading...</span>
-                          </div>
-                        ) : reInvestStatus === "failed" ? (
-                          <>
-                            <img src={failMark} alt="" />
-                            Failed
-                          </>
-                        ) : reInvestStatus === "success" ? (
-                          <>Success</>
-                        ) : (
-                          <>Reinvest</>
-                        )} */}
-                    Refund
-                  </button>
-                </div>
-              )}
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  startedVesting === false ||
+                  canClaim === false ||
+                  timerFinished === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    class="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
           </div>
         </div>
       </div>

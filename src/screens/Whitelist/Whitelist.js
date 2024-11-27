@@ -423,7 +423,7 @@ const Whitelist = ({
   };
 
   const getInfoTimer = async () => {
-    const vestingSc = new window.bscTestWeb3.eth.Contract(
+    const vestingSc = new window.bscWeb3.eth.Contract(
       VESTING_ABI,
       window.config.vesting_address
     );
@@ -524,7 +524,7 @@ const Whitelist = ({
       { from: await window.getCoinbase() }
     );
 
-    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
+    const gasPrice = await window.bscWeb3.eth.getGasPrice();
     console.log("gasPrice", gasPrice);
     const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
     // const increasedGwei = parseInt(currentGwei) + 2;
