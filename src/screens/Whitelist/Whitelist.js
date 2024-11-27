@@ -423,7 +423,7 @@ const Whitelist = ({
   };
 
   const getInfoTimer = async () => {
-    const vestingSc = new window.bscTestWeb3.eth.Contract(
+    const vestingSc = new window.bscWeb3.eth.Contract(
       VESTING_ABI,
       window.config.vesting_address
     );
