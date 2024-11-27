@@ -38,10 +38,10 @@ const renderer = ({ days, hours, minutes, seconds }) => {
   );
 };
 
-const renderer2 = ({ hours, minutes }) => {
+const renderer2 = ({ days, hours, minutes }) => {
   return (
     <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
-      {hours}d:{hours}h:{minutes}m
+      {days}d:{hours}h:{minutes}m
     </h6>
   );
 };
@@ -62,6 +62,7 @@ const StakeWodDetails2 = ({
   poolCap,
   isConnected,
   start_date,
+  onSuccessfulStake
 }) => {
   let { reward_token_wod, BigNumber, alertify, reward_token_idyp, token_dyps } =
     window;
@@ -232,26 +233,26 @@ const StakeWodDetails2 = ({
     //Calculate APY
 
     try {
-      let amount = new BigNumber(1000000000000000000).toFixed(0);
-      let router = await window.getUniswapRouterContract();
-      let WETH = await router.methods.WETH().call();
-      let platformTokenAddress = window.config.USDC_address;
-      let rewardTokenAddress = window.config.reward_token_wod_address;
-      let path = [
-        ...new Set(
-          [rewardTokenAddress, WETH, platformTokenAddress].map((a) =>
-            a.toLowerCase()
-          )
-        ),
-      ];
-      let _amountOutMin = await router.methods
-        .getAmountsOut(amount, path)
-        .call();
-      _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
-      _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
+      // let amount = new BigNumber(1000000000000000000).toFixed(0);
+      // let router = await window.getUniswapRouterContract();
+      // let WETH = await router.methods.WETH().call();
+      // let platformTokenAddress = window.config.USDC_address;
+      // let rewardTokenAddress = window.config.reward_token_wod_address;
+      // let path = [
+      //   ...new Set(
+      //     [rewardTokenAddress, WETH, platformTokenAddress].map((a) =>
+      //       a.toLowerCase()
+      //     )
+      //   ),
+      // ];
+      // let _amountOutMin = await router.methods
+      //   .getAmountsOut(amount, path)
+      //   .call();
+      // _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
+      // _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
 
       let _bal;
-      if (chainId === "1" && coinbase && isConnected) {
+      if (chainId === "56" && coinbase && isConnected) {
         _bal = reward_token_wod.balanceOf(coinbase);
       }
       if (staking && coinbase !== undefined && coinbase !== null) {
@@ -267,9 +268,10 @@ const StakeWodDetails2 = ({
         let tStakers = staking.getNumberOfHolders();
 
         //Take iDYP Balance on Staking
-        let _tvlConstantiDYP = reward_token_idyp.balanceOf(
-          staking._address
-        ); /* TVL of iDYP on Staking */
+        // let _tvlConstantiDYP = reward_token_idyp.balanceOf(
+        //   staking._address
+        // );
+        /* TVL of iDYP on Staking */
 
         //Take DYPS Balance
         // let _tvlDYPS = token_dyps.balanceOf(staking._address); /* TVL of DYPS */
@@ -296,7 +298,7 @@ const StakeWodDetails2 = ({
           _tvl,
           _rFeeEarned,
           tStakers,
-          _tvlConstantiDYP,
+          // _tvlConstantiDYP,
           //   _tvlDYPS,
         ]);
 
@@ -312,17 +314,17 @@ const StakeWodDetails2 = ({
             console.log(e);
           });
 
-        let usdValueiDYP = new BigNumber(tvlConstantiDYP)
-          .times(_amountOutMin)
-          .toFixed(18);
-        let usdValueDYPS = 0;
-        let usd_per_lp = dypprice;
-        let tvlUSD = new BigNumber(tvl)
-          .times(usd_per_lp)
-          .plus(usdValueiDYP)
-          .plus(usdValueDYPS)
-          .toFixed(18);
-        settvlusd(tvlUSD);
+        // let usdValueiDYP = new BigNumber(tvlConstantiDYP)
+        //   .times(_amountOutMin)
+        //   .toFixed(18);
+        // let usdValueDYPS = 0;
+        // let usd_per_lp = dypprice;
+        // let tvlUSD = new BigNumber(tvl)
+        //   .times(usd_per_lp)
+        //   .plus(usdValueiDYP)
+        //   .plus(usdValueDYPS)
+        //   .toFixed(18);
+        // settvlusd(tvlUSD);
 
         let balance_formatted = new BigNumber(token_balance ?? 0)
           .div(1e18)
@@ -390,11 +392,12 @@ const StakeWodDetails2 = ({
   }, []);
 
   useEffect(() => {
-    if (chainId === "1") {
+    if (chainId === "56") {
       refreshBalance();
       if (depositAmount !== "") {
         checkApproval(depositAmount);
       }
+      getApprovedAmount();
     }
   }, [coinbase, coinbase2, staking, isConnected, chainId]);
 
@@ -415,6 +418,7 @@ const StakeWodDetails2 = ({
         setdepositLoading(false);
         setdepositStatus("deposit");
         refreshBalance();
+        getApprovedAmount()
       })
       .catch((e) => {
         setdepositLoading(false);
@@ -449,6 +453,8 @@ const StakeWodDetails2 = ({
         setdepositLoading(false);
         setdepositStatus("success");
         refreshBalance();
+        getApprovedAmount()
+        onSuccessfulStake()
         setTimeout(() => {
           setdepositStatus("initial");
           setdepositAmount("");
@@ -477,6 +483,7 @@ const StakeWodDetails2 = ({
         setwithdrawLoading(false);
         setwithdrawStatus("success");
         refreshBalance();
+        onSuccessfulStake()
         setTimeout(() => {
           setwithdrawStatus("initial");
           setwithdrawAmount("");
@@ -542,13 +549,29 @@ const StakeWodDetails2 = ({
   };
 
   const getApproxReturn = (depositAmount) => {
-    const expirationDate = new Date("2025-11-07T23:11:00.000+02:00");
+    const expirationDate = new Date("2025-11-27T23:11:00.000+02:00");
     const currentDate = new Date();
     const timeDifference = expirationDate - currentDate;
     const millisecondsInADay = 1000 * 60 * 60 * 24;
     const daysUntilExpiration = Math.floor(timeDifference / millisecondsInADay);
 
     return ((depositAmount * apr) / 100 / 365) * daysUntilExpiration;
+  };
+
+  const getApprovedAmount = async () => {
+    const result = await window
+      .checkapproveStakePool(
+        coinbase,
+        reward_token_wod._address,
+        staking._address
+      )
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+
+    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+    setapprovedAmount(result_formatted);
   };
 
   const handleReinvest = async (e) => {
@@ -580,9 +603,9 @@ const StakeWodDetails2 = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
+    await handleSwitchNetworkhook("0x38")
       .then(() => {
-        handleSwitchNetwork("1");
+        handleSwitchNetwork("56");
       })
       .catch((e) => {
         console.log(e);
@@ -647,7 +670,6 @@ const StakeWodDetails2 = ({
     let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
     let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
 
-    setapprovedAmount(result_formatted2);
     if (
       Number(result_formatted) >= Number(amount) &&
       Number(result_formatted) !== 0
@@ -672,8 +694,8 @@ const StakeWodDetails2 = ({
 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
-      const stakingSc = new window.infuraWeb3.eth.Contract(
-        window.CONSTANT_STAKING_DYPIUS_ABI,
+      const stakingSc = new window.bscWeb3.eth.Contract(
+        window.CONSTANT_STAKING_WOD_ABI,
         staking._address
       );
       const totalDeposited = await stakingSc.methods
@@ -812,8 +834,7 @@ const StakeWodDetails2 = ({
                           fontWeight: 300,
                         }}
                       >
-                        {getFormattedNumber(getApproxReturn(depositAmount), 2)}{" "}
-                        WOD
+                        {getFormattedNumber(approvedAmount, 2)} WOD
                       </span>
                     </span>
                   </div>
@@ -919,29 +940,31 @@ const StakeWodDetails2 = ({
                   disabled={
                     (depositAmount === "" || depositLoading === true) &&
                     isConnected &&
-                    chainId === "1"
+                    chainId === "56"
                       ? true
                       : false
                   }
                   className={`btn w-100 ${
                     depositAmount === "" &&
                     isConnected &&
-                    chainId === "1" &&
+                    chainId === "56" &&
                     "disabled-btn"
                   } ${
-                     depositStatus === "initial" && depositAmount !== "" &&
+                    depositStatus === "initial" &&
+                    depositAmount !== "" &&
                     isConnected &&
-                    chainId === "1" &&
+                    chainId === "56" &&
                     "outline-btn-stake"
                   }  ${
                     ((depositStatus === "deposit" &&
-                   isConnected &&
-                   chainId === "1") || !isConnected) &&
-                   "connectbtn"
-                 } ${
+                      isConnected &&
+                      chainId === "56") ||
+                      !isConnected) &&
+                    "connectbtn"
+                  } ${
                     depositStatus === "success"
                       ? "success-button"
-                      : (depositStatus === "fail" || chainId !== "1") &&
+                      : (depositStatus === "fail" || chainId !== "56") &&
                         isConnected
                       ? "fail-button"
                       : null
@@ -949,7 +972,7 @@ const StakeWodDetails2 = ({
                   onClick={() => {
                     !isConnected
                       ? handleConnection()
-                      : isConnected && chainId !== "1"
+                      : isConnected && chainId !== "56"
                       ? handleEthPool()
                       : depositStatus === "deposit"
                       ? handleStake()
@@ -960,8 +983,8 @@ const StakeWodDetails2 = ({
                 >
                   {!isConnected ? (
                     <>Connect Wallet</>
-                  ) : isConnected && chainId !== "1" ? (
-                    <>Switch to Ethereum</>
+                  ) : isConnected && chainId !== "56" ? (
+                    <>Switch to BNB Chain</>
                   ) : depositLoading ? (
                     <div
                       class="spinner-border spinner-border-sm text-light"
@@ -993,14 +1016,14 @@ const StakeWodDetails2 = ({
               </div> */}
               {errorMsg && <h6 className="errormsg w-100">{errorMsg}</h6>}
             </div>
-            {/* {pendingDivs > 0 && */}
+            {depositedTokens > 0 &&
             <div className="stake-separator"></div>
-            {/* } */}
-            {/* {pendingDivs > 0 && ( */}
+            }
+            {depositedTokens > 0 && (
             <div
               className={`otherside-border ${
                 listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(expired === true || chainId !== "1") && "blurrypool"} `}
+              }  ${(expired === true || chainId !== "56") && "blurrypool"} `}
             >
               <div className="d-flex justify-content-between gap-2 flex-column flex-lg-row">
                 <h6
@@ -1036,7 +1059,7 @@ const StakeWodDetails2 = ({
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />{" "} */}
-                    {getFormattedNumber(pendingDivs, 2)} WOD
+                    {getFormattedNumber(pendingDivs, pendingDivs > 0 ? 6 : 2)} WOD
                   </h6>
                   <div className="d-flex w-100 align-items-center gap-2">
                     <button
@@ -1120,15 +1143,15 @@ const StakeWodDetails2 = ({
                 {errorMsg2 && <h6 className="errormsg w-100">{errorMsg2}</h6>}
               </div>
             </div>
-            {/* )} */}
-            {/* {depositedTokens && depositedTokens > 0 && ( */}
+            )}
+            {depositedTokens && depositedTokens > 0 && (
             <div className="stake-separator"></div>
-            {/* )} */}
-            {/* {depositedTokens && depositedTokens > 0 && ( */}
+            )}
+            {depositedTokens && depositedTokens > 0 && (
             <div
               className={`otherside-border  ${
                 listType === "list" ? "col-12 col-md-6 col-lg-2" : "px-0"
-              } ${chainId !== "1" && "blurrypool"} `}
+              } ${chainId !== "56" && "blurrypool"} `}
             >
               <div className="d-flex flex-column gap-2">
                 <h6 className="m-0 deposit-txt d-flex align-items-center gap-2 justify-content-between">
@@ -1156,8 +1179,8 @@ const StakeWodDetails2 = ({
                         <h6 className="m-0 rewardstxtwod d-flex align-items-center gap-2">
                           <Countdown
                             date={
-                              // (Number(stakingTime) + Number(cliffTime)) * 1000
-                              today.getTime()
+                              (Number(stakingTime) + Number(cliffTime)) * 1000
+                              // today.getTime()
                             }
                             renderer={renderer2}
                           />
@@ -1178,12 +1201,16 @@ const StakeWodDetails2 = ({
                 </div>
               </div>
             </div>
-            {/* )} */}
+            )}
             <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              className={`info-pool-wrapper2 p-1 d-flex ${
+                depositedTokens > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: depositedTokens > 0 ? 'auto' : 'fit-content'
+                width: depositedTokens > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();

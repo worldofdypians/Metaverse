@@ -4,7 +4,12 @@ import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import dappRadarFull from "./dappradarFull.svg";
 // import playIcon from "../../../assets/playIcon.svg";
 
-const ExplorerGrid = ({ totalSupply, monthlyPlayers }) => {
+const ExplorerGrid = ({
+  totalSupply,
+  monthlyPlayers,
+  wodHolders,
+  totalVolumeNew,
+}) => {
   const [totalTx2, setTotalTx] = useState(0);
   const [totalvolume2, setTotalVolume] = useState(0);
 
@@ -62,7 +67,7 @@ const ExplorerGrid = ({ totalSupply, monthlyPlayers }) => {
           <div className="col-12 col-lg-3 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
-                ${getFormattedNumber(totalvolume2, 0)}
+                ${getFormattedNumber(totalVolumeNew, 0)}
               </h6>
               <span className="new-stats-type">Total Volume (USD)</span>
             </div>
@@ -70,9 +75,9 @@ const ExplorerGrid = ({ totalSupply, monthlyPlayers }) => {
           <div className="col-12 col-lg-3 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
-                {getFormattedNumber(totalSupply, 0)}
+                {getFormattedNumber(wodHolders, 0)}
               </h6>
-              <span className="new-stats-type">Sold NFTs</span>
+              <span className="new-stats-type">WOD Holders</span>
             </div>
           </div>
         </div>

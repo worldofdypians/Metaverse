@@ -5,6 +5,7 @@ import newPool from "../assets/newPool.png";
 import staked from "../assets/staked.svg";
 import stakeTag from "../assets/stakeTag.svg";
 import cawsLabel from "../assets/cawsLabel.png";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 const TopPoolsCard = ({
   isAccount,
@@ -48,7 +49,10 @@ const TopPoolsCard = ({
             : "poolscardwrapper"
         } cursor-pointer position-relative ${details && "pools-card-open"}  ${
           isHover && "pools-card-hover"
-        } `}
+        } 
+         ${
+          isStaked && !isHover && "pools-card-staked"
+        }`}
         onClick={() => handleDetails()}
         style={{ display: display }}
         onMouseEnter={() => {
@@ -58,14 +62,14 @@ const TopPoolsCard = ({
           setShowDetails(false);
         }}
       >
-        {isStaked && isPremium && (
+        {/* {isStaked && isPremium && (
           <img
             src={staked}
             className="staked"
             alt="staked"
             style={{ right: isAccount === true ? 60 : "" }}
           />
-        )}
+        )} */}
 
         {/* {tvl === '--' && (
           <img src={comingSoon} className="comingsoon" alt="top pick" />
@@ -137,7 +141,7 @@ const TopPoolsCard = ({
             >
               <h6 className="tvl-text m-0">Available Quota</h6>
 
-              <h6 className="locktime-amount m-0">{availableQuota}</h6>
+              <h6 className="locktime-amount m-0">{getFormattedNumber(availableQuota) }</h6>
             </div>
           </div>
           {/* {tvl != "--" && (
