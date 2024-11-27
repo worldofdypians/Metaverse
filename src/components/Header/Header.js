@@ -211,7 +211,7 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      } else if (chainId === 56) {
+      } else if (chainId === 56 || chainId === 97) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(true);

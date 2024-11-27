@@ -235,6 +235,21 @@
   cursor: default;
 }
 
+.disabled-btn2 {
+  color: #c0c9ff !important;
+  background: transparent;
+  border: 1px solid #c0c9ff !important;
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 18px;
+  opacity: 1 !important;
+  pointer-events: none;
+  cursor: default;
+}
+
 .success-button {
   color: #ffffff !important;
   background: linear-gradient(90.74deg, #75cac2 0%, #57b6ab 100%) !important;

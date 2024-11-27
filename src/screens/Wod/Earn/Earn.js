@@ -14,72 +14,12 @@ const Earn = ({
   binanceW3WProvider,
   isPremium,
   tvl,
-  wodBalance
+  wodBalance,
+  tokenPools,
+  userPools,
+  onSuccessfulStake
 }) => {
-  const tokenPools = [
-    {
-      pair_name: "WOD",
-      apy_percent: 7.5,
-      lock_time: "30 days",
-      chain: "BNB Chain",
-      tokenURL: ["wodToken"],
-      chainLogo: "bnbLogo.svg",
-      tvl_usd: "--",
-      type: 'token',
-      expired: 'No',
-      id: 'one'
-    },
-    {
-      pair_name: "WOD",
-      apy_percent: 12.5,
-      lock_time: "60 days",
-      chain: "BNB Chain",
-      tokenURL: ["wodToken"],
-      chainLogo: "bnbLogo.svg",
-      tvl_usd: "--",
-      type: 'token',
-      expired: 'No',
-      id: 'two'
-
-
-    },
-    {
-      pair_name: "WOD",
-      apy_percent: 20,
-      lock_time: "90 days",
-      chain: "Ethereum",
-      tokenURL: ["wodToken"],
-      chainLogo: "ethIcon.svg",
-      tvl_usd: "--",
-      type: 'token',
-      expired: 'No',
-      id: 'three'
-    },
-    {
-      pair_name: "WOD",
-      apy_percent: 35,
-      lock_time: "180 days",
-      chain: "Ethereum",
-      tokenURL: ["wodToken"],
-      chainLogo: "ethIcon.svg",
-      tvl_usd: "--",
-      type: 'token',
-      expired: 'No',
-      id: 'four'
-    },
-    // {
-    //   pair_name: "WOD",
-    //   apy_percent: 50,
-    //   lock_time: "360 days",
-    //   chain: "Ethereum",
-    //   tokenURL: ["wodToken"],
-    //   chainLogo: "ethIcon.svg",
-    //   tvl_usd: "--",
-    //   type: 'token',
-    //   expired: 'No',
-    //   id: 'three'
-    // },
-  ];
+ 
 
   // const nftPools = [
   //   {
@@ -209,6 +149,8 @@ const Earn = ({
             isPremium={isPremium}
             tvl={tvl}
             wodBalance={wodBalance}
+            userPools={userPools}
+            onSuccessfulStake={onSuccessfulStake}
           />
         </div>
       </div>
