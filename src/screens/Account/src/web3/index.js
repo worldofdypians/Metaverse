@@ -26,6 +26,7 @@ const furyBeast_address = "0x79fb1A71c950605d96FA89c4eA96B45de0391eed";
 const wingStorm_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
 const scorpionKing_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
 const stoneEye_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
+const goldenPass_address = "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
 const landNft_address = "0xcd60d912655281908ee557ce1add61e983385a03";
 const landNftStake_address = "0x6821710b0d6e9e10acfd8433ad023f874ed782f1";
 const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9";
@@ -108,6 +109,7 @@ export const furyBeastAddress = furyBeast_address;
 export const wingStormAddress = wingStorm_address;
 export const scorpionKingAddress = scorpionKing_address;
 export const stoneEyeAddress = stoneEye_address;
+export const goldenPassAddress = goldenPass_address;
 export const dyp700Address = dyp700_address;
 export const dyp700v1Address = dyp700v1_address;
 

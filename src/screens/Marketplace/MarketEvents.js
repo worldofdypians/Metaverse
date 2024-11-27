@@ -1979,7 +1979,10 @@ const MarketEvents = ({
           <DragonPopup onClosePopup={onClosePopup} />
         )}
         {popup && packagePopup === "goldenpass" && (
-          <GoldenPassPopup onClosePopup={onClosePopup} />
+          <GoldenPassPopup onClosePopup={onClosePopup}
+          binanceW3WProvider={binanceW3WProvider}
+          // coinbase={coinbase}
+          />
         )}
         {popup && packagePopup === "puzzlemadness" && (
           <PuzzleMadnessPopup onClosePopup={onClosePopup} />

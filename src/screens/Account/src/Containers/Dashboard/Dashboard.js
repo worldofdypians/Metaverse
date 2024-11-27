@@ -10565,6 +10565,11 @@ function Dashboard({
             onClosePopup={() => {
               setgoldenPassPopup(false);
             }}
+            coinbase={coinbase}
+            chainId={chainId}
+            wodPrice={wodPrice}
+            binanceW3WProvider={binanceW3WProvider}
+            wallet={data?.getPlayer?.wallet?.publicAddress}
           />
         )}
 
