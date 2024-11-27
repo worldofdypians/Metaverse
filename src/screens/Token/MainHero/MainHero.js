@@ -49,14 +49,14 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
-      title: "",
-      logo: "unknown.svg",
-      // link: "https://www.gate.io/trade/WOD_USDT",
+      title: "PancakeSwap",
+      logo: "pancakeswap.svg",
+      link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
     },
     {
-      title: "",
-      logo: "unknown.svg",
-      // link: "https://www.gate.io/trade/WOD_USDT",
+      title: "TrustWallet",
+      logo: "trustwallet.svg",
+      link: "https://short.trustwallet.com/app-download",
     },
   ];
 
