@@ -182,7 +182,7 @@ const Whitelist = ({
     let availableTGEAdvisors = 0;
     if (coinbase) {
       availableTGEAdvisors = await advisorsSc.methods
-        .available(coinbase)
+        .availableTGE(coinbase)
         .call()
         .catch((e) => {
           console.error(e);
