@@ -434,7 +434,7 @@ const Whitelist = ({
 
     let totalVestedTokensPerUserAdvisors = 0;
     if (coinbase) {
-      totalVestedTokensPerUserAdvisors = await vestingSc.methods
+      totalVestedTokensPerUserAdvisors = await advisorsSc.methods
         .vestedTokens(coinbase)
         .call()
         .catch((e) => {
