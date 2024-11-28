@@ -361,18 +361,22 @@ const Header = ({
         setImmutableState(false);
         setTaikoState(true);
       }
-      // else if (chainId === 713715 ) {
-      //   setAvaxState(false);
-      //   setBnbState(false);
-      //   setEthState(false);
-      //   setBaseState(false);
-      //   setConfluxState(false);
-      //   setopBnbState(false);
-      //   setSkaleState(false);
-      //   setCoreState(false);
-      //   setVictionState(false);
-      //   setSeiState(true)
-      // }
+      else if (chainId === 1329 ) {
+        setMatState(false);
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(true);
+        setImmutableState(false);
+        setTaikoState(false);
+      }
       else {
         setMatState(false);
         setAvaxState(false);
@@ -1407,9 +1411,9 @@ const Header = ({
                                     ? taiko
                                     : matState === true
                                     ? matchain
-                                    : // : seiState === true
-                                      // ? sei
-                                      error
+                                    : seiState === true
+                                    ? sei
+                                    : error
                                 }
                                 width={20}
                                 height={20}
@@ -1514,6 +1518,21 @@ const Header = ({
                               <img src={base} alt="" width={20} height={20} />
                               Base
                             </Dropdown.Item>
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
+                                <Dropdown.Item
+                                  onClick={() => switchNetwork("0x531", 1329)}
+                                >
+                                  <img
+                                    src={sei}
+                                    width={20}
+                                    height={20}
+                                    alt=""
+                                  />
+                                  SEI
+                                </Dropdown.Item>
+                              )}
+
                             {window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item

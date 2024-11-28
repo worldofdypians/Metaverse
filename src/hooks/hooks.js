@@ -123,15 +123,15 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https:/vicscan.xyz"],
   };
   const SEIPARAMS = {
-    chainId: "0xae3f3", // A 0x-prefixed hexadecimal string
-    chainName: "Sei EVM Devnet",
+    chainId: "0x531", // A 0x-prefixed hexadecimal string
+    chainName: "Sei Network",
     nativeCurrency: {
       name: "Sei",
       symbol: "SEI", // 2-6 characters long
       decimals: 18,
     },
-    rpcUrls: ["https://evm-rpc-arctic-1.sei-apis.com"],
-    blockExplorerUrls: ["https://seistream.app/"],
+    rpcUrls: ["https://evm-rpc.sei-apis.com"],
+    blockExplorerUrls: ["https://seitrace.com"],
   };
 
   const TAIKOPARAMS = {
@@ -188,7 +188,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x45c" && switchError.code.toString().includes("32603"))||
       (chainID === "0x28c58" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0xae3f3" && switchError.code.toString().includes("32603"))||
+      (chainID === "0x531" && switchError.code.toString().includes("32603"))||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xa9" && switchError.code.toString().includes("32603"))||
       (chainID === "0x2ba" && switchError.code.toString().includes("32603")) ||
@@ -223,7 +223,7 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [TAIKOPARAMS]
               : chainID === "0x58"
               ? [VICTIONPARAMS]
-              : chainID === "0xae3f3"
+              : chainID === "0x531"
               ? [SEIPARAMS]
               : chainID === "0x343b"
               ? [IMMUTABLEPARAMS]

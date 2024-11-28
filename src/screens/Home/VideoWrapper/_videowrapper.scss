@@ -239,3 +239,22 @@ font-style: normal;
 font-weight: 700;
 line-height: 24px; /* 171.429% */
 }
+
+.home-epic{
+  cursor: pointer;
+  transition: all .25s;
+  z-index: 2;
+}
+
+.home-epic:hover{
+  transform: scale(1.05);
+  filter: drop-shadow(0px 4px 6px rgba(243, 191, 9, 0.45));
+}
+
+.home-line{
+  position: absolute;
+  top: 22%;  
+    left: 50%; 
+
+    transform: translate(-50%, -50%);
+}
