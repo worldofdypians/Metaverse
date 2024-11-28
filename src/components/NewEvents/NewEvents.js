@@ -1608,6 +1608,7 @@ const NewEvents = ({
       mobileThumbImage: dragonRuinsThumbMobile,
       mobileThumbImageActive: dragonRuinsActiveThumbMobile,
       wodAmount: dragonRuinsWodAmount,
+      usdPrice: 2.00,
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
       dayText: "MON",
@@ -1637,6 +1638,8 @@ const NewEvents = ({
       mobileThumbImage: coldBiteThumbMobile,
       mobileThumbImageActive: coldBiteActiveThumbMobile,
       wodAmount: coldBiteWodAmount,
+      usdPrice: 2.50,
+
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
       dayText: "TUE",
@@ -1667,6 +1670,7 @@ const NewEvents = ({
       mobileThumbImage: furyBeastThumbMobile,
       mobileThumbImageActive: furyBeastActiveThumbMobile,
       wodAmount: furyBeastWodAmount,
+      usdPrice: 2.50,
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
       dayText: "WED",
@@ -1698,6 +1702,8 @@ const NewEvents = ({
       mobileThumbImage: wingStormThumbMobile,
       mobileThumbImageActive: wingStormActiveThumbMobile,
       wodAmount: wingStormWodAmount,
+      usdPrice: 3.00,
+
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -1729,6 +1735,7 @@ const NewEvents = ({
       mobileThumbImage: scorpionKingThumbMobile,
       mobileThumbImageActive: scorpionKingActiveThumbMobile,
       wodAmount: scorpionKingWodAmount,
+      usdPrice: 3.50,
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -1759,6 +1766,7 @@ const NewEvents = ({
       mobileThumbImage: stoneEyeThumbMobile,
       mobileThumbImageActive: stoneEyeActiveThumbMobile,
       wodAmount: stoneEyeWodAmount,
+      usdPrice: 3.00,
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -1876,6 +1884,7 @@ const NewEvents = ({
     id: "puzzle",
     popupImage: puzzleMadnessPopup,
     image: puzzleMadnessBanner,
+    usdPrice: 4.00,
 
     desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
     title: "Puzzle Madness",
@@ -1901,6 +1910,7 @@ const NewEvents = ({
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
     link: "/account/challenges/golden-pass",
+    usdPrice: 2.00,
     popupDesc:
       "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
     secondaryDesc:
@@ -2553,7 +2563,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          dragonRuinsWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -2577,7 +2587,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          coldBiteWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -2601,7 +2611,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          furyBeastWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -2625,7 +2635,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          wingStormWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -2649,7 +2659,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          scorpionKingWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -2673,7 +2683,7 @@ const NewEvents = ({
                                       <span className="event-price-usd">
                                         ($
                                         {getFormattedNumber(
-                                          stoneEyeWodAmount * wodPrice
+                                          activeEvent.usdPrice
                                         )}
                                         )
                                       </span>
@@ -3435,12 +3445,11 @@ const NewEvents = ({
                           </div>
                         ) : activeEvent?.id === "puzzle" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
-                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-5">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
+                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
                                 <span className="event-price-span">
                                   Event Price
                                 </span>
-
                                 <div className="d-flex align-items-center gap-3">
                                   <div className="d-flex align-items-center gap-1">
                                     <img
@@ -3459,7 +3468,7 @@ const NewEvents = ({
                                   <span className="event-price-usd">
                                     ($
                                     {getFormattedNumber(
-                                      puzzleMadnessWodAmount * wodPrice
+                                      activeEvent.usdPrice
                                     )}
                                     )
                                   </span>
@@ -3568,7 +3577,7 @@ const NewEvents = ({
                         ) : activeEvent?.id === "explorer-hunt" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                             <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column">
+                              <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
                                   style={{ fontSize: "18px" }}
@@ -3587,7 +3596,7 @@ const NewEvents = ({
                         ) : activeEvent?.id === "greatCollection" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                             <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column">
+                              <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
                                   style={{ fontSize: "18px" }}
