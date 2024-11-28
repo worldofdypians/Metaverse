@@ -355,6 +355,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setDragonBundleState("deposit");
         setStatusColor("#00FECF");
+        setDragonShowApproval(false)
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -531,6 +532,8 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setBearBundleState("deposit");
         setStatusColor("#00FECF");
+        setBearShowApproval(false)
+
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -706,6 +709,8 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setBeastBundleState("deposit");
         setStatusColor("#00FECF");
+        setBeastShowApproval(false)
+
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -881,6 +886,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setEagleBundleState("deposit");
         setStatusColor("#00FECF");
+        setEagleShowApproval(false)
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -1056,6 +1062,8 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setScorpionBundleState("deposit");
         setStatusColor("#00FECF");
+        setScorpionShowApproval(false)
+
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -1232,6 +1240,8 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setCyclopsBundleState("deposit");
         setStatusColor("#00FECF");
+        setCyclopsShowApproval(false)
+
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -2339,7 +2349,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtDragon ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
@@ -2424,7 +2434,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtBear ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
@@ -2506,7 +2516,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtBeast ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
@@ -2586,7 +2596,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtEagle ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
@@ -2669,7 +2679,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtScorpion ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
@@ -2753,7 +2763,7 @@ const NewEvents = ({
                                   <>
                                     {hasBoughtCyclops ? (
                                       <div className="d-flex flex-column gap-1">
-                                        <span className="days3">
+                                        <span className="event-price-span">
                                           Active Until:
                                         </span>
                                         <Countdown
