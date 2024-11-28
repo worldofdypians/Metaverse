@@ -817,7 +817,7 @@ const MyProfile = ({
                   <div className="daily-progress-item position-relative">
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Upcoming</span>
+                      <span>Ready</span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -836,7 +836,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.puzzleMadnessCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
