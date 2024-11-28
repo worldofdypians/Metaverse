@@ -82,40 +82,9 @@ import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/asset
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <>
-      <div className="d-flex align-items-center gap-1">
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {days < 10 ? "0" + days : days}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Days
-          </span>
-        </div>
-        <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-          :
-        </h6>
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {hours < 10 ? "0" + hours : hours}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Hours
-          </span>
-        </div>
-        <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-          :
-        </h6>
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {minutes < 10 ? "0" + minutes : minutes}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Minutes
-          </span>
-        </div>
-      </div>
-    </>
+    <h6 className="timer-text mb-0">
+      {days}d: {hours}h:{minutes}m (UTC)
+    </h6>
   );
 };
 
@@ -1187,7 +1156,7 @@ const MyProfile = ({
                       ) : (
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}
-                          renderer={renderer2}
+                          renderer={renderer}
                           // onComplete={() => {
                           //   setcountdown();
                           //   setisActive(false);

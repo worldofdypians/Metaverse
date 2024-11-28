@@ -521,11 +521,12 @@ const NewEvents = ({
   };
 
   const handleApprovalBear = async () => {
+  
     setBearBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
-
+if (window.WALLET_TYPE !== "binance") {
     await wod_token_abi.methods
       .approve(coldBiteAddress, "500000000000000000000000000")
       .send({ from: coinbase })
@@ -540,6 +541,30 @@ const NewEvents = ({
         setStatus(e?.message);
         setBearBundleState("fail");
       });
+    }
+    else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        cold_bite_address,
+        COLD_BITE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      
+      await wod_token_abi.methods
+        .approve(coldBiteAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBearBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearBundleState("fail");
+        });
+      }
   };
 
   const handleDepositBear = async () => {
@@ -681,7 +706,7 @@ const NewEvents = ({
         .allowance(wallet, furyBeastAddress)
         .call()
         .then((data) => {
-          console.log("ddddddd", data);
+          
           if (data === "0" || data < 150000000000000000000) {
             setBeastShowApproval(true);
             setBeastBundleState("initial");
@@ -1740,7 +1765,7 @@ const NewEvents = ({
     }
   }, [selectedEvent]);
   useEffect(() => {
-    if (eventId === undefined) {
+    if (eventId === undefined || eventId ==='golden-pass') {
       const filteredEvent =
         eventinfos.find((item) => {
           return item.day === utcDayIndex;
@@ -1767,7 +1792,6 @@ const NewEvents = ({
       eventId !== "great-collection" &&
       eventId !== "explorer-hunt" &&
       eventId !== "critical-hit" &&
-      eventId !== "golden-pass" &&
       eventId !== "puzzle-madness"
     ) {
       setActiveEvent(
@@ -1797,9 +1821,10 @@ const NewEvents = ({
       setActiveEvent(criticalHitInfos);
     } else if (eventId !== "" && eventId === "puzzle-madness") {
       setActiveEvent(puzzleMadnessInfo);
-    } else if (eventId !== "" && eventId === "golden-pass") {
-      setActiveEvent(goldenPassInfo);
     }
+    //  else if (eventId !== "" && eventId === "golden-pass") {
+    //   setActiveEvent(goldenPassInfo);
+    // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
   const html = document.querySelector("html");
@@ -1850,8 +1875,7 @@ const NewEvents = ({
                             eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
                             eventId !== "explorer-hunt" &&
-                            eventId !== "critical-hit" &&
-                            eventId !== "golden-pass" &&
+                            eventId !== "critical-hit"  &&
                             eventId !== "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
@@ -3114,9 +3138,9 @@ const NewEvents = ({
                     ) : challenge === "maze-day" ||
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
-                      challenge === "critical-hit" ||
-                      challenge === "golden-pass" ||
-                      challenge === "puzzle-madness" ? (
+                      challenge === "critical-hit"
+                      //  || challenge === "golden-pass" 
+                      || challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
                         <div className="new-event-wrapper d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
@@ -3222,7 +3246,7 @@ const NewEvents = ({
                             </span>
                           </div>
                         )}
-                        {eventId === "golden-pass" &&
+                        {/* {eventId === "golden-pass" &&
                           availableTime !== 0 &&
                           availableTime !== undefined && (
                             <div className="new-event-wrapper mt-5 p-3">
@@ -3260,7 +3284,7 @@ const NewEvents = ({
                                 </div>
                               </div>
                             </div>
-                          )}
+                          )} */}
                       </div>
                     ) : (
                       <></>

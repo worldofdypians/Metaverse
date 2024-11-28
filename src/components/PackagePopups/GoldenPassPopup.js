@@ -83,15 +83,14 @@ const GoldenPassPopup = ({
     );
 
     const purchaseTimestamp = await goldenPassContract.methods
-      .getTimeOfDeposit(coinbase)
+      .getTimeOfExpireBuff(coinbase)
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtGolden(false);
       return;
     }
     setCountdown(purchaseTimestamp);
-    setHasBoughtGolden(true);
-    console.log(purchaseTimestamp, "tomestapm");
+    setHasBoughtGolden(true); 
   };
 
   const checkApproval = async () => {
@@ -479,7 +478,7 @@ const GoldenPassPopup = ({
             {hasBoughtGolden ? (
               <div className="d-flex flex-column gap-1">
                 <span className="days3">Active Until:</span>
-                <Countdown renderer={renderer} date={countdown} />
+                <Countdown renderer={renderer} date={Number(countdown)*1000} />
               </div>
             ) : (
               <div className="d-flex align-items-center gap-2">

@@ -51,7 +51,7 @@ import {
   idyp3500Address,
   dragonRuinsAddress,
 } from "../../web3";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
@@ -72,6 +72,7 @@ import RankPopup from "../../../../../components/MyProfile/RankPopup";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
 import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
+import { GOLDEN_PASS_ABI, golden_pass_address } from "../../../../../components/NewEvents/abi";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -448,6 +449,7 @@ function Dashboard({
       statValue: "---",
     },
   ];
+  const navigate = useNavigate();
 
   const [tokensState, setTokensState] = useState({});
   const [showChecklistModal, setshowChecklistModal] = useState(false);
@@ -702,7 +704,9 @@ function Dashboard({
 
     return errors;
   };
-
+const handleClosePopup = ()=>{
+  navigate('/account')
+}
   const handleSubmit = async (e) => {
     setLoading(true);
     setErrors(validateUrl(mediaUrl));
@@ -5152,49 +5156,17 @@ function Dashboard({
   };
 
   const handleRefreshCountdown700 = async () => {
-    const dypv1 = new window.infuraWeb3.eth.Contract(
-      DYP_700V1_ABI,
-      dyp700v1Address
-    );
-    const dragonsc = new window.bscWeb3.eth.Contract(WOD_ABI, dragonRuinsAddress);
-    const remainingTime = await dragonsc.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-    if (remainingTime > 0) {
-      setcountdown(remainingTime);
-    }
-
-    const puzzlemaddnessContract = new window.bscWeb3.eth.Contract(
-      iDYP_3500_ABI,
-      idyp3500Address
+    const goldenPassContract = new window.bscWeb3.eth.Contract(
+      GOLDEN_PASS_ABI,
+      golden_pass_address
     );
 
-    const remainingTime_puzzlemaddness = await puzzlemaddnessContract.methods
+    const purchaseTimestamp = await goldenPassContract.methods
       .getTimeOfExpireBuff(coinbase)
       .call();
-    if (remainingTime_puzzlemaddness > 0) {
-      setcountdown3500(remainingTime_puzzlemaddness);
-    }
 
-    const dypv2 = new window.bscWeb3.eth.Contract(DYP_700_ABI, dyp700Address);
-    const remainingTimev1 = await dypv1.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    const remainingTimev2 = await dypv2.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call()
-      .catch((e) => {
-        console.error(e);
-        return 0;
-      });
-
-    setcountdown700(Number(remainingTimev1) + Number(remainingTimev2));
-    handleSetAvailableTime(Number(remainingTimev1) + Number(remainingTimev2));
+    setcountdown700(purchaseTimestamp);
+    handleSetAvailableTime(purchaseTimestamp);
   };
 
   const countUserDailyBundles = async (address) => {
@@ -10563,10 +10535,11 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {goldenPassPopup && (
+        {(goldenPassPopup || eventId === 'golden-pass') && (
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
+              handleClosePopup();
             }}
             coinbase={coinbase}
             chainId={chainId}
