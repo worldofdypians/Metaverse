@@ -1623,4 +1623,3 @@ export const PUZZLE_MADNESS_ABI = [
     type: "function",
   },
 ];
-

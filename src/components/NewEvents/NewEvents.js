@@ -134,7 +134,8 @@ const NewEvents = ({
   availableTime,
   eventCardCount,
   wodPrice,
-  email,isConnected
+  email,
+  isConnected,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -355,7 +356,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setDragonBundleState("deposit");
         setStatusColor("#00FECF");
-        setDragonShowApproval(false)
+        setDragonShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -456,7 +457,7 @@ const NewEvents = ({
     );
 
     const result_cold_bite = await coldBiteContract.methods
-      .getEstimatedBundleDYPAmount()
+      .getEstimatedBundleWODAmount()
       .call()
       .catch((e) => {
         console.error(e);
@@ -532,8 +533,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setBearBundleState("deposit");
         setStatusColor("#00FECF");
-        setBearShowApproval(false)
-
+        setBearShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -681,7 +681,7 @@ const NewEvents = ({
         .allowance(wallet, furyBeastAddress)
         .call()
         .then((data) => {
-          console.log("ddddddd", data)
+          console.log("ddddddd", data);
           if (data === "0" || data < 150000000000000000000) {
             setBeastShowApproval(true);
             setBeastBundleState("initial");
@@ -709,8 +709,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setBeastBundleState("deposit");
         setStatusColor("#00FECF");
-        setBeastShowApproval(false)
-
+        setBeastShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -886,7 +885,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setEagleBundleState("deposit");
         setStatusColor("#00FECF");
-        setEagleShowApproval(false)
+        setEagleShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -1062,8 +1061,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setScorpionBundleState("deposit");
         setStatusColor("#00FECF");
-        setScorpionShowApproval(false)
-
+        setScorpionShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -1240,8 +1238,7 @@ const NewEvents = ({
         setStatus("Succesfully approved!");
         setCyclopsBundleState("deposit");
         setStatusColor("#00FECF");
-        setCyclopsShowApproval(false)
-
+        setCyclopsShowApproval(false);
       })
       .catch((e) => {
         setStatusColor("#FE7A00");
@@ -1815,6 +1812,10 @@ const NewEvents = ({
     }
   }, [showPopup]);
 
+
+
+  
+
   return (
     <>
       <div
@@ -2321,29 +2322,153 @@ const NewEvents = ({
                                   <span className="event-price-span">
                                     Event Price
                                   </span>
-                                  <div className="d-flex align-items-center gap-3">
-                                    <div className="d-flex align-items-center gap-1">
-                                      <img
-                                        src={wodIcon}
-                                        height={30}
-                                        width={30}
-                                        alt=""
-                                      />
-                                      <h6 className="event-price-coin mb-0">
+                                  {adjustedDay === 1 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            dragonRuinsWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
                                         {getFormattedNumber(
-                                          activeEvent.wodAmount
-                                        )}{" "}
-                                        WOD
-                                      </h6>
+                                          dragonRuinsWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
                                     </div>
-                                    <span className="event-price-usd">
-                                      ($
-                                      {getFormattedNumber(
-                                        activeEvent.wodAmount * wodPrice
-                                      )}
-                                      )
-                                    </span>
-                                  </div>
+                                  ) : adjustedDay === 2 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            coldBiteWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          coldBiteWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 3 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            furyBeastWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          furyBeastWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 4 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            wingStormWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          wingStormWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 6 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            scorpionKingWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          scorpionKingWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 7 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            stoneEyeWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          stoneEyeWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
                                 {adjustedDay === 1 ? (
                                   <>
@@ -2359,74 +2484,91 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                          {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                          {isConnected && email && <>
-                                        <button
-                                          disabled={
-                                            dragonBundleState === "deposit" ||
-                                            dragonBundleState === "loading" ||
-                                            checkWallet === false
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            dragonBundleState === "deposit" ||
-                                            checkWallet === false || dragonShowApproval === false
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleApprovalDragon()}
-                                        >
-                                          {dragonBundleState === "loading" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                dragonBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                dragonShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalDragon()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            dragonBundleState === "deposit" ||
-                                            dragonDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                        
-                                              dragonShowApproval === true &&
-                                              checkWallet === true
-                                                ? "stake-wod-btn-inactive d-none"
-                                                : dragonShowApproval === false && 
-                                                checkWallet === true  
-                                                ? "stake-wod-btn"
-                                                : "stake-wod-btn-inactive"
-
-                                          }  py-2 px-4`}
-                                          onClick={() => handleDepositDragon()}
-                                        >
-                                          {dragonDepositState ===
-                                          "loading-deposit" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                              {dragonBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                               disabled={
+                                                checkWallet === true &&
+                                                dragonDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                dragonShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : dragonShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositDragon()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button>
-                                        </>}
+                                              {dragonDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>
@@ -2444,71 +2586,87 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                           {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                    {isConnected && email && <>
-                                        <button
-                                          disabled={
-                                            bearBundleState === "deposit" ||
-                                            bearBundleState === "loading" ||
-                                            checkWallet === false
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            bearBundleState === "deposit" ||
-                                            checkWallet === false || bearShowApproval === false
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleApprovalBear()}
-                                        >
-                                          {bearBundleState === "loading" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                bearBundleState === "deposit" ||
+                                                bearBundleState === "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                bearBundleState === "deposit" ||
+                                                checkWallet === false ||
+                                                bearShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBear()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            bearBundleState === "deposit" ||
-                                            bearDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                            bearShowApproval === true &&
-                                            checkWallet === true
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : bearShowApproval === false && 
-                                              checkWallet === true  
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleDepositBear()}
-                                        >
-                                          {bearDepositState ===
-                                          "loading-deposit" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                              {bearBundleState === "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                               disabled={
+                                                checkWallet === true &&
+                                                bearDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                bearShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : bearShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBear()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button></>}
+                                              {bearDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>
@@ -2526,69 +2684,91 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                         {isConnected && email && <>
-                                        <button
-                                          disabled={
-                                            beastBundleState === "deposit" ||
-                                            beastBundleState === "loading" ||
-                                            checkWallet === false  
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            beastBundleState === "deposit" ||
-                                            checkWallet === false || beastShowApproval === false  
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleApprovalBeast()}
-                                        >
-                                          {beastBundleState === "loading" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                beastBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                beastShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBeast()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            beastBundleState === "deposit"  &&
-                                            checkWallet === true 
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                            beastShowApproval === true &&
-                                            checkWallet === true
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : beastShowApproval === false && 
-                                              checkWallet === true  
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleDepositBeast()}
-                                        >
-                                          {beastDepositState ===
-                                          "loading-deposit" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                              {beastBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                               disabled={
+                                                checkWallet === true &&
+                                                beastDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                beastShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : beastShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBeast()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button></>}
+                                              {beastDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>
@@ -2606,72 +2786,92 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                         {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                         {isConnected && email && <>  <button
-                                          disabled={
-                                            eagleBundleState === "deposit" ||
-                                            eagleBundleState === "loading" ||
-                                            checkWallet === false
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            eagleBundleState === "deposit" ||
-                                            checkWallet === false || eagleShowApproval === false
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleApprovalEagle()}
-                                        >
-                                          {eagleBundleState === "loading" ? (
-                                            <CircularProgress
-                                              size={20}
-                                              style={{
-                                                alignSelf: "center",
-                                                margin: "auto",
-                                              }}
-                                            />
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            eagleBundleState === "deposit" ||
-                                            eagleDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                            eagleShowApproval === true &&
-                                            checkWallet === true
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : eagleShowApproval === false && 
-                                              checkWallet === true  
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive"
-
-                                            
-                                          }  py-2 px-4`}
-                                          onClick={() => handleDepositEagle()}
-                                        >
-                                          {eagleDepositState ===
-                                          "loading-deposit" ? (
-                                            <CircularProgress
-                                              size={20}
-                                              style={{
-                                                alignSelf: "center",
-                                                margin: "auto",
-                                              }}
-                                            />
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button>
-                                        </>}
-
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            {" "}
+                                            <button
+                                              disabled={
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                eagleBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                eagleShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalEagle()
+                                              }
+                                            >
+                                              {eagleBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                eagleDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                eagleShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : eagleShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositEagle()
+                                              }
+                                            >
+                                              {eagleDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>
@@ -2689,77 +2889,95 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                         {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                         {isConnected && email && <>
-                                        <button
-                                          disabled={
-                                            scorpionBundleState === "deposit" ||
-                                            scorpionBundleState === "loading" ||
-                                            checkWallet === false
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            scorpionBundleState === "deposit" ||
-                                            checkWallet === false || scorpionShowApproval === false
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() =>
-                                            handleApprovalScorpion()
-                                          }
-                                        >
-                                          {scorpionBundleState === "loading" ? (
-                                            <CircularProgress
-                                              size={20}
-                                              style={{
-                                                alignSelf: "center",
-                                                margin: "auto",
-                                              }}
-                                            />
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            scorpionBundleState === "deposit" ||
-                                            scorpionDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                            scorpionShowApproval === true &&
-                                            checkWallet === true
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : scorpionShowApproval === false && 
-                                              checkWallet === true  
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive"
-                                          }  py-2 px-4`}
-                                          onClick={() =>
-                                            handleDepositScorpion()
-                                          }
-                                        >
-                                          {scorpionDepositState ===
-                                          "loading-deposit" ? (
-                                            <CircularProgress
-                                              size={20}
-                                              style={{
-                                                alignSelf: "center",
-                                                margin: "auto",
-                                              }}
-                                            />
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button></>}
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                scorpionBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                scorpionShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalScorpion()
+                                              }
+                                            >
+                                              {scorpionBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                scorpionDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                scorpionShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : scorpionShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositScorpion()
+                                              }
+                                            >
+                                              {scorpionDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 0 ? (
+                                ) : adjustedDay === 7 ? (
                                   <>
                                     {hasBoughtCyclops ? (
                                       <div className="d-flex flex-column gap-1">
@@ -2773,73 +2991,91 @@ const NewEvents = ({
                                       </div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
-                                              {(!isConnected || !email) && <button className="stake-wod-btn-inactive" disabled> Buy</button> }
-                                              {isConnected && email && <>
-                                        <button
-                                          disabled={
-                                            cyclopsBundleState === "deposit" ||
-                                            cyclopsBundleState === "loading" ||
-                                            checkWallet === false
-                                              ? true
-                                              : false
-                                          }
-                                          className={` ${
-                                            cyclopsBundleState === "deposit" ||
-                                            checkWallet === false || cyclopsShowApproval === false
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : "stake-wod-btn"
-                                          }  py-2 px-4`}
-                                          onClick={() =>
-                                            handleApprovalCyclops()
-                                          }
-                                        >
-                                          {cyclopsBundleState === "loading" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                cyclopsBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                cyclopsShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalCyclops()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Approve"
-                                          )}
-                                        </button>
-                                        <button
-                                          disabled={
-                                            cyclopsBundleState === "deposit" ||
-                                            cyclopsDepositState ===
-                                              "loading-deposit" ||
-                                            checkWallet === true
-                                              ? false
-                                              : true
-                                          }
-                                          className={` ${
-                                            cyclopsShowApproval === true &&
-                                            checkWallet === true
-                                              ? "stake-wod-btn-inactive d-none"
-                                              : cyclopsShowApproval === false && 
-                                              checkWallet === true  
-                                              ? "stake-wod-btn"
-                                              : "stake-wod-btn-inactive"
-                                          }  py-2 px-4`}
-                                          onClick={() => handleDepositCyclops()}
-                                        >
-                                          {cyclopsDepositState ===
-                                          "loading-deposit" ? (
-                                            <div
-                                              class="spinner-border spinner-border-sm text-light"
-                                              role="status"
+                                              {cyclopsBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                cyclopsDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                cyclopsShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : cyclopsShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositCyclops()
+                                              }
                                             >
-                                              <span class="visually-hidden">
-                                                Loading...
-                                              </span>
-                                            </div>
-                                          ) : (
-                                            "Buy"
-                                          )}
-                                        </button></>}
+                                              {cyclopsDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
                                       </div>
                                     )}
                                   </>

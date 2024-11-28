@@ -20,13 +20,14 @@ const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
 const wod_token_address = "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8";
 const idyptoken_address = "0xBD100d061E120b2c67A24453CF6368E63f1Be056";
 
-const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
-const coldBite_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
+const dragonRuins_address = "0x6AC1f8315b485dA07aBB7f18A7DA107Ea4d4ea23";
+const coldBite_address = "0xC361bEDcF5A59200fEd1A1cF6Ee45558dc1a1eC6";
 const furyBeast_address = "0x79fb1A71c950605d96FA89c4eA96B45de0391eed";
 const wingStorm_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
-const scorpionKing_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
-const stoneEye_address = "0x0E745F8128406d3855990859F0C918fc2aaDf066";
+const scorpionKing_address = "0x16b9eC0f2C1B3c82C52087b777E12e8be5A9b953";
+const stoneEye_address = "0x24405FADC76D00481f4A3d83A33E7e9289350aCc";
 const goldenPass_address = "0xCD30c0C1bca73537c2A2809863B90D8c0431Defb";
+const puzzleMadness_address = "0x5e55203cd881716498771b2D163375B10F0F0449";
 const landNft_address = "0xcd60d912655281908ee557ce1add61e983385a03";
 const landNftStake_address = "0x6821710b0d6e9e10acfd8433ad023f874ed782f1";
 const dyp700_address = "0xd16DAad6bEd59a2c6806868855A05f4abF3b2ac9";
@@ -110,6 +111,7 @@ export const wingStormAddress = wingStorm_address;
 export const scorpionKingAddress = scorpionKing_address;
 export const stoneEyeAddress = stoneEye_address;
 export const goldenPassAddress = goldenPass_address;
+export const puzzleMadnessAddress = puzzleMadness_address;
 export const dyp700Address = dyp700_address;
 export const dyp700v1Address = dyp700v1_address;
 
