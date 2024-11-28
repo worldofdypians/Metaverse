@@ -264,15 +264,15 @@ function App() {
       },
       blockExplorerUrls: ["https:/vicscan.xyz"],
     },
-    713715: {
-      chainId: 713715,
-      chainName: "Sei EVM Devnet",
-      rpcUrls: ["https://evm-rpc-arctic-1.sei-apis.com"],
+    1329 : {
+      chainId: 1329 ,
+      chainName: "Sei Network",
+      rpcUrls: ["https://evm-rpc.sei-apis.com"],
       nativeCurrency: {
         symbol: "SEI",
         decimals: 18,
       },
-      blockExplorerUrls: ["https://seistream.app/"],
+      blockExplorerUrls: ["https://seitrace.com"],
     },
     13371: {
       chainId: 13371,
@@ -439,6 +439,8 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [domainPopup, setDomainPopup] = useState(false);
+  const [showSync, setshowSync] = useState(false);
+
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
@@ -484,7 +486,9 @@ function App() {
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
-  let matchainLastDay = new Date("2025-03-28T14:00:00.000+02:00");
+  let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-04-04T14:00:00.000+02:00");
+
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -641,6 +645,9 @@ function App() {
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
+  const [seiEarnToken, setSeiEarnToken] = useState(0);
+  const [seiEarnPoints, setSeiEarnPoints] = useState(0);
+
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -3603,7 +3610,7 @@ function App() {
       totalRewards: "$20,000 in MAT Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Nov 28, 2024",
+      eventDate: "Dec 04, 2024",
       backgroundImage: upcomingMatchain,
       userEarnUsd: matEarnUsd,
       userEarnCrypto: matEarnToken,
@@ -3623,7 +3630,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Nov 28, 2024",
+        eventDate: "Dec 04, 2024",
       },
     },
 
@@ -3631,28 +3638,37 @@ function App() {
     //   title: "SEI",
     //   logo: seiLogo,
     //   eventStatus: "Coming Soon",
+    //   rewardType: "SEI",
+    //   rewardAmount: "$20,000",
+    //   location: [-0.06787060104021504, 0.08728981018066406],
+    //   image: "matchainBanner.png",
+    //   type: "Treasure Hunt",
+    //   infoType: "Treasure Hunt",
+    //   marker: markers.treasureMarker,
     //   totalRewards: "$20,000 in SEI Rewards",
     //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: seiBg,
+    //   eventType: "Explore & Mine",
+    //   eventDate: "Dec 05, 2024",
+    //   backgroundImage: upcomingMatchain,
+    //   userEarnUsd: seiEarnUsd,
+    //   userEarnCrypto: seiEarnToken,
+    //   userEarnPoints: seiEarnPoints,
     //   popupInfo: {
     //     title: "SEI",
-    //     chain: "SEI Chain",
+    //     chain: "Sei Network",
     //     linkState: "sei",
     //     rewards: "SEI",
     //     status: "Coming Soon",
     //     id: "event13",
-    //     eventType: "Explore & Find",
+    //     eventType: "Explore & Mine",
     //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
+    //     eventDuration: seiLastDay,
+    //     minRewards: "0.5",
+    //     maxRewards: "20",
     //     minPoints: "5,000",
     //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
+    //     learnMore: "",
+    //     eventDate: "Dec 05, 2024",
     //   },
     // },
     {
@@ -4623,7 +4639,7 @@ function App() {
   useEffect(() => {
     fetchEthStaking();
   }, [stakeCount]);
-  console.log(tokenPools);
+ 
   return (
     <>
       <div
@@ -4659,6 +4675,7 @@ function App() {
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
+          onSyncClick={()=>{setshowSync(true)}}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -4985,6 +5002,9 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
+
               />
             }
           />
@@ -5048,6 +5068,9 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
+
               />
             }
           />
@@ -5775,6 +5798,8 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
               />
             }
           />

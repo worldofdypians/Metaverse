@@ -85,6 +85,7 @@ import logoutIcon from "./assets/dropdownAssets/logoutIcon.svg";
 import registerIcon from "./assets/dropdownAssets/registerIcon.svg";
 import supportIcon from "./assets/dropdownAssets/supportIcon.svg";
 import premiumIcon from "./assets/dropdownAssets/premiumIcon.svg";
+import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
 
 import unlinkedIcon from "./assets/dropdownAssets/unlinkedIcon.svg";
 import userIcon from "./assets/dropdownAssets/userIcon.svg";
@@ -113,6 +114,7 @@ const Header = ({
   email,
   username,
   loginListener,
+  onSyncClick,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -149,7 +151,7 @@ const Header = ({
     about: null,
     collections: null,
     account: null,
-    chains: null
+    chains: null,
   });
 
   // const [domainPopup, setDomainPopup] = useState(false);
@@ -225,8 +227,7 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      }
-       else if (chainId === 698) {
+      } else if (chainId === 698) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -240,8 +241,7 @@ const Header = ({
         setMantaState(false);
         setTaikoState(false);
         setMatState(true);
-      } 
-      else if (chainId === 204) {
+      } else if (chainId === 204) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -491,12 +491,21 @@ const Header = ({
 
   useEffect(() => {
     if (email !== undefined && gameAccount !== undefined && coinbase) {
-      setAccount({
-        logged: true,
-        wallet: gameAccount,
-        linked: gameAccount,
-        guest: true,
-      });
+      if (gameAccount.toLowerCase() === coinbase.toLowerCase()) {
+        setAccount({
+          logged: true,
+          wallet: gameAccount,
+          linked: gameAccount,
+          guest: true,
+        });
+      } else if (gameAccount.toLowerCase() !== coinbase.toLowerCase()) {
+        setAccount({
+          logged: true,
+          wallet: gameAccount,
+          linked: false,
+          guest: true,
+        });
+      }
     } else if (!email && coinbase) {
       setAccount({
         logged: false,
@@ -550,7 +559,8 @@ const Header = ({
             </NavLink>
             <div
               className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 ${
-                location.pathname === "/token" || location.pathname === "/token-claim" ||
+                location.pathname === "/token" ||
+                location.pathname === "/token-claim" ||
                 location.pathname === "/staking" ||
                 location.pathname === "/bridge" ||
                 location.pathname === "/buy"
@@ -570,7 +580,7 @@ const Header = ({
               >
                 <div className="position-relative d-flex flex-column gap-2">
                   <div className="triangle"></div>
-               
+
                   <NavLink
                     to={"/token"}
                     className={({ isActive }) =>
@@ -614,7 +624,7 @@ const Header = ({
                 </div>
               </div>
             </div>
-             
+
             {/* <div className="nav-anchor">Roadmap</div> */}
 
             <NavLink
@@ -697,7 +707,7 @@ const Header = ({
                     Game Updates
                   </NavLink>
                   <NavLink
-                    to={'https://t.me/WorldOfDypians_bot'}
+                    to={"https://t.me/WorldOfDypians_bot"}
                     target="_blank"
                     className={({ isActive }) =>
                       isActive
@@ -747,7 +757,6 @@ const Header = ({
                     </a>
                   </div>
                   <div className="d-flex align-items-center justify-content-between px-2 mb-2">
-                   
                     <a
                       href="https://www.facebook.com/worldofdypians"
                       target="_blank"
@@ -809,7 +818,7 @@ const Header = ({
               >
                 <div className="position-relative d-flex flex-column gap-2">
                   <div className="triangle"></div>
-                 <NavLink
+                  <NavLink
                     to={"/about#tokenomics"}
                     className={({ isActive }) =>
                       isActive && window.location.hash === "#tokenomics"
@@ -818,7 +827,7 @@ const Header = ({
                     }
                   >
                     Tokenomics
-                  </NavLink> 
+                  </NavLink>
                   <NavLink
                     to={"/about#security"}
                     className={({ isActive }) =>
@@ -850,7 +859,7 @@ const Header = ({
                     Team
                   </NavLink>
 
-                    <NavLink
+                  <NavLink
                     to={"/about#partners"}
                     className={({ isActive }) =>
                       isActive && window.location.hash === "#partners"
@@ -860,9 +869,7 @@ const Header = ({
                   >
                     Partners
                   </NavLink>
-                
-                
-             
+
                   <NavLink
                     to={"/about#brand"}
                     className={({ isActive }) =>
@@ -969,6 +976,7 @@ const Header = ({
                               alt=""
                             />
                           </NavLink>
+
                           <div
                             className={`dropdown-nav ${
                               account.linked === false
@@ -976,21 +984,33 @@ const Header = ({
                                 : ""
                             } nav-active p-2 d-flex align-items-center gap-2`}
                           >
-                            <img
-                              width={20}
-                              height={20}
-                              src={walletIcon}
-                              alt=""
-                            />
-                            <div className="d-flex flex-column gap-2">
-                              <span className="header-wallet-span">
-                                Wallet Address
-                              </span>
-                              <span className="header-wallet">
-                                {account.wallet !== false
-                                  ? shortAddress(account.wallet)
-                                  : "NA"}
-                              </span>
+                            <div className="d-flex w-100 justify-content-between align-items-center gap-2">
+                              <div className="d-flex align-items-center gap-2">
+                                <img
+                                  width={20}
+                                  height={20}
+                                  src={walletIcon}
+                                  alt=""
+                                />
+                                <div className="d-flex flex-column gap-2">
+                                  <span className="header-wallet-span">
+                                    Wallet Address
+                                  </span>
+                                  <span className="header-wallet">
+                                    {account.wallet !== false
+                                      ? shortAddress(account.wallet)
+                                      : "NA"}
+                                  </span>
+                                </div>
+                              </div>
+                              {account.linked === false && (
+                                <button
+                                  className="d-flex align-items-center gap-1 syncbtn px-2 py-1"
+                                  onClick={onSyncClick}
+                                >
+                                  <img src={sync} alt="" /> Sync
+                                </button>
+                              )}
                             </div>
                           </div>
                           <hr className="header-divider my-0" />
@@ -1009,7 +1029,7 @@ const Header = ({
                         <img width={20} height={20} src={premiumIcon} alt="" />
                         Prime
                       </NavLink>
-                     
+
                       <NavLink
                         to={"/shop"}
                         className={({ isActive }) =>
@@ -1399,19 +1419,20 @@ const Header = ({
                             </div>
                           </span>
                         }
-                      >
-                       
-                      </DropdownButton>
+                      ></DropdownButton>
                       <div
-                    className={`header-dropdown p-4 d-flex flex-column gap-2 ${
-                      dropdown.chains === "chains"
-                        ? "header-dropdown-active"
-                        : ""
-                    }`}
-                    style={{left: "0", top: "62px", width: "315px"}}
-                  >
-                     <div className="d-flex flex-column position-relative gap-2">
-                      <div className="triangle" style={{top: "-38px"}}></div>
+                        className={`header-dropdown p-4 d-flex flex-column gap-2 ${
+                          dropdown.chains === "chains"
+                            ? "header-dropdown-active"
+                            : ""
+                        }`}
+                        style={{ left: "0", top: "62px", width: "315px" }}
+                      >
+                        <div className="d-flex flex-column position-relative gap-2">
+                          <div
+                            className="triangle"
+                            style={{ top: "-38px" }}
+                          ></div>
                           <span className="select-gray-txt ">
                             SELECT A NETWORK
                           </span>
@@ -1449,7 +1470,7 @@ const Header = ({
                                   Matchain
                                 </Dropdown.Item>
                               )}
-                              
+
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa9", 169)}
                             >
@@ -1472,7 +1493,7 @@ const Header = ({
                                   Taiko
                                 </Dropdown.Item>
                               )}
-                       
+
                             {window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
@@ -1557,15 +1578,20 @@ const Header = ({
                           </div>
                           <hr className="header-divider my-0" />
                           <span
-                        className="dropdown-nav p-2 d-flex align-items-center gap-2"
-                        onClick={() => {
-                          handleOpenDomains();
-                          setShowMenu(false);
-                        }}
-                      >
-                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
-                        Domain Name{" "}
-                      </span>
+                            className="dropdown-nav p-2 d-flex align-items-center gap-2"
+                            onClick={() => {
+                              handleOpenDomains();
+                              setShowMenu(false);
+                            }}
+                          >
+                            <img
+                              src={domainIcon}
+                              width={16}
+                              height={16}
+                              alt=""
+                            />{" "}
+                            Domain Name{" "}
+                          </span>
                           <button
                             className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
                             onClick={() => {
@@ -1580,7 +1606,7 @@ const Header = ({
                             DISCONNECT
                           </button>
                         </div>
-                    </div>
+                      </div>
                       <span
                         className="d-flex align-items-center gap-2"
                         // onClick={() => {
