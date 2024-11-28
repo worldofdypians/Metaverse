@@ -558,7 +558,7 @@ const MyProfile = ({
                     </button>
                     ) :  coinbase && email && !address && !username ? (
                       <NavLink
-                        className="loginbtn-profile px-5 py-2"
+                        className="loginbtn-profile px-5 py-2 d-flex align-items-center"
                         to={'/player'}
                         
                       >
