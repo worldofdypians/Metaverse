@@ -174,6 +174,8 @@ function Dashboard({
   matEarnUsd,
   wodBalance,
   wodPrice,
+  showSync,
+  onCloseSync
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -182,7 +184,7 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-
+console.log(showSync)
   const {
     data,
     refetch: refetchPlayer,
@@ -5643,6 +5645,8 @@ const handleClosePopup = ()=>{
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
+        onCloseSync();
+
           }, 1000);
           onSubscribeSuccess(account);
 
@@ -5654,6 +5658,8 @@ const handleClosePopup = ()=>{
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
+        onCloseSync();
+
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -5675,6 +5681,8 @@ const handleClosePopup = ()=>{
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
+        onCloseSync();
+
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
@@ -5686,6 +5694,8 @@ const handleClosePopup = ()=>{
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
+        onCloseSync();
+
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -6701,6 +6711,7 @@ const handleClosePopup = ()=>{
       setTimeout(() => {
         setsyncStatus("initial");
         setshowSyncModal(false);
+        onCloseSync();
       }, 3000);
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
@@ -10062,6 +10073,7 @@ const handleClosePopup = ()=>{
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
+              onLinkWallet={connectWallet}
             />
             <NewEvents
               events={dummyBetaPassData2}
@@ -10407,15 +10419,19 @@ const handleClosePopup = ()=>{
           />
         )}
 
-        {showSyncModal === true && (
+        {(showSyncModal === true || showSync === true) && (
           <SyncModal
             onCancel={() => {
               setshowSyncModal(false);
+             onCloseSync();
+
             }}
             onclose={() => {
               setshowSyncModal(false);
+             onCloseSync();
+
             }}
-            open={showSyncModal}
+            open={(showSyncModal === true || showSync === true)}
             onConfirm={handleSync}
             syncStatus={syncStatus}
           />
