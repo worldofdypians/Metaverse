@@ -119,9 +119,10 @@ const WhitelistContent = ({
       } else if (selectedRound.id == "advisors") {
         if (today.getTime() > cliffTime) {
           settimerFinishedAdvisors(true);
-        } else if (Number(userClaimedTokens) === 0) {
-          settimerFinishedAdvisors(true);
-        }
+        } 
+        // else if (Number(userClaimedTokens) === 0) {
+        //   settimerFinishedAdvisors(true);
+        // }
       }
     }
   }, [selectedRound, userClaimedTokens, cliffTime]);
@@ -259,9 +260,8 @@ const WhitelistContent = ({
                           settimerFinishedKol(true);
                         }}
                       />
-                    ) : userClaimedTokens &&
-                      Number(userClaimedTokens) > 0 &&
-                      selectedRound?.id === "advisors" ? (
+                    ) :  
+                      selectedRound?.id === "advisors" && isConnected && totalVestedTokens>0 ? (
                       <Countdown
                         date={Number(cliffTime)}
                         renderer={renderer2}
