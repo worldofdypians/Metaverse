@@ -3577,7 +3577,7 @@ const NewEvents = ({
                         ) : activeEvent?.id === "explorer-hunt" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                             <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column">
+                              <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
                                   style={{ fontSize: "18px" }}
@@ -3596,7 +3596,7 @@ const NewEvents = ({
                         ) : activeEvent?.id === "greatCollection" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                             <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column">
+                              <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
                                   style={{ fontSize: "18px" }}

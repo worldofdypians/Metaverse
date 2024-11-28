@@ -82,7 +82,7 @@ import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/asset
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <h6 className="timer-text mb-0">
+    <h6 className="timer-text2 mb-0">
       {days}d: {hours}h:{minutes}m (UTC)
     </h6>
   );
@@ -110,10 +110,10 @@ const renderer3 = ({ days, hours }) => {
     </span>
   );
 };
-const renderer4 = ({ hours, minutes }) => {
+const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {hours}H:{minutes}M
+      {hours}h:{minutes}m:{seconds}s
     </span>
   );
 };
