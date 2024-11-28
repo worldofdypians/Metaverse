@@ -3445,12 +3445,11 @@ const NewEvents = ({
                           </div>
                         ) : activeEvent?.id === "puzzle" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
-                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-5">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
+                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
                                 <span className="event-price-span">
                                   Event Price
                                 </span>
-
                                 <div className="d-flex align-items-center gap-3">
                                   <div className="d-flex align-items-center gap-1">
                                     <img
