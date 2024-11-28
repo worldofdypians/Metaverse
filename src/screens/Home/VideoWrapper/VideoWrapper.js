@@ -15,7 +15,8 @@ import multiplayer from "../../../assets/multiplayer.svg";
 import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
 import skaleLogo from "../../Marketplace/MarketNFTs/assets/skaleLogo.svg";
 import bnbLogo from "../../Marketplace/MarketNFTs/assets/bnblogo.svg";
-
+import homeEpicGames from "../../../assets/homeEpicGames.svg";
+import homeLine from "../../../assets/homeLine.svg";
 import victionLogo from "./assets/victionLogo.svg";
 import buyWod from "./assets/buyWod.svg";
 import victionBg from "./assets/victionBg.webp";
@@ -38,39 +39,42 @@ import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard
 import axios from "axios";
 import wodToken from "../../../assets/wodAssets/wodToken.svg";
 import Countdown from "react-countdown";
-import gate from './assets/buyWodAssets/gate.svg'
-import kucoin from './assets/buyWodAssets/kucoin.svg'
-import mexc from './assets/buyWodAssets/mexc.svg'
-import pancakeSwap from './assets/buyWodAssets/pancakeSwap.svg'
-import trustWallet from './assets/buyWodAssets/trustWallet.svg'
-import xMarkBuyWod from './assets/buyWodAssets/xMark.svg'
+import gate from "./assets/buyWodAssets/gate.svg";
+import kucoin from "./assets/buyWodAssets/kucoin.svg";
+import mexc from "./assets/buyWodAssets/mexc.svg";
+import pancakeSwap from "./assets/buyWodAssets/pancakeSwap.svg";
+import trustWallet from "./assets/buyWodAssets/trustWallet.svg";
+import xMarkBuyWod from "./assets/buyWodAssets/xMark.svg";
 import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
 import { set } from "lodash";
-
-
 
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">{days < 10 ? "0" + days : days}</h6>
+        <h6 className="main-hero-title mb-0">
+          {days < 10 ? "0" + days : days}
+        </h6>
         <span className="ways-to-amplify-desc">Days</span>
       </div>
       <h6 className="main-hero-title mb-0">:</h6>
 
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">{hours < 10 ? "0" + hours : hours}</h6>
+        <h6 className="main-hero-title mb-0">
+          {hours < 10 ? "0" + hours : hours}
+        </h6>
         <span className="ways-to-amplify-desc">Hours</span>
       </div>
       <h6 className="main-hero-title mb-0">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">{minutes < 10 ? "0" + minutes : minutes}</h6>
+        <h6 className="main-hero-title mb-0">
+          {minutes < 10 ? "0" + minutes : minutes}
+        </h6>
         <span className="ways-to-amplify-desc">Minutes</span>
       </div>
     </div>
   );
 };
-
 
 const VideoWrapper = ({
   handleRegister,
@@ -98,7 +102,6 @@ const VideoWrapper = ({
     setIcons(false);
   });
 
-
   const location = useLocation();
 
   const reqmodal = document.querySelector("#reqmodal");
@@ -107,10 +110,7 @@ const VideoWrapper = ({
   let dypius2LastDay = new Date("2024-05-27T16:00:00.000+02:00");
   let releaseDate = new Date("2024-11-27T11:00:00.000+00:00");
 
-
   console.log(window.location.hash);
-  
-
 
   const exchanges = [
     {
@@ -139,7 +139,6 @@ const VideoWrapper = ({
       link: "https://short.trustwallet.com/app-download",
     },
   ];
-
 
   const dummyBetaPassData2 = [
     {
@@ -242,15 +241,11 @@ const VideoWrapper = ({
     }
   }, [modal, buyWodPopup]);
 
-
-
   useEffect(() => {
-  if(window.location.hash === "#buy-wod"){
-    setBuyWodPopup(true);
-  }
-  }, [])
-  
-
+    if (window.location.hash === "#buy-wod") {
+      setBuyWodPopup(true);
+    }
+  }, []);
 
   return (
     <>
@@ -274,7 +269,7 @@ const VideoWrapper = ({
               <Countdown date={releaseDate} renderer={renderer} />
             </div> */}
             <div className="d-flex flex-column flex-lg-row flex-md-row m-0 gap-lg-5 gap-3 align-items-center justify-content-center">
-                <a
+              {/* <a
                   className="game-event-download py-2 px-5 d-flex align-items-center gap-2"
                   onMouseEnter={() => setHoverState(true)}
                   onMouseLeave={() => setHoverState(false)}
@@ -283,7 +278,7 @@ const VideoWrapper = ({
                 >
                   <img src={hoverState ? epicwhite : epicblack} alt="icon" className="epicgame2" />
                   Download
-                </a>
+                </a> */}
 
               <button
                 className="btn multiplayer-btn py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
@@ -291,10 +286,27 @@ const VideoWrapper = ({
                   setBuyWodPopup(true);
                 }}
               >
-                <img src={buyWod} alt="" />
+                {/* <img src={buyWod} alt="" /> */}
                 {/* Buy  */}
                 Buy WOD
               </button>
+              <NavLink
+                to={"/staking"}
+                className="btn stake-wod-btn2 py-2 px-5 d-flex align-items-center w-100 gap-2 justify-content-center"
+              >
+                {/* <img src={buyWod} alt="" /> */}
+                {/* Buy  */}
+                Stake WOD
+              </NavLink>
+            </div>
+            <div className="home-download-wrapper position-relative d-none d-lg-flex">
+              <a
+                href="https://store.epicgames.com/p/world-of-dypians-2e0694"
+                target="_blank"
+              >
+                <img src={homeEpicGames} className="home-epic" alt="" />
+              </a>
+              <img src={homeLine} className="home-line" alt="" />
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">
@@ -370,7 +382,11 @@ const VideoWrapper = ({
       </div>
       {modal === true ? (
         <OutsideClickHandler onOutsideClick={() => setModal(false)}>
-          <div className="system-requirements-modal p-3" id="reqmodal" style={{background : '#1a1c39'}}>
+          <div
+            className="system-requirements-modal p-3"
+            id="reqmodal"
+            style={{ background: "#1a1c39" }}
+          >
             <div className="d-flex align-items-start justify-content-end">
               <img
                 src={xMark}
@@ -381,20 +397,37 @@ const VideoWrapper = ({
               />
             </div>
 
-            <GlobalLeaderboard allStarData={allStarData} screen={'home'} leaderboardBtn='monthly'/>
+            <GlobalLeaderboard
+              allStarData={allStarData}
+              screen={"home"}
+              leaderboardBtn="monthly"
+            />
           </div>
         </OutsideClickHandler>
       ) : (
         <></>
       )}
-      {buyWodPopup &&
-      <OutsideClickHandler onOutsideClick={() => {setBuyWodPopup(false); window.location.hash = ""}}>
+      {buyWodPopup && (
+        <OutsideClickHandler
+          onOutsideClick={() => {
+            setBuyWodPopup(false);
+            window.location.hash = "";
+          }}
+        >
           <div className="challenge-popup-wrapper popup-active p-3">
             <div className="d-flex align-items-center justify-content-between mb-3">
-              <h6 className="mb-0 buy-wod-popup-title">
-                Buy WOD
-              </h6>
-              <img src={xMarkBuyWod} width={22} height={22} style={{cursor: "pointer"}} onClick={() => {setBuyWodPopup(false); window.location.hash = ""}} alt="" />
+              <h6 className="mb-0 buy-wod-popup-title">Buy WOD</h6>
+              <img
+                src={xMarkBuyWod}
+                width={22}
+                height={22}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setBuyWodPopup(false);
+                  window.location.hash = "";
+                }}
+                alt=""
+              />
             </div>
             <div className="d-flex flex-column gap-2">
               {exchanges.map((item, index) => (
@@ -402,8 +435,8 @@ const VideoWrapper = ({
               ))}
             </div>
           </div>
-      </OutsideClickHandler>
-      }
+        </OutsideClickHandler>
+      )}
       {/* {multiplayerModal === true ? (
         <OutsideClickHandler onOutsideClick={() => setmultiplayerModal(false)}>
           <div className="system-requirements-modal p-3" id="reqmodal">
