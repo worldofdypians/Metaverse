@@ -350,9 +350,15 @@ const getListedNFTS = async (
                   });
 
                 return (listedItems = Object.values(latestStates));
+              }).catch((e)=>{
+                console.error(e)
               });
+          }).catch((e)=>{
+            console.error(e)
           });
-      });
+      }).catch((e)=>{
+        console.error(e)
+      });;
 
     return listedItems;
   } else {
@@ -360,6 +366,8 @@ const getListedNFTS = async (
       .post(URL, { query: singleItemQuery(block) })
       .then(async (result3) => {
         listedItems = Object.values(result3.data.data.itemListeds);
+      }).catch((e)=>{
+        console.error(e)
       });
   }
 

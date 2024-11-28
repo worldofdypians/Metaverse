@@ -863,3 +863,9 @@ export const ADVISORS_ABI = [
     type: "function",
   },
 ];
+
+export const blockedAccounts = [
+  '0xFE859937319148791A67646e3C65FE89441B8e93',
+  '0x5f75EF1101c25Ed85c4eF12fe05Dc95569709eC8',
+  '0xb9bE3CA291D13f9BeF28031b9fd7d90Fa9Bc2366'
+]

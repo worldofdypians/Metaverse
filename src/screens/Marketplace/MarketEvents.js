@@ -1979,7 +1979,10 @@ const MarketEvents = ({
           <DragonPopup onClosePopup={onClosePopup} />
         )}
         {popup && packagePopup === "goldenpass" && (
-          <GoldenPassPopup onClosePopup={onClosePopup} />
+          <GoldenPassPopup onClosePopup={onClosePopup}
+          binanceW3WProvider={binanceW3WProvider}
+          // coinbase={coinbase}
+          />
         )}
         {popup && packagePopup === "puzzlemadness" && (
           <PuzzleMadnessPopup onClosePopup={onClosePopup} />
@@ -2676,10 +2679,7 @@ const MarketEvents = ({
                 className="popup-event-desc"
                 // style={{ fontSize: "12px", fontWeight: "500" }}
               >
-                Sei is recognized as the fastest Layer 1 blockchain, setting new
-                benchmarks in blockchain performance and scalability. Supporting
-                multiple execution environments, including the innovative
-                parallelized Ethereum Virtual Machine,
+                Sei is at the pinnacle of high-speed blockchain platforms, ideal for web2 like experiences, high-frequency trading and real-time digital exchanges.
               </p>
             ) : dummyEvent.id === "event12" ? (
               <p

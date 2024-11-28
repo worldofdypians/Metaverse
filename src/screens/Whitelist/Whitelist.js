@@ -25,6 +25,7 @@ import {
   KOL_ABI,
   PRIVATE_ABI,
   ADVISORS_ABI,
+  blockedAccounts,
 } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -168,13 +169,25 @@ const Whitelist = ({
 
     let availableTGEKol = 0;
     if (coinbase) {
-      availableTGEKol = await kolSc.methods
-        .availableTGE(coinbase)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
+      if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) !== undefined
+      ) {
+        availableTGEKol = 0;
+      } else if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) === undefined
+      ) {
+        availableTGEKol = await kolSc.methods
+          .availableTGE(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      }
     }
 
     setcanClaimKol(Number(availableTGEKol) === 1);
@@ -229,13 +242,25 @@ const Whitelist = ({
 
     let tokensToClaimAmountKol = 0;
     if (coinbase) {
-      tokensToClaimAmountKol = await kolSc.methods
-        .getPendingUnlocked(coinbase)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
+      if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) !== undefined
+      ) {
+        tokensToClaimAmountKol = 0;
+      } else if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) === undefined
+      ) {
+        tokensToClaimAmountKol = await kolSc.methods
+          .getPendingUnlocked(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      }
     }
 
     const tokensToClaimAmountKol_formatted = new window.BigNumber(
@@ -306,19 +331,30 @@ const Whitelist = ({
 
     let totalClaimedTokensByUserKol = 0;
     if (coinbase) {
-      totalClaimedTokensByUserKol = await kolSc.methods
-        .claimedTokens(coinbase)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
-      const totalClaimedTokensByUserKol_formatted = new window.BigNumber(
-        totalClaimedTokensByUserKol / 1e18
-      ).toFixed(0);
-
-      setuserClaimedTokensKOL(totalClaimedTokensByUserKol_formatted);
+      if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) !== undefined
+      ) {
+        totalClaimedTokensByUserKol = 0;
+      } else if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) === undefined
+      ) {
+        totalClaimedTokensByUserKol = await kolSc.methods
+          .claimedTokens(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      }
     }
+    const totalClaimedTokensByUserKol_formatted = new window.BigNumber(
+      totalClaimedTokensByUserKol / 1e18
+    ).toFixed(0);
+    setuserClaimedTokensKOL(totalClaimedTokensByUserKol_formatted);
 
     let totalClaimedTokensByUserAdvisors = 0;
     if (coinbase) {
@@ -371,19 +407,30 @@ const Whitelist = ({
 
     let totalVestedTokensPerUserKol = 0;
     if (coinbase) {
-      totalVestedTokensPerUserKol = await kolSc.methods
-        .vestedTokens(coinbase)
-        .call()
-        .catch((e) => {
-          console.error(e);
-          return 0;
-        });
-      const totalVestedTokensPerUserKol_formatted = new window.BigNumber(
-        totalVestedTokensPerUserKol / 1e18
-      ).toFixed(0);
-
-      setuserVestedTokensKOL(totalVestedTokensPerUserKol_formatted);
+      if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) !== undefined
+      ) {
+        totalVestedTokensPerUserKol = 0;
+      } else if (
+        blockedAccounts.find((item) => {
+          return item.toLowerCase() === coinbase.toLowerCase();
+        }) === undefined
+      ) {
+        totalVestedTokensPerUserKol = await kolSc.methods
+          .vestedTokens(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+            return 0;
+          });
+      }
     }
+    const totalVestedTokensPerUserKol_formatted = new window.BigNumber(
+      totalVestedTokensPerUserKol / 1e18
+    ).toFixed(0);
+    setuserVestedTokensKOL(totalVestedTokensPerUserKol_formatted);
 
     let totalVestedTokensPerUserAdvisors = 0;
     if (coinbase) {
@@ -784,15 +831,17 @@ const Whitelist = ({
               : false
           }
           selectedRound={selectedRound}
-          cliffTime={ selectedRound?.id === "seed"
-          ? cliffTime
-          : selectedRound?.id === "private"
-          ? cliffTimePrivate
-          : selectedRound?.id === "kol"
-          ? cliffTimeKol
-          : selectedRound?.id === "advisors"
-          ? cliffTimeAdvisors
-          : 0}
+          cliffTime={
+            selectedRound?.id === "seed"
+              ? cliffTime
+              : selectedRound?.id === "private"
+              ? cliffTimePrivate
+              : selectedRound?.id === "kol"
+              ? cliffTimeKol
+              : selectedRound?.id === "advisors"
+              ? cliffTimeAdvisors
+              : 0
+          }
         />
       </div>
     </div>

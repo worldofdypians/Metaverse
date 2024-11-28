@@ -24,7 +24,7 @@ import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
-import opensea from '../../assets/opensea.svg'
+import opensea from "../../assets/opensea.svg";
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
@@ -36,7 +36,7 @@ import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
 import syncIcon from "../Challenges/assets/syncIcon.svg";
 import Countdown from "react-countdown";
-
+import wodIcon from "../../screens/Wod/Earn/assets/tokens/wodToken.png";
 import goldenPassCard from "./assets/banners/goldenPassBanner.webp";
 import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
 
@@ -68,15 +68,48 @@ import stoneEyeActiveThumbMobile from "./assets/banners/stoneEyeActiveThumbMobil
 import wingStormActiveThumbMobile from "./assets/banners/wingStormActiveThumbMobile.webp";
 import dragonRuinsActiveThumbMobile from "./assets/banners/dragonRuinsActiveThumbMobile.webp";
 import Slider from "react-slick";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import {
+  coldBiteAddress,
+  dragonRuinsAddress,
+  furyBeastAddress,
+  puzzleMadnessAddress,
+  scorpionKingAddress,
+  stoneEyeAddress,
+  wingStormAddress,
+  wod_token_abi,
+} from "../../screens/Account/src/web3";
+import { WOD_ABI } from "../../screens/Account/src/web3/abis";
+import { token_abi } from "../../screens/Account/src/web3";
+import { wod_abi } from "../../screens/Account/src/web3";
+import { ethers } from "ethers";
+import {
+  COLD_BITE_ABI,
+  cold_bite_address,
+  DRAGON_RUINS_ABI,
+  dragon_ruins_address,
+  FURY_BEAST_ABI,
+  fury_beast_address,
+  PUZZLE_MADNESS_ABI,
+  puzzle_madness_address,
+  SCORPION_KING_ABI,
+  scorpion_king_address,
+  STONE_EYE_ABI,
+  stone_eye_address,
+  WING_STORM_ABI,
+  wing_storm_address,
+} from "./abi";
+import Web3 from "web3";
+import { CircularProgress } from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
-      <div className="d-flex flex-column gap-1 align-items-center">
+      {/* <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time3 mb-0">{days < 10 ? "0" + days : days}</h6>
         <span className="days3">Days</span>
       </div>
-      <h6 className="mint-time3 mb-0">:</h6>
+      <h6 className="mint-time3 mb-0">:</h6> */}
 
       <div className="d-flex flex-column gap-1 align-items-center">
         <h6 className="mint-time3 mb-0">{hours < 10 ? "0" + hours : hours}</h6>
@@ -103,9 +136,11 @@ const NewEvents = ({
   selectedEvent,
   availableTime,
   eventCardCount,
+  wodPrice,
+  email,
+  isConnected,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
-
   const [challenge, setChallenge] = useState("");
   const [eventDuration, seteventDuration] = useState("Live");
   const [showPopup, setshowPopup] = useState("");
@@ -117,7 +152,56 @@ const NewEvents = ({
   const [statusColor, setStatusColor] = useState("#FE7A00");
   const [currentWeek, setCurrentWeek] = useState([]);
   const [activeSlide, setActiveSlide] = useState();
+  const [checkWallet, setCheckWallet] = useState(true);
+  //DRAGON RUINS
+  const [dragonRuinsWodAmount, setDragonRuinsWodAmount] = useState(0);
+  const [dragonBundleState, setDragonBundleState] = useState("initial");
+  const [dragonDepositState, setDragonDepositState] = useState("initial");
+  const [dragonShowApproval, setDragonShowApproval] = useState(true);
+  const [hasBoughtDragon, setHasBoughtDragon] = useState(false);
 
+  //PUZZLE MADNESS
+  const [puzzleMadnessWodAmount, setpuzzleMadnessWodAmount] = useState(0);
+  const [puzzleMadnessBundleState, setpuzzleMadnessBundleState] =
+    useState("initial");
+  const [puzzleMadnessDepositState, setpuzzleMadnessDepositState] =
+    useState("initial");
+  const [puzzleMadnessShowApproval, setpuzzleMadnessShowApproval] =
+    useState(true);
+  const [hasBoughtpuzzleMadness, setHasBoughtpuzzleMadness] = useState(false);
+  const [puzzleMadnessCountdown, setpuzzleMadnessCountdown] = useState(0);
+  const [isFinishedPuzzle, setisFinishedPuzzle] = useState(false);
+
+  //COLD BITE
+  const [coldBiteWodAmount, setColdBiteWodAmount] = useState(0);
+  const [bearBundleState, setBearBundleState] = useState("initial");
+  const [bearDepositState, setBearDepositState] = useState("initial");
+  const [bearShowApproval, setBearShowApproval] = useState(true);
+  const [hasBoughtBear, setHasBoughtBear] = useState(false);
+  //FURY BEAST
+  const [furyBeastWodAmount, setFuryBeastWodAmount] = useState(0);
+  const [beastBundleState, setBeastBundleState] = useState("initial");
+  const [beastDepositState, setBeastDepositState] = useState("initial");
+  const [beastShowApproval, setBeastShowApproval] = useState(true);
+  const [hasBoughtBeast, setHasBoughtBeast] = useState(false);
+  //WING STORM
+  const [wingStormWodAmount, setWingStormWodAmount] = useState(0);
+  const [eagleBundleState, setEagleBundleState] = useState("initial");
+  const [eagleDepositState, setEagleDepositState] = useState("initial");
+  const [eagleShowApproval, setEagleShowApproval] = useState(true);
+  const [hasBoughtEagle, setHasBoughtEagle] = useState(false);
+  //SCORPION KING
+  const [scorpionKingWodAmount, setScorpionKingWodAmount] = useState(0);
+  const [scorpionBundleState, setScorpionBundleState] = useState("initial");
+  const [scorpionDepositState, setScorpionDepositState] = useState("initial");
+  const [scorpionShowApproval, setScorpionShowApproval] = useState(true);
+  const [hasBoughtScorpion, setHasBoughtScorpion] = useState(false);
+  //STONE EYE
+  const [stoneEyeWodAmount, setStoneEyeWodAmount] = useState(0);
+  const [cyclopsBundleState, setCyclopsBundleState] = useState("initial");
+  const [cyclopsDepositState, setCyclopsDepositState] = useState("initial");
+  const [cyclopsShowApproval, setCyclopsShowApproval] = useState(true);
+  const [hasBoughtCyclops, setHasBoughtCyclops] = useState(false);
   const sliderRef = useRef();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
@@ -128,6 +212,18 @@ const NewEvents = ({
   const adjustedDay = currentDate === 0 ? 7 : currentDate;
   // const isMonday = now.getDay() === 1;
   const isMonday = true;
+
+  const now = new Date();
+  const midnightUTC = new Date(
+    Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1,
+      0,
+      0,
+      0
+    )
+  );
 
   const getMonday = (date) => {
     const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
@@ -191,6 +287,1500 @@ const NewEvents = ({
     ],
   };
 
+  //PUZZLE MADNESS
+  const getBundlePrizesPuzzle = async () => {
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness_address
+    );
+
+    const result_puzzle = await puzzleContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_puzzle) {
+      setpuzzleMadnessWodAmount(result_puzzle / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownPuzzle = async () => {
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness_address
+    );
+
+    const purchaseTimestamp = await puzzleContract.methods
+      .getTimeOfExpireBuff(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtDragon(false); // User hasn't bought it
+      return;
+    }
+    setHasBoughtpuzzleMadness(true);
+    setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+  };
+
+  const checkApprovalPuzzle = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, puzzleMadnessAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setpuzzleMadnessShowApproval(true);
+          } else {
+            setpuzzleMadnessShowApproval(false);
+            setpuzzleMadnessBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalPuzzle = async () => {
+    setpuzzleMadnessBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(puzzleMadnessAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setpuzzleMadnessBundleState("deposit");
+        setStatusColor("#00FECF");
+        setpuzzleMadnessShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setpuzzleMadnessBundleState("fail");
+      });
+  };
+
+  const handleDepositPuzzle = async () => {
+    let web3 = new Web3(window.ethereum);
+    const puzzleContract = new web3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzleMadnessAddress
+    );
+
+    setpuzzleMadnessDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await puzzleContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setpuzzleMadnessDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownPuzzle();
+          checkApprovalPuzzle();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownPuzzle();
+    } else if (window.WALLET_TYPE === "binance") {
+      const dragonsc = new ethers.Contract(
+        puzzleMadnessAddress,
+        PUZZLE_MADNESS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await dragonsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setpuzzleMadnessDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownPuzzle();
+        checkApprovalPuzzle();
+      }
+
+      handleRefreshCountdownPuzzle();
+    }
+  };
+
+  //DRAGON RUINS
+
+  const getBundlePrizesDragon = async () => {
+    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
+
+    const result_dragon_ruins = await dragonRuinsContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_dragon_ruins) {
+      setDragonRuinsWodAmount(result_dragon_ruins / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownDragon = async () => {
+    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
+
+    const purchaseTimestamp = await dragonRuinsContract.methods
+      .getTimeOfDeposit(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtDragon(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtDragon(isToday);
+  };
+
+  const checkApprovalDragon = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, dragonRuinsAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setDragonShowApproval(true);
+          } else {
+            setDragonShowApproval(false);
+            setDragonBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalDragon = async () => {
+    setDragonBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(dragonRuinsAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setDragonBundleState("deposit");
+        setStatusColor("#00FECF");
+        setDragonShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setDragonBundleState("fail");
+      });
+  };
+
+  const handleDepositDragon = async () => {
+    let web3 = new Web3(window.ethereum);
+    const dragonRuinsContract = new web3.eth.Contract(
+      DRAGON_RUINS_ABI,
+      dragon_ruins_address
+    );
+
+    setDragonDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await dragonRuinsContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setDragonDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownDragon();
+          checkApprovalDragon();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDragonDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownDragon();
+    } else if (window.WALLET_TYPE === "binance") {
+      const dragonsc = new ethers.Contract(
+        dragon_ruins_address,
+        DRAGON_RUINS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await dragonsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setDragonDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setDragonDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownDragon();
+        checkApprovalDragon();
+      }
+
+      handleRefreshCountdownDragon();
+    }
+  };
+
+  //COLD BITE
+
+  const getBundlePrizesBear = async () => {
+    const coldBiteContract = new window.bscWeb3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
+
+    const result_cold_bite = await coldBiteContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_cold_bite) {
+      setColdBiteWodAmount(result_cold_bite / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownBear = async () => {
+    const coldBiteContract = new window.bscWeb3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
+
+    const purchaseTimestamp = await coldBiteContract.methods
+      .getTimeOfDeposit(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtBear(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtBear(isToday);
+  };
+
+  const checkApprovalBear = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await token_abi.methods
+        .allowance(wallet, coldBiteAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setBearShowApproval(true);
+          } else {
+            setBearShowApproval(false);
+            setBearBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalBear = async () => {
+    setBearBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+    if (window.WALLET_TYPE !== "binance") {
+      await wod_token_abi.methods
+        .approve(coldBiteAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBearBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearBundleState("fail");
+        });
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        cold_bite_address,
+        COLD_BITE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await wod_token_abi.methods
+        .approve(coldBiteAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBearBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearBundleState("fail");
+        });
+    }
+  };
+
+  const handleDepositBear = async () => {
+    let web3 = new Web3(window.ethereum);
+    const coldBiteContract = new web3.eth.Contract(
+      COLD_BITE_ABI,
+      cold_bite_address
+    );
+    setBearDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await coldBiteContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setBearDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownBear();
+          checkApprovalBear();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownBear();
+    } else if (window.WALLET_TYPE === "binance") {
+      const bearsc = new ethers.Contract(
+        cold_bite_address,
+        COLD_BITE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await bearsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setBearDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownBear();
+        checkApprovalBear();
+      }
+      handleRefreshCountdownBear();
+    }
+  };
+
+  //FURY BEAST
+  const getBundlePrizesBeast = async () => {
+    const furyBeastContract = new window.bscWeb3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
+
+    const result_fury_beast = await furyBeastContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_fury_beast) {
+      setFuryBeastWodAmount(result_fury_beast / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownBeast = async () => {
+    const furyBeastContract = new window.bscWeb3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
+
+    const purchaseTimestamp = await furyBeastContract.methods
+      .getTimeOfDeposit(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtBeast(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtBeast(isToday);
+  };
+
+  const checkApprovalBeast = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, furyBeastAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setBeastShowApproval(true);
+            setBeastBundleState("initial");
+          } else {
+            setBeastShowApproval(false);
+            setBeastBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalBeast = async () => {
+    setBeastBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(furyBeastAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setBeastBundleState("deposit");
+        setStatusColor("#00FECF");
+        setBeastShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setBeastBundleState("fail");
+      });
+  };
+
+  const handleDepositBeast = async () => {
+    let web3 = new Web3(window.ethereum);
+    const furyBeastContract = new web3.eth.Contract(
+      FURY_BEAST_ABI,
+      fury_beast_address
+    );
+
+    setBeastDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await furyBeastContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setBeastDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownBeast();
+          checkApprovalBeast();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBeastDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownBeast();
+    } else if (window.WALLET_TYPE === "binance") {
+      const beastsc = new ethers.Contract(
+        fury_beast_address,
+        FURY_BEAST_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await beastsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBeastDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setBeastDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownBeast();
+        checkApprovalBeast();
+      }
+      handleRefreshCountdownBeast();
+    }
+  };
+
+  //WING STORM
+
+  const getBundlePrizesEagle = async () => {
+    const wingStormContract = new window.bscWeb3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
+
+    const result_wing_storm = await wingStormContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_wing_storm) {
+      setWingStormWodAmount(result_wing_storm / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownEagle = async () => {
+    const wingStormContract = new window.bscWeb3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
+
+    const purchaseTimestamp = await wingStormContract.methods
+      .getTimeOfDeposit(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtEagle(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtEagle(isToday);
+  };
+
+  const checkApprovalEagle = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, wingStormAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setEagleShowApproval(true);
+          } else {
+            setEagleShowApproval(false);
+            setEagleBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalEagle = async () => {
+    setEagleBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(wingStormAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setEagleBundleState("deposit");
+        setStatusColor("#00FECF");
+        setEagleShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setEagleBundleState("fail");
+      });
+  };
+
+  const handleDepositEagle = async () => {
+    let web3 = new Web3(window.ethereum);
+    const wingStormContract = new web3.eth.Contract(
+      WING_STORM_ABI,
+      wing_storm_address
+    );
+
+    setEagleDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await wingStormContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setEagleDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownEagle();
+          checkApprovalEagle();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setEagleDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownEagle();
+    } else if (window.WALLET_TYPE === "binance") {
+      const eaglesc = new ethers.Contract(
+        wing_storm_address,
+        WING_STORM_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await eaglesc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setEagleDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setEagleDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownEagle();
+        checkApprovalEagle();
+      }
+      handleRefreshCountdownEagle();
+    }
+  };
+
+  //SCORPION KING
+
+  const getBundlePrizesScorpion = async () => {
+    const scorpionKingContract = new window.bscWeb3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
+
+    const result_scorpion_king = await scorpionKingContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_scorpion_king) {
+      setScorpionKingWodAmount(result_scorpion_king / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownScorpion = async () => {
+    const scorpionKingContract = new window.bscWeb3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
+
+    const purchaseTimestamp = await scorpionKingContract.methods
+      .getTimeOfDeposit(coinbase)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtScorpion(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtScorpion(isToday);
+  };
+
+  const checkApprovalScorpion = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, scorpionKingAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setScorpionShowApproval(true);
+          } else {
+            setScorpionShowApproval(false);
+            setScorpionBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalScorpion = async () => {
+    setScorpionBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(scorpionKingAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setScorpionBundleState("deposit");
+        setStatusColor("#00FECF");
+        setScorpionShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setScorpionBundleState("fail");
+      });
+  };
+
+  const handleDepositScorpion = async () => {
+    let web3 = new Web3(window.ethereum);
+    const scorpionKingContract = new web3.eth.Contract(
+      SCORPION_KING_ABI,
+      scorpion_king_address
+    );
+    setScorpionDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await scorpionKingContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setScorpionDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownScorpion();
+          checkApprovalScorpion();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setScorpionDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownScorpion();
+    } else if (window.WALLET_TYPE === "binance") {
+      const dragonRuins_address = "0x6837Da6fC313D9218AF7FC9C27dcC088a128bdab";
+
+      const scorpionsc = new ethers.Contract(
+        scorpion_king_address,
+        SCORPION_KING_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await scorpionsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setScorpionDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setScorpionDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownScorpion();
+        checkApprovalScorpion();
+      }
+      handleRefreshCountdownScorpion();
+    }
+  };
+
+  //STONE EYE
+
+  const getBundlePrizesCyclops = async () => {
+    const stoneEyeContract = new window.bscWeb3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
+
+    const result_stone_eye = await stoneEyeContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_stone_eye) {
+      setStoneEyeWodAmount(result_stone_eye / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownCyclops = async () => {
+    const stoneEyeContract = new window.bscWeb3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
+
+    const purchaseTimestamp = await stoneEyeContract.methods
+      .getTimeOfDeposit(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtCyclops(false); // User hasn't bought it
+      return;
+    }
+    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+    const currentUTCDate = new Date();
+
+    // Get the UTC components
+    const purchaseYear = purchaseDate.getUTCFullYear();
+    const purchaseMonth = purchaseDate.getUTCMonth();
+    const purchaseDay = purchaseDate.getUTCDate();
+
+    const currentYear = currentUTCDate.getUTCFullYear();
+    const currentMonth = currentUTCDate.getUTCMonth();
+    const currentDay = currentUTCDate.getUTCDate();
+
+    // Check if the purchase was made on the same UTC day
+    const isToday =
+      purchaseYear === currentYear &&
+      purchaseMonth === currentMonth &&
+      purchaseDay === currentDay;
+    setHasBoughtCyclops(isToday);
+  };
+
+  const checkApprovalCyclops = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, stoneEyeAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setCyclopsShowApproval(true);
+          } else {
+            setCyclopsShowApproval(false);
+            setCyclopsBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalCyclops = async () => {
+    setCyclopsBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(stoneEyeAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setCyclopsBundleState("deposit");
+        setStatusColor("#00FECF");
+        setCyclopsShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setCyclopsBundleState("fail");
+      });
+  };
+
+  const handleDepositCyclops = async () => {
+    let web3 = new Web3(window.ethereum);
+    const stoneEyeContract = new web3.eth.Contract(
+      STONE_EYE_ABI,
+      stone_eye_address
+    );
+
+    setCyclopsDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await stoneEyeContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setCyclopsDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownCyclops();
+          checkApprovalCyclops();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setCyclopsDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownCyclops();
+    } else if (window.WALLET_TYPE === "binance") {
+      const cyclopssc = new ethers.Contract(
+        stone_eye_address,
+        STONE_EYE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await cyclopssc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setCyclopsDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setCyclopsDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownCyclops();
+        checkApprovalCyclops();
+      }
+      handleRefreshCountdownCyclops();
+    }
+  };
+
+  const checkWalletAddr = () => {
+    if (coinbase && wallet) {
+      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
+        setCheckWallet(false);
+      } else if (
+        coinbase?.toLowerCase() === wallet?.toLowerCase() &&
+        chainId === 56
+      ) {
+        setCheckWallet(true);
+      }
+    } else if (wallet) {
+      setCheckWallet(true);
+    } else setCheckWallet(false);
+  };
+
+  useEffect(() => {
+    getBundlePrizesDragon();
+    getBundlePrizesPuzzle();
+
+    getBundlePrizesBear();
+    getBundlePrizesBeast();
+    getBundlePrizesEagle();
+    getBundlePrizesScorpion();
+    getBundlePrizesCyclops();
+  }, []);
+
+  useEffect(() => {
+    checkWalletAddr();
+    if (email && wallet && chainId === 56) {
+      handleRefreshCountdownDragon();
+      checkApprovalDragon();
+      handleRefreshCountdownPuzzle();
+      checkApprovalPuzzle();
+      handleRefreshCountdownBear();
+      checkApprovalBear();
+      handleRefreshCountdownBeast();
+      checkApprovalBeast();
+      handleRefreshCountdownEagle();
+      checkApprovalEagle();
+      handleRefreshCountdownScorpion();
+      checkApprovalScorpion();
+      handleRefreshCountdownCyclops();
+      checkApprovalCyclops();
+    } else {
+      setHasBoughtBear(false);
+      setHasBoughtBeast(false);
+      setHasBoughtCyclops(false);
+      setHasBoughtDragon(false);
+      setHasBoughtpuzzleMadness(false);
+
+      setHasBoughtEagle(false);
+      setHasBoughtScorpion(false);
+      setDragonShowApproval(false);
+      setDragonBundleState("initial");
+
+      setpuzzleMadnessShowApproval(false);
+      setpuzzleMadnessBundleState("initial");
+
+      setBeastShowApproval(false);
+      setBeastBundleState("initial");
+      setBearShowApproval(false);
+      setBearBundleState("initial");
+      setCyclopsShowApproval(false);
+      setCyclopsBundleState("initial");
+      setEagleShowApproval(false);
+      setEagleBundleState("initial");
+      setScorpionShowApproval(false);
+      setScorpionBundleState("initial");
+    }
+  }, [wallet, chainId, email]);
+  const eventinfos = [
+    {
+      id: "dragon",
+      challange: "dragon-ruins",
+      title: "Dragon Ruins",
+      popupImage: dragonRuinsPopup,
+      image: dragonRuinsBanner,
+      thumbImage: dragonRuinsThumb,
+      thumbImageActive: dragonRuinsActiveThumb,
+      mobileThumbImage: dragonRuinsThumbMobile,
+      mobileThumbImageActive: dragonRuinsActiveThumbMobile,
+      wodAmount: dragonRuinsWodAmount,
+      desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
+      day: 1,
+      dayText: "MON",
+      dayTextLong: "Monday",
+      popupDesc:
+        "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Mondays.",
+        "The Dragon must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 16,000 points and up to 200 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 10 and above",
+        "Craft plenty of health potions and equip fire-resistant gear to counter the dragon's fiery breath.",
+        "Use ranged weapons to attack from a distance, avoiding its powerful melee strikes.",
+      ],
+      link: "/account/challenges/dragon-ruins",
+    },
+    {
+      challange: "cold-bite",
+      id: "coldbite",
+      image: coldBiteBanner,
+      popupImage: coldBitePopup,
+      thumbImage: coldBiteThumb,
+      thumbImageActive: coldBiteActiveThumb,
+      mobileThumbImage: coldBiteThumbMobile,
+      mobileThumbImageActive: coldBiteActiveThumbMobile,
+      wodAmount: coldBiteWodAmount,
+      desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
+      day: 2,
+      dayText: "TUE",
+      dayTextLong: "Tuesday",
+      title: "Cold Bite",
+      popupDesc:
+        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Tuesdays.",
+        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 30,000 points and up to 300 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 15 and above",
+        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
+        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
+      ],
+      link: "/account/challenges/cold-bite",
+    },
+    {
+      challange: "fury-beast",
+      id: "furyBeast",
+      image: furyBeastBanner,
+      popupImage: furyBeastPopup,
+      thumbImage: furyBeastThumb,
+      thumbImageActive: furyBeastActiveThumb,
+      mobileThumbImage: furyBeastThumbMobile,
+      mobileThumbImageActive: furyBeastActiveThumbMobile,
+      wodAmount: furyBeastWodAmount,
+      desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
+      day: 3,
+      dayText: "WED",
+      dayTextLong: "Wednesday",
+
+      title: "Fury Beast",
+      popupDesc:
+        "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Wednesdays.",
+        "The Gorilla must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 60,000 points and up to 400 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 18 and above",
+        "Craft plenty of health potions and focus on agility to dodge the Gorilla’s ground-pounding attacks.",
+        "Aim for weak points like the head to deal maximum damage quickly.",
+      ],
+      link: "/account/challenges/fury-beast",
+    },
+    {
+      challange: "wing-storm",
+      id: "wingstorm",
+      image: wingStormBanner,
+      popupImage: wingStormPopup,
+      thumbImage: wingStormThumb,
+      thumbImageActive: wingStormActiveThumb,
+      mobileThumbImage: wingStormThumbMobile,
+      mobileThumbImageActive: wingStormActiveThumbMobile,
+      wodAmount: wingStormWodAmount,
+      desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
+      day: 4,
+      dayText: "THU",
+      dayTextLong: "Thursday",
+
+      title: "Wing Storm",
+      popupDesc:
+        "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Thursdays.",
+        "The Eagle must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 70,000 points and up to 500 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 22 and above",
+        "Craft plenty of health potions and use ranged weapons or magic to counter the Eagle’s aerial mobility.",
+        "Stay mobile and anticipate its swift movements to avoid being caught off-guard.",
+      ],
+      link: "/account/challenges/wing-storm",
+    },
+    {
+      challange: "scorpion-king",
+      id: "scorpion",
+      popupImage: scorpionKingPopup,
+      image: scorpionKingBanner,
+      thumbImage: scorpionKingThumb,
+      thumbImageActive: scorpionKingActiveThumb,
+      mobileThumbImage: scorpionKingThumbMobile,
+      mobileThumbImageActive: scorpionKingActiveThumbMobile,
+      wodAmount: scorpionKingWodAmount,
+      desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
+      day: 6,
+      dayText: "SAT",
+      dayTextLong: "Saturday",
+      title: "Scorpion King",
+      popupDesc:
+        "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Saturdays.",
+        "The Scorpion must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 120,000 points and up to 1,000 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 40 and above",
+        "Craft plenty of health potions and target the tail to disable its poison strikes and reduce the threat.",
+        "Equip high-damage weapons to end the fight quickly before the poison accumulates.",
+      ],
+      link: "/account/challenges/scorpion-king",
+    },
+    {
+      challange: "stone-eye",
+      id: "stoneEye",
+      image: stoneEyeBanner,
+      popupImage: stoneEyePopup,
+      thumbImage: stoneEyeThumb,
+      thumbImageActive: stoneEyeActiveThumb,
+      mobileThumbImage: stoneEyeThumbMobile,
+      mobileThumbImageActive: stoneEyeActiveThumbMobile,
+      wodAmount: stoneEyeWodAmount,
+      desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
+      day: 7,
+      dayText: "SUN",
+      dayTextLong: "Sunday",
+      title: "Stone Eye",
+      popupDesc:
+        "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
+      workList: [
+        "Purchase the bundle from the Challenge & Events.",
+        "The event is available exclusively on Sundays.",
+        "The Cyclop must be defeated within the day, with the timer resetting at 00:00 UTC.",
+        "Rewards include 80,000 points and up to 600 stars.",
+      ],
+      tips: [
+        "Recommended Hero Level: 30 and above",
+        "Craft plenty of health potions and equip high-defense gear to withstand its crushing attacks.",
+        "Attack its legs to slow it down and exploit openings for critical hits.",
+      ],
+      link: "/account/challenges/stone-eye",
+    },
+  ];
+
   const mazeGardenInfo = {
     id: "maze",
     popupImage: mazeGardenPopup,
@@ -237,6 +1827,7 @@ const NewEvents = ({
   };
 
   const explorerHuntInfo = {
+    id: "explorer-hunt",
     image: explorerHuntBanner,
     popupImage: explorerHuntPopup,
     desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
@@ -321,184 +1912,6 @@ const NewEvents = ({
     ],
   };
 
-  const eventinfos = [
-    {
-      id: "dragon",
-      challange: "dragon-ruins",
-      title: "Dragon Ruins",
-      popupImage: dragonRuinsPopup,
-      image: dragonRuinsBanner,
-      thumbImage: dragonRuinsThumb,
-      thumbImageActive: dragonRuinsActiveThumb,
-
-      mobileThumbImage: dragonRuinsThumbMobile,
-      mobileThumbImageActive: dragonRuinsActiveThumbMobile,
-
-      desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
-      day: 1,
-      dayText: "MON",
-      popupDesc:
-        "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Mondays.",
-        "The Dragon must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 16,000 points and up to 200 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 10 and above",
-        "Craft plenty of health potions and equip fire-resistant gear to counter the dragon's fiery breath.",
-        "Use ranged weapons to attack from a distance, avoiding its powerful melee strikes.",
-      ],
-      link: "/account/challenges/dragon-ruins",
-    },
-    {
-      challange: "cold-bite",
-
-      id: "coldbite",
-      image: coldBiteBanner,
-      popupImage: coldBitePopup,
-      thumbImage: coldBiteThumb,
-      thumbImageActive: coldBiteActiveThumb,
-
-      mobileThumbImage: coldBiteThumbMobile,
-      mobileThumbImageActive: coldBiteActiveThumbMobile,
-
-      desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
-      day: 2,
-      dayText: "TUE",
-      title: "Cold Bite",
-      popupDesc:
-        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Tuesdays.",
-        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 30,000 points and up to 300 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 15 and above",
-        "Craft plenty of health potions and equip frost-resistant armor to mitigate the bear's ice attacks.",
-        "Focus on evading its slow but powerful swipes and counterattacking with precision.",
-      ],
-      link: "/account/challenges/cold-bite",
-    },
-    {
-      challange: "fury-beast",
-
-      id: "furyBeast",
-      image: furyBeastBanner,
-      popupImage: furyBeastPopup,
-      thumbImage: furyBeastThumb,
-      thumbImageActive: furyBeastActiveThumb,
-
-      mobileThumbImage: furyBeastThumbMobile,
-      mobileThumbImageActive: furyBeastActiveThumbMobile,
-      desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
-      day: 3,
-      dayText: "WED",
-      title: "Fury Beast",
-      popupDesc:
-        "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Wednesdays.",
-        "The Gorilla must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 60,000 points and up to 400 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 18 and above",
-        "Craft plenty of health potions and focus on agility to dodge the Gorilla’s ground-pounding attacks.",
-        "Aim for weak points like the head to deal maximum damage quickly.",
-      ],
-      link: "/account/challenges/fury-beast",
-    },
-    {
-      challange: "wing-storm",
-      id: "wingstorm",
-      image: wingStormBanner,
-      popupImage: wingStormPopup,
-      thumbImage: wingStormThumb,
-      thumbImageActive: wingStormActiveThumb,
-      mobileThumbImage: wingStormThumbMobile,
-      mobileThumbImageActive: wingStormActiveThumbMobile,
-      desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
-      day: 4,
-      dayText: "THU",
-      title: "Wing Storm",
-      popupDesc:
-        "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Thursdays.",
-        "The Eagle must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 70,000 points and up to 500 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 22 and above",
-        "Craft plenty of health potions and use ranged weapons or magic to counter the Eagle’s aerial mobility.",
-        "Stay mobile and anticipate its swift movements to avoid being caught off-guard.",
-      ],
-      link: "/account/challenges/wing-storm",
-    },
-    {
-      challange: "scorpion-king",
-      id: "scorpion",
-      popupImage: scorpionKingPopup,
-      image: scorpionKingBanner,
-      thumbImage: scorpionKingThumb,
-      thumbImageActive: scorpionKingActiveThumb,
-      mobileThumbImage: scorpionKingThumbMobile,
-      mobileThumbImageActive: scorpionKingActiveThumbMobile,
-      desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
-      day: 6,
-      dayText: "SAT",
-      title: "Scorpion King",
-      popupDesc:
-        "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Saturdays.",
-        "The Scorpion must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 120,000 points and up to 1,000 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 40 and above",
-        "Craft plenty of health potions and target the tail to disable its poison strikes and reduce the threat.",
-        "Equip high-damage weapons to end the fight quickly before the poison accumulates.",
-      ],
-      link: "/account/challenges/scorpion-king",
-    },
-    {
-      challange: "stone-eye",
-      id: "stoneEye",
-      image: stoneEyeBanner,
-      popupImage: stoneEyePopup,
-      thumbImage: stoneEyeThumb,
-      thumbImageActive: stoneEyeActiveThumb,
-      mobileThumbImage: stoneEyeThumbMobile,
-      mobileThumbImageActive: stoneEyeActiveThumbMobile,
-      desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
-      day: 7,
-      dayText: "SUN",
-      title: "Stone Eye",
-      popupDesc:
-        "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
-      workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Sundays.",
-        "The Cyclop must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 80,000 points and up to 600 stars.",
-      ],
-      tips: [
-        "Recommended Hero Level: 30 and above",
-        "Craft plenty of health potions and equip high-defense gear to withstand its crushing attacks.",
-        "Attack its legs to slow it down and exploit openings for critical hits.",
-      ],
-      link: "/account/challenges/stone-eye",
-    },
-  ];
-
   useEffect(() => {
     const today = new Date();
     const monday = getMonday(today);
@@ -535,7 +1948,7 @@ const NewEvents = ({
     }
   }, [selectedEvent]);
   useEffect(() => {
-    if (eventId === undefined) {
+    if (eventId === undefined || eventId === "golden-pass") {
       const filteredEvent =
         eventinfos.find((item) => {
           return item.day === utcDayIndex;
@@ -562,7 +1975,6 @@ const NewEvents = ({
       eventId !== "great-collection" &&
       eventId !== "explorer-hunt" &&
       eventId !== "critical-hit" &&
-      eventId !== "golden-pass" &&
       eventId !== "puzzle-madness"
     ) {
       setActiveEvent(
@@ -592,9 +2004,10 @@ const NewEvents = ({
       setActiveEvent(criticalHitInfos);
     } else if (eventId !== "" && eventId === "puzzle-madness") {
       setActiveEvent(puzzleMadnessInfo);
-    } else if (eventId !== "" && eventId === "golden-pass") {
-      setActiveEvent(goldenPassInfo);
     }
+    //  else if (eventId !== "" && eventId === "golden-pass") {
+    //   setActiveEvent(goldenPassInfo);
+    // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
   const html = document.querySelector("html");
@@ -642,7 +2055,6 @@ const NewEvents = ({
                             eventId !== "great-collection" &&
                             eventId !== "explorer-hunt" &&
                             eventId !== "critical-hit" &&
-                            eventId !== "golden-pass" &&
                             eventId !== "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
@@ -1091,177 +2503,831 @@ const NewEvents = ({
                             </div>
                           </div>
                           <div className="d-flex align-items-end justify-content-between">
-                            <h6 className="mb-0 purchase-package-title">
-                              Activate
-                            </h6>
+                            {(activeEvent?.id !== "greatCollection" &&
+                              activeEvent?.id !== "maze" &&
+                              activeEvent?.id !== "explorer-hunt") && (
+                                <h6 className="mb-0 purchase-package-title">
+                                  Activate
+                                </h6>
+                              )}
+                            {activeEvent?.id === "maze" && (
+                              <h6 className="mb-0 purchase-package-title">
+                                Requirements
+                              </h6>
+                            )}
                             {/* <div className="d-flex align-items-end gap-2">
                               <span className="available-on">Available on</span>
                               <img src={bnb} width={20} height={20} alt="" />
                               <span className="purchase-chain">BNB Chain</span>
                             </div> */}
                           </div>
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            {activeEvent?.id === "critical" ? (
-                              <div className="challenge-popup-button-wrapper p-3 d-flex gap-3 justify-content-center w-100">
-                                <NavLink
-                                  to={"/shop/land"}
-                                  className="getpremium-btn col-lg-4 py-2"
+                          {adjustedDay === activeEvent.day ? (
+                            <>
+                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                                <div
+                                  className="event-price-wrapper p-3 d-flex align-items-center gap-5"
+                                  style={{
+                                    pointerEvents: isMonday ? "auto" : "none",
+                                    filter: isMonday ? "none" : "blur(5px)",
+                                  }}
                                 >
-                                  Buy on Shop
-                                </NavLink>
-                                <NavLink
-                                  to={
-                                    "https://opensea.io/collection/worldofdypians"
-                                  }
-                                  target="_blank"
-                                  className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
-                                >
-                                  <img src={opensea} alt="" />
-                                  Buy on Opensea
-                                </NavLink>
-                              </div>
-                            ) : (
-                              <span
-                                className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                                style={{ fontWeight: "700", fontSize: "18px" }}
-                              >
-                                Event Coming Soon
-                              </span>
-                            )}
-                            {/* <div
-                              className="event-price-wrapper p-3 d-flex align-items-center gap-5"
-                              style={{
-                                pointerEvents: isMonday ? "auto" : "none",
-                                filter: isMonday ? "none" : "blur(5px)",
-                              }}
-                            >
-                              <span className="event-price-span">
-                                Event Price
-                              </span>
-                              <div className="d-flex align-items-center gap-3">
-                                <div className="d-flex align-items-center gap-1">
-                                  <img src={dypIcon} alt="" />
-                                  <h6 className="event-price-coin mb-0">
-                                    {getFormattedNumber(dragonRuinsDypAmount)}{" "}
-                                    DYP
-                                  </h6>
-                                </div>
-                                <span className="event-price-usd">($3.75)</span>
-                              </div>
-                            </div> */}
-                            {/* {!isMonday ? 
-        <h6 className="available-day-text mb-0 text-white" style={{fontWeight: "700", fontSize: "18px"}}>Available on Monday</h6>  
-        :
-        <div className="position-relative">
-          <Countdown renderer={renderer} date={Date.now() + timeUntilMidnight} />
-        </div>
-      } */}
-                            {/* <div
-                              className="d-flex align-items-center gap-3"
-                              style={{
-                                pointerEvents: isMonday ? "auto" : "none",
-                                filter: isMonday ? "none" : "blur(5px)",
-                              }}
-                            >
-                              <button
-                                disabled={
-                                  // bundleState === "deposit" || checkWallet === false  || !isMonday ?
-                                  true
-                                  //  : false
-                                }
-                                // className={` ${
-                                //   bundleState === "deposit" || checkWallet === false || !isMonday
-                                //     ? "stake-wod-btn-inactive"
-                                //     : "stake-wod-btn"
-                                // }  py-2 px-4`}
-
-                                className={`stake-wod-btn-inactive py-2 px-4`}
-
-                                // onClick={() => {
-                                //   handleApproval();
-                                // }}
-                              >
-                                Approve
-                              </button>
-
-                              <button
-                                disabled={
-                                  // bundleState === "deposit" && checkWallet === true || isMonday ? false :
-                                  true
-                                }
-                                // className={` ${
-                                //   bundleState === "deposit" ||
-                                //   (showApproval === false && checkWallet === true)
-                                //     ? "stake-wod-btn"
-                                //     : "stake-wod-btn-inactive"
-                                // }  py-2 px-4`}
-
-                                className={`stake-wod-btn-inactive py-2 px-4`}
-
-                                // onClick={() => {
-                                //   handleDeposit();
-                                // }}
-                              >
-                                Buy
-                              </button>
-                            </div> */}
-                          </div>
-                          {/* <span
-                            className="statusText"
-                            style={{
-                              color: statusColor,
-                              width: "fit-content",
-                            }}
-                          >
-                            {status}
-                          </span>
-                          {countdown !== 0 && countdown && (
-                            <div className="new-event-wrapper mt-5 p-3">
-                              <div className="d-flex flex-column gap-2">
-                                <div className=" d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between w-100">
-                                  <div className="d-flex flex-column gap-2">
-                                    <div className="d-flex align-items-center gap-2">
-                                      <h6 className="mb-0 time-remaining">
-                                        Available Time Remaining
-                                      </h6>
-                                      <img
-                                        src={whiteTooltip}
-                                        width={20}
-                                        height={20}
-                                        alt=""
-                                      />
+                                  <span className="event-price-span">
+                                    Event Price
+                                  </span>
+                                  {adjustedDay === 1 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            dragonRuinsWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          dragonRuinsWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
                                     </div>
-                                    <p className="sync-desc mb-0">
-                                      Use in-game
-                                      <img
-                                        src={syncIcon}
-                                        className="mx-1"
-                                        width={20}
-                                        height={20}
-                                        alt=""
-                                      />
-                                      sync button every time you purchase a
-                                      bundle
-                                    </p>
-                                  </div>
-                                  <Countdown
-                                    date={Number(countdown) * 1000}
-                                    renderer={renderer}
-                                    onComplete={() => {
-                                      setcountdown();
-                                    }}
-                                  />
+                                  ) : adjustedDay === 2 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            coldBiteWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          coldBiteWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 3 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            furyBeastWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          furyBeastWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 4 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            wingStormWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          wingStormWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 6 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            scorpionKingWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          scorpionKingWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : adjustedDay === 7 ? (
+                                    <div className="d-flex align-items-center gap-3">
+                                      <div className="d-flex align-items-center gap-1">
+                                        <img
+                                          src={wodIcon}
+                                          height={30}
+                                          width={30}
+                                          alt=""
+                                        />
+                                        <h6 className="event-price-coin mb-0">
+                                          {getFormattedNumber(
+                                            stoneEyeWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </h6>
+                                      </div>
+                                      <span className="event-price-usd">
+                                        ($
+                                        {getFormattedNumber(
+                                          stoneEyeWodAmount * wodPrice
+                                        )}
+                                        )
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
+                                {adjustedDay === 1 ? (
+                                  <>
+                                    {hasBoughtDragon ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                dragonBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                dragonShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalDragon()
+                                              }
+                                            >
+                                              {dragonBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                dragonDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                dragonShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : dragonShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositDragon()
+                                              }
+                                            >
+                                              {dragonDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 2 ? (
+                                  <>
+                                    {hasBoughtBear ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                bearBundleState === "deposit" ||
+                                                bearBundleState === "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                bearBundleState === "deposit" ||
+                                                checkWallet === false ||
+                                                bearShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBear()
+                                              }
+                                            >
+                                              {bearBundleState === "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                bearDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                bearShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : bearShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBear()
+                                              }
+                                            >
+                                              {bearDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 3 ? (
+                                  <>
+                                    {hasBoughtBeast ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                beastBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                beastShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBeast()
+                                              }
+                                            >
+                                              {beastBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                beastDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                beastShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : beastShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBeast()
+                                              }
+                                            >
+                                              {beastDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 4 ? (
+                                  <>
+                                    {hasBoughtEagle ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            {" "}
+                                            <button
+                                              disabled={
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                eagleBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                eagleShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalEagle()
+                                              }
+                                            >
+                                              {eagleBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                eagleDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                eagleShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : eagleShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositEagle()
+                                              }
+                                            >
+                                              {eagleDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 6 ? (
+                                  <>
+                                    {hasBoughtScorpion ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                scorpionBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                scorpionShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalScorpion()
+                                              }
+                                            >
+                                              {scorpionBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                scorpionDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                scorpionShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : scorpionShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositScorpion()
+                                              }
+                                            >
+                                              {scorpionDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 7 ? (
+                                  <>
+                                    {hasBoughtCyclops ? (
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="event-price-span">
+                                          Active Until:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="stake-wod-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                cyclopsBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                cyclopsShowApproval === false
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : "stake-wod-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalCyclops()
+                                              }
+                                            >
+                                              {cyclopsBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                cyclopsDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                cyclopsShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "stake-wod-btn-inactive d-none"
+                                                  : cyclopsShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "stake-wod-btn"
+                                                  : "stake-wod-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositCyclops()
+                                              }
+                                            >
+                                              {cyclopsDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
                               </div>
-                            </div>
-                          )} */}
+                              <span
+                                className="statusText"
+                                style={{
+                                  color: statusColor,
+                                  width: "fit-content",
+                                }}
+                              >
+                                {status}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                                <span
+                                  className="available-day-text mb-0 text-white w-100 d-flex justify-content-center text-center"
+                                  style={{
+                                    fontWeight: "700",
+                                    fontSize: "18px",
+                                  }}
+                                >
+                                  Challenge Available on{" "}
+                                  {activeEvent.dayTextLong}
+                                </span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     ) : challenge === "maze-day" ||
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
                       challenge === "critical-hit" ||
-                      challenge === "golden-pass" ||
+                      //  || challenge === "golden-pass"
                       challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
                         <div className="new-event-wrapper d-flex flex-column">
@@ -1330,9 +3396,18 @@ const NewEvents = ({
                           </div>
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
-                          <h6 className="mb-0 purchase-package-title">
-                            Activate
-                          </h6>
+                        {(activeEvent?.id !== "greatCollection" &&
+                              activeEvent?.id !== "maze" &&
+                              activeEvent?.id !== "explorer-hunt") && (
+                                <h6 className="mb-0 purchase-package-title">
+                                  Activate
+                                </h6>
+                              )}
+                            {activeEvent?.id === "maze" && (
+                              <h6 className="mb-0 purchase-package-title">
+                                Requirements
+                              </h6>
+                            )}
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
@@ -1340,35 +3415,217 @@ const NewEvents = ({
                           </div> */}
                         </div>
                         {activeEvent?.id === "critical" ? (
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
-                                <NavLink
-                                  to={"/shop/land"}
-                                  className="getpremium-btn col-lg-4 py-2"
-                                >
-                                  Buy on Shop
-                                </NavLink>
-                                <NavLink
-                                  to={
-                                    "https://opensea.io/collection/worldofdypians"
-                                  }
-                                  target="_blank"
-                                  className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
-                                >
-                                  <img src={opensea} alt="" />
-                                  Buy on Opensea
-                                </NavLink>
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
+                            <NavLink
+                              to={"/shop/land"}
+                              className="getpremium-btn col-lg-4 py-2"
+                            >
+                              Buy on Shop
+                            </NavLink>
+                            <NavLink
+                              to={
+                                "https://opensea.io/collection/worldofdypians"
+                              }
+                              target="_blank"
+                              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                            >
+                              <img src={opensea} alt="" />
+                              Buy on Opensea
+                            </NavLink>
+                          </div>
+                        ) : activeEvent?.id === "puzzle" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-5">
+                                <span className="event-price-span">
+                                  Event Price
+                                </span>
+
+                                <div className="d-flex align-items-center gap-3">
+                                  <div className="d-flex align-items-center gap-1">
+                                    <img
+                                      src={wodIcon}
+                                      height={30}
+                                      width={30}
+                                      alt=""
+                                    />
+                                    <h6 className="event-price-coin mb-0">
+                                      {getFormattedNumber(
+                                        puzzleMadnessWodAmount
+                                      )}{" "}
+                                      WOD
+                                    </h6>
+                                  </div>
+                                  <span className="event-price-usd">
+                                    ($
+                                    {getFormattedNumber(
+                                      puzzleMadnessWodAmount * wodPrice
+                                    )}
+                                    )
+                                  </span>
+                                </div>
                               </div>
-                            ) : (
-                             <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                               <span
-                                className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                                style={{ fontWeight: "700", fontSize: "18px" }}
-                              >
-                                Event Coming Soon
+
+                              <div className="d-flex align-items-center gap-2">
+                                {hasBoughtpuzzleMadness &&
+                                  isFinishedPuzzle === false && (
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="event-price-span">
+                                        Active Until:
+                                      </span>
+                                      <Countdown
+                                        renderer={renderer}
+                                        date={puzzleMadnessCountdown}
+                                        onComplete={() => {
+                                          setisFinishedPuzzle(true);
+                                        }}
+                                      />
+                                    </div>
+                                  )}
+                                {(!isConnected || !email) && (
+                                  <button
+                                    className="stake-wod-btn-inactive"
+                                    disabled
+                                  >
+                                    {" "}
+                                    Buy
+                                  </button>
+                                )}
+                                {isConnected && email && (
+                                  <>
+                                    <button
+                                      disabled={
+                                        puzzleMadnessBundleState ===
+                                          "deposit" ||
+                                        puzzleMadnessBundleState ===
+                                          "loading" ||
+                                        checkWallet === false
+                                          ? true
+                                          : false
+                                      }
+                                      className={` ${
+                                        puzzleMadnessBundleState ===
+                                          "deposit" ||
+                                        checkWallet === false ||
+                                        puzzleMadnessShowApproval === false
+                                          ? "stake-wod-btn-inactive d-none"
+                                          : "stake-wod-btn"
+                                      }  py-2 px-4`}
+                                      onClick={() => handleApprovalPuzzle()}
+                                    >
+                                      {puzzleMadnessBundleState ===
+                                      "loading" ? (
+                                        <div
+                                          class="spinner-border spinner-border-sm text-light"
+                                          role="status"
+                                        >
+                                          <span class="visually-hidden">
+                                            Loading...
+                                          </span>
+                                        </div>
+                                      ) : (
+                                        "Approve"
+                                      )}
+                                    </button>
+                                    <button
+                                      disabled={
+                                        checkWallet === true &&
+                                        puzzleMadnessDepositState !==
+                                          "loading-deposit"
+                                          ? false
+                                          : true
+                                      }
+                                      className={` ${
+                                        puzzleMadnessShowApproval === true &&
+                                        checkWallet === true
+                                          ? "stake-wod-btn-inactive d-none"
+                                          : puzzleMadnessShowApproval ===
+                                              false && checkWallet === true
+                                          ? "stake-wod-btn"
+                                          : "stake-wod-btn-inactive"
+                                      }  py-2 px-4`}
+                                      onClick={() => handleDepositPuzzle()}
+                                    >
+                                      {puzzleMadnessDepositState ===
+                                      "loading-deposit" ? (
+                                        <div
+                                          class="spinner-border spinner-border-sm text-light"
+                                          role="status"
+                                        >
+                                          <span class="visually-hidden">
+                                            Loading...
+                                          </span>
+                                        </div>
+                                      ) : (
+                                        "Buy"
+                                      )}
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "explorer-hunt" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3">
+                              <div className="d-flex flex-column">
+                                <span
+                                  className="challenge-popup-desc text-white"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  What is Explorer Hunt?
+                                </span>
+                                <span className="challenge-popup-desc text-white">
+                                  Explorer Hunt is an event where you must
+                                  defend the world from alien explorers who have
+                                  landed to assess the terrain before their
+                                  invasion.
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "greatCollection" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3">
+                              <div className="d-flex flex-column">
+                                <span
+                                  className="challenge-popup-desc text-white"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  What is The Great Collection?
+                                </span>
+                                <span className="challenge-popup-desc text-white">
+                                  The Great Collection is a thrilling event
+                                  where players are tasked with gathering rare
+                                  and unique partner branded coins scattered
+                                  across the game.
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "maze" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                              <span className="challenge-popup-desc text-white">
+                                You need to hold at least 400 WOD tokens to
+                                participate
                               </span>
-                             </div>
-                            )}
-                        {eventId === "golden-pass" &&
+                              <NavLink className="explore-btn" to="/#buy-wod">
+                                BUY WOD
+                              </NavLink>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <span
+                              className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                              style={{ fontWeight: "700", fontSize: "18px" }}
+                            >
+                              Event Coming Soon
+                            </span>
+                          </div>
+                        )}
+                        {/* {eventId === "golden-pass" &&
                           availableTime !== 0 &&
                           availableTime !== undefined && (
                             <div className="new-event-wrapper mt-5 p-3">
@@ -1406,7 +3663,7 @@ const NewEvents = ({
                                 </div>
                               </div>
                             </div>
-                          )}
+                          )} */}
                       </div>
                     ) : (
                       <></>

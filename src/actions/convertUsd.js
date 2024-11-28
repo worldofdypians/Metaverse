@@ -36,9 +36,12 @@ const getListedNftResult = async () => {
   const result = await getListedNFTS(0, "", "", "", "").catch((e) => {
     console.log(e);
   });
-
-  let result2 = result.filter((item)=>{return item.payment_priceType === 0})
-  return result2;
+  if (result && result.length > 0) {
+    let result2 = result.filter((item) => {
+      return item.payment_priceType === 0;
+    });
+    return result2;
+  }
 };
 
 getDypPrice();
@@ -57,8 +60,6 @@ const convertToUSD = async (price, payment_priceType) => {
 
   return null;
 };
-
-
 
 const filterNFTsByAddress = (nfts, address) => {
   return nfts.filter(

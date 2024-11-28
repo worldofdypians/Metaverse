@@ -93,6 +93,8 @@ import Map from "./screens/Map/Map.js";
 import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
 import matchainLogo from "./components/Header/assets/matchain.svg";
+import seiLogo from "./components/Header/assets/sei.svg";
+
 
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
@@ -115,6 +117,8 @@ import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
 import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
 import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
+import seiBg from "./screens/Marketplace/assets/seiBg.webp";
+
 
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
@@ -456,7 +460,7 @@ function App() {
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
-
+  const [wodPrice, setWodPrice] = useState(0);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -927,6 +931,10 @@ function App() {
             return obj.betapassId === "cookie3";
           });
 
+          const seiEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "sei";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -992,6 +1000,16 @@ function App() {
             setCoreEarnToken(userEarnedusd / corePrice);
           }
 
+          
+          if (seiEvent && seiEvent[0]) {
+            const userEarnedusd =
+              seiEvent[0].reward.earn.total /
+              seiEvent[0].reward.earn.multiplier;
+            const pointsSei = seiEvent[0].reward.earn.totalPoints;
+            setSeiEarnPoints(pointsSei);
+            setSeiEarnUsd(userEarnedusd);
+            setSeiEarnToken(userEarnedusd / seiPrice)
+          }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -1556,6 +1574,21 @@ function App() {
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
+  };
+
+  const fetchWodPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=world-of-dypians&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((res) => {
+        if (
+          res.data["world-of-dypians"] &&
+          res.data["world-of-dypians"] !== NaN
+        ) {
+          setWodPrice(res.data["world-of-dypians"].usd);
+        }
+      });
   };
 
   const fetchDogeCoinPrice = async () => {
@@ -3110,7 +3143,13 @@ function App() {
   };
 
   async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
+    if (
+      userId !== undefined &&
+      userId !== null &&
+      authToken !== undefined &&
+      email &&
+      isConnected
+    ) {
       try {
         const response = await fetch(
           `https://api.worldofdypians.com/user-favorites/${userId}`,
@@ -3634,43 +3673,43 @@ function App() {
       },
     },
 
-    // {
-    //   title: "SEI",
-    //   logo: seiLogo,
-    //   eventStatus: "Coming Soon",
-    //   rewardType: "SEI",
-    //   rewardAmount: "$20,000",
-    //   location: [-0.06787060104021504, 0.08728981018066406],
-    //   image: "matchainBanner.png",
-    //   type: "Treasure Hunt",
-    //   infoType: "Treasure Hunt",
-    //   marker: markers.treasureMarker,
-    //   totalRewards: "$20,000 in SEI Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Dec 05, 2024",
-    //   backgroundImage: upcomingMatchain,
-    //   userEarnUsd: seiEarnUsd,
-    //   userEarnCrypto: seiEarnToken,
-    //   userEarnPoints: seiEarnPoints,
-    //   popupInfo: {
-    //     title: "SEI",
-    //     chain: "Sei Network",
-    //     linkState: "sei",
-    //     rewards: "SEI",
-    //     status: "Coming Soon",
-    //     id: "event13",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: seiLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Dec 05, 2024",
-    //   },
-    // },
+    {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      rewardType: "SEI",
+      rewardAmount: "$20,000",
+      location: [-0.06787060104021504, 0.08728981018066406],
+      image: "matchainBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 05, 2024",
+      backgroundImage: seiBg,
+      userEarnUsd: seiEarnUsd,
+      userEarnCrypto: seiEarnToken,
+      userEarnPoints: seiEarnPoints,
+      popupInfo: {
+        title: "SEI",
+        chain: "Sei Network",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: seiLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 05, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -4531,20 +4570,24 @@ function App() {
       .catch((e) => {
         console.error(e);
       });
+      
     const result2 = await axios
       .get("https://api.worldofdypians.com/api/totalVolumes")
       .catch((e) => {
         console.error(e);
       });
 
-    if (result.data && result.data !== "NaN") {
-      setTotalTx(result.data);
-      localStorage.setItem("cachedTvl", result.data);
+    if (result && result.status === 200) {
+      if (result.data && result.data != "NAN") {
+        setTotalTx(result.data);
+        localStorage.setItem("cachedTvl", result.data);
+      }
     }
-
-    if (result2.data && result2.data !== "NaN") {
-      setTotalVolume(result2.data);
-      localStorage.setItem("cachedVolume", result2.data);
+    if (result2 && result2.status === 200) {
+      if (result2.data && result2.data !== "NaN") {
+        setTotalVolume(result2.data);
+        localStorage.setItem("cachedVolume", result2.data);
+      }
     }
   };
 
@@ -4567,7 +4610,7 @@ function App() {
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
-  }, [coinbase, nftCount]);
+  }, [coinbase, nftCount, authToken, isConnected, email]);
 
   useEffect(() => {
     getListedNfts2();
@@ -4603,13 +4646,17 @@ function App() {
       fetchUserPools(coinbase);
 
       // getNotifications(coinbase);
+    }
+  }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    if (coinbase && isConnected && authToken && email)
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
         "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
-    }
-  }, [coinbase, nftCount]);
+  }, [coinbase, isConnected, authToken, email]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -4630,6 +4677,7 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
+    fetchWodPrice();
     fetchCawsNfts();
     fetchLandNfts();
     fetchTimepieceNfts();
@@ -4951,6 +4999,7 @@ function App() {
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
+                wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
@@ -5016,6 +5065,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
@@ -5746,6 +5796,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);

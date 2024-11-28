@@ -82,40 +82,9 @@ import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/asset
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <>
-      <div className="d-flex align-items-center gap-1">
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {days < 10 ? "0" + days : days}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Days
-          </span>
-        </div>
-        <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-          :
-        </h6>
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {hours < 10 ? "0" + hours : hours}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Hours
-          </span>
-        </div>
-        <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-          :
-        </h6>
-        <div className="d-flex flex-column align-items-center">
-          <h6 className="profile-time-number mb-0" style={{ fontSize: "10px" }}>
-            {minutes < 10 ? "0" + minutes : minutes}
-          </h6>
-          <span className="profile-time-desc mb-0" style={{ fontSize: "8px" }}>
-            Minutes
-          </span>
-        </div>
-      </div>
-    </>
+    <h6 className="timer-text mb-0">
+      {days}d: {hours}h:{minutes}m (UTC)
+    </h6>
   );
 };
 
@@ -138,6 +107,13 @@ const renderer3 = ({ days, hours }) => {
       }}
     >
       Available: {days}d {hours}h
+    </span>
+  );
+};
+const renderer4 = ({ hours, minutes }) => {
+  return (
+    <span className="beast-siege-timer">
+      {hours}H:{minutes}M
     </span>
   );
 };
@@ -196,12 +172,17 @@ const MyProfile = ({
   userTaikoScore,
   onEventCardClick,
   userDataStarWeekly,
+  onLinkWallet
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
   const utcDayIndex = new Date().getUTCDay();
+
+
+
+
 
   const dailyEvents = [
     {
@@ -413,7 +394,7 @@ const MyProfile = ({
                       }  gap-2`}
                     >
                       <h6 className="my-profile-username mb-0">
-                        {email ? username : "GUEST"}
+                        {email && username ? username : "GUEST"}
                       </h6>
                       {!email && coinbase && (
                         <NavLink
@@ -426,7 +407,7 @@ const MyProfile = ({
                     </div>
 
                     <span className="current-rank-text text-capitalize">
-                      {email ? userRankName.name : ""}
+                      {email && username ? userRankName.name : ""}
                     </span>
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
@@ -460,7 +441,7 @@ const MyProfile = ({
                                 : "wallet-addr"
                             } `}
                           >
-                            {email !== undefined
+                            {email !== undefined && address
                               ? shortAddress(address)
                               : coinbase
                               ? shortAddress(coinbase)
@@ -528,9 +509,9 @@ const MyProfile = ({
                         className="loginbtn-profile px-5 py-2"
                         onClick={onConnectWallet}
                       >
-                        Log in
+                        Connect
                       </button>
-                    ) : (
+                    ) : email && username && coinbase && isConnected && address ?  (
                       <button
                         className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
                         onClick={onSyncClick}
@@ -548,7 +529,23 @@ const MyProfile = ({
                           ? "Success"
                           : "Error"}
                       </button>
-                    )}
+                    ) :  email && username && coinbase && isConnected && (!address) ?  (
+                      <button
+                      className="loginbtn-profile px-5 py-2"
+                      onClick={onLinkWallet}
+                    >
+                      Link Wallet
+                    </button>
+                    ) :  coinbase && email && !address && !username ? (
+                      <NavLink
+                        className="loginbtn-profile px-5 py-2 d-flex align-items-center"
+                        to={'/player'}
+                        
+                      >
+                        Create player
+                        {/* <img src={greenarrow} alt="" /> */}
+                      </NavLink>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -576,7 +573,10 @@ const MyProfile = ({
                     <div className="d-flex flex-column">
                       <div className="d-flex">
                         <span className="user-data-item-right">
-                        {getFormattedNumber(userDataStar.statValue ?? "---", 0)}
+                          {getFormattedNumber(
+                            userDataStar.statValue ?? "---",
+                            0
+                          )}
                         </span>
                       </div>
                       <span className="user-data-item-left">Stars</span>
@@ -767,7 +767,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -817,7 +817,7 @@ const MyProfile = ({
                   <div className="daily-progress-item position-relative">
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Upcoming</span>
+                      <span>Ready</span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -836,7 +836,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.puzzleMadnessCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
@@ -1062,7 +1062,7 @@ const MyProfile = ({
                   <div className="d-flex flex-column">
                     <h6
                       className="special-rewards-total mb-0"
-                      style={{ color: isPremium ? '#F3BF09' : "#FFE8D2" }}
+                      style={{ color: isPremium ? "#F3BF09" : "#FFE8D2" }}
                     >
                       $
                       {getFormattedNumber(
@@ -1106,15 +1106,16 @@ const MyProfile = ({
                           style={{ width: 44, height: 44 }}
                         />
                         <div className="d-flex flex-column">
-                        <span
-                          className="user-blue-rank"
-                          style={{ color: isPremium ? "#F3BF09" : "" }}
-                        >
-                          {!isPremium ? "Upgrade Status" : "Prime Enabled"}
-                        </span>
-                        <span className="user-rank-text">
-                          {!isPremium ? "Prime" : ""}
-                        </span></div>
+                          <span
+                            className="user-blue-rank"
+                            style={{ color: isPremium ? "#F3BF09" : "" }}
+                          >
+                            {!isPremium ? "Upgrade Status" : "Prime Enabled"}
+                          </span>
+                          <span className="user-rank-text">
+                            {!isPremium ? "Prime" : ""}
+                          </span>
+                        </div>
                       </div>
                       {!isPremium ? (
                         <NavLink
@@ -1172,7 +1173,7 @@ const MyProfile = ({
                       ) : (
                         <Countdown
                           date={Number(isgoldenPassActive) * 1000}
-                          renderer={renderer2}
+                          renderer={renderer}
                           // onComplete={() => {
                           //   setcountdown();
                           //   setisActive(false);
@@ -1200,14 +1201,19 @@ const MyProfile = ({
                         >
                           {dailyEvents[utcDayIndex].title}
                         </span>
-                        <span
+                        {/* <span
                           className={`utcEventContent`}
                           style={{
                             color: dailyEvents[utcDayIndex].contentColor,
                           }}
                         >
                           Coming Soon
-                        </span>
+                        </span> */}
+                       <div className="d-flex flex-column gap-1">
+                       <span className="beast-siege-ends-in">Ends in:</span>
+                       <Countdown renderer={renderer4} date={midnight} />
+                       </div>
+                        
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
