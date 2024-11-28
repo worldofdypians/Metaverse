@@ -736,8 +736,13 @@ const Whitelist = ({
 
   useEffect(() => {
     getInfo();
-    getInfoTimer();
   }, [coinbase]);
+
+  useEffect(() => {
+    if (coinbase && isConnected) {
+      getInfoTimer();
+    }
+  }, [coinbase, isConnected]);
 
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">

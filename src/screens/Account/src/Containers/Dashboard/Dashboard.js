@@ -184,7 +184,7 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-console.log(showSync)
+  
   const {
     data,
     refetch: refetchPlayer,
