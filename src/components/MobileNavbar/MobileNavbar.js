@@ -148,8 +148,7 @@ const MobileNavbar = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      }
-      else if (chainId === 698) {
+      } else if (chainId === 698) {
         setAvaxState(false);
         setBnbState(false);
         setEthState(false);
@@ -163,8 +162,7 @@ const MobileNavbar = ({
         setMantaState(false);
         setTaikoState(false);
         setMatState(true);
-      }
-      else if (chainId === 204) {
+      } else if (chainId === 204) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -284,18 +282,22 @@ const MobileNavbar = ({
         setImmutableState(false);
         setTaikoState(true);
       }
-      // else if (chainId === 713715 ) {
-      //   setAvaxState(false);
-      //   setBnbState(false);
-      //   setEthState(false);
-      //   setBaseState(false);
-      //   setConfluxState(false);
-      //   setopBnbState(false);
-      //   setSkaleState(false);
-      //   setCoreState(false);
-      //   setVictionState(false);
-      //   setSeiState(true)
-      // }
+      else if (chainId === 1329 ) {
+        setMatState(false);
+        setAvaxState(false);
+        setBnbState(false);
+        setMantaState(false);
+        setEthState(false);
+        setBaseState(false);
+        setConfluxState(false);
+        setopBnbState(false);
+        setSkaleState(false);
+        setCoreState(false);
+        setVictionState(false);
+        setSeiState(true);
+        setImmutableState(false);
+        setTaikoState(false);
+      }
       else {
         setMatState(false);
         setAvaxState(false);
@@ -444,9 +446,9 @@ const MobileNavbar = ({
                           ? taiko
                           : matState === true
                           ? matchain
-                          : // : seiState === true
-                            // ? sei
-                            error
+                           : seiState === true
+                            ? sei
+                          :  error
                       }
                       height={16}
                       width={16}
@@ -479,9 +481,9 @@ const MobileNavbar = ({
                         ? "Taiko"
                         : matState === true
                         ? "Matchain"
-                        : // : seiState === true
-                          // ? "Sei"
-                          "Unsupported"}
+                        : seiState === true
+                          ? "Sei"
+                         :  "Unsupported"}
                     </span>
 
                     <img src={dropdown} alt="" />

@@ -42,8 +42,8 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                       </div>
                     ) : item.eventStatus === "Coming Soon" ? (
                       <div
-                        className={`position-absolute  events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-0`}
-                        style={{ top: "-15px", left: 50, whiteSpace: "pre" }}
+                        className={`position-relative  events-page-status-tag-upcoming px-2 d-flex align-items-center justify-content-center gap-0`}
+                        style={{ whiteSpace: "pre", zIndex: 1 }}
                       >
                         {/* <div
                                     className="pulsatingDot"
@@ -71,16 +71,18 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                   </span>
                 </div>
               </div>
+              {item.eventStatus !== "Coming Soon" &&
               <div className="d-flex flex-column gap-2 gap-lg-4" style={{zIndex: '1'}}>
-                {/* <img src={totalEarningsIcon} alt="" /> */}
+              
                 <div className="d-flex flex-column gap-2">
                   <span className="total-earnings-amount">
                     ${getFormattedNumber(item.userEarnUsd)}
                   </span>
                   <span className="total-earnings-span">My Earnings</span>
                 </div>
-              </div>
+              </div>  }
               <div className="d-none d-lg-flex align-items-center position-relative">
+              {item.eventStatus !== "Coming Soon" &&
                 <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
                   <div className="d-flex align-items-center gap-2">
                     <img src={pickaxe} alt="" />
@@ -91,7 +93,7 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                     <span className="treasure-hunt-type">{item.eventDate}</span>
                   </div>
                 </div>
-             
+        }
               </div>
               <img
                   src={item.backgroundImage}

@@ -502,6 +502,45 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
+                        onMouseEnter={() => handleMouseEnter("sei")}
+                        onMouseLeave={handleMouseLeave}
+                        className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "sei" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("sei");
+                          setAllData(allMatData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "sei"
+                              ? seiActive
+                              : optionText2 !== "sei" &&
+                                hoverState === "sei"
+                              ? seiWhite
+                              : seiInactive
+                          }
+                          className={`${
+                            optionText2 === "sei"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Sei"
+                          : windowSize.width < 786 && optionText2 === "sei"
+                          ? "Sei"
+                          : ""}
+                      </button>
+
+                      <button
                         onMouseEnter={() => handleMouseEnter("manta")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -857,7 +896,7 @@ const NewLeaderBoard = ({
               </div>
 
               <div
-                className="d-flex flex-column gap-2 tablewrapper position-relative w-100"
+                className="d-flex flex-column gap-2 tablewrapper position-relative w-100 justify-content-between"
                 style={{ height: optionText === "genesis" ? "345px" : "100%" }}
               >
                 <div className="d-lg-flex d-none align-items-center justify-content-between gap-2">
@@ -877,7 +916,7 @@ const NewLeaderBoard = ({
               )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {optionText2 === "matchain" ? (
+                    {(optionText2 === "matchain" || optionText2 === "sei" )? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <h6 className="mb-0">Coming Soon</h6>
                       </div>
@@ -910,7 +949,7 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                              optionText2 === "matchain" && "blur-leaderboard"
+                             ( optionText2 === "matchain" ||  optionText2 === "sei") && "blur-leaderboard"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
@@ -1179,8 +1218,9 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? playerAvatar15
                                                         : playerAvatar16
-                                                      : optionText2 ===
-                                                        "matchain"
+                                                      :( optionText2 ===
+                                                        "matchain" ||  optionText2 ===
+                                                        "sei")
                                                       ? index + 1 <= 10
                                                         ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
                                                             index + 1
