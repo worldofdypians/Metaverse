@@ -10,6 +10,7 @@ import coreIcon from "../assets/chainIcons/coreIcon.svg";
 import baseIcon from "../assets/chainIcons/baseIcon.svg";
 import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
 import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
+import seiLogo from "../assets/chainIcons/seiLogo.svg";
 import victionIcon from "../assets/chainIcons/victionIcon.svg";
 import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
 import matchainIcon from "../assets/chainIcons/matchainIcon.svg";
@@ -467,7 +468,7 @@ const chainAreas = [
     marker: markers.skaleMarker,
     activeMarker: activeMarkers.skaleMarker,
     icon: skaleIcon,
-    location: [-0.0673360036280549, 0.08455395698547363],
+    location: [-0.0672560036280549, 0.08460395698547363],
     banner: "skaleBanner.png",
     area: [
       [
@@ -1432,7 +1433,58 @@ const chainAreas = [
       "Join community-driven contests",
     ],
   },
+  {
+    title: "Sei Area",
+    marker: markers.seiMarker,
+    activeMarker: activeMarkers.seiMarker,
 
+    icon: seiLogo,
+    location: [-0.06734488843929015, 0.08361518383026124],
+    banner: "seiBanner.png",
+    area: [
+      [
+        [-0.0671249474515005, 0.08401215076446535],
+        [-0.06698547267824354, 0.08378148078918458],
+        [-0.06696937943514361, 0.08344352245330812],
+        [-0.06715176952323615, 0.0832289457321167],
+        [-0.06741999023976578, 0.08318603038787842],
+        [-0.06768284654053355, 0.08323967456817628],
+        [-0.06777940599760639, 0.08340060710906984],
+        [-0.06779013482615308, 0.08364737033843994],
+      ],
+    ],
+    events: [],
+    pastEvents: [],
+    socials: [
+      {
+        link: "https://x.com/SeiNetwork",
+        icon: twitter,
+      },
+      {
+        link: "https://t.me/seinetwork",
+        icon: telegram,
+      },
+      {
+        link: "https://discord.com/invite/sei",
+        icon: discord,
+      },
+      {
+        link: "https://www.sei.io/",
+        icon: website,
+      },
+    ],
+    city: "Dypians",
+    size: "500x500",
+    rewards: "N/A",
+    desc: "Sei is at the pinnacle of high-speed blockchain platforms, ideal for web2 like experiences, high-frequency trading and real-time digital exchanges. ",
+    benefits: [
+      "Participate in exclusive quests and events",
+      "Participate in daily challenges",
+      "Explore an immersive environment",
+      "Experience real-time interactions",
+      "Join community-driven contests",
+    ],
+  },
 ];
 
 const bearAreas = [
