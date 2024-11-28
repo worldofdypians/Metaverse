@@ -93,6 +93,8 @@ import Map from "./screens/Map/Map.js";
 import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
 import matchainLogo from "./components/Header/assets/matchain.svg";
+import seiLogo from "./components/Header/assets/sei.svg";
+
 
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
@@ -115,6 +117,8 @@ import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
 import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
 import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
+import seiBg from "./screens/Marketplace/assets/seiBg.webp";
+
 
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
@@ -264,15 +268,15 @@ function App() {
       },
       blockExplorerUrls: ["https:/vicscan.xyz"],
     },
-    713715: {
-      chainId: 713715,
-      chainName: "Sei EVM Devnet",
-      rpcUrls: ["https://evm-rpc-arctic-1.sei-apis.com"],
+    1329 : {
+      chainId: 1329 ,
+      chainName: "Sei Network",
+      rpcUrls: ["https://evm-rpc.sei-apis.com"],
       nativeCurrency: {
         symbol: "SEI",
         decimals: 18,
       },
-      blockExplorerUrls: ["https://seistream.app/"],
+      blockExplorerUrls: ["https://seitrace.com"],
     },
     13371: {
       chainId: 13371,
@@ -439,6 +443,8 @@ function App() {
 
   const [isPremium, setIsPremium] = useState(false);
   const [domainPopup, setDomainPopup] = useState(false);
+  const [showSync, setshowSync] = useState(false);
+
   const [availableDomain, setAvailableDomain] = useState("initial");
   const [domainPrice, setDomainPrice] = useState(0);
   const [bnbUSDPrice, setBnbUSDPrice] = useState(0);
@@ -484,7 +490,9 @@ function App() {
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
-  let matchainLastDay = new Date("2025-03-28T14:00:00.000+02:00");
+  let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-04-04T14:00:00.000+02:00");
+
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -641,6 +649,9 @@ function App() {
   const [bnbPrice, setBnbPrice] = useState(0);
   const [cfxPrice, setCfxPrice] = useState(0);
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
+  const [seiEarnToken, setSeiEarnToken] = useState(0);
+  const [seiEarnPoints, setSeiEarnPoints] = useState(0);
+
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
   const [skalePoints, setSkalePoints] = useState(0);
@@ -656,14 +667,12 @@ function App() {
   const [nftPools, setnftPools] = useState([]);
   const [tokenPools, settokenPools] = useState([]);
   const [userPools, setUserPools] = useState([]);
- 
+
   const [stakeCount, setstakeCount] = useState(0);
 
   const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
- 
-
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
@@ -684,29 +693,26 @@ function App() {
       bnb_result &&
       bnb_result.status === 200
     ) {
-
-      const stakingSc1 = new window.bscWeb3.eth.Contract(
-        window.CONSTANT_STAKING_WOD_ABI,
-        window.constant_staking_wod1._address
+      const tokenSc = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        window.config.wod_token_address
       );
-      const totaldesposited_wod1 = await stakingSc1.methods
-        .totalDeposited()
+
+      const totaldesposited_wod1 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod1._address)
         .call()
         .catch((e) => {
           console.error(e);
         });
+
       const totaldesposited_wod1_formatted = new window.BigNumber(
         totaldesposited_wod1
       )
         .div(1e18)
         .toFixed(6);
-   
-      const stakingSc2 = new window.bscWeb3.eth.Contract(
-        window.CONSTANT_STAKING_WOD_ABI,
-        window.constant_staking_wod2._address
-      );
-      const totaldesposited_wod2 = await stakingSc2.methods
-        .totalDeposited()
+
+      const totaldesposited_wod2 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod2._address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -716,14 +722,9 @@ function App() {
       )
         .div(1e18)
         .toFixed(6);
-   
-  
-      const stakingSc3 = new window.bscWeb3.eth.Contract(
-        window.CONSTANT_STAKING_WOD_ABI,
-        window.constant_staking_wod3._address
-      );
-      const totaldesposited_wod3 = await stakingSc3.methods
-        .totalDeposited()
+
+      const totaldesposited_wod3 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod3._address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -733,14 +734,9 @@ function App() {
       )
         .div(1e18)
         .toFixed(6);
-   
-  
-      const stakingSc4 = new window.bscWeb3.eth.Contract(
-        window.CONSTANT_STAKING_WOD_ABI,
-        window.constant_staking_wod4._address
-      );
-      const totaldesposited_wod4 = await stakingSc4.methods
-        .totalDeposited()
+
+      const totaldesposited_wod4 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod4._address)
         .call()
         .catch((e) => {
           console.error(e);
@@ -750,30 +746,29 @@ function App() {
       )
         .div(1e18)
         .toFixed(6);
-   
 
-        const poolcapArray = [
-          {
-            id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
-            poolCap: 13000000,
-            totaldeposited: totaldesposited_wod1_formatted,
-          },
-          {
-            id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
-            poolCap: 12000000,
-            totaldeposited: totaldesposited_wod2_formatted,
-          },
-          {
-            id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
-            poolCap: 20000000,
-            totaldeposited: totaldesposited_wod3_formatted,
-          },
-          {
-            id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
-            poolCap: 9000000,
-            totaldeposited: totaldesposited_wod4_formatted,
-          },
-        ];
+      const poolcapArray = [
+        {
+          id: "0xefeFE07D9789cEf9BF6169F4d87fbE7DD297500C",
+          poolCap: 13000000,
+          totaldeposited: totaldesposited_wod1_formatted,
+        },
+        {
+          id: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
+          poolCap: 12000000,
+          totaldeposited: totaldesposited_wod2_formatted,
+        },
+        {
+          id: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
+          poolCap: 20000000,
+          totaldeposited: totaldesposited_wod3_formatted,
+        },
+        {
+          id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+          poolCap: 9000000,
+          totaldeposited: totaldesposited_wod4_formatted,
+        },
+      ];
 
       let resultWodToken = bnb_result.data.stakingInfoWODBnb;
       let resultWodTokenTVL = bnb_result.data.totalTVL;
@@ -832,7 +827,7 @@ function App() {
       settokenPools(resultWodToken2);
     }
   };
- 
+
   const fetchUserPools = async (addr) => {
     const userpools_result = await axios
       .get(`https://api.dyp.finance/api/user_pools_wod/${addr}`)
@@ -936,6 +931,10 @@ function App() {
             return obj.betapassId === "cookie3";
           });
 
+          const seiEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "sei";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -1001,6 +1000,16 @@ function App() {
             setCoreEarnToken(userEarnedusd / corePrice);
           }
 
+          
+          if (seiEvent && seiEvent[0]) {
+            const userEarnedusd =
+              seiEvent[0].reward.earn.total /
+              seiEvent[0].reward.earn.multiplier;
+            const pointsSei = seiEvent[0].reward.earn.totalPoints;
+            setSeiEarnPoints(pointsSei);
+            setSeiEarnUsd(userEarnedusd);
+            setSeiEarnToken(userEarnedusd / seiPrice)
+          }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -3619,7 +3628,7 @@ function App() {
       totalRewards: "$20,000 in MAT Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Nov 28, 2024",
+      eventDate: "Dec 04, 2024",
       backgroundImage: upcomingMatchain,
       userEarnUsd: matEarnUsd,
       userEarnCrypto: matEarnToken,
@@ -3639,38 +3648,47 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Nov 28, 2024",
+        eventDate: "Dec 04, 2024",
       },
     },
 
-    // {
-    //   title: "SEI",
-    //   logo: seiLogo,
-    //   eventStatus: "Coming Soon",
-    //   totalRewards: "$20,000 in SEI Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Find",
-    //   eventDate: "XXX XX, XXXX",
-    //   backgroundImage: seiBg,
-    //   popupInfo: {
-    //     title: "SEI",
-    //     chain: "SEI Chain",
-    //     linkState: "sei",
-    //     rewards: "SEI",
-    //     status: "Coming Soon",
-    //     id: "event13",
-    //     eventType: "Explore & Find",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: dypius2LastDay,
-    //     minRewards: "1",
-    //     maxRewards: "100",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore:
-    //       "/news/65dc8229039c5118d5c8782b/Dypius-Treasure-Hunt:-Magic-Egg-is-Live",
-    //     eventDate: "XXX XX, XXXX",
-    //   },
-    // },
+    {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      rewardType: "SEI",
+      rewardAmount: "$20,000",
+      location: [-0.06787060104021504, 0.08728981018066406],
+      image: "matchainBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 05, 2024",
+      backgroundImage: seiBg,
+      userEarnUsd: seiEarnUsd,
+      userEarnCrypto: seiEarnToken,
+      userEarnPoints: seiEarnPoints,
+      popupInfo: {
+        title: "SEI",
+        chain: "Sei Network",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: seiLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 05, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,
@@ -4564,7 +4582,6 @@ function App() {
     getWodBalance(coinbase);
   }, [coinbase, isConnected, networkId]);
 
- 
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
@@ -4640,7 +4657,7 @@ function App() {
   useEffect(() => {
     fetchEthStaking();
   }, [stakeCount]);
-
+ 
   return (
     <>
       <div
@@ -4676,6 +4693,7 @@ function App() {
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
+          onSyncClick={()=>{setshowSync(true)}}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -5002,6 +5020,9 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
+
               />
             }
           />
@@ -5065,6 +5086,9 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
+
               />
             }
           />
@@ -5792,6 +5816,8 @@ function App() {
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
+                showSync={showSync}
+                onCloseSync={()=>{setshowSync(false)}}
               />
             }
           />

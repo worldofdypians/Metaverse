@@ -1034,9 +1034,9 @@ const NewDailyBonus = ({
   const handleSeiPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
+        await handleSwitchNetworkhook("0x531")
           .then(() => {
-            handleSwitchNetwork(713715);
+            handleSwitchNetwork(1329);
           })
           .catch((e) => {
             console.log(e);
@@ -2912,6 +2912,76 @@ const NewDailyBonus = ({
       //   setMessage("notsupported");
       // }
       setMessage("comingsoon");
+    } else if (chain === "sei") {
+      // if (window.WALLET_TYPE !== "binance") {
+      //   if (email && coinbase && address) {
+      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
+      //       if (isPremium) {
+      //         if (
+      //           claimedMatChests + claimedMatPremiumChests === 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase()
+      //         ) {
+      //           setMessage("complete");
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests + claimedMatPremiumChests < 20 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       } else if (!isPremium) {
+      //         if (
+      //           claimedMatChests === 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("premium");
+      //           setDisable(true);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId === 698
+      //         ) {
+      //           setMessage("");
+      //           setDisable(false);
+      //         } else if (
+      //           claimedMatChests < 10 &&
+      //           // rewardData.length === 0 &&
+      //           address.toLowerCase() === coinbase.toLowerCase() &&
+      //           chainId !== 698
+      //         ) {
+      //           setMessage("switch");
+      //           setDisable(true);
+      //         }
+      //       }
+      //     } else {
+      //       setMessage("switchAccount");
+      //       setDisable(true);
+      //     }
+      //   } else {
+      //     setMessage("login");
+      //     setDisable(true);
+      //   }
+      // } else if (
+      //   window.WALLET_TYPE === "binance" ||
+      //   window.ethereum?.isBinance
+      // ) {
+      //   setMessage("notsupported");
+      // }
+      setMessage("comingsoon");
     }
   }, [
     email,
@@ -4011,18 +4081,106 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div> */}
-
-                        <div className={`position-relative chain-item w-100`}>
+                        
+                        <div className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
                           <img
                             src={comingSoon2}
-                            className={`chain-img`}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
                             alt=""
                           />
                           <div
-                            className={`chain-title-wrapper p-2 d-flex align-items-center flex-lg-column justify-content-center`}
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
                           >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
                             <div className="d-flex align-items-center gap-2">
+                              {/* <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div> */}
                               <span className="percentage-span">
+                                {/* {parseInt(matPercentage)}% */}
                                 Coming Soon
                               </span>
                             </div>
@@ -5077,6 +5235,109 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
+
+                              : chain === "sei"
+                          ? allSeiChests && allSeiChests.length > 0
+                            ? allSeiChests.map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  image={seiImages[index]}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onSeiChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataSei(value, value2);
+                                    setIsActive(value);
+                                    setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={item.chestType?.toLowerCase()}
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.isOpened}
+                                  disableBtn={disable}
+                                  isActive={isActive}
+                                  isActiveIndex={isActiveIndex}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+                            : window.range(0, 19).map((item, index) => (
+                                <NewChestItem
+                                  coinbase={coinbase}
+                                  claimingChest={claimingChest}
+                                  setClaimingChest={setClaimingChest}
+                                  buyNftPopup={buyNftPopup}
+                                  chainId={chainId}
+                                  chain={chain}
+                                  key={index}
+                                  item={item}
+                                  image={seiImages[index]}
+                                  // openChest={openChest}
+                                  selectedChest={selectedChest}
+                                  isPremium={isPremium}
+                                  onClaimRewards={(value) => {
+                                    // setRewardData(value);
+                                    setLiveRewardData(value);
+                                    onSeiChestClaimed();
+                                    showLiveRewardData(value);
+                                    setIsActive(item.chestId);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  handleShowRewards={(value, value2) => {
+                                    showSingleRewardDataSei(value, value2);
+                                    setIsActive(value);
+                                    // setIsActiveIndex(index + 1);
+                                  }}
+                                  onLoadingChest={(value) => {
+                                    // setDisable(value);
+                                  }}
+                                  onChestStatus={(val) => {
+                                    setMessage(val);
+                                  }}
+                                  address={address}
+                                  email={email}
+                                  rewardTypes={
+                                    index + 1 <= 10 ? "standard" : "premium"
+                                  }
+                                  chestId={item.chestId}
+                                  chestIndex={index + 1}
+                                  open={item.opened}
+                                  disableBtn={true}
+                                  isActive={isActive}
+                                  openChest={() => {
+                                    console.log("test");
+                                  }}
+                                  dummypremiumChests={
+                                    dummypremiumChests[index - 10]?.closedImg
+                                  }
+                                />
+                              ))
+
+
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (

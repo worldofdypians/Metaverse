@@ -64,14 +64,13 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const renderer2 = ({ hours, minutes }) => {
+const renderer2 = ({ days, hours, minutes }) => {
   return (
     <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
-      {hours}d:{hours}h:{minutes}m
+      {days}D:{hours}H:{minutes}M
     </h6>
   );
 };
-
 const ReleaseContent = ({
   isConnected,
   chainId,
@@ -115,9 +114,9 @@ const ReleaseContent = ({
             <div className="d-flex flex-column gap-3 col-lg-2 justify-content-between">
               <div className="release-input-wrapper p-3 h-100">
                 <div className="d-flex flex-column">
-                  <span className="release-green-txt">Token Distribution</span>
+                  <span className="release-green-txt">TGE Release</span>
                   <span className="release-white-txt">
-                    {selectedRound?.title}
+                    6%
                   </span>
                 </div>
               </div>

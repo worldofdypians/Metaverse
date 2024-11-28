@@ -144,7 +144,17 @@
   line-height: normal;
   border: none;
 }
-
+.syncbtn:hover {
+  border-radius: 7px;
+  background: linear-gradient(90deg, #ff8168 166.8%, #ea6278 0%);
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+}
 @keyframes rotating {
   from {
     -ms-transform: rotate(0deg);
@@ -926,7 +936,6 @@
 
 .rank-premium-status-wrapper:hover {
   border: 1px solid #f3bf09;
-
 }
 
 .rank-upgrade-status {
