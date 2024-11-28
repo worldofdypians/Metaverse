@@ -767,10 +767,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             className="popup-event-desc"
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
-            Sei is recognized as the fastest Layer 1 blockchain, setting new
-            benchmarks in blockchain performance and scalability. Supporting
-            multiple execution environments, including the innovative
-            parallelized Ethereum Virtual Machine,
+           Sei is at the pinnacle of high-speed blockchain platforms, ideal for web2 like experiences, high-frequency trading and real-time digital exchanges.
           </p>
         ) : dummyEvent.popupInfo.id === "event12" ? (
           <p
@@ -842,6 +839,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? "https://x.com/matchain_io"
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://x.com/cookie3_com"
+                : dummyEvent.popupInfo.id === "event13"
+                ? "https://x.com/SeiNetwork"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"

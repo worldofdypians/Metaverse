@@ -196,6 +196,7 @@ const MyProfile = ({
   userTaikoScore,
   onEventCardClick,
   userDataStarWeekly,
+  onLinkWallet
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -413,7 +414,7 @@ const MyProfile = ({
                       }  gap-2`}
                     >
                       <h6 className="my-profile-username mb-0">
-                        {email ? username : "GUEST"}
+                        {email && username ? username : "GUEST"}
                       </h6>
                       {!email && coinbase && (
                         <NavLink
@@ -426,7 +427,7 @@ const MyProfile = ({
                     </div>
 
                     <span className="current-rank-text text-capitalize">
-                      {email ? userRankName.name : ""}
+                      {email && username ? userRankName.name : ""}
                     </span>
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
@@ -460,7 +461,7 @@ const MyProfile = ({
                                 : "wallet-addr"
                             } `}
                           >
-                            {email !== undefined
+                            {email !== undefined && address
                               ? shortAddress(address)
                               : coinbase
                               ? shortAddress(coinbase)
@@ -528,9 +529,9 @@ const MyProfile = ({
                         className="loginbtn-profile px-5 py-2"
                         onClick={onConnectWallet}
                       >
-                        Log in
+                        Connect
                       </button>
-                    ) : (
+                    ) : email && username && coinbase && isConnected && address ?  (
                       <button
                         className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
                         onClick={onSyncClick}
@@ -548,7 +549,23 @@ const MyProfile = ({
                           ? "Success"
                           : "Error"}
                       </button>
-                    )}
+                    ) :  email && username && coinbase && isConnected && (!address) ?  (
+                      <button
+                      className="loginbtn-profile px-5 py-2"
+                      onClick={onLinkWallet}
+                    >
+                      Link Wallet
+                    </button>
+                    ) :  coinbase && email && !address && !username ? (
+                      <NavLink
+                        className="loginbtn-profile px-5 py-2"
+                        to={'/player'}
+                        
+                      >
+                        Create player
+                        {/* <img src={greenarrow} alt="" /> */}
+                      </NavLink>
+                    ) : null}
                   </div>
                 </div>
               </div>

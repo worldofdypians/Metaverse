@@ -93,6 +93,8 @@ import Map from "./screens/Map/Map.js";
 import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
 import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
 import matchainLogo from "./components/Header/assets/matchain.svg";
+import seiLogo from "./components/Header/assets/sei.svg";
+
 
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
@@ -115,6 +117,8 @@ import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
 import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
 import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
+import seiBg from "./screens/Marketplace/assets/seiBg.webp";
+
 
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
@@ -927,6 +931,10 @@ function App() {
             return obj.betapassId === "cookie3";
           });
 
+          const seiEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "sei";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -992,6 +1000,16 @@ function App() {
             setCoreEarnToken(userEarnedusd / corePrice);
           }
 
+          
+          if (seiEvent && seiEvent[0]) {
+            const userEarnedusd =
+              seiEvent[0].reward.earn.total /
+              seiEvent[0].reward.earn.multiplier;
+            const pointsSei = seiEvent[0].reward.earn.totalPoints;
+            setSeiEarnPoints(pointsSei);
+            setSeiEarnUsd(userEarnedusd);
+            setSeiEarnToken(userEarnedusd / seiPrice)
+          }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -3634,43 +3652,43 @@ function App() {
       },
     },
 
-    // {
-    //   title: "SEI",
-    //   logo: seiLogo,
-    //   eventStatus: "Coming Soon",
-    //   rewardType: "SEI",
-    //   rewardAmount: "$20,000",
-    //   location: [-0.06787060104021504, 0.08728981018066406],
-    //   image: "matchainBanner.png",
-    //   type: "Treasure Hunt",
-    //   infoType: "Treasure Hunt",
-    //   marker: markers.treasureMarker,
-    //   totalRewards: "$20,000 in SEI Rewards",
-    //   myEarnings: 0.0,
-    //   eventType: "Explore & Mine",
-    //   eventDate: "Dec 05, 2024",
-    //   backgroundImage: upcomingMatchain,
-    //   userEarnUsd: seiEarnUsd,
-    //   userEarnCrypto: seiEarnToken,
-    //   userEarnPoints: seiEarnPoints,
-    //   popupInfo: {
-    //     title: "SEI",
-    //     chain: "Sei Network",
-    //     linkState: "sei",
-    //     rewards: "SEI",
-    //     status: "Coming Soon",
-    //     id: "event13",
-    //     eventType: "Explore & Mine",
-    //     totalRewards: "$20,000 in SEI Rewards",
-    //     eventDuration: seiLastDay,
-    //     minRewards: "0.5",
-    //     maxRewards: "20",
-    //     minPoints: "5,000",
-    //     maxPoints: "50,000",
-    //     learnMore: "",
-    //     eventDate: "Dec 05, 2024",
-    //   },
-    // },
+    {
+      title: "SEI",
+      logo: seiLogo,
+      eventStatus: "Coming Soon",
+      rewardType: "SEI",
+      rewardAmount: "$20,000",
+      location: [-0.06787060104021504, 0.08728981018066406],
+      image: "matchainBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 05, 2024",
+      backgroundImage: seiBg,
+      userEarnUsd: seiEarnUsd,
+      userEarnCrypto: seiEarnToken,
+      userEarnPoints: seiEarnPoints,
+      popupInfo: {
+        title: "SEI",
+        chain: "Sei Network",
+        linkState: "sei",
+        rewards: "SEI",
+        status: "Coming Soon",
+        id: "event13",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: seiLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 05, 2024",
+      },
+    },
     {
       title: "SKALE",
       logo: skaleLogo,

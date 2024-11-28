@@ -10100,6 +10100,7 @@ console.log(showSync)
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
+              onLinkWallet={connectWallet}
             />
             <NewEvents
               events={dummyBetaPassData2}
