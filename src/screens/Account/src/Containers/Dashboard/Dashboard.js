@@ -172,6 +172,8 @@ function Dashboard({
   authToken,
   matEarnUsd,
   wodBalance,
+  showSync,
+  onCloseSync
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -180,7 +182,7 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-
+console.log(showSync)
   const {
     data,
     refetch: refetchPlayer,
@@ -5670,6 +5672,8 @@ function Dashboard({
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
+        onCloseSync();
+
           }, 1000);
           onSubscribeSuccess(account);
 
@@ -5681,6 +5685,8 @@ function Dashboard({
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
+        onCloseSync();
+
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -5702,6 +5708,8 @@ function Dashboard({
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
+        onCloseSync();
+
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
@@ -5713,6 +5721,8 @@ function Dashboard({
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
+        onCloseSync();
+
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -6728,6 +6738,7 @@ function Dashboard({
       setTimeout(() => {
         setsyncStatus("initial");
         setshowSyncModal(false);
+        onCloseSync();
       }, 3000);
       console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
     }
@@ -10430,15 +10441,19 @@ function Dashboard({
           />
         )}
 
-        {showSyncModal === true && (
+        {(showSyncModal === true || showSync === true) && (
           <SyncModal
             onCancel={() => {
               setshowSyncModal(false);
+             onCloseSync();
+
             }}
             onclose={() => {
               setshowSyncModal(false);
+             onCloseSync();
+
             }}
-            open={showSyncModal}
+            open={(showSyncModal === true || showSync === true)}
             onConfirm={handleSync}
             syncStatus={syncStatus}
           />
