@@ -299,7 +299,7 @@ const NewEvents = ({
     const purchaseTimestamp = await dragonRuinsContract.methods
       .getTimeOfDeposit(wallet)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtDragon(false); // User hasn't bought it
       return;
     }
@@ -475,7 +475,7 @@ const NewEvents = ({
     const purchaseTimestamp = await coldBiteContract.methods
       .getTimeOfDeposit(wallet)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
       return;
     }
@@ -648,7 +648,7 @@ const NewEvents = ({
     const purchaseTimestamp = await furyBeastContract.methods
       .getTimeOfDeposit(wallet)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
       return;
     }
@@ -825,7 +825,7 @@ const NewEvents = ({
     const purchaseTimestamp = await wingStormContract.methods
       .getTimeOfDeposit(wallet)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
       return;
     }
@@ -1000,7 +1000,7 @@ const NewEvents = ({
     const purchaseTimestamp = await scorpionKingContract.methods
       .getTimeOfDeposit(coinbase)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
       return;
     }
@@ -1176,7 +1176,7 @@ const NewEvents = ({
     const purchaseTimestamp = await stoneEyeContract.methods
       .getTimeOfDeposit(wallet)
       .call();
-    if (purchaseTimestamp === 0) {
+    if (Number(purchaseTimestamp) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
       return;
     }
