@@ -460,7 +460,7 @@ function App() {
   const [bscAmount, setBscAmount] = useState(0);
   const [skaleAmount, setSkaleAmount] = useState(0);
   const [isCheckedNewsLetter, setisCheckedNewsLetter] = useState(false);
-
+  const [wodPrice, setWodPrice] = useState(0);
   const [generateNonce, { loading: loadingGenerateNonce, data: dataNonce }] =
     useMutation(GENERATE_NONCE);
   const [verifyWallet, { loading: loadingVerify, data: dataVerify }] =
@@ -1574,6 +1574,21 @@ function App() {
 
     setDypTokenData(dypprice);
     setDypTokenDatabnb(dypprice);
+  };
+
+  const fetchWodPrice = async () => {
+    await axios
+      .get(
+        `https://pro-api.coingecko.com/api/v3/simple/price?ids=world-of-dypians&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+      )
+      .then((res) => {
+        if (
+          res.data["world-of-dypians"] &&
+          res.data["world-of-dypians"] !== NaN
+        ) {
+          setWodPrice(res.data["world-of-dypians"].usd);
+        }
+      });
   };
 
   const fetchDogeCoinPrice = async () => {
@@ -3128,7 +3143,13 @@ function App() {
   };
 
   async function fetchUserFavorites(userId) {
-    if (userId !== undefined && userId !== null) {
+    if (
+      userId !== undefined &&
+      userId !== null &&
+      authToken !== undefined &&
+      email &&
+      isConnected
+    ) {
       try {
         const response = await fetch(
           `https://api.worldofdypians.com/user-favorites/${userId}`,
@@ -4549,20 +4570,24 @@ function App() {
       .catch((e) => {
         console.error(e);
       });
+      
     const result2 = await axios
       .get("https://api.worldofdypians.com/api/totalVolumes")
       .catch((e) => {
         console.error(e);
       });
 
-    if (result.data && result.data !== "NaN") {
-      setTotalTx(result.data);
-      localStorage.setItem("cachedTvl", result.data);
+    if (result && result.status === 200) {
+      if (result.data && result.data != "NAN") {
+        setTotalTx(result.data);
+        localStorage.setItem("cachedTvl", result.data);
+      }
     }
-
-    if (result2.data && result2.data !== "NaN") {
-      setTotalVolume(result2.data);
-      localStorage.setItem("cachedVolume", result2.data);
+    if (result2 && result2.status === 200) {
+      if (result2.data && result2.data !== "NaN") {
+        setTotalVolume(result2.data);
+        localStorage.setItem("cachedVolume", result2.data);
+      }
     }
   };
 
@@ -4585,7 +4610,7 @@ function App() {
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
-  }, [coinbase, nftCount]);
+  }, [coinbase, nftCount, authToken, isConnected, email]);
 
   useEffect(() => {
     getListedNfts2();
@@ -4621,13 +4646,17 @@ function App() {
       fetchUserPools(coinbase);
 
       // getNotifications(coinbase);
+    }
+  }, [coinbase, nftCount]);
+
+  useEffect(() => {
+    if (coinbase && isConnected && authToken && email)
       addNewUserIfNotExists(
         coinbase,
         "Welcome",
         "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!"
       );
-    }
-  }, [coinbase, nftCount]);
+  }, [coinbase, isConnected, authToken, email]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -4648,6 +4677,7 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
+    fetchWodPrice();
     fetchCawsNfts();
     fetchLandNfts();
     fetchTimepieceNfts();
@@ -4969,6 +4999,7 @@ function App() {
                 wodBalance={wodBalance}
                 authToken={authToken}
                 dailyBonuslistedNFTS={listedNFTS}
+                wodPrice={wodPrice}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
                 }}
@@ -5034,6 +5065,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);
@@ -5764,6 +5796,7 @@ function App() {
               <Dashboard
                 wodBalance={wodBalance}
                 authToken={authToken}
+                wodPrice={wodPrice}
                 dailyBonuslistedNFTS={listedNFTS}
                 onSuccessDeposit={() => {
                   setCount55(count55 + 1);

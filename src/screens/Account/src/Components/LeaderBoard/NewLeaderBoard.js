@@ -122,20 +122,20 @@ const renderer2 = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-1 justify-content-center">
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time2 m-0">{days < 10 ? "0" + days : days}</h6>
-        <span className="days fw-normal">Days</span>
+        <h6 className="mint-time2 m-0 font-poppins">{days < 10 ? "0" + days : days}</h6>
+        <span className="days fw-normal font-poppins">Days</span>
       </div>
-      <h6 className="mint-time2 m-0">:</h6>
+      <h6 className="mint-time2 m-0 font-poppins">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time2 m-0">{hours < 10 ? "0" + hours : hours}</h6>
-        <span className="days fw-normal">Hours</span>
+        <h6 className="mint-time2 m-0 font-poppins">{hours < 10 ? "0" + hours : hours}</h6>
+        <span className="days fw-normal font-poppins">Hours</span>
       </div>
-      <h6 className="mint-time2 m-0">:</h6>
+      <h6 className="mint-time2 m-0 font-poppins">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time2 m-0">
+        <h6 className="mint-time2 m-0 font-poppins">
           {minutes < 10 ? "0" + minutes : minutes}
         </h6>
-        <span className="days fw-normal">Minutes</span>
+        <span className="days fw-normal font-poppins">Minutes</span>
       </div>
     </div>
   );
