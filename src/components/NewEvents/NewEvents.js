@@ -73,6 +73,7 @@ import {
   coldBiteAddress,
   dragonRuinsAddress,
   furyBeastAddress,
+  puzzleMadnessAddress,
   scorpionKingAddress,
   stoneEyeAddress,
   wingStormAddress,
@@ -89,6 +90,8 @@ import {
   dragon_ruins_address,
   FURY_BEAST_ABI,
   fury_beast_address,
+  PUZZLE_MADNESS_ABI,
+  puzzle_madness_address,
   SCORPION_KING_ABI,
   scorpion_king_address,
   STONE_EYE_ABI,
@@ -156,6 +159,19 @@ const NewEvents = ({
   const [dragonDepositState, setDragonDepositState] = useState("initial");
   const [dragonShowApproval, setDragonShowApproval] = useState(true);
   const [hasBoughtDragon, setHasBoughtDragon] = useState(false);
+
+  //PUZZLE MADNESS
+  const [puzzleMadnessWodAmount, setpuzzleMadnessWodAmount] = useState(0);
+  const [puzzleMadnessBundleState, setpuzzleMadnessBundleState] =
+    useState("initial");
+  const [puzzleMadnessDepositState, setpuzzleMadnessDepositState] =
+    useState("initial");
+  const [puzzleMadnessShowApproval, setpuzzleMadnessShowApproval] =
+    useState(true);
+  const [hasBoughtpuzzleMadness, setHasBoughtpuzzleMadness] = useState(false);
+  const [puzzleMadnessCountdown, setpuzzleMadnessCountdown] = useState(0);
+  const [isFinishedPuzzle, setisFinishedPuzzle] = useState(false);
+
   //COLD BITE
   const [coldBiteWodAmount, setColdBiteWodAmount] = useState(0);
   const [bearBundleState, setBearBundleState] = useState("initial");
@@ -269,6 +285,166 @@ const NewEvents = ({
         },
       },
     ],
+  };
+
+  //PUZZLE MADNESS
+  const getBundlePrizesPuzzle = async () => {
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness_address
+    );
+
+    const result_puzzle = await puzzleContract.methods
+      .getEstimatedBundleWODAmount()
+      .call()
+      .catch((e) => {
+        console.error(e);
+      });
+
+    if (result_puzzle) {
+      setpuzzleMadnessWodAmount(result_puzzle / 1e18);
+    }
+  };
+
+  const handleRefreshCountdownPuzzle = async () => {
+    const puzzleContract = new window.bscWeb3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzle_madness_address
+    );
+
+    const purchaseTimestamp = await puzzleContract.methods
+      .getTimeOfExpireBuff(wallet)
+      .call();
+    if (Number(purchaseTimestamp) === 0) {
+      setHasBoughtDragon(false); // User hasn't bought it
+      return;
+    }
+    setHasBoughtpuzzleMadness(true);
+    setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+  };
+
+  const checkApprovalPuzzle = async () => {
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      await wod_token_abi.methods
+        .allowance(wallet, puzzleMadnessAddress)
+        .call()
+        .then((data) => {
+          if (data === "0" || data < 150000000000000000000) {
+            setpuzzleMadnessShowApproval(true);
+          } else {
+            setpuzzleMadnessShowApproval(false);
+            setpuzzleMadnessBundleState("deposit");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  };
+
+  const handleApprovalPuzzle = async () => {
+    setpuzzleMadnessBundleState("loading");
+    setStatus("Approving, please wait");
+    setStatusColor("#00FECF");
+    // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
+
+    await wod_token_abi.methods
+      .approve(puzzleMadnessAddress, "500000000000000000000000000")
+      .send({ from: coinbase })
+      .then(() => {
+        setStatus("Succesfully approved!");
+        setpuzzleMadnessBundleState("deposit");
+        setStatusColor("#00FECF");
+        setpuzzleMadnessShowApproval(false);
+      })
+      .catch((e) => {
+        setStatusColor("#FE7A00");
+        setStatus(e?.message);
+        setpuzzleMadnessBundleState("fail");
+      });
+  };
+
+  const handleDepositPuzzle = async () => {
+    let web3 = new Web3(window.ethereum);
+    const puzzleContract = new web3.eth.Contract(
+      PUZZLE_MADNESS_ABI,
+      puzzleMadnessAddress
+    );
+
+    setpuzzleMadnessDepositState("loading-deposit");
+    setStatus("Confirm to complete purchase");
+    setStatusColor("#00FECF");
+    if (window.WALLET_TYPE !== "binance") {
+      await puzzleContract.methods
+        .deposit()
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Bundle successfully purchased!");
+          setpuzzleMadnessDepositState("success");
+          setStatusColor("#00FECF");
+
+          handleRefreshCountdownPuzzle();
+          checkApprovalPuzzle();
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessDepositState("failDeposit");
+          console.log(e);
+        });
+      handleRefreshCountdownPuzzle();
+    } else if (window.WALLET_TYPE === "binance") {
+      const dragonsc = new ethers.Contract(
+        puzzleMadnessAddress,
+        PUZZLE_MADNESS_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
+
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
+
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      // let gasLimit;
+      // console.log('dragonsc',dragonsc.callStatic.deposit())
+      // try {
+      //   gasLimit = await dragonsc.estimateGas.deposit();
+      //   transactionParameters.gasLimit = gasLimit;
+      //   console.log("transactionParameters", transactionParameters);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+
+      const txResponse = await dragonsc
+        .deposit({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setpuzzleMadnessDepositState("failDeposit");
+          console.log(e);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setStatus("Bundle successfully purchased!");
+        setpuzzleMadnessDepositState("success");
+        setStatusColor("#00FECF");
+
+        handleRefreshCountdownPuzzle();
+        checkApprovalPuzzle();
+      }
+
+      handleRefreshCountdownPuzzle();
+    }
   };
 
   //DRAGON RUINS
@@ -521,35 +697,11 @@ const NewEvents = ({
   };
 
   const handleApprovalBear = async () => {
-  
     setBearBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
     // const approveAmount = await wod_abi.methods.MIN_DEPOSIT().call();
-if (window.WALLET_TYPE !== "binance") {
-    await wod_token_abi.methods
-      .approve(coldBiteAddress, "500000000000000000000000000")
-      .send({ from: coinbase })
-      .then(() => {
-        setStatus("Succesfully approved!");
-        setBearBundleState("deposit");
-        setStatusColor("#00FECF");
-        setBearShowApproval(false);
-      })
-      .catch((e) => {
-        setStatusColor("#FE7A00");
-        setStatus(e?.message);
-        setBearBundleState("fail");
-      });
-    }
-    else if (window.WALLET_TYPE === "binance") {
-      const tokenSc = new ethers.Contract(
-        cold_bite_address,
-        COLD_BITE_ABI,
-        binanceW3WProvider.getSigner()
-      );
-
-      
+    if (window.WALLET_TYPE !== "binance") {
       await wod_token_abi.methods
         .approve(coldBiteAddress, "500000000000000000000000000")
         .send({ from: coinbase })
@@ -564,7 +716,28 @@ if (window.WALLET_TYPE !== "binance") {
           setStatus(e?.message);
           setBearBundleState("fail");
         });
-      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const tokenSc = new ethers.Contract(
+        cold_bite_address,
+        COLD_BITE_ABI,
+        binanceW3WProvider.getSigner()
+      );
+
+      await wod_token_abi.methods
+        .approve(coldBiteAddress, "500000000000000000000000000")
+        .send({ from: coinbase })
+        .then(() => {
+          setStatus("Succesfully approved!");
+          setBearBundleState("deposit");
+          setStatusColor("#00FECF");
+          setBearShowApproval(false);
+        })
+        .catch((e) => {
+          setStatusColor("#FE7A00");
+          setStatus(e?.message);
+          setBearBundleState("fail");
+        });
+    }
   };
 
   const handleDepositBear = async () => {
@@ -706,7 +879,6 @@ if (window.WALLET_TYPE !== "binance") {
         .allowance(wallet, furyBeastAddress)
         .call()
         .then((data) => {
-          
           if (data === "0" || data < 150000000000000000000) {
             setBeastShowApproval(true);
             setBeastBundleState("initial");
@@ -1371,6 +1543,8 @@ if (window.WALLET_TYPE !== "binance") {
 
   useEffect(() => {
     getBundlePrizesDragon();
+    getBundlePrizesPuzzle();
+
     getBundlePrizesBear();
     getBundlePrizesBeast();
     getBundlePrizesEagle();
@@ -1383,6 +1557,8 @@ if (window.WALLET_TYPE !== "binance") {
     if (email && wallet && chainId === 56) {
       handleRefreshCountdownDragon();
       checkApprovalDragon();
+      handleRefreshCountdownPuzzle();
+      checkApprovalPuzzle();
       handleRefreshCountdownBear();
       checkApprovalBear();
       handleRefreshCountdownBeast();
@@ -1398,10 +1574,16 @@ if (window.WALLET_TYPE !== "binance") {
       setHasBoughtBeast(false);
       setHasBoughtCyclops(false);
       setHasBoughtDragon(false);
+      setHasBoughtpuzzleMadness(false);
+
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
       setDragonShowApproval(false);
       setDragonBundleState("initial");
+
+      setpuzzleMadnessShowApproval(false);
+      setpuzzleMadnessBundleState("initial");
+
       setBeastShowApproval(false);
       setBeastBundleState("initial");
       setBearShowApproval(false);
@@ -1645,6 +1827,7 @@ if (window.WALLET_TYPE !== "binance") {
   };
 
   const explorerHuntInfo = {
+    id: "explorer-hunt",
     image: explorerHuntBanner,
     popupImage: explorerHuntPopup,
     desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
@@ -1765,7 +1948,7 @@ if (window.WALLET_TYPE !== "binance") {
     }
   }, [selectedEvent]);
   useEffect(() => {
-    if (eventId === undefined || eventId ==='golden-pass') {
+    if (eventId === undefined || eventId === "golden-pass") {
       const filteredEvent =
         eventinfos.find((item) => {
           return item.day === utcDayIndex;
@@ -1837,10 +2020,6 @@ if (window.WALLET_TYPE !== "binance") {
     }
   }, [showPopup]);
 
-
-
-  
-
   return (
     <>
       <div
@@ -1875,7 +2054,7 @@ if (window.WALLET_TYPE !== "binance") {
                             eventId !== "maze-day" &&
                             eventId !== "great-collection" &&
                             eventId !== "explorer-hunt" &&
-                            eventId !== "critical-hit"  &&
+                            eventId !== "critical-hit" &&
                             eventId !== "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
@@ -2324,9 +2503,18 @@ if (window.WALLET_TYPE !== "binance") {
                             </div>
                           </div>
                           <div className="d-flex align-items-end justify-content-between">
-                            <h6 className="mb-0 purchase-package-title">
-                              Activate
-                            </h6>
+                            {(activeEvent?.id !== "greatCollection" &&
+                              activeEvent?.id !== "maze" &&
+                              activeEvent?.id !== "explorer-hunt") && (
+                                <h6 className="mb-0 purchase-package-title">
+                                  Activate
+                                </h6>
+                              )}
+                            {activeEvent?.id === "maze" && (
+                              <h6 className="mb-0 purchase-package-title">
+                                Requirements
+                              </h6>
+                            )}
                             {/* <div className="d-flex align-items-end gap-2">
                               <span className="available-on">Available on</span>
                               <img src={bnb} width={20} height={20} alt="" />
@@ -2556,7 +2744,7 @@ if (window.WALLET_TYPE !== "binance") {
                                               )}
                                             </button>
                                             <button
-                                               disabled={
+                                              disabled={
                                                 checkWallet === true &&
                                                 dragonDepositState !==
                                                   "loading-deposit"
@@ -2654,7 +2842,7 @@ if (window.WALLET_TYPE !== "binance") {
                                               )}
                                             </button>
                                             <button
-                                               disabled={
+                                              disabled={
                                                 checkWallet === true &&
                                                 bearDepositState !==
                                                   "loading-deposit"
@@ -2756,7 +2944,7 @@ if (window.WALLET_TYPE !== "binance") {
                                               )}
                                             </button>
                                             <button
-                                               disabled={
+                                              disabled={
                                                 checkWallet === true &&
                                                 beastDepositState !==
                                                   "loading-deposit"
@@ -3138,9 +3326,9 @@ if (window.WALLET_TYPE !== "binance") {
                     ) : challenge === "maze-day" ||
                       challenge === "great-collection" ||
                       challenge === "explorer-hunt" ||
-                      challenge === "critical-hit"
-                      //  || challenge === "golden-pass" 
-                      || challenge === "puzzle-madness" ? (
+                      challenge === "critical-hit" ||
+                      //  || challenge === "golden-pass"
+                      challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
                         <div className="new-event-wrapper d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
@@ -3208,9 +3396,18 @@ if (window.WALLET_TYPE !== "binance") {
                           </div>
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
-                          <h6 className="mb-0 purchase-package-title">
-                            Activate
-                          </h6>
+                        {(activeEvent?.id !== "greatCollection" &&
+                              activeEvent?.id !== "maze" &&
+                              activeEvent?.id !== "explorer-hunt") && (
+                                <h6 className="mb-0 purchase-package-title">
+                                  Activate
+                                </h6>
+                              )}
+                            {activeEvent?.id === "maze" && (
+                              <h6 className="mb-0 purchase-package-title">
+                                Requirements
+                              </h6>
+                            )}
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
@@ -3235,6 +3432,188 @@ if (window.WALLET_TYPE !== "binance") {
                               <img src={opensea} alt="" />
                               Buy on Opensea
                             </NavLink>
+                          </div>
+                        ) : activeEvent?.id === "puzzle" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-5">
+                                <span className="event-price-span">
+                                  Event Price
+                                </span>
+
+                                <div className="d-flex align-items-center gap-3">
+                                  <div className="d-flex align-items-center gap-1">
+                                    <img
+                                      src={wodIcon}
+                                      height={30}
+                                      width={30}
+                                      alt=""
+                                    />
+                                    <h6 className="event-price-coin mb-0">
+                                      {getFormattedNumber(
+                                        puzzleMadnessWodAmount
+                                      )}{" "}
+                                      WOD
+                                    </h6>
+                                  </div>
+                                  <span className="event-price-usd">
+                                    ($
+                                    {getFormattedNumber(
+                                      puzzleMadnessWodAmount * wodPrice
+                                    )}
+                                    )
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="d-flex align-items-center gap-2">
+                                {hasBoughtpuzzleMadness &&
+                                  isFinishedPuzzle === false && (
+                                    <div className="d-flex flex-column gap-1">
+                                      <span className="event-price-span">
+                                        Active Until:
+                                      </span>
+                                      <Countdown
+                                        renderer={renderer}
+                                        date={puzzleMadnessCountdown}
+                                        onComplete={() => {
+                                          setisFinishedPuzzle(true);
+                                        }}
+                                      />
+                                    </div>
+                                  )}
+                                {(!isConnected || !email) && (
+                                  <button
+                                    className="stake-wod-btn-inactive"
+                                    disabled
+                                  >
+                                    {" "}
+                                    Buy
+                                  </button>
+                                )}
+                                {isConnected && email && (
+                                  <>
+                                    <button
+                                      disabled={
+                                        puzzleMadnessBundleState ===
+                                          "deposit" ||
+                                        puzzleMadnessBundleState ===
+                                          "loading" ||
+                                        checkWallet === false
+                                          ? true
+                                          : false
+                                      }
+                                      className={` ${
+                                        puzzleMadnessBundleState ===
+                                          "deposit" ||
+                                        checkWallet === false ||
+                                        puzzleMadnessShowApproval === false
+                                          ? "stake-wod-btn-inactive d-none"
+                                          : "stake-wod-btn"
+                                      }  py-2 px-4`}
+                                      onClick={() => handleApprovalPuzzle()}
+                                    >
+                                      {puzzleMadnessBundleState ===
+                                      "loading" ? (
+                                        <div
+                                          class="spinner-border spinner-border-sm text-light"
+                                          role="status"
+                                        >
+                                          <span class="visually-hidden">
+                                            Loading...
+                                          </span>
+                                        </div>
+                                      ) : (
+                                        "Approve"
+                                      )}
+                                    </button>
+                                    <button
+                                      disabled={
+                                        checkWallet === true &&
+                                        puzzleMadnessDepositState !==
+                                          "loading-deposit"
+                                          ? false
+                                          : true
+                                      }
+                                      className={` ${
+                                        puzzleMadnessShowApproval === true &&
+                                        checkWallet === true
+                                          ? "stake-wod-btn-inactive d-none"
+                                          : puzzleMadnessShowApproval ===
+                                              false && checkWallet === true
+                                          ? "stake-wod-btn"
+                                          : "stake-wod-btn-inactive"
+                                      }  py-2 px-4`}
+                                      onClick={() => handleDepositPuzzle()}
+                                    >
+                                      {puzzleMadnessDepositState ===
+                                      "loading-deposit" ? (
+                                        <div
+                                          class="spinner-border spinner-border-sm text-light"
+                                          role="status"
+                                        >
+                                          <span class="visually-hidden">
+                                            Loading...
+                                          </span>
+                                        </div>
+                                      ) : (
+                                        "Buy"
+                                      )}
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "explorer-hunt" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3">
+                              <div className="d-flex flex-column">
+                                <span
+                                  className="challenge-popup-desc text-white"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  What is Explorer Hunt?
+                                </span>
+                                <span className="challenge-popup-desc text-white">
+                                  Explorer Hunt is an event where you must
+                                  defend the world from alien explorers who have
+                                  landed to assess the terrain before their
+                                  invasion.
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "greatCollection" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3">
+                              <div className="d-flex flex-column">
+                                <span
+                                  className="challenge-popup-desc text-white"
+                                  style={{ fontSize: "18px" }}
+                                >
+                                  What is The Great Collection?
+                                </span>
+                                <span className="challenge-popup-desc text-white">
+                                  The Great Collection is a thrilling event
+                                  where players are tasked with gathering rare
+                                  and unique partner branded coins scattered
+                                  across the game.
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : activeEvent?.id === "maze" ? (
+                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                              <span className="challenge-popup-desc text-white">
+                                You need to hold at least 400 WOD tokens to
+                                participate
+                              </span>
+                              <NavLink className="explore-btn" to="/#buy-wod">
+                                BUY WOD
+                              </NavLink>
+                            </div>
                           </div>
                         ) : (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">

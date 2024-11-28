@@ -767,7 +767,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
