@@ -40,7 +40,6 @@ import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.sv
 import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
 import seiLogo from "../../../../../components/Header/assets/sei.svg";
 
-
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import conflux from "../../Components/WalletBalance/assets/conflux.svg";
@@ -69,12 +68,24 @@ import {
   weeklyExtraStarPrizes,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
+
+import dailyChestsBg from "../../Components/PremiumPopup/assets/dailyChestsBg.webp";
+import exclusiveBg from "../../Components/PremiumPopup/assets/exclusiveBg.webp";
+import extraDailyStarsBg from "../../Components/PremiumPopup/assets/extraDailyStarsBg.webp";
+import increasedRewardsBg from "../../Components/PremiumPopup/assets/increasedRewardsBg.webp";
+import prioritySupportBg from "../../Components/PremiumPopup/assets/prioritySupportBg.webp";
+import privateEventsBg from "../../Components/PremiumPopup/assets/privateEventsBg.webp";
+import treasureHuntBg from "../../Components/PremiumPopup/assets/treasureHuntBg.webp";
+
 import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
 import RankPopup from "../../../../../components/MyProfile/RankPopup";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
 import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
-import { GOLDEN_PASS_ABI, golden_pass_address } from "../../../../../components/NewEvents/abi";
+import {
+  GOLDEN_PASS_ABI,
+  golden_pass_address,
+} from "../../../../../components/NewEvents/abi";
 import { WbIncandescentTwoTone } from "@mui/icons-material";
 
 const StyledTextField = styled(TextField)({
@@ -179,7 +190,7 @@ function Dashboard({
   wodPrice,
   showSync,
   onCloseSync,
-  easy2StakeEarnUsd
+  easy2StakeEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -188,7 +199,41 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
+
   
+  const allBenefits = [
+    {
+      title: "Exclusive access to the game",
+      image: exclusiveBg,
+    },
+    {
+      title: "Unlock All Daily Bonus Chests",
+      image: dailyChestsBg,
+    },
+    {
+      title: "Unlimited Treasure Hunts",
+      image: treasureHuntBg,
+    },
+    {
+      title: "Increased Rewards",
+      image: increasedRewardsBg,
+    },
+    {
+      title: "Earn Extra Daily Stars",
+      image: extraDailyStarsBg,
+    },
+    {
+      title: "Access to Private Events",
+      image: privateEventsBg,
+    },
+    {
+      title: "Priority Support",
+      image: prioritySupportBg,
+    },
+  ];
+
+
+
   const {
     data,
     refetch: refetchPlayer,
@@ -710,9 +755,9 @@ function Dashboard({
 
     return errors;
   };
-const handleClosePopup = ()=>{
-  navigate('/account')
-}
+  const handleClosePopup = () => {
+    navigate("/account");
+  };
   const handleSubmit = async (e) => {
     setLoading(true);
     setErrors(validateUrl(mediaUrl));
@@ -5649,8 +5694,7 @@ const handleClosePopup = ()=>{
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
-        onCloseSync();
-
+            onCloseSync();
           }, 1000);
           onSubscribeSuccess(account);
 
@@ -5662,8 +5706,7 @@ const handleClosePopup = ()=>{
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
-        onCloseSync();
-
+          onCloseSync();
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -5685,8 +5728,7 @@ const handleClosePopup = ()=>{
           setTimeout(() => {
             setshowSyncModal(false);
             setsyncStatus("initial");
-        onCloseSync();
-
+            onCloseSync();
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
@@ -5698,8 +5740,7 @@ const handleClosePopup = ()=>{
         setsyncStatus("error");
         setTimeout(() => {
           setsyncStatus("initial");
-        onCloseSync();
-
+          onCloseSync();
         }, 3000);
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
@@ -7166,11 +7207,13 @@ const handleClosePopup = ()=>{
     }
 
     if (coinbase && window.WALLET_TYPE !== "binance") {
-      
-      let token_Sc = new window.web3.eth.Contract(
-        window.ERC20_ABI, token,
-      );
-      let tokenBalance2 = await token_Sc.methods.balanceOf(coinbase).call().catch((e)=>{console.error(e)});
+      let token_Sc = new window.web3.eth.Contract(window.ERC20_ABI, token);
+      let tokenBalance2 = await token_Sc.methods
+        .balanceOf(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
       setTokenBalance(tokenBalance2);
     }
     setprice(tokenprice);
@@ -10104,7 +10147,6 @@ const handleClosePopup = ()=>{
               eventCardCount={eventCardCount}
               email={email}
               isConnected={isConnected}
-
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -10122,7 +10164,7 @@ const handleClosePopup = ()=>{
             allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
             allMatChests={allMatChests}
-            allSeiChests={allSeiChests} 
+            allSeiChests={allSeiChests}
             userSocialRewards={userSocialRewards}
             bnbEarnUsd={bnbEarnUsd}
             skaleEarnUsd={skaleEarnUsd}
@@ -10141,7 +10183,6 @@ const handleClosePopup = ()=>{
             cookieEarnUsd={cookieEarnUsd}
             baseEarnUSD={baseEarnUSD}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
-
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -10386,7 +10427,6 @@ const handleClosePopup = ()=>{
                   // setgetPremiumPopup(true);
                   setLeaderboard(false);
                   window.location.hash = "";
-
                 }}
                 onGoldenpassClick={() => {
                   setgoldenPassPopup(true);
@@ -10437,15 +10477,13 @@ const handleClosePopup = ()=>{
           <SyncModal
             onCancel={() => {
               setshowSyncModal(false);
-             onCloseSync();
-
+              onCloseSync();
             }}
             onclose={() => {
               setshowSyncModal(false);
-             onCloseSync();
-
+              onCloseSync();
             }}
-            open={(showSyncModal === true || showSync === true)}
+            open={showSyncModal === true || showSync === true}
             onConfirm={handleSync}
             syncStatus={syncStatus}
           />
@@ -10565,7 +10603,7 @@ const handleClosePopup = ()=>{
           </OutsideClickHandler>
         )}
 
-        {(goldenPassPopup || eventId === 'golden-pass') && (
+        {(goldenPassPopup || eventId === "golden-pass") && (
           <GoldenPassPopup
             onClosePopup={() => {
               setgoldenPassPopup(false);
@@ -10636,8 +10674,7 @@ const handleClosePopup = ()=>{
                 genesisRank2={genesisRank2}
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
-            easy2StakeEarnUsd={easy2StakeEarnUsd}
-
+                easy2StakeEarnUsd={easy2StakeEarnUsd}
               />
             </div>
           </OutsideClickHandler>
@@ -10936,7 +10973,7 @@ const handleClosePopup = ()=>{
                           <span className="subscription-chain mb-0">
                             Matchain
                           </span>
-                        </div> 
+                        </div>
                         {/* <div className="d-flex align-items-center gap-2">
                           <img
                             src={seiLogo}
@@ -10967,7 +11004,7 @@ const handleClosePopup = ()=>{
                           />
                           <span className="subscription-chain mb-0">Taiko</span>
                         </div>
-                    
+
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
@@ -11037,39 +11074,32 @@ const handleClosePopup = ()=>{
                     </div>
                   </div>
                 )}
-                <div className="my-3">
-                  <h6 className="popup-subtitle mb-0">Benefits</h6>
+                <div className="d-flex flex-column">
+                  <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
+                    <h6 className="premium-benefits-popup-title mb-0">
+                      Benefits
+                    </h6>
+                  </div>
+                  <div className="sidebar-separator2 m-0"></div>
+                  <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
+                    {allBenefits.map((item, index) => {
+                      return (
+                        <div key={index} className="benefit-item">
+                          <div className="d-flex flex-column gap-3">
+                            <img
+                              src={item.image}
+                              alt=""
+                              className="benefitimg"
+                            />
+                            <span className="benefittitle p-3">
+                              {item.title}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
-                  <div className="d-flex flex-column gap-2">
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={metaverseIcon} alt="" />
-                      <h6 className="premium-benefits-title mb-0">Metaverse</h6>
-                    </div>
-                    {metaverseBenefits.map((item, index) => (
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={greenCheck} alt="" />
-                        <span className="premium-benefits-item mb-0">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="d-flex flex-column gap-2">
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={dappsIcon} alt="" />
-                      <h6 className="premium-benefits-title mb-0">Dapps</h6>
-                    </div>
-                    {dappsBenefits.map((item, index) => (
-                      <div className="d-flex align-items-center gap-2">
-                        <img src={greenCheck} alt="" />
-                        <span className="premium-benefits-item mb-0">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>{" "}
                 <hr className="form-divider my-4" />
                 {isConnected && (
                   <>
@@ -11130,7 +11160,7 @@ const handleClosePopup = ()=>{
                                     />
                                     BNB Chain
                                   </li>
-   {window.WALLET_TYPE !== "binance" &&
+                                  {window.WALLET_TYPE !== "binance" &&
                                     !window.ethereum?.isBinance && (
                                       <li
                                         className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11179,7 +11209,7 @@ const handleClosePopup = ()=>{
                                         Taiko
                                       </li>
                                     )}
-                               
+
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                                     onClick={handleAvaxPool}
@@ -11293,7 +11323,7 @@ const handleClosePopup = ()=>{
                                   </span>
                                   <div
                                     className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                                    style={{ height: "34px" }}
+                                    style={{ height: "34px", overflow: 'unset' }}
                                   >
                                     <span className="subscription-price-text mb-0">
                                       Subscription Price:
@@ -12177,9 +12207,7 @@ const handleClosePopup = ()=>{
                         approveStatus === "approveAmount" ||
                         approveStatus === "failsubscribe" ||
                         approveStatus === "successsubscribe") ? (
-                        <>
-                          Approve token
-                        </>
+                        <>Approve token</>
                       ) : loadspinner === false && approveStatus === "fail" ? (
                         "Failed"
                       ) : (
@@ -12207,9 +12235,7 @@ const handleClosePopup = ()=>{
                       (approveStatus === "initial" ||
                         approveStatus === "fail" ||
                         approveStatus === "deposit") ? (
-                        <>
-                          Buy
-                        </>
+                        <>Buy</>
                       ) : loadspinnerSub === false &&
                         approveStatus === "successsubscribe" ? (
                         "Success"
