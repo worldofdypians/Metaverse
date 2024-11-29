@@ -3484,7 +3484,7 @@ function App() {
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
-      image: "immutableBanner.png",
+      image: "easy2stakeBanner.webp",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
 
@@ -3497,7 +3497,7 @@ function App() {
       userEarnUsd: easy2StakeEarnUsd,
       userEarnCrypto: easy2StakeEarnToken,
       userEarnPoints: easy2StakePoints,
-      image: "immutableBanner.png",
+      image: "easy2stakeBanner.webp",
 
       popupInfo: {
         title: "Easy2Stake",
@@ -3524,7 +3524,7 @@ function App() {
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
-      image: "immutableBanner.png",
+      image: "midleBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
@@ -3536,7 +3536,7 @@ function App() {
       userEarnUsd: midleEarnUsd,
       userEarnCrypto: midleEarnToken,
       userEarnPoints: midlePoints,
-      image: "immutableBanner.png",
+      image: "midleBanner.png",
       popupInfo: {
         title: "Midle",
         chain: "BNB Chain",
@@ -3814,7 +3814,7 @@ function App() {
       rewardType: "SEI",
       rewardAmount: "$20,000",
       location: [-0.06787060104021504, 0.08728981018066406],
-      image: "matchainBanner.png",
+      image: "seiBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       marker: markers.treasureMarker,
