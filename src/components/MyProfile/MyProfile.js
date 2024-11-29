@@ -82,7 +82,7 @@ import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/asset
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <h6 className="timer-text mb-0">
+    <h6 className="timer-text2 mb-0">
       {days}d: {hours}h:{minutes}m (UTC)
     </h6>
   );
@@ -110,10 +110,10 @@ const renderer3 = ({ days, hours }) => {
     </span>
   );
 };
-const renderer4 = ({ hours, minutes }) => {
+const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {hours}H:{minutes}M
+      {hours}h:{minutes}m:{seconds}s
     </span>
   );
 };
@@ -767,7 +767,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -817,7 +817,7 @@ const MyProfile = ({
                   <div className="daily-progress-item position-relative">
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Upcoming</span>
+                      <span>Ready</span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -836,7 +836,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.puzzleMadnessCount
                         : "Ready"} */}
-                        Upcoming
+                        Ready
                       </span>
                     </div>
                     {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
