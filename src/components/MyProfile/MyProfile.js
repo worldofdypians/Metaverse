@@ -172,17 +172,13 @@ const MyProfile = ({
   userTaikoScore,
   onEventCardClick,
   userDataStarWeekly,
-  onLinkWallet
+  onLinkWallet,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
 
   const chestPercentage = (totalClaimedChests / 140) * 100;
   const utcDayIndex = new Date().getUTCDay();
-
-
-
-
 
   const dailyEvents = [
     {
@@ -511,7 +507,11 @@ const MyProfile = ({
                       >
                         Connect
                       </button>
-                    ) : email && username && coinbase && isConnected && address ?  (
+                    ) : email &&
+                      username &&
+                      coinbase &&
+                      isConnected &&
+                      address ? (
                       <button
                         className="d-flex align-items-center gap-1 syncbtn px-3 py-2"
                         onClick={onSyncClick}
@@ -529,18 +529,21 @@ const MyProfile = ({
                           ? "Success"
                           : "Error"}
                       </button>
-                    ) :  email && username && coinbase && isConnected && (!address) ?  (
+                    ) : email &&
+                      username &&
+                      coinbase &&
+                      isConnected &&
+                      !address ? (
                       <button
-                      className="loginbtn-profile px-5 py-2"
-                      onClick={onLinkWallet}
-                    >
-                      Link Wallet
-                    </button>
-                    ) :  coinbase && email && !address && !username ? (
+                        className="loginbtn-profile px-5 py-2"
+                        onClick={onLinkWallet}
+                      >
+                        Link Wallet
+                      </button>
+                    ) : coinbase && email && !address && !username ? (
                       <NavLink
                         className="loginbtn-profile px-5 py-2 d-flex align-items-center"
-                        to={'/player'}
-                        
+                        to={"/player"}
                       >
                         Create player
                         {/* <img src={greenarrow} alt="" /> */}
@@ -725,7 +728,7 @@ const MyProfile = ({
                         {allClaimedChestsstd === 0
                           ? "Ready"
                           : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd
+                          ? allClaimedChestsstd + "/70"
                           : "Completed"}
                       </span>
                     </div>
@@ -744,7 +747,7 @@ const MyProfile = ({
                         {allClaimedChestsPremium === 0
                           ? "Ready"
                           : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium
+                          ? allClaimedChestsPremium + "/70"
                           : "Completed"}
                       </span>
                     </div>
@@ -799,11 +802,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 2
+                        {userActiveEvents === 5
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/2"}
+                          : userActiveEvents + "/5"}
                       </span>
                     </div>
                     {/* <img
@@ -831,12 +834,12 @@ const MyProfile = ({
                     <img src={puzzleMadness} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {/* {userDailyBundles?.puzzleMadnessCount
-                        ? userDailyBundles?.puzzleMadnessCount === 0
-                          ? "Ready"
-                          : userDailyBundles?.puzzleMadnessCount
-                        : "Ready"} */}
-                        Ready
+                        {userDailyBundles?.puzzleMadnessCount
+                          ? userDailyBundles?.puzzleMadnessCount === 0
+                            ? "Ready"
+                            : userDailyBundles?.puzzleMadnessCount
+                          : "Ready"}
+                        {/* Ready */}
                       </span>
                     </div>
                     {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
@@ -1209,11 +1212,10 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                       <div className="d-flex flex-column gap-1">
-                       <span className="beast-siege-ends-in">Ends in:</span>
-                       <Countdown renderer={renderer4} date={midnight} />
-                       </div>
-                        
+                        <div className="d-flex flex-column gap-1">
+                          <span className="beast-siege-ends-in">Ends in:</span>
+                          <Countdown renderer={renderer4} date={midnight} />
+                        </div>
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
