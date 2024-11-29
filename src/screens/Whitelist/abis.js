@@ -865,6 +865,15 @@ export const ADVISORS_ABI = [
 ];
 
 export const blockedAccounts = [
-  '0xFE859937319148791A67646e3C65FE89441B8e93',
-  '0x5f75EF1101c25Ed85c4eF12fe05Dc95569709eC8'
+  "0xfe859937319148791a67646e3c65fe89441b8e93",
+  "0x5f75ef1101c25ed85c4ef12fe05dc95569709ec8",
+  "0xb9be3ca291d13f9bef28031b9fd7d90fa9bc2366",
+]
+
+
+export const specialWallets = [
+  '0xa85c4b2a2ef31724260bbd1445dc90ffd861f4c2',
+  '0xeddb00d08022f282a0179cb4c35697f50ef3b138',
+  '0x96d1c96dcddd6074ff7ddac2de08a74fea90afbb',
+
 ]

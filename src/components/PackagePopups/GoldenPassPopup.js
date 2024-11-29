@@ -470,7 +470,7 @@ const GoldenPassPopup = ({
               </div>
               <span className="event-price-usd">
                 ($
-                {getFormattedNumber(goldenPassWodAmount * wodPrice)})
+                {getFormattedNumber(50)})
               </span>
             </div>
           </div>

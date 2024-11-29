@@ -210,7 +210,11 @@ const chainAreas = [
         [-0.06697474384951874, 0.08613646030426027],
       ],
     ],
-    events: [],
+    events: [ {
+      title: "Treasure Hunt",
+      image: treasureHuntInfo,
+      link: "/account/challenges/treasure-hunt",
+    },],
     pastEvents: [],
     socials: [
       {
@@ -323,13 +327,14 @@ const chainAreas = [
         image: leaderboardInfo,
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
+    ],
+    pastEvents: [
+   
     ],
     socials: [
       {
@@ -598,7 +603,11 @@ const chainAreas = [
         [-0.06783305014033982, 0.08444130420684816],
       ],
     ],
-    events: [],
+    events: [  {
+      title: "Treasure Hunt",
+      image: treasureHuntInfo,
+      link: "/account/challenges/treasure-hunt",
+    },],
     pastEvents: [],
     socials: [
       {
@@ -796,7 +805,11 @@ const chainAreas = [
         [-0.06888983973998769, 0.08470952510833742],
       ],
     ],
-    events: [],
+    events: [ {
+      title: "Treasure Hunt",
+      image: treasureHuntInfo,
+      link: "/account/challenges/treasure-hunt",
+    },],
     pastEvents: [],
     socials: [
       {
@@ -903,14 +916,14 @@ const chainAreas = [
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account#leaderboard",
-      },
-    ],
-    pastEvents: [
-      {
+      }, {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
+    ],
+    pastEvents: [
+     
     ],
     socials: [
       {
@@ -1453,7 +1466,11 @@ const chainAreas = [
         [-0.06779013482615308, 0.08364737033843994],
       ],
     ],
-    events: [],
+    events: [ {
+      title: "Treasure Hunt",
+      image: treasureHuntInfo,
+      link: "/account/challenges/treasure-hunt",
+    },],
     pastEvents: [],
     socials: [
       {
