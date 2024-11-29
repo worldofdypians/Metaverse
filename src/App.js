@@ -1189,9 +1189,9 @@ function App() {
 
   const fetchTotalVolume = async () => {
     await axios
-      .get(`https://api.dyp.finance/api/getWodVolume`)
+      .get(`https://api.worldofdypians.com/api/getwodvolume`)
       .then((res) => {
-        setTotalVolumeNew(res.data.volume);
+        setTotalVolumeNew(res.data.totalVolume);
       })
       .catch((err) => {
         console.log(err);
