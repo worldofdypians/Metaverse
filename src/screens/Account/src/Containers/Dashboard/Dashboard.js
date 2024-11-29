@@ -184,7 +184,7 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-console.log(showSync)
+  
   const {
     data,
     refetch: refetchPlayer,
@@ -9892,10 +9892,10 @@ const handleClosePopup = ()=>{
   }, [email]);
 
   useEffect(() => {
-    if (coinbase && isConnected) {
+    if (coinbase && isConnected && email && userWallet) {
       handleRefreshCountdown700();
     }
-  }, [coinbase, isConnected]);
+  }, [coinbase, isConnected, email, userWallet]);
 
   useEffect(() => {
     if (success === true) {

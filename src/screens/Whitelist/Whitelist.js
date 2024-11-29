@@ -25,7 +25,7 @@ import {
   KOL_ABI,
   PRIVATE_ABI,
   ADVISORS_ABI,
-  blockedAccounts,
+  blockedAccounts, specialWallets
 } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -91,6 +91,13 @@ const Whitelist = ({
   const [selectedRound, setselectedRound] = useState();
 
   const getInfo = async () => {
+    let isSpecial = false;
+    if(coinbase) {
+      if(specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true
+      }
+      else isSpecial = false;
+    }
     const vestingSc = new window.bscWeb3.eth.Contract(
       VESTING_ABI,
       window.config.vesting_address
@@ -103,7 +110,7 @@ const Whitelist = ({
 
     const kolSc = new window.bscWeb3.eth.Contract(
       KOL_ABI,
-      window.config.kol_address
+      isSpecial ?  window.config.kol2_address : window.config.kol_address
     );
 
     const advisorsSc = new window.bscWeb3.eth.Contract(
@@ -434,7 +441,7 @@ const Whitelist = ({
 
     let totalVestedTokensPerUserAdvisors = 0;
     if (coinbase) {
-      totalVestedTokensPerUserAdvisors = await vestingSc.methods
+      totalVestedTokensPerUserAdvisors = await advisorsSc.methods
         .vestedTokens(coinbase)
         .call()
         .catch((e) => {
@@ -470,6 +477,14 @@ const Whitelist = ({
   };
 
   const getInfoTimer = async () => {
+    let isSpecial = false;
+    if(coinbase) {
+      if(specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true
+      }
+      else isSpecial = false;
+    }
+
     const vestingSc = new window.bscWeb3.eth.Contract(
       VESTING_ABI,
       window.config.vesting_address
@@ -482,7 +497,7 @@ const Whitelist = ({
 
     const kolSc = new window.bscWeb3.eth.Contract(
       KOL_ABI,
-      window.config.kol_address
+      isSpecial ? window.config.kol2_address : window.config.kol_address
     );
 
     const advisorsSc = new window.bscWeb3.eth.Contract(
@@ -654,10 +669,17 @@ const Whitelist = ({
 
   const handleClaimKol = async () => {
     console.log("kol");
+    let isSpecial = false;
+    if(coinbase) {
+      if(specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true
+      }
+      else isSpecial = false;
+    }
 
     setclaimLoadingKol(true);
     let web3 = new Web3(window.ethereum);
-    const kolSc = new web3.eth.Contract(KOL_ABI, window.config.kol_address, {
+    const kolSc = new web3.eth.Contract(KOL_ABI, isSpecial ? window.config.kol2_address : window.config.kol_address, {
       from: await window.getCoinbase(),
     });
 
@@ -736,8 +758,13 @@ const Whitelist = ({
 
   useEffect(() => {
     getInfo();
-    getInfoTimer();
   }, [coinbase]);
+
+  useEffect(() => {
+    if (coinbase && isConnected) {
+      getInfoTimer();
+    }
+  }, [coinbase, isConnected]);
 
   return (
     <div className="container-fluid whitelist-mainhero-wrapper token-wrapper px-0">
