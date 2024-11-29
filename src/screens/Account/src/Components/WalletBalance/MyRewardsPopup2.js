@@ -1605,6 +1605,7 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
+              <div className="d-flex flex-column gap-2">
               <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                   <img
@@ -1618,7 +1619,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(immutableEarnUsd, 2)}
                   </span>
                 </div>
-              {/* </div> */}
+              </div>
               {/* </div> */}
             </div>
           </div>
@@ -1712,19 +1713,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dypPremiumUSD, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={cookieIcon}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Cookie3
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(cookieEarnUsd, 2)}
-                  </span>
-              </div>
+               
               
               </div>
 
@@ -1759,15 +1748,19 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
+                <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={base} alt="" />
-                    Base
+                    <img
+                      src={cookieIcon}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Cookie3
                   </span>
                   <span className="item-name-right">
-                    ${getFormattedNumber(baseRewardsUSD, 2)}
+                    ${getFormattedNumber(cookieEarnUsd, 2)}
                   </span>
-                </div>
+              </div>
             
               </div>
 
