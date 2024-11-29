@@ -959,7 +959,7 @@ function App() {
 
           
           const midleEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "midlestake";
+            return obj.betapassId === "midle";
           });
 
           if (dypPremiumEvent && dypPremiumEvent[0]) {
@@ -1022,6 +1022,8 @@ function App() {
           }
 
           if (midleEvent && midleEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               midleEvent[0].reward.earn.total /
               midleEvent[0].reward.earn.multiplier;
