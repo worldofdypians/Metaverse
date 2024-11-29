@@ -38,6 +38,8 @@ import ReCaptchaV2 from "react-google-recaptcha";
 
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
 import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+import seiLogo from "../../../../../components/Header/assets/sei.svg";
+
 
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
@@ -73,6 +75,7 @@ import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
 import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
 import { GOLDEN_PASS_ABI, golden_pass_address } from "../../../../../components/NewEvents/abi";
+import { WbIncandescentTwoTone } from "@mui/icons-material";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -175,7 +178,8 @@ function Dashboard({
   wodBalance,
   wodPrice,
   showSync,
-  onCloseSync
+  onCloseSync,
+  easy2StakeEarnUsd
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -7145,6 +7149,7 @@ const handleClosePopup = ()=>{
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
+    window.web3 = new Web3(window.ethereum);
 
     let formattedTokenPrice = getFormattedNumber(
       tokenprice / 10 ** tokenDecimals,
@@ -7157,6 +7162,15 @@ const handleClosePopup = ()=>{
         binanceW3WProvider.getSigner()
       );
       let tokenBalance2 = await token_Sc.balanceOf(coinbase);
+      setTokenBalance(tokenBalance2);
+    }
+
+    if (coinbase && window.WALLET_TYPE !== "binance") {
+      
+      let token_Sc = new window.web3.eth.Contract(
+        window.ERC20_ABI, token,
+      );
+      let tokenBalance2 = await token_Sc.methods.balanceOf(coinbase).call().catch((e)=>{console.error(e)});
       setTokenBalance(tokenBalance2);
     }
     setprice(tokenprice);
@@ -10046,11 +10060,10 @@ const handleClosePopup = ()=>{
                 Number(dataAmountStarWeekly) +
                 Number(cawsPremiumRewards) +
                 Number(landPremiumRewards) +
-                Number(mantaEarnUsd) +
-                Number(taikoEarnUsd) +
-                Number(matEarnUsd) +
                 Number(immutableEarnUsd) +
-                Number(baseEarnUSD)
+                Number(victionEarnUsd) +
+                Number(baseEarnUSD) +
+                Number(easy2StakeEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10109,8 +10122,7 @@ const handleClosePopup = ()=>{
             allBaseChests={allBaseChests}
             allTaikoChests={allTaikoChests}
             allMatChests={allMatChests}
-            allSeiChests={allSeiChests}
-            availableTime={goldenPassRemainingTime}
+            allSeiChests={allSeiChests} 
             userSocialRewards={userSocialRewards}
             bnbEarnUsd={bnbEarnUsd}
             skaleEarnUsd={skaleEarnUsd}
@@ -10128,6 +10140,8 @@ const handleClosePopup = ()=>{
             genesisRank2={genesisRank2}
             cookieEarnUsd={cookieEarnUsd}
             baseEarnUSD={baseEarnUSD}
+            easy2StakeEarnUsd={easy2StakeEarnUsd}
+
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -10622,6 +10636,8 @@ const handleClosePopup = ()=>{
                 genesisRank2={genesisRank2}
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
+            easy2StakeEarnUsd={easy2StakeEarnUsd}
+
               />
             </div>
           </OutsideClickHandler>
@@ -10920,7 +10936,17 @@ const handleClosePopup = ()=>{
                           <span className="subscription-chain mb-0">
                             Matchain
                           </span>
-                        </div>
+                        </div> 
+                        {/* <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={seiLogo}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            SEI
+                          </span>
+                        </div> */}
 
                         <div className="d-flex align-items-center gap-2">
                           <img

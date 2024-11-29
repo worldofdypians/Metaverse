@@ -95,7 +95,6 @@ import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIc
 import matchainLogo from "./components/Header/assets/matchain.svg";
 import seiLogo from "./components/Header/assets/sei.svg";
 
-
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
 import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
@@ -105,10 +104,14 @@ import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIco
 import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
 import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
 import immutableLogo from "./screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg";
+import easy2stakeLogo from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeLogo.svg";
+
 import mantaLogo from "./screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
 import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
 import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
+import easy2stakeBg from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeBg.webp";
+
 import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
 import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
 import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
@@ -118,7 +121,6 @@ import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.pn
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
 import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
 import seiBg from "./screens/Marketplace/assets/seiBg.webp";
-
 
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
@@ -268,8 +270,8 @@ function App() {
       },
       blockExplorerUrls: ["https:/vicscan.xyz"],
     },
-    1329 : {
-      chainId: 1329 ,
+    1329: {
+      chainId: 1329,
       chainName: "Sei Network",
       rpcUrls: ["https://evm-rpc.sei-apis.com"],
       nativeCurrency: {
@@ -486,13 +488,14 @@ function App() {
   let skaleLastDay = new Date("2024-07-14T13:00:00.000+02:00");
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
+  let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
+
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-04T14:00:00.000+02:00");
-
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -636,6 +639,12 @@ function App() {
   const [immutablePrice, setImmutablePrice] = useState(0);
   const [immutableEarnToken, setImmutableEarnToken] = useState(0);
   const [immutablePoints, setImmutablePoints] = useState(0);
+
+
+  
+  const [easy2StakeEarnUsd, setEasy2StakeEarnUsd] = useState(0);
+  const [easy2StakeEarnToken, setEasy2StakeEarnToken] = useState(0);
+  const [easy2StakePoints, setEasy2StakePoints] = useState(0);
 
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
@@ -935,6 +944,10 @@ function App() {
             return obj.betapassId === "sei";
           });
 
+          const easy2stakeEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "easy2stake";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -957,6 +970,8 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
               immutableEvent[0].reward.earn.multiplier;
@@ -966,6 +981,21 @@ function App() {
             setImmutableEarnUsd(userEarnedusd);
             setImmutableEarnToken(userEarnedusd / immutablePrice);
           }
+
+
+          if (easy2stakeEvent && easy2stakeEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
+            const userEarnedusd =
+              easy2stakeEvent[0].reward.earn.total /
+              easy2stakeEvent[0].reward.earn.multiplier;
+            const pointsBnb = easy2stakeEvent[0].reward.earn.totalPoints;
+
+            setEasy2StakePoints(pointsBnb);
+            setEasy2StakeEarnUsd(userEarnedusd);
+            setEasy2StakeEarnToken(userEarnedusd / bnbPrice);
+          }
+
 
           if (taikoEvent && taikoEvent[0]) {
             const userEarnedusd =
@@ -978,8 +1008,6 @@ function App() {
           }
 
           if (cookieEvent && cookieEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
-
             const userEarnedusd =
               cookieEvent[0].reward.earn.total /
               cookieEvent[0].reward.earn.multiplier;
@@ -1000,7 +1028,6 @@ function App() {
             setCoreEarnToken(userEarnedusd / corePrice);
           }
 
-          
           if (seiEvent && seiEvent[0]) {
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1008,7 +1035,7 @@ function App() {
             const pointsSei = seiEvent[0].reward.earn.totalPoints;
             setSeiEarnPoints(pointsSei);
             setSeiEarnUsd(userEarnedusd);
-            setSeiEarnToken(userEarnedusd / seiPrice)
+            setSeiEarnToken(userEarnedusd / seiPrice);
           }
           if (matEvent && matEvent[0]) {
             const userEarnedusd =
@@ -1021,6 +1048,8 @@ function App() {
           }
 
           if (victionEvent && victionEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
               victionEvent[0].reward.earn.multiplier;
@@ -1189,9 +1218,9 @@ function App() {
 
   const fetchTotalVolume = async () => {
     await axios
-      .get(`https://api.dyp.finance/api/getWodVolume`)
+      .get(`https://api.worldofdypians.com/api/getwodvolume`)
       .then((res) => {
-        setTotalVolumeNew(res.data.volume);
+        setTotalVolumeNew(res.data.totalVolume);
       })
       .catch((err) => {
         console.log(err);
@@ -3351,7 +3380,117 @@ function App() {
     //     eventDate: "Jul 01, 2024",
     //   },
     // },
+    {
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Nov 29, 2024",
+      backgroundImage: victionBg,
+      image: "victionBanner.png",
+      userEarnUsd: victionEarnUsd,
+      userEarnCrypto: victionEarnToken,
+      userEarnPoints: victionPoints,
+      popupInfo: {
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: victionLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Nov 29, 2024",
+      },
+    },
+    {
+      title: "Immutable",
+      logo: immutableLogo,
+      eventStatus: "Live",
+      rewardType: "IMX",
+      rewardAmount: "$20,000",
+      location: [-0.05935191046684262, 0.03785133361816407],
+      image: "immutableBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
 
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in IMX Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 29, 2024",
+      backgroundImage: immutableBg,
+      userEarnUsd: immutableEarnUsd,
+      userEarnCrypto: immutableEarnToken,
+      userEarnPoints: immutablePoints,
+      image: "immutableBanner.png",
+
+      popupInfo: {
+        title: "Immutable",
+        chain: "Immutable",
+        linkState: "immutable",
+        rewards: "IMX",
+        status: "Live",
+        id: "event15",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in IMX Rewards",
+        eventDuration: victionLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
+        eventDate: "Nov 29, 2024",
+      },
+    },
+    {
+      title: "Easy2Stake",
+      logo: easy2stakeLogo,
+      eventStatus: "Live",
+      rewardType: "BNB",
+      rewardAmount: "$20,000",
+      location: [-0.05935191046684262, 0.03785133361816407],
+      image: "immutableBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 29, 2024",
+      backgroundImage: easy2stakeBg,
+      userEarnUsd: easy2StakeEarnUsd,
+      userEarnCrypto: easy2StakeEarnToken,
+      userEarnPoints: easy2StakePoints,
+      image: "immutableBanner.png",
+
+      popupInfo: {
+        title: "Easy2Stake",
+        chain: "BNB Chain",
+        linkState: "easy2stake",
+        rewards: "BNB",
+        status: "Live",
+        id: "event26",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: victionLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Nov 29, 2024",
+      },
+    },
     {
       title: "CORE",
       logo: coreLogo,
@@ -3384,37 +3523,7 @@ function App() {
         eventDate: "Jul 01, 2024",
       },
     },
-    {
-      title: "VICTION",
-      logo: victionLogo,
-      eventStatus: "Expired",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Jul 01, 2024",
-      backgroundImage: victionBg,
-      image: "victionBanner.png",
-      userEarnUsd: victionEarnUsd,
-      userEarnCrypto: victionEarnToken,
-      userEarnPoints: victionPoints,
-      popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
-        status: "Expired",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: coreLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "",
-        eventDate: "Jul 01, 2024",
-      },
-    },
+
     {
       title: "Base",
       logo: baseLogo2,
@@ -3481,46 +3590,7 @@ function App() {
         eventDate: "Jun 12, 2024",
       },
     },
-    {
-      title: "Immutable",
-      logo: immutableLogo,
-      eventStatus: "Expired",
-      rewardType: "IMX",
-      rewardAmount: "$20,000",
-      location: [-0.05935191046684262, 0.03785133361816407],
-      image: "immutableBanner.png",
-      type: "Treasure Hunt",
-      infoType: "Treasure Hunt",
 
-      marker: markers.treasureMarker,
-      totalRewards: "$20,000 in IMX Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Aug 15, 2024",
-      backgroundImage: immutableBg,
-      userEarnUsd: immutableEarnUsd,
-      userEarnCrypto: immutableEarnToken,
-      userEarnPoints: immutablePoints,
-      image: "immutableBanner.png",
-
-      popupInfo: {
-        title: "Immutable",
-        chain: "Immutable",
-        linkState: "immutable",
-        rewards: "IMX",
-        status: "Expired",
-        id: "event15",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in IMX Rewards",
-        eventDuration: immutableLastDay,
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "50,000",
-        learnMore: "https://medium.com/@worldofdypians/625a2926c94b",
-        eventDate: "Aug 15, 2024",
-      },
-    },
     {
       title: "Taiko",
       logo: taikoLogo,
@@ -3546,7 +3616,7 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Live",
+        status: "Expired",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -3848,37 +3918,7 @@ function App() {
         eventDate: "Dec 22, 2023",
       },
     },
-    {
-      title: "Base",
-      logo: baseLogo,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in ETH Rewards",
-      myEarnings: 126.45,
-      eventType: "Explore & Mine",
-      eventDate: "Nov 01, 2023",
-      backgroundImage: baseUpcoming,
-      userEarnUsd: baseEarnUSD,
-      userEarnCrypto: baseEarnETH,
-      userEarnPoints: baseUserPoints,
-      popupInfo: {
-        eventType: "Explore & Mine",
-        title: "Base",
-        chain: "Base Chain",
-        linkState: "base",
-        rewards: "ETH",
-        status: "Expired",
-        id: "event4",
-        date: "Nov 01, 2023",
-        totalRewards: "$10,000 in ETH Rewards",
-        eventDuration: baseLastDay,
-        eventDate: "Nov 01, 2023",
-        minRewards: "0.5",
-        maxRewards: "20",
-        minPoints: "5,000",
-        maxPoints: "30,000",
-        learnMore: "/news/65422043b3f3545e95018290/Base-Treasure-Hunt-Event",
-      },
-    },
+
     {
       title: "CoinGecko",
       logo: coingecko,
@@ -4570,7 +4610,7 @@ function App() {
       .catch((e) => {
         console.error(e);
       });
-      
+
     const result2 = await axios
       .get("https://api.worldofdypians.com/api/totalVolumes")
       .catch((e) => {
@@ -4687,7 +4727,7 @@ function App() {
   useEffect(() => {
     fetchEthStaking();
   }, [stakeCount]);
- 
+
   return (
     <>
       <div
@@ -4723,7 +4763,9 @@ function App() {
           email={email}
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
-          onSyncClick={()=>{setshowSync(true)}}
+          onSyncClick={() => {
+            setshowSync(true);
+          }}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -5048,12 +5090,15 @@ function App() {
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
+                easy2StakeEarnUsd={easy2StakeEarnUsd}
+
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
                 showSync={showSync}
-                onCloseSync={()=>{setshowSync(false)}}
-
+                onCloseSync={() => {
+                  setshowSync(false);
+                }}
               />
             }
           />
@@ -5115,12 +5160,15 @@ function App() {
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
+                easy2StakeEarnUsd={easy2StakeEarnUsd}
+
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
                 showSync={showSync}
-                onCloseSync={()=>{setshowSync(false)}}
-
+                onCloseSync={() => {
+                  setshowSync(false);
+                }}
               />
             }
           />
@@ -5846,11 +5894,15 @@ function App() {
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
+                easy2StakeEarnUsd={easy2StakeEarnUsd}
+
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
                 showSync={showSync}
-                onCloseSync={()=>{setshowSync(false)}}
+                onCloseSync={() => {
+                  setshowSync(false);
+                }}
               />
             }
           />

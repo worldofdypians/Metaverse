@@ -742,6 +742,7 @@ const GetPremiumPopup = ({
     setformattedPrice("");
     setTokenBalance("");
     setselectedSubscriptionToken(token);
+    window.web3 = new Web3(window.ethereum);
 
     let tokenprice =
       chainId === 1
@@ -798,6 +799,14 @@ const GetPremiumPopup = ({
         binanceW3WProvider.getSigner()
       );
       let tokenBalance2 = await token_Sc.balanceOf(coinbase);
+      setTokenBalance(tokenBalance2);
+    }
+    if (coinbase && window.WALLET_TYPE !== "binance") {
+      
+      let token_Sc = new window.web3.eth.Contract(
+        window.ERC20_ABI, token,
+      );
+      let tokenBalance2 = await token_Sc.methods.balanceOf(coinbase).call().catch((e)=>{console.error(e)});
       setTokenBalance(tokenBalance2);
     }
     setprice(tokenprice);

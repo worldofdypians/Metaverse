@@ -725,7 +725,7 @@ const MyProfile = ({
                         {allClaimedChestsstd === 0
                           ? "Ready"
                           : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd
+                          ? allClaimedChestsstd + '/70'
                           : "Completed"}
                       </span>
                     </div>
@@ -744,7 +744,7 @@ const MyProfile = ({
                         {allClaimedChestsPremium === 0
                           ? "Ready"
                           : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium
+                          ? allClaimedChestsPremium+ '/70'
                           : "Completed"}
                       </span>
                     </div>
@@ -799,11 +799,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 2
+                        {userActiveEvents === 4
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/2"}
+                          : userActiveEvents + "/4"}
                       </span>
                     </div>
                     {/* <img
@@ -831,12 +831,12 @@ const MyProfile = ({
                     <img src={puzzleMadness} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {/* {userDailyBundles?.puzzleMadnessCount
+                        {userDailyBundles?.puzzleMadnessCount
                         ? userDailyBundles?.puzzleMadnessCount === 0
                           ? "Ready"
                           : userDailyBundles?.puzzleMadnessCount
-                        : "Ready"} */}
-                        Ready
+                        : "Ready"}
+                        {/* Ready */}
                       </span>
                     </div>
                     {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
