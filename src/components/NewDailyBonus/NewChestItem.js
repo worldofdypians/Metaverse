@@ -365,6 +365,12 @@ const NewChestItem = ({
       window.config.daily_bonus_mat_address
     );
 
+    
+    const daily_bonus_contract_sei = new window.web3.eth.Contract(
+      window.DAILY_BONUS_SEI_ABI,
+      window.config.daily_bonus_sei_address
+    );
+
     // console.log(daily_bonus_contract);
     if (chainId === 204) {
       if (window.WALLET_TYPE !== "binance") {
@@ -1127,6 +1133,104 @@ const NewChestItem = ({
               data.transactionHash,
               chestIndex - 1,
               "taiko"
+            );
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+          });
+      }
+    }  else if (chainId === 1329) {
+      if (rewardTypes === "premium" && isPremium) {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.seiWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_sei.methods
+          .openPremiumChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_sei.methods
+          .openPremiumChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "sei"
+            );
+          })
+          .catch((e) => {
+            window.alertify.error(e?.message);
+            onChestStatus("error");
+            setTimeout(() => {
+              onChestStatus("initial");
+            }, 3000);
+            onLoadingChest(false);
+            setLoading(false);
+            setClaimingChest(false);
+            console.error(e);
+          });
+      } else if (rewardTypes === "standard") {
+        const web3 = new Web3(window.ethereum);
+        const gasPrice = await window.seiWeb3.eth.getGasPrice();
+        console.log("gasPrice", gasPrice);
+        const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+        // const increasedGwei = parseInt(currentGwei) + 0.01;
+        // console.log("increasedGwei", increasedGwei);
+
+        const transactionParameters = {
+          gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+        };
+
+        await daily_bonus_contract_sei.methods
+          .openChest()
+          .estimateGas({ from: address })
+          .then((gas) => {
+            transactionParameters.gas = web3.utils.toHex(gas);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(transactionParameters);
+
+        await daily_bonus_contract_sei.methods
+          .openChest()
+          .send({
+            from: address,
+            ...transactionParameters,
+          })
+          .then((data) => {
+            handleCheckIfTxExists(
+              email,
+              data.transactionHash,
+              chestIndex - 1,
+              "sei"
             );
           })
           .catch((e) => {

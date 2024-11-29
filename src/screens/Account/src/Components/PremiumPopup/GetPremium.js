@@ -19,6 +19,13 @@ import { ethers } from "ethers";
 import axios from "axios";
 import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import "./_getpremium.scss";
+import dailyChestsBg from "./assets/dailyChestsBg.webp";
+import exclusiveBg from "./assets/exclusiveBg.webp";
+import extraDailyStarsBg from "./assets/extraDailyStarsBg.webp";
+import increasedRewardsBg from "./assets/increasedRewardsBg.webp";
+import prioritySupportBg from "./assets/prioritySupportBg.webp";
+import privateEventsBg from "./assets/privateEventsBg.webp";
+import treasureHuntBg from "./assets/treasureHuntBg.webp";
 
 const GetPremiumPopup = ({
   coinbase,
@@ -107,6 +114,37 @@ const GetPremiumPopup = ({
     "Voting capabilities in the News section",
     "Priority access to dedicated DeFi pools",
     "Early access to upcoming features and updates",
+  ];
+
+  const allBenefits = [
+    {
+      title: "Exclusive access to the game",
+      image: exclusiveBg,
+    },
+    {
+      title: "Unlock All Daily Bonus Chests",
+      image: dailyChestsBg,
+    },
+    {
+      title: "Unlimited Treasure Hunts",
+      image: treasureHuntBg,
+    },
+    {
+      title: "Increased Rewards",
+      image: increasedRewardsBg,
+    },
+    {
+      title: "Earn Extra Daily Stars",
+      image: extraDailyStarsBg,
+    },
+    {
+      title: "Access to Private Events",
+      image: privateEventsBg,
+    },
+    {
+      title: "Priority Support",
+      image: prioritySupportBg,
+    },
   ];
 
   const [dropdownIcon, setdropdownIcon] = useState("");
@@ -742,6 +780,7 @@ const GetPremiumPopup = ({
     setformattedPrice("");
     setTokenBalance("");
     setselectedSubscriptionToken(token);
+    window.web3 = new Web3(window.ethereum);
 
     let tokenprice =
       chainId === 1
@@ -798,6 +837,16 @@ const GetPremiumPopup = ({
         binanceW3WProvider.getSigner()
       );
       let tokenBalance2 = await token_Sc.balanceOf(coinbase);
+      setTokenBalance(tokenBalance2);
+    }
+    if (coinbase && window.WALLET_TYPE !== "binance") {
+      let token_Sc = new window.web3.eth.Contract(window.ERC20_ABI, token);
+      let tokenBalance2 = await token_Sc.methods
+        .balanceOf(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
       setTokenBalance(tokenBalance2);
     }
     setprice(tokenprice);
@@ -2505,35 +2554,22 @@ const GetPremiumPopup = ({
               <img src={premiumIcon} className="already-preium-badge" alt="" />
             </div>
           </div>
-          <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
-            <h6 className="premium-benefits-popup-title text-white mb-0">
-              Benefits
-            </h6>
-          </div>
-          <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <img src={metaverseIcon} alt="" />
-                <h6 className="premium-benefits-title mb-0">Metaverse</h6>
-              </div>
-              {metaverseBenefits.map((item, index) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={greenCheck} alt="" />
-                  <span className="premium-benefits-item mb-0">{item}</span>
-                </div>
-              ))}
+          <div className="d-flex flex-column">
+            <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
+              <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
             </div>
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <img src={dappsIcon} alt="" />
-                <h6 className="premium-benefits-title mb-0">Dapps</h6>
-              </div>
-              {dappsBenefits.map((item, index) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={greenCheck} alt="" />
-                  <span className="premium-benefits-item mb-0">{item}</span>
-                </div>
-              ))}
+            <div className="sidebar-separator2 m-0"></div>
+            <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
+              {allBenefits.map((item, index) => {
+                return (
+                  <div key={index} className="benefit-item">
+                    <div className="d-flex flex-column gap-3">
+                      <img src={item.image} alt="" className="benefitimg" />
+                      <span className="benefittitle p-3">{item.title}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -2791,35 +2827,22 @@ const GetPremiumPopup = ({
               </div>
             </div>
           )}
-          <div className="mt-3 p-3 benefits-title-wrapper justify-content-start">
-            <h6 className="premium-benefits-popup-title text-white mb-0">
-              Benefits
-            </h6>
-          </div>
-          <div className="premium-benefits-wrapper d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-start align-items-lg-center justify-content-between p-3">
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <img src={metaverseIcon} alt="" />
-                <h6 className="premium-benefits-title mb-0">Metaverse</h6>
-              </div>
-              {metaverseBenefits.map((item, index) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={greenCheck} alt="" />
-                  <span className="premium-benefits-item mb-0">{item}</span>
-                </div>
-              ))}
+          <div className="d-flex flex-column">
+            <div className="mt-3 p-3 benefits-title-wrapper justify-content-center">
+              <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
             </div>
-            <div className="d-flex flex-column gap-2">
-              <div className="d-flex align-items-center gap-2">
-                <img src={dappsIcon} alt="" />
-                <h6 className="premium-benefits-title mb-0">Dapps</h6>
-              </div>
-              {dappsBenefits.map((item, index) => (
-                <div className="d-flex align-items-center gap-2">
-                  <img src={greenCheck} alt="" />
-                  <span className="premium-benefits-item mb-0">{item}</span>
-                </div>
-              ))}
+            <div className="sidebar-separator2 m-0"></div>
+            <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
+              {allBenefits.map((item, index) => {
+                return (
+                  <div key={index} className="benefit-item">
+                    <div className="d-flex flex-column gap-3">
+                      <img src={item.image} alt="" className="benefitimg" />
+                      <span className="benefittitle p-3">{item.title}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
           {/* <hr className="form-divider my-4" /> */}

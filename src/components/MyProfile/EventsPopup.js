@@ -17,6 +17,8 @@ import victionThumb from "../../screens/Account/src/Components/WalletBalance/ass
 import seiThumb from "../../screens/Account/src/Components/WalletBalance/assets/seiThumb.png";
 import multiversThumb from "../../screens/Account/src/Components/WalletBalance/assets/multiversThumb.png";
 import immutableThumb from "../../screens/Account/src/Components/WalletBalance/assets/immutableThumb.png";
+import easy2stakeThumb from "../../screens/Account/src/Components/WalletBalance/assets/easy2stakeThumb.webp";
+import midleThumb from "../../screens/Account/src/Components/WalletBalance/assets/midleThumb.webp";
 import coreThumb from "../../screens/Account/src/Components/WalletBalance/assets/coreThumb.png";
 import eventPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImage.png";
 import bnbPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/bnbPopupImage.png";
@@ -152,6 +154,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? cookie3Thumb
                     : dummyEvent.popupInfo.linkState === "matchain"
                     ? eventPopupImageMatchain
+                    : dummyEvent.popupInfo.linkState === "easy2stake"
+                    ? easy2stakeThumb
+                    : dummyEvent.popupInfo.linkState === "midle"
+                    ? midleThumb
                     : eventPopupImage
                 }
                 alt=""
@@ -260,7 +266,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   leaderboard. Remember to log in to the game daily and venture
                   into the Coin98 area to uncover hidden treasures.
                 </p>
-              ) : dummyEvent.popupInfo.id === "event20" ? (
+              ) : (dummyEvent.popupInfo.id === "event20") ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
@@ -272,7 +278,31 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   and venture into the BNB Chain area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.id === "event21" ? (
+              ): (dummyEvent.popupInfo.id === "event26") ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the Easy2Stake
+                   area, players not only stand a chance to secure daily
+                  rewards in BNB, but also earn points for their placement on
+                  the global leaderboard. Remember to log in to the game daily
+                  and venture into the Easy2Stake area to uncover hidden
+                  treasures.
+                </p>
+              ) : (dummyEvent.popupInfo.id === "event27") ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the Midle
+                   area, players not only stand a chance to secure daily
+                  rewards in BNB, but also earn points for their placement on
+                  the global leaderboard. Remember to log in to the game daily
+                  and venture into the Midle area to uncover hidden
+                  treasures.
+                </p>
+              ): dummyEvent.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
@@ -490,41 +520,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 {dummyEvent.popupInfo.id !== "event5" && (
                   <li className="popup-event-desc">
                     Earn{" "}
-                    {dummyEvent.popupInfo.id === "event1"
-                      ? "CFX"
-                      : dummyEvent.popupInfo.id === "event2"
-                      ? "C98"
-                      : dummyEvent.popupInfo.id === "event5"
-                      ? "DYP"
-                      : dummyEvent.popupInfo.id === "event6" ||
-                        dummyEvent.popupInfo.id === "event8" ||
-                        dummyEvent.popupInfo.id === "event9" ||
-                        dummyEvent.popupInfo.id === "event20" ||
-                        dummyEvent.popupInfo.id === "event3" 
-                      ? "BNB"
-                      : dummyEvent.popupInfo.id === "event7"
-                      ? "DOGE"
-                      : dummyEvent.popupInfo.id === "event25"
-                      ? "MAT"
-                      : dummyEvent.popupInfo.id === "event11"
-                      ? "SKL"
-                      : dummyEvent.popupInfo.id === "event14"
-                      ? "VIC"
-                      : dummyEvent.popupInfo.id === "event15"
-                      ? "IMX"
-                      : dummyEvent.popupInfo.id === "event13"
-                      ? "SEI"
-                      : dummyEvent.popupInfo.id === "event12"
-                      ? "CORE"
-                      : dummyEvent.popupInfo.id === "event16"
-                      ? "EGLD"
-                      : dummyEvent.popupInfo.id === "event21"
-                      ? "MANTA"
-                      : dummyEvent.popupInfo.id === "event22"
-                      ? "TAIKO"
-                      : dummyEvent.popupInfo.id === "event23"
-                      ? "COOKIE"
-                      : "ETH"}{" "}
+                    {dummyEvent.popupInfo.rewards}{" "}
                     rewards
                   </li>
                 )}
@@ -584,6 +580,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             ? "Cookie3"
             : dummyEvent.popupInfo.id === "event25"
             ? "Matchain"
+            : dummyEvent.popupInfo.id === "event26"
+            ? "Easy2Stake"
+            : dummyEvent.popupInfo.id === "event27"
+            ? "Midle"
             : "Base Network"}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
@@ -638,6 +638,20 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             and Berkeley Blockchain Xcelerator. Manta is poised to bring the
             next generation of web3 users and usher in a new chapter of web3
             zkApp applications.
+          </p>
+        ): dummyEvent.popupInfo.id === "event26" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+           Easy2Stake is a trusted staking service provider that enables secure and efficient staking for multiple blockchains, ensuring users can earn rewards while supporting web3 ecosystems. 
+          </p>
+        ): dummyEvent.popupInfo.id === "event27" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+           Midle is the web and mobile app that boosts user acquisition, retention and engagement.  
           </p>
         ) : dummyEvent.popupInfo.id === "event22" ? (
           <p
@@ -841,6 +855,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/cookie3_com"
                 : dummyEvent.popupInfo.id === "event13"
                 ? "https://x.com/SeiNetwork"
+                : dummyEvent.popupInfo.id === "event26"
+                ? "https://x.com/easy2stake"
+                 : dummyEvent.popupInfo.id === "event27"
+                ? "https://x.com/midle_official"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
@@ -886,7 +904,11 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://t.me/cookie3_co"
                 : dummyEvent.popupInfo.id === "event25"
-                    ? "https://t.me/matchain_fam"
+                ? "https://t.me/matchain_fam"
+               : dummyEvent.popupInfo.id === "event26"
+                ? "https://t.me/easy2stake"
+                : dummyEvent.popupInfo.id === "event27"
+                ? "https://t.me/midlecommunity"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -947,7 +969,11 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 : dummyEvent.popupInfo.id === "event23"
                 ? "https://www.cookie3.com/"
                 : dummyEvent.popupInfo.id === "event25"
-                    ? "https://www.matchain.io/"
+                ? "https://www.matchain.io/"
+                : dummyEvent.popupInfo.id === "event26"
+                ? "https://www.easy2stake.com"
+                 : dummyEvent.popupInfo.id === "event27"
+                ? "https://app.midle.io/"
                 : "https://base.org/"
             }
             target="_blank"
@@ -989,43 +1015,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   {dummyEvent.popupInfo.id !== "event5" && (
                     <>
                       {getFormattedNumber(dummyEvent.userEarnCrypto, 2)}
-                      {dummyEvent.popupInfo.id === "event1"
-                        ? "CFX"
-                        : dummyEvent.popupInfo.id === "event2"
-                        ? "C98"
-                       
-                        : dummyEvent.popupInfo.id === "event5"
-                        ? "DYP"
-                        : dummyEvent.popupInfo.id === "event6" ||
-                          dummyEvent.popupInfo.id === "event8" ||
-                          dummyEvent.popupInfo.id === "event9" ||
-                          dummyEvent.popupInfo.id === "event3" 
-                        ? "BNB"
-                        : dummyEvent.popupInfo.id === "event7"
-                        ? "DOGE"
-                         : dummyEvent.popupInfo.id === "event25"
-                        ? "MAT"
-                        : dummyEvent.popupInfo.id === "event11"
-                        ? "SKL"
-                        : dummyEvent.popupInfo.id === "event20"
-                        ? "BNB"
-                        : dummyEvent.popupInfo.id === "event14"
-                        ? "VIC"
-                        : dummyEvent.popupInfo.id === "event15"
-                        ? "IMX"
-                        : dummyEvent.popupInfo.id === "event13"
-                        ? "SEI"
-                        : dummyEvent.popupInfo.id === "event12"
-                        ? "CORE"
-                        : dummyEvent.popupInfo.id === "event16"
-                        ? "EGLD"
-                        : dummyEvent.popupInfo.id === "event21"
-                        ? "MANTA"
-                        : dummyEvent.popupInfo.id === "event22"
-                        ? "TAIKO"
-                        : dummyEvent.popupInfo.id === "event23"
-                        ? "COOKIE"
-                        : "ETH"}
+                      {dummyEvent.popupInfo.rewards}
                     </>
                   )}
                 </span>

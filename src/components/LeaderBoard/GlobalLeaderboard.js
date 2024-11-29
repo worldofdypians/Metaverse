@@ -135,7 +135,7 @@ const GlobalLeaderboard = ({
   useEffect(() => {
     setOptionText2("bnb");
   }, []);
-
+console.log(isactive, availableTime)
   return (
     <div
       className={`d-flex flex-column gap-3 leaderboard-wrapper ${

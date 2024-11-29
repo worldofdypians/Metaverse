@@ -7991,6 +7991,11 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
+                  : chain === "sei"
+                  ? showSingleRewardDataSei(
+                      rewardData.chestId,
+                      isActiveIndex - 1
+                    )
                 : showSingleRewardDataSkale(
                     rewardData.chestId,
                     isActiveIndex - 1

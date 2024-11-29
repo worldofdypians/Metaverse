@@ -371,15 +371,7 @@ const NewLeaderBoard = ({
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
-  useEffect(() => {
-    if (
-      availableTime === null ||
-      availableTime === undefined ||
-      availableTime === "0"
-    ) {
-      setisActive(false);
-    } else setisActive(true);
-  }, [availableTime]);
+ 
 
   useEffect(() => {
     if (allBnbData && allBnbData.length > 0) {

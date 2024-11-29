@@ -19,6 +19,27 @@ line-height: normal;
 letter-spacing: -0.216px;
 }
 
+.benefit-item {
+    border-radius: 10px;
+    background: #222647;
+    min-width: 140px;
+}
+
+// .benefitimg {
+//     width: auto;
+//     aspect-ratio: 2.18 / 1;
+// }
+
+.benefittitle {
+    color: #F7F7FC;
+text-align: center;
+font-family: Montserrat;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
 .already-premium-title{
     color: #F3BF09;
     text-align: center;
