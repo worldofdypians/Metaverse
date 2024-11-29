@@ -94,6 +94,7 @@ import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/core
 import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
 import matchainLogo from "./components/Header/assets/matchain.svg";
 import seiLogo from "./components/Header/assets/sei.svg";
+import midleLogo from "./screens/Map/assets/chainIcons/midle.png";
 
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
@@ -111,6 +112,7 @@ import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg
 import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
 import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
 import easy2stakeBg from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeBg.webp";
+import midleBg from "./screens/Marketplace/assets/midleBg.webp";
 
 import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
 import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
@@ -489,6 +491,8 @@ function App() {
   let bnbLastDay = new Date("2024-09-10T13:00:00.000+02:00");
   let coreLastDay = new Date("2024-10-01T14:00:00.000+02:00");
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
+  let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
+
 
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
   let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
@@ -645,6 +649,11 @@ function App() {
   const [easy2StakeEarnUsd, setEasy2StakeEarnUsd] = useState(0);
   const [easy2StakeEarnToken, setEasy2StakeEarnToken] = useState(0);
   const [easy2StakePoints, setEasy2StakePoints] = useState(0);
+
+    
+  const [midleEarnUsd, setMidleEarnUsd] = useState(0);
+  const [midleEarnToken, setMidleEarnToken] = useState(0);
+  const [midlePoints, setMidlePoints] = useState(0);
 
   const [mantaEarnUsd, setMantaEarnUsd] = useState(0);
   const [mantaPrice, setMantaPrice] = useState(0);
@@ -948,6 +957,11 @@ function App() {
             return obj.betapassId === "easy2stake";
           });
 
+          
+          const midleEvent = responseData.events.filter((obj) => {
+            return obj.betapassId === "midlestake";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -1005,6 +1019,16 @@ function App() {
             setTaikoPoints(pointsTaiko);
             setTaikoEarnUsd(userEarnedusd);
             setTaikoEarnToken(userEarnedusd / taikoPrice);
+          }
+
+          if (midleEvent && midleEvent[0]) {
+            const userEarnedusd =
+              midleEvent[0].reward.earn.total /
+              midleEvent[0].reward.earn.multiplier;
+            const pointsMidle = midleEvent[0].reward.earn.totalPoints;
+            setMidlePoints(pointsMidle);
+            setMidleEarnUsd(userEarnedusd);
+            setMidleEarnToken(userEarnedusd / bnbPrice);
           }
 
           if (cookieEvent && cookieEvent[0]) {
@@ -3492,6 +3516,44 @@ function App() {
       },
     },
     {
+      title: "Midle",
+      logo: midleLogo,
+      eventStatus: "Live",
+      rewardType: "BNB",
+      rewardAmount: "$20,000",
+      location: [-0.05935191046684262, 0.03785133361816407],
+      image: "immutableBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Nov 29, 2024",
+      backgroundImage: midleBg,
+      userEarnUsd: midleEarnUsd,
+      userEarnCrypto: midleEarnToken,
+      userEarnPoints: midlePoints,
+      image: "immutableBanner.png",
+      popupInfo: {
+        title: "Midle",
+        chain: "BNB Chain",
+        linkState: "midle",
+        rewards: "BNB",
+        status: "Live",
+        id: "event27",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: victionLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Nov 29, 2024",
+      },
+    },
+    {
       title: "CORE",
       logo: coreLogo,
       eventStatus: "Expired",
@@ -5091,6 +5153,8 @@ function App() {
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
+                midleEarnUsd={midleEarnUsd}
+
 
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
@@ -5161,6 +5225,7 @@ function App() {
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
+                midleEarnUsd={midleEarnUsd}
 
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
@@ -5895,6 +5960,7 @@ function App() {
                 percent={percent}
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
+                midleEarnUsd={midleEarnUsd}
 
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);

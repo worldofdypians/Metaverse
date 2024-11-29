@@ -18,6 +18,7 @@ import seiThumb from "../../screens/Account/src/Components/WalletBalance/assets/
 import multiversThumb from "../../screens/Account/src/Components/WalletBalance/assets/multiversThumb.png";
 import immutableThumb from "../../screens/Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import easy2stakeThumb from "../../screens/Account/src/Components/WalletBalance/assets/easy2stakeThumb.webp";
+import midleThumb from "../../screens/Account/src/Components/WalletBalance/assets/midleThumb.webp";
 import coreThumb from "../../screens/Account/src/Components/WalletBalance/assets/coreThumb.png";
 import eventPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImage.png";
 import bnbPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/bnbPopupImage.png";
@@ -155,6 +156,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? eventPopupImageMatchain
                     : dummyEvent.popupInfo.linkState === "easy2stake"
                     ? easy2stakeThumb
+                    : dummyEvent.popupInfo.linkState === "midle"
+                    ? midleThumb
                     : eventPopupImage
                 }
                 alt=""
@@ -287,7 +290,19 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   and venture into the Easy2Stake area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.id === "event21" ? (
+              ) : (dummyEvent.popupInfo.id === "event27") ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB
+                  Chain Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the Midle
+                   area, players not only stand a chance to secure daily
+                  rewards in BNB, but also earn points for their placement on
+                  the global leaderboard. Remember to log in to the game daily
+                  and venture into the Midle area to uncover hidden
+                  treasures.
+                </p>
+              ): dummyEvent.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
@@ -565,6 +580,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             ? "Cookie3"
             : dummyEvent.popupInfo.id === "event25"
             ? "Matchain"
+            : dummyEvent.popupInfo.id === "event26"
+            ? "Easy2Stake"
+            : dummyEvent.popupInfo.id === "event27"
+            ? "Midle"
             : "Base Network"}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
@@ -626,6 +645,13 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
            Easy2Stake is a trusted staking service provider that enables secure and efficient staking for multiple blockchains, ensuring users can earn rewards while supporting web3 ecosystems. 
+          </p>
+        ): dummyEvent.popupInfo.id === "event27" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+           Midle is the web and mobile app that boosts user acquisition, retention and engagement.  
           </p>
         ) : dummyEvent.popupInfo.id === "event22" ? (
           <p
@@ -831,6 +857,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/SeiNetwork"
                 : dummyEvent.popupInfo.id === "event26"
                 ? "https://x.com/easy2stake"
+                 : dummyEvent.popupInfo.id === "event27"
+                ? "https://x.com/midle_official"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
@@ -879,6 +907,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://t.me/matchain_fam"
                : dummyEvent.popupInfo.id === "event26"
                 ? "https://t.me/easy2stake"
+                : dummyEvent.popupInfo.id === "event27"
+                ? "https://t.me/midlecommunity"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -942,6 +972,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://www.matchain.io/"
                 : dummyEvent.popupInfo.id === "event26"
                 ? "https://www.easy2stake.com"
+                 : dummyEvent.popupInfo.id === "event27"
+                ? "https://app.midle.io/"
                 : "https://base.org/"
             }
             target="_blank"

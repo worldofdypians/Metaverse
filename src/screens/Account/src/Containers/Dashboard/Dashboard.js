@@ -191,6 +191,7 @@ function Dashboard({
   showSync,
   onCloseSync,
   easy2StakeEarnUsd,
+  midleEarnUsd
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -10106,7 +10107,7 @@ function Dashboard({
                 Number(immutableEarnUsd) +
                 Number(victionEarnUsd) +
                 Number(baseEarnUSD) +
-                Number(easy2StakeEarnUsd)
+                Number(easy2StakeEarnUsd) + Number(midleEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10183,6 +10184,8 @@ function Dashboard({
             cookieEarnUsd={cookieEarnUsd}
             baseEarnUSD={baseEarnUSD}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
+            midleEarnUsd={midleEarnUsd}
+
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -10675,6 +10678,8 @@ function Dashboard({
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
+            midleEarnUsd={midleEarnUsd}
+
               />
             </div>
           </OutsideClickHandler>
