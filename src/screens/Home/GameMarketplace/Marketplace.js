@@ -112,6 +112,11 @@ const MarketPlace = () => {
 
   const videoGallery = [
     {
+      videoLink: "https://www.youtube.com/watch?v=v5Um-Q8l9z8&t",
+      imageLink: "https://img.youtube.com/vi/v5Um-Q8l9z8/maxresdefault.jpg",
+      id: "v5Um-Q8l9z8"
+    },
+    {
       videoLink: "https://www.youtube.com/watch?v=szTyRNXuIN8",
       imageLink: "https://img.youtube.com/vi/szTyRNXuIN8/maxresdefault.jpg",
       id: "szTyRNXuIN8",
@@ -186,11 +191,7 @@ const MarketPlace = () => {
       imageLink: "https://img.youtube.com/vi/NQpxySZUXn8/maxresdefault.jpg",
       id: "NQpxySZUXn8",
     },
-    {
-      videoLink: "https://www.youtube.com/watch?v=ixIefVgfWlc",
-      imageLink: "https://img.youtube.com/vi/ixIefVgfWlc/maxresdefault.jpg",
-      id: "ixIefVgfWlc",
-    },
+  
   ];
 
   return (
@@ -219,23 +220,23 @@ const MarketPlace = () => {
                     </div>
                   ))} */}
                 {videoGallery.slice(0, 8).map((item, index) => (
-                  <div
-                    className="video-gallery-item mx-3"
-                    key={index}
-                    onClick={() => {
-                      setVideoPopup(true);
-                      setVideoLink(item.id);
-                    }}
-                  >
-                    <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
-                      <img src={playIcon} width={32} height={32} alt="" />
-                    </div>
-                    <img
-                      src={item.imageLink}
-                      className="gallery-video-thumb"
-                      alt=""
-                    />
-                  </div>
+                 <div
+                 className="video-gallery-item mx-3"
+                 key={index}
+                 onClick={() => {
+                   setVideoPopup(true);
+                   setVideoLink(item.id); // This is now the clean ID
+                 }}
+               >
+                 <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
+                   <img src={playIcon} width={32} height={32} alt="Play Icon" />
+                 </div>
+                 <img
+                   src={`https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`}
+                   className="gallery-video-thumb"
+                   alt="Thumbnail"
+                 />
+               </div>
                 ))}
               </Marquee>
               <Marquee gradient={false} direction="right">
@@ -243,22 +244,22 @@ const MarketPlace = () => {
                   .slice(9, videoGallery.length)
                   .map((item, index) => (
                     <div
-                      className="video-gallery-item mx-3"
-                      key={index}
-                      onClick={() => {
-                        setVideoPopup(true);
-                        setVideoLink(item.id);
-                      }}
-                    >
-                      <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
-                        <img src={playIcon} width={32} height={32} alt="" />
-                      </div>
-                      <img
-                        src={item.imageLink}
-                        className="gallery-video-thumb"
-                        alt=""
-                      />
+                    className="video-gallery-item mx-3"
+                    key={index}
+                    onClick={() => {
+                      setVideoPopup(true);
+                      setVideoLink(item.id); // This is now the clean ID
+                    }}
+                  >
+                    <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
+                      <img src={playIcon} width={32} height={32} alt="Play Icon" />
                     </div>
+                    <img
+                      src={`https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`}
+                      className="gallery-video-thumb"
+                      alt="Thumbnail"
+                    />
+                  </div>
                   ))}
               </Marquee>
             </>
