@@ -338,6 +338,16 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "Dypius",
+      icon: "dypius",
+      backer: false,
+
+    },    {
+      name: "OpenFlux",
+      icon: "openflux",
+      backer: false,
+    },
   ];
 
   useEffect(() => {
