@@ -139,7 +139,9 @@ const NewEvents = ({
   wodPrice,
   email,
   isConnected,
-  setBeastSiegeStatus
+  setBeastSiegeStatus,
+  greatCollectionData,
+  explorerHuntData
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -3635,7 +3637,7 @@ const NewEvents = ({
                           </div>
                         ) : activeEvent?.id === "explorer-hunt" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
                               <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
@@ -3650,11 +3652,16 @@ const NewEvents = ({
                                   invasion.
                                 </span>
                               </div>
+                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                                <span className="yellow-text-amount">{getFormattedNumber(explorerHuntData?.statValue ?? 0)}</span>
+                                <span className="small-text-amount">Partners Saved</span>
+
+                              </div>
                             </div>
                           </div>
                         ) : activeEvent?.id === "greatCollection" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
                               <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
@@ -3669,11 +3676,16 @@ const NewEvents = ({
                                   across the game.
                                 </span>
                               </div>
+                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                                <span className="yellow-text-amount">{getFormattedNumber(greatCollectionData?.statValue ?? 0)}</span>
+                                <span className="small-text-amount">Brands Collected</span>
+
+                              </div>
                             </div>
                           </div>
                         ) : activeEvent?.id === "maze" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
                               <span className="challenge-popup-desc text-white">
                                 You need to hold at least 400 WOD tokens to
                                 participate

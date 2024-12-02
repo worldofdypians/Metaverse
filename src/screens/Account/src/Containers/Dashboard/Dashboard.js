@@ -1023,6 +1023,8 @@ function Dashboard({
   const [userRankSkale, setUserRankSkale] = useState("");
   const [userSkaleScore, setUserSkaleScore] = useState(0);
   const [eventCardCount, seteventCardCount] = useState(0);
+  const [explorerHuntData, setexplorerHuntData] = useState([]);
+  const [greatCollectionData, setgreatCollectionData] = useState([]);
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
@@ -4194,24 +4196,38 @@ function Dashboard({
     // setdailyplayerData(result.data.data.leaderboard);
   };
 
-  // const fetchExplorerHunt = async () => {
- 
-  //     const data = {
-  //       StatisticName: "ExploreHuntEventKillCollection",
-  //       StartPosition: 0,
-  //       MaxResultsCount: 100,
-  //       Version: version - 1,
-  //     };
-  //     const result = await axios.post(
-  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
-  //       data
-  //     );
-  //     setPrevDataStar(result.data.data.leaderboard);
+  const fetchExplorerHunt = async () => {
+
+      const data = {
+        StatisticName: "ExploreHuntEventKillCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId           ,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setexplorerHuntData(result.data.data.leaderboard);
     
  
+ 
+  };
 
-  //   // setdailyplayerData(result.data.data.leaderboard);
-  // };
+  
+  const fetchGreatCollection = async () => {
+    const data = {
+      StatisticName: "TheGreatCollection",
+      StartPosition: 0,
+      MaxResultsCount: 1,
+      PlayerId: userId           ,
+    };
+    const result = await axios.post(
+      `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+      data
+    );
+    setgreatCollectionData(result.data.data.leaderboard);
+};
 
   const fetchRecordsStar = async () => {
     const data = {
@@ -4730,6 +4746,8 @@ function Dashboard({
       // fetchWeeklyRecordsSkale();
       fetchMonthlyRecordsSkale();
       fetchRecordsStar();
+      fetchGreatCollection()
+      fetchExplorerHunt()
       fetchRecordsStarWeekly();
     }
   }, [username, userId, goldenPassRemainingTime]);
@@ -10170,6 +10188,8 @@ function Dashboard({
     // fetchWeeklyRecordsSkale();
     fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchGreatCollection()
+    fetchExplorerHunt()
     fetchRecordsStarWeekly();
 
     // }
@@ -10558,6 +10578,8 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+            greatCollectionData={greatCollectionData}
+            explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
               userDataStarWeekly={userDataStarWeekly}
               primeStars={primeStars}
@@ -10674,6 +10696,8 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              greatCollectionData={greatCollectionData}
+            explorerHuntData={explorerHuntData}
               availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
