@@ -173,6 +173,8 @@ const MyProfile = ({
   onEventCardClick,
   userDataStarWeekly,
   onLinkWallet,
+  beastSiegeStatus
+
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -190,6 +192,7 @@ const MyProfile = ({
       class: "stoneEyeBannerItem",
       arrow: stoneEyeArrow,
       link: "/account/challenges/stone-eye",
+      active: beastSiegeStatus.cyclops
     },
     {
       image: dragonRuins, // Monday
@@ -200,6 +203,8 @@ const MyProfile = ({
       class: "dragonRuinsBannerItem",
       arrow: dragonRuinsArrow,
       link: "/account/challenges/dragon-ruins",
+      active: beastSiegeStatus.dragon
+
     },
     {
       image: coldBite, // Tuesday
@@ -210,6 +215,8 @@ const MyProfile = ({
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
       link: "/account/challenges/cold-bite",
+      active: beastSiegeStatus.bear
+
     },
     {
       image: furyBeast, // Wednesday
@@ -220,6 +227,8 @@ const MyProfile = ({
       class: "furyBeastBannerItem",
       arrow: furyBeastArrow,
       link: "/account/challenges/fury-beast",
+      active: beastSiegeStatus.beast
+
     },
     {
       image: wingStorm, // Thursday
@@ -230,6 +239,8 @@ const MyProfile = ({
       class: "wingStormBannerItem",
       arrow: wingStormArrow,
       link: "/account/challenges/wing-storm",
+      active: beastSiegeStatus.eagle
+
     },
     {
       image: bnbMazeDay, // Friday
@@ -240,6 +251,7 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
+      
     },
     {
       image: scorpionKing, // Saturday
@@ -250,6 +262,8 @@ const MyProfile = ({
       class: "scorpionKingBannerItem",
       arrow: scorpionKingArrow,
       link: "/account/challenges/maze-day",
+      active: beastSiegeStatus.scorpion
+
     },
   ];
 
@@ -770,7 +784,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Ready
+                        {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -1212,10 +1226,14 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                        <div className="d-flex flex-column gap-1">
-                          <span className="beast-siege-ends-in">Ends in:</span>
+                        {dailyEvents[utcDayIndex].active ?
+                          <div className="d-flex flex-column gap-1">
+                          <span className="beast-siege-ends-in">Available until:</span>
                           <Countdown renderer={renderer4} date={midnight} />
                         </div>
+                          :
+                          <span className="beast-siege-timer">Ready</span>
+                        }
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}

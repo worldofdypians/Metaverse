@@ -1151,6 +1151,14 @@ function Dashboard({
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [beastSiegeStatus, setBeastSiegeStatus] = useState({
+    dragon: false,
+    bear: false,
+    beast: false,
+    eagle: false,
+    scorpion: false, 
+    cyclops: false
+  })
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -10036,6 +10044,7 @@ function Dashboard({
               dragonRuinsCountdown={countdown}
               puzzleMadnessCountdown={countdown3500}
               userActiveEvents={userActiveEvents}
+              beastSiegeStatus={beastSiegeStatus}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
               allClaimedChests={
                 openedBaseChests.length +
@@ -10148,6 +10157,7 @@ function Dashboard({
               eventCardCount={eventCardCount}
               email={email}
               isConnected={isConnected}
+              setBeastSiegeStatus={setBeastSiegeStatus}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (

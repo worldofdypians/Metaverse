@@ -139,6 +139,7 @@ const NewEvents = ({
   wodPrice,
   email,
   isConnected,
+  setBeastSiegeStatus
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -316,7 +317,7 @@ const NewEvents = ({
       .getTimeOfExpireBuff(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtDragon(false); // User hasn't bought it
+      setHasBoughtpuzzleMadness(false); 
       return;
     }
     setHasBoughtpuzzleMadness(true);
@@ -477,7 +478,11 @@ const NewEvents = ({
       .getTimeOfDeposit(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtDragon(false); // User hasn't bought it
+      setHasBoughtDragon(false);
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        dragon: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -498,6 +503,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtDragon(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      dragon: isToday   
+    }));
   };
 
   const checkApprovalDragon = async () => {
@@ -655,6 +664,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        bear: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -675,6 +688,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBear(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      bear: isToday   
+    }));
   };
 
   const checkApprovalBear = async () => {
@@ -851,6 +868,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        beast: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -871,6 +892,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBeast(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      beast: isToday   
+    }));
   };
 
   const checkApprovalBeast = async () => {
@@ -1028,6 +1053,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        eagle: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1048,6 +1077,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtEagle(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      eagle: isToday   
+    }));
   };
 
   const checkApprovalEagle = async () => {
@@ -1204,6 +1237,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        scorpion: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1224,6 +1261,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtScorpion(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      scorpion: isToday   
+    }));
   };
 
   const checkApprovalScorpion = async () => {
@@ -1381,6 +1422,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        cyclops: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1401,6 +1446,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtCyclops(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      cyclops: isToday   
+    }));
   };
 
   const checkApprovalCyclops = async () => {
@@ -1578,6 +1627,16 @@ const NewEvents = ({
 
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        dragon: false,
+        bear: false,
+        beast: false,
+        eagle: false,
+        scorpion: false,
+        cyclops: false,
+
+      }));
       setDragonShowApproval(false);
       setDragonBundleState("initial");
 
