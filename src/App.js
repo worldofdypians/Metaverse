@@ -954,12 +954,12 @@ function App() {
           });
 
           const easy2stakeEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "easy2stake";
+            return obj.id === "easy2stakeEvent1";
           });
 
           
           const midleEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "midle";
+            return obj.id === "midleEvent1";
           });
 
           if (dypPremiumEvent && dypPremiumEvent[0]) {
