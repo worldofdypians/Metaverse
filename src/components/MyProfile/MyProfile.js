@@ -119,6 +119,8 @@ const renderer4 = ({ hours, minutes, seconds }) => {
 };
 
 const MyProfile = ({
+  greatCollectionData,
+  explorerHuntData,
   canBuy,
   email,
   isPremium,
@@ -175,7 +177,7 @@ const MyProfile = ({
   onLinkWallet,
   beastSiegeStatus,
   userRankMat,
-  userMatScore
+  userMatScore,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -193,7 +195,7 @@ const MyProfile = ({
       class: "stoneEyeBannerItem",
       arrow: stoneEyeArrow,
       link: "/account/challenges/stone-eye",
-      active: beastSiegeStatus.cyclops
+      active: beastSiegeStatus.cyclops,
     },
     {
       image: dragonRuins, // Monday
@@ -204,8 +206,7 @@ const MyProfile = ({
       class: "dragonRuinsBannerItem",
       arrow: dragonRuinsArrow,
       link: "/account/challenges/dragon-ruins",
-      active: beastSiegeStatus.dragon
-
+      active: beastSiegeStatus.dragon,
     },
     {
       image: coldBite, // Tuesday
@@ -216,8 +217,7 @@ const MyProfile = ({
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
       link: "/account/challenges/cold-bite",
-      active: beastSiegeStatus.bear
-
+      active: beastSiegeStatus.bear,
     },
     {
       image: furyBeast, // Wednesday
@@ -228,8 +228,7 @@ const MyProfile = ({
       class: "furyBeastBannerItem",
       arrow: furyBeastArrow,
       link: "/account/challenges/fury-beast",
-      active: beastSiegeStatus.beast
-
+      active: beastSiegeStatus.beast,
     },
     {
       image: wingStorm, // Thursday
@@ -240,8 +239,7 @@ const MyProfile = ({
       class: "wingStormBannerItem",
       arrow: wingStormArrow,
       link: "/account/challenges/wing-storm",
-      active: beastSiegeStatus.eagle
-
+      active: beastSiegeStatus.eagle,
     },
     {
       image: bnbMazeDay, // Friday
@@ -252,7 +250,6 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
-      
     },
     {
       image: scorpionKing, // Saturday
@@ -263,8 +260,7 @@ const MyProfile = ({
       class: "scorpionKingBannerItem",
       arrow: scorpionKingArrow,
       link: "/account/challenges/maze-day",
-      active: beastSiegeStatus.scorpion
-
+      active: beastSiegeStatus.scorpion,
     },
   ];
 
@@ -366,26 +362,24 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                        isPremium
-                          ? starterProfilePremium
-                          : starterProfile
-                        // : userRankName.name === "rookie"
-                        // ? isPremium
-                        //   ? rookieProfilePremium
-                        //   : rookieProfile
-                        // : userRankName.name === "underdog"
-                        // ? isPremium
-                        //   ? underdogProfilePremium
-                        //   : underdogProfile
-                        // : userRankName.name === "champion"
-                        // ? isPremium
-                        //   ? championProfilePremium
-                        //   : championProfile
-                        // : userRankName.name === "unstoppable"
-                        // ? isPremium
-                        //   ? unstoppableProfilePremium
-                        //   : unstoppableProfile
-                        // : starterProfile
+                      isPremium ? starterProfilePremium : starterProfile
+                      // : userRankName.name === "rookie"
+                      // ? isPremium
+                      //   ? rookieProfilePremium
+                      //   : rookieProfile
+                      // : userRankName.name === "underdog"
+                      // ? isPremium
+                      //   ? underdogProfilePremium
+                      //   : underdogProfile
+                      // : userRankName.name === "champion"
+                      // ? isPremium
+                      //   ? championProfilePremium
+                      //   : championProfile
+                      // : userRankName.name === "unstoppable"
+                      // ? isPremium
+                      //   ? unstoppableProfilePremium
+                      //   : unstoppableProfile
+                      // : starterProfile
                     }
                     alt=""
                   />
@@ -415,7 +409,7 @@ const MyProfile = ({
                         </NavLink>
                       )}
                     </div>
-{/* 
+                    {/* 
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
                     </span> */}
@@ -836,7 +830,13 @@ const MyProfile = ({
                   <div className="daily-progress-item position-relative">
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Ready</span>
+                      <span>
+                        {explorerHuntData?.statValue
+                          ? explorerHuntData?.statValue === 0
+                            ? "Ready"
+                            : explorerHuntData?.statValue
+                          : "Ready"}
+                      </span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -1228,14 +1228,16 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                        {dailyEvents[utcDayIndex].active ?
+                        {dailyEvents[utcDayIndex].active ? (
                           <div className="d-flex flex-column gap-1">
-                          <span className="beast-siege-ends-in">Available until:</span>
-                          <Countdown renderer={renderer4} date={midnight} />
-                        </div>
-                          :
+                            <span className="beast-siege-ends-in">
+                              Available until:
+                            </span>
+                            <Countdown renderer={renderer4} date={midnight} />
+                          </div>
+                        ) : (
                           <span className="beast-siege-timer">Ready</span>
-                        }
+                        )}
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
