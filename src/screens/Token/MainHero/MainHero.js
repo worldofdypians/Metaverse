@@ -234,7 +234,7 @@ const MainHero = ({ scrollInto }) => {
             </div>
           </div>
 
-          <div className="d-flex flex-column gap-3">
+          {/* <div className="d-flex flex-column gap-3">
             <h6 className="mb-0 investors-title">Launchpads</h6>
             <div className="investors-grid">
               {launchpads.map((item, index) => (
@@ -252,7 +252,7 @@ const MainHero = ({ scrollInto }) => {
                 </a>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

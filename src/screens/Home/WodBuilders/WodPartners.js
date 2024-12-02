@@ -227,6 +227,13 @@ const WodPartners = ({ full }) => {
       name: "Mintpad",
       icon: "mintpad.svg",
     },
+    {
+      name: "Dypius",
+      icon: "dypius.svg",
+    },    {
+      name: "OpenFlux",
+      icon: "openflux.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
