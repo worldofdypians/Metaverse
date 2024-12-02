@@ -323,6 +323,16 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
+    {
+      name: "Dypius",
+      icon: "dypius",
+      backer: false,
+
+    },    {
+      name: "OpenFlux",
+      icon: "openflux",
+      backer: false,
+    },
  
   ];
   return (

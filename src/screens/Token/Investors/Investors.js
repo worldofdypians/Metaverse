@@ -76,6 +76,11 @@ const Investors = ({ page }) => {
       logo: "easy2stakeBackers.svg",
       link: "https://www.easy2stake.com/",
     },
+    {
+      title: "Immutable",
+      logo: "immutableBackers.svg",
+      link: "https://www.immutable.com/",
+    },
   ];
 
   const [show, setShow] = useState(false);
