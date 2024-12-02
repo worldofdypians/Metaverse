@@ -49,6 +49,8 @@ const GoldenPassPopup = ({
   const [goldenPassWodAmount, setGoldenPassWodAmount] = useState(0);
   const [countdown, setCountdown] = useState(0);
   const [hasBoughtGolden, setHasBoughtGolden] = useState(false);
+  const [timerFinished, settimerFinished] = useState(false);
+
   const [showApproval, setShowApproval] = useState(true);
   const [bundleState, setBundleState] = useState("initial");
   const [depositState, setDepositState] = useState("initial");
@@ -475,10 +477,10 @@ const GoldenPassPopup = ({
             </div>
           </div>
           <>
-            {hasBoughtGolden ? (
+            {(hasBoughtGolden && settimerFinished === false) ? (
               <div className="d-flex flex-column gap-1">
                 <span className="days3">Active Until:</span>
-                <Countdown renderer={renderer} date={Number(countdown)*1000} />
+                <Countdown renderer={renderer} date={Number(countdown)*1000} onComplete={()=>{settimerFinished(true)}}/>
               </div>
             ) : (
               <div className="d-flex align-items-center gap-2">
