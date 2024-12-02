@@ -173,6 +173,9 @@ const MyProfile = ({
   onEventCardClick,
   userDataStarWeekly,
   onLinkWallet,
+  beastSiegeStatus,
+  userRankMat,
+  userMatScore
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -190,6 +193,7 @@ const MyProfile = ({
       class: "stoneEyeBannerItem",
       arrow: stoneEyeArrow,
       link: "/account/challenges/stone-eye",
+      active: beastSiegeStatus.cyclops
     },
     {
       image: dragonRuins, // Monday
@@ -200,6 +204,8 @@ const MyProfile = ({
       class: "dragonRuinsBannerItem",
       arrow: dragonRuinsArrow,
       link: "/account/challenges/dragon-ruins",
+      active: beastSiegeStatus.dragon
+
     },
     {
       image: coldBite, // Tuesday
@@ -210,6 +216,8 @@ const MyProfile = ({
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
       link: "/account/challenges/cold-bite",
+      active: beastSiegeStatus.bear
+
     },
     {
       image: furyBeast, // Wednesday
@@ -220,6 +228,8 @@ const MyProfile = ({
       class: "furyBeastBannerItem",
       arrow: furyBeastArrow,
       link: "/account/challenges/fury-beast",
+      active: beastSiegeStatus.beast
+
     },
     {
       image: wingStorm, // Thursday
@@ -230,6 +240,8 @@ const MyProfile = ({
       class: "wingStormBannerItem",
       arrow: wingStormArrow,
       link: "/account/challenges/wing-storm",
+      active: beastSiegeStatus.eagle
+
     },
     {
       image: bnbMazeDay, // Friday
@@ -240,6 +252,7 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
+      
     },
     {
       image: scorpionKing, // Saturday
@@ -250,6 +263,8 @@ const MyProfile = ({
       class: "scorpionKingBannerItem",
       arrow: scorpionKingArrow,
       link: "/account/challenges/maze-day",
+      active: beastSiegeStatus.scorpion
+
     },
   ];
 
@@ -351,27 +366,26 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                      userRankName.name === "starter"
-                        ? isPremium
+                        isPremium
                           ? starterProfilePremium
                           : starterProfile
-                        : userRankName.name === "rookie"
-                        ? isPremium
-                          ? rookieProfilePremium
-                          : rookieProfile
-                        : userRankName.name === "underdog"
-                        ? isPremium
-                          ? underdogProfilePremium
-                          : underdogProfile
-                        : userRankName.name === "champion"
-                        ? isPremium
-                          ? championProfilePremium
-                          : championProfile
-                        : userRankName.name === "unstoppable"
-                        ? isPremium
-                          ? unstoppableProfilePremium
-                          : unstoppableProfile
-                        : starterProfile
+                        // : userRankName.name === "rookie"
+                        // ? isPremium
+                        //   ? rookieProfilePremium
+                        //   : rookieProfile
+                        // : userRankName.name === "underdog"
+                        // ? isPremium
+                        //   ? underdogProfilePremium
+                        //   : underdogProfile
+                        // : userRankName.name === "champion"
+                        // ? isPremium
+                        //   ? championProfilePremium
+                        //   : championProfile
+                        // : userRankName.name === "unstoppable"
+                        // ? isPremium
+                        //   ? unstoppableProfilePremium
+                        //   : unstoppableProfile
+                        // : starterProfile
                     }
                     alt=""
                   />
@@ -401,10 +415,10 @@ const MyProfile = ({
                         </NavLink>
                       )}
                     </div>
-
+{/* 
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
-                    </span>
+                    </span> */}
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
@@ -631,6 +645,8 @@ const MyProfile = ({
                     userDataStar={userDataStar}
                     userRankManta={userRankManta}
                     userMantaScore={userMantaScore}
+                    userRankMat={userRankMat}
+                    userMatScore={userMatScore}
                     userRankBase={userRankBase}
                     userBaseScore={userBaseScore}
                     userRankTaiko={userRankTaiko}
@@ -727,8 +743,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsstd === 0
                           ? "Ready"
-                          : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd + "/70"
+                          : allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -746,8 +762,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsPremium === 0
                           ? "Ready"
-                          : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium + "/70"
+                          : allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -770,7 +786,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Ready
+                        {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -1212,10 +1228,14 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                        <div className="d-flex flex-column gap-1">
-                          <span className="beast-siege-ends-in">Ends in:</span>
+                        {dailyEvents[utcDayIndex].active ?
+                          <div className="d-flex flex-column gap-1">
+                          <span className="beast-siege-ends-in">Available until:</span>
                           <Countdown renderer={renderer4} date={midnight} />
                         </div>
+                          :
+                          <span className="beast-siege-timer">Ready</span>
+                        }
                       </div>
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
