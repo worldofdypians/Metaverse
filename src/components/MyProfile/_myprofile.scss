@@ -15,7 +15,7 @@
 
 .user-data-item-left {
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%;
@@ -78,10 +78,12 @@
   background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: all 0.25s;
+  border: 0.5px solid #ffd37e;
 }
 
 .wallet-address-wrapper2:hover {
   background: rgba(255, 129, 104, 0.4);
+  box-shadow: 0px 0px 10px #ffd37e;
 }
 
 .wallet-address-wrapper-error {
@@ -503,6 +505,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all .25s;
   img {
     width: 80px;
     height: auto;
@@ -521,6 +525,11 @@
     }
   }
 }
+
+.daily-progress-item:hover{
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
+
 .daily-progress-value {
   display: flex;
   justify-content: center;

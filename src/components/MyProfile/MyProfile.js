@@ -575,7 +575,7 @@ const MyProfile = ({
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    <span className="user-data-item-left">My Progress</span>
+                    {/* <span className="user-data-item-left">My Progress</span> */}
                     <div className="d-flex flex-column">
                       <div className="d-flex">
                         <span className="user-data-item-right">
@@ -616,17 +616,19 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <div className="wallet-address-wrapper2 p-2 w-100">
+                <NavLink 
+                to={"/account/challenges/great-collection"}
+                className="wallet-address-wrapper2 p-2 w-100">
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Brands</span>
-                      <span className="user-data-item-left">Collected</span>
+                      <span className="user-data-item-left">Great</span>
+                      <span className="user-data-item-left">Collection</span>
                     </div>
                     <div className="d-flex">
                       <span className="user-data-item-right">Upcoming</span>
                     </div>
                   </div>
-                </div>
+                </NavLink>
                 {rankDropdown === true && (
                   <RankSmallPopup
                     onClose={() => {
@@ -720,7 +722,7 @@ const MyProfile = ({
                     />
                   )}
                 </div> */}
-                  <div className="daily-progress-item position-relative">
+                  <NavLink to={"/account/prime"} className="daily-progress-item position-relative">
                     <img src={prime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -734,8 +736,8 @@ const MyProfile = ({
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                  </div>
-                  <div className="daily-progress-item position-relative">
+                  </NavLink>
+                  <div className="daily-progress-item position-relative" onClick={openDailyBonus}>
                     <img src={dailyBonusStd} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -754,7 +756,7 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <div className="daily-progress-item position-relative">
+                  <div className="daily-progress-item position-relative" onClick={openDailyBonus}>
                     <img src={dailyBonusPrime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -775,7 +777,7 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <div className="daily-progress-item position-relative">
+                  <NavLink to={dailyEvents[utcDayIndex].link} className="daily-progress-item position-relative">
                     <img src={dailyEvents[utcDayIndex].image} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -797,9 +799,9 @@ const MyProfile = ({
                     <span className="bundle-title-bottom">
                       {dailyEvents[utcDayIndex].title}
                     </span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink to={"/account/challenges/critical-hit"} className="daily-progress-item position-relative">
                     <img src={criticalHit} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
@@ -810,9 +812,9 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Critical Hit</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink to={"/account/challenges/treasure-hunt"} className="daily-progress-item position-relative">
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -829,9 +831,9 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Treasure Hunt</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink  to={"/account/challenges/explorer-hunt"} className="daily-progress-item position-relative">
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
@@ -842,9 +844,9 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Explorer Hunt</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink to={"/account/challenges/puzzle-madness"} className="daily-progress-item position-relative">
                     <img src={puzzleMadness} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -864,7 +866,7 @@ const MyProfile = ({
                     />
                   )} */}
                     <span className="bundle-title-bottom">Puzzle Madness</span>
-                  </div>
+                  </NavLink>
 
                   {/* <div className="daily-progress-item position-relative">
                   <img

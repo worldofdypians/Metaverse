@@ -26,7 +26,18 @@ import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
 import opensea from "../../assets/opensea.svg";
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
-
+import dragonRuinsText from "../../assets/gameAssets/challengeCards/dragonRuinsText.png";
+import dragonRuinsHead from "../../assets/gameAssets/challengeCards/dragonRuinsHead.png";
+import coldBiteHead from "../../assets/gameAssets/challengeCards/coldBiteHead.png";
+import furyBeastHead from "../../assets/gameAssets/challengeCards/furyBeastHead.png";
+import wingStormHead from "../../assets/gameAssets/challengeCards/wingStormHead.png";
+import scorpionKingHead from "../../assets/gameAssets/challengeCards/scorpionKingHead.png";
+import stoneEyeHead from "../../assets/gameAssets/challengeCards/stoneEyeHead.png";
+import coldBiteText from "../../assets/gameAssets/challengeCards/coldBiteText.png";
+import furyBeastText from "../../assets/gameAssets/challengeCards/furyBeastText.png";
+import wingStormText from "../../assets/gameAssets/challengeCards/wingStormText.png";
+import scorpionKingText from "../../assets/gameAssets/challengeCards/scorpionKingText.png";
+import stoneEyeText from "../../assets/gameAssets/challengeCards/stoneEyeText.png";
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
 import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
 import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
@@ -139,7 +150,7 @@ const NewEvents = ({
   wodPrice,
   email,
   isConnected,
-  setBeastSiegeStatus
+  setBeastSiegeStatus,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -317,7 +328,7 @@ const NewEvents = ({
       .getTimeOfExpireBuff(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtpuzzleMadness(false); 
+      setHasBoughtpuzzleMadness(false);
       return;
     }
     setHasBoughtpuzzleMadness(true);
@@ -479,9 +490,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtDragon(false);
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        dragon: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        dragon: false,
       }));
       return;
     }
@@ -503,9 +514,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtDragon(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      dragon: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      dragon: isToday,
     }));
   };
 
@@ -664,9 +675,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        bear: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        bear: false,
       }));
       return;
     }
@@ -688,9 +699,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBear(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      bear: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      bear: isToday,
     }));
   };
 
@@ -868,9 +879,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        beast: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        beast: false,
       }));
       return;
     }
@@ -892,9 +903,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBeast(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      beast: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      beast: isToday,
     }));
   };
 
@@ -1053,9 +1064,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        eagle: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        eagle: false,
       }));
       return;
     }
@@ -1077,9 +1088,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtEagle(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      eagle: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      eagle: isToday,
     }));
   };
 
@@ -1237,9 +1248,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        scorpion: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        scorpion: false,
       }));
       return;
     }
@@ -1261,9 +1272,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtScorpion(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      scorpion: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      scorpion: isToday,
     }));
   };
 
@@ -1422,9 +1433,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        cyclops: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        cyclops: false,
       }));
       return;
     }
@@ -1446,9 +1457,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtCyclops(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      cyclops: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      cyclops: isToday,
     }));
   };
 
@@ -1627,15 +1638,14 @@ const NewEvents = ({
 
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
         dragon: false,
         bear: false,
         beast: false,
         eagle: false,
         scorpion: false,
         cyclops: false,
-
       }));
       setDragonShowApproval(false);
       setDragonBundleState("initial");
@@ -1666,8 +1676,11 @@ const NewEvents = ({
       thumbImageActive: dragonRuinsActiveThumb,
       mobileThumbImage: dragonRuinsThumbMobile,
       mobileThumbImageActive: dragonRuinsActiveThumbMobile,
+      textImage: dragonRuinsText,
+      headImage: dragonRuinsHead,
       wodAmount: dragonRuinsWodAmount,
-      usdPrice: 2.00,
+      class: "dragon-siege",
+      usdPrice: 2.0,
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
       dayText: "MON",
@@ -1696,8 +1709,11 @@ const NewEvents = ({
       thumbImageActive: coldBiteActiveThumb,
       mobileThumbImage: coldBiteThumbMobile,
       mobileThumbImageActive: coldBiteActiveThumbMobile,
+      textImage: coldBiteText,
+      headImage: coldBiteHead,
       wodAmount: coldBiteWodAmount,
-      usdPrice: 2.50,
+      usdPrice: 2.5,
+      class: "bear-siege",
 
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
@@ -1728,8 +1744,12 @@ const NewEvents = ({
       thumbImageActive: furyBeastActiveThumb,
       mobileThumbImage: furyBeastThumbMobile,
       mobileThumbImageActive: furyBeastActiveThumbMobile,
+      textImage: furyBeastText,
+      headImage: furyBeastHead,
       wodAmount: furyBeastWodAmount,
-      usdPrice: 2.50,
+      class: "beast-siege",
+
+      usdPrice: 2.5,
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
       dayText: "WED",
@@ -1761,8 +1781,11 @@ const NewEvents = ({
       mobileThumbImage: wingStormThumbMobile,
       mobileThumbImageActive: wingStormActiveThumbMobile,
       wodAmount: wingStormWodAmount,
-      usdPrice: 3.00,
+      textImage: wingStormText,
+      headImage: wingStormHead,
+      class: "eagle-siege",
 
+      usdPrice: 3.0,
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -1794,7 +1817,11 @@ const NewEvents = ({
       mobileThumbImage: scorpionKingThumbMobile,
       mobileThumbImageActive: scorpionKingActiveThumbMobile,
       wodAmount: scorpionKingWodAmount,
-      usdPrice: 3.50,
+      textImage: scorpionKingText,
+      headImage: scorpionKingHead,
+      class: "scorpion-siege",
+
+      usdPrice: 3.5,
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -1811,7 +1838,7 @@ const NewEvents = ({
       tips: [
         "Recommended Hero Level: 40 and above",
         "Craft plenty of health potions and target the tail to disable its poison strikes and reduce the threat.",
-        "Equip high-damage weapons to end the fight quickly before the poison accumulates.",
+        "Equip high-damage weapons to end the fight quickly before the poison kills you.",
       ],
       link: "/account/challenges/scorpion-king",
     },
@@ -1825,7 +1852,11 @@ const NewEvents = ({
       mobileThumbImage: stoneEyeThumbMobile,
       mobileThumbImageActive: stoneEyeActiveThumbMobile,
       wodAmount: stoneEyeWodAmount,
-      usdPrice: 3.00,
+      textImage: stoneEyeText,
+      headImage: stoneEyeHead,
+      class: "cyclops-siege",
+
+      usdPrice: 3.0,
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -1943,7 +1974,7 @@ const NewEvents = ({
     id: "puzzle",
     popupImage: puzzleMadnessPopup,
     image: puzzleMadnessBanner,
-    usdPrice: 4.00,
+    usdPrice: 4.0,
 
     desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
     title: "Puzzle Madness",
@@ -1969,7 +2000,7 @@ const NewEvents = ({
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
     link: "/account/challenges/golden-pass",
-    usdPrice: 2.00,
+    usdPrice: 2.0,
     popupDesc:
       "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
     secondaryDesc:
@@ -2504,31 +2535,26 @@ const NewEvents = ({
                         </div>
                         <div className="sidebar-separator2 my-2"></div>
                         <div className="d-flex flex-column gap-3">
-                          <div className="new-event-wrapper d-flex flex-column">
-                            <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
-                              <img
-                                src={tooltipIcon}
-                                className="new-event-banner-tooltip"
-                                alt=""
-                                onClick={() => {
-                                  setshowPopup(activeEvent?.id);
-                                }}
-                              />
+                          {/* <div className="new-event-wrapper d-flex flex-column">
+                            <div className="position-relative d-flex flex-column align-items-lg-center justify-content-start">
+                              <div className="row px-lg-4 py-lg-2">
+                                <div className="col-12 d-flex justify-content-center pb-2 text-image-holder">
+                                  <img src={activeEvent.textImage} alt="" style={{height: "45px"}} />
+                                </div>
+                              <div className="col-12 col-xxl-6 d-flex flex-column gap-2 position-relative">
                               <img
                                 src={activeEvent?.image}
                                 className="new-event-banner"
                                 alt=""
                               />
-
-                              <div className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row dynamicPosition">
-                                <div className="d-flex flex-column gap-2  col-lg-6">
+                              <div className="d-flex flex-column gap-2 p-3" style={{zIndex: 1}}>
                                   <h6
                                     className="mb-0 challenge-popup-secondary-title"
                                     style={{ color: "#FFC808" }}
                                   >
                                     How it works
                                   </h6>
-                                  <div className="d-flex flex-column gap-2">
+                                  <div className="d-flex flex-column gap-2" style={{zIndex: 1}}>
                                     {activeEvent?.workList.map(
                                       (work, index) => (
                                         <div
@@ -2544,8 +2570,7 @@ const NewEvents = ({
                                     )}
                                   </div>
                                 </div>
-
-                                <div className="d-flex flex-column gap-1 col-lg-6">
+                                <div className="d-flex flex-column gap-2 p-3" style={{zIndex: 1}}>
                                   {activeEvent?.tips && (
                                     <h6
                                       className="mb-0 challenge-popup-secondary-title"
@@ -2569,9 +2594,17 @@ const NewEvents = ({
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-end justify-content-between">
+                              <div className="col-12 col-xxl-6 h-100 px-0 px-lg-2">
+                                <div className="new-event-wrapper w-100 h-100 p-3 position-relative d-flex flex-column gap-5 justify-content-between"> 
+                                <img
+                                src={tooltipIcon}
+                                className="new-event-banner-tooltip"
+                                alt=""
+                                onClick={() => {
+                                  setshowPopup(activeEvent?.id);
+                                }}
+                              />
+                                 <div className="d-flex align-items-end justify-content-between">
                             {(activeEvent?.id !== "greatCollection" &&
                               activeEvent?.id !== "maze" &&
                               activeEvent?.id !== "explorer-hunt") && (
@@ -2584,17 +2617,13 @@ const NewEvents = ({
                                 Requirements
                               </h6>
                             )}
-                            {/* <div className="d-flex align-items-end gap-2">
-                              <span className="available-on">Available on</span>
-                              <img src={bnb} width={20} height={20} alt="" />
-                              <span className="purchase-chain">BNB Chain</span>
-                            </div> */}
+                       
                           </div>
                           {adjustedDay === activeEvent.day ? (
                             <>
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                              <div className="d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                                 <div
-                                  className="event-price-wrapper p-3 d-flex align-items-center gap-5"
+                                  className="event-price-wrapper p-3 d-flex align-items-center gap-3"
                                   style={{
                                     pointerEvents: isMonday ? "auto" : "none",
                                     filter: isMonday ? "none" : "blur(5px)",
@@ -3373,10 +3402,13 @@ const NewEvents = ({
                               >
                                 {status}
                               </span>
+                              <div className="d-flex w-100 justify-content-end">
+                                <img src={activeEvent.headImage} className="head-image" alt="" />
+                              </div>
                             </>
                           ) : (
                             <>
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                              <div className=" p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
                                 <span
                                   className="available-day-text mb-0 text-white w-100 d-flex justify-content-center text-center"
                                   style={{
@@ -3388,8 +3420,98 @@ const NewEvents = ({
                                   {activeEvent.dayTextLong}
                                 </span>
                               </div>
+                              <div className="d-flex w-100 justify-content-end">
+                                <img src={activeEvent.headImage} style={{filter: "grayscale(1)"}} alt="" />
+                              </div>
                             </>
                           )}
+
+                                </div>
+                              </div>
+                              </div>
+                            </div>
+                          </div> */}
+                          <div className="row gap-3 gap-xxl-0">
+                            <div className="col-12 col-xxl-6">
+                              <div className={`beast-siege-wrapper ${activeEvent.class} p-3 d-flex flex-column justify-content-between w-100`}>
+                                <div className="d-flex flex-column gap-1">
+                                  <h6 className="beast-siege-title mb-0">
+                                    {activeEvent.title}
+                                  </h6>
+                                  <span className="beast-siege-sub">Ready</span>
+                                </div>
+                                <div className="d-flex flex-column gap-2">
+                                  <div className="d-flex align-items-end gap-1">
+                                    <span className="beast-siege-wod-price">
+                                      120.5 WOD
+                                    </span>
+                                    <span className="beast-siege-usd-price">
+                                      ($3.5)
+                                    </span>
+                                  </div>
+                                  <span className="beast-siege-event-price">
+                                    Event Price
+                                  </span>
+                                </div>
+                                <button className="beast-siege-btn px-4 py-2">
+                                  Buy
+                                </button>
+                              </div>
+                            </div>
+                            <div className="col-12 col-xxl-6">
+                              <div className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100`}>
+                                <div className="d-flex flex-column gap-3">
+                                  <div className="d-flex flex-column gap-2">
+                                    <h6
+                                      className="mb-0 challenge-popup-secondary-title"
+                                      style={{ color: "#FFC808" }}
+                                    >
+                                      How it works
+                                    </h6>
+                                    <div
+                                      className="d-flex flex-column gap-2"
+                                      style={{ zIndex: 1 }}
+                                    >
+                                      {activeEvent?.workList.map(
+                                        (work, index) => (
+                                          <div
+                                            className="d-flex align-items-center gap-2"
+                                            key={index}
+                                          >
+                                            <div className="yellow-dot"></div>
+                                            <span className="challenge-popup-desc text-white">
+                                              {work}
+                                            </span>
+                                          </div>
+                                        )
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="d-flex flex-column gap-2">
+                                    <h6
+                                      className="mb-0 challenge-popup-secondary-title"
+                                      style={{ color: "#FFC808" }}
+                                    >
+                                      Tips
+                                    </h6>
+                                    <div className="d-flex flex-column gap-1">
+                                      {activeEvent?.tips?.map((tip, index) => (
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          key={index}
+                                        >
+                                          <div className="yellow-dot"></div>
+                                          <span className="challenge-popup-desc text-white">
+                                            {tip}
+                                          </span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : challenge === "maze-day" ||
@@ -3415,7 +3537,10 @@ const NewEvents = ({
                               alt=""
                             />
 
-                            <div className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row dynamicPosition">
+                            <div
+                              className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row"
+                              style={{ zIndex: "1" }}
+                            >
                               <div className="d-flex flex-column gap-2  col-lg-6">
                                 <h6
                                   className="mb-0 challenge-popup-secondary-title"
@@ -3465,18 +3590,18 @@ const NewEvents = ({
                           </div>
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
-                        {(activeEvent?.id !== "greatCollection" &&
-                              activeEvent?.id !== "maze" &&
-                              activeEvent?.id !== "explorer-hunt") && (
-                                <h6 className="mb-0 purchase-package-title">
-                                  Activate
-                                </h6>
-                              )}
-                            {activeEvent?.id === "maze" && (
+                          {activeEvent?.id !== "greatCollection" &&
+                            activeEvent?.id !== "maze" &&
+                            activeEvent?.id !== "explorer-hunt" && (
                               <h6 className="mb-0 purchase-package-title">
-                                Requirements
+                                Activate
                               </h6>
                             )}
+                          {activeEvent?.id === "maze" && (
+                            <h6 className="mb-0 purchase-package-title">
+                              Requirements
+                            </h6>
+                          )}
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
@@ -3526,10 +3651,7 @@ const NewEvents = ({
                                   </div>
                                   <span className="event-price-usd">
                                     ($
-                                    {getFormattedNumber(
-                                      activeEvent.usdPrice
-                                    )}
-                                    )
+                                    {getFormattedNumber(activeEvent.usdPrice)})
                                   </span>
                                 </div>
                               </div>

@@ -157,3 +157,224 @@
     color: #ffc808;
   }
 }
+
+.beast-siege-wrapper {
+  height: 380px;
+  border-radius: 12px;
+}
+
+.dragon-siege {
+  background: linear-gradient(109deg, #2e3842 0%, #121b1e 49%);
+  position: relative;
+}
+
+.dragon-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/dragonRuinsHead.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  pointer-events: none;
+}
+
+.bear-siege {
+  background: linear-gradient(109deg, #0097b9 0%, rgba(18, 16, 131, 0.77) 49%);
+  position: relative;
+}
+
+.bear-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/coldBiteHead.png");
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+}
+.beast-siege {
+  background: linear-gradient(109deg, #29302C 0%, #29302C 49%);
+  position: relative;
+}
+
+.beast-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/furyBeastHead.png");
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+}
+.eagle-siege {
+  background: linear-gradient(109deg, #004E7F 0%, #073755 49%);
+  position: relative;
+}
+
+.eagle-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/wingStormHead.png");
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+}
+.scorpion-siege {
+  background: linear-gradient(109deg, #732802 0%, #AB621E 49%);
+  position: relative;
+}
+
+.scorpion-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/scorpionKingHead.png");
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+}
+.cyclops-siege {
+  background: linear-gradient(109deg, #0B3398 0%, #062663 49%);
+  position: relative;
+}
+
+.cyclops-siege::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/gameAssets/challengeCards/stoneEyeHead.png");
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+}
+
+.beast-siege-title {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+
+.beast-siege-sub {
+  color: #bbc9da;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.beast-siege-wod-price {
+  color: #eeedff;
+  font-family: "Montserrat";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.beast-siege-usd-price {
+  color: #ffc808;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.beast-siege-event-price {
+  color: #d3d5d7;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.beast-siege-btn {
+  border-radius: 12px;
+  background: #ffeacd;
+  color: #2b353e;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  width: fit-content;
+}
+
+.beast-siege-info-wrapper {
+  border-radius: 12px;
+  height: 380px;
+}
+
+.dragon-siege-info {
+  background-image: url("./assets/banners/dragonRuinsBanner.webp");
+  background-size: cover;
+}
+
+.bear-siege-info {
+  background-image: url("./assets/banners/coldBiteBanner.webp");
+  background-size: cover;
+}
+
+.beast-siege-info {
+  background-image: url("./assets/banners/furyBeastBanner.webp");
+  background-size: cover;
+}
+
+.eagle-siege-info {
+  background-image: url("./assets/banners/wingStormBanner.webp");
+  background-size: cover;
+}
+
+.scorpion-siege-info {
+  background-image: url("./assets/banners/scorpionKingBanner.webp");
+  background-size: cover;
+}
+
+.cyclops-siege-info {
+  background-image: url("./assets/banners/stoneEyeBanner.webp");
+  background-size: cover;
+}
