@@ -210,11 +210,18 @@ const chainAreas = [
         [-0.06697474384951874, 0.08613646030426027],
       ],
     ],
-    events: [ {
-      title: "Treasure Hunt",
-      image: treasureHuntInfo,
-      link: "/account/challenges/treasure-hunt",
-    },],
+    events: [
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account#dailybonus",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account#leaderboard",
+      },
+    ],
     pastEvents: [],
     socials: [
       {

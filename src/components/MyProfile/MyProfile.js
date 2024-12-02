@@ -173,8 +173,9 @@ const MyProfile = ({
   onEventCardClick,
   userDataStarWeekly,
   onLinkWallet,
-  beastSiegeStatus
-
+  beastSiegeStatus,
+  userRankMat,
+  userMatScore
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -365,27 +366,26 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                      userRankName.name === "starter"
-                        ? isPremium
+                        isPremium
                           ? starterProfilePremium
                           : starterProfile
-                        : userRankName.name === "rookie"
-                        ? isPremium
-                          ? rookieProfilePremium
-                          : rookieProfile
-                        : userRankName.name === "underdog"
-                        ? isPremium
-                          ? underdogProfilePremium
-                          : underdogProfile
-                        : userRankName.name === "champion"
-                        ? isPremium
-                          ? championProfilePremium
-                          : championProfile
-                        : userRankName.name === "unstoppable"
-                        ? isPremium
-                          ? unstoppableProfilePremium
-                          : unstoppableProfile
-                        : starterProfile
+                        // : userRankName.name === "rookie"
+                        // ? isPremium
+                        //   ? rookieProfilePremium
+                        //   : rookieProfile
+                        // : userRankName.name === "underdog"
+                        // ? isPremium
+                        //   ? underdogProfilePremium
+                        //   : underdogProfile
+                        // : userRankName.name === "champion"
+                        // ? isPremium
+                        //   ? championProfilePremium
+                        //   : championProfile
+                        // : userRankName.name === "unstoppable"
+                        // ? isPremium
+                        //   ? unstoppableProfilePremium
+                        //   : unstoppableProfile
+                        // : starterProfile
                     }
                     alt=""
                   />
@@ -415,10 +415,10 @@ const MyProfile = ({
                         </NavLink>
                       )}
                     </div>
-
+{/* 
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
-                    </span>
+                    </span> */}
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
@@ -645,6 +645,8 @@ const MyProfile = ({
                     userDataStar={userDataStar}
                     userRankManta={userRankManta}
                     userMantaScore={userMantaScore}
+                    userRankMat={userRankMat}
+                    userMatScore={userMatScore}
                     userRankBase={userRankBase}
                     userBaseScore={userBaseScore}
                     userRankTaiko={userRankTaiko}
@@ -741,8 +743,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsstd === 0
                           ? "Ready"
-                          : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd + "/70"
+                          : allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -760,8 +762,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsPremium === 0
                           ? "Ready"
-                          : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium + "/70"
+                          : allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>

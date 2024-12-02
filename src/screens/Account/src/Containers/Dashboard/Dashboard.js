@@ -66,6 +66,8 @@ import {
   taikoStars,
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
+  seiStars,
+  matStars,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 
@@ -296,10 +298,10 @@ function Dashboard({
       symbol: "matchain",
     },
 
-    // {
-    //   name: "SEI",
-    //   symbol: "sei",
-    // },
+    {
+      name: "SEI",
+      symbol: "sei",
+    },
   ];
 
   const chestImagesBnb = [
@@ -665,6 +667,7 @@ function Dashboard({
   const [taikocount, settaikocount] = useState(0);
   const [basecount, setbasecount] = useState(0);
   const [matcount, setmatcount] = useState(0);
+  const [seicount, setseicount] = useState(0);
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -774,7 +777,9 @@ function Dashboard({
 
       if (email !== "" && mediaUrl !== "" && coinbase !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/submissions", data)
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
           .then(function (result) {
             console.log(result.data);
             setSpecialRewardsSuccess("Email sent successfully");
@@ -979,6 +984,7 @@ function Dashboard({
   const [allTaikoData, setAllTaikoData] = useState([]);
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
+  const [allSeiData, setAllSeiData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1070,6 +1076,29 @@ function Dashboard({
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
+
+
+  
+  const [dailyRecordsSei, setDailyRecordsSei] = useState([]);
+  const [weeklyRecordsSei, setWeeklyRecordsSei] = useState([]);
+  const [monthlyRecordsSei, setMonthlyRecordsSei] = useState([]);
+  const [activePlayerSei, setActivePlayerSei] = useState(false);
+  const [activePlayerSeiWeekly, setActivePlayerSeiWeekly] = useState(false);
+  const [activePlayerSeiMonthly, setActivePlayerSeiMonthly] =
+    useState(false);
+  const [userDataSei, setUserDataSei] = useState({});
+  const [userDataSeiWeekly, setUserDataSeiWeekly] = useState({});
+  const [userDataSeiMonthly, setUserDataSeiMonthly] = useState({});
+  const [prevDataSei, setPrevDataSei] = useState([]);
+  const [prevDataSeiWeekly, setPrevDataSeiWeekly] = useState([]);
+  const [prevDataSeiMonthly, setPrevDataSeiMonthly] = useState([]);
+  const [dailyDataAmountSei, setDailyDataAmountSei] = useState([]);
+  const [weeklyDataAmountSei, setWeeklyDataAmountSei] = useState([]);
+  const [monthlyDataAmountSei, setMonthlyDataAmountSei] = useState([]);
+  const [userRankSei, setUserRankSei] = useState("");
+  const [userSeiScore, setUserSeiScore] = useState(0);
+
+
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
   const [weeklyRecordsBase, setWeeklyRecordsBase] = useState([]);
@@ -2250,6 +2279,379 @@ function Dashboard({
       }
     }
   };
+
+
+
+  
+  const fillRecordsSei = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsSei(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsSei(finalData);
+    }
+  };
+  // const fillRecordsWeeklySei = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsSei(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsSei(finalData);
+  //   }
+  // };
+  const fillRecordsMonthlySei = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsSei(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsSei(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersSei = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataSei(result.data.data.leaderboard);
+    } else {
+      setPrevDataSei(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  // const fetchPreviousWeeklyWinnersSei = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "LeaderboardSeiWeekly",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setPrevDataSeiWeekly(result.data.data.leaderboard);
+  //   } else {
+  //     setPrevDataSeiWeekly(placeholderplayerData);
+  //   }
+  // };
+
+  const fetchPreviousMonthlyWinnersSei = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSeiMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataSeiMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataSeiMonthly(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsSei = async () => {
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsSei([]);
+      });
+
+    fetchPreviousWinnersSei(parseInt(result.data.data.version));
+    setDailyRecordsSei(result.data.data.leaderboard);
+    fillRecordsSei(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSei(true);
+        fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerSei(false);
+        fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsSei = async () => {
+  //   const data = {
+  //     StatisticName: "LeaderboardSeiWeekly",
+  //     StartPosition: 0,
+  //     MaxResultsCount: 100,
+  //   };
+  //   const result = await axios
+  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
+  //     .catch((e) => {
+  //       console.error(e);
+  //       fillRecordsWeeklySei([]);
+  //     });
+  //   setWeeklyRecordsSei(result.data.data.leaderboard);
+
+  //   fetchPreviousWeeklyWinnersSei(parseInt(result.data.data.version));
+  //   fillRecordsWeeklySei(result.data.data.leaderboard);
+  //   if (userId && username) {
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     if (testArray.length > 0) {
+  //       setActivePlayerSeiWeekly(true);
+  //       fetchWeeklyRecordsAroundPlayerSei(result.data.data.leaderboard);
+  //     }
+  //     if (testArray.length === 0) {
+  //       setActivePlayerSeiWeekly(false);
+  //       fetchWeeklyRecordsAroundPlayerSei(result.data.data.leaderboard);
+  //     }
+  //   }
+  // };
+  const fetchMonthlyRecordsSei = async () => {
+    const data = {
+      StatisticName: "LeaderboardSeiMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlySei([]);
+      });
+    setMonthlyRecordsSei(result.data.data.leaderboard);
+
+    fetchPreviousMonthlyWinnersSei(parseInt(result.data.data.version));
+
+    fillRecordsMonthlySei(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSeiMonthly(true);
+        fetchMonthlyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerSeiMonthly(false);
+        fetchMonthlyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      if (isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+              : Number(skaleStars[userPosition]) +
+                Number(skaleStarsPremium[userPosition])
+            : 0
+        );
+      } else if (!isPremium && testArray[0].statValue != 0) {
+        setDailyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skaleStars[9])
+              : Number(skaleStars[userPosition])
+            : 0
+        );
+      } else setDailyDataAmountSei(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerSei(true);
+          setUserDataSei([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerSei(false);
+          setUserDataSei(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerSei(false);
+        setUserDataSei(...testArray);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsAroundPlayerSei = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "LeaderboardSeiWeekly",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   if (userId) {
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     const userPosition = testArray[0].position;
+  //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountSei(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9]) +
+  //               Number(skalePrizesWeeklyGolden[9])
+  //             : Number(skalePrizesWeekly[userPosition]) +
+  //               Number(skalePrizesWeeklyGolden[userPosition])
+  //           : 0
+  //       );
+  //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountSei(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9])
+  //             : Number(skalePrizesWeekly[userPosition])
+  //           : 0
+  //       );
+  //     } else setWeeklyDataAmountSei(0);
+
+  //     if (itemData.length > 0) {
+  //       var testArray2 = Object.values(itemData).filter(
+  //         (item) => item.displayName === username
+  //       );
+
+  //       if (testArray.length > 0 && testArray2.length > 0) {
+  //         setActivePlayerSeiWeekly(true);
+  //         setUserDataSeiWeekly([]);
+  //       } else if (testArray.length > 0 && testArray2.length === 0) {
+  //         setActivePlayerSeiWeekly(false);
+  //         setUserDataSeiWeekly(...testArray);
+  //       }
+  //     } else if (testArray.length > 0) {
+  //       setActivePlayerSeiWeekly(false);
+  //       setUserDataSeiWeekly(...testArray);
+  //     }
+  //   }
+  // };
+
+  const fetchMonthlyRecordsAroundPlayerSei = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSeiMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankSei(testArray[0].position);
+      setUserSeiScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerSeiMonthly(true);
+          setUserDataSeiMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerSeiMonthly(false);
+          setUserDataSeiMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerSeiMonthly(false);
+        setUserDataSeiMonthly(...testArray);
+      }
+    }
+  };
+
+
+
+
 
   const fillRecordsBase = (itemData) => {
     if (itemData.length === 0) {
@@ -3777,7 +4179,7 @@ function Dashboard({
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3791,6 +4193,25 @@ function Dashboard({
 
     // setdailyplayerData(result.data.data.leaderboard);
   };
+
+  // const fetchExplorerHunt = async () => {
+ 
+  //     const data = {
+  //       StatisticName: "ExploreHuntEventKillCollection",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 100,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     setPrevDataStar(result.data.data.leaderboard);
+    
+ 
+
+  //   // setdailyplayerData(result.data.data.leaderboard);
+  // };
 
   const fetchRecordsStar = async () => {
     const data = {
@@ -4288,6 +4709,12 @@ function Dashboard({
       fetchDailyRecordsManta();
       // fetchWeeklyRecordsManta();
       fetchMonthlyRecordsManta();
+
+
+      // fetchDailyRecordsSei();
+      // fetchWeeklyRecordsSei();
+      // fetchMonthlyRecordsSei();
+
       fetchDailyRecordsBase();
       // fetchWeeklyRecordsBase();
       fetchMonthlyRecordsBase();
@@ -4358,12 +4785,19 @@ function Dashboard({
     }
   }, [taikocount]);
 
+  useEffect(() => {
+    if (matcount !== 0) {
+      fetchDailyRecordsMat();
+      getAllMatChests(email);
+    }
+  }, [matcount]);
+
   // useEffect(() => {
-  //   if (matcount !== 0) {
-  //     fetchDailyRecordsMat();
-  //     getAllMatChests(email);
+  //   if (seicount !== 0) {
+  //     fetchDailyRecordsSei();
+  //     getAllSeiChests(email);
   //   }
-  // }, [matcount]);
+  // }, [seicount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -4521,6 +4955,7 @@ function Dashboard({
       activePlayerSkale,
       activePlayerViction,
       activePlayerTaiko,
+      activePlayerMat
     ];
     const allFalse = playerActiveArray.every((v) => v === false);
 
@@ -4805,6 +5240,7 @@ function Dashboard({
     activePlayerSkale,
     activePlayerViction,
     activePlayerTaiko,
+    activePlayerMat
   ]);
 
   useEffect(() => {
@@ -5013,8 +5449,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: mantaStars,
-        previous_rewards: mantaStars,
+        rewards: baseStars,
+        previous_rewards: baseStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -5057,6 +5493,59 @@ function Dashboard({
     activePlayerMantaMonthly,
     activePlayerMantaWeekly,
   ]);
+
+  
+  useEffect(() => {
+    setAllSeiData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: seiStars,
+        previous_rewards: seiStars,
+        activeData: dailyRecordsSei,
+        previousData: prevDataSei,
+        player_data: userDataSei,
+        is_active: activePlayerSei, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        previous_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsSei,
+        previousData: prevDataSeiWeekly,
+        player_data: userDataSeiWeekly,
+        is_active: activePlayerSeiWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        previous_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsSei,
+        previousData: prevDataSeiMonthly,
+        player_data: userDataSeiMonthly,
+        is_active: activePlayerSeiMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsSei,
+    weeklyRecordsSei,
+    monthlyRecordsSei,
+    prevDataSei,
+    prevDataSeiWeekly,
+    prevDataSeiMonthly,
+    userDataSei,
+    userDataSeiWeekly,
+    userDataSeiMonthly,
+    activePlayerSei,
+    activePlayerSeiMonthly,
+    activePlayerSeiWeekly,
+  ]);
+
 
   useEffect(() => {
     setAllBaseData([
@@ -5166,8 +5655,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: matStars,
+        previous_rewards: matStars,
         activeData: dailyRecordsMat,
         previousData: prevDataMat,
         player_data: userDataMat,
@@ -7142,7 +7631,7 @@ function Dashboard({
         ? window.config.subscriptionskale_tokens[token]?.decimals
         : chainId === 1116
         ? window.config.subscriptioncore_tokens[token]?.decimals
-        : chainId === 713715
+        : chainId === 1329
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
@@ -7194,7 +7683,7 @@ function Dashboard({
             token,
             discountPercentageMat
           )
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
@@ -7243,7 +7732,8 @@ function Dashboard({
     const mantasubscribeAddress = window.config.subscription_manta_address;
     const taikosubscribeAddress = window.config.subscription_taiko_address;
     const matsubscribeAddress = window.config.subscription_mat_address;
-    const coresubscribeAddress = window.config.subscription_core_address;
+    const coresubscribeAddress = window.config.subscription_core_address; 
+
 
     window.web3 = new Web3(window.ethereum);
 
@@ -7600,7 +8090,7 @@ function Dashboard({
               ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price
@@ -7651,7 +8141,7 @@ function Dashboard({
               ? taikosubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price,
@@ -7812,7 +8302,7 @@ function Dashboard({
           )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
@@ -7861,7 +8351,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 713715) {
+      } else if (chainId === 1329) {
         const result = await subscribeTokencontractsei.methods
           .allowance(coinbase, seisubscribeAddress)
           .call()
@@ -8228,6 +8718,8 @@ function Dashboard({
             ? "SUBSCRIPTION_CORE"
             : chainId === 713715
             ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
       const today = Date.now();
@@ -8277,24 +8769,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8354,24 +8846,24 @@ function Dashboard({
             onSubscribeSuccess();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeBNB",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeBNB",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8436,24 +8928,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "viction subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "viction subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8513,24 +9005,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "taiko subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "taiko subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8592,24 +9084,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "tamchain subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "tamchain subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8654,7 +9146,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8668,24 +9160,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: chainId.toString(),
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8733,6 +9225,8 @@ function Dashboard({
             ? "SUBSCRIPTION_CORE"
             : chainId === 713715
             ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
       const today = Date.now();
@@ -8800,24 +9294,24 @@ function Dashboard({
           setloadspinnerSub(false);
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: "bnb subscribeNFT BinanceWallet",
-                premiumTimestamp: today.toString(),
-              },
-              {
-                headers: { Authorization: `Bearer ${authToken}` },
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+          // await axios
+          //   .patch(
+          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+          //     {
+          //       multiplier: "yes",
+          //       chain: "bnb subscribeNFT BinanceWallet",
+          //       premiumTimestamp: today.toString(),
+          //     },
+          //     {
+          //       headers: { Authorization: `Bearer ${authToken}` },
+          //     }
+          //   )
+          //   .then(() => {
+          //     getRankData();
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //   });
           setTimeout(() => {
             setgetPremiumPopup(false);
             onSubscribeSuccess();
@@ -8863,24 +9357,24 @@ function Dashboard({
             onSubscribeSuccess();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeBNB BinanceWallet",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeBNB BinanceWallet",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8931,7 +9425,7 @@ function Dashboard({
                   ? "taiko"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8943,24 +9437,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: chainId.toString(),
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -9209,10 +9703,10 @@ function Dashboard({
   const handleSeiPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
+        await handleSwitchNetworkhook("0x531")
           .then(() => {
-            handleSwitchNetwork(713715);
-            setChainDropdown(chainDropdowns[8]);
+            handleSwitchNetwork(1329);
+            setChainDropdown(chainDropdowns[11]);
           })
           .catch((e) => {
             console.log(e);
@@ -9285,7 +9779,8 @@ function Dashboard({
     userVictionScore +
     userMantaScore +
     userBaseScore +
-    userTaikoScore;
+    userTaikoScore +
+    userMatScore;
 
   const handleMatPool = async () => {
     if (window.ethereum) {
@@ -9324,30 +9819,30 @@ function Dashboard({
 
   const handleRankRewards = () => {
     const totalScore =
-      userBnbScore +
-      userSkaleScore +
-      userCoreScore +
-      userVictionScore +
-      userMantaScore +
-      userBaseScore +
-      userTaikoScore +
-      userMatScore;
+    userBnbScore +
+    userSkaleScore +
+    userCoreScore +
+    userVictionScore +
+    userMantaScore +
+    userBaseScore +
+    userTaikoScore +
+    userMatScore;
 
     const totalScore_multiplied =
       rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
-    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
+    if (totalScore_multiplied > 15999999 && totalScore_multiplied < 28000000) {
       setUserRankRewards(5);
     } else if (
-      totalScore_multiplied >= 26000000 &&
-      totalScore_multiplied < 39000000
+      totalScore_multiplied >= 28000000 &&
+      totalScore_multiplied < 41000000
     ) {
       setUserRankRewards(10);
     } else if (
-      totalScore_multiplied >= 39000000 &&
-      totalScore_multiplied < 64000000
+      totalScore_multiplied >= 41000000 &&
+      totalScore_multiplied < 66000000
     ) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 64000000) {
+    } else if (totalScore_multiplied >= 66000000) {
       setUserRankRewards(100);
     }
   };
@@ -9359,37 +9854,37 @@ function Dashboard({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 63999999) {
+    if (allScore > 65999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 38999999) {
+    } else if (allScore > 40999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 64000000) * 100);
-    } else if (allScore > 25999999) {
+      setUserProgress((allScore / 66000000) * 100);
+    } else if (allScore > 27999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 39000000) * 100);
-    } else if (allScore > 13999999) {
+      setUserProgress((allScore / 41000000) * 100);
+    } else if (allScore > 15999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 26000000) * 100);
+      setUserProgress((allScore / 28000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 14000000) * 100);
+      setUserProgress((allScore / 16000000) * 100);
     }
   };
 
@@ -9426,9 +9921,9 @@ function Dashboard({
               rank: userRankName.id,
             }
           )
-          .then(async () => {
-            getRankData();
-          });
+          // .then(async () => {
+          //   getRankData();
+          // });
       }
     }
   };
@@ -9588,32 +10083,50 @@ function Dashboard({
       });
     }
 
+    if (openedSeiChests && openedSeiChests.length > 0) {
+      openedSeiChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
     setTreasureRewardMoney(moneyResult);
   };
 
-  useEffect(() => {
-    handleRankRewards();
-  }, [
-    userBnbScore,
-    userSkaleScore,
-    userCoreScore,
-    userVictionScore,
-    userMantaScore,
-    userBaseScore,
-    userTaikoScore,
-    userMatScore,
-    rankData,
-  ]);
+  // useEffect(() => {
+  //   handleRankRewards();
+  // }, [
+  //   userBnbScore,
+  //   userSkaleScore,
+  //   userCoreScore,
+  //   userVictionScore,
+  //   userMantaScore,
+  //   userBaseScore,
+  //   userTaikoScore,
+  //   userMatScore,
+  //   rankData,
+  // ]);
 
-  useEffect(() => {
-    updateUserRank();
-  }, [handleUserRank]);
+  // useEffect(() => {
+  //   updateUserRank();
+  // }, [handleUserRank]);
 
-  useEffect(() => {
-    if (coinbase) {
-      getRankData();
-    }
-  }, [coinbase]);
+  // useEffect(() => {
+  //   if (coinbase) {
+  //     getRankData();
+  //   }
+  // }, [coinbase]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -9637,6 +10150,11 @@ function Dashboard({
     fetchDailyRecordsManta();
     // fetchWeeklyRecordsManta();
     fetchMonthlyRecordsManta();
+
+    // fetchDailyRecordsSei();
+    // fetchWeeklyRecordsSei();
+    // fetchMonthlyRecordsSei();
+    
     fetchDailyRecordsBase();
     // fetchWeeklyRecordsBase();
     fetchMonthlyRecordsBase();
@@ -9720,16 +10238,16 @@ function Dashboard({
       handleSubscriptionTokenChange(wcoreAddress);
       handleCheckIfAlreadyApproved(wcoreAddress);
     }
-    // else if (chainId === 713715) {
-    //   setChainDropdown(chainDropdowns[8]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("usdt");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionsei_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wseiAddress);
-    //   handleCheckIfAlreadyApproved(wseiAddress);
-    // }
+    else if (chainId === 1329) {
+      setChainDropdown(chainDropdowns[11]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("usdt");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionsei_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wseiAddress);
+      handleCheckIfAlreadyApproved(wseiAddress);
+    }
     else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
@@ -9854,12 +10372,12 @@ function Dashboard({
           ?.decimals
       );
     }
-    // else if (chainId === 713715 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscriptionsei_tokens[selectedSubscriptionToken]
-    //       ?.decimals
-    //   );
-    // }
+    else if (chainId === 1329 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    }
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
@@ -9893,6 +10411,8 @@ function Dashboard({
     claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
     claimedMatChests,
@@ -9952,7 +10472,7 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      // getAllMatChests(email);
+      getAllMatChests(email);
       // getAllSeiChests(email);
     }
   }, [email]);
@@ -9995,6 +10515,7 @@ function Dashboard({
     openedVictionChests,
     openedSkaleChests,
     openedMantaChests,
+    openedSeiChests,
     openedBaseChests,
     openedTaikoChests,
   ]);
@@ -10050,7 +10571,8 @@ function Dashboard({
                 openedBaseChests.length +
                 openedChests.length +
                 openedCoreChests.length +
-                openedMantaChests.length +
+                openedMantaChests.length+
+                openedSeiChests.length +
                 openedSkaleChests.length +
                 openedTaikoChests.length +
                 openedMatChests.length +
@@ -10059,7 +10581,8 @@ function Dashboard({
               allClaimedChestsPremium={
                 claimedBasePremiumChests +
                 claimedCorePremiumChests +
-                claimedMantaPremiumChests +
+                claimedMantaPremiumChests+
+                claimedSeiPremiumChests +
                 claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
                 claimedVictionPremiumChests +
@@ -10070,6 +10593,7 @@ function Dashboard({
                 claimedBaseChests +
                 claimedCoreChests +
                 claimedMantaChests +
+                claimedSeiChests +
                 claimedMatChests +
                 claimedTaikoChests +
                 claimedVictionChests +
@@ -10122,20 +10646,23 @@ function Dashboard({
               syncStatus={syncStatus}
               onSyncClick={handleShowSyncModal}
               rankData={rankData}
-              userRank={userRank}
-              userRankCore={userRankCore}
-              userRankSkale={userRankSkale}
-              userBnbScore={userBnbScore}
-              userCoreScore={userCoreScore}
-              userRankViction={userRankViction}
-              userVictionScore={userVictionScore}
-              userRankManta={userRankManta}
-              userMantaScore={userMantaScore}
-              userRankBase={userRankBase}
-              userBaseScore={userBaseScore}
-              userRankTaiko={userRankTaiko}
-              userTaikoScore={userTaikoScore}
-              userSkaleScore={userSkaleScore}
+              userRank={userData?.position ?? 0}
+              userRankCore={userDataCore?.position ?? 0}
+              userRankSkale={userDataSkale?.position ?? 0}
+              userBnbScore={userData?.statValue ?? 0}
+              userCoreScore={userDataCore?.statValue ?? 0}
+              userRankViction={userDataViction?.position ?? 0}
+              userVictionScore={userDataViction?.statValue ?? 0}
+              userRankMat={userDataMat?.position ?? 0}
+              userMatScore={userDataMat?.statValue ?? 0}
+              userRankManta={userDataManta?.position ?? 0}
+              userMantaScore={userDataManta?.statValue ?? 0}
+
+              userRankBase={userDataBase?.position ?? 0}
+              userBaseScore={userDataBase?.statValue ?? 0}
+              userRankTaiko={userDataTaiko?.position ?? 0}
+              userTaikoScore={userDataTaiko?.statValue ?? 0}
+              userSkaleScore={userDataSkale?.statValue ?? 0}
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
