@@ -1863,24 +1863,24 @@ const GetPremiumPopup = ({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             onSuccessDeposit();
             setTimeout(() => {
               setloadspinnerSub(false);
@@ -1915,24 +1915,24 @@ const GetPremiumPopup = ({
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeBNB",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeBNB",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -1965,24 +1965,24 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
             onSuccessDeposit();
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "viction subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "viction subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2016,24 +2016,24 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
             onSuccessDeposit();
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "taiko subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "taiko subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2067,24 +2067,24 @@ const GetPremiumPopup = ({
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
             onSuccessDeposit();
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "matchain subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "matchain subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2114,24 +2114,24 @@ const GetPremiumPopup = ({
             onSuccessDeposit();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: chainId.toString(),
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -2213,24 +2213,24 @@ const GetPremiumPopup = ({
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
           onSuccessDeposit();
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: "bnb subscribeNFT BinanceWallet",
-                premiumTimestamp: today.toString(),
-              },
-              {
-                headers: { Authorization: `Bearer ${authToken}` },
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+          // await axios
+          //   .patch(
+          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+          //     {
+          //       multiplier: "yes",
+          //       chain: "bnb subscribeNFT BinanceWallet",
+          //       premiumTimestamp: today.toString(),
+          //     },
+          //     {
+          //       headers: { Authorization: `Bearer ${authToken}` },
+          //     }
+          //   )
+          //   .then(() => {
+          //     getRankData();
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //   });
 
           setTimeout(() => {
             setloadspinnerSub(false);
@@ -2265,24 +2265,24 @@ const GetPremiumPopup = ({
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: "bnb subscribeBNB BinanceWallet",
-                premiumTimestamp: today.toString(),
-              },
-              {
-                headers: { Authorization: `Bearer ${authToken}` },
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+          // await axios
+          //   .patch(
+          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+          //     {
+          //       multiplier: "yes",
+          //       chain: "bnb subscribeBNB BinanceWallet",
+          //       premiumTimestamp: today.toString(),
+          //     },
+          //     {
+          //       headers: { Authorization: `Bearer ${authToken}` },
+          //     }
+          //   )
+          //   .then(() => {
+          //     getRankData();
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //   });
 
           setTimeout(() => {
             setloadspinnerSub(false);
@@ -2313,24 +2313,24 @@ const GetPremiumPopup = ({
           onSuccessDeposit();
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: chainId.toString(),
-                premiumTimestamp: today.toString(),
-              },
-              {
-                headers: { Authorization: `Bearer ${authToken}` },
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+          // await axios
+          //   .patch(
+          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+          //     {
+          //       multiplier: "yes",
+          //       chain: chainId.toString(),
+          //       premiumTimestamp: today.toString(),
+          //     },
+          //     {
+          //       headers: { Authorization: `Bearer ${authToken}` },
+          //     }
+          //   )
+          //   .then(() => {
+          //     getRankData();
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //   });
 
           setTimeout(() => {
             setloadspinnerSub(false);

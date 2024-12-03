@@ -139,6 +139,9 @@ const NewEvents = ({
   wodPrice,
   email,
   isConnected,
+  setBeastSiegeStatus,
+  greatCollectionData,
+  explorerHuntData
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -316,7 +319,7 @@ const NewEvents = ({
       .getTimeOfExpireBuff(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtDragon(false); // User hasn't bought it
+      setHasBoughtpuzzleMadness(false); 
       return;
     }
     setHasBoughtpuzzleMadness(true);
@@ -477,7 +480,11 @@ const NewEvents = ({
       .getTimeOfDeposit(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtDragon(false); // User hasn't bought it
+      setHasBoughtDragon(false);
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        dragon: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -498,6 +505,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtDragon(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      dragon: isToday   
+    }));
   };
 
   const checkApprovalDragon = async () => {
@@ -655,6 +666,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        bear: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -675,6 +690,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBear(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      bear: isToday   
+    }));
   };
 
   const checkApprovalBear = async () => {
@@ -851,6 +870,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        beast: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -871,6 +894,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBeast(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      beast: isToday   
+    }));
   };
 
   const checkApprovalBeast = async () => {
@@ -1028,6 +1055,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        eagle: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1048,6 +1079,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtEagle(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      eagle: isToday   
+    }));
   };
 
   const checkApprovalEagle = async () => {
@@ -1204,6 +1239,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        scorpion: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1224,6 +1263,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtScorpion(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      scorpion: isToday   
+    }));
   };
 
   const checkApprovalScorpion = async () => {
@@ -1381,6 +1424,10 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        cyclops: false   
+      }));
       return;
     }
     const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
@@ -1401,6 +1448,10 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtCyclops(isToday);
+    setBeastSiegeStatus(prevStatus => ({
+      ...prevStatus, 
+      cyclops: isToday   
+    }));
   };
 
   const checkApprovalCyclops = async () => {
@@ -1578,6 +1629,16 @@ const NewEvents = ({
 
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
+      setBeastSiegeStatus(prevStatus => ({
+        ...prevStatus, 
+        dragon: false,
+        bear: false,
+        beast: false,
+        eagle: false,
+        scorpion: false,
+        cyclops: false,
+
+      }));
       setDragonShowApproval(false);
       setDragonBundleState("initial");
 
@@ -3576,7 +3637,7 @@ const NewEvents = ({
                           </div>
                         ) : activeEvent?.id === "explorer-hunt" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
+                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
                               <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
@@ -3591,11 +3652,16 @@ const NewEvents = ({
                                   invasion.
                                 </span>
                               </div>
+                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                                <span className="yellow-text-amount">{getFormattedNumber(explorerHuntData?.statValue ?? 0)}</span>
+                                <span className="small-text-amount">Partners Saved</span>
+
+                              </div>
                             </div>
                           </div>
                         ) : activeEvent?.id === "greatCollection" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
                               <div className="d-flex flex-column gap-2">
                                 <span
                                   className="challenge-popup-desc text-white"
@@ -3610,11 +3676,16 @@ const NewEvents = ({
                                   across the game.
                                 </span>
                               </div>
+                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                                <span className="yellow-text-amount">{getFormattedNumber(greatCollectionData?.statValue ?? 0)}</span>
+                                <span className="small-text-amount">Brands Collected</span>
+
+                              </div>
                             </div>
                           </div>
                         ) : activeEvent?.id === "maze" ? (
                           <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
                               <span className="challenge-popup-desc text-white">
                                 You need to hold at least 400 WOD tokens to
                                 participate

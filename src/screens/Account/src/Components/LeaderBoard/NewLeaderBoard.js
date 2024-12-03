@@ -122,12 +122,16 @@ const renderer2 = ({ days, hours, minutes }) => {
   return (
     <div className="timer-wrapper d-flex align-items-start gap-1 justify-content-center">
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time2 m-0 font-poppins">{days < 10 ? "0" + days : days}</h6>
+        <h6 className="mint-time2 m-0 font-poppins">
+          {days < 10 ? "0" + days : days}
+        </h6>
         <span className="days fw-normal font-poppins">Days</span>
       </div>
       <h6 className="mint-time2 m-0 font-poppins">:</h6>
       <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time2 m-0 font-poppins">{hours < 10 ? "0" + hours : hours}</h6>
+        <h6 className="mint-time2 m-0 font-poppins">
+          {hours < 10 ? "0" + hours : hours}
+        </h6>
         <span className="days fw-normal font-poppins">Hours</span>
       </div>
       <h6 className="mint-time2 m-0 font-poppins">:</h6>
@@ -371,7 +375,6 @@ const NewLeaderBoard = ({
   useEffect(() => {
     handleOption(optionText2);
   }, [inactiveBoard]);
- 
 
   useEffect(() => {
     if (allBnbData && allBnbData.length > 0) {
@@ -456,6 +459,45 @@ const NewLeaderBoard = ({
                           : ""}
                       </button>
                       <button
+                        onMouseEnter={() => handleMouseEnter("taiko")}
+                        onMouseLeave={handleMouseLeave}
+                        className={`
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "taiko" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("taiko");
+                          setAllData(allTaikoData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "taiko"
+                              ? taikoActive
+                              : optionText2 !== "taiko" &&
+                                hoverState === "taiko"
+                              ? taikoWhite
+                              : taikoInactive
+                          }
+                          className={`${
+                            optionText2 === "taiko"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "Taiko"
+                          : windowSize.width < 786 && optionText2 === "taiko"
+                          ? "Taiko"
+                          : ""}
+                      </button>
+
+                      <button
                         onMouseEnter={() => handleMouseEnter("matchain")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -511,8 +553,7 @@ const NewLeaderBoard = ({
                           src={
                             optionText2 === "sei"
                               ? seiActive
-                              : optionText2 !== "sei" &&
-                                hoverState === "sei"
+                              : optionText2 !== "sei" && hoverState === "sei"
                               ? seiWhite
                               : seiInactive
                           }
@@ -572,45 +613,6 @@ const NewLeaderBoard = ({
                       </button>
 
                       <button
-                        onMouseEnter={() => handleMouseEnter("taiko")}
-                        onMouseLeave={handleMouseLeave}
-                        className={`
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "taiko" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("taiko");
-                          setAllData(allTaikoData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "taiko"
-                              ? taikoActive
-                              : optionText2 !== "taiko" &&
-                                hoverState === "taiko"
-                              ? taikoWhite
-                              : taikoInactive
-                          }
-                          className={`${
-                            optionText2 === "taiko"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "Taiko"
-                          : windowSize.width < 786 && optionText2 === "taiko"
-                          ? "Taiko"
-                          : ""}
-                      </button>
-
-                      <button
                         onMouseEnter={() => handleMouseEnter("base")}
                         onMouseLeave={handleMouseLeave}
                         className={`
@@ -645,45 +647,6 @@ const NewLeaderBoard = ({
                           ? "Base"
                           : windowSize.width < 786 && optionText2 === "base"
                           ? "Base"
-                          : ""}
-                      </button>
-
-                      <button
-                        onMouseEnter={() => handleMouseEnter("skale")}
-                        onMouseLeave={handleMouseLeave}
-                        className={` 
-                     d-flex align-items-center gap-2
-                     ${
-                       optionText2 === "skale" &&
-                       "otheroptionsActive optionswrapper-bg-new"
-                     } leaderboard-inactive-btn2 w-100`}
-                        onClick={() => {
-                          handleOption("skale");
-                          setAllData(allSkaleData);
-                        }}
-                      >
-                        <img
-                          src={
-                            optionText2 === "skale"
-                              ? skaleActive
-                              : optionText2 !== "skale" &&
-                                hoverState === "skale"
-                              ? skaleWhite
-                              : skaleInactive
-                          }
-                          className={`${
-                            optionText2 === "skale"
-                              ? "leaderboard-icon leaderboard-icon-active"
-                              : "leaderboard-icon"
-                          }`}
-                          width={20}
-                          height={20}
-                          alt=""
-                        />
-                        {windowSize.width > 768
-                          ? "SKALE"
-                          : windowSize.width < 786 && optionText2 === "skale"
-                          ? "SKALE"
                           : ""}
                       </button>
                       <button
@@ -723,7 +686,6 @@ const NewLeaderBoard = ({
                           ? "CORE"
                           : ""}
                       </button>
-
                       <button
                         onMouseEnter={() => handleMouseEnter("viction")}
                         onMouseLeave={handleMouseLeave}
@@ -762,6 +724,44 @@ const NewLeaderBoard = ({
                           ? "Viction"
                           : windowSize.width < 786 && optionText2 === "viction"
                           ? "Viction"
+                          : ""}
+                      </button>
+                      <button
+                        onMouseEnter={() => handleMouseEnter("skale")}
+                        onMouseLeave={handleMouseLeave}
+                        className={` 
+                     d-flex align-items-center gap-2
+                     ${
+                       optionText2 === "skale" &&
+                       "otheroptionsActive optionswrapper-bg-new"
+                     } leaderboard-inactive-btn2 w-100`}
+                        onClick={() => {
+                          handleOption("skale");
+                          setAllData(allSkaleData);
+                        }}
+                      >
+                        <img
+                          src={
+                            optionText2 === "skale"
+                              ? skaleActive
+                              : optionText2 !== "skale" &&
+                                hoverState === "skale"
+                              ? skaleWhite
+                              : skaleInactive
+                          }
+                          className={`${
+                            optionText2 === "skale"
+                              ? "leaderboard-icon leaderboard-icon-active"
+                              : "leaderboard-icon"
+                          }`}
+                          width={20}
+                          height={20}
+                          alt=""
+                        />
+                        {windowSize.width > 768
+                          ? "SKALE"
+                          : windowSize.width < 786 && optionText2 === "skale"
+                          ? "SKALE"
                           : ""}
                       </button>
                     </div>
@@ -833,10 +833,7 @@ const NewLeaderBoard = ({
                       )}
                     </div>
                   </div>
-                  <NavLink
-                    className=""
-                    to="/account/prime"
-                  >
+                  <NavLink className="" to="/account/prime">
                     <div
                       className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2"
                       onClick={onPremiumClick}
@@ -908,7 +905,7 @@ const NewLeaderBoard = ({
               )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {(optionText2 === "matchain" || optionText2 === "sei" )? (
+                    {optionText2 === "sei" ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <h6 className="mb-0">Coming Soon</h6>
                       </div>
@@ -941,7 +938,7 @@ const NewLeaderBoard = ({
                           <div
                             key={index}
                             className={`${
-                             ( optionText2 === "matchain" ||  optionText2 === "sei") && "blur-leaderboard"
+                              optionText2 === "sei" && "blur-leaderboard"
                             } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
@@ -1210,9 +1207,9 @@ const NewLeaderBoard = ({
                                                           index + 1 <= 85
                                                         ? playerAvatar15
                                                         : playerAvatar16
-                                                      :( optionText2 ===
-                                                        "matchain" ||  optionText2 ===
-                                                        "sei")
+                                                      : optionText2 ===
+                                                          "matchain" ||
+                                                        optionText2 === "sei"
                                                       ? index + 1 <= 10
                                                         ? require(`../../../../../components/LeaderBoard/assets/globalRanks/globalRank${
                                                             index + 1

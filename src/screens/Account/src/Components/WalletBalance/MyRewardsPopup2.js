@@ -694,7 +694,7 @@ const MyRewardsPopupNew = ({
                 Number(cawsRewards) +
                 Number(pasttreasureRewardMoney) +
                 Number(gemRewards) +
-                Number(pastUserRankUsd) +
+                // Number(pastUserRankUsd) +
                 Number(leaderboardTotalData) +
                 Number(leaderboardSkaleTotalData) +
                 Number(baseRewardsUSD) +
@@ -778,7 +778,7 @@ const MyRewardsPopupNew = ({
                     Number(wodRewards) +
                       Number(wodCawsRewards) +
                       Number(cawsRewards) +
-                      Number(pastUserRankUsd) +
+                      // Number(pastUserRankUsd) +
                       Number(pasttreasureRewardMoney) +
                       Number(gemRewards) +
                       Number(leaderboardTotalData) +
@@ -835,7 +835,7 @@ const MyRewardsPopupNew = ({
                       // Number(weeklyplayerData) +
                       // Number(userRank2) +
                       Number(genesisRank2) +
-                      Number(userRankRewards) +
+                      // Number(userRankRewards) +
                       Number(userDataStar) +
                       Number(userDataStarWeekly) +
                       Number(userSocialRewardsCached) +
@@ -1162,7 +1162,7 @@ const MyRewardsPopupNew = ({
               $
               {previousRewards
                 ? getFormattedNumber(
-                    Number(pastUserRankUsd) + Number(pastSpecialRewards),
+                    Number(0),
                     2
                   )
                 : getFormattedNumber(
@@ -1204,13 +1204,13 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            {/* <img
+            <img
               src={
                 matchainLogo
               }
               style={{ width: 16, height: 16 }}
               alt=""
-            /> */}
+            />
             <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
             <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
@@ -1521,7 +1521,7 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
 
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Matchain</span>
                 <span className="item-name-right">
                   $
@@ -1529,7 +1529,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyMat, 2)}
                 </span>
-              </div> */}
+              </div>
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
@@ -1850,7 +1850,7 @@ const MyRewardsPopupNew = ({
                   : getFormattedNumber(userSocialRewardsCached, 2)}
               </span>
             </div>
-            <div className="d-flex w-100 justify-content-between gap-2">
+            {/* <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Rank Bonus</span>
               <span className="item-name-right">
                 $
@@ -1858,7 +1858,7 @@ const MyRewardsPopupNew = ({
                   ? getFormattedNumber(pastUserRankUsd, 2)
                   : getFormattedNumber(userRankRewards, 2)}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
