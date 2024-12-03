@@ -43,7 +43,7 @@ const GovernanceContent = () => {
             </div>
           </div>
         </div>
-        <div className="past-proposals-wrapper d-flex justify-content-center p-3">
+        {/* <div className="past-proposals-wrapper d-flex justify-content-center p-3">
           <div className="custom-container w-100">
             <div className="d-flex flex-column gap-3">
               <div className="d-flex flex-column gap-2 justify-content-center align-items-center">
@@ -56,7 +56,7 @@ const GovernanceContent = () => {
                   the World of Dypians ecosystem.
                 </span>
               </div>
-              {/* <NavLink to="proposal/1">
+              <NavLink to="proposal/1">
                 <div className="past-proposals-item p-3">
                   <div className="d-flex flex-column flex-lg-row flex-md-row align-items-start align-items-lg-center justify-content-between gap-2">
                     <div className="d-flex flex-column gap-2">
@@ -175,10 +175,10 @@ const GovernanceContent = () => {
                     </div>
                   </div>
                 </div>
-              </NavLink> */}
+              </NavLink>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1267,7 +1267,7 @@ const NewDailyBonus = ({
     }
     new Audio(successSound).play();
   };
-console.log(rewardData)
+
   const showLiveRewardDataSkale = (value) => {
     const filteredResult = value;
 

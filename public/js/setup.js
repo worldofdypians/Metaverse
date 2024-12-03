@@ -370,6 +370,8 @@ window.config = {
   //===========================================================================
   //GOVERNANCE
   governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
+  vote_duration_in_seconds: 259200, // 3 days
+
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
