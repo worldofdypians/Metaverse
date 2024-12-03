@@ -3527,10 +3527,9 @@ const NewEvents = ({
                                     </span>
                                   )}
                                 </div>
-                                {adjustedDay === 1 ? (
+                                {activeEvent.day === 1 ? (
                                   <>
-                                    {hasBoughtDragon &&
-                                    adjustedDay === 1 ? (
+                                    {hasBoughtDragon && adjustedDay === 1  ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3545,7 +3544,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              dragonRuinsWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
@@ -3563,9 +3562,9 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 2 ? (
+                                ) : activeEvent.day === 2 ? (
                                   <>
-                                    {hasBoughtBear ? (
+                                    {hasBoughtBear && adjustedDay === 2 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3580,7 +3579,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              coldBiteWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
@@ -3598,9 +3597,9 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 3 ? (
+                                ) : activeEvent.day === 3 ? (
                                   <>
-                                    {hasBoughtBeast ? (
+                                    {hasBoughtBeast && adjustedDay === 3  ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3615,7 +3614,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              furyBeastWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
@@ -3633,9 +3632,9 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 4 ? (
+                                ) : activeEvent.day === 4 ? (
                                   <>
-                                    {hasBoughtEagle ? (
+                                    {hasBoughtEagle && adjustedDay === 4 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3650,7 +3649,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              wingStormWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
@@ -3668,9 +3667,9 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 6 ? (
+                                ) : activeEvent.day === 6 ? (
                                   <>
-                                    {hasBoughtScorpion ? (
+                                    {hasBoughtScorpion && adjustedDay === 6 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3685,7 +3684,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              scorpionKingWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
@@ -3703,9 +3702,9 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 7 ? (
+                                ) : activeEvent.day === 7 ? (
                                   <>
-                                    {hasBoughtCyclops ? (
+                                    {hasBoughtCyclops  && adjustedDay === 7 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3720,7 +3719,7 @@ const NewEvents = ({
                                         <div className="d-flex align-items-end gap-1">
                                           <span className="beast-siege-wod-price">
                                             {getFormattedNumber(
-                                              activeEvent.wodAmount
+                                              stoneEyeWodAmount
                                             )}{" "}
                                             WOD
                                           </span>
