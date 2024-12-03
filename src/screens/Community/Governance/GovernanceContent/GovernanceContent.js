@@ -1,8 +1,10 @@
 import React from "react";
 import "./_governanceContent.scss";
 import { NavLink } from "react-router-dom";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import moment from "moment";
 
-const GovernanceContent = () => {
+const GovernanceContent = ({ totalProposals, allProposals }) => {
   return (
     <div className="container-fluid px-0">
       <div className="d-flex flex-column">
@@ -12,34 +14,63 @@ const GovernanceContent = () => {
               <h2 className="font-montserrat  market-banner-title px-0">
                 ACTIVE PROPOSALS
               </h2>
-              <div className="active-proposals-inner-wrapper w-100 py-3 px-3 ">
-                <div className="d-flex align-items-center gap-3 flex-column flex-lg-row justify-content-between">
-                  <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
-                    <div className="d-flex flex-column gap-2">
-                      <span className="active-proposals-features">
-                        Access to Basic Features on the New Pools
-                      </span>
-                      <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
-                        <div className="d-flex align-items-center gap-3">
-                          <span className="gov-gray-text">By</span>
-                          <span className="gov-white-text">0x253...acb3</span>
+              {allProposals &&
+                allProposals.length > 0 &&
+                allProposals.map((item, index) => {
+                  return (
+                    <NavLink to={`proposal/${index}`}>
+                    <div
+                      className="active-proposals-inner-wrapper w-100 py-3 px-3 "
+                      key={index}
+                    >
+                      <div className="d-flex align-items-center gap-3 flex-column flex-lg-row justify-content-between">
+                        <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
+                          <div className="d-flex flex-column gap-2">
+                            <span className="active-proposals-features">
+                              {item.subject}
+                            </span>
+                            <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
+                              <div className="d-flex align-items-center gap-3">
+                                <span className="gov-gray-text">By</span>
+                                <span className="gov-white-text">
+                                  0x253...acb3
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="gov-gray-text">Votes</span>
+                                <span className="gov-white-text">
+                                  {getFormattedNumber(
+                                    Number(item._optionOneVotes / 1e18) +
+                                      Number(item._optionTwoVotes / 1e18),
+                                    6
+                                  )}
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center gap-2">
+                                <span className="gov-gray-text">Ends in</span>
+                                <span className="gov-white-text">
+                                  {moment
+                                    .duration(
+                                      item._proposalStartTime * 1e3 +
+                                        window.config.vote_duration_in_seconds *
+                                          1e3 -
+                                        Date.now()
+                                    )
+                                    .humanize(true)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="gov-gray-text">Votes</span>
-                          <span className="gov-white-text">124,021</span>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="gov-gray-text">Ends in</span>
-                          <span className="gov-white-text">3 days</span>
+                        <div>
+                          <button className="getpremium-btn px-4 py-2">
+                            VOTE NOW
+                          </button>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div>
-                    <button className="getpremium-btn px-4 py-2">VOTE NOW</button>
-                  </div>
-                </div>
-              </div>
+                    </div></NavLink>
+                  );
+                })}
             </div>
           </div>
         </div>

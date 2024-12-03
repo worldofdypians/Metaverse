@@ -4,11 +4,33 @@ import leftWhiteArrow from "../../assets/leftWhiteArrow.svg";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
+import Web3 from "web3";
 
-const GovernanceInner = ({ coinbase, isConnected, chainId,handleConnection }) => {
+const GovernanceInner = ({
+  coinbase,
+  isConnected,
+  chainId,
+  handleConnection,
+  handleSwitchNetwork,
+  handleSwitchChainGateWallet,
+  handleSwitchChainBinanceWallet,
+  refreshBalance
+
+}) => {
   const { proposalId } = useParams();
   const [currentProposal, setCurrentProposal] = useState([]);
   const [myDepositedTokens, setmyDepositedTokens] = useState(0);
+  const [depositAmount, setdepositAmount] = useState(0);
+  const [depositLoading, setdepositLoading] = useState(false);
+  const [depositStatus, setdepositStatus] = useState("initial");
+  const [claimLoading, setclaimLoading] = useState(false);
+  const [claimStatus, setclaimStatus] = useState("initial");
+  const [withdrawAmount, setwithdrawAmount] = useState(0);
+  const [withdrawLoading, setwithdrawLoading] = useState(false);
+  const [withdrawStatus, setwithdrawStatus] = useState("initial");
+
+  const { BigNumber, reward_token_wod } = window;
 
   const purchaseDate = currentProposal?._proposalStartTime
     ? new Date(currentProposal?._proposalStartTime * 1000)
@@ -16,6 +38,30 @@ const GovernanceInner = ({ coinbase, isConnected, chainId,handleConnection }) =>
   const endDate = new Date(
     purchaseDate.getTime() + window.config.vote_duration_in_seconds * 1e3
   );
+
+  const switchNetwork = async (hexChainId, chain) => {
+    if (window.ethereum) {
+      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+        await handleSwitchNetworkhook(hexChainId)
+          .then(() => {
+            handleSwitchNetwork(chain);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+        handleSwitchChainGateWallet(chain);
+      } else if (coinbase && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(chain);
+      }
+    } else if (coinbase && window.WALLET_TYPE === "binance") {
+      handleSwitchChainBinanceWallet(chain);
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
+
+
   const getProposal = async (_proposalId) => {
     if (_proposalId) {
       const governanceSc = new window.bscWeb3.eth.Contract(
@@ -50,6 +96,101 @@ const GovernanceInner = ({ coinbase, isConnected, chainId,handleConnection }) =>
       setmyDepositedTokens(balanceFormatted);
     }
   };
+
+
+  const handleApprove = (e) => {
+    // e.preventDefault();
+    setdepositLoading(true);
+
+    let amount = depositAmount;
+    amount = new BigNumber(amount).times(1e18).toFixed(0);
+    reward_token_wod
+      .approve(window.config.governance_address, amount)
+      .then(() => {
+        setdepositLoading(false);
+        setdepositStatus("deposit");
+      })
+      .catch((e) => {
+        setdepositLoading(false);
+        setdepositStatus("error");
+        window.alertify.error(e?.message);
+        setTimeout(() => {
+          setdepositAmount(0);
+          setdepositStatus("initial");
+        }, 8000);
+      });
+  };
+
+  const handleAddVote = async (proposalId, option) => {
+    setdepositLoading(true);
+    window.web3 = new Web3(window.ethereum);
+    const governanceSc = new window.web3.eth.Contract(
+      window.GOVERNANCE_ABI,
+      window.config.governance_address
+    );
+    let amount = depositAmount;
+    amount = new BigNumber(amount).times(1e18).toFixed(0);
+    await governanceSc.methods
+      .addVotes(proposalId, option, amount)
+      .then(() => {
+        setdepositLoading(false);
+        setdepositStatus("success");
+      })
+      .catch((e) => {
+        setdepositLoading(false);
+        setdepositStatus("error");
+        window.alertify.error(e?.message);
+        setTimeout(() => {
+          setdepositLoading(false);
+          setdepositStatus("initial");
+        }, 8000);
+      });
+  };
+
+  const handleRemoveVote = async(proposalId) => {
+    // e.preventDefault();
+    setwithdrawLoading(true)
+    window.web3 = new Web3(window.ethereum);
+    const governanceSc = new window.web3.eth.Contract(
+      window.GOVERNANCE_ABI,
+      window.config.governance_address
+    );
+      let amount = withdrawAmount;
+      amount = new BigNumber(amount).times(1e18).toFixed(0);
+      await governanceSc.methods
+        .removeVotes(proposalId, amount)
+        .then(() => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("success");
+        })
+        .catch((e) => {
+          setwithdrawLoading(false);
+          setwithdrawStatus("error");
+          window.alertify.error(e?.message )
+          setTimeout(() => {
+            setwithdrawLoading(false);
+            setwithdrawStatus("initial");
+            setwithdrawAmount(0)
+          }, 8000);
+        });
+    
+  };
+
+  const handleClaim = async() => {
+    window.web3 = new Web3(window.ethereum);
+    const governanceSc = new window.web3.eth.Contract(
+      window.GOVERNANCE_ABI,
+      window.config.governance_address
+    );
+ 
+      await governanceSc.methods.withdrawAllTokens().send({from: coinbase}).then(()=>{
+         refreshBalance();
+      }).catch((e)=>{console.error(e)});
+     
+ 
+  };
+
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -177,25 +318,22 @@ const GovernanceInner = ({ coinbase, isConnected, chainId,handleConnection }) =>
                     </div>
                     {isConnected ? (
                       myDepositedTokens !== undefined &&
-                      myDepositedTokens > 0 ? (
+                      myDepositedTokens > 0 && chainId === 56? (
                         <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                           <div className="d-flex flex-column">
-                          <span className="my-votes-amount">
-                            {getFormattedNumber(myDepositedTokens)}
-                          </span>
-                          <span className="my-votes-desc">
-                            My Votes
-                          </span>
+                            <span className="my-votes-amount">
+                              {getFormattedNumber(myDepositedTokens)}
+                            </span>
+                            <span className="my-votes-desc">My Votes</span>
                           </div>
                           <div className="d-flex align-items-center gap-2">
-                           
                             <button className="btn-withdraw-gov px-2 px-lg-5 py-2">
                               Withdraw
                             </button>
                           </div>
                         </div>
                       ) : myDepositedTokens !== undefined &&
-                        Number(myDepositedTokens) === 0 ? (
+                        Number(myDepositedTokens) === 0 && chainId === 56? (
                         <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                           <span className="single-proposal-description-green">
                             Vote
@@ -209,21 +347,33 @@ const GovernanceInner = ({ coinbase, isConnected, chainId,handleConnection }) =>
                             </button>
                           </div>
                         </div>
-                      ) : !isConnected ? (
-                        <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                          <button
-                            className="connectbtn-gov px-3 py-2"
-                            style={{ width: "fit-content" }}
-                            onClick={() => {
-                              handleConnection();
-                            }}
-                          >
-                            Connect Wallet
-                          </button>
-                        </div>
                       ) : (
                         <></>
                       )
+                    ) : !isConnected ? (
+                      <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                        <button
+                          className="connectbtn-gov px-3 py-2"
+                          style={{ width: "fit-content" }}
+                          onClick={() => {
+                            handleConnection();
+                          }}
+                        >
+                          Connect Wallet
+                        </button>
+                      </div>
+                    ) : isConnected && chainId !== 56 ? (
+                      <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                        <button
+                          className="fail-button px-3 py-2"
+                          style={{ width: "fit-content" }}
+                          onClick={() => {
+                            switchNetwork("0x38", 56);
+                          }}
+                        >
+                          Switch to BNB Chain
+                        </button>
+                      </div>
                     ) : (
                       <></>
                     )}

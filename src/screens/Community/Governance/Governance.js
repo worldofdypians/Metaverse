@@ -16,7 +16,6 @@ const Governance = ({
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
   handleConnection,
-  refreshBalance
 }) => {
   const [createProposalPopup, setCreateProposalPopup] = useState(false);
   const [minWodBalanceForProposal, setminWodBalanceForProposal] = useState(0);
@@ -25,16 +24,9 @@ const Governance = ({
   const [allProposals, setallProposals] = useState([]);
   const [totalProposals, settotalProposals] = useState(0);
 
-  const [depositAmount, setdepositAmount] = useState(0);
-  const [depositLoading, setdepositLoading] = useState(false);
-  const [depositStatus, setdepositStatus] = useState("initial");
-  const [claimLoading, setclaimLoading] = useState(false);
-  const [claimStatus, setclaimStatus] = useState("initial");
-  const [withdrawAmount, setwithdrawAmount] = useState(0);
-  const [withdrawLoading, setwithdrawLoading] = useState(false);
-  const [withdrawStatus, setwithdrawStatus] = useState("initial");
 
-  const { BigNumber, reward_token_wod } = window;
+ 
+
 
   const getProposalInfo = async () => {
     const governanceSc = new window.bscWeb3.eth.Contract(
@@ -87,9 +79,12 @@ const Governance = ({
     let newProposals = [];
     let newProposals2 = [];
 
+ 
+
     for (let i = total_proposals; i >= 1; i--) {
       const checkproposal = await getProposal(i);
       if (checkproposal != undefined) {
+        
         newProposals.push(checkproposal);
       }
     }
@@ -97,7 +92,20 @@ const Governance = ({
     newProposals = await Promise.all(newProposals);
 
     const newnewProposalsFinal = newProposals.map((item) => {
-      return { ...item };
+      let action = item._proposalAction;
+
+      let actionText =
+        {
+          0: "New Game Events",
+          1: "Revamp Events",
+          2: "New Bundles",
+          3: "Special Offer",
+          4: "Feature Request",
+          5: "General",
+        }[action] || "";
+    
+
+      return { ...item, subject: actionText };
     });
 
     // newProposals = newProposals.map(p => {
@@ -107,98 +115,6 @@ const Governance = ({
     newProposals2 = proposals.concat(newnewProposalsFinal);
     setallProposals(newProposals2);
     settotalProposals(total_proposals);
-  };
-
-  const handleApprove = (e) => {
-    // e.preventDefault();
-    setdepositLoading(true);
-
-    let amount = depositAmount;
-    amount = new BigNumber(amount).times(1e18).toFixed(0);
-    reward_token_wod
-      .approve(window.config.governance_address, amount)
-      .then(() => {
-        setdepositLoading(false);
-        setdepositStatus("deposit");
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("error");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setdepositAmount(0);
-          setdepositStatus("initial");
-        }, 8000);
-      });
-  };
-
-  const handleAddVote = async (proposalId, option) => {
-    setdepositLoading(true);
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
-    let amount = depositAmount;
-    amount = new BigNumber(amount).times(1e18).toFixed(0);
-    await governanceSc.methods
-      .addVotes(proposalId, option, amount)
-      .then(() => {
-        setdepositLoading(false);
-        setdepositStatus("success");
-      })
-      .catch((e) => {
-        setdepositLoading(false);
-        setdepositStatus("error");
-        window.alertify.error(e?.message);
-        setTimeout(() => {
-          setdepositLoading(false);
-          setdepositStatus("initial");
-        }, 8000);
-      });
-  };
-
-  const handleRemoveVote = async(proposalId) => {
-    // e.preventDefault();
-    setwithdrawLoading(true)
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
-      let amount = withdrawAmount;
-      amount = new BigNumber(amount).times(1e18).toFixed(0);
-      await governanceSc.methods
-        .removeVotes(proposalId, amount)
-        .then(() => {
-          setwithdrawLoading(false);
-          setwithdrawStatus("success");
-        })
-        .catch((e) => {
-          setwithdrawLoading(false);
-          setwithdrawStatus("error");
-          window.alertify.error(e?.message )
-          setTimeout(() => {
-            setwithdrawLoading(false);
-            setwithdrawStatus("initial");
-            setwithdrawAmount(0)
-          }, 8000);
-        });
-    
-  };
-
-  const handleClaim = async() => {
-    window.web3 = new Web3(window.ethereum);
-    const governanceSc = new window.web3.eth.Contract(
-      window.GOVERNANCE_ABI,
-      window.config.governance_address
-    );
- 
-      await governanceSc.methods.withdrawAllTokens().send({from: coinbase}).then(()=>{
-         refreshBalance();
-      }).catch((e)=>{console.error(e)});
-     
- 
   };
 
   const handleSubmitProposal = async (subject, desc) => {

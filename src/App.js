@@ -6191,9 +6191,7 @@ function App() {
                 handleConnection={() => {
                   setwalletModal(true);
                 }}
-                refreshBalance={() => {
-                  setcountBalance(countBalance + 1);
-                }}
+               
               />
             }
           />
@@ -6208,6 +6206,9 @@ function App() {
                 chainId={networkId}
                 handleConnection={() => {
                   setwalletModal(true);
+                }}
+                refreshBalance={() => {
+                  setcountBalance(countBalance + 1);
                 }}
               />
             }
