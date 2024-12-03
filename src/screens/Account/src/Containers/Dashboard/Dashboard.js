@@ -4738,7 +4738,7 @@ function Dashboard({
       // fetchWeeklyRecordsTaiko();
       fetchMonthlyRecordsTaiko();
 
-      // fetchDailyRecordsMat();
+      fetchDailyRecordsMat();
       // fetchWeeklyRecordsMat();
       // fetchMonthlyRecordsMat();
 
