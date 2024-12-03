@@ -91,6 +91,7 @@ const MyRewardsPopupNew = ({
   matEarnUsd,
   easy2StakeEarnUsd,
   midleEarnUsd,
+  coingeckoEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -101,9 +102,7 @@ const MyRewardsPopupNew = ({
 
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
   const [leaderboardSkaleTotalData, setleaderboardSkaleTotalData] = useState(0);
-
-  const [genesisData, setgenesisData] = useState(0);
-  const [bundlesBought, setbundlesBought] = useState(0);
+ 
 
   const [cawsRewards, setCawsRewards] = useState(0);
   const [wodCawsRewards, setWodCawsRewards] = useState(0);
@@ -142,16 +141,7 @@ const MyRewardsPopupNew = ({
   const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
 
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
-
-  const getBundles = async () => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
+ 
 
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
@@ -650,8 +640,7 @@ const MyRewardsPopupNew = ({
     allBaseChests,
   ]);
 
-  useEffect(() => {
-    getBundles();
+  useEffect(() => { 
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
@@ -793,10 +782,8 @@ const MyRewardsPopupNew = ({
                       Number(dypPremiumUSD) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
-                      Number(cookieEarnUsd) +
-                      Number(taikoEarnUsd) +
-                      Number(mantaEarnUsd) +
-                      Number(skaleEarnUsd),
+                      Number(cookieEarnUsd)+
+                      Number(mantaEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -814,6 +801,9 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(easy2StakeEarnUsd) +
                       Number(midleEarnUsd) +
+                      Number(taikoEarnUsd) +
+                      Number(skaleEarnUsd) +
+                      Number(coingeckoEarnUsd) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
@@ -1096,9 +1086,7 @@ const MyRewardsPopupNew = ({
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
                       Number(mantaEarnUsd) +
-                      Number(taikoEarnUsd) +
-                      Number(cookieEarnUsd) +
-                      Number(skaleEarnUsd),
+                      Number(cookieEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -1108,7 +1096,10 @@ const MyRewardsPopupNew = ({
                       Number(immutableEarnUsd) +
                       Number(baseEarnUSD)+
                       Number(easy2StakeEarnUsd) +
-                      Number(midleEarnUsd) ,
+                      Number(midleEarnUsd) +
+                      Number(skaleEarnUsd) +
+                      Number(taikoEarnUsd) +
+                      Number(coingeckoEarnUsd) ,
                     2
                   )}
             </span>
@@ -1166,7 +1157,7 @@ const MyRewardsPopupNew = ({
                     2
                   )
                 : getFormattedNumber(
-                    Number(userSocialRewardsCached) + Number(userRankRewards),
+                    Number(userSocialRewardsCached),
                     2
                   )}
             </span>
@@ -1592,6 +1583,15 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(easy2StakeEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={coingecko} alt="" />
+                    CoinGecko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coingeckoEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1620,6 +1620,16 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(midleEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
+                    SKALE
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(skaleEarnUsd, 2)}
+                  </span>
+                </div>
+          
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1633,6 +1643,22 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(immutableEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        require("../../../../../components/Header/assets/taiko.svg")
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Taiko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(taikoEarnUsd, 2)}
                   </span>
                 </div>
               </div>
@@ -1660,22 +1686,7 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper">
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        require("../../../../../components/Header/assets/taiko.svg")
-                          .default
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Taiko
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(taikoEarnUsd, 2)}
-                  </span>
-                </div>
+           
 
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1795,15 +1806,6 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
-                    SKALE
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(skaleEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
