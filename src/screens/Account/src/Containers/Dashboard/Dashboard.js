@@ -194,6 +194,7 @@ function Dashboard({
   onCloseSync,
   easy2StakeEarnUsd,
   midleEarnUsd,
+  coingeckoEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -294,7 +295,6 @@ function Dashboard({
       name: "Matchain",
       symbol: "matchain",
     },
-
     {
       name: "SEI",
       symbol: "sei",
@@ -5712,7 +5712,7 @@ function Dashboard({
       .getTimeOfExpireBuff(coinbase)
       .call();
     const today = new Date();
- 
+
     if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
       handleSetAvailableTime(purchaseTimestamp);
     }
@@ -5748,7 +5748,7 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
@@ -7688,6 +7688,7 @@ function Dashboard({
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
+
     window.web3 = new Web3(window.ethereum);
 
     let formattedTokenPrice = getFormattedNumber(
@@ -8715,8 +8716,6 @@ function Dashboard({
             ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
             : chainId === 1329
             ? "SUBSCRIPTION_SEI"
             : "",
@@ -8754,7 +8753,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8834,7 +8833,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8916,7 +8915,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8993,7 +8992,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -9072,7 +9071,7 @@ function Dashboard({
                   ? "core"
                   : chainId === 698
                   ? "matchain"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -9222,8 +9221,6 @@ function Dashboard({
             ? "SUBSCRIPTION_TAIKO"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
             : chainId === 1329
             ? "SUBSCRIPTION_SEI"
             : "",
@@ -9282,7 +9279,7 @@ function Dashboard({
                 ? "taiko"
                 : chainId === 1116
                 ? "core"
-                : chainId === 713715
+                : chainId === 1329
                 ? "sei"
                 : "";
             setselectedChainforPremium(selectedchain);
@@ -9347,7 +9344,7 @@ function Dashboard({
                   ? "taiko"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -10434,8 +10431,13 @@ function Dashboard({
   useEffect(() => {
     getOtherNfts();
     getDypBalance(userWallet ? userWallet : coinbase);
-    fetchUserFavorites(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
+
+  useEffect(() => {
+    if (authToken && email && isConnected) {
+      fetchUserFavorites(userWallet ? userWallet : coinbase);
+    }
+  }, [account, userWallet, isConnected, authToken, email]);
 
   useEffect(() => {
     refetchPlayer();
@@ -10477,7 +10479,7 @@ function Dashboard({
   useEffect(() => {
     if (coinbase && isConnected && email && userWallet) {
       handleRefreshCountdown700();
-    } 
+    }
   }, [coinbase, isConnected, email, userWallet]);
 
   useEffect(() => {
@@ -10516,36 +10518,36 @@ function Dashboard({
     openedBaseChests,
     openedTaikoChests,
   ]);
-  
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
       <div className="d-none">
-      {goldenPassRemainingTime !== undefined && (
-        <Countdown
-          date={(Number(goldenPassRemainingTime) * 1000)}
-          onComplete={() => {
-            handleSetAvailableTime();
-          }}
-        />
-      )}
+        {goldenPassRemainingTime !== undefined && (
+          <Countdown
+            date={Number(goldenPassRemainingTime) * 1000}
+            onComplete={() => {
+              handleSetAvailableTime();
+            }}
+          />
+        )}
         {countdown !== undefined && (
-        <Countdown
-          date={Number(countdown) * 1000}
-          onComplete={() => {
-            setcountdown();
-          }}
-        />
+          <Countdown
+            date={Number(countdown) * 1000}
+            onComplete={() => {
+              setcountdown();
+            }}
+          />
         )}
         {countdown3500 !== undefined && (
-        <Countdown
-          date={Number(countdown3500) * 1000}
-          onComplete={() => {
-            setcountdown3500();
-          }}
-        />
+          <Countdown
+            date={Number(countdown3500) * 1000}
+            onComplete={() => {
+              setcountdown3500();
+            }}
+          />
         )}
       </div>
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
@@ -10639,7 +10641,10 @@ function Dashboard({
                 Number(victionEarnUsd) +
                 Number(baseEarnUSD) +
                 Number(easy2StakeEarnUsd) +
-                Number(midleEarnUsd)
+                Number(midleEarnUsd) +
+                Number(taikoEarnUsd) +
+                Number(skaleEarnUsd) +
+                Number(coingeckoEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10722,6 +10727,7 @@ function Dashboard({
             baseEarnUSD={baseEarnUSD}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
+            coingeckoEarnUsd={coingeckoEarnUsd}
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -11215,6 +11221,7 @@ function Dashboard({
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
+                coingeckoEarnUsd={coingeckoEarnUsd}
               />
             </div>
           </OutsideClickHandler>
@@ -11514,16 +11521,14 @@ function Dashboard({
                             Matchain
                           </span>
                         </div>
-                        {/* <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-2">
                           <img
                             src={seiLogo}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
-                          <span className="subscription-chain mb-0">
-                            SEI
-                          </span>
-                        </div> */}
+                          <span className="subscription-chain mb-0">SEI</span>
+                        </div>
 
                         <div className="d-flex align-items-center gap-2">
                           <img
@@ -11715,6 +11720,23 @@ function Dashboard({
                                           alt=""
                                         />
                                         Matchain
+                                      </li>
+                                    )}
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleSeiPool}
+                                      >
+                                        <img
+                                          src={seiLogo}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        SEI
                                       </li>
                                     )}
 
@@ -11934,7 +11956,7 @@ function Dashboard({
                                               : chainId === 1116
                                               ? window.config
                                                   .subscriptioncore_tokens
-                                              : chainId === 713715
+                                              : chainId === 1329
                                               ? window.config
                                                   .subscriptionsei_tokens
                                               : window.config
@@ -12001,7 +12023,7 @@ function Dashboard({
                                                           .subscriptioncore_tokens[
                                                           t
                                                         ]?.symbol
-                                                      : chainId === 713715
+                                                      : chainId === 1329
                                                       ? window.config
                                                           .subscriptionsei_tokens[
                                                           t
@@ -12057,7 +12079,7 @@ function Dashboard({
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens
-                                                      : chainId === 713715
+                                                      : chainId === 1329
                                                       ? window.config
                                                           .subscriptionsei_tokens[
                                                           t
@@ -12129,7 +12151,7 @@ function Dashboard({
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
-                                                    : chainId === 713715
+                                                    : chainId === 1329
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
@@ -12188,7 +12210,7 @@ function Dashboard({
                                                 ? window.config
                                                     .subscriptionmat_tokens[t]
                                                     ?.symbol
-                                                : chainId === 713715
+                                                : chainId === 1329
                                                 ? window.config
                                                     .subscriptionsei_tokens[t]
                                                     ?.symbol
