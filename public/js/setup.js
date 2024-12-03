@@ -366,6 +366,10 @@ window.config = {
 
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   USDC_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+
+  //===========================================================================
+  //GOVERNANCE
+  governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
@@ -3898,6 +3902,646 @@ async function myNftList(address) {
     return result;
   });
 }
+
+window.GOVERNANCE_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "admin",
+        type: "address",
+      },
+    ],
+    name: "EmergencyDeclared",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "contract StakingPool",
+        name: "",
+        type: "address",
+      },
+      { indexed: false, internalType: "string", name: "", type: "string" },
+    ],
+    name: "PoolCallReverted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "contract StakingPool",
+        name: "",
+        type: "address",
+      },
+      { indexed: false, internalType: "bytes", name: "", type: "bytes" },
+    ],
+    name: "PoolCallReverted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "contract StakingPool",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "PoolCallSucceeded",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "ADMIN_CAN_CLAIM_AFTER",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ADMIN_FEATURES_EXPIRE_AFTER",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "EMERGENCY_WAIT_TIME",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MIN_BALANCE_TO_INIT_PROPOSAL",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "QUORUM",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "RESULT_EXECUTION_ALLOWANCE_PERIOD",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "TRUSTED_TOKEN_ADDRESS",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "VOTE_DURATION",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "actions",
+    outputs: [
+      { internalType: "enum Governance.Action", name: "", type: "uint8" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "proposalId", type: "uint256" },
+      { internalType: "enum Governance.Option", name: "option", type: "uint8" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "addVotes",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "newMinBalanceToInitProposal",
+        type: "uint256",
+      },
+    ],
+    name: "changeMinBalanceToInitProposal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "newQuorum", type: "uint256" }],
+    name: "changeQuorum",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "trustedFarmContractAddress",
+        type: "address",
+      },
+      { internalType: "address", name: "token", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "claimAnyTokenFromContract",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claimOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractStartTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "declareEmergency",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "trustedFarmContractAddress",
+        type: "address",
+      },
+    ],
+    name: "declareEmergencyForContract",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "trustedFarmContractAddress",
+        type: "address",
+      },
+      { internalType: "address", name: "newOwner", type: "address" },
+    ],
+    name: "emergencyTransferContractOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "executeProposal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "getProposal",
+    outputs: [
+      { internalType: "uint256", name: "_proposalId", type: "uint256" },
+      {
+        internalType: "enum Governance.Action",
+        name: "_proposalAction",
+        type: "uint8",
+      },
+      { internalType: "uint256", name: "_optionOneVotes", type: "uint256" },
+      { internalType: "uint256", name: "_optionTwoVotes", type: "uint256" },
+      {
+        internalType: "contract StakingPool[]",
+        name: "_stakingPool",
+        type: "address[]",
+      },
+      { internalType: "address", name: "_newGovernance", type: "address" },
+      { internalType: "uint256", name: "_proposalStartTime", type: "uint256" },
+      { internalType: "bool", name: "_isProposalExecuted", type: "bool" },
+      { internalType: "uint256", name: "_newQuorum", type: "uint256" },
+      { internalType: "string", name: "_proposalText", type: "string" },
+      { internalType: "uint256", name: "_newMinBalance", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "enum Governance.PoolGroupName",
+        name: "",
+        type: "uint8",
+      },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "hardcodedStakingPools",
+    outputs: [
+      { internalType: "contract StakingPool", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isEmergency",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isOwner",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "isProposalExecuted",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "isProposalExecutible",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "proposalId", type: "uint256" }],
+    name: "isProposalOpen",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lastIndex",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lastVotedProposalStartTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "newGovernances",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "newMinBalances",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "newQuorums",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "optionOneVotes",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "optionTwoVotes",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "pendingOwner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "proposalStartTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "proposalTexts",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "enum Governance.PoolGroupName",
+        name: "poolGroupName",
+        type: "uint8",
+      },
+    ],
+    name: "proposeDisburseOrBurn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "newMinBalance", type: "uint256" },
+    ],
+    name: "proposeNewMinBalanceToInitProposal",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "newQuorum", type: "uint256" }],
+    name: "proposeNewQuorum",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "trustedFarmContractAddress",
+        type: "address",
+      },
+      { internalType: "uint256", name: "newMagicNumber", type: "uint256" },
+      { internalType: "uint256", name: "newLockupTime", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "newStakingFeeRateX100",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "newUnstakingFeeRateX100",
+        type: "uint256",
+      },
+      { internalType: "address", name: "newRouterAddress", type: "address" },
+      {
+        internalType: "address",
+        name: "newFeeRecipientAddress",
+        type: "address",
+      },
+    ],
+    name: "proposeSetContractVariables",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "text", type: "string" }],
+    name: "proposeText",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "enum Governance.PoolGroupName",
+        name: "poolGroupName",
+        type: "uint8",
+      },
+      { internalType: "address", name: "newGovernance", type: "address" },
+    ],
+    name: "proposeUpgradeGovernance",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "proposalId", type: "uint256" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "removeVotes",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_farmContractAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newFeeRecipientAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newLockupTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newMagicNumber",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newRouterAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newStakingFeeRateX100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "setContractVariables_newUnstakingFeeRateX100",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "stakingPools",
+    outputs: [
+      { internalType: "contract StakingPool", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "totalDepositedTokens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferAnyERC20Token",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "pool", type: "address" },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferAnyERC20TokenFromPool",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferAnyLegacyERC20Token",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "pool", type: "address" },
+      { internalType: "address", name: "tokenAddress", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferAnyLegacyERC20TokenFromPool",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "votedForOption",
+    outputs: [
+      { internalType: "enum Governance.Option", name: "", type: "uint8" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "votesForProposalByAddress",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdrawAllTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 window.TOKEN_LOCK_ABI = [
   {
@@ -13040,7 +13684,6 @@ window.DAILY_BONUS_MAT_ABI = [
   },
 ];
 
-
 window.DAILY_BONUS_SEI_ABI = [
   {
     inputs: [
@@ -13247,7 +13890,6 @@ window.DAILY_BONUS_SEI_ABI = [
     type: "function",
   },
 ];
-
 
 window.WETH_ABI = [
   {
@@ -14718,7 +15360,6 @@ window.SUBSCRIPTION_NEWBNB2_ABI = [
     type: "function",
   },
 ];
-
 
 window.SUBSCRIPTION_SEI_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -32828,7 +33469,6 @@ function wait(ms) {
   );
 }
 
-
 const checkapproveStakePool = async (useraddr, tokenaddr, stakingaddr) => {
   window.web3 = new Web3(window.ethereum);
   let token_contract = new window.web3.eth.Contract(
@@ -33034,9 +33674,12 @@ async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
     window.config.subscription_sei_address
   );
   if (seiContract) {
+ 
     return await seiContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress)
-      .call();
+      .getEstimatedTokenSubscriptionAmount(tokenAddress,0)
+      .call().catch((e) => {
+        return 100000000;
+      });
   }
 }
 
@@ -33232,7 +33875,7 @@ Object.keys(window.config)
     (k) =>
       k.startsWith("token_") ||
       k.startsWith("reward_token_wod") ||
-      k.startsWith("constant_staking_wod")  ||
+      k.startsWith("constant_staking_wod") ||
       k.startsWith("constant_staking_wod1") ||
       k.startsWith("constant_staking_wod2") ||
       k.startsWith("constant_staking_wod3") ||

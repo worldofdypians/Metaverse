@@ -9,6 +9,8 @@ import Web3 from "web3";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+import seiIcon from "../../../../../components/Header/assets/sei.svg";
+
 
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
@@ -86,6 +88,10 @@ const GetPremiumPopup = ({
       name: "Matchain",
       symbol: "matchain",
     },
+    {
+      name: "SEI",
+      symbol: "sei",
+    },
   ];
 
   const { BigNumber } = window;
@@ -101,20 +107,8 @@ const GetPremiumPopup = ({
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
   let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
+  let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
 
-  const metaverseBenefits = [
-    "Exclusive access to World of Dypians",
-    "Access to Daily Bonus Event",
-    "Access every Treasure Hunt Event without the need to hold a Beta Pass NFT",
-    "Earn extra daily stars to boost your Global Rank",
-  ];
-
-  const dappsBenefits = [
-    "DYP Tools administrative dashboard",
-    "Voting capabilities in the News section",
-    "Priority access to dedicated DeFi pools",
-    "Early access to upcoming features and updates",
-  ];
 
   const allBenefits = [
     {
@@ -735,6 +729,23 @@ const GetPremiumPopup = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+  
+  const handleSeiPool = async () => {
+    if (window.ethereum) {
+      if (!window.gatewallet) {
+        await handleSwitchNetworkhook("0x531")
+          .then(() => {
+            handleSwitchNetwork(1329);
+            setChainDropdown(chainDropdowns[11]);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    } else {
+      window.alertify.error("No web3 detected. Please install Metamask!");
+    }
+  };
 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
@@ -763,7 +774,7 @@ const GetPremiumPopup = ({
         ? window.config.subscriptionskale_tokens[token]?.decimals
         : chainId === 1116
         ? window.config.subscriptioncore_tokens[token]?.decimals
-        : chainId === 713715
+        : chainId === 1329
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
@@ -818,7 +829,7 @@ const GetPremiumPopup = ({
             token,
             discountPercentageMat
           )
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmountETH(token);
 
@@ -829,7 +840,7 @@ const GetPremiumPopup = ({
       tokenDecimals
     );
 
-    console.log("tokenprice", tokenprice, tokenDecimals, token);
+
     if (coinbase && window.WALLET_TYPE === "binance") {
       let token_Sc = new ethers.Contract(
         token,
@@ -1225,7 +1236,7 @@ const GetPremiumPopup = ({
               ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price
@@ -1276,7 +1287,7 @@ const GetPremiumPopup = ({
               ? taikosubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price,
@@ -1427,7 +1438,7 @@ const GetPremiumPopup = ({
           )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmountETH(token);
 
@@ -1476,7 +1487,7 @@ const GetPremiumPopup = ({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 713715) {
+      } else if (chainId === 1329) {
         const result = await subscribeTokencontractsei.methods
           .allowance(coinbase, seisubscribeAddress)
           .call()
@@ -1845,8 +1856,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
 
@@ -2175,8 +2186,8 @@ const GetPremiumPopup = ({
             ? "SUBSCRIPTION_MANTA"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
 
@@ -2442,16 +2453,16 @@ const GetPremiumPopup = ({
       handleSubscriptionTokenChange(wcoreAddress);
       handleCheckIfAlreadyApproved(wcoreAddress);
     }
-    //else if (chainId === 713715) {
-    //   setChainDropdown(chainDropdowns[8]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("usdt");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionsei_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wseiAddress);
-    //   handleCheckIfAlreadyApproved(wseiAddress);
-    // }
+    else if (chainId === 1329) {
+      setChainDropdown(chainDropdowns[11]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("usdt");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionsei_tokens)[11]
+      );
+      handleSubscriptionTokenChange(wseiAddress);
+      handleCheckIfAlreadyApproved(wseiAddress);
+    }
     else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -2532,7 +2543,12 @@ const GetPremiumPopup = ({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    } else {
+    }  else if (chainId === 1329 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
+    }else {
       settokenDecimals(
         window.config.subscriptioneth_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -2733,6 +2749,16 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">Matchain</span>
                   </div>
+                  <div className="d-flex align-items-center gap-2">
+                          <img
+                            src={seiIcon}
+                            alt=""
+                            style={{ width: 18, height: 18 }}
+                          />
+                          <span className="subscription-chain mb-0">
+                            SEI
+                          </span>
+                        </div>
 
                   <div className="d-flex align-items-center gap-2">
                     <img
@@ -2808,16 +2834,7 @@ const GetPremiumPopup = ({
                     />
                     <span className="subscription-chain mb-0">Viction</span>
                   </div>
-                  {/*   <div className="d-flex align-items-center gap-2">
-                                    <img
-                                      src={seiIcon}
-                                      alt=""
-                                      style={{ width: 18, height: 18 }}
-                                    />
-                                    <span className="subscription-chain mb-0">
-                                      SEI
-                                    </span>
-                                  </div> */}
+           
                 </div>
                 <img
                   src={premiumIcon}
@@ -2919,7 +2936,23 @@ const GetPremiumPopup = ({
                           Matchain
                         </li>
                       )}
-
+ {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleSeiPool}
+                                      >
+                                        <img
+                                          src={seiIcon}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        SEI
+                                      </li>
+                                    )}
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                       onClick={handleMantaPool}
@@ -3156,7 +3189,7 @@ const GetPremiumPopup = ({
                             ? window.config.subscriptionmat_tokens
                             : chainId === 1116
                             ? window.config.subscriptioncore_tokens
-                            : chainId === 713715
+                            : chainId === 1329
                             ? window.config.subscriptionsei_tokens
                             : window.config.subscriptioneth_tokens
                         ).map((t, i) => (
@@ -3201,7 +3234,7 @@ const GetPremiumPopup = ({
                                     : chainId === 1116
                                     ? window.config.subscriptioncore_tokens[t]
                                         ?.symbol
-                                    : chainId === 713715
+                                    : chainId === 1329
                                     ? window.config.subscriptionsei_tokens[t]
                                         ?.symbol
                                     : window.config.subscriptioneth_tokens[t]
@@ -3239,7 +3272,7 @@ const GetPremiumPopup = ({
                                     : chainId === 698
                                     ? window.config.subscriptionmat_tokens[t]
                                         ?.symbol
-                                    : chainId === 713715
+                                    : chainId === 1329
                                     ? window.config.subscriptionsei_tokens[t]
                                         ?.symbol
                                     : chainId === 1116
@@ -3301,7 +3334,7 @@ const GetPremiumPopup = ({
                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
                                       t
                                     ]?.symbol.toLowerCase()}Icon.svg`)
-                                  : chainId === 713715
+                                  : chainId === 1329
                                   ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                       t
                                     ]?.symbol.toLowerCase()}Icon.svg`)
@@ -3341,7 +3374,7 @@ const GetPremiumPopup = ({
                                   ?.symbol
                               : chainId === 698
                               ? window.config.subscriptionmat_tokens[t]?.symbol
-                              : chainId === 713715
+                              : chainId === 1329
                               ? window.config.subscriptionsei_tokens[t]?.symbol
                               : window.config.subscriptioneth_tokens[t]?.symbol}
                           </li>
@@ -3354,7 +3387,7 @@ const GetPremiumPopup = ({
                     width={16}
                     alt="usdt"
                   /> */}
-                    <span className="subscription-price-token mb-0">
+                    <span className="subscription-price-token mb-0 text-uppercase">
                       {formattedPrice.slice(0, 7)} {dropdownTitle}
                     </span>
                   </div>

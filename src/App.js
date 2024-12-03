@@ -493,9 +493,8 @@ function App() {
   let victionLastDay = new Date("2025-03-29T14:00:00.000+02:00");
   let midleLastDay = new Date("2025-03-30T14:00:00.000+02:00");
 
-
   let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
-  let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+  let taikoLastDay = new Date("2025-04-03T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
@@ -644,13 +643,10 @@ function App() {
   const [immutableEarnToken, setImmutableEarnToken] = useState(0);
   const [immutablePoints, setImmutablePoints] = useState(0);
 
-
-  
   const [easy2StakeEarnUsd, setEasy2StakeEarnUsd] = useState(0);
   const [easy2StakeEarnToken, setEasy2StakeEarnToken] = useState(0);
   const [easy2StakePoints, setEasy2StakePoints] = useState(0);
 
-    
   const [midleEarnUsd, setMidleEarnUsd] = useState(0);
   const [midleEarnToken, setMidleEarnToken] = useState(0);
   const [midlePoints, setMidlePoints] = useState(0);
@@ -957,7 +953,6 @@ function App() {
             return obj.id === "easy2stakeEvent1";
           });
 
-          
           const midleEvent = responseData.events.filter((obj) => {
             return obj.id === "midleEvent1";
           });
@@ -996,7 +991,6 @@ function App() {
             setImmutableEarnToken(userEarnedusd / immutablePrice);
           }
 
-
           if (easy2stakeEvent && easy2stakeEvent[0]) {
             userActiveEvents = userActiveEvents + 1;
 
@@ -1010,8 +1004,9 @@ function App() {
             setEasy2StakeEarnToken(userEarnedusd / bnbPrice);
           }
 
-
           if (taikoEvent && taikoEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
               taikoEvent[0].reward.earn.multiplier;
@@ -1114,6 +1109,8 @@ function App() {
           }
 
           if (coingeckoEvent && coingeckoEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
             const usdValue =
@@ -1137,6 +1134,8 @@ function App() {
             }
           }
           if (skaleEvent && skaleEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const points = skaleEvent[0].reward.earn.totalPoints;
             setSkalePoints(points);
             const usdValue =
@@ -3587,7 +3586,6 @@ function App() {
         eventDate: "Jul 01, 2024",
       },
     },
-
     {
       title: "Base",
       logo: baseLogo2,
@@ -3658,19 +3656,18 @@ function App() {
     {
       title: "Taiko",
       logo: taikoLogo,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
       location: [-0.06124018456762751, 0.11788845062255861],
       image: "taikoBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
       marker: markers.treasureMarker,
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Aug 19, 2024",
+      eventDate: "Dec 03, 2024",
       backgroundImage: taikoBg,
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
@@ -3680,7 +3677,7 @@ function App() {
         chain: "Taiko",
         linkState: "taiko",
         rewards: "TAIKO",
-        status: "Expired",
+        status: "Live",
         id: "event22",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in TAIKO Rewards",
@@ -3690,7 +3687,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Aug 19, 2024",
+        eventDate: "Dec 03, 2024",
       },
     },
     {
@@ -3847,32 +3844,37 @@ function App() {
     {
       title: "SKALE",
       logo: skaleLogo,
-      eventStatus: "Expired",
+      eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Apr 15, 2024",
+      eventDate: "Dec 03, 2024",
       backgroundImage: upcomingSkale,
       userEarnUsd: skaleEarnUsd,
       userEarnCrypto: skaleEarnToken,
       userEarnPoints: skalePoints,
+      image: "skaleBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
       popupInfo: {
         title: "SKALE",
         chain: "SKALE Nebula Hub",
         linkState: "skale",
         rewards: "SKL",
-        status: "Expired",
+        status: "Live",
         id: "event11",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in SKL Rewards",
-        eventDuration: skaleLastDay,
+        eventDuration: taikoLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
-        eventDate: "Apr 15, 2024",
+        // learnMore:
+        //   "/news/661d1671299713edd050794b/SKALE-Treasure-Hunt-Event-Live-in-the-World-of-Dypians",
+        learnMore: "",
+        eventDate: "Dec 03, 2024",
       },
     },
     {
@@ -3985,32 +3987,39 @@ function App() {
 
     {
       title: "CoinGecko",
+      image: "coingeckoBanner.png",
       logo: coingecko,
-      eventStatus: "Expired",
-      totalRewards: "$10,000 in BNB Rewards",
+      eventStatus: "Live",
+      totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
-      eventDate: "Ended",
+      eventDate: "Dec 03, 2024",
       backgroundImage: coingeckoUpcoming,
       userEarnUsd: userEarnUsd,
       userEarnCrypto: userEarnETH,
       userEarnPoints: userPoints,
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+
+      marker: markers.treasureMarker,
       popupInfo: {
         title: "CoinGecko",
         chain: "BNB Chain",
         linkState: "coingecko",
         rewards: "BNB",
-        status: "Expired",
+        status: "Live",
         id: "event3",
         eventType: "Explore & Mine",
-        totalRewards: "$10,000 in BNB Rewards",
-        eventDuration: coingeckoLastDay,
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: taikoLastDay,
         minRewards: "1",
         maxRewards: "100",
         minPoints: "5,000",
         maxPoints: "50,000",
-        learnMore:
-          "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        // learnMore:
+        //   "/news/6511853f7531f3d1a8fbba67/CoinGecko-Treasure-Hunt-Event",
+        learnMore: "",
+        eventDate: "Dec 03, 2024",
       },
     },
     {
@@ -5156,8 +5165,6 @@ function App() {
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
-
-
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -5165,6 +5172,7 @@ function App() {
                 onCloseSync={() => {
                   setshowSync(false);
                 }}
+                coingeckoEarnUsd={userEarnUsd}
               />
             }
           />
@@ -5228,7 +5236,6 @@ function App() {
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
-
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -5236,6 +5243,7 @@ function App() {
                 onCloseSync={() => {
                   setshowSync(false);
                 }}
+                coingeckoEarnUsd={userEarnUsd}
               />
             }
           />
@@ -5963,7 +5971,7 @@ function App() {
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
                 midleEarnUsd={midleEarnUsd}
-
+                coingeckoEarnUsd={userEarnUsd}
                 onManageLogin={(value1, value2) => {
                   handleManageLogin(value1, value2);
                 }}
@@ -6165,7 +6173,22 @@ function App() {
             }
           />
           {/* <Route exact path="/buy" element={<Buy />} /> */}
-          <Route exact path="/governance" element={<Governance />} />
+          <Route
+            exact
+            path="/governance"
+            element={
+              <Governance
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                binanceW3WProvider={library}
+                wodBalance={wodBalance}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+              />
+            }
+          />
           <Route exact path="/campaigns" element={<Campaigns />} />
           <Route
             exact
