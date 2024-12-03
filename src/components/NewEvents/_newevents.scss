@@ -205,7 +205,7 @@
   pointer-events: none;
 }
 .beast-siege {
-  background: linear-gradient(109deg, #29302C 0%, #29302C 49%);
+  background: linear-gradient(109deg, #29302c 0%, #29302c 49%);
   position: relative;
 }
 
@@ -225,7 +225,7 @@
   pointer-events: none;
 }
 .eagle-siege {
-  background: linear-gradient(109deg, #004E7F 0%, #073755 49%);
+  background: linear-gradient(109deg, #004e7f 0%, #073755 49%);
   position: relative;
 }
 
@@ -245,7 +245,7 @@
   pointer-events: none;
 }
 .scorpion-siege {
-  background: linear-gradient(109deg, #732802 0%, #AB621E 49%);
+  background: linear-gradient(109deg, #732802 0%, #ab621e 49%);
   position: relative;
 }
 
@@ -265,7 +265,7 @@
   pointer-events: none;
 }
 .cyclops-siege {
-  background: linear-gradient(109deg, #0B3398 0%, #062663 49%);
+  background: linear-gradient(109deg, #0b3398 0%, #062663 49%);
   position: relative;
 }
 
@@ -342,11 +342,32 @@
   line-height: normal;
   border: none;
   width: fit-content;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
 }
-
 .beast-siege-info-wrapper {
   border-radius: 12px;
   height: 380px;
+}
+
+.beast-siege-btn-inactive{
+  border-radius: 12px;
+  background: black;
+  color: white;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+  width: fit-content;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
 }
 
 .dragon-siege-info {
@@ -377,4 +398,34 @@
 .cyclops-siege-info {
   background-image: url("./assets/banners/stoneEyeBanner.webp");
   background-size: cover;
+}
+
+.luminosity {
+  mix-blend-mode: luminosity;
+}
+
+.dragon-button{
+  color: #2B353E !important;
+  background: #FFEACD !important;
+}
+
+.bear-button{
+  color: #018CAC !important;
+  background: #68E9FE !important;
+}
+.beast-button{
+  color: #27302A !important;
+  background: #BEE3A8 !important;
+}
+.eagle-button{
+  color: #053E62 !important;
+  background: #D6F4FF !important;
+}
+.scorpion-button{
+  color: #7A2F06 !important;
+  background: #FFD695 !important;
+}
+.cyclops-button{
+  color: #0A308D !important;
+  background: #F1EDFF !important;
 }

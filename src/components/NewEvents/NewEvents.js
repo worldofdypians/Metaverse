@@ -115,25 +115,9 @@ import { CircularProgress } from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
-      {/* <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">{days < 10 ? "0" + days : days}</h6>
-        <span className="days3">Days</span>
-      </div>
-      <h6 className="mint-time3 mb-0">:</h6> */}
-
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">{hours < 10 ? "0" + hours : hours}</h6>
-        <span className="days3">Hours</span>
-      </div>
-      <h6 className="mint-time3 mb-0">:</h6>
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">
-          {minutes < 10 ? "0" + minutes : minutes}
-        </h6>
-        <span className="days3">Minutes</span>
-      </div>
-    </div>
+    <span className="beast-siege-wod-price">
+      {hours}h:{minutes}m
+    </span>
   );
 };
 
@@ -1483,6 +1467,8 @@ const NewEvents = ({
   };
 
   const handleApprovalCyclops = async () => {
+    console.log("herllo");
+
     setCyclopsBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -1665,6 +1651,7 @@ const NewEvents = ({
       setScorpionBundleState("initial");
     }
   }, [wallet, chainId, email]);
+
   const eventinfos = [
     {
       id: "dragon",
@@ -2011,6 +1998,7 @@ const NewEvents = ({
       "Extra rewards are given based on leaderboard rank as long as the golden pass is active.",
     ],
   };
+
 
   useEffect(() => {
     const today = new Date();
@@ -3433,33 +3421,901 @@ const NewEvents = ({
                           </div> */}
                           <div className="row gap-3 gap-xxl-0">
                             <div className="col-12 col-xxl-6">
-                              <div className={`beast-siege-wrapper ${activeEvent.class} p-3 d-flex flex-column justify-content-between w-100`}>
+                              <div
+                                className={`beast-siege-wrapper ${
+                                  activeEvent.class
+                                } ${
+                                  adjustedDay === activeEvent.day
+                                    ? ""
+                                    : "luminosity"
+                                } p-3 d-flex flex-column justify-content-between w-100`}
+                              >
                                 <div className="d-flex flex-column gap-1">
                                   <h6 className="beast-siege-title mb-0">
                                     {activeEvent.title}
                                   </h6>
-                                  <span className="beast-siege-sub">Ready</span>
-                                </div>
-                                <div className="d-flex flex-column gap-2">
-                                  <div className="d-flex align-items-end gap-1">
-                                    <span className="beast-siege-wod-price">
-                                      120.5 WOD
+                                  {/* {adjustedDay === activeEvent.day ? (
+                                    <span className="beast-siege-sub">
+                                      Ready
                                     </span>
-                                    <span className="beast-siege-usd-price">
-                                      ($3.5)
+                                  ) : (
+                                    <span className="beast-siege-sub">
+                                      Available on {activeEvent.dayTextLong}
                                     </span>
-                                  </div>
-                                  <span className="beast-siege-event-price">
-                                    Event Price
-                                  </span>
+                                  )} */}
+                                  {adjustedDay === 1 &&
+                                  activeEvent.day === 1 ? (
+                                    <>
+                                      {hasBoughtDragon ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 2 &&
+                                    activeEvent.day === 2 ? (
+                                    <>
+                                      {hasBoughtBear ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 3 &&
+                                    activeEvent.day === 3 ? (
+                                    <>
+                                      {hasBoughtBeast ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 4 &&
+                                    activeEvent.day === 4 ? (
+                                    <>
+                                      {hasBoughtEagle ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 6 &&
+                                    activeEvent.day === 6 ? (
+                                    <>
+                                      {hasBoughtScorpion ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 7 &&
+                                    activeEvent.day === 7 ? (
+                                    <>
+                                      {hasBoughtCyclops ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <span className="beast-siege-sub">
+                                      Available on {activeEvent.dayTextLong}
+                                    </span>
+                                  )}
                                 </div>
-                                <button className="beast-siege-btn px-4 py-2">
-                                  Buy
-                                </button>
+                                {adjustedDay === 1 ? (
+                                  <>
+                                    {hasBoughtDragon &&
+                                    adjustedDay === 1 ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 2 ? (
+                                  <>
+                                    {hasBoughtBear ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 3 ? (
+                                  <>
+                                    {hasBoughtBeast ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 4 ? (
+                                  <>
+                                    {hasBoughtEagle ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 6 ? (
+                                  <>
+                                    {hasBoughtScorpion ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 7 ? (
+                                  <>
+                                    {hasBoughtCyclops ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <span className="beast-siege-event-price">
+                                          Ends in:
+                                        </span>
+                                        <Countdown
+                                          renderer={renderer}
+                                          date={midnightUTC}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex align-items-end gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              activeEvent.wodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                                {adjustedDay === 1 && activeEvent.day === 1 ? (
+                                  <>
+                                    {hasBoughtDragon ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                dragonBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                dragonBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                dragonShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn dragon-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalDragon()
+                                              }
+                                            >
+                                              {dragonBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  role="status"
+                                                  style={{ color: "#2b353e" }}
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                dragonDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                dragonShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : dragonShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn dragon-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositDragon()
+                                              }
+                                            >
+                                              {dragonDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light dragon-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 2 &&
+                                  activeEvent.day === 2 ? (
+                                  <>
+                                    {hasBoughtBear ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                bearBundleState === "deposit" ||
+                                                bearBundleState === "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                bearBundleState === "deposit" ||
+                                                checkWallet === false ||
+                                                bearShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn bear-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBear()
+                                              }
+                                            >
+                                              {bearBundleState === "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                bearDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                bearShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : bearShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn bear-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBear()
+                                              }
+                                            >
+                                              {bearDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light bear-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 3 &&
+                                  activeEvent.day === 3 ? (
+                                  <>
+                                    {hasBoughtBeast ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                beastBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                beastBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                beastShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn beast-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalBeast()
+                                              }
+                                            >
+                                              {beastBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                beastDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                beastShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : beastShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn beast-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositBeast()
+                                              }
+                                            >
+                                              {beastDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light beast-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 4 &&
+                                  activeEvent.day === 4 ? (
+                                  <>
+                                    {hasBoughtEagle ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                eagleBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                eagleBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                eagleShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn eagle-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalEagle()
+                                              }
+                                            >
+                                              {eagleBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                eagleDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                eagleShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : eagleShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn eagle-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositEagle()
+                                              }
+                                            >
+                                              {eagleDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light eagle-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 6 &&
+                                  activeEvent.day === 6 ? (
+                                  <>
+                                    {hasBoughtScorpion ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                scorpionBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                scorpionBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                scorpionShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn scorpion-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalScorpion()
+                                              }
+                                            >
+                                              {scorpionBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                scorpionDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                scorpionShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : scorpionShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn scorpion-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositScorpion()
+                                              }
+                                            >
+                                              {scorpionDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : adjustedDay === 7 &&
+                                  activeEvent.day === 7 ? (
+                                  <>
+                                    {hasBoughtCyclops ? (
+                                      <div style={{ height: "38px" }}></div>
+                                    ) : (
+                                      <div className="d-flex align-items-center gap-2">
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                cyclopsBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                cyclopsBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                cyclopsShowApproval === false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn cyclops-button"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalCyclops()
+                                              }
+                                            >
+                                              {cyclopsBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                cyclopsDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                cyclopsShowApproval === true &&
+                                                checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : cyclopsShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn cyclops-button"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositCyclops()
+                                              }
+                                            >
+                                              {cyclopsDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <div style={{ height: "38px" }}></div>
+                                )}
                               </div>
                             </div>
                             <div className="col-12 col-xxl-6">
-                              <div className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100`}>
+                              <div
+                                className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100`}
+                              >
                                 <div className="d-flex flex-column gap-3">
                                   <div className="d-flex flex-column gap-2">
                                     <h6
@@ -3510,6 +4366,17 @@ const NewEvents = ({
                                   </div>
                                 </div>
                               </div>
+                            </div>
+                            <div className="col-12 mt-2">
+                              <span
+                                className="statusText"
+                                style={{
+                                  color: statusColor,
+                                  width: "fit-content",
+                                }}
+                              >
+                                {status}
+                              </span>
                             </div>
                           </div>
                         </div>
