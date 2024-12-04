@@ -7,7 +7,7 @@ import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import plusIcon from "./assets/plusIcon.svg";
 import minusIcon from "./assets/minusIcon.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
+import wodIcon from "./assets/wodIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import useWindowSize from "../../hooks/useWindowSize";
 import successMark from "./assets/successMark.svg";
@@ -18,13 +18,13 @@ const DomainModal = ({
   available,
   price,
   chainId,
-  bnbUSDPrice,
+  wodPrice,
   onRegister,
   loading,
   successMessage,
   successDomain,
   metadata,
-  bscAmount,
+  wodBalance,
 }) => {
   const windowSize = useWindowSize();
   const [domainSearch, setDomainSearch] = useState("");
@@ -66,7 +66,7 @@ const DomainModal = ({
           <>
             {" "}
             <div className="d-flex align-items-center justify-content-between">
-              <h6 className="popup-title mb-0">BNB Domain Name</h6>
+              <h6 className="popup-title mb-0">WOD Domain Name</h6>
               <img
                 src={popupXmark}
                 alt=""
@@ -117,28 +117,7 @@ const DomainModal = ({
                       <span className="name-service mb-0">Your Domain</span>
                     </div>
                   </div>
-                  {/* <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-            <div className="d-flex align-items-center gap-1">
-              <div className="d-flex flex-column align-items-end gap-1">
-                <div className="domain-price mb-0">
-                  ${getFormattedNumber(price * bnbUSDPrice, 2)}
-                </div>
-                <span className="bnb-price-domain">
-                  {getFormattedNumber(price, 2)} BNB
-                </span>
-              </div>
-              <span className="name-service">/year</span>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <span className="domain-register mb-0">Register now</span>
-              <img
-                src={registerDomainIcon}
-                width={10}
-                height={10}
-                alt=""
-              />
-            </div>
-          </div> */}
+           
                   <div className="d-flex flex-lg-column flex-row gap-1">
                     <span className="name-service mb-0">Expires on </span>
                     <span className="name-service mb-0">
@@ -174,19 +153,19 @@ const DomainModal = ({
                   >
                     <div className="d-flex align-items-center gap-2">
                       <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-                        <span className="mb-0">.bnb</span>
+                        <span className="mb-0">.wod</span>
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center gap-2">
                           <h6 className="domain-name mb-0">
-                            {domainSearch}.bnb
+                            {domainSearch}.wod
                           </h6>
                           <div className="domain-available-tag d-none d-lg-flex px-2">
                             <span className="mb-0">Available</span>
                           </div>
                         </div>
                         <span className="name-service mb-0">
-                          BNB Name Service
+                          WOD Name Service
                         </span>
                       </div>
                     </div>
@@ -194,10 +173,10 @@ const DomainModal = ({
                       <div className="d-flex align-items-center gap-1">
                         <div className="d-flex flex-column align-items-end gap-1">
                           <div className="domain-price mb-0">
-                            ${getFormattedNumber(price * bnbUSDPrice, 2)}
+                            ${getFormattedNumber(price * wodPrice, 2)}
                           </div>
                           <span className="bnb-price-domain">
-                            {getFormattedNumber(price, 2)} BNB
+                            {getFormattedNumber(price, 2)} WOD
                           </span>
                         </div>
                         <span className="name-service">/year</span>
@@ -222,12 +201,12 @@ const DomainModal = ({
                   >
                     <div className="d-flex align-items-center gap-2">
                       <div className="bnb-domain-icon-orange d-flex align-items-center justify-content-center">
-                        <span className="mb-0">.bnb</span>
+                        <span className="mb-0">.wod</span>
                       </div>
                       <div className="d-flex flex-column">
-                        <h6 className="domain-name mb-0">{domainSearch}.bnb</h6>
+                        <h6 className="domain-name mb-0">{domainSearch}.wod</h6>
                         <span className="name-service mb-0">
-                          BNB Name Service
+                          WOD Name Service
                         </span>
                       </div>
                     </div>
@@ -235,7 +214,7 @@ const DomainModal = ({
                       <span className="name-service mb-0">
                         Domain Unavailable
                       </span>
-                      {/* <span className="name-service mb-0">November 14, 2024</span> */}
+                      
                     </div>
                   </div>
                 ) : (
@@ -248,19 +227,19 @@ const DomainModal = ({
                   <div className="selected-domain-search-item w-100 px-3 py-4 mt-4 d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-                        <span className="mb-0">.bnb</span>
+                        <span className="mb-0">.wod</span>
                       </div>
                       <div className="d-flex flex-column">
                         <div className="d-flex align-items-center gap-2">
                           <h6 className="domain-name mb-0">
-                            {domainSearch}.bnb
+                            {domainSearch}.wod
                           </h6>
                           <div className="domain-available-tag d-none d-lg-flex d-none d-lg-flex px-2">
                             <span className="mb-0 ">Available</span>
                           </div>
                         </div>
                         <span className="name-service mb-0">
-                          BNB Name Service
+                          WOD Name Service
                         </span>
                       </div>
                     </div>
@@ -268,10 +247,10 @@ const DomainModal = ({
                       <div className="d-flex align-items-center gap-1">
                         <div className="d-flex flex-column align-items-end gap-1">
                           <div className="domain-price mb-0">
-                            ${getFormattedNumber(price * bnbUSDPrice, 2)}
+                            ${getFormattedNumber(price * wodPrice, 2)}
                           </div>
                           <span className="bnb-price-domain">
-                            {getFormattedNumber(price, 2)} BNB
+                            {getFormattedNumber(price, 2)} WOD
                           </span>
                         </div>
                         <span className="name-service">/year</span>
@@ -315,7 +294,7 @@ const DomainModal = ({
                     </div>
                     <div className="d-flex flex-column align-items-start align-items-lg-end gap-2 w-100">
                       <span className="bnb-balance mb-0">
-                        My Balance: {getFormattedNumber(bscAmount, 2)} BNB
+                        My Balance: {getFormattedNumber(wodBalance, 2)} WOD
                       </span>
                       <div
                         className="selected-domain-search-item p-2 justify-content-between d-flex align-items-center gap-4 gap-lg-5"
@@ -332,7 +311,7 @@ const DomainModal = ({
                         </span>
                         <div className="d-flex align-items-center gap-2">
                           <div className="d-flex align-items-center gap-1">
-                            <img src={bnbIcon} alt="" />
+                            <img src={wodIcon} alt="" />
                             <span className="domain-bnb-value mb-0">
                               {getFormattedNumber(price * registrationYear, 2)}
                             </span>
@@ -340,7 +319,7 @@ const DomainModal = ({
                           <span className="domain-usd-value mb-0">
                             $
                             {getFormattedNumber(
-                              price * bnbUSDPrice * registrationYear,
+                              price * wodPrice * registrationYear,
                               2
                             )}
                           </span>
@@ -421,188 +400,6 @@ const DomainModal = ({
         ) : (
           <></>
         )}
-
-        {/* <div className="domain-search-items mt-3">
-        <div className="domain-search-item d-flex align-items-center justify-content-between p-3">
-          <div className="d-flex align-items-center gap-2">
-          <div className="bnb-domain-icon-orange d-flex align-items-center justify-content-center">
-            <span className="mb-0">.bnb</span>
-          </div>
-          <div className="d-flex flex-column">
-            <h6 className="domain-name mb-0">
-              example.bnb
-            </h6>
-            <span className="name-service mb-0">
-                BNB Name Service
-            </span>
-          </div>
-          </div>
-          <div className="d-flex flex-column flex-lg-row">
-          <span className="name-service mb-0">Expires on</span>
-          <span className="name-service mb-0">November 14, 2024</span>
-          </div>
-        </div>
-        <div className="domain-search-item d-flex align-items-center justify-content-between p-3">
-          <div className="d-flex align-items-center gap-2">
-          <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-            <span className="mb-0">.bnb</span>
-          </div>
-          <div className="d-flex flex-column">
-            <div className="d-flex align-items-center gap-2">
-            <h6 className="domain-name mb-0">
-              example.bnb
-            </h6>
-            <div className="domain-available-tag d-none d-lg-flex px-2">
-              <span className="mb-0">Available</span>
-            </div>
-            </div>
-            <span className="name-service mb-0">
-                BNB Name Service
-            </span>
-          </div>
-          </div>
-            <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-              <div className="d-flex align-items-end gap-1">
-                <div className="domain-price mb-0">$5.00</div>
-                <span className="name-service">/year</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
-              </div>
-            </div>
-        </div>
-        <div className="domain-search-item d-flex align-items-center justify-content-between p-3">
-          <div className="d-flex align-items-center gap-2">
-          <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-            <span className="mb-0">.bnb</span>
-          </div>
-          <div className="d-flex flex-column">
-            <div className="d-flex align-items-center gap-2">
-            <h6 className="domain-name mb-0">
-              example.bnb
-            </h6>
-            <div className="domain-available-tag d-none d-lg-flex px-2">
-              <span className="mb-0">Available</span>
-            </div>
-            </div>
-            <span className="name-service mb-0">
-                BNB Name Service
-            </span>
-          </div>
-          </div>
-            <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-              <div className="d-flex align-items-end gap-1">
-                <div className="domain-price mb-0">$5.00</div>
-                <span className="name-service">/year</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
-              </div>
-            </div>
-        </div>
-        <div className="domain-search-item d-flex align-items-center justify-content-between p-3">
-          <div className="d-flex align-items-center gap-2">
-          <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-            <span className="mb-0">.bnb</span>
-          </div>
-          <div className="d-flex flex-column">
-            <div className="d-flex align-items-center gap-2">
-            <h6 className="domain-name mb-0">
-              example.bnb
-            </h6>
-            <div className="domain-available-tag d-none d-lg-flex px-2">
-              <span className="mb-0">Available</span>
-            </div>
-            </div>
-            <span className="name-service mb-0">
-                BNB Name Service
-            </span>
-          </div>
-          </div>
-            <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-              <div className="d-flex align-items-end gap-1">
-                <div className="domain-price mb-0">$5.00</div>
-                <span className="name-service">/year</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
-              </div>
-            </div>
-        </div>
-      </div> */}
-        {/* <div className="domain-search-items d-flex align-items-center justify-content-center mt-3 p-5">
-        <span className="no-domains-text mb-0">
-        No .bnb domain names are currently available for your search
-        </span>
-      </div> */}
-        {/* <div className="d-flex flex-column gap-3">
-          <div className="selected-domain-search-item w-100 px-3 py-4 py-lg-5 mt-3 d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <div className="bnb-domain-icon-green d-flex align-items-center justify-content-center">
-                <span className="mb-0">.bnb</span>
-              </div>
-              <div className="d-flex flex-column">
-                <div className="d-flex align-items-center gap-2">
-                  <h6 className="domain-name mb-0">example.bnb</h6>
-                  <div className="domain-available-tag d-none d-lg-flex d-none d-lg-flex px-2">
-                    <span className="mb-0 ">Available</span>
-                  </div>
-                </div>
-                <span className="name-service mb-0">BNB Name Service</span>
-              </div>
-            </div>
-            <div className="d-flex align-items-center justify-content-center flex-column gap-2">
-              <div className="d-flex align-items-end gap-1">
-                <div className="domain-price mb-0">$5.00</div>
-                <span className="name-service">/year</span>
-              </div>
-              <div className="d-flex align-items-center gap-2">
-                <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
-              </div>
-            </div>
-          </div>
-          <div className="d-flex align-items-center justify-content-between">
-            <div className="d-flex flex-column gap-2">
-              <span className="registration-year mb-0">Registration Year</span>
-              <div
-                className="selected-domain-search-item p-2 d-flex align-items-center gap-4 gap-lg-5"
-                style={{ borderRadius: "8px" }}
-              >
-                <img src={minusIcon} alt="" />
-                <span className="registration-year-amount mb-0">1</span>
-                <img src={plusIcon} alt="" />
-              </div>
-            </div>
-            <div className="d-flex flex-column align-items-end gap-2">
-              <span className="bnb-balance mb-0">My Balance: 2.14 WBNB</span>
-              <div
-                className="selected-domain-search-item p-2 d-flex align-items-center gap-4 gap-lg-5"
-                style={{ borderRadius: "8px" }}
-              >
-                <span className="registration-year-amount mb-0">
-                  Total Price
-                </span>
-                <div className="d-flex align-items-center gap-2">
-                  <div className="d-flex align-items-center gap-1">
-                    <img src={bnbIcon} alt="" />
-                    <span className="domain-bnb-value mb-0">0.025</span>
-                  </div>
-                  <span className="domain-usd-value mb-0">$100.00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr className="domain-popup-divider w-100" />
-         <div className="d-flex w-100 justify-content-center">
-         <div className="linear-border">
-            <button className="btn filled-btn px-4">Register</button>
-          </div>
-         </div>
-        </div> */}
       </div>
     </OutsideClickHandler>
   );

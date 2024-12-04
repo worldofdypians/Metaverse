@@ -1505,34 +1505,86 @@ function App() {
 
   const web3Name = createWeb3Name();
 
+  const spaceid_price = [
+    {
+      5: {
+        wodPrice: 50,
+      },
+    },
+    {
+      4: {
+        wodPrice: 250,
+      },
+    },
+    {
+      3: {
+        wodPrice: 550,
+      },
+    },
+  ];
+
+  const searchWodDomain = async () => {
+    const spaceid_main_sc = new window.bscWeb3.eth.Contract(
+      window.SPACEID_ABI,
+      window.config.spaceId_address
+    );
+
+    const spaceid_searchSc = new window.bscWeb3.eth.Contract(
+      window.SPACEID_SEARCH_ABI,
+      window.config.spaceId_search_address
+    );
+  };
+
   const searchDomain = async (domain) => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance") {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const register = new SIDRegister({ signer, chainId: 56 });
-      const available = await register.getAvailable(domain).catch((e) => {
-        console.error(e);
-      });
-      const price = await register.getRentPrice(domain, 1);
-      const newPrice = new BigNumber(price._hex / 1e18).toFixed();
-      setDomainPrice(newPrice);
-      if (domain == "") {
-        setAvailableDomain("initial");
-      } else {
-        setAvailableDomain(available);
-      }
-    } else if (window.WALLET_TYPE === "binance" && library) {
-      const provider = library;
-      const signer = provider.getSigner();
-      const register = new SIDRegister({ signer, chainId: 56 });
-      const available = await register.getAvailable(domain);
-      const price = await register.getRentPrice(domain, 1);
-      const newPrice = new BigNumber(price._hex / 1e18).toFixed();
-      setDomainPrice(newPrice);
-      if (domain == "") {
-        setAvailableDomain("initial");
-      } else {
-        setAvailableDomain(available);
+    if (domain && domain.length >= 3) {
+      if (window.ethereum && window.WALLET_TYPE !== "binance") {
+        // const provider = new ethers.providers.Web3Provider(window.ethereum);
+        // const signer = provider.getSigner();
+        // const register = new SIDRegister({ signer, chainId: 56 });
+        // const available = await register.getAvailable(domain).catch((e) => {
+        //   console.error(e);
+        // });
+        // const price = await register.getRentPrice(domain, 1);
+        // const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+        // setDomainPrice(newPrice);
+        // if (domain == "") {
+        //   setAvailableDomain("initial");
+        // } else {
+        //   setAvailableDomain(available);
+        // }
+        const spaceid_searchSc = new window.bscWeb3.eth.Contract(
+          window.SPACEID_SEARCH_ABI,
+          window.config.spaceId_search_address
+        );
+
+        const bytes = ethers.utils.toUtf8Bytes(domain);
+
+        const hash = ethers.utils.keccak256(bytes);
+
+        const id = ethers.BigNumber.from(hash);
+        const isAvailable = await spaceid_searchSc.methods
+          .available(id)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+        setAvailableDomain(isAvailable);
+        const priceObject = spaceid_price.find((item) => item[domain.length > 5 ? 5 : domain.length]);
+        console.log('priceObjectpriceObjectpriceObject',priceObject)
+        setDomainPrice(priceObject[domain.length].wodPrice);
+      } else if (window.WALLET_TYPE === "binance" && library) {
+        const provider = library;
+        const signer = provider.getSigner();
+        const register = new SIDRegister({ signer, chainId: 56 });
+        const available = await register.getAvailable(domain);
+        const price = await register.getRentPrice(domain, 1);
+        const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+        setDomainPrice(newPrice);
+        if (domain == "") {
+          setAvailableDomain("initial");
+        } else {
+          setAvailableDomain(available);
+        }
       }
     }
   };
@@ -3282,7 +3334,6 @@ function App() {
       });
   };
 
-
   const fetchCorePrice = async () => {
     await axios
       .get(
@@ -3365,10 +3416,11 @@ function App() {
     fetchTaikoPrice();
     fetchCookiePrice();
     fetchCorePrice();
-    fetchMatchainPrice()
+    fetchMatchainPrice();
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
+    searchWodDomain();
   }, []);
 
   useEffect(() => {
@@ -3678,7 +3730,7 @@ function App() {
         learnMore: "",
         eventDate: "Dec 04, 2024",
       },
-    }, 
+    },
     {
       title: "VICTION",
       logo: victionLogo,
@@ -3714,7 +3766,7 @@ function App() {
         eventDate: "Nov 29, 2024",
       },
     },
-  
+
     {
       title: "Easy2Stake",
       logo: easy2stakeLogo,
@@ -3794,11 +3846,6 @@ function App() {
       },
     },
 
-
-
-
-
-   
     {
       title: "Cookie3",
       logo: cookie3Logo,
@@ -3838,7 +3885,6 @@ function App() {
       },
     },
 
-
     {
       title: "SEI",
       logo: seiLogo,
@@ -3876,7 +3922,7 @@ function App() {
         eventDate: "Dec 05, 2024",
       },
     },
-     {
+    {
       title: "Manta",
       logo: mantaLogo,
       eventStatus: "Coming Soon",
@@ -4057,7 +4103,6 @@ function App() {
         eventDate: "Dec 22, 2023",
       },
     },
-
 
     {
       title: "Dypius",
@@ -6732,13 +6777,13 @@ function App() {
           available={availableDomain}
           price={domainPrice}
           chainId={networkId}
-          bnbUSDPrice={bnbUSDPrice}
+          wodPrice={wodPrice}
           onRegister={registerDomain}
           loading={loadingDomain}
           successMessage={successMessage}
           successDomain={successDomain}
           metadata={domainMetaData}
-          bscAmount={bscAmount}
+          wodBalance={wodBalance}
         />
       )}
 

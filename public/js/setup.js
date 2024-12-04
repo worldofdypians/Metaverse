@@ -370,6 +370,16 @@ window.config = {
   //===========================================================================
   //GOVERNANCE
   governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
+
+  //===========================================================================
+  //SPACEID
+  spaceId_address: "0xD7b837A0E388B4c25200983bdAa3EF3A83ca86b7",
+  spaceId_wod_identifier:
+    "1533103087848007402528814703718465546414937899778836453330234761390470",
+  spaceId_resolver_address: "0xd8c34a379BD95c3EfFF2CA23Dfa27D83962dc44a",
+  spaceId_search_address: "0x64483f365bff31bac48937b9f9defeeead34f0fd",
+
+  spaceId_duration: 31556952,
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
@@ -3902,6 +3912,462 @@ async function myNftList(address) {
     return result;
   });
 }
+
+window.SPACEID_ABI = [{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"duration","type":"uint256"}],"name":"DurationTooShort","type":"error"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"name","type":"string"}],"name":"NameNotAvailable","type":"error"},{"inputs":[],"name":"NotQualifiedRegister","type":"error"},{"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"realPrice","type":"uint256"}],"name":"SimulateERC20Price","type":"error"},{"inputs":[{"internalType":"uint256","name":"realPrice","type":"uint256"}],"name":"SimulatePrice","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"bytes32","name":"label","type":"bytes32"},{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":false,"internalType":"uint256","name":"baseCost","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"expires","type":"uint256"}],"name":"NameRegistered","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"string","name":"name","type":"string"},{"indexed":true,"internalType":"bytes32","name":"label","type":"bytes32"},{"indexed":false,"internalType":"uint256","name":"cost","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"expires","type":"uint256"}],"name":"NameRenewed","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"bool","name":"hasMintCap","type":"bool"}],"name":"SetHasMintCap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"maxDomainLength","type":"uint256"}],"name":"SetMaxDomainLength","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"minDomainLength","type":"uint256"}],"name":"SetMinDomainLength","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"minRegistrationDuration","type":"uint256"}],"name":"SetMinRegistrationDuration","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"minRenewDuration","type":"uint256"}],"name":"SetMinRenewDuration","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"mintCap","type":"uint256"}],"name":"SetMintCap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetPointHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetPriceHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetQualificationHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetRenewPointHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetRenewPriceHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetRenewRewardHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"hook","type":"address"}],"name":"SetRewardHook","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"base","type":"address"}],"name":"SetTldBase","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"priceOracle","type":"address"}],"name":"SetTldPriceOracle","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"identifier","type":"uint256"},{"indexed":false,"internalType":"address","name":"token","type":"address"}],"name":"SetTldPricingToken","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"name","type":"string"}],"name":"available","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"resolver","type":"address"},{"internalType":"bool","name":"setTldName","type":"bool"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRegister","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"resolver","type":"address"},{"internalType":"bool","name":"setTldName","type":"bool"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRegisterSimulate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"resolver","type":"address"},{"internalType":"bool","name":"setTldName","type":"bool"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRegisterWithERC20","outputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"total","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"resolver","type":"address"},{"internalType":"bool","name":"setTldName","type":"bool"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRegisterWithERC20Simulate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRenew","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"initiatedBy","type":"address"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRenewSimulate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRenewWithERC20","outputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"total","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string[]","name":"names","type":"string[]"},{"internalType":"uint256","name":"duration","type":"uint256"},{"internalType":"address","name":"initiatedBy","type":"address"},{"internalType":"bytes[]","name":"extraData","type":"bytes[]"}],"name":"bulkRenewWithERC20Simulate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"defaultPriceOracle","outputs":[{"internalType":"contract IPriceOracle","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"erc20PlatformFeeBalances","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"}],"name":"getPriceOracle","outputs":[{"internalType":"contract IPriceOracle","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"contract ISANN","name":"_sann","type":"address"},{"internalType":"contract IPlatformConfig","name":"_platformConfig","type":"address"},{"internalType":"contract IPrepaidPlatformFee","name":"_prepaidPlatformFee","type":"address"},{"internalType":"contract IPriceOracle","name":"_priceOracle","type":"address"},{"internalType":"contract IReverseRegistrar","name":"_reverseRegistrar","type":"address"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"platformConfig","outputs":[{"internalType":"contract IPlatformConfig","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"platformFeeBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"prepaidPlatformFee","outputs":[{"internalType":"contract IPrepaidPlatformFee","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"_name","type":"string"},{"internalType":"address","name":"_buyer","type":"address"},{"internalType":"uint256","name":"_duration","type":"uint256"},{"internalType":"bytes","name":"_extraData","type":"bytes"}],"name":"priceAfterDiscount","outputs":[{"internalType":"uint256","name":"cost","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"recoverFunds","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"}],"name":"rentERC20Price","outputs":[{"components":[{"internalType":"uint256","name":"base","type":"uint256"},{"internalType":"uint256","name":"premium","type":"uint256"}],"internalType":"struct IPriceOracle.Price","name":"price","type":"tuple"},{"internalType":"address","name":"token","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"}],"name":"rentPrice","outputs":[{"components":[{"internalType":"uint256","name":"base","type":"uint256"},{"internalType":"uint256","name":"premium","type":"uint256"}],"internalType":"struct IPriceOracle.Price","name":"price","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"duration","type":"uint256"}],"name":"rentPriceInUSD","outputs":[{"components":[{"internalType":"uint256","name":"base","type":"uint256"},{"internalType":"uint256","name":"premium","type":"uint256"}],"internalType":"struct IPriceOracle.Price","name":"price","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"reverseRegistrar","outputs":[{"internalType":"contract IReverseRegistrar","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"sann","outputs":[{"internalType":"contract ISANN","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"_maxDomainLength","type":"uint256"}],"name":"setMaxDomainLength","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"_minDomainLength","type":"uint256"}],"name":"setMinDomainLength","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"_minRegistrationDuration","type":"uint256"}],"name":"setMinRegistrationDuration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"_minRenewDuration","type":"uint256"}],"name":"setMinRenewDuration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"uint256","name":"_mintCap","type":"uint256"}],"name":"setMintCap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setPointHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setPriceHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setQualificationHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setRenewPointHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setRenewPriceHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setRenewRewardHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_hook","type":"address"}],"name":"setRewardHook","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"components":[{"internalType":"uint256","name":"minDomainLength","type":"uint256"},{"internalType":"uint256","name":"maxDomainLength","type":"uint256"},{"internalType":"uint256","name":"minRegistrationDuration","type":"uint256"},{"internalType":"uint256","name":"minRenewDuration","type":"uint256"},{"internalType":"uint256","name":"mintCap","type":"uint256"}],"internalType":"struct TldConfig","name":"_config","type":"tuple"}],"name":"setTldConfigs","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"_qualificationHook","type":"address"},{"internalType":"address","name":"_priceHook","type":"address"},{"internalType":"address","name":"_rewardHook","type":"address"},{"internalType":"address","name":"_renewPriceHook","type":"address"},{"internalType":"address","name":"_renewRewardHook","type":"address"}],"name":"setTldHooks","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"priceOracle","type":"address"}],"name":"setTldPriceOracle","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"},{"internalType":"address","name":"token","type":"address"}],"name":"setTldPricingToken","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldConfigs","outputs":[{"internalType":"uint256","name":"minDomainLength","type":"uint256"},{"internalType":"uint256","name":"maxDomainLength","type":"uint256"},{"internalType":"uint256","name":"minRegistrationDuration","type":"uint256"},{"internalType":"uint256","name":"minRenewDuration","type":"uint256"},{"internalType":"uint256","name":"mintCap","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldERC20Revenues","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldHooks","outputs":[{"internalType":"contract IQualificationHook","name":"qualificationHook","type":"address"},{"internalType":"contract IPriceHook","name":"priceHook","type":"address"},{"internalType":"contract IPointHook","name":"pointHook","type":"address"},{"internalType":"contract IRewardHook","name":"rewardHook","type":"address"},{"internalType":"contract IRenewPriceHook","name":"renewPriceHook","type":"address"},{"internalType":"contract IRenewPointHook","name":"renewPointHook","type":"address"},{"internalType":"contract IRenewRewardHook","name":"renewRewardHook","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldPriceOracles","outputs":[{"internalType":"contract IPriceOracle","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldPricingTokens","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"tldRevenues","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"}],"name":"upgradeTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"identifier","type":"uint256"}],"name":"withdrawERC20","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"withdrawERC20PlatformFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawPlatformFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
+
+window.SPACEID_SEARCH_ABI = [
+  {
+    inputs: [
+      { internalType: "contract ISANN", name: "_sann", type: "address" },
+      {
+        internalType: "contract ISidRegistry",
+        name: "_sidRegistry",
+        type: "address",
+      },
+      { internalType: "uint256", name: "_identifier", type: "uint256" },
+      { internalType: "string", name: "_tld", type: "string" },
+      { internalType: "string", name: "_baseUri", type: "string" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "approved",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      { indexed: false, internalType: "bool", name: "approved", type: "bool" },
+    ],
+    name: "ApprovalForAll",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "controller",
+        type: "address",
+      },
+    ],
+    name: "ControllerAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "controller",
+        type: "address",
+      },
+    ],
+    name: "ControllerRemoved",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "uint256", name: "id", type: "uint256" },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "expires",
+        type: "uint256",
+      },
+    ],
+    name: "NameMigrated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "uint256", name: "id", type: "uint256" },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "expires",
+        type: "uint256",
+      },
+    ],
+    name: "NameRegistered",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "uint256", name: "id", type: "uint256" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "expires",
+        type: "uint256",
+      },
+    ],
+    name: "NameRenewed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "GRACE_PERIOD",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "id", type: "uint256" }],
+    name: "available",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "baseNode",
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "baseUri",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "deleteDefaultRoyalty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "getApproved",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "identifier",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "operator", type: "address" },
+    ],
+    name: "isApprovedForAll",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "id", type: "uint256" }],
+    name: "nameExpires",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "ownerOf",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "id", type: "uint256" },
+      { internalType: "address", name: "owner", type: "address" },
+    ],
+    name: "reclaim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "id", type: "uint256" },
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "duration", type: "uint256" },
+    ],
+    name: "register",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "id", type: "uint256" },
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "duration", type: "uint256" },
+    ],
+    name: "registerOnly",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "id", type: "uint256" },
+      { internalType: "uint256", name: "duration", type: "uint256" },
+    ],
+    name: "renew",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
+    name: "resetTokenRoyalty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "uint256", name: "salePrice", type: "uint256" },
+    ],
+    name: "royaltyInfo",
+    outputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "bytes", name: "_data", type: "bytes" },
+    ],
+    name: "safeTransferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "sann",
+    outputs: [{ internalType: "contract ISANN", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "operator", type: "address" },
+      { internalType: "bool", name: "approved", type: "bool" },
+    ],
+    name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_receiver", type: "address" },
+      { internalType: "uint96", name: "_feeNumerator", type: "uint96" },
+    ],
+    name: "setDefaultRoyalty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "resolver", type: "address" }],
+    name: "setResolver",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_tokenId", type: "uint256" },
+      { internalType: "address", name: "_receiver", type: "address" },
+      { internalType: "uint96", name: "_feeNumerator", type: "uint96" },
+    ],
+    name: "setTokenRoyalty",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "string", name: "newURI", type: "string" }],
+    name: "setURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "sidRegistry",
+    outputs: [
+      { internalType: "contract ISidRegistry", name: "", type: "address" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "supplyAmount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "bytes4", name: "interfaceID", type: "bytes4" }],
+    name: "supportsInterface",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "tld",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "tokenURI",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 window.GOVERNANCE_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -33674,10 +34140,10 @@ async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
     window.config.subscription_sei_address
   );
   if (seiContract) {
- 
     return await seiContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress,0)
-      .call().catch((e) => {
+      .getEstimatedTokenSubscriptionAmount(tokenAddress, 0)
+      .call()
+      .catch((e) => {
         return 100000000;
       });
   }
