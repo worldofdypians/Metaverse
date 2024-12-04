@@ -302,7 +302,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   and venture into the Midle area to uncover hidden
                   treasures.
                 </p>
-              ): dummyEvent.id === "event21" ? (
+              ): dummyEvent.popupInfo.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
@@ -346,7 +346,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   daily and venture into the downtown area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.id === "event6" ? (
+              ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Gate Beta Pass NFT</b>. You can get the Gate Beta
