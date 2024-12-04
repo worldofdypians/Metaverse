@@ -144,6 +144,7 @@ const NewEvents = ({
   greatCollectionData,
   explorerHuntData,
   setPuzzleMadnessTimer,
+  onConnectWallet,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -2943,10 +2944,10 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3039,10 +3040,11 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
+
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3130,10 +3132,11 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
+
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3225,10 +3228,11 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
+
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3320,10 +3324,10 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3415,10 +3419,10 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn-inactive"
-                                            disabled
+                                            onClick={onConnectWallet}
                                           >
                                             {" "}
-                                            Buy
+                                            Connect Wallet
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -3778,10 +3782,11 @@ const NewEvents = ({
                                             {(!isConnected || !email) && (
                                               <button
                                                 className="beast-siege-btn-inactive"
-                                                disabled
+                                                onClick={onConnectWallet}
+
                                               >
                                                 {" "}
-                                                Buy
+                                                Connect Wallet
                                               </button>
                                             )}
                                             {isConnected && email && (

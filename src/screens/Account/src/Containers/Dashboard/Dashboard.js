@@ -10691,6 +10691,9 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              onConnectWallet={() => {
+                setshowWalletModal(true);
+              }}
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
