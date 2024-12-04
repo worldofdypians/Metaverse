@@ -1593,7 +1593,7 @@ function App() {
     }
   };
 
-  const handlePurchaseDomain = async (label, years, price) => {
+  const handlePurchaseDomain = async (label, years) => {
     if (window.ethereum && window.WALLET_TYPE !== "binance") {
       let web3 = new Web3(window.ethereum);
       setdomainStatus("loading");
@@ -1616,7 +1616,6 @@ function App() {
         .then(() => {
           setdomainStatus("success");
           setLoadingDomain(false);
-
           setSuccessMessage(
             "You have successfully registered your .wod domain"
           );
@@ -1631,13 +1630,52 @@ function App() {
           setLoadingDomain(false);
           setSuccessDomain(false);
           setdomainStatus("error");
-
           setSuccessMessage(`Something went wrong: ${e?.message}`);
           setTimeout(() => {
             setSuccessMessage("");
             setdomainStatus("initial");
           }, 5000);
         });
+    } else if (window.ethereum && window.WALLET_TYPE === "binance") {
+      setdomainStatus("loading");
+      const spaceid_main_sc = new ethers.Contract(
+        window.config.spaceId_address,
+        window.SPACEID_ABI,
+        library.getSigner()
+      );
+
+      const txResponse = await spaceid_main_sc
+        .bulkRegisterWithERC20(
+          window.config.spaceId_wod_identifier,
+          [label],
+          coinbase,
+          years * window.config.spaceId_duration,
+          window.config.spaceId_resolver_address,
+          true,
+          []
+        )
+        .catch((e) => {
+          setLoadingDomain(false);
+          setSuccessDomain(false);
+          setdomainStatus("error");
+          setSuccessMessage(`Something went wrong: ${e?.message}`);
+          setTimeout(() => {
+            setSuccessMessage("");
+            setdomainStatus("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setdomainStatus("success");
+        setLoadingDomain(false);
+        setSuccessMessage("You have successfully registered your .wod domain");
+        setSuccessDomain(true);
+        setTimeout(() => {
+          setSuccessMessage("");
+          setSuccessDomain(false);
+          setdomainStatus("initial");
+        }, 5000);
+      }
     }
   };
 
@@ -1660,7 +1698,7 @@ function App() {
           setdomainStatus("deposit");
           setTimeout(() => {
             setLoadingDomain(true);
-            handlePurchaseDomain(label, years, price);
+            handlePurchaseDomain(label, years);
           }, 1000);
         })
         .catch((e) => {
@@ -1671,68 +1709,35 @@ function App() {
             setdomainStatus("initial");
           }, 4000);
         });
-      // const provider = ethers.providers.Web3Provider(window.ethereum);
-      // const signer = provider.getSigner();
-      // const address = await signer.getAddress();
-      // const register = new SIDRegister({ signer, chainId: 56 });
-      // await register
-      //   .register(label, address, years, {
-      //     setPrimaryName: true,
-      //     referrer: "dyp.bnb",
-      //   })
-      //   .then(() => {
-      //     setSuccessMessage(
-      //       "You have successfully registered your .bnb domain"
-      //     );
-      //     setSuccessDomain(true);
-      //     setTimeout(() => {
-      //       setSuccessMessage("");
-      //       setSuccessDomain(false);
-      //     }, 5000);
-      //     setLoadingDomain(false);
-      //   })
-      //   .catch((e) => {
-      //   setLoadingDomain(false);
-      //   setSuccessDomain(false);
-      //   setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
-      //   setTimeout(() => {
-      //     setSuccessMessage("");
-      //   }, 5000);
-      //   console.log(e);
-      // });
     } else if (window.WALLET_TYPE === "binance" && library) {
       setLoadingDomain(true);
-      const provider = library;
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      const register = new SIDRegister({ signer, chainId: 56 });
-      await register
-        .register(label, address, years, {
-          setPrimaryName: true,
-          referrer: "dyp.bnb",
-        })
-        .then(() => {
-          setSuccessMessage(
-            "You have successfully registered your .bnb domain"
-          );
-          setSuccessDomain(true);
-          setTimeout(() => {
-            setSuccessMessage("");
-            setSuccessDomain(false);
-          }, 5000);
-          setLoadingDomain(false);
-        })
+      setdomainStatus("loading-approve");
+
+      const tokenSc = new ethers.Contract(
+        window.config.wod_token_address,
+        window.ERC20_ABI,
+        library.getSigner()
+      );
+      const newPrice = new BigNumber(price * 1e18).toFixed();
+      const txResponse = await tokenSc
+        .approve(window.config.spaceId_address, newPrice)
         .catch((e) => {
+          console.error(e);
           setLoadingDomain(false);
-          setSuccessDomain(false);
-          setSuccessMessage(
-            `Something went wrong: ${{ e }.e.reason ?? "try again later"}`
-          );
+          setdomainStatus("error");
           setTimeout(() => {
-            setSuccessMessage("");
-          }, 5000);
-          console.log({ e }.e.reason);
+            setdomainStatus("initial");
+          }, 4000);
         });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
+        setLoadingDomain(false);
+        setdomainStatus("deposit");
+        setTimeout(() => {
+          setLoadingDomain(true);
+          handlePurchaseDomain(label, years);
+        }, 1000);
+      }
     }
   };
 
