@@ -183,7 +183,7 @@ const MyProfile = ({
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
- 
+
   const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
 
@@ -469,14 +469,20 @@ const MyProfile = ({
                           coinbase &&
                           syncStatus !== "" &&
                           address.toLowerCase() === coinbase.toLowerCase() && (
-                            <img
-                              src={domainIcon}
-                              width={30}
-                              height={30}
-                              alt=""
-                              style={{ cursor: "pointer" }}
-                              onClick={onDomainClick}
-                            />
+                            <a
+                              href="https://wod.space.id"
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <img
+                                src={domainIcon}
+                                width={30}
+                                height={30}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                                // onClick={onDomainClick}
+                              />
+                            </a>
                           )}
                         {!domainName &&
                           isConnected &&
@@ -485,14 +491,20 @@ const MyProfile = ({
                           coinbase &&
                           syncStatus !== "" &&
                           address.toLowerCase() !== coinbase.toLowerCase() && (
-                            <img
-                              src={errordomainIcon}
-                              width={30}
-                              height={30}
-                              alt=""
-                              style={{ cursor: "pointer" }}
-                              onClick={onDomainClick}
-                            />
+                            <a
+                              href="https://wod.space.id"
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <img
+                                src={errordomainIcon}
+                                width={30}
+                                height={30}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                                // onClick={onDomainClick}
+                              />
+                            </a>
                           )}
                       </div>
                     </div>
@@ -612,7 +624,10 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <NavLink to="/account/challenges/great-collection" className={'w-100'}>
+                <NavLink
+                  to="/account/challenges/great-collection"
+                  className={"w-100"}
+                >
                   <div className="wallet-address-wrapper2 p-2 w-100">
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="d-flex flex-column">
