@@ -91,6 +91,7 @@ const MyRewardsPopupNew = ({
   matEarnUsd,
   easy2StakeEarnUsd,
   midleEarnUsd,
+  coingeckoEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -101,9 +102,7 @@ const MyRewardsPopupNew = ({
 
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
   const [leaderboardSkaleTotalData, setleaderboardSkaleTotalData] = useState(0);
-
-  const [genesisData, setgenesisData] = useState(0);
-  const [bundlesBought, setbundlesBought] = useState(0);
+ 
 
   const [cawsRewards, setCawsRewards] = useState(0);
   const [wodCawsRewards, setWodCawsRewards] = useState(0);
@@ -142,16 +141,7 @@ const MyRewardsPopupNew = ({
   const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
 
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
-
-  const getBundles = async () => {
-    if (address) {
-      const result = await axios.get(
-        `https://api3.dyp.finance/api/bundles/count/${address}`
-      );
-      const result_formatted = result.data.count;
-      setbundlesBought(result_formatted);
-    }
-  };
+ 
 
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
@@ -650,8 +640,7 @@ const MyRewardsPopupNew = ({
     allBaseChests,
   ]);
 
-  useEffect(() => {
-    getBundles();
+  useEffect(() => { 
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
@@ -694,7 +683,7 @@ const MyRewardsPopupNew = ({
                 Number(cawsRewards) +
                 Number(pasttreasureRewardMoney) +
                 Number(gemRewards) +
-                Number(pastUserRankUsd) +
+                // Number(pastUserRankUsd) +
                 Number(leaderboardTotalData) +
                 Number(leaderboardSkaleTotalData) +
                 Number(baseRewardsUSD) +
@@ -778,7 +767,7 @@ const MyRewardsPopupNew = ({
                     Number(wodRewards) +
                       Number(wodCawsRewards) +
                       Number(cawsRewards) +
-                      Number(pastUserRankUsd) +
+                      // Number(pastUserRankUsd) +
                       Number(pasttreasureRewardMoney) +
                       Number(gemRewards) +
                       Number(leaderboardTotalData) +
@@ -790,13 +779,9 @@ const MyRewardsPopupNew = ({
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
-                      Number(dypPremiumUSD) +
-                      Number(bnbEarnUsd) +
-                      Number(coreEarnUsd) +
-                      Number(cookieEarnUsd) +
-                      Number(taikoEarnUsd) +
-                      Number(mantaEarnUsd) +
-                      Number(skaleEarnUsd),
+                      Number(dypPremiumUSD)  +
+                      Number(cookieEarnUsd)+
+                      Number(mantaEarnUsd),
                     2
                   )
                 : getFormattedNumber(
@@ -805,6 +790,9 @@ const MyRewardsPopupNew = ({
                       Number(immutableEarnUsd) +
                       Number(baseEarnUSD) +
                       Number(victionEarnUsd) +
+                      Number(bnbEarnUsd) +
+                      Number(coreEarnUsd)+
+                      Number(matEarnUsd)+
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
@@ -814,6 +802,9 @@ const MyRewardsPopupNew = ({
                       Number(seiEarnUsd) +
                       Number(easy2StakeEarnUsd) +
                       Number(midleEarnUsd) +
+                      Number(taikoEarnUsd) +
+                      Number(skaleEarnUsd) +
+                      Number(coingeckoEarnUsd) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
@@ -835,7 +826,7 @@ const MyRewardsPopupNew = ({
                       // Number(weeklyplayerData) +
                       // Number(userRank2) +
                       Number(genesisRank2) +
-                      Number(userRankRewards) +
+                      // Number(userRankRewards) +
                       Number(userDataStar) +
                       Number(userDataStarWeekly) +
                       Number(userSocialRewardsCached) +
@@ -1093,22 +1084,25 @@ const MyRewardsPopupNew = ({
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
-                      Number(bnbEarnUsd) +
-                      Number(coreEarnUsd) +
                       Number(mantaEarnUsd) +
-                      Number(taikoEarnUsd) +
-                      Number(cookieEarnUsd) +
-                      Number(skaleEarnUsd),
+                      Number(cookieEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(seiEarnUsd) +
-                      Number(victionEarnUsd) +
+                      Number(victionEarnUsd)  +
+                      Number(bnbEarnUsd) +
+                      Number(coreEarnUsd)+
+                      Number(matEarnUsd)+
+
                       Number(multiversEarnUsd) +
                       Number(immutableEarnUsd) +
                       Number(baseEarnUSD)+
                       Number(easy2StakeEarnUsd) +
-                      Number(midleEarnUsd) ,
+                      Number(midleEarnUsd) +
+                      Number(skaleEarnUsd) +
+                      Number(taikoEarnUsd) +
+                      Number(coingeckoEarnUsd) ,
                     2
                   )}
             </span>
@@ -1162,11 +1156,11 @@ const MyRewardsPopupNew = ({
               $
               {previousRewards
                 ? getFormattedNumber(
-                    Number(pastUserRankUsd) + Number(pastSpecialRewards),
+                    Number(0),
                     2
                   )
                 : getFormattedNumber(
-                    Number(userSocialRewardsCached) + Number(userRankRewards),
+                    Number(userSocialRewardsCached),
                     2
                   )}
             </span>
@@ -1204,13 +1198,20 @@ const MyRewardsPopupNew = ({
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            {/* <img
+            <img
               src={
                 matchainLogo
               }
               style={{ width: 16, height: 16 }}
               alt=""
-            /> */}
+            />
+              <img
+              src={
+                seiIcon
+              }
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
             <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
             <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
@@ -1521,7 +1522,7 @@ const MyRewardsPopupNew = ({
                 </span>
               </div>
 
-              {/* <div className="d-flex w-100 justify-content-between gap-2">
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Matchain</span>
                 <span className="item-name-right">
                   $
@@ -1529,7 +1530,7 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyMat, 2)}
                 </span>
-              </div> */}
+              </div>
 
               {/*  <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">SEI</span>
@@ -1592,6 +1593,28 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(easy2StakeEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={coingecko} alt="" />
+                    CoinGecko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coingeckoEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={coreIcon}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    CORE
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(coreEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1620,6 +1643,33 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(midleEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
+                    SKALE
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(skaleEarnUsd, 2)}
+                  </span>
+                </div>
+          
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        require("../../../../Marketplace/assets/bnbLogo.svg")
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    BNB Chain
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(bnbEarnUsd, 2)}
+                  </span>
+                </div>
+              
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1633,6 +1683,37 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(immutableEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        require("../../../../../components/Header/assets/taiko.svg")
+                          .default
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Taiko
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(taikoEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                       matchainLogo
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Matchain
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(matEarnUsd, 2)}
                   </span>
                 </div>
               </div>
@@ -1660,22 +1741,7 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper">
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        require("../../../../../components/Header/assets/taiko.svg")
-                          .default
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Taiko
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(taikoEarnUsd, 2)}
-                  </span>
-                </div>
+           
 
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1693,35 +1759,6 @@ const MyRewardsPopupNew = ({
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        require("../../../../Marketplace/assets/bnbLogo.svg")
-                          .default
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    BNB Chain
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(bnbEarnUsd, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={coreIcon}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    CORE
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(coreEarnUsd, 2)}
-                  </span>
-                </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
                     <img src={dypiusPremium} alt="" />
                     Premium
                   </span>
@@ -1729,8 +1766,21 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dypPremiumUSD, 2)}
                   </span>
                 </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={cookieIcon}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Cookie3
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(cookieEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
-
+              
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
@@ -1762,19 +1812,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={cookieIcon}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Cookie3
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(cookieEarnUsd, 2)}
-                  </span>
-                </div>
+               
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1795,15 +1833,6 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
-                  </span>
-                </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
-                    SKALE
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(skaleEarnUsd, 2)}
                   </span>
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
@@ -1850,7 +1879,7 @@ const MyRewardsPopupNew = ({
                   : getFormattedNumber(userSocialRewardsCached, 2)}
               </span>
             </div>
-            <div className="d-flex w-100 justify-content-between gap-2">
+            {/* <div className="d-flex w-100 justify-content-between gap-2">
               <span className="item-name-left">Rank Bonus</span>
               <span className="item-name-right">
                 $
@@ -1858,7 +1887,7 @@ const MyRewardsPopupNew = ({
                   ? getFormattedNumber(pastUserRankUsd, 2)
                   : getFormattedNumber(userRankRewards, 2)}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

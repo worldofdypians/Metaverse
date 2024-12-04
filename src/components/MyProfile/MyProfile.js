@@ -119,6 +119,8 @@ const renderer4 = ({ hours, minutes, seconds }) => {
 };
 
 const MyProfile = ({
+  greatCollectionData,
+  explorerHuntData,
   canBuy,
   email,
   isPremium,
@@ -174,11 +176,15 @@ const MyProfile = ({
   userDataStarWeekly,
   onLinkWallet,
   beastSiegeStatus,
+  userRankMat,
+  userMatScore,
+  userRankSei,
+  userSeiScore,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
-
-  const chestPercentage = (totalClaimedChests / 140) * 100;
+ 
+  const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
 
   const dailyEvents = [
@@ -367,27 +373,24 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                      userRankName.name === "starter"
-                        ? isPremium
-                          ? starterProfilePremium
-                          : starterProfile
-                        : userRankName.name === "rookie"
-                        ? isPremium
-                          ? rookieProfilePremium
-                          : rookieProfile
-                        : userRankName.name === "underdog"
-                        ? isPremium
-                          ? underdogProfilePremium
-                          : underdogProfile
-                        : userRankName.name === "champion"
-                        ? isPremium
-                          ? championProfilePremium
-                          : championProfile
-                        : userRankName.name === "unstoppable"
-                        ? isPremium
-                          ? unstoppableProfilePremium
-                          : unstoppableProfile
-                        : starterProfile
+                      isPremium ? starterProfilePremium : starterProfile
+                      // : userRankName.name === "rookie"
+                      // ? isPremium
+                      //   ? rookieProfilePremium
+                      //   : rookieProfile
+                      // : userRankName.name === "underdog"
+                      // ? isPremium
+                      //   ? underdogProfilePremium
+                      //   : underdogProfile
+                      // : userRankName.name === "champion"
+                      // ? isPremium
+                      //   ? championProfilePremium
+                      //   : championProfile
+                      // : userRankName.name === "unstoppable"
+                      // ? isPremium
+                      //   ? unstoppableProfilePremium
+                      //   : unstoppableProfile
+                      // : starterProfile
                     }
                     alt=""
                   />
@@ -417,10 +420,10 @@ const MyProfile = ({
                         </NavLink>
                       )}
                     </div>
-
+                    {/* 
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
-                    </span>
+                    </span> */}
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
@@ -628,7 +631,10 @@ const MyProfile = ({
                       <span className="user-data-item-left">Collection</span>
                     </div>
                     <div className="d-flex">
-                      <span className="user-data-item-right">Upcoming</span>
+                      <span className="user-data-item-right"> {getFormattedNumber(
+                            greatCollectionData?.statValue ?? 0
+                          )}</span>
+
                     </div>
                   </div>
                 </NavLink>
@@ -650,6 +656,10 @@ const MyProfile = ({
                     userDataStar={userDataStar}
                     userRankManta={userRankManta}
                     userMantaScore={userMantaScore}
+                    userRankMat={userRankMat}
+                    userMatScore={userMatScore}
+                    userRankSei={userRankSei}
+                    userSeiScore={userSeiScore}
                     userRankBase={userRankBase}
                     userBaseScore={userBaseScore}
                     userRankTaiko={userRankTaiko}
@@ -752,8 +762,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsstd === 0
                           ? "Ready"
-                          : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd + "/70"
+                          : allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -774,8 +784,8 @@ const MyProfile = ({
                       <span>
                         {allClaimedChestsPremium === 0
                           ? "Ready"
-                          : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium + "/70"
+                          : allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -839,11 +849,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 5
+                        {userActiveEvents === 11
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/5"}
+                          : userActiveEvents + "/11"}
                       </span>
                     </div>
                     {/* <img
@@ -860,7 +870,13 @@ const MyProfile = ({
                   >
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Ready</span>
+                      <span>
+                        {explorerHuntData?.statValue
+                          ? explorerHuntData?.statValue === 0
+                            ? "Ready"
+                            : explorerHuntData?.statValue
+                          : "Ready"}
+                      </span>
                     </div>
                     {/* <img
                     src={emptyTag}

@@ -141,6 +141,8 @@ const NewEvents = ({
   email,
   isConnected,
   setBeastSiegeStatus,
+  greatCollectionData,
+  explorerHuntData
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");

@@ -77,13 +77,14 @@ const chainAreas = [
         image: leaderboardInfo,
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
+    ],
+    pastEvents: [
+     
     ],
     socials: [
       {
@@ -154,15 +155,17 @@ const chainAreas = [
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account#leaderboard",
+        link: 
+        "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account#dailybonus",
       },
+    ],
+    pastEvents: [
+     
     ],
     socials: [
       {
@@ -210,11 +213,23 @@ const chainAreas = [
         [-0.06697474384951874, 0.08613646030426027],
       ],
     ],
-    events: [ {
-      title: "Treasure Hunt",
-      image: treasureHuntInfo,
-      link: "/account/challenges/treasure-hunt",
-    },],
+    events: [
+      {
+        title: "Daily Bonus",
+        image: dailyBonusInfo,
+        link: "/account#dailybonus",
+      },
+      {
+        title: "Leaderboard",
+        image: leaderboardInfo,
+        link: "/account#leaderboard",
+      },
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {
@@ -262,14 +277,14 @@ const chainAreas = [
       ],
     ],
 
-    events: [],
-    pastEvents: [
+    events: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/coingecko",
@@ -333,9 +348,7 @@ const chainAreas = [
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [
-   
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/base",
@@ -498,14 +511,13 @@ const chainAreas = [
         image: leaderboardInfo,
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/SkaleNetwork",
@@ -603,11 +615,13 @@ const chainAreas = [
         [-0.06783305014033982, 0.08444130420684816],
       ],
     ],
-    events: [  {
-      title: "Treasure Hunt",
-      image: treasureHuntInfo,
-      link: "/account/challenges/treasure-hunt",
-    },],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {
@@ -805,11 +819,13 @@ const chainAreas = [
         [-0.06888983973998769, 0.08470952510833742],
       ],
     ],
-    events: [ {
-      title: "Treasure Hunt",
-      image: treasureHuntInfo,
-      link: "/account/challenges/treasure-hunt",
-    },],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {
@@ -916,15 +932,14 @@ const chainAreas = [
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account#leaderboard",
-      }, {
+      },
+      {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [
-     
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/BuildOnViction",
@@ -982,14 +997,13 @@ const chainAreas = [
         image: leaderboardInfo,
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
     ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/taikoxyz",
@@ -1466,11 +1480,13 @@ const chainAreas = [
         [-0.06779013482615308, 0.08364737033843994],
       ],
     ],
-    events: [ {
-      title: "Treasure Hunt",
-      image: treasureHuntInfo,
-      link: "/account/challenges/treasure-hunt",
-    },],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {

@@ -4,6 +4,10 @@ import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
+import matActive from "../../../../../components/Header/assets/matchain.svg";
+import seiIcon from "../../../../../components/Header/assets/sei.svg";
+
+
 import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import star from "./assets/star.svg";
@@ -40,78 +44,12 @@ const RankSmallPopup = ({
   primeStars,
   globalMonthly,
   globalWeekly,
-  isPremium
+  isPremium,
+  userRankMat, 
+  userRankSei,
+  userSeiScore
 }) => {
-  const [userProgress, setUserProgress] = useState(0);
-
-  const userTotalScore =
-    userBnbScore +
-    userSkaleScore +
-    userCoreScore +
-    userVictionScore +
-    userMantaScore +
-    userBaseScore +
-    userTaikoScore +
-    userMatScore;
-
-  const handleUserRank = () => {
-    let allScore;
-    if (rankData && rankData.multiplier === "yes") {
-      allScore = userTotalScore * 4;
-    } else if (rankData && rankData.multiplier === "no") {
-      allScore = userTotalScore;
-    }
-    if (allScore > 63999999) {
-      // setUserRankName({
-      //   name: "unstoppable",
-      //   id: 4,
-      // });
-      // sliderRef?.current?.innerSlider?.slickGoTo(4);
-      setUserProgress(100);
-    } else if (allScore > 38999999) {
-      //   setUserRankName({
-      //     name: "champion",
-      //     id: 3,
-      //   });
-      // sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 64000000) * 100);
-    } else if (allScore > 25999999) {
-      // setUserRankName({
-      //   name: "underdog",
-      //   id: 2,
-      // });
-      // sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 39000000) * 100);
-    } else if (allScore > 13999999) {
-      // setUserRankName({
-      //   name: "rookie",
-      //   id: 1,
-      // });
-      // sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 26000000) * 100);
-    } else {
-      // sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 14000000) * 100);
-    }
-  };
-
-  useEffect(() => {
-    handleUserRank();
-  }, [
-    userRank,
-    userRankSkale,
-    userBnbScore,
-    userRankCore,
-    userRankViction,
-    userRankManta,
-    userRankBase,
-    userCoreScore,
-    userVictionScore,
-    userMantaScore,
-    userBaseScore,
-    userMatScore,
-    userTaikoScore,
-  ]);
+  
 
   return (
     <div className="package-popup-wrapper">
@@ -143,7 +81,7 @@ const RankSmallPopup = ({
                   style={{ width: "20px", height: "20px" }}
                   alt=""
                 />{" "}
-                {getFormattedNumber(userDataStar.statValue,0)}
+                {getFormattedNumber(userDataStar.statValue, 0)}
               </span>
               <span className="smallTextYellow">Collected Stars</span>
             </div>
@@ -157,7 +95,7 @@ const RankSmallPopup = ({
                 <div className="d-flex flex-column">
                   <span className="rank-upgrade-status">Upgrade Status</span>
                   <span className="rank-upgrade-status-bottom">
-                   {isPremium ? ' Prime Enabled' : 'Prime'}
+                    {isPremium ? " Prime Enabled" : "Prime"}
                   </span>
                 </div>
               </div>
@@ -189,13 +127,61 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRank + 1,0)}
+                    #{getFormattedNumber(userRank + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userBnbScore, 0)}
+                  </span>
+                </div>
+              </div>
+              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={matActive}
+                    width={25}
+                    className="rankChain"
+                    height={25}
+                    alt=""
+                  />
+                  {/* <span className="rank-dropdown-text">Manta</span> */}
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Rank</span>
+                  <span className="rank-dropdown-text-yellow">
+                    #{getFormattedNumber(userRankMat + 1, 0)}
+                  </span>
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Score</span>
+                  <span className="rank-dropdown-text-yellow">
+                    {getFormattedNumber(userMatScore, 0)}
+                  </span>
+                </div>
+              </div>
+              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={seiIcon}
+                    width={25}
+                    className="rankChain"
+                    height={25}
+                    alt=""
+                  />
+                  {/* <span className="rank-dropdown-text">Manta</span> */}
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Rank</span>
+                  <span className="rank-dropdown-text-yellow">
+                    #{getFormattedNumber(userRankSei + 1, 0)}
+                  </span>
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Score</span>
+                  <span className="rank-dropdown-text-yellow">
+                    {getFormattedNumber(userSeiScore, 0)}
                   </span>
                 </div>
               </div>
@@ -213,11 +199,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankManta + 1,0)}
+                    #{getFormattedNumber(userRankManta + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userMantaScore, 0)}
                   </span>
@@ -237,11 +223,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankBase + 1,0)}
+                    #{getFormattedNumber(userRankBase + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userBaseScore, 0)}
                   </span>
@@ -261,11 +247,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankTaiko + 1,0)}
+                    #{getFormattedNumber(userRankTaiko + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userTaikoScore, 0)}
                   </span>
@@ -300,11 +286,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankSkale + 1,0)}
+                    #{getFormattedNumber(userRankSkale + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userSkaleScore, 0)}
                   </span>
@@ -324,11 +310,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankCore + 1,0)}
+                    #{getFormattedNumber(userRankCore + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userCoreScore, 0)}
                   </span>
@@ -348,11 +334,11 @@ const RankSmallPopup = ({
                 <div className="rank-item-wrapper p-2">
                   <span className="rank-dropdown-text">Rank</span>
                   <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankViction + 1,0)}
+                    #{getFormattedNumber(userRankViction + 1, 0)}
                   </span>
                 </div>
                 <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
+                  <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userVictionScore, 0)}
                   </span>
