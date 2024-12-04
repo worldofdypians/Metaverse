@@ -51,10 +51,14 @@
 .challenge-popup-desc {
   color: #828fbb;
   font-family: "Poppins";
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
   line-height: 22px; /* 150% */
+  @media screen and (max-width: 1500px) {
+    font-size: 13px;
+    line-height: 18px;
+  }
   @media screen and (max-width: 786px) {
     font-size: 12px;
     line-height: 18px;

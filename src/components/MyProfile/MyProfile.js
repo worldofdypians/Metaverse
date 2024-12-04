@@ -180,6 +180,7 @@ const MyProfile = ({
   userMatScore,
   userRankSei,
   userSeiScore,
+  puzzleMadnessTimer
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -632,7 +633,7 @@ const MyProfile = ({
                     </div>
                     <div className="d-flex">
                       <span className="user-data-item-right"> {getFormattedNumber(
-                            greatCollectionData?.statValue ?? 0
+                            greatCollectionData[0]?.statValue ?? 0
                           )}</span>
 
                     </div>
@@ -871,10 +872,10 @@ const MyProfile = ({
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {explorerHuntData?.statValue
-                          ? explorerHuntData?.statValue === 0
+                        {explorerHuntData[0]?.statValue
+                          ? explorerHuntData[0]?.statValue === 0
                             ? "Ready"
-                            : explorerHuntData?.statValue
+                            : explorerHuntData[0]?.statValue
                           : "Ready"}
                       </span>
                     </div>
@@ -1352,14 +1353,91 @@ const MyProfile = ({
                   onClick={onEventCardClick}
                 >
                   <div className="d-flex flex-column justify-content-between h-100">
-                    <div className="d-flex flex-column">
-                      <h6 className="leaderboards-title">PUZZLE MADNESS</h6>
-                      <span
+                    <div className="d-flex flex-column gap-2">
+                      <h6 className="leaderboards-title mb-0">PUZZLE MADNESS</h6>
+                      {/* <span
                         className={`utcEventContent w-75`}
                         style={{ color: "#CCE8F5" }}
                       >
                         Test your puzzle solving skills and boost score
-                      </span>
+                      </span> */}
+                          {beastSiegeStatus.puzzleMadness ? (
+                        //   <div className="d-flex flex-column gap-1">
+                        //   <span className="beast-siege-ends-in">Available until:</span>
+                        //   <Countdown renderer={renderer4} date={midnight} />
+                        // </div>
+                        <>
+                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                            <div className="ready-circle-2 d-flex flex-column gap-1">
+                              <Countdown renderer={renderer4} date={puzzleMadnessTimer} />
+                            </div>
+                            <span className="new-time-remaining">
+                              Time Remaining
+                            </span>
+                          </div>
+                          <div className="d-flex d-lg-none">
+                            <Countdown renderer={renderer4} date={puzzleMadnessTimer} />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="ready-circle d-none d-lg-flex">
+                            <span className="beast-siege-timer">Ready</span>
+                          </div>
+                          <span className="beast-siege-timer d-flex d-lg-none">
+                            Ready
+                          </span>
+                        </>
+                      )}
+                        <div
+                        className={`d-flex flex-column gap-1 infotips-holder`}
+                      >
+                        <div
+                              className="d-flex align-items-center gap-1"
+                            >
+                              <div className="yellow-dot"></div>
+                              <span
+                                className="beast-siege-timer"
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 400,
+                                  color: "#fff",
+                                }}
+                              >
+                                Up to 160,000 points
+                              </span>
+                            </div>
+                        <div
+                              className="d-flex align-items-center gap-1"
+                            >
+                              <div className="yellow-dot"></div>
+                              <span
+                                className="beast-siege-timer"
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 400,
+                                  color: "#fff",
+                                }}
+                              >
+                                x2-x8 multiplier
+                              </span>
+                            </div>
+                        <div
+                              className="d-flex align-items-center gap-1"
+                            >
+                              <div className="yellow-dot"></div>
+                              <span
+                                className="beast-siege-timer"
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 400,
+                                  color: "#fff",
+                                }}
+                              >
+                                Multiple activations
+                              </span>
+                            </div>
+                      </div>
                     </div>
                     <img
                       src={puzzleMadnessArrow}
@@ -1368,7 +1446,7 @@ const MyProfile = ({
                       alt=""
                     />
                   </div>
-                  <img src={puzzleMadnessBanner} className="eventbannerimg" />
+                  <img src={puzzleMadnessBanner} className="eventbannerimg puzzle-eventbannerimg" />
                 </NavLink>
               </div>
             </div>

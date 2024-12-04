@@ -1182,7 +1182,9 @@ function Dashboard({
     eagle: false,
     scorpion: false,
     cyclops: false,
+    puzzleMadness: false
   });
+  const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0)
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -10575,6 +10577,7 @@ function Dashboard({
               puzzleMadnessCountdown={countdown3500}
               userActiveEvents={userActiveEvents}
               beastSiegeStatus={beastSiegeStatus}
+              puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
               allClaimedChests={
                 openedBaseChests.length +
@@ -10688,6 +10691,7 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              setPuzzleMadnessTimer={setPuzzleMadnessTimer}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               availableTime={goldenPassRemainingTime}

@@ -407,7 +407,10 @@
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   border: 2px solid transparent;
   transition: all 0.25s ease;
-
+  overflow: hidden;
+  @media screen and (max-width: 786px) {
+    height: 180px;
+  }
   .utcEventContent {
     @media screen and (max-width: 786px) {
       width: 50% !important;
@@ -791,6 +794,18 @@
   overflow: hidden;
 }
 
+.new-stake-nft-wrapper:hover{
+  .ready-circle {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .ready-circle-2 {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .countdown-position-beast{
+  filter: drop-shadow(0px 0px 5px gold);
+  }
+}
+
 .profile-banner-class-thing:hover {
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
@@ -852,6 +867,9 @@
   bottom: 0;
   z-index: 0;
   // filter: grayscale(1);
+}
+.puzzle-eventbannerimg{
+  right: -35px;
 }
 
 .score-text-wrapper {
