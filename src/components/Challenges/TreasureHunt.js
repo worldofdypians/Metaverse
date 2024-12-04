@@ -71,35 +71,42 @@ const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
                   </span>
                 </div>
               </div>
-              {item.eventStatus !== "Coming Soon" &&
-              <div className="d-flex flex-column gap-2 gap-lg-4" style={{zIndex: '1'}}>
-              
-                <div className="d-flex flex-column gap-2">
-                  <span className="total-earnings-amount">
-                    ${getFormattedNumber(item.userEarnUsd)}
-                  </span>
-                  <span className="total-earnings-span">My Earnings</span>
+              {item.eventStatus !== "Coming Soon" && (
+                <div
+                  className="d-flex flex-column gap-2 gap-lg-4"
+                  style={{ zIndex: "1" }}
+                >
+                  <div className="d-flex flex-column gap-2">
+                    <span className="total-earnings-amount">
+                      ${getFormattedNumber(item.userEarnUsd)}
+                    </span>
+                    <span className="total-earnings-span">My Earnings</span>
+                  </div>
                 </div>
-              </div>  }
+              )}
               <div className="d-none d-lg-flex align-items-center position-relative">
-              {item.eventStatus !== "Coming Soon" &&
-                <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={pickaxe} alt="" />
-                    <span className="treasure-hunt-type">{item.eventType}</span>
+                {item.eventStatus !== "Coming Soon" && (
+                  <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={pickaxe} alt="" />
+                      <span className="treasure-hunt-type">
+                        {item.eventType}
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      <img src={calendar} alt="" />
+                      <span className="treasure-hunt-type">
+                        {item.eventDate}
+                      </span>
+                    </div>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <img src={calendar} alt="" />
-                    <span className="treasure-hunt-type">{item.eventDate}</span>
-                  </div>
-                </div>
-        }
+                )}
               </div>
               <img
-                  src={item.backgroundImage}
-                  className="upcoming-mint-img-new d-none d-lg-flex"
-                  alt=""
-                />
+                src={item.backgroundImage}
+                className="upcoming-mint-img-new d-none d-lg-flex"
+                alt=""
+              />
             </div>
           );
         })}

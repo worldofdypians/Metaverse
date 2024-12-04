@@ -25,9 +25,6 @@ const Governance = ({
   const [totalProposals, settotalProposals] = useState(0);
 
 
- 
-
-
   const getProposalInfo = async () => {
     const governanceSc = new window.bscWeb3.eth.Contract(
       window.GOVERNANCE_ABI,
@@ -141,6 +138,7 @@ const Governance = ({
           .then(() => {
             setgovLoading(false);
             setgovStatus("success");
+            refreshProposals();
             setTimeout(() => {
               setgovStatus("initial");
               setCreateProposalPopup(false);
@@ -172,6 +170,7 @@ const Governance = ({
         if (txReceipt) {
           setgovLoading(false);
           setgovStatus("success");
+          refreshProposals();
           setTimeout(() => {
             setgovStatus("initial");
             setCreateProposalPopup(false);
@@ -185,6 +184,7 @@ const Governance = ({
     window.scrollTo(0, 0);
     document.title = "Governance";
     getProposalInfo();
+    refreshProposals();
   }, []);
 
   return (

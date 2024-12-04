@@ -19,58 +19,69 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                 allProposals.map((item, index) => {
                   return (
                     <NavLink to={`proposal/${index}`}>
-                    <div
-                      className="active-proposals-inner-wrapper w-100 py-3 px-3 "
-                      key={index}
-                    >
-                      <div className="d-flex align-items-center gap-3 flex-column flex-lg-row justify-content-between">
-                        <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
-                          <div className="d-flex flex-column gap-2">
-                            <span className="active-proposals-features">
-                              {item.subject}
-                            </span>
-                            <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
-                              <div className="d-flex align-items-center gap-3">
-                                <span className="gov-gray-text">By</span>
-                                <span className="gov-white-text">
-                                  0x253...acb3
-                                </span>
-                              </div>
-                              <div className="d-flex align-items-center gap-2">
-                                <span className="gov-gray-text">Votes</span>
-                                <span className="gov-white-text">
-                                  {getFormattedNumber(
-                                    Number(item._optionOneVotes / 1e18) +
-                                      Number(item._optionTwoVotes / 1e18),
-                                    6
-                                  )}
-                                </span>
-                              </div>
-                              <div className="d-flex align-items-center gap-2">
-                                <span className="gov-gray-text">Ends in</span>
-                                <span className="gov-white-text">
-                                  {moment
-                                    .duration(
-                                      item._proposalStartTime * 1e3 +
-                                        window.config.vote_duration_in_seconds *
-                                          1e3 -
-                                        Date.now()
-                                    )
-                                    .humanize(true)}
-                                </span>
+                      <div
+                        className="active-proposals-inner-wrapper w-100 py-3 px-3 "
+                        key={index}
+                      >
+                        <div className="d-flex align-items-center gap-3 flex-column flex-lg-row justify-content-between">
+                          <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
+                            <div className="d-flex flex-column gap-2">
+                              <span className="active-proposals-features">
+                                {item.subject}
+                              </span>
+                              <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
+                                <div className="d-flex align-items-center gap-3">
+                                  <span className="gov-gray-text">By</span>
+                                  <span className="gov-white-text">
+                                    0x253...acb3
+                                  </span>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                  <span className="gov-gray-text">Votes</span>
+                                  <span className="gov-white-text">
+                                    {getFormattedNumber(
+                                      Number(item._optionOneVotes / 1e18) +
+                                        Number(item._optionTwoVotes / 1e18),
+                                      6
+                                    )}
+                                  </span>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                  <span className="gov-gray-text">Ends in</span>
+                                  <span className="gov-white-text">
+                                    {moment
+                                      .duration(
+                                        item._proposalStartTime * 1e3 +
+                                          window.config
+                                            .vote_duration_in_seconds *
+                                            1e3 -
+                                          Date.now()
+                                      )
+                                      .humanize(true)}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div>
-                          <button className="getpremium-btn px-4 py-2">
-                            VOTE NOW
-                          </button>
+                          <div>
+                            <button className="getpremium-btn px-4 py-2">
+                              VOTE NOW
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div></NavLink>
+                    </NavLink>
                   );
                 })}
+
+              {allProposals && allProposals.length === 0 && (
+                <div className="new-stake-info-wrapper flex-column gap-3 gap-lg-0 p-5 d-flex align-items-center justify-content-center">
+                  <span className="upcoming-stake">
+                    New proposals are coming...
+                  </span>
+                  <span className="upcoming-stake-desc">Check back soon!</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
