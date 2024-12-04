@@ -2149,7 +2149,6 @@ const NewEvents = ({
     // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
-  console.log(explorerHuntData, greatCollectionData);
 
   const html = document.querySelector("html");
 
