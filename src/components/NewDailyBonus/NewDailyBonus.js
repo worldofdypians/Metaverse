@@ -415,6 +415,7 @@ const NewDailyBonus = ({
 
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
   const [totalSeiUsd, settotalSeiUsd] = useState(0);
+  const [totalSeiStars, settotalSeiStars] = useState(0);
 
   const [tooltip, setTooltip] = useState(false);
   const [claimingChest, setClaimingChest] = useState(false);
@@ -769,7 +770,7 @@ const NewDailyBonus = ({
           }
         }
       });
-      // settotalSeiStars(resultstars)
+      settotalSeiStars(resultstars)
 
       settotalSeiPoints(resultSeiPoints);
       settotalSeiUsd(resultSeiUsd);
@@ -2001,6 +2002,8 @@ const NewDailyBonus = ({
     allTaikoChests,
     allMatChests,
     allCoreChests,
+    allSeiChests,
+
   ]);
 
   // useEffect(() => {
@@ -2546,75 +2549,75 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "sei") {
-      // if (window.WALLET_TYPE !== "binance") {
-      //   if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedMatChests + claimedMatPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedMatChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedSeiChests + claimedSeiPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedSeiChests + claimedSeiPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSeiChests + claimedSeiPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1329
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedSeiChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedSeiChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSeiChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1329
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("login");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
     }
   }, [
     email,
@@ -2639,6 +2642,8 @@ const NewDailyBonus = ({
     claimedTaikoPremiumChests,
     claimedMatChests,
     claimedMatPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
     rewardData,
   ]);
 
@@ -2771,7 +2776,7 @@ const NewDailyBonus = ({
                       : chain === "matchain"
                       ? totalMatPoints
                       : chain === "sei"
-                      ? 0
+                      ? totalSeiPoints
                       : totalSkalePoints,
                     0
                   )}{" "}
@@ -2796,7 +2801,7 @@ const NewDailyBonus = ({
                       : chain === "matchain"
                       ? totalMatStars
                       : chain === "sei"
-                      ? 0
+                      ? totalSeiStars
                       : totalSkaleStars,
                     0
                   )}{" "}
@@ -2824,7 +2829,7 @@ const NewDailyBonus = ({
                       : chain === "matchain"
                       ? totalMatUsd
                       : chain === "sei"
-                      ? 0
+                      ? totalSeiUsd
                       : totalSkaleUsd,
                     2
                   )}{" "}
@@ -3068,6 +3073,110 @@ const NewDailyBonus = ({
                               </div>
                               <span className="percentage-span">
                                 {parseInt(matPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon2}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(seiPercentage)}%
+                                {/* Coming Soon */}
                               </span>
                             </div>
                           </div>
@@ -3739,110 +3848,7 @@ const NewDailyBonus = ({
                           </div>
                         </div> */}
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={comingSoon2}
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" && "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 1329
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleSeiPool}
-                              >
-                                {" "}
-                                <img
-                                  src={seiIcon}
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div> */}
-                              <span className="percentage-span">
-                                {/* {parseInt(matPercentage)}% */}
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                  
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon3}
@@ -3970,6 +3976,53 @@ const NewDailyBonus = ({
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
                                 Matchain
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon2}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
                               </button>
                             </div>
                           </div>
@@ -5406,26 +5459,26 @@ const NewDailyBonus = ({
                               BASE Network
                             </span>
                           </h6>
-                        ) : (
-                          // : chain === "sei" ? (
-                          //   <h6
-                          //     className="loader-text mb-0"
-                          //     style={{ color: "#ce5d1b" }}
-                          //   >
-                          //     Switch to{" "}
-                          //     <span
-                          //       style={{
-                          //         textDecoration: "underline",
-                          //         cursor: "pointer",
-                          //       }}
-                          //       // onClick={handleSeiPool}
-                          //     >
-                          //       Sei Network
-                          //     </span>
-                          //   </h6>
-                          // )
+                        ) 
+                          : chain === "sei" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleSeiPool}
+                              >
+                                Sei Network
+                              </span>
+                            </h6>
+                          ) :
                           <></>
-                        )}
+                        }
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>
