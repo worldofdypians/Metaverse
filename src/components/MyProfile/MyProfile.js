@@ -17,7 +17,7 @@ import mageFinish from "../../screens/Account/src/Components/WalletBalance/asset
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
 import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
 import goldenPassBadge from "./assets/goldenPassBadge.png";
-
+import defeatedRed from "./assets/defeated-red.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
@@ -113,7 +113,7 @@ const renderer3 = ({ days, hours }) => {
 const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {hours}h:{minutes}m:{seconds}s
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
   );
 };
@@ -173,8 +173,7 @@ const MyProfile = ({
   onEventCardClick,
   userDataStarWeekly,
   onLinkWallet,
-  beastSiegeStatus
-
+  beastSiegeStatus,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -192,7 +191,8 @@ const MyProfile = ({
       class: "stoneEyeBannerItem",
       arrow: stoneEyeArrow,
       link: "/account/challenges/stone-eye",
-      active: beastSiegeStatus.cyclops
+      active: beastSiegeStatus.cyclops,
+      infoTips: ["80,000 points", "Up to 600 stars."],
     },
     {
       image: dragonRuins, // Monday
@@ -203,8 +203,8 @@ const MyProfile = ({
       class: "dragonRuinsBannerItem",
       arrow: dragonRuinsArrow,
       link: "/account/challenges/dragon-ruins",
-      active: beastSiegeStatus.dragon
-
+      active: beastSiegeStatus.dragon,
+      infoTips: ["16,000 points", "Up to 200 stars."],
     },
     {
       image: coldBite, // Tuesday
@@ -215,8 +215,8 @@ const MyProfile = ({
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
       link: "/account/challenges/cold-bite",
-      active: beastSiegeStatus.bear
-
+      active: beastSiegeStatus.bear,
+      infoTips: ["30,000 points", "Up to 300 stars."],
     },
     {
       image: furyBeast, // Wednesday
@@ -227,8 +227,8 @@ const MyProfile = ({
       class: "furyBeastBannerItem",
       arrow: furyBeastArrow,
       link: "/account/challenges/fury-beast",
-      active: beastSiegeStatus.beast
-
+      active: beastSiegeStatus.beast,
+      infoTips: ["60,000 points", "Up to 400 stars."],
     },
     {
       image: wingStorm, // Thursday
@@ -239,8 +239,8 @@ const MyProfile = ({
       class: "wingStormBannerItem",
       arrow: wingStormArrow,
       link: "/account/challenges/wing-storm",
-      active: beastSiegeStatus.eagle
-
+      active: beastSiegeStatus.eagle,
+      infoTips: ["70,000 points", "Up to 500 stars."],
     },
     {
       image: bnbMazeDay, // Friday
@@ -251,7 +251,9 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
-      
+      infoTips: ["200,000 points", "Up to 800 stars", "$10"],
+
+      imageClass: "mazeDayEventBanner",
     },
     {
       image: scorpionKing, // Saturday
@@ -262,8 +264,8 @@ const MyProfile = ({
       class: "scorpionKingBannerItem",
       arrow: scorpionKingArrow,
       link: "/account/challenges/maze-day",
-      active: beastSiegeStatus.scorpion
-
+      active: beastSiegeStatus.scorpion,
+      infoTips: ["120,000 points", "Up to 1000 stars."],
     },
   ];
 
@@ -616,9 +618,10 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <NavLink 
-                to={"/account/challenges/great-collection"}
-                className="wallet-address-wrapper2 p-2 w-100">
+                <NavLink
+                  to={"/account/challenges/great-collection"}
+                  className="wallet-address-wrapper2 p-2 w-100"
+                >
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex flex-column">
                       <span className="user-data-item-left">Great</span>
@@ -722,7 +725,10 @@ const MyProfile = ({
                     />
                   )}
                 </div> */}
-                  <NavLink to={"/account/prime"} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/prime"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={prime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -737,7 +743,10 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </NavLink>
-                  <div className="daily-progress-item position-relative" onClick={openDailyBonus}>
+                  <div
+                    className="daily-progress-item position-relative"
+                    onClick={openDailyBonus}
+                  >
                     <img src={dailyBonusStd} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -756,7 +765,10 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <div className="daily-progress-item position-relative" onClick={openDailyBonus}>
+                  <div
+                    className="daily-progress-item position-relative"
+                    onClick={openDailyBonus}
+                  >
                     <img src={dailyBonusPrime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -777,7 +789,10 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <NavLink to={dailyEvents[utcDayIndex].link} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={dailyEvents[utcDayIndex].link}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={dailyEvents[utcDayIndex].image} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -801,7 +816,10 @@ const MyProfile = ({
                     </span>
                   </NavLink>
 
-                  <NavLink to={"/account/challenges/critical-hit"} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/critical-hit"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={criticalHit} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
@@ -814,7 +832,10 @@ const MyProfile = ({
                     <span className="bundle-title-bottom">Critical Hit</span>
                   </NavLink>
 
-                  <NavLink to={"/account/challenges/treasure-hunt"} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/treasure-hunt"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -833,7 +854,10 @@ const MyProfile = ({
                     <span className="bundle-title-bottom">Treasure Hunt</span>
                   </NavLink>
 
-                  <NavLink  to={"/account/challenges/explorer-hunt"} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/explorer-hunt"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
@@ -846,7 +870,10 @@ const MyProfile = ({
                     <span className="bundle-title-bottom">Explorer Hunt</span>
                   </NavLink>
 
-                  <NavLink to={"/account/challenges/puzzle-madness"} className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/puzzle-madness"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={puzzleMadness} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -1210,17 +1237,20 @@ const MyProfile = ({
                   onClick={onEventCardClick}
                 >
                   <div
-                    className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
+                    className={`${dailyEvents[utcDayIndex].class} profile-banner-class-thing position-relative p-3 d-flex`}
                   >
-                    <div className=" d-flex flex-column justify-content-between gap-2 ">
-                      <div className="d-flex flex-column gap-2">
-                        <span
-                          className={`utcEventTitle`}
-                          style={{ color: dailyEvents[utcDayIndex].titleColor }}
-                        >
-                          {dailyEvents[utcDayIndex].title}
-                        </span>
-                        {/* <span
+                    <div
+                      className=" d-flex flex-column justify-content-between gap-2 "
+                      style={{ zIndex: 1 }}
+                    >
+                      {/* <div className="d-flex flex-column gap-1" style={{zIndex: 1}}> */}
+                      <span
+                        className={`utcEventTitle`}
+                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                      >
+                        {dailyEvents[utcDayIndex].title}
+                      </span>
+                      {/* <span
                           className={`utcEventContent`}
                           style={{
                             color: dailyEvents[utcDayIndex].contentColor,
@@ -1228,26 +1258,73 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                        {dailyEvents[utcDayIndex].active ?
-                          <div className="d-flex flex-column gap-1">
-                          <span className="beast-siege-ends-in">Available until:</span>
-                          <Countdown renderer={renderer4} date={midnight} />
-                        </div>
-                          :
-                          <span className="beast-siege-timer">Ready</span>
-                        }
+                      {dailyEvents[utcDayIndex].active ? (
+                        //   <div className="d-flex flex-column gap-1">
+                        //   <span className="beast-siege-ends-in">Available until:</span>
+                        //   <Countdown renderer={renderer4} date={midnight} />
+                        // </div>
+                        <>
+                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                            <div className="ready-circle-2 d-flex flex-column gap-1">
+                              <Countdown renderer={renderer4} date={midnight} />
+                            </div>
+                            <span className="new-time-remaining">
+                              Time Remaining
+                            </span>
+                          </div>
+                          <div className="d-flex d-lg-none">
+                            <Countdown renderer={renderer4} date={midnight} />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="ready-circle d-none d-lg-flex">
+                            <span className="beast-siege-timer">Ready</span>
+                          </div>
+                          <span className="beast-siege-timer d-flex d-lg-none">
+                            Ready
+                          </span>
+                        </>
+                      )}
+                      <div
+                        className={`d-flex flex-column gap-1 infotips-holder ${
+                          dailyEvents[utcDayIndex].title === "BNB Maze Day" &&
+                          "bnb-infotips-holder"
+                        }`}
+                      >
+                        {dailyEvents[utcDayIndex].infoTips.map(
+                          (item, index) => (
+                            <div
+                              key={index}
+                              className="d-flex align-items-center gap-1"
+                            >
+                              <div className="yellow-dot"></div>
+                              <span
+                                className="beast-siege-timer"
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 400,
+                                  color: "#fff",
+                                }}
+                              >
+                                {item}
+                              </span>
+                            </div>
+                          )
+                        )}
                       </div>
+                      {/* </div> */}
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
                         alt=""
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
-
+                    {/* <img src={defeatedRed} className="defeated-red" alt="" /> */}
                     <img
                       src={dailyEvents[utcDayIndex].bannerImg}
                       alt=""
-                      className="eventbannerimg"
+                      className={`eventbannerimg ${dailyEvents[utcDayIndex]?.imageClass}`}
                     />
                   </div>
                 </NavLink>

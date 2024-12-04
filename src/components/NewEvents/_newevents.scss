@@ -94,15 +94,20 @@
   border-radius: 0px 0px 10px 10px;
   background: #18193c;
   backdrop-filter: blur(10px);
+  height: 710px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .challenges-list-wrapper {
   border-radius: 10px;
   background: #121235;
-  height: 100%;
+  height: 670px;
   @media screen and (max-width: 600px) {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr);
+    height: auto;
   }
 }
 
@@ -161,11 +166,16 @@
 .beast-siege-wrapper {
   height: 380px;
   border-radius: 12px;
+  z-index: 1;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
 .dragon-siege {
   background: linear-gradient(109deg, #2e3842 0%, #121b1e 49%);
   position: relative;
+  z-index: 2;
 }
 
 .dragon-siege::before {
@@ -182,11 +192,13 @@
   background-repeat: no-repeat;
   background-position: bottom;
   pointer-events: none;
+  z-index: -1;
 }
 
 .bear-siege {
   background: linear-gradient(109deg, #0097b9 0%, rgba(18, 16, 131, 0.77) 49%);
   position: relative;
+  z-index: 2;
 }
 
 .bear-siege::before {
@@ -203,10 +215,12 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
+  z-index: -1;
 }
 .beast-siege {
   background: linear-gradient(109deg, #29302c 0%, #29302c 49%);
   position: relative;
+  z-index: 2;
 }
 
 .beast-siege::before {
@@ -223,10 +237,12 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
+  z-index: -1;
 }
 .eagle-siege {
   background: linear-gradient(109deg, #004e7f 0%, #073755 49%);
   position: relative;
+  z-index: 2;
 }
 
 .eagle-siege::before {
@@ -243,10 +259,12 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
+  z-index: -1;
 }
 .scorpion-siege {
   background: linear-gradient(109deg, #732802 0%, #ab621e 49%);
   position: relative;
+  z-index: 2;
 }
 
 .scorpion-siege::before {
@@ -263,10 +281,12 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
+  z-index: -1;
 }
 .cyclops-siege {
   background: linear-gradient(109deg, #0b3398 0%, #062663 49%);
   position: relative;
+  z-index: 2;
 }
 
 .cyclops-siege::before {
@@ -283,6 +303,112 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   pointer-events: none;
+  z-index: -1;
+}
+.maze-garden-card {
+  background: linear-gradient(109deg, #081c00 0%, #081c00 49%);
+  position: relative;
+}
+
+.maze-garden-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/banners/bnbMazeDayCard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+  z-index: -1;
+}
+.puzzle-madness-card {
+  background: linear-gradient(109deg, #055F67 0%, #00293E 49%);
+  position: relative;
+}
+
+.puzzle-madness-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/banners/puzzleMadnessCard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+  z-index: -1;
+}
+.critical-hit-card {
+  background: linear-gradient(109deg, #712B1F 0%, #3E0A04 49%);
+  position: relative;
+}
+
+.critical-hit-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/banners/criticalHitCard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+  z-index: -1;
+}
+.explorer-hunt-card {
+  background: linear-gradient(109deg, #491961 0%, #2E0A40 49%);
+  position: relative;
+}
+
+.explorer-hunt-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/banners/explorerHuntCard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+  z-index: -1;
+}
+.great-collection-card {
+  background: linear-gradient(109deg, #71511F 0%, #503203 49%);
+  position: relative;
+}
+
+.great-collection-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/banners/greatCollectionCard.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .beast-siege-title {
@@ -350,9 +476,12 @@
 .beast-siege-info-wrapper {
   border-radius: 12px;
   height: 380px;
+  @media screen and (max-width: 786px) {
+    height: auto;
+  }
 }
 
-.beast-siege-btn-inactive{
+.beast-siege-btn-inactive {
   border-radius: 12px;
   background: black;
   color: white;
@@ -400,32 +529,69 @@
   background-size: cover;
 }
 
+.maze-garden-info {
+  background-image: url("./assets/banners/mazeGardenBanner.webp");
+  background-size: cover;
+}
+.puzzle-madness-info {
+  background-image: url("./assets/banners/puzzleMadnessBanner.webp");
+  background-size: cover;
+}
+.explorer-hunt-info {
+  background-image: url("./assets/banners/explorerHuntBanner.webp");
+  background-size: cover;
+}
+.great-collection-info {
+  background-image: url("./assets/banners/greatCollectionBanner.webp");
+  background-size: cover;
+}
+.critical-hit-info {
+  background-image: url("./assets/banners/criticalHitBanner.webp");
+  background-size: cover;
+}
+
 .luminosity {
   mix-blend-mode: luminosity;
 }
 
-.dragon-button{
-  color: #2B353E !important;
-  background: #FFEACD !important;
+.dragon-button {
+  color: #2b353e !important;
+  background: #ffeacd !important;
 }
 
-.bear-button{
-  color: #018CAC !important;
-  background: #68E9FE !important;
+.bear-button {
+  color: #018cac !important;
+  background: #68e9fe !important;
 }
-.beast-button{
-  color: #27302A !important;
-  background: #BEE3A8 !important;
+.beast-button {
+  color: #27302a !important;
+  background: #bee3a8 !important;
 }
-.eagle-button{
-  color: #053E62 !important;
-  background: #D6F4FF !important;
+.eagle-button {
+  color: #053e62 !important;
+  background: #d6f4ff !important;
 }
-.scorpion-button{
-  color: #7A2F06 !important;
-  background: #FFD695 !important;
+.scorpion-button {
+  color: #7a2f06 !important;
+  background: #ffd695 !important;
 }
-.cyclops-button{
-  color: #0A308D !important;
-  background: #F1EDFF !important;
+.cyclops-button {
+  color: #0a308d !important;
+  background: #f1edff !important;
+}
+.critical-hit-button{
+  color: #420D07 !important;
+  background: #C77F72 !important;
+}
+
+.maze-day-button {
+  color: #081c01 !important;
+  background: #ddf8d7 !important;
+}
+
+.event-top-banner {
+  height: 200px;
+  width: 100%;
+  margin-bottom: 31px;
+  object-fit: cover;
 }

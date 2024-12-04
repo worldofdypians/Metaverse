@@ -24,7 +24,13 @@ import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
+import bnbMazeDayCard from "./assets/banners/bnbMazeDayCard.png";
 import opensea from "../../assets/opensea.svg";
+import bnbMazeDayTopBanner from './assets/banners/bnbMazeDayTopBanner.webp'
+import criticalHitTopBanner from './assets/banners/criticalHitTopBanner.webp'
+import explorerHuntTopBanner from './assets/banners/explorerHuntTopBanner.webp'
+import greatCollectionTopBanner from './assets/banners/greatCollectionTopBanner.webp'
+import puzzleMadnessTopBanner from './assets/banners/puzzleMadnessTopBanner.webp'
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 import dragonRuinsText from "../../assets/gameAssets/challengeCards/dragonRuinsText.png";
 import dragonRuinsHead from "../../assets/gameAssets/challengeCards/dragonRuinsHead.png";
@@ -1874,6 +1880,9 @@ const NewEvents = ({
     day: 5,
     dayText: "FRI",
     title: "Maze Day",
+    topBanner: bnbMazeDayTopBanner,
+    class: "maze-garden-card",
+    infoClass: "maze-garden-info",
     popupDesc:
       "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
     workList: [
@@ -1894,6 +1903,9 @@ const NewEvents = ({
     id: "greatCollection",
     image: greatCollectionBanner,
     popupImage: greatCollectionPopup,
+    topBanner: greatCollectionTopBanner,
+    class: "great-collection-card",
+    infoClass: "great-collection-info",
     desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
     title: "The Great Collection",
     popupDesc:
@@ -1915,6 +1927,10 @@ const NewEvents = ({
     id: "explorer-hunt",
     image: explorerHuntBanner,
     popupImage: explorerHuntPopup,
+    topBanner: explorerHuntTopBanner,
+    class: "explorer-hunt-card",
+    infoClass: "explorer-hunt-info",
+
     desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
     title: "Explorer Hunt",
     popupDesc:
@@ -1936,6 +1952,10 @@ const NewEvents = ({
     id: "critical",
     image: criticalHitBanner,
     popupImage: criticalHitPopup,
+    topBanner: criticalHitTopBanner,
+    class: "critical-hit-card",
+    infoClass: "critical-hit-info",
+
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Critical Hit",
     link: "/account/challenges/critical-hit",
@@ -1962,6 +1982,9 @@ const NewEvents = ({
     popupImage: puzzleMadnessPopup,
     image: puzzleMadnessBanner,
     usdPrice: 4.0,
+    topBanner: puzzleMadnessTopBanner,
+    class: "puzzle-madness-card",
+    infoClass: "puzzle-madness-info",
 
     desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
     title: "Puzzle Madness",
@@ -1998,7 +2021,6 @@ const NewEvents = ({
       "Extra rewards are given based on leaderboard rank as long as the golden pass is active.",
     ],
   };
-
 
   useEffect(() => {
     const today = new Date();
@@ -2523,906 +2545,10 @@ const NewEvents = ({
                         </div>
                         <div className="sidebar-separator2 my-2"></div>
                         <div className="d-flex flex-column gap-3">
-                          {/* <div className="new-event-wrapper d-flex flex-column">
-                            <div className="position-relative d-flex flex-column align-items-lg-center justify-content-start">
-                              <div className="row px-lg-4 py-lg-2">
-                                <div className="col-12 d-flex justify-content-center pb-2 text-image-holder">
-                                  <img src={activeEvent.textImage} alt="" style={{height: "45px"}} />
-                                </div>
-                              <div className="col-12 col-xxl-6 d-flex flex-column gap-2 position-relative">
-                              <img
-                                src={activeEvent?.image}
-                                className="new-event-banner"
-                                alt=""
-                              />
-                              <div className="d-flex flex-column gap-2 p-3" style={{zIndex: 1}}>
-                                  <h6
-                                    className="mb-0 challenge-popup-secondary-title"
-                                    style={{ color: "#FFC808" }}
-                                  >
-                                    How it works
-                                  </h6>
-                                  <div className="d-flex flex-column gap-2" style={{zIndex: 1}}>
-                                    {activeEvent?.workList.map(
-                                      (work, index) => (
-                                        <div
-                                          className="d-flex align-items-center gap-2"
-                                          key={index}
-                                        >
-                                          <div className="yellow-dot"></div>
-                                          <span className="challenge-popup-desc text-white">
-                                            {work}
-                                          </span>
-                                        </div>
-                                      )
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="d-flex flex-column gap-2 p-3" style={{zIndex: 1}}>
-                                  {activeEvent?.tips && (
-                                    <h6
-                                      className="mb-0 challenge-popup-secondary-title"
-                                      style={{ color: "#FFC808" }}
-                                    >
-                                      Tips
-                                    </h6>
-                                  )}
-                                  <div className="d-flex flex-column gap-1">
-                                    {activeEvent?.tips?.map((tip, index) => (
-                                      <div
-                                        className="d-flex align-items-center gap-2"
-                                        key={index}
-                                      >
-                                        <div className="yellow-dot"></div>
-                                        <span className="challenge-popup-desc text-white">
-                                          {tip}
-                                        </span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-12 col-xxl-6 h-100 px-0 px-lg-2">
-                                <div className="new-event-wrapper w-100 h-100 p-3 position-relative d-flex flex-column gap-5 justify-content-between"> 
-                                <img
-                                src={tooltipIcon}
-                                className="new-event-banner-tooltip"
-                                alt=""
-                                onClick={() => {
-                                  setshowPopup(activeEvent?.id);
-                                }}
-                              />
-                                 <div className="d-flex align-items-end justify-content-between">
-                            {(activeEvent?.id !== "greatCollection" &&
-                              activeEvent?.id !== "maze" &&
-                              activeEvent?.id !== "explorer-hunt") && (
-                                <h6 className="mb-0 purchase-package-title">
-                                  Activate
-                                </h6>
-                              )}
-                            {activeEvent?.id === "maze" && (
-                              <h6 className="mb-0 purchase-package-title">
-                                Requirements
-                              </h6>
-                            )}
-                       
-                          </div>
-                          {adjustedDay === activeEvent.day ? (
-                            <>
-                              <div className="d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                                <div
-                                  className="event-price-wrapper p-3 d-flex align-items-center gap-3"
-                                  style={{
-                                    pointerEvents: isMonday ? "auto" : "none",
-                                    filter: isMonday ? "none" : "blur(5px)",
-                                  }}
-                                >
-                                  <span className="event-price-span">
-                                    Event Price
-                                  </span>
-                                  {adjustedDay === 1 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            dragonRuinsWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 2 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            coldBiteWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 3 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            furyBeastWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 4 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            wingStormWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 6 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            scorpionKingWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 7 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            stoneEyeWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
-                                      </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                                {adjustedDay === 1 ? (
-                                  <>
-                                    {hasBoughtDragon ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                dragonBundleState ===
-                                                  "deposit" ||
-                                                dragonBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                dragonBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                dragonShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalDragon()
-                                              }
-                                            >
-                                              {dragonBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                dragonDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                dragonShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : dragonShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositDragon()
-                                              }
-                                            >
-                                              {dragonDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : adjustedDay === 2 ? (
-                                  <>
-                                    {hasBoughtBear ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                bearBundleState === "deposit" ||
-                                                bearBundleState === "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                bearBundleState === "deposit" ||
-                                                checkWallet === false ||
-                                                bearShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalBear()
-                                              }
-                                            >
-                                              {bearBundleState === "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                bearDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                bearShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : bearShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositBear()
-                                              }
-                                            >
-                                              {bearDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : adjustedDay === 3 ? (
-                                  <>
-                                    {hasBoughtBeast ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                beastBundleState ===
-                                                  "deposit" ||
-                                                beastBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                beastBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                beastShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalBeast()
-                                              }
-                                            >
-                                              {beastBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                beastDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                beastShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : beastShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositBeast()
-                                              }
-                                            >
-                                              {beastDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : adjustedDay === 4 ? (
-                                  <>
-                                    {hasBoughtEagle ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            {" "}
-                                            <button
-                                              disabled={
-                                                eagleBundleState ===
-                                                  "deposit" ||
-                                                eagleBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                eagleBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                eagleShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalEagle()
-                                              }
-                                            >
-                                              {eagleBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                eagleDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                eagleShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : eagleShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositEagle()
-                                              }
-                                            >
-                                              {eagleDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : adjustedDay === 6 ? (
-                                  <>
-                                    {hasBoughtScorpion ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                scorpionBundleState ===
-                                                  "deposit" ||
-                                                scorpionBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                scorpionBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                scorpionShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalScorpion()
-                                              }
-                                            >
-                                              {scorpionBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                scorpionDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                scorpionShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : scorpionShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositScorpion()
-                                              }
-                                            >
-                                              {scorpionDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : adjustedDay === 7 ? (
-                                  <>
-                                    {hasBoughtCyclops ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
-                                    ) : (
-                                      <div className="d-flex align-items-center gap-2">
-                                        {(!isConnected || !email) && (
-                                          <button
-                                            className="stake-wod-btn-inactive"
-                                            disabled
-                                          >
-                                            {" "}
-                                            Buy
-                                          </button>
-                                        )}
-                                        {isConnected && email && (
-                                          <>
-                                            <button
-                                              disabled={
-                                                cyclopsBundleState ===
-                                                  "deposit" ||
-                                                cyclopsBundleState ===
-                                                  "loading" ||
-                                                checkWallet === false
-                                                  ? true
-                                                  : false
-                                              }
-                                              className={` ${
-                                                cyclopsBundleState ===
-                                                  "deposit" ||
-                                                checkWallet === false ||
-                                                cyclopsShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleApprovalCyclops()
-                                              }
-                                            >
-                                              {cyclopsBundleState ===
-                                              "loading" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Approve"
-                                              )}
-                                            </button>
-                                            <button
-                                              disabled={
-                                                checkWallet === true &&
-                                                cyclopsDepositState !==
-                                                  "loading-deposit"
-                                                  ? false
-                                                  : true
-                                              }
-                                              className={` ${
-                                                cyclopsShowApproval === true &&
-                                                checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : cyclopsShowApproval ===
-                                                      false &&
-                                                    checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
-                                              }  py-2 px-4`}
-                                              onClick={() =>
-                                                handleDepositCyclops()
-                                              }
-                                            >
-                                              {cyclopsDepositState ===
-                                              "loading-deposit" ? (
-                                                <div
-                                                  class="spinner-border spinner-border-sm text-light"
-                                                  role="status"
-                                                >
-                                                  <span class="visually-hidden">
-                                                    Loading...
-                                                  </span>
-                                                </div>
-                                              ) : (
-                                                "Buy"
-                                              )}
-                                            </button>
-                                          </>
-                                        )}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
-                              <span
-                                className="statusText"
-                                style={{
-                                  color: statusColor,
-                                  width: "fit-content",
-                                }}
-                              >
-                                {status}
-                              </span>
-                              <div className="d-flex w-100 justify-content-end">
-                                <img src={activeEvent.headImage} className="head-image" alt="" />
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div className=" p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                                <span
-                                  className="available-day-text mb-0 text-white w-100 d-flex justify-content-center text-center"
-                                  style={{
-                                    fontWeight: "700",
-                                    fontSize: "18px",
-                                  }}
-                                >
-                                  Challenge Available on{" "}
-                                  {activeEvent.dayTextLong}
-                                </span>
-                              </div>
-                              <div className="d-flex w-100 justify-content-end">
-                                <img src={activeEvent.headImage} style={{filter: "grayscale(1)"}} alt="" />
-                              </div>
-                            </>
-                          )}
-
-                                </div>
-                              </div>
-                              </div>
-                            </div>
-                          </div> */}
                           <div className="row gap-3 gap-xxl-0">
                             <div className="col-12 col-xxl-6">
                               <div
-                                className={`beast-siege-wrapper ${
+                                className={`beast-siege-wrapper gap-4 gap-lg-0 ${
                                   activeEvent.class
                                 } ${
                                   adjustedDay === activeEvent.day
@@ -3434,15 +2560,7 @@ const NewEvents = ({
                                   <h6 className="beast-siege-title mb-0">
                                     {activeEvent.title}
                                   </h6>
-                                  {/* {adjustedDay === activeEvent.day ? (
-                                    <span className="beast-siege-sub">
-                                      Ready
-                                    </span>
-                                  ) : (
-                                    <span className="beast-siege-sub">
-                                      Available on {activeEvent.dayTextLong}
-                                    </span>
-                                  )} */}
+
                                   {adjustedDay === 1 &&
                                   activeEvent.day === 1 ? (
                                     <>
@@ -3529,7 +2647,7 @@ const NewEvents = ({
                                 </div>
                                 {activeEvent.day === 1 ? (
                                   <>
-                                    {hasBoughtDragon && adjustedDay === 1  ? (
+                                    {hasBoughtDragon && adjustedDay === 1 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3599,7 +2717,7 @@ const NewEvents = ({
                                   </>
                                 ) : activeEvent.day === 3 ? (
                                   <>
-                                    {hasBoughtBeast && adjustedDay === 3  ? (
+                                    {hasBoughtBeast && adjustedDay === 3 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -3704,7 +2822,7 @@ const NewEvents = ({
                                   </>
                                 ) : activeEvent.day === 7 ? (
                                   <>
-                                    {hasBoughtCyclops  && adjustedDay === 7 ? (
+                                    {hasBoughtCyclops && adjustedDay === 7 ? (
                                       <div className="d-flex flex-column gap-2">
                                         <span className="beast-siege-event-price">
                                           Ends in:
@@ -4387,7 +3505,7 @@ const NewEvents = ({
                       //  || challenge === "golden-pass"
                       challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
-                        <div className="new-event-wrapper d-flex flex-column">
+                        <div className="d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
                             <img
                               src={tooltipIcon}
@@ -4398,76 +3516,315 @@ const NewEvents = ({
                               }}
                             />
                             <img
-                              src={activeEvent?.image}
-                              className="new-event-banner"
+                              src={activeEvent?.topBanner}
+                              className="event-top-banner"
                               alt=""
                             />
-
-                            <div
-                              className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row"
-                              style={{ zIndex: "1" }}
-                            >
-                              <div className="d-flex flex-column gap-2  col-lg-6">
-                                <h6
-                                  className="mb-0 challenge-popup-secondary-title"
-                                  style={{ color: "#FFC808" }}
+                            <div className="sidebar-separator2 my-2"></div>
+                           <div className="w-100">
+                           <div className="row gap-3 gap-xxl-0 mt-2">
+                              <div className="col-12 col-xxl-6">
+                                <div
+                                  className={`beast-siege-wrapper gap-4 gap-lg-0 ${activeEvent.class} ${
+                                    activeEvent.title === "Maze Day" &&
+                                    adjustedDay !== 5
+                                      ? "luminosity"
+                                      : ""
+                                  } p-3 d-flex flex-column justify-content-between w-100`}
                                 >
-                                  How it works
-                                </h6>
-                                <div className="d-flex flex-column gap-2">
-                                  {activeEvent?.workList.map((work, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="yellow-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {work}
+                                  <div className="d-flex flex-column gap-1">
+                                    <h6 className="beast-siege-title mb-0">
+                                      {activeEvent.title}
+                                    </h6>
+                                    {activeEvent.title === "Maze Day" &&
+                                    adjustedDay !== 5 ? (
+                                      <span className="beast-siege-sub">
+                                        Available on Friday
                                       </span>
-                                    </div>
-                                  ))}
+                                    ) : activeEvent.title === "Maze Day" &&
+                                      adjustedDay === 5 ? (
+                                      <span className="beast-siege-sub">
+                                        Ready
+                                      </span>
+                                    ) : activeEvent.title === "Puzzle Madness" ?  (
+                                      <span className="beast-siege-sub">
+                                        Find the Pieces
+                                      </span>
+                                    ) : activeEvent.title === "Explorer Hunt" ?  (
+                                      <span className="beast-siege-sub">
+                                      Defend the Partners
+                                    </span>
+                                    ) : activeEvent.title === "The Great Collection" ? (
+                                      <span className="beast-siege-sub">
+                                      Collect the Coins
+                                    </span>
+                                    ) :  <span className="beast-siege-sub">
+                                    Break the Gem
+                                  </span> }
+                                  </div>
+                                  {activeEvent.title === "Maze Day" ? (
+                                    <>
+                                      <div className="d-flex flex-column gap-1">
+                                        <span className="beast-siege-wod-price">
+                                          Hold 400 WOD
+                                        </span>
+                                        <span className="beast-siege-event-price">
+                                          Event Requirement
+                                        </span>
+                                      </div>
+                                      <NavLink
+                                        to={"/#buy-wod"}
+                                        className="beast-siege-btn maze-day-button"
+                                      >
+                                        Buy WOD
+                                      </NavLink>
+                                    </>
+                                  ) : activeEvent.title === "Critical Hit" ? 
+                                  (
+                                    <div className="d-flex flex-column gap-2">
+
+                                    <NavLink
+                                      to={"/shop/land"}
+                                      className="beast-siege-btn critical-hit-button"
+                                    >
+                                      Buy on Shop
+                                    </NavLink>
+                                    <NavLink
+                                      to={"https://opensea.io/collection/worldofdypians"}
+                                      target="_blank"
+                                      className="beast-siege-btn critical-hit-button d-flex align-items-center gap-2"
+                                    >
+                                       <img src={opensea} alt="" />
+                                       Buy on Opensea
+                                    </NavLink>
+                                  </div>
+                                  )
+                                  : activeEvent.title === "The Great Collection" ? 
+                                  (
+                                   <>
+                                    <div className="d-flex flex-column gap-1">
+                                        <span className="beast-siege-wod-price">
+                                          1,578
+                                        </span>
+                                        <span className="beast-siege-event-price">
+                                          Brands Collected
+                                        </span>
+                                      </div>
+                                      <div style={{height: "38px"}}></div>
+                                   </>
+                                  )
+                                  : activeEvent.title === "Explorer Hunt" ? 
+                                  (
+                                   <>
+                                    <div className="d-flex flex-column gap-1">
+                                        <span className="beast-siege-wod-price">
+                                          3
+                                        </span>
+                                        <span className="beast-siege-event-price">
+                                          Partners Saved
+                                        </span>
+                                      </div>
+                                      <div style={{height: "38px"}}></div>
+                                   </>
+                                  )
+                                  : activeEvent.title === "Puzzle Madness" ? (
+                                    <>
+                                      <div className="d-flex flex-column gap-1">
+                                        <div className="d-flex align-items-end gap-1">
+                                        <span className="beast-siege-wod-price">
+                                          {" "}
+                                          {getFormattedNumber(
+                                            puzzleMadnessWodAmount
+                                          )}{" "}
+                                          WOD
+                                        </span>
+                                        <span className="beast-siege-usd-price">(${getFormattedNumber(activeEvent.usdPrice)})</span>
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Event Price
+                                        </span>
+                                      </div>
+                                      <div className="d-flex align-items-center gap-2">
+                                        {hasBoughtpuzzleMadness &&
+                                          isFinishedPuzzle === false && (
+                                            <div className="d-flex flex-column gap-1">
+                                              <span className="event-price-span">
+                                                Active Until:
+                                              </span>
+                                              <Countdown
+                                                renderer={renderer}
+                                                date={puzzleMadnessCountdown}
+                                                onComplete={() => {
+                                                  setisFinishedPuzzle(true);
+                                                }}
+                                              />
+                                            </div>
+                                          )}
+                                        {(!isConnected || !email) && (
+                                          <button
+                                            className="beast-siege-btn-inactive"
+                                            disabled
+                                          >
+                                            {" "}
+                                            Buy
+                                          </button>
+                                        )}
+                                        {isConnected && email && (
+                                          <>
+                                            <button
+                                              disabled={
+                                                puzzleMadnessBundleState ===
+                                                  "deposit" ||
+                                                puzzleMadnessBundleState ===
+                                                  "loading" ||
+                                                checkWallet === false
+                                                  ? true
+                                                  : false
+                                              }
+                                              className={` ${
+                                                puzzleMadnessBundleState ===
+                                                  "deposit" ||
+                                                checkWallet === false ||
+                                                puzzleMadnessShowApproval ===
+                                                  false
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleApprovalPuzzle()
+                                              }
+                                            >
+                                              {puzzleMadnessBundleState ===
+                                              "loading" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Approve"
+                                              )}
+                                            </button>
+                                            <button
+                                              disabled={
+                                                checkWallet === true &&
+                                                puzzleMadnessDepositState !==
+                                                  "loading-deposit"
+                                                  ? false
+                                                  : true
+                                              }
+                                              className={` ${
+                                                puzzleMadnessShowApproval ===
+                                                  true && checkWallet === true
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : puzzleMadnessShowApproval ===
+                                                      false &&
+                                                    checkWallet === true
+                                                  ? "beast-siege-btn"
+                                                  : "beast-siege-btn-inactive"
+                                              }  py-2 px-4`}
+                                              onClick={() =>
+                                                handleDepositPuzzle()
+                                              }
+                                            >
+                                              {puzzleMadnessDepositState ===
+                                              "loading-deposit" ? (
+                                                <div
+                                                  class="spinner-border spinner-border-sm text-light"
+                                                  role="status"
+                                                >
+                                                  <span class="visually-hidden">
+                                                    Loading...
+                                                  </span>
+                                                </div>
+                                              ) : (
+                                                "Buy"
+                                              )}
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
                                 </div>
                               </div>
-
-                              <div className="d-flex flex-column gap-1 col-lg-6">
-                                {activeEvent?.tips && (
-                                  <h6
-                                    className="mb-0 challenge-popup-secondary-title"
-                                    style={{ color: "#FFC808" }}
-                                  >
-                                    Tips
-                                  </h6>
-                                )}
-                                <div className="d-flex flex-column gap-1">
-                                  {activeEvent?.tips?.map((tip, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="yellow-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {tip}
-                                      </span>
+                              <div className="col-12 col-xxl-6">
+                                <div className={`beast-siege-info-wrapper ${activeEvent.infoClass} p-3 w-100`}>
+                                  <div className="d-flex flex-column gap-3">
+                                    <div className="d-flex flex-column gap-2">
+                                      <h6
+                                        className="mb-0 challenge-popup-secondary-title"
+                                        style={{ color: "#FFC808" }}
+                                      >
+                                        How it works
+                                      </h6>
+                                      <div className="d-flex flex-column gap-2">
+                                        {activeEvent?.workList.map(
+                                          (work, index) => (
+                                            <div
+                                              className="d-flex align-items-center gap-2"
+                                              key={index}
+                                            >
+                                              <div className="yellow-dot"></div>
+                                              <span className="challenge-popup-desc text-white">
+                                                {work}
+                                              </span>
+                                            </div>
+                                          )
+                                        )}
+                                      </div>
                                     </div>
-                                  ))}
+
+                                    <div className="d-flex flex-column gap-2">
+                                      {activeEvent?.tips && (
+                                        <h6
+                                          className="mb-0 challenge-popup-secondary-title"
+                                          style={{ color: "#FFC808" }}
+                                        >
+                                          Tips
+                                        </h6>
+                                      )}
+                                      <div className="d-flex flex-column gap-1">
+                                        {activeEvent?.tips?.map(
+                                          (tip, index) => (
+                                            <div
+                                              className="d-flex align-items-center gap-2"
+                                              key={index}
+                                            >
+                                              <div className="yellow-dot"></div>
+                                              <span className="challenge-popup-desc text-white">
+                                                {tip}
+                                              </span>
+                                            </div>
+                                          )
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
+                           </div>
                           </div>
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
-                          {activeEvent?.id !== "greatCollection" &&
+                          {/* {activeEvent?.id !== "greatCollection" &&
                             activeEvent?.id !== "maze" &&
                             activeEvent?.id !== "explorer-hunt" && (
                               <h6 className="mb-0 purchase-package-title">
                                 Activate
                               </h6>
-                            )}
-                          {activeEvent?.id === "maze" && (
+                            )} */}
+                          {/* {activeEvent?.id === "maze" && (
                             <h6 className="mb-0 purchase-package-title">
                               Requirements
                             </h6>
-                          )}
+                          )} */}
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
@@ -4475,211 +3832,217 @@ const NewEvents = ({
                           </div> */}
                         </div>
                         {activeEvent?.id === "critical" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
-                            <NavLink
-                              to={"/shop/land"}
-                              className="getpremium-btn col-lg-4 py-2"
-                            >
-                              Buy on Shop
-                            </NavLink>
-                            <NavLink
-                              to={
-                                "https://opensea.io/collection/worldofdypians"
-                              }
-                              target="_blank"
-                              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
-                            >
-                              <img src={opensea} alt="" />
-                              Buy on Opensea
-                            </NavLink>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
+                          //   <NavLink
+                          //     to={"/shop/land"}
+                          //     className="getpremium-btn col-lg-4 py-2"
+                          //   >
+                          //     Buy on Shop
+                          //   </NavLink>
+                          //   <NavLink
+                          //     to={
+                          //       "https://opensea.io/collection/worldofdypians"
+                          //     }
+                          //     target="_blank"
+                          //     className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                          //   >
+                          //     <img src={opensea} alt="" />
+                          //     Buy on Opensea
+                          //   </NavLink>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "puzzle" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
-                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
-                                <span className="event-price-span">
-                                  Event Price
-                                </span>
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="d-flex align-items-center gap-1">
-                                    <img
-                                      src={wodIcon}
-                                      height={30}
-                                      width={30}
-                                      alt=""
-                                    />
-                                    <h6 className="event-price-coin mb-0">
-                                      {getFormattedNumber(
-                                        puzzleMadnessWodAmount
-                                      )}{" "}
-                                      WOD
-                                    </h6>
-                                  </div>
-                                  <span className="event-price-usd">
-                                    ($
-                                    {getFormattedNumber(activeEvent.usdPrice)})
-                                  </span>
-                                </div>
-                              </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
+                          //     <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
+                          //       <span className="event-price-span">
+                          //         Event Price
+                          //       </span>
+                          //       <div className="d-flex align-items-center gap-3">
+                          //         <div className="d-flex align-items-center gap-1">
+                          //           <img
+                          //             src={wodIcon}
+                          //             height={30}
+                          //             width={30}
+                          //             alt=""
+                          //           />
+                          //           <h6 className="event-price-coin mb-0">
+                          //             {getFormattedNumber(
+                          //               puzzleMadnessWodAmount
+                          //             )}{" "}
+                          //             WOD
+                          //           </h6>
+                          //         </div>
+                          //         <span className="event-price-usd">
+                          //           ($
+                          //           {getFormattedNumber(activeEvent.usdPrice)})
+                          //         </span>
+                          //       </div>
+                          //     </div>
 
-                              <div className="d-flex align-items-center gap-2">
-                                {hasBoughtpuzzleMadness &&
-                                  isFinishedPuzzle === false && (
-                                    <div className="d-flex flex-column gap-1">
-                                      <span className="event-price-span">
-                                        Active Until:
-                                      </span>
-                                      <Countdown
-                                        renderer={renderer}
-                                        date={puzzleMadnessCountdown}
-                                        onComplete={() => {
-                                          setisFinishedPuzzle(true);
-                                        }}
-                                      />
-                                    </div>
-                                  )}
-                                {(!isConnected || !email) && (
-                                  <button
-                                    className="stake-wod-btn-inactive"
-                                    disabled
-                                  >
-                                    {" "}
-                                    Buy
-                                  </button>
-                                )}
-                                {isConnected && email && (
-                                  <>
-                                    <button
-                                      disabled={
-                                        puzzleMadnessBundleState ===
-                                          "deposit" ||
-                                        puzzleMadnessBundleState ===
-                                          "loading" ||
-                                        checkWallet === false
-                                          ? true
-                                          : false
-                                      }
-                                      className={` ${
-                                        puzzleMadnessBundleState ===
-                                          "deposit" ||
-                                        checkWallet === false ||
-                                        puzzleMadnessShowApproval === false
-                                          ? "stake-wod-btn-inactive d-none"
-                                          : "stake-wod-btn"
-                                      }  py-2 px-4`}
-                                      onClick={() => handleApprovalPuzzle()}
-                                    >
-                                      {puzzleMadnessBundleState ===
-                                      "loading" ? (
-                                        <div
-                                          class="spinner-border spinner-border-sm text-light"
-                                          role="status"
-                                        >
-                                          <span class="visually-hidden">
-                                            Loading...
-                                          </span>
-                                        </div>
-                                      ) : (
-                                        "Approve"
-                                      )}
-                                    </button>
-                                    <button
-                                      disabled={
-                                        checkWallet === true &&
-                                        puzzleMadnessDepositState !==
-                                          "loading-deposit"
-                                          ? false
-                                          : true
-                                      }
-                                      className={` ${
-                                        puzzleMadnessShowApproval === true &&
-                                        checkWallet === true
-                                          ? "stake-wod-btn-inactive d-none"
-                                          : puzzleMadnessShowApproval ===
-                                              false && checkWallet === true
-                                          ? "stake-wod-btn"
-                                          : "stake-wod-btn-inactive"
-                                      }  py-2 px-4`}
-                                      onClick={() => handleDepositPuzzle()}
-                                    >
-                                      {puzzleMadnessDepositState ===
-                                      "loading-deposit" ? (
-                                        <div
-                                          class="spinner-border spinner-border-sm text-light"
-                                          role="status"
-                                        >
-                                          <span class="visually-hidden">
-                                            Loading...
-                                          </span>
-                                        </div>
-                                      ) : (
-                                        "Buy"
-                                      )}
-                                    </button>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          </div>
+                          //     <div className="d-flex align-items-center gap-2">
+                          //       {hasBoughtpuzzleMadness &&
+                          //         isFinishedPuzzle === false && (
+                          //           <div className="d-flex flex-column gap-1">
+                          //             <span className="event-price-span">
+                          //               Active Until:
+                          //             </span>
+                          //             <Countdown
+                          //               renderer={renderer}
+                          //               date={puzzleMadnessCountdown}
+                          //               onComplete={() => {
+                          //                 setisFinishedPuzzle(true);
+                          //               }}
+                          //             />
+                          //           </div>
+                          //         )}
+                          //       {(!isConnected || !email) && (
+                          //         <button
+                          //           className="stake-wod-btn-inactive"
+                          //           disabled
+                          //         >
+                          //           {" "}
+                          //           Buy
+                          //         </button>
+                          //       )}
+                          //       {isConnected && email && (
+                          //         <>
+                          //           <button
+                          //             disabled={
+                          //               puzzleMadnessBundleState ===
+                          //                 "deposit" ||
+                          //               puzzleMadnessBundleState ===
+                          //                 "loading" ||
+                          //               checkWallet === false
+                          //                 ? true
+                          //                 : false
+                          //             }
+                          //             className={` ${
+                          //               puzzleMadnessBundleState ===
+                          //                 "deposit" ||
+                          //               checkWallet === false ||
+                          //               puzzleMadnessShowApproval === false
+                          //                 ? "stake-wod-btn-inactive d-none"
+                          //                 : "stake-wod-btn"
+                          //             }  py-2 px-4`}
+                          //             onClick={() => handleApprovalPuzzle()}
+                          //           >
+                          //             {puzzleMadnessBundleState ===
+                          //             "loading" ? (
+                          //               <div
+                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 role="status"
+                          //               >
+                          //                 <span class="visually-hidden">
+                          //                   Loading...
+                          //                 </span>
+                          //               </div>
+                          //             ) : (
+                          //               "Approve"
+                          //             )}
+                          //           </button>
+                          //           <button
+                          //             disabled={
+                          //               checkWallet === true &&
+                          //               puzzleMadnessDepositState !==
+                          //                 "loading-deposit"
+                          //                 ? false
+                          //                 : true
+                          //             }
+                          //             className={` ${
+                          //               puzzleMadnessShowApproval === true &&
+                          //               checkWallet === true
+                          //                 ? "stake-wod-btn-inactive d-none"
+                          //                 : puzzleMadnessShowApproval ===
+                          //                     false && checkWallet === true
+                          //                 ? "stake-wod-btn"
+                          //                 : "stake-wod-btn-inactive"
+                          //             }  py-2 px-4`}
+                          //             onClick={() => handleDepositPuzzle()}
+                          //           >
+                          //             {puzzleMadnessDepositState ===
+                          //             "loading-deposit" ? (
+                          //               <div
+                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 role="status"
+                          //               >
+                          //                 <span class="visually-hidden">
+                          //                   Loading...
+                          //                 </span>
+                          //               </div>
+                          //             ) : (
+                          //               "Buy"
+                          //             )}
+                          //           </button>
+                          //         </>
+                          //       )}
+                          //     </div>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "explorer-hunt" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column gap-2">
-                                <span
-                                  className="challenge-popup-desc text-white"
-                                  style={{ fontSize: "18px" }}
-                                >
-                                  What is Explorer Hunt?
-                                </span>
-                                <span className="challenge-popup-desc text-white">
-                                  Explorer Hunt is an event where you must
-                                  defend the world from alien explorers who have
-                                  landed to assess the terrain before their
-                                  invasion.
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                          <></>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex align-items-center justify-content-between gap-3">
+                          //     <div className="d-flex flex-column gap-2">
+                          //       <span
+                          //         className="challenge-popup-desc text-white"
+                          //         style={{ fontSize: "18px" }}
+                          //       >
+                          //         What is Explorer Hunt?
+                          //       </span>
+                          //       <span className="challenge-popup-desc text-white">
+                          //         Explorer Hunt is an event where you must
+                          //         defend the world from alien explorers who have
+                          //         landed to assess the terrain before their
+                          //         invasion.
+                          //       </span>
+                          //     </div>
+                          //   </div>
+                          // </div>
                         ) : activeEvent?.id === "greatCollection" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3">
-                              <div className="d-flex flex-column gap-2">
-                                <span
-                                  className="challenge-popup-desc text-white"
-                                  style={{ fontSize: "18px" }}
-                                >
-                                  What is The Great Collection?
-                                </span>
-                                <span className="challenge-popup-desc text-white">
-                                  The Great Collection is a thrilling event
-                                  where players are tasked with gathering rare
-                                  and unique partner branded coins scattered
-                                  across the game.
-                                </span>
-                              </div>
-                            </div>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex align-items-center justify-content-between gap-3">
+                          //     <div className="d-flex flex-column gap-2">
+                          //       <span
+                          //         className="challenge-popup-desc text-white"
+                          //         style={{ fontSize: "18px" }}
+                          //       >
+                          //         What is The Great Collection?
+                          //       </span>
+                          //       <span className="challenge-popup-desc text-white">
+                          //         The Great Collection is a thrilling event
+                          //         where players are tasked with gathering rare
+                          //         and unique partner branded coins scattered
+                          //         across the game.
+                          //       </span>
+                          //     </div>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "maze" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
-                              <span className="challenge-popup-desc text-white">
-                                You need to hold at least 400 WOD tokens to
-                                participate
-                              </span>
-                              <NavLink className="explore-btn" to="/#buy-wod">
-                                BUY WOD
-                              </NavLink>
-                            </div>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                          //     <span className="challenge-popup-desc text-white">
+                          //       You need to hold at least 400 WOD tokens to
+                          //       participate
+                          //     </span>
+                          //     <NavLink className="explore-btn" to="/#buy-wod">
+                          //       BUY WOD
+                          //     </NavLink>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <span
-                              className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                              style={{ fontWeight: "700", fontSize: "18px" }}
-                            >
-                              Event Coming Soon
-                            </span>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <span
+                          //     className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                          //     style={{ fontWeight: "700", fontSize: "18px" }}
+                          //   >
+                          //     Event Coming Soon
+                          //   </span>
+                          // </div>
+                          <></>
                         )}
                         {/* {eventId === "golden-pass" &&
                           availableTime !== 0 &&
