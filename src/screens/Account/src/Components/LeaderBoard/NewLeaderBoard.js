@@ -178,6 +178,7 @@ const NewLeaderBoard = ({
   allMatData,
   onPremiumClick,
   onGoldenpassClick,
+  allSeiData,
 }) => {
   const chainItems = [
     {
@@ -546,7 +547,7 @@ const NewLeaderBoard = ({
                      } leaderboard-inactive-btn2 w-100`}
                         onClick={() => {
                           handleOption("sei");
-                          setAllData(allMatData);
+                          setAllData(allSeiData);
                         }}
                       >
                         <img
@@ -905,13 +906,13 @@ const NewLeaderBoard = ({
               )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {optionText2 === "sei" ? (
+                    {/* {optionText2 === "sei" ? (
                       <div className="coming-soon-position d-flex align-items-center justify-content-center">
                         <h6 className="mb-0">Coming Soon</h6>
                       </div>
                     ) : (
                       <></>
-                    )}
+                    )} */}
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
@@ -937,9 +938,7 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={`${
-                              optionText2 === "sei" && "blur-leaderboard"
-                            } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
+                            className={` leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
@@ -1600,10 +1599,13 @@ const NewLeaderBoard = ({
                                               style={{ color: "#fff" }}
                                             >
                                               {getFormattedNumber(
-                                                leaderboard.rewards[
-                                                  leaderboard.player_data
-                                                    .position
-                                                ]
+                                                leaderboard.player_data
+                                                  .statValue === 0
+                                                  ? 0
+                                                  : leaderboard.rewards[
+                                                      leaderboard.player_data
+                                                        .position
+                                                    ]
                                                   ? leaderboard.rewards[
                                                       leaderboard.player_data
                                                         .position

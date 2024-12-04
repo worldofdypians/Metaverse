@@ -552,6 +552,8 @@ function Dashboard({
   const [myMantaNfts, setmyMantaNfts] = useState([]);
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
   const [myCookieNfts, setmyCookieNfts] = useState([]);
+  const [mySeiNfts, setmySeiNfts] = useState([]);
+
   const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
@@ -2473,28 +2475,28 @@ function Dashboard({
 
       const userPosition = testArray[0].position;
 
-      if (isPremium && testArray[0].statValue != 0) {
-        setDailyDataAmountSei(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
-              : Number(skaleStars[userPosition]) +
-                Number(skaleStarsPremium[userPosition])
-            : 0
-        );
-      } else if (!isPremium && testArray[0].statValue != 0) {
-        setDailyDataAmountSei(
-          testArray[0].statValue !== 0
-            ? userPosition > 10
-              ? 0
-              : userPosition === 10
-              ? Number(skaleStars[9])
-              : Number(skaleStars[userPosition])
-            : 0
-        );
-      } else setDailyDataAmountSei(0);
+      // if (isPremium && testArray[0].statValue != 0) {
+      //   setDailyDataAmountSei(
+      //     testArray[0].statValue !== 0
+      //       ? userPosition > 10
+      //         ? 0
+      //         : userPosition === 10
+      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+      //         : Number(skaleStars[userPosition]) +
+      //           Number(skaleStarsPremium[userPosition])
+      //       : 0
+      //   );
+      // } else if (!isPremium && testArray[0].statValue != 0) {
+      //   setDailyDataAmountSei(
+      //     testArray[0].statValue !== 0
+      //       ? userPosition > 10
+      //         ? 0
+      //         : userPosition === 10
+      //         ? Number(skaleStars[9])
+      //         : Number(skaleStars[userPosition])
+      //       : 0
+      //   );
+      // } else setDailyDataAmountSei(0);
 
       if (itemData.length > 0) {
         var testArray2 = Object.values(itemData).filter(
@@ -2503,7 +2505,7 @@ function Dashboard({
 
         if (testArray.length > 0 && testArray2.length > 0) {
           setActivePlayerSei(true);
-          setUserDataSei([]);
+          setUserDataSei(...testArray);
         } else if (testArray.length > 0 && testArray2.length === 0) {
           setActivePlayerSei(false);
           setUserDataSei(...testArray);
@@ -4709,7 +4711,7 @@ function Dashboard({
       // fetchWeeklyRecordsManta();
       // fetchMonthlyRecordsManta();
 
-      // fetchDailyRecordsSei();
+      fetchDailyRecordsSei();
       // fetchWeeklyRecordsSei();
       // fetchMonthlyRecordsSei();
 
@@ -4792,12 +4794,12 @@ function Dashboard({
     }
   }, [matcount]);
 
-  // useEffect(() => {
-  //   if (seicount !== 0) {
-  //     fetchDailyRecordsSei();
-  //     getAllSeiChests(email);
-  //   }
-  // }, [seicount]);
+  useEffect(() => {
+    if (seicount !== 0) {
+      fetchDailyRecordsSei();
+      getAllSeiChests(email);
+    }
+  }, [seicount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -6781,7 +6783,8 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
-          claimedMatChests + claimedMatPremiumChests < 20
+          claimedMatChests + claimedMatPremiumChests < 20 ||
+          claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
@@ -6792,7 +6795,8 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-          claimedMatChests + claimedMatPremiumChests === 20
+          claimedMatChests + claimedMatPremiumChests === 20 &&
+          claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -6805,7 +6809,8 @@ function Dashboard({
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
-          claimedMatChests < 10
+          claimedMatChests < 10 ||
+          claimedSeiChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -6816,7 +6821,8 @@ function Dashboard({
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
-          claimedMatChests === 10
+          claimedMatChests === 10 &&
+          claimedSeiChests === 10
         ) {
           setCanBuy(false);
         }
@@ -7362,6 +7368,9 @@ function Dashboard({
 
     getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then((NFTS) =>
       setmyCookieNfts(NFTS)
+    );
+    getMyNFTS(userWallet ? userWallet : coinbase, "sei").then((NFTS) =>
+      setmySeiNfts(NFTS)
     );
   };
 
@@ -10146,7 +10155,7 @@ function Dashboard({
     // fetchWeeklyRecordsManta();
     // fetchMonthlyRecordsManta();
 
-    // fetchDailyRecordsSei();
+    fetchDailyRecordsSei();
     // fetchWeeklyRecordsSei();
     // fetchMonthlyRecordsSei();
 
@@ -10472,7 +10481,7 @@ function Dashboard({
       getAllBaseChests(email);
       getAllTaikoChests(email);
       getAllMatChests(email);
-      // getAllSeiChests(email);
+      getAllSeiChests(email);
     }
   }, [email]);
 
@@ -10659,6 +10668,8 @@ function Dashboard({
               userVictionScore={userDataViction?.statValue ?? 0}
               userRankMat={userDataMat?.position ?? 0}
               userMatScore={userDataMat?.statValue ?? 0}
+              userRankSei={userDataSei?.position ?? 0}
+              userSeiScore={userDataSei?.statValue ?? 0}
               userRankManta={userDataManta?.position ?? 0}
               userMantaScore={userDataManta?.statValue ?? 0}
               userRankBase={userDataBase?.position ?? 0}
@@ -10842,7 +10853,7 @@ function Dashboard({
               setmatcount(matcount + 1);
             }}
             onSeiChestClaimed={() => {
-              setCount(count + 1);
+              setseicount(seicount + 1);
             }}
             dummypremiumChests={dummypremiumChests}
             onPremiumClick={() => {
@@ -10964,6 +10975,7 @@ function Dashboard({
                 allBaseData={allBaseData}
                 allTaikoData={allTaikoData}
                 allMatData={allMatData}
+                allSeiData={allSeiData}
                 dailyplayerData={dailyplayerData}
                 weeklyplayerData={weeklyplayerData}
                 monthlyplayerData={monthlyplayerData}
@@ -11293,6 +11305,7 @@ function Dashboard({
                 myMantaNfts={myMantaNfts}
                 myTaikoNfts={myTaikoNfts}
                 myCookieNfts={myCookieNfts}
+                mySeiNfts={mySeiNfts}
                 mySkaleNfts={mySkaleNfts}
                 latestBoughtNFTS={latest20BoughtNFTS}
                 myOffers={myOffers}

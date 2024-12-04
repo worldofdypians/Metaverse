@@ -178,11 +178,13 @@ const MyProfile = ({
   beastSiegeStatus,
   userRankMat,
   userMatScore,
+  userRankSei,
+  userSeiScore,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
-
-  const chestPercentage = (totalClaimedChests / 140) * 100;
+ 
+  const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
 
   const dailyEvents = [
@@ -610,17 +612,23 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <div className="wallet-address-wrapper2 p-2 w-100">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Brands</span>
-                      <span className="user-data-item-left">Collected</span>
-                    </div>
-                    <div className="d-flex">
-                      <span className="user-data-item-right">Upcoming</span>
+                <NavLink to="/account/challenges/great-collection" className={'w-100'}>
+                  <div className="wallet-address-wrapper2 p-2 w-100">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className="d-flex flex-column">
+                        <span className="user-data-item-left">Brands</span>
+                        <span className="user-data-item-left">Collected</span>
+                      </div>
+                      <div className="d-flex">
+                        <span className="user-data-item-right">
+                          {getFormattedNumber(
+                            greatCollectionData?.statValue ?? 0
+                          )}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </NavLink>
                 {rankDropdown === true && (
                   <RankSmallPopup
                     onClose={() => {
@@ -641,6 +649,8 @@ const MyProfile = ({
                     userMantaScore={userMantaScore}
                     userRankMat={userRankMat}
                     userMatScore={userMatScore}
+                    userRankSei={userRankSei}
+                    userSeiScore={userSeiScore}
                     userRankBase={userRankBase}
                     userBaseScore={userBaseScore}
                     userRankTaiko={userRankTaiko}
@@ -812,11 +822,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 8
+                        {userActiveEvents === 11
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/8"}
+                          : userActiveEvents + "/11"}
                       </span>
                     </div>
                     {/* <img
