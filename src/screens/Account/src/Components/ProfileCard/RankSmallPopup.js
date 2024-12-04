@@ -5,6 +5,8 @@ import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
 import matActive from "../../../../../components/Header/assets/matchain.svg";
+import seiIcon from "../../../../../components/Header/assets/sei.svg";
+
 
 import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -44,6 +46,8 @@ const RankSmallPopup = ({
   globalWeekly,
   isPremium,
   userRankMat, 
+  userRankSei,
+  userSeiScore
 }) => {
   
 
@@ -154,6 +158,30 @@ const RankSmallPopup = ({
                   <span className="rank-dropdown-text">Score</span>
                   <span className="rank-dropdown-text-yellow">
                     {getFormattedNumber(userMatScore, 0)}
+                  </span>
+                </div>
+              </div>
+              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={seiIcon}
+                    width={25}
+                    className="rankChain"
+                    height={25}
+                    alt=""
+                  />
+                  {/* <span className="rank-dropdown-text">Manta</span> */}
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Rank</span>
+                  <span className="rank-dropdown-text-yellow">
+                    #{getFormattedNumber(userRankSei + 1, 0)}
+                  </span>
+                </div>
+                <div className="rank-item-wrapper p-2">
+                  <span className="rank-dropdown-text">Score</span>
+                  <span className="rank-dropdown-text-yellow">
+                    {getFormattedNumber(userSeiScore, 0)}
                   </span>
                 </div>
               </div>

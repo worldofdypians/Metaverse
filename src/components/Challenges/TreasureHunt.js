@@ -1,17 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./_challenges.scss";
 import pickaxe from "./assets/pickaxe.svg";
 import calendar from "./assets/calendar.svg";
 import totalEarningsIcon from "./assets/totalEarningsIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
-const TreasureHunt = ({ events, eventDuration, onEventClick }) => {
+const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
+
+
+const [slicedEvents, setSlicedEvents] = useState([])
+
+useEffect(() => {
+ if(page === 1 && eventDuration === "Live"){
+  setSlicedEvents(events .filter((obj) => {
+    return obj.eventStatus === eventDuration;
+  }).slice(0, 8))
+ }else if(page === 2 && eventDuration === "Live"){
+  setSlicedEvents(events.filter((obj) => {
+    return obj.eventStatus === eventDuration;
+  }).slice(8, events.length))
+ }else if(eventDuration !== "Live"){
+  setSlicedEvents(events .filter((obj) => {
+    return obj.eventStatus === eventDuration;
+  }))
+ }
+}, [page, eventDuration])
+
+
   return (
     <div className="treasurehunt-wrapper">
-      {events
-        .filter((obj) => {
-          return obj.eventStatus === eventDuration;
-        })
+      {slicedEvents
+       
         .map((item, index) => {
           return (
             <div
