@@ -24,9 +24,26 @@ import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
+import bnbMazeDayCard from "./assets/banners/bnbMazeDayCard.png";
 import opensea from "../../assets/opensea.svg";
+import bnbMazeDayTopBanner from "./assets/banners/bnbMazeDayTopBanner.webp";
+import criticalHitTopBanner from "./assets/banners/criticalHitTopBanner.webp";
+import explorerHuntTopBanner from "./assets/banners/explorerHuntTopBanner.webp";
+import greatCollectionTopBanner from "./assets/banners/greatCollectionTopBanner.webp";
+import puzzleMadnessTopBanner from "./assets/banners/puzzleMadnessTopBanner.webp";
 import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
-
+import dragonRuinsText from "../../assets/gameAssets/challengeCards/dragonRuinsText.png";
+import dragonRuinsHead from "../../assets/gameAssets/challengeCards/dragonRuinsHead.png";
+import coldBiteHead from "../../assets/gameAssets/challengeCards/coldBiteHead.png";
+import furyBeastHead from "../../assets/gameAssets/challengeCards/furyBeastHead.png";
+import wingStormHead from "../../assets/gameAssets/challengeCards/wingStormHead.png";
+import scorpionKingHead from "../../assets/gameAssets/challengeCards/scorpionKingHead.png";
+import stoneEyeHead from "../../assets/gameAssets/challengeCards/stoneEyeHead.png";
+import coldBiteText from "../../assets/gameAssets/challengeCards/coldBiteText.png";
+import furyBeastText from "../../assets/gameAssets/challengeCards/furyBeastText.png";
+import wingStormText from "../../assets/gameAssets/challengeCards/wingStormText.png";
+import scorpionKingText from "../../assets/gameAssets/challengeCards/scorpionKingText.png";
+import stoneEyeText from "../../assets/gameAssets/challengeCards/stoneEyeText.png";
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
 import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
 import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
@@ -104,25 +121,9 @@ import { CircularProgress } from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
-    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
-      {/* <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">{days < 10 ? "0" + days : days}</h6>
-        <span className="days3">Days</span>
-      </div>
-      <h6 className="mint-time3 mb-0">:</h6> */}
-
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">{hours < 10 ? "0" + hours : hours}</h6>
-        <span className="days3">Hours</span>
-      </div>
-      <h6 className="mint-time3 mb-0">:</h6>
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="mint-time3 mb-0">
-          {minutes < 10 ? "0" + minutes : minutes}
-        </h6>
-        <span className="days3">Minutes</span>
-      </div>
-    </div>
+    <span className="beast-siege-wod-price">
+      {String(hours).padStart(2, "0")}h:{String(minutes).padStart(2, "0")}m
+    </span>
   );
 };
 
@@ -141,7 +142,8 @@ const NewEvents = ({
   isConnected,
   setBeastSiegeStatus,
   greatCollectionData,
-  explorerHuntData
+  explorerHuntData,
+  setPuzzleMadnessTimer,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -205,6 +207,7 @@ const NewEvents = ({
   const [cyclopsDepositState, setCyclopsDepositState] = useState("initial");
   const [cyclopsShowApproval, setCyclopsShowApproval] = useState(true);
   const [hasBoughtCyclops, setHasBoughtCyclops] = useState(false);
+  const [page, setPage] = useState(1);
   const sliderRef = useRef();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
@@ -319,11 +322,20 @@ const NewEvents = ({
       .getTimeOfExpireBuff(wallet)
       .call();
     if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtpuzzleMadness(false); 
+      setHasBoughtpuzzleMadness(false);
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        puzzleMadness: false,
+      }));
       return;
     }
     setHasBoughtpuzzleMadness(true);
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      puzzleMadness: false,
+    }));
     setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+    setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
   };
 
   const checkApprovalPuzzle = async () => {
@@ -481,9 +493,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtDragon(false);
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        dragon: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        dragon: false,
       }));
       return;
     }
@@ -505,9 +517,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtDragon(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      dragon: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      dragon: isToday,
     }));
   };
 
@@ -666,9 +678,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBear(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        bear: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        bear: false,
       }));
       return;
     }
@@ -690,9 +702,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBear(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      bear: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      bear: isToday,
     }));
   };
 
@@ -870,9 +882,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtBeast(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        beast: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        beast: false,
       }));
       return;
     }
@@ -894,9 +906,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtBeast(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      beast: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      beast: isToday,
     }));
   };
 
@@ -1055,9 +1067,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtEagle(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        eagle: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        eagle: false,
       }));
       return;
     }
@@ -1079,9 +1091,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtEagle(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      eagle: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      eagle: isToday,
     }));
   };
 
@@ -1239,9 +1251,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtScorpion(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        scorpion: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        scorpion: false,
       }));
       return;
     }
@@ -1263,9 +1275,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtScorpion(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      scorpion: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      scorpion: isToday,
     }));
   };
 
@@ -1424,9 +1436,9 @@ const NewEvents = ({
       .call();
     if (Number(purchaseTimestamp) === 0) {
       setHasBoughtCyclops(false); // User hasn't bought it
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
-        cyclops: false   
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
+        cyclops: false,
       }));
       return;
     }
@@ -1448,9 +1460,9 @@ const NewEvents = ({
       purchaseMonth === currentMonth &&
       purchaseDay === currentDay;
     setHasBoughtCyclops(isToday);
-    setBeastSiegeStatus(prevStatus => ({
-      ...prevStatus, 
-      cyclops: isToday   
+    setBeastSiegeStatus((prevStatus) => ({
+      ...prevStatus,
+      cyclops: isToday,
     }));
   };
 
@@ -1474,6 +1486,8 @@ const NewEvents = ({
   };
 
   const handleApprovalCyclops = async () => {
+    console.log("herllo");
+
     setCyclopsBundleState("loading");
     setStatus("Approving, please wait");
     setStatusColor("#00FECF");
@@ -1629,15 +1643,15 @@ const NewEvents = ({
 
       setHasBoughtEagle(false);
       setHasBoughtScorpion(false);
-      setBeastSiegeStatus(prevStatus => ({
-        ...prevStatus, 
+      setBeastSiegeStatus((prevStatus) => ({
+        ...prevStatus,
         dragon: false,
         bear: false,
         beast: false,
         eagle: false,
         scorpion: false,
         cyclops: false,
-
+        puzzleMadness: false,
       }));
       setDragonShowApproval(false);
       setDragonBundleState("initial");
@@ -1657,6 +1671,7 @@ const NewEvents = ({
       setScorpionBundleState("initial");
     }
   }, [wallet, chainId, email]);
+
   const eventinfos = [
     {
       id: "dragon",
@@ -1668,8 +1683,11 @@ const NewEvents = ({
       thumbImageActive: dragonRuinsActiveThumb,
       mobileThumbImage: dragonRuinsThumbMobile,
       mobileThumbImageActive: dragonRuinsActiveThumbMobile,
+      textImage: dragonRuinsText,
+      headImage: dragonRuinsHead,
       wodAmount: dragonRuinsWodAmount,
-      usdPrice: 2.00,
+      class: "dragon-siege",
+      usdPrice: 2.0,
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
       dayText: "MON",
@@ -1677,10 +1695,11 @@ const NewEvents = ({
       popupDesc:
         "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Mondays.",
-        "The Dragon must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 16,000 points and up to 200 stars.",
+        "The event is available exclusively on Mondays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 16,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 200 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 10 and above",
@@ -1698,8 +1717,11 @@ const NewEvents = ({
       thumbImageActive: coldBiteActiveThumb,
       mobileThumbImage: coldBiteThumbMobile,
       mobileThumbImageActive: coldBiteActiveThumbMobile,
+      textImage: coldBiteText,
+      headImage: coldBiteHead,
       wodAmount: coldBiteWodAmount,
-      usdPrice: 2.50,
+      usdPrice: 2.5,
+      class: "bear-siege",
 
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
@@ -1708,11 +1730,13 @@ const NewEvents = ({
       title: "Cold Bite",
       popupDesc:
         "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Tuesdays.",
-        "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 30,000 points and up to 300 stars.",
+        "The event is available exclusively on Tuesdays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 30,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 300 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 15 and above",
@@ -1730,8 +1754,12 @@ const NewEvents = ({
       thumbImageActive: furyBeastActiveThumb,
       mobileThumbImage: furyBeastThumbMobile,
       mobileThumbImageActive: furyBeastActiveThumbMobile,
+      textImage: furyBeastText,
+      headImage: furyBeastHead,
       wodAmount: furyBeastWodAmount,
-      usdPrice: 2.50,
+      class: "beast-siege",
+
+      usdPrice: 2.5,
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
       dayText: "WED",
@@ -1740,11 +1768,13 @@ const NewEvents = ({
       title: "Fury Beast",
       popupDesc:
         "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
+
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Wednesdays.",
-        "The Gorilla must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 60,000 points and up to 400 stars.",
+        "The event is available exclusively on Wednesdays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 60,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 400 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 18 and above",
@@ -1763,8 +1793,11 @@ const NewEvents = ({
       mobileThumbImage: wingStormThumbMobile,
       mobileThumbImageActive: wingStormActiveThumbMobile,
       wodAmount: wingStormWodAmount,
-      usdPrice: 3.00,
+      textImage: wingStormText,
+      headImage: wingStormHead,
+      class: "eagle-siege",
 
+      usdPrice: 3.0,
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -1773,11 +1806,13 @@ const NewEvents = ({
       title: "Wing Storm",
       popupDesc:
         "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
+
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Thursdays.",
-        "The Eagle must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 70,000 points and up to 500 stars.",
+        "The event is available exclusively on Thursdays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 70,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 500 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 22 and above",
@@ -1796,7 +1831,11 @@ const NewEvents = ({
       mobileThumbImage: scorpionKingThumbMobile,
       mobileThumbImageActive: scorpionKingActiveThumbMobile,
       wodAmount: scorpionKingWodAmount,
-      usdPrice: 3.50,
+      textImage: scorpionKingText,
+      headImage: scorpionKingHead,
+      class: "scorpion-siege",
+
+      usdPrice: 3.5,
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -1804,16 +1843,18 @@ const NewEvents = ({
       title: "Scorpion King",
       popupDesc:
         "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
+
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Saturdays.",
-        "The Scorpion must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 120,000 points and up to 1,000 stars.",
+        "The event is available exclusively on Saturdays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 120,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 1000 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 40 and above",
         "Craft plenty of health potions and target the tail to disable its poison strikes and reduce the threat.",
-        "Equip high-damage weapons to end the fight quickly before the poison accumulates.",
+        "Equip high-damage weapons to end the fight quickly before the poison kills you.",
       ],
       link: "/account/challenges/scorpion-king",
     },
@@ -1827,7 +1868,11 @@ const NewEvents = ({
       mobileThumbImage: stoneEyeThumbMobile,
       mobileThumbImageActive: stoneEyeActiveThumbMobile,
       wodAmount: stoneEyeWodAmount,
-      usdPrice: 3.00,
+      textImage: stoneEyeText,
+      headImage: stoneEyeHead,
+      class: "cyclops-siege",
+
+      usdPrice: 3.0,
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -1836,10 +1881,11 @@ const NewEvents = ({
       popupDesc:
         "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
       workList: [
-        "Purchase the bundle from the Challenge & Events.",
-        "The event is available exclusively on Sundays.",
-        "The Cyclop must be defeated within the day, with the timer resetting at 00:00 UTC.",
-        "Rewards include 80,000 points and up to 600 stars.",
+        "The event is available exclusively on Sundays and needs to be activated.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "To access the event, go to the Teleport Station and find the right portal.",
+        "Rewards: 80,000 points added to the BNB Chain leaderboard.",
+        "Rewards: Up to 600 stars added to the Global Leaderboards.",
       ],
       tips: [
         "Recommended Hero Level: 30 and above",
@@ -1858,14 +1904,18 @@ const NewEvents = ({
     day: 5,
     dayText: "FRI",
     title: "Maze Day",
+    topBanner: bnbMazeDayTopBanner,
+    class: "maze-garden-card",
+    infoClass: "maze-garden-info",
     popupDesc:
       "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
     workList: [
-      "The event is available exclusively on Fridays.",
-      "Hold at least 400 WOD tokens to participate.",
-      "Players must find their way to the maze’s center and collect the gem to earn rewards.",
+      "The event runs exclusively on Fridays and requires holding at least 400 WOD to participate.",
+      "To access the event, go to the Teleport Station and find the right portal or go directly to the BNB Chain area.",
+      "Players must find their way to the maze’s center and destroy the gem to earn rewards.",
       "Rewards include up to 200,000 points, 800 stars, and $10.",
     ],
+
     tips: [
       "Recommended Hero Level: 15 and above",
       "Focus on observation to spot clues, gates, and shortcuts.",
@@ -1878,18 +1928,21 @@ const NewEvents = ({
     id: "greatCollection",
     image: greatCollectionBanner,
     popupImage: greatCollectionPopup,
+    topBanner: greatCollectionTopBanner,
+    class: "great-collection-card",
+    infoClass: "great-collection-info",
     desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
     title: "The Great Collection",
     popupDesc:
       "The Great Collection is a thrilling event where players are tasked with gathering rare and unique partner branded coins scattered across the game. This event challenges your exploration and problem-solving skills as you work to collect as many coins as possible. Compete against other players to amass the largest collection and earn exclusive rewards based on your ranking.",
     workList: [
+      "The challenge is free to access by everyone.",
       "Rare collectible items are hidden across the map, in both common and hard-to-reach locations.",
-      "Players must explore the maps to retrieve these partner branded coins.",
+      "Players must collect partner branded items.",
       "The collected amount contributes to unlocking more rewards in the future.",
     ],
     tips: [
-      "Recommended Hero Level: 1 and above",
-      "Prioritize exploring areas that are less crowded to maximize your chances of finding hidden coins.",
+      "Explore the Island Zero and Dypians City maps to maximize  item findings.",
       "Use mounts or movement speed boosts to traverse large zones quickly.",
     ],
     link: "/account/challenges/great-collection",
@@ -1899,19 +1952,24 @@ const NewEvents = ({
     id: "explorer-hunt",
     image: explorerHuntBanner,
     popupImage: explorerHuntPopup,
+    topBanner: explorerHuntTopBanner,
+    class: "explorer-hunt-card",
+    infoClass: "explorer-hunt-info",
+
     desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
     title: "Explorer Hunt",
     popupDesc:
       "Defend the world from the alien explorers who have landed to assess the terrain before their invasion. Players will hear an alert signaling the arrival of these intruders in a specific area, and your task is to defend the city by defeating them. The event features three levels of explorers, each more powerful and challenging than the last. Be prepared to strategize and face increasingly formidable opponents as you protect your homeland.",
     workList: [
-      "Alerts will notify players of the arrival of alien explorers in a designated area.",
-      "Players must travel to the location and engage in combat with the explorers.",
-      "There are three levels of explorers to defeat, each with higher difficulty and rewards.",
+      "The challenge is free to access by everyone.",
+      "Alerts will notify players of the arrival of explorers in a designated area.",
+      "Alerts can happen multiple times a day, and you have 10 minutes to defeat the explorers.",
+      "Defeating the explorers gives you points within different ranges, which will be added to the BNB Chain leaderboard.",
     ],
     tips: [
       "Recommended Hero Level: 20 and above",
       "Upgrade your weapons and armor to handle the increasing difficulty of higher-level explorers.",
-      "Stock up on health potions to sustain yourself during prolonged battles.",
+      "You must fight them at close range, as they have an invisible shield protecting them from long-range attacks.",
     ],
     link: "/account/challenges/explorer-hunt",
   };
@@ -1920,6 +1978,10 @@ const NewEvents = ({
     id: "critical",
     image: criticalHitBanner,
     popupImage: criticalHitPopup,
+    topBanner: criticalHitTopBanner,
+    class: "critical-hit-card",
+    infoClass: "critical-hit-info",
+
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Critical Hit",
     link: "/account/challenges/critical-hit",
@@ -1930,7 +1992,7 @@ const NewEvents = ({
       "Genesis Land is a 125x125 area in World of Dypians, available to those who own a Genesis Land NFT. Benefits include exclusive rewards, Land NFT staking pool, and special in-game events like Critical Hit.",
     workList: [
       "Hold Genesis Land NFT to access the event.",
-      "Earn 30,000-80,000 points by destroying the Gem",
+      "Earn 30,000-80,000 points added to the BNB Chain leaderboard.",
       "Receive rewards ranging from $20 to $7,000 ",
       "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
     ],
@@ -1945,7 +2007,10 @@ const NewEvents = ({
     id: "puzzle",
     popupImage: puzzleMadnessPopup,
     image: puzzleMadnessBanner,
-    usdPrice: 4.00,
+    usdPrice: 4.0,
+    topBanner: puzzleMadnessTopBanner,
+    class: "puzzle-madness-card",
+    infoClass: "puzzle-madness-info",
 
     desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
     title: "Puzzle Madness",
@@ -1958,9 +2023,11 @@ const NewEvents = ({
     thirdDesc:
       "Holding a CAWS NFT gives you an advantage. Your cat companion helps detect hidden pieces with an exclamation mark above its head. However, the cat cannot detect pieces on top or inside buildings, so players must thoroughly explore.",
     workList: [
-      "Purchase the bundle from the Challenge & Events.",
-      "Find 10 pieces within the two-hour limit in the  Island Zero and Dypians City maps ",
-      "An indicator will guide you on whether pieces are located making your search easier",
+      "The event is available at any time and needs to be activated.",
+      "The challenge duration is 2 hours and can be extended.",
+      "You can complete the challenge multiple times within the time limit.",
+      "Find 10 pieces in the Island Zero and Dypians City maps.",
+      "Rewards: Up to 160,000 points added to the BNB Chain leaderboard.",
     ],
   };
 
@@ -1971,7 +2038,7 @@ const NewEvents = ({
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
     link: "/account/challenges/golden-pass",
-    usdPrice: 2.00,
+    usdPrice: 2.0,
     popupDesc:
       "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
     secondaryDesc:
@@ -2080,6 +2147,8 @@ const NewEvents = ({
     //   setActiveEvent(goldenPassInfo);
     // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
+
+  console.log(explorerHuntData, greatCollectionData);
 
   const html = document.querySelector("html");
 
@@ -2376,43 +2445,76 @@ const NewEvents = ({
                   <div className="col-12 col-lg-10">
                     {(challenge === "treasure-hunt" ||
                       selectedEvent === "treasure-hunt") && (
-                      <div className="d-flex align-items-center gap-2 mb-3">
-                        <div
-                          className={`${
-                            eventDuration === "Live"
-                              ? "active-challenge-tab"
-                              : "challenge-tab"
-                          }   px-4 py-2 d-flex align-items-center justify-content-center`}
-                          onClick={() => {
-                            seteventDuration("Live");
-                          }}
-                        >
-                          <span>Live</span>
+                      <div className="d-flex align-items-center justify-content-between flex-column flex-lg-row gap-2 gap-lg-0">
+                        <div className="d-flex align-items-center gap-2 mb-3">
+                          <div
+                            className={`${
+                              eventDuration === "Live"
+                                ? "active-challenge-tab"
+                                : "challenge-tab"
+                            }   px-4 py-2 d-flex align-items-center justify-content-center`}
+                            onClick={() => {
+                              seteventDuration("Live");
+                              setPage(1);
+                            }}
+                          >
+                            <span>Live</span>
+                          </div>
+                          <div
+                            className={`${
+                              eventDuration === "Coming Soon"
+                                ? "active-challenge-tab"
+                                : "challenge-tab"
+                            } px-4 py-2 d-flex align-items-center justify-content-center`}
+                            onClick={() => {
+                              seteventDuration("Coming Soon");
+                              setPage(1);
+                            }}
+                          >
+                            <span>Upcoming</span>
+                          </div>
+                          <div
+                            className={`${
+                              eventDuration === "Expired"
+                                ? "active-challenge-tab"
+                                : "challenge-tab"
+                            } px-4 py-2 d-flex align-items-center justify-content-center`}
+                            onClick={() => {
+                              seteventDuration("Expired");
+                              setPage(1);
+                            }}
+                          >
+                            <span>Past</span>
+                          </div>
                         </div>
-                        <div
-                          className={`${
-                            eventDuration === "Coming Soon"
-                              ? "active-challenge-tab"
-                              : "challenge-tab"
-                          } px-4 py-2 d-flex align-items-center justify-content-center`}
-                          onClick={() => {
-                            seteventDuration("Coming Soon");
-                          }}
-                        >
-                          <span>Upcoming</span>
-                        </div>
-                        <div
-                          className={`${
-                            eventDuration === "Expired"
-                              ? "active-challenge-tab"
-                              : "challenge-tab"
-                          } px-4 py-2 d-flex align-items-center justify-content-center`}
-                          onClick={() => {
-                            seteventDuration("Expired");
-                          }}
-                        >
-                          <span>Past</span>
-                        </div>
+                        {eventDuration === "Live" && (
+                          <div className="d-flex align-items-center gap-2 mb-3">
+                            <div
+                              className={`${
+                                page === 1
+                                  ? "active-challenge-tab"
+                                  : "challenge-tab"
+                              } px-4 py-2 d-flex align-items-center justify-content-center`}
+                              onClick={() => {
+                                setPage(1);
+                              }}
+                            >
+                              <span>1</span>
+                            </div>
+                            <div
+                              className={`${
+                                page === 2
+                                  ? "active-challenge-tab"
+                                  : "challenge-tab"
+                              } px-4 py-2 d-flex align-items-center justify-content-center`}
+                              onClick={() => {
+                                setPage(2);
+                              }}
+                            >
+                              <span>2</span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                     {challenge === "treasure-hunt" ? (
@@ -2420,6 +2522,7 @@ const NewEvents = ({
                         events={events}
                         eventDuration={eventDuration}
                         onEventClick={onEventClick}
+                        page={page}
                       />
                     ) : challenge === "dragon-ruins" ||
                       challenge === "cold-bite" ||
@@ -2506,270 +2609,340 @@ const NewEvents = ({
                         </div>
                         <div className="sidebar-separator2 my-2"></div>
                         <div className="d-flex flex-column gap-3">
-                          <div className="new-event-wrapper d-flex flex-column">
-                            <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
-                              <img
-                                src={tooltipIcon}
-                                className="new-event-banner-tooltip"
-                                alt=""
-                                onClick={() => {
-                                  setshowPopup(activeEvent?.id);
-                                }}
-                              />
-                              <img
-                                src={activeEvent?.image}
-                                className="new-event-banner"
-                                alt=""
-                              />
-
-                              <div className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row dynamicPosition">
-                                <div className="d-flex flex-column gap-2  col-lg-6">
-                                  <h6
-                                    className="mb-0 challenge-popup-secondary-title"
-                                    style={{ color: "#FFC808" }}
-                                  >
-                                    How it works
+                          <div className="row gap-3 gap-xxl-0">
+                            <div className="col-12 col-xxl-6">
+                              <div
+                                className={`beast-siege-wrapper gap-4 gap-lg-0 ${
+                                  activeEvent.class
+                                } ${
+                                  adjustedDay === activeEvent.day
+                                    ? ""
+                                    : "luminosity"
+                                } p-3 d-flex flex-column justify-content-between w-100`}
+                              >
+                                <div className="d-flex flex-column gap-1">
+                                  <h6 className="beast-siege-title mb-0">
+                                    {activeEvent.title}
                                   </h6>
-                                  <div className="d-flex flex-column gap-2">
-                                    {activeEvent?.workList.map(
-                                      (work, index) => (
-                                        <div
-                                          className="d-flex align-items-center gap-2"
-                                          key={index}
-                                        >
-                                          <div className="yellow-dot"></div>
-                                          <span className="challenge-popup-desc text-white">
-                                            {work}
+
+                                  {adjustedDay === 1 &&
+                                  activeEvent.day === 1 ? (
+                                    <>
+                                      {hasBoughtDragon ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 2 &&
+                                    activeEvent.day === 2 ? (
+                                    <>
+                                      {hasBoughtBear ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 3 &&
+                                    activeEvent.day === 3 ? (
+                                    <>
+                                      {hasBoughtBeast ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 4 &&
+                                    activeEvent.day === 4 ? (
+                                    <>
+                                      {hasBoughtEagle ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 6 &&
+                                    activeEvent.day === 6 ? (
+                                    <>
+                                      {hasBoughtScorpion ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : adjustedDay === 7 &&
+                                    activeEvent.day === 7 ? (
+                                    <>
+                                      {hasBoughtCyclops ? (
+                                        <span className="beast-siege-sub">
+                                          In Progress
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <span className="beast-siege-sub">
+                                      Available on {activeEvent.dayTextLong}
+                                    </span>
+                                  )}
+                                </div>
+                                {activeEvent.day === 1 ? (
+                                  <>
+                                    {hasBoughtDragon && adjustedDay === 1 ? (
+                                      <div
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              dragonRuinsWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
                                           </span>
                                         </div>
-                                      )
+                                      </div>
                                     )}
-                                  </div>
-                                </div>
-
-                                <div className="d-flex flex-column gap-1 col-lg-6">
-                                  {activeEvent?.tips && (
-                                    <h6
-                                      className="mb-0 challenge-popup-secondary-title"
-                                      style={{ color: "#FFC808" }}
-                                    >
-                                      Tips
-                                    </h6>
-                                  )}
-                                  <div className="d-flex flex-column gap-1">
-                                    {activeEvent?.tips?.map((tip, index) => (
+                                  </>
+                                ) : activeEvent.day === 2 ? (
+                                  <>
+                                    {hasBoughtBear && adjustedDay === 2 ? (
                                       <div
-                                        className="d-flex align-items-center gap-2"
-                                        key={index}
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
                                       >
-                                        <div className="yellow-dot"></div>
-                                        <span className="challenge-popup-desc text-white">
-                                          {tip}
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
                                         </span>
                                       </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="d-flex align-items-end justify-content-between">
-                            {(activeEvent?.id !== "greatCollection" &&
-                              activeEvent?.id !== "maze" &&
-                              activeEvent?.id !== "explorer-hunt") && (
-                                <h6 className="mb-0 purchase-package-title">
-                                  Activate
-                                </h6>
-                              )}
-                            {activeEvent?.id === "maze" && (
-                              <h6 className="mb-0 purchase-package-title">
-                                Requirements
-                              </h6>
-                            )}
-                            {/* <div className="d-flex align-items-end gap-2">
-                              <span className="available-on">Available on</span>
-                              <img src={bnb} width={20} height={20} alt="" />
-                              <span className="purchase-chain">BNB Chain</span>
-                            </div> */}
-                          </div>
-                          {adjustedDay === activeEvent.day ? (
-                            <>
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                                <div
-                                  className="event-price-wrapper p-3 d-flex align-items-center gap-5"
-                                  style={{
-                                    pointerEvents: isMonday ? "auto" : "none",
-                                    filter: isMonday ? "none" : "blur(5px)",
-                                  }}
-                                >
-                                  <span className="event-price-span">
-                                    Event Price
-                                  </span>
-                                  {adjustedDay === 1 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            dragonRuinsWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              coldBiteWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 2 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            coldBiteWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    )}
+                                  </>
+                                ) : activeEvent.day === 3 ? (
+                                  <>
+                                    {hasBoughtBeast && adjustedDay === 3 ? (
+                                      <div
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
+                                        </span>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 3 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            furyBeastWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              furyBeastWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 4 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            wingStormWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    )}
+                                  </>
+                                ) : activeEvent.day === 4 ? (
+                                  <>
+                                    {hasBoughtEagle && adjustedDay === 4 ? (
+                                      <div
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
+                                        </span>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 6 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            scorpionKingWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              wingStormWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : adjustedDay === 7 ? (
-                                    <div className="d-flex align-items-center gap-3">
-                                      <div className="d-flex align-items-center gap-1">
-                                        <img
-                                          src={wodIcon}
-                                          height={30}
-                                          width={30}
-                                          alt=""
-                                        />
-                                        <h6 className="event-price-coin mb-0">
-                                          {getFormattedNumber(
-                                            stoneEyeWodAmount
-                                          )}{" "}
-                                          WOD
-                                        </h6>
+                                    )}
+                                  </>
+                                ) : activeEvent.day === 6 ? (
+                                  <>
+                                    {hasBoughtScorpion && adjustedDay === 6 ? (
+                                      <div
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
+                                        </span>
                                       </div>
-                                      <span className="event-price-usd">
-                                        ($
-                                        {getFormattedNumber(
-                                          activeEvent.usdPrice
-                                        )}
-                                        )
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                                {adjustedDay === 1 ? (
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              scorpionKingWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : activeEvent.day === 7 ? (
+                                  <>
+                                    {hasBoughtCyclops && adjustedDay === 7 ? (
+                                      <div
+                                        className="d-flex flex-column align-items-center gap-2"
+                                        style={{ width: "fit-content" }}
+                                      >
+                                        <div className="new-events-circle-2">
+                                          <Countdown
+                                            renderer={renderer}
+                                            date={midnightUTC}
+                                          />
+                                        </div>
+                                        <span className="beast-siege-event-price">
+                                          Time Remaining
+                                        </span>
+                                      </div>
+                                    ) : (
+                                      <div className="d-flex flex-column gap-2">
+                                        <div className="d-flex flex-column align-items-start gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              stoneEyeWodAmount
+                                            )}{" "}
+                                            WOD
+                                          </span>
+                                          <span className="beast-siege-usd-price">
+                                            ($
+                                            {getFormattedNumber(
+                                              activeEvent.usdPrice
+                                            )}
+                                            )
+                                          </span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                                {adjustedDay === 1 && activeEvent.day === 1 ? (
                                   <>
                                     {hasBoughtDragon ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -2793,8 +2966,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 checkWallet === false ||
                                                 dragonShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn dragon-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalDragon()
@@ -2803,8 +2976,9 @@ const NewEvents = ({
                                               {dragonBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
+                                                  style={{ color: "#2b353e" }}
                                                 >
                                                   <span class="visually-hidden">
                                                     Loading...
@@ -2825,12 +2999,12 @@ const NewEvents = ({
                                               className={` ${
                                                 dragonShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : dragonShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn dragon-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositDragon()
@@ -2839,7 +3013,7 @@ const NewEvents = ({
                                               {dragonDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light dragon-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -2847,7 +3021,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -2855,23 +3029,16 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 2 ? (
+                                ) : adjustedDay === 2 &&
+                                  activeEvent.day === 2 ? (
                                   <>
                                     {hasBoughtBear ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -2892,8 +3059,8 @@ const NewEvents = ({
                                                 bearBundleState === "deposit" ||
                                                 checkWallet === false ||
                                                 bearShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn bear-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalBear()
@@ -2901,7 +3068,7 @@ const NewEvents = ({
                                             >
                                               {bearBundleState === "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -2923,12 +3090,12 @@ const NewEvents = ({
                                               className={` ${
                                                 bearShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : bearShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn bear-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositBear()
@@ -2937,7 +3104,7 @@ const NewEvents = ({
                                               {bearDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light bear-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -2945,7 +3112,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -2953,23 +3120,16 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 3 ? (
+                                ) : adjustedDay === 3 &&
+                                  activeEvent.day === 3 ? (
                                   <>
                                     {hasBoughtBeast ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -2993,8 +3153,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 checkWallet === false ||
                                                 beastShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn beast-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalBeast()
@@ -3003,7 +3163,7 @@ const NewEvents = ({
                                               {beastBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3025,12 +3185,12 @@ const NewEvents = ({
                                               className={` ${
                                                 beastShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : beastShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn beast-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositBeast()
@@ -3039,7 +3199,7 @@ const NewEvents = ({
                                               {beastDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light beast-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3047,7 +3207,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -3055,23 +3215,16 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 4 ? (
+                                ) : adjustedDay === 4 &&
+                                  activeEvent.day === 4 ? (
                                   <>
                                     {hasBoughtEagle ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -3080,7 +3233,6 @@ const NewEvents = ({
                                         )}
                                         {isConnected && email && (
                                           <>
-                                            {" "}
                                             <button
                                               disabled={
                                                 eagleBundleState ===
@@ -3096,8 +3248,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 checkWallet === false ||
                                                 eagleShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn eagle-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalEagle()
@@ -3106,7 +3258,7 @@ const NewEvents = ({
                                               {eagleBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3128,12 +3280,12 @@ const NewEvents = ({
                                               className={` ${
                                                 eagleShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : eagleShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn eagle-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositEagle()
@@ -3142,7 +3294,7 @@ const NewEvents = ({
                                               {eagleDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light eagle-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3150,7 +3302,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -3158,23 +3310,16 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 6 ? (
+                                ) : adjustedDay === 6 &&
+                                  activeEvent.day === 6 ? (
                                   <>
                                     {hasBoughtScorpion ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -3198,8 +3343,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 checkWallet === false ||
                                                 scorpionShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn scorpion-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalScorpion()
@@ -3208,7 +3353,7 @@ const NewEvents = ({
                                               {scorpionBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3230,12 +3375,12 @@ const NewEvents = ({
                                               className={` ${
                                                 scorpionShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : scorpionShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn scorpion-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositScorpion()
@@ -3244,7 +3389,7 @@ const NewEvents = ({
                                               {scorpionDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light scorpion-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3252,7 +3397,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -3260,23 +3405,16 @@ const NewEvents = ({
                                       </div>
                                     )}
                                   </>
-                                ) : adjustedDay === 7 ? (
+                                ) : adjustedDay === 7 &&
+                                  activeEvent.day === 7 ? (
                                   <>
                                     {hasBoughtCyclops ? (
-                                      <div className="d-flex flex-column gap-1">
-                                        <span className="event-price-span">
-                                          Active Until:
-                                        </span>
-                                        <Countdown
-                                          renderer={renderer}
-                                          date={midnightUTC}
-                                        />
-                                      </div>
+                                      <div style={{ height: "38px" }}></div>
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="stake-wod-btn-inactive"
+                                            className="beast-siege-btn-inactive"
                                             disabled
                                           >
                                             {" "}
@@ -3300,8 +3438,8 @@ const NewEvents = ({
                                                   "deposit" ||
                                                 checkWallet === false ||
                                                 cyclopsShowApproval === false
-                                                  ? "stake-wod-btn-inactive d-none"
-                                                  : "stake-wod-btn"
+                                                  ? "beast-siege-btn-inactive d-none"
+                                                  : "beast-siege-btn cyclops-button"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleApprovalCyclops()
@@ -3310,7 +3448,7 @@ const NewEvents = ({
                                               {cyclopsBundleState ===
                                               "loading" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3332,12 +3470,12 @@ const NewEvents = ({
                                               className={` ${
                                                 cyclopsShowApproval === true &&
                                                 checkWallet === true
-                                                  ? "stake-wod-btn-inactive d-none"
+                                                  ? "beast-siege-btn-inactive d-none"
                                                   : cyclopsShowApproval ===
                                                       false &&
                                                     checkWallet === true
-                                                  ? "stake-wod-btn"
-                                                  : "stake-wod-btn-inactive"
+                                                  ? "beast-siege-btn cyclops-button"
+                                                  : "beast-siege-btn-inactive"
                                               }  py-2 px-4`}
                                               onClick={() =>
                                                 handleDepositCyclops()
@@ -3346,7 +3484,7 @@ const NewEvents = ({
                                               {cyclopsDepositState ===
                                               "loading-deposit" ? (
                                                 <div
-                                                  class="spinner-border spinner-border-sm text-light"
+                                                  class="spinner-border spinner-border-sm text-light cyclops-button"
                                                   role="status"
                                                 >
                                                   <span class="visually-hidden">
@@ -3354,7 +3492,7 @@ const NewEvents = ({
                                                   </span>
                                                 </div>
                                               ) : (
-                                                "Buy"
+                                                "Activate"
                                               )}
                                             </button>
                                           </>
@@ -3363,9 +3501,66 @@ const NewEvents = ({
                                     )}
                                   </>
                                 ) : (
-                                  <></>
+                                  <div style={{ height: "38px" }}></div>
                                 )}
                               </div>
+                            </div>
+                            <div className="col-12 col-xxl-6">
+                              <div
+                                className={`beast-siege-info-wrapper ${activeEvent.class}-info  p-3 w-100`}
+                              >
+                                <div className="d-flex flex-column gap-3">
+                                  <div className="d-flex flex-column gap-2">
+                                    <h6
+                                      className="mb-0 challenge-popup-secondary-title"
+                                      style={{ color: "#FFC808" }}
+                                    >
+                                      How it works
+                                    </h6>
+                                    <div
+                                      className="d-flex flex-column gap-2"
+                                      style={{ zIndex: 1 }}
+                                    >
+                                      {activeEvent?.workList.map(
+                                        (work, index) => (
+                                          <div
+                                            className="d-flex align-items-center gap-2"
+                                            key={index}
+                                          >
+                                            <div className="yellow-dot"></div>
+                                            <span className="challenge-popup-desc text-white">
+                                              {work}
+                                            </span>
+                                          </div>
+                                        )
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="d-flex flex-column gap-2">
+                                    <h6
+                                      className="mb-0 challenge-popup-secondary-title"
+                                      style={{ color: "#FFC808" }}
+                                    >
+                                      Tips
+                                    </h6>
+                                    <div className="d-flex flex-column gap-1">
+                                      {activeEvent?.tips?.map((tip, index) => (
+                                        <div
+                                          className="d-flex align-items-center gap-2"
+                                          key={index}
+                                        >
+                                          <div className="yellow-dot"></div>
+                                          <span className="challenge-popup-desc text-white">
+                                            {tip}
+                                          </span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-12 mt-2">
                               <span
                                 className="statusText"
                                 style={{
@@ -3375,23 +3570,8 @@ const NewEvents = ({
                               >
                                 {status}
                               </span>
-                            </>
-                          ) : (
-                            <>
-                              <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                                <span
-                                  className="available-day-text mb-0 text-white w-100 d-flex justify-content-center text-center"
-                                  style={{
-                                    fontWeight: "700",
-                                    fontSize: "18px",
-                                  }}
-                                >
-                                  Challenge Available on{" "}
-                                  {activeEvent.dayTextLong}
-                                </span>
-                              </div>
-                            </>
-                          )}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ) : challenge === "maze-day" ||
@@ -3401,84 +3581,369 @@ const NewEvents = ({
                       //  || challenge === "golden-pass"
                       challenge === "puzzle-madness" ? (
                       <div className="d-flex flex-column gap-3">
-                        <div className="new-event-wrapper d-flex flex-column">
+                        <div className="d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
+                            {activeEvent.title === "Puzzle Madness" && (
+                              <img
+                                src={tooltipIcon}
+                                className="new-event-banner-tooltip"
+                                alt=""
+                                onClick={() => {
+                                  setshowPopup(activeEvent?.id);
+                                }}
+                              />
+                            )}
                             <img
-                              src={tooltipIcon}
-                              className="new-event-banner-tooltip"
-                              alt=""
-                              onClick={() => {
-                                setshowPopup(activeEvent?.id);
-                              }}
-                            />
-                            <img
-                              src={activeEvent?.image}
-                              className="new-event-banner"
+                              src={activeEvent?.topBanner}
+                              className="event-top-banner"
                               alt=""
                             />
-
-                            <div className="d-flex col-12 p-2 p-lg-4 justify-content-between gap-2 flex-column flex-lg-row dynamicPosition">
-                              <div className="d-flex flex-column gap-2  col-lg-6">
-                                <h6
-                                  className="mb-0 challenge-popup-secondary-title"
-                                  style={{ color: "#FFC808" }}
-                                >
-                                  How it works
-                                </h6>
-                                <div className="d-flex flex-column gap-2">
-                                  {activeEvent?.workList.map((work, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="yellow-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {work}
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-
-                              <div className="d-flex flex-column gap-1 col-lg-6">
-                                {activeEvent?.tips && (
-                                  <h6
-                                    className="mb-0 challenge-popup-secondary-title"
-                                    style={{ color: "#FFC808" }}
+                            <div className="sidebar-separator2 my-2"></div>
+                            <div className="w-100">
+                              <div className="row gap-3 gap-xxl-0 mt-2">
+                                <div className="col-12 col-xxl-6">
+                                  <div
+                                    className={`beast-siege-wrapper gap-4 gap-lg-0 ${
+                                      activeEvent.class
+                                    } ${
+                                      activeEvent.title === "Maze Day" &&
+                                      adjustedDay !== 5
+                                        ? "luminosity"
+                                        : ""
+                                    } p-3 d-flex flex-column justify-content-between w-100`}
                                   >
-                                    Tips
-                                  </h6>
-                                )}
-                                <div className="d-flex flex-column gap-1">
-                                  {activeEvent?.tips?.map((tip, index) => (
-                                    <div
-                                      className="d-flex align-items-center gap-2"
-                                      key={index}
-                                    >
-                                      <div className="yellow-dot"></div>
-                                      <span className="challenge-popup-desc text-white">
-                                        {tip}
-                                      </span>
+                                    <div className="d-flex flex-column gap-1">
+                                      <h6 className="beast-siege-title mb-0">
+                                        {activeEvent.title}
+                                      </h6>
+                                      {activeEvent.title === "Maze Day" &&
+                                      adjustedDay !== 5 ? (
+                                        <span className="beast-siege-sub">
+                                          Available on Friday
+                                        </span>
+                                      ) : activeEvent.title === "Maze Day" &&
+                                        adjustedDay === 5 ? (
+                                        <span className="beast-siege-sub">
+                                          Ready
+                                        </span>
+                                      ) : activeEvent.title ===
+                                        "Puzzle Madness" ? (
+                                        <span className="beast-siege-sub">
+                                          Find the Pieces
+                                        </span>
+                                      ) : activeEvent.title ===
+                                        "Explorer Hunt" ? (
+                                        <span className="beast-siege-sub">
+                                          Defend the Partners
+                                        </span>
+                                      ) : activeEvent.title ===
+                                        "The Great Collection" ? (
+                                        <span className="beast-siege-sub">
+                                          Collect
+                                        </span>
+                                      ) : (
+                                        <span className="beast-siege-sub">
+                                          Break the Gem
+                                        </span>
+                                      )}
                                     </div>
-                                  ))}
+                                    {activeEvent.title === "Maze Day" ? (
+                                      <>
+                                        <div className="d-flex flex-column gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            Hold 400 WOD
+                                          </span>
+                                          <span className="beast-siege-event-price">
+                                            Event Requirement
+                                          </span>
+                                        </div>
+                                        <NavLink
+                                          to={"/#buy-wod"}
+                                          className="beast-siege-btn maze-day-button"
+                                        >
+                                          Buy WOD
+                                        </NavLink>
+                                      </>
+                                    ) : activeEvent.title === "Critical Hit" ? (
+                                      <div className="d-flex flex-column gap-2">
+                                        <NavLink
+                                          to={"/shop/land"}
+                                          className="beast-siege-btn critical-hit-button"
+                                        >
+                                          Buy on Shop
+                                        </NavLink>
+                                        <NavLink
+                                          to={
+                                            "https://opensea.io/collection/worldofdypians"
+                                          }
+                                          target="_blank"
+                                          className="beast-siege-btn critical-hit-button d-flex align-items-center gap-2"
+                                        >
+                                          <img src={opensea} alt="" />
+                                          Buy on Opensea
+                                        </NavLink>
+                                      </div>
+                                    ) : activeEvent.title ===
+                                      "The Great Collection" ? (
+                                      <>
+                                        <div className="d-flex flex-column gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              greatCollectionData[0]?.statValue,
+                                              0
+                                            )}
+                                          </span>
+                                          <span className="beast-siege-event-price">
+                                            Brands Collected
+                                          </span>
+                                        </div>
+                                        <div style={{ height: "38px" }}></div>
+                                      </>
+                                    ) : activeEvent.title ===
+                                      "Explorer Hunt" ? (
+                                      <>
+                                        <div className="d-flex flex-column gap-1">
+                                          <span className="beast-siege-wod-price">
+                                            {getFormattedNumber(
+                                              explorerHuntData[0]?.statValue,
+                                              0
+                                            )}
+                                          </span>
+                                          <span className="beast-siege-event-price">
+                                            Partners Saved
+                                          </span>
+                                        </div>
+                                        <div style={{ height: "38px" }}></div>
+                                      </>
+                                    ) : activeEvent.title ===
+                                      "Puzzle Madness" ? (
+                                      <>
+                                        {hasBoughtpuzzleMadness &&
+                                        isFinishedPuzzle === false ? (
+                                          // <div className="d-flex flex-column gap-1">
+                                          //   <span className="event-price-span">
+                                          //     Active Until:
+                                          //   </span>
+                                          //   <Countdown
+                                          //     renderer={renderer}
+                                          //     date={puzzleMadnessCountdown}
+                                          //     onComplete={() => {
+                                          //       setisFinishedPuzzle(true);
+                                          //     }}
+                                          //   />
+                                          // </div>
+                                          <div
+                                            className="d-flex flex-column align-items-center gap-2"
+                                            style={{ width: "fit-content" }}
+                                          >
+                                            <div className="new-events-circle-2">
+                                              <Countdown
+                                                renderer={renderer}
+                                                date={puzzleMadnessCountdown}
+                                                onComplete={() => {
+                                                  setisFinishedPuzzle(true);
+                                                }}
+                                              />
+                                            </div>
+                                            <span className="beast-siege-event-price">
+                                              Time Remaining
+                                            </span>
+                                          </div>
+                                        ) : (
+                                          <div className="d-flex flex-column gap-1">
+                                            <div className="d-flex flex-column align-items-start gap-1">
+                                              <span className="beast-siege-wod-price">
+                                                {" "}
+                                                {getFormattedNumber(
+                                                  puzzleMadnessWodAmount
+                                                )}{" "}
+                                                WOD
+                                              </span>
+                                              <span className="beast-siege-usd-price">
+                                                ($
+                                                {getFormattedNumber(
+                                                  activeEvent.usdPrice
+                                                )}
+                                                )
+                                              </span>
+                                            </div>
+                                          </div>
+                                        )}
+
+                                        {hasBoughtpuzzleMadness &&
+                                        isFinishedPuzzle === false ? (
+                                          <div style={{ height: "38px" }}></div>
+                                        ) : (
+                                          <div className="d-flex align-items-center gap-2">
+                                            {(!isConnected || !email) && (
+                                              <button
+                                                className="beast-siege-btn-inactive"
+                                                disabled
+                                              >
+                                                {" "}
+                                                Buy
+                                              </button>
+                                            )}
+                                            {isConnected && email && (
+                                              <>
+                                                <button
+                                                  disabled={
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    puzzleMadnessBundleState ===
+                                                      "loading" ||
+                                                    checkWallet === false
+                                                      ? true
+                                                      : false
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessBundleState ===
+                                                      "deposit" ||
+                                                    checkWallet === false ||
+                                                    puzzleMadnessShowApproval ===
+                                                      false
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : "beast-siege-btn"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleApprovalPuzzle()
+                                                  }
+                                                >
+                                                  {puzzleMadnessBundleState ===
+                                                  "loading" ? (
+                                                    <div
+                                                      class="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span class="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Approve"
+                                                  )}
+                                                </button>
+                                                <button
+                                                  disabled={
+                                                    checkWallet === true &&
+                                                    puzzleMadnessDepositState !==
+                                                      "loading-deposit"
+                                                      ? false
+                                                      : true
+                                                  }
+                                                  className={` ${
+                                                    puzzleMadnessShowApproval ===
+                                                      true &&
+                                                    checkWallet === true
+                                                      ? "beast-siege-btn-inactive d-none"
+                                                      : puzzleMadnessShowApproval ===
+                                                          false &&
+                                                        checkWallet === true
+                                                      ? "beast-siege-btn"
+                                                      : "beast-siege-btn-inactive"
+                                                  }  py-2 px-4`}
+                                                  onClick={() =>
+                                                    handleDepositPuzzle()
+                                                  }
+                                                >
+                                                  {puzzleMadnessDepositState ===
+                                                  "loading-deposit" ? (
+                                                    <div
+                                                      class="spinner-border spinner-border-sm text-light"
+                                                      role="status"
+                                                    >
+                                                      <span class="visually-hidden">
+                                                        Loading...
+                                                      </span>
+                                                    </div>
+                                                  ) : (
+                                                    "Activate"
+                                                  )}
+                                                </button>
+                                              </>
+                                            )}
+                                          </div>
+                                        )}
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="col-12 col-xxl-6">
+                                  <div
+                                    className={`beast-siege-info-wrapper ${activeEvent.infoClass} p-3 w-100`}
+                                  >
+                                    <div className="d-flex flex-column gap-3">
+                                      <div className="d-flex flex-column gap-2">
+                                        <h6
+                                          className="mb-0 challenge-popup-secondary-title"
+                                          style={{ color: "#FFC808" }}
+                                        >
+                                          How it works
+                                        </h6>
+                                        <div className="d-flex flex-column gap-2">
+                                          {activeEvent?.workList.map(
+                                            (work, index) => (
+                                              <div
+                                                className="d-flex align-items-center gap-2"
+                                                key={index}
+                                              >
+                                                <div className="yellow-dot"></div>
+                                                <span className="challenge-popup-desc text-white">
+                                                  {work}
+                                                </span>
+                                              </div>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+
+                                      <div className="d-flex flex-column gap-2">
+                                        {activeEvent?.tips && (
+                                          <h6
+                                            className="mb-0 challenge-popup-secondary-title"
+                                            style={{ color: "#FFC808" }}
+                                          >
+                                            Tips
+                                          </h6>
+                                        )}
+                                        <div className="d-flex flex-column gap-1">
+                                          {activeEvent?.tips?.map(
+                                            (tip, index) => (
+                                              <div
+                                                className="d-flex align-items-center gap-2"
+                                                key={index}
+                                              >
+                                                <div className="yellow-dot"></div>
+                                                <span className="challenge-popup-desc text-white">
+                                                  {tip}
+                                                </span>
+                                              </div>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div className="d-flex align-items-end justify-content-between">
-                        {(activeEvent?.id !== "greatCollection" &&
-                              activeEvent?.id !== "maze" &&
-                              activeEvent?.id !== "explorer-hunt") && (
-                                <h6 className="mb-0 purchase-package-title">
-                                  Activate
-                                </h6>
-                              )}
-                            {activeEvent?.id === "maze" && (
+                          {/* {activeEvent?.id !== "greatCollection" &&
+                            activeEvent?.id !== "maze" &&
+                            activeEvent?.id !== "explorer-hunt" && (
                               <h6 className="mb-0 purchase-package-title">
-                                Requirements
+                                Activate
                               </h6>
-                            )}
+                            )} */}
+                          {/* {activeEvent?.id === "maze" && (
+                            <h6 className="mb-0 purchase-package-title">
+                              Requirements
+                            </h6>
+                          )} */}
                           {/* <div className="d-flex align-items-end gap-2">
                             <span className="available-on">Available on</span>
                             <img src={bnb} width={20} height={20} alt="" />
@@ -3486,224 +3951,217 @@ const NewEvents = ({
                           </div> */}
                         </div>
                         {activeEvent?.id === "critical" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
-                            <NavLink
-                              to={"/shop/land"}
-                              className="getpremium-btn col-lg-4 py-2"
-                            >
-                              Buy on Shop
-                            </NavLink>
-                            <NavLink
-                              to={
-                                "https://opensea.io/collection/worldofdypians"
-                              }
-                              target="_blank"
-                              className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
-                            >
-                              <img src={opensea} alt="" />
-                              Buy on Opensea
-                            </NavLink>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3  align-items-center justify-content-center position-relative">
+                          //   <NavLink
+                          //     to={"/shop/land"}
+                          //     className="getpremium-btn col-lg-4 py-2"
+                          //   >
+                          //     Buy on Shop
+                          //   </NavLink>
+                          //   <NavLink
+                          //     to={
+                          //       "https://opensea.io/collection/worldofdypians"
+                          //     }
+                          //     target="_blank"
+                          //     className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
+                          //   >
+                          //     <img src={opensea} alt="" />
+                          //     Buy on Opensea
+                          //   </NavLink>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "puzzle" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
-                              <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
-                                <span className="event-price-span">
-                                  Event Price
-                                </span>
-                                <div className="d-flex align-items-center gap-3">
-                                  <div className="d-flex align-items-center gap-1">
-                                    <img
-                                      src={wodIcon}
-                                      height={30}
-                                      width={30}
-                                      alt=""
-                                    />
-                                    <h6 className="event-price-coin mb-0">
-                                      {getFormattedNumber(
-                                        puzzleMadnessWodAmount
-                                      )}{" "}
-                                      WOD
-                                    </h6>
-                                  </div>
-                                  <span className="event-price-usd">
-                                    ($
-                                    {getFormattedNumber(
-                                      activeEvent.usdPrice
-                                    )}
-                                    )
-                                  </span>
-                                </div>
-                              </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
+                          //     <div className="event-price-wrapper p-3 d-flex align-items-center gap-3 gap-lg-5">
+                          //       <span className="event-price-span">
+                          //         Event Price
+                          //       </span>
+                          //       <div className="d-flex align-items-center gap-3">
+                          //         <div className="d-flex align-items-center gap-1">
+                          //           <img
+                          //             src={wodIcon}
+                          //             height={30}
+                          //             width={30}
+                          //             alt=""
+                          //           />
+                          //           <h6 className="event-price-coin mb-0">
+                          //             {getFormattedNumber(
+                          //               puzzleMadnessWodAmount
+                          //             )}{" "}
+                          //             WOD
+                          //           </h6>
+                          //         </div>
+                          //         <span className="event-price-usd">
+                          //           ($
+                          //           {getFormattedNumber(activeEvent.usdPrice)})
+                          //         </span>
+                          //       </div>
+                          //     </div>
 
-                              <div className="d-flex align-items-center gap-2">
-                                {hasBoughtpuzzleMadness &&
-                                  isFinishedPuzzle === false && (
-                                    <div className="d-flex flex-column gap-1">
-                                      <span className="event-price-span">
-                                        Active Until:
-                                      </span>
-                                      <Countdown
-                                        renderer={renderer}
-                                        date={puzzleMadnessCountdown}
-                                        onComplete={() => {
-                                          setisFinishedPuzzle(true);
-                                        }}
-                                      />
-                                    </div>
-                                  )}
-                                {(!isConnected || !email) && (
-                                  <button
-                                    className="stake-wod-btn-inactive"
-                                    disabled
-                                  >
-                                    {" "}
-                                    Buy
-                                  </button>
-                                )}
-                                {isConnected && email && (
-                                  <>
-                                    <button
-                                      disabled={
-                                        puzzleMadnessBundleState ===
-                                          "deposit" ||
-                                        puzzleMadnessBundleState ===
-                                          "loading" ||
-                                        checkWallet === false
-                                          ? true
-                                          : false
-                                      }
-                                      className={` ${
-                                        puzzleMadnessBundleState ===
-                                          "deposit" ||
-                                        checkWallet === false ||
-                                        puzzleMadnessShowApproval === false
-                                          ? "stake-wod-btn-inactive d-none"
-                                          : "stake-wod-btn"
-                                      }  py-2 px-4`}
-                                      onClick={() => handleApprovalPuzzle()}
-                                    >
-                                      {puzzleMadnessBundleState ===
-                                      "loading" ? (
-                                        <div
-                                          class="spinner-border spinner-border-sm text-light"
-                                          role="status"
-                                        >
-                                          <span class="visually-hidden">
-                                            Loading...
-                                          </span>
-                                        </div>
-                                      ) : (
-                                        "Approve"
-                                      )}
-                                    </button>
-                                    <button
-                                      disabled={
-                                        checkWallet === true &&
-                                        puzzleMadnessDepositState !==
-                                          "loading-deposit"
-                                          ? false
-                                          : true
-                                      }
-                                      className={` ${
-                                        puzzleMadnessShowApproval === true &&
-                                        checkWallet === true
-                                          ? "stake-wod-btn-inactive d-none"
-                                          : puzzleMadnessShowApproval ===
-                                              false && checkWallet === true
-                                          ? "stake-wod-btn"
-                                          : "stake-wod-btn-inactive"
-                                      }  py-2 px-4`}
-                                      onClick={() => handleDepositPuzzle()}
-                                    >
-                                      {puzzleMadnessDepositState ===
-                                      "loading-deposit" ? (
-                                        <div
-                                          class="spinner-border spinner-border-sm text-light"
-                                          role="status"
-                                        >
-                                          <span class="visually-hidden">
-                                            Loading...
-                                          </span>
-                                        </div>
-                                      ) : (
-                                        "Buy"
-                                      )}
-                                    </button>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          </div>
+                          //     <div className="d-flex align-items-center gap-2">
+                          //       {hasBoughtpuzzleMadness &&
+                          //         isFinishedPuzzle === false && (
+                          //           <div className="d-flex flex-column gap-1">
+                          //             <span className="event-price-span">
+                          //               Active Until:
+                          //             </span>
+                          //             <Countdown
+                          //               renderer={renderer}
+                          //               date={puzzleMadnessCountdown}
+                          //               onComplete={() => {
+                          //                 setisFinishedPuzzle(true);
+                          //               }}
+                          //             />
+                          //           </div>
+                          //         )}
+                          //       {(!isConnected || !email) && (
+                          //         <button
+                          //           className="stake-wod-btn-inactive"
+                          //           disabled
+                          //         >
+                          //           {" "}
+                          //           Buy
+                          //         </button>
+                          //       )}
+                          //       {isConnected && email && (
+                          //         <>
+                          //           <button
+                          //             disabled={
+                          //               puzzleMadnessBundleState ===
+                          //                 "deposit" ||
+                          //               puzzleMadnessBundleState ===
+                          //                 "loading" ||
+                          //               checkWallet === false
+                          //                 ? true
+                          //                 : false
+                          //             }
+                          //             className={` ${
+                          //               puzzleMadnessBundleState ===
+                          //                 "deposit" ||
+                          //               checkWallet === false ||
+                          //               puzzleMadnessShowApproval === false
+                          //                 ? "stake-wod-btn-inactive d-none"
+                          //                 : "stake-wod-btn"
+                          //             }  py-2 px-4`}
+                          //             onClick={() => handleApprovalPuzzle()}
+                          //           >
+                          //             {puzzleMadnessBundleState ===
+                          //             "loading" ? (
+                          //               <div
+                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 role="status"
+                          //               >
+                          //                 <span class="visually-hidden">
+                          //                   Loading...
+                          //                 </span>
+                          //               </div>
+                          //             ) : (
+                          //               "Approve"
+                          //             )}
+                          //           </button>
+                          //           <button
+                          //             disabled={
+                          //               checkWallet === true &&
+                          //               puzzleMadnessDepositState !==
+                          //                 "loading-deposit"
+                          //                 ? false
+                          //                 : true
+                          //             }
+                          //             className={` ${
+                          //               puzzleMadnessShowApproval === true &&
+                          //               checkWallet === true
+                          //                 ? "stake-wod-btn-inactive d-none"
+                          //                 : puzzleMadnessShowApproval ===
+                          //                     false && checkWallet === true
+                          //                 ? "stake-wod-btn"
+                          //                 : "stake-wod-btn-inactive"
+                          //             }  py-2 px-4`}
+                          //             onClick={() => handleDepositPuzzle()}
+                          //           >
+                          //             {puzzleMadnessDepositState ===
+                          //             "loading-deposit" ? (
+                          //               <div
+                          //                 class="spinner-border spinner-border-sm text-light"
+                          //                 role="status"
+                          //               >
+                          //                 <span class="visually-hidden">
+                          //                   Loading...
+                          //                 </span>
+                          //               </div>
+                          //             ) : (
+                          //               "Activate"
+                          //             )}
+                          //           </button>
+                          //         </>
+                          //       )}
+                          //     </div>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "explorer-hunt" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex align-items-center justify-content-between gap-3 w-100">
-                              <div className="d-flex flex-column gap-2">
-                                <span
-                                  className="challenge-popup-desc text-white"
-                                  style={{ fontSize: "18px" }}
-                                >
-                                  What is Explorer Hunt?
-                                </span>
-                                <span className="challenge-popup-desc text-white">
-                                  Explorer Hunt is an event where you must
-                                  defend the world from alien explorers who have
-                                  landed to assess the terrain before their
-                                  invasion.
-                                </span>
-                              </div>
-                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-                                <span className="yellow-text-amount">{getFormattedNumber(explorerHuntData?.statValue ?? 0)}</span>
-                                <span className="small-text-amount">Partners Saved</span>
-
-                              </div>
-                            </div>
-                          </div>
-                        ) : activeEvent?.id === "greatCollection" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
-                              <div className="d-flex flex-column gap-2">
-                                <span
-                                  className="challenge-popup-desc text-white"
-                                  style={{ fontSize: "18px" }}
-                                >
-                                  What is The Great Collection?
-                                </span>
-                                <span className="challenge-popup-desc text-white">
-                                  The Great Collection is a thrilling event
-                                  where players are tasked with gathering rare
-                                  and unique partner branded coins scattered
-                                  across the game.
-                                </span>
-                              </div>
-                              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-                                <span className="yellow-text-amount">{getFormattedNumber(greatCollectionData?.statValue ?? 0)}</span>
-                                <span className="small-text-amount">Brands Collected</span>
-
-                              </div>
-                            </div>
-                          </div>
+                          <></>
+                        ) : // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                        //   <div className="d-flex align-items-center justify-content-between gap-3">
+                        //     <div className="d-flex flex-column gap-2">
+                        //       <span
+                        //         className="challenge-popup-desc text-white"
+                        //         style={{ fontSize: "18px" }}
+                        //       >
+                        //         What is Explorer Hunt?
+                        //       </span>
+                        //       <span className="challenge-popup-desc text-white">
+                        //         Explorer Hunt is an event where you must
+                        //         defend the world from alien explorers who have
+                        //         landed to assess the terrain before their
+                        //         invasion.
+                        //       </span>
+                        //     </div>
+                        //   </div>
+                        // </div>
+                        activeEvent?.id === "greatCollection" ? (
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex align-items-center justify-content-between gap-3">
+                          //     <div className="d-flex flex-column gap-2">
+                          //       <span
+                          //         className="challenge-popup-desc text-white"
+                          //         style={{ fontSize: "18px" }}
+                          //       >
+                          //         What is The Great Collection?
+                          //       </span>
+                          //       <span className="challenge-popup-desc text-white">
+                          //         The Great Collection is a thrilling event
+                          //         where players are tasked with gathering rare
+                          //         and unique partner branded coins scattered
+                          //         across the game.
+                          //       </span>
+                          //     </div>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : activeEvent?.id === "maze" ? (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between gap-3 w-100">
-                              <span className="challenge-popup-desc text-white">
-                                You need to hold at least 400 WOD tokens to
-                                participate
-                              </span>
-                              <NavLink className="explore-btn" to="/#buy-wod">
-                                BUY WOD
-                              </NavLink>
-                            </div>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <div className="d-flex align-items-center justify-content-between gap-3 w-100">
+                          //     <span className="challenge-popup-desc text-white">
+                          //       You need to hold at least 400 WOD tokens to
+                          //       participate
+                          //     </span>
+                          //     <NavLink className="explore-btn" to="/#buy-wod">
+                          //       BUY WOD
+                          //     </NavLink>
+                          //   </div>
+                          // </div>
+                          <></>
                         ) : (
-                          <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
-                            <span
-                              className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
-                              style={{ fontWeight: "700", fontSize: "18px" }}
-                            >
-                              Event Coming Soon
-                            </span>
-                          </div>
+                          // <div className="new-event-wrapper p-3 d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between position-relative">
+                          //   <span
+                          //     className="available-day-text mb-0 text-white w-100 d-flex justify-content-center"
+                          //     style={{ fontWeight: "700", fontSize: "18px" }}
+                          //   >
+                          //     Event Coming Soon
+                          //   </span>
+                          // </div>
+                          <></>
                         )}
                         {/* {eventId === "golden-pass" &&
                           availableTime !== 0 &&
