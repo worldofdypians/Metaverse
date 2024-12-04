@@ -25,6 +25,7 @@ const DomainModal = ({
   successDomain,
   metadata,
   wodBalance,
+  domainStatus,
 }) => {
   const windowSize = useWindowSize();
   const [domainSearch, setDomainSearch] = useState("");
@@ -117,7 +118,7 @@ const DomainModal = ({
                       <span className="name-service mb-0">Your Domain</span>
                     </div>
                   </div>
-           
+
                   <div className="d-flex flex-lg-column flex-row gap-1">
                     <span className="name-service mb-0">Expires on </span>
                     <span className="name-service mb-0">
@@ -214,7 +215,6 @@ const DomainModal = ({
                       <span className="name-service mb-0">
                         Domain Unavailable
                       </span>
-                      
                     </div>
                   </div>
                 ) : (
@@ -329,25 +329,48 @@ const DomainModal = ({
                   </div>
                   <hr className="domain-popup-divider w-100" />
                   <div className="d-flex w-100 justify-content-center">
-                    <div className="linear-border">
-                      <button
-                        className="btn filled-btn px-4"
-                        onClick={() =>
-                          onRegister(selectedName, registrationYear)
-                        }
-                      >
-                        {loading ? (
+                    <button
+                      className={`btn ${
+                        domainStatus === "error" ? "failbtn" : "stake-wod-btn2"
+                      } py-2 px-5`}
+                      onClick={() =>
+                        onRegister(
+                          selectedName,
+                          registrationYear,
+                          price * registrationYear
+                        )
+                      }
+                    >
+                      {domainStatus === "initial" ? (
+                        "Approve"
+                      ) : domainStatus === "loading-approve" ? (
+                        <div className="d-flex align-items-center gap-2">
+                          Approving{" "}
                           <div
-                          className="spinner-border text-light spinner-border-sm"
+                            className="spinner-border text-light spinner-border-sm"
                             role="status"
                           >
                             <span className="sr-only"></span>
                           </div>
-                        ) : (
-                          "Register"
-                        )}
-                      </button>
-                    </div>
+                        </div>
+                      ) : domainStatus === "deposit" ? (
+                        "Register"
+                      ) : domainStatus === "loading" ? (
+                        <div className="d-flex align-items-center gap-2">
+                          Processing{" "}
+                          <div
+                            className="spinner-border text-light spinner-border-sm"
+                            role="status"
+                          >
+                            <span className="sr-only"></span>
+                          </div>
+                        </div>
+                      ) : domainStatus === "success" ? (
+                        "Success"
+                      ) : (
+                        "Failed"
+                      )}
+                    </button>
                   </div>
                 </div>
               </>

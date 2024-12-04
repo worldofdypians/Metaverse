@@ -458,6 +458,7 @@ function App() {
 
   const [domainName, setDomainName] = useState(null);
   const [loadingDomain, setLoadingDomain] = useState(false);
+  const [domainStatus, setdomainStatus] = useState("initial");
   const [domainMetaData, setDomainMetaData] = useState(null);
   const [totalTx, setTotalTx] = useState(0);
   const [totalvolume, setTotalVolume] = useState(0);
@@ -1562,6 +1563,7 @@ function App() {
         const hash = ethers.utils.keccak256(bytes);
 
         const id = ethers.BigNumber.from(hash);
+
         const isAvailable = await spaceid_searchSc.methods
           .available(id)
           .call()
@@ -1569,8 +1571,10 @@ function App() {
             console.error(e);
           });
         setAvailableDomain(isAvailable);
-        const priceObject = spaceid_price.find((item) => item[domain.length > 5 ? 5 : domain.length]);
-        console.log('priceObjectpriceObjectpriceObject',priceObject)
+        const priceObject = spaceid_price.find(
+          (item) => item[domain.length > 5 ? 5 : domain.length]
+        );
+        console.log(spaceid_searchSc.methods.available(id).call());
         setDomainPrice(priceObject[domain.length].wodPrice);
       } else if (window.WALLET_TYPE === "binance" && library) {
         const provider = library;
@@ -1589,38 +1593,113 @@ function App() {
     }
   };
 
-  const registerDomain = async (label, years) => {
+  const handlePurchaseDomain = async (label, years, price) => {
     if (window.ethereum && window.WALLET_TYPE !== "binance") {
-      setLoadingDomain(true);
-      const provider = ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      const register = new SIDRegister({ signer, chainId: 56 });
-      await register
-        .register(label, address, years, {
-          setPrimaryName: true,
-          referrer: "dyp.bnb",
-        })
+      let web3 = new Web3(window.ethereum);
+      setdomainStatus("loading");
+      const spaceid_main_sc = new web3.eth.Contract(
+        window.SPACEID_ABI,
+        window.config.spaceId_address
+      );
+
+      await spaceid_main_sc.methods
+        .bulkRegisterWithERC20(
+          window.config.spaceId_wod_identifier,
+          [label],
+          coinbase,
+          years * window.config.spaceId_duration,
+          window.config.spaceId_resolver_address,
+          true,
+          []
+        )
+        .send({ from: coinbase })
         .then(() => {
+          setdomainStatus("success");
+          setLoadingDomain(false);
+
           setSuccessMessage(
-            "You have successfully registered your .bnb domain"
+            "You have successfully registered your .wod domain"
           );
           setSuccessDomain(true);
           setTimeout(() => {
             setSuccessMessage("");
             setSuccessDomain(false);
+            setdomainStatus("initial");
           }, 5000);
-          setLoadingDomain(false);
         })
         .catch((e) => {
           setLoadingDomain(false);
           setSuccessDomain(false);
-          setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+          setdomainStatus("error");
+
+          setSuccessMessage(`Something went wrong: ${e?.message}`);
           setTimeout(() => {
             setSuccessMessage("");
+            setdomainStatus("initial");
           }, 5000);
-          console.log(e);
         });
+    }
+  };
+
+  const registerDomain = async (label, years, price) => {
+    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+      setLoadingDomain(true);
+      setdomainStatus("loading-approve");
+
+      let web3 = new Web3(window.ethereum);
+      const tokenSc = new web3.eth.Contract(
+        window.ERC20_ABI,
+        window.config.wod_token_address
+      );
+      const newPrice = new BigNumber(price * 1e18).toFixed();
+      await tokenSc.methods
+        .approve(window.config.spaceId_address, newPrice)
+        .send({ from: coinbase })
+        .then(() => {
+          setLoadingDomain(false);
+          setdomainStatus("deposit");
+          setTimeout(() => {
+            setLoadingDomain(true);
+            handlePurchaseDomain(label, years, price);
+          }, 1000);
+        })
+        .catch((e) => {
+          console.error(e);
+          setLoadingDomain(false);
+          setdomainStatus("error");
+          setTimeout(() => {
+            setdomainStatus("initial");
+          }, 4000);
+        });
+      // const provider = ethers.providers.Web3Provider(window.ethereum);
+      // const signer = provider.getSigner();
+      // const address = await signer.getAddress();
+      // const register = new SIDRegister({ signer, chainId: 56 });
+      // await register
+      //   .register(label, address, years, {
+      //     setPrimaryName: true,
+      //     referrer: "dyp.bnb",
+      //   })
+      //   .then(() => {
+      //     setSuccessMessage(
+      //       "You have successfully registered your .bnb domain"
+      //     );
+      //     setSuccessDomain(true);
+      //     setTimeout(() => {
+      //       setSuccessMessage("");
+      //       setSuccessDomain(false);
+      //     }, 5000);
+      //     setLoadingDomain(false);
+      //   })
+      //   .catch((e) => {
+      //   setLoadingDomain(false);
+      //   setSuccessDomain(false);
+      //   setSuccessMessage(`Something went wrong: ${e?.data?.message}`);
+      //   setTimeout(() => {
+      //     setSuccessMessage("");
+      //   }, 5000);
+      //   console.log(e);
+      // });
     } else if (window.WALLET_TYPE === "binance" && library) {
       setLoadingDomain(true);
       const provider = library;
@@ -6784,6 +6863,7 @@ function App() {
           successDomain={successDomain}
           metadata={domainMetaData}
           wodBalance={wodBalance}
+          domainStatus={domainStatus}
         />
       )}
 
