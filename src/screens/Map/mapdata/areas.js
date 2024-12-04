@@ -77,13 +77,14 @@ const chainAreas = [
         image: leaderboardInfo,
         link: "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
+    ],
+    pastEvents: [
+     
     ],
     socials: [
       {
@@ -154,15 +155,17 @@ const chainAreas = [
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: "/account#leaderboard",
+        link: 
+        "/account#leaderboard",
       },
-    ],
-    pastEvents: [
       {
         title: "Daily Bonus",
         image: dailyBonusInfo,
         link: "/account#dailybonus",
       },
+    ],
+    pastEvents: [
+     
     ],
     socials: [
       {
@@ -220,6 +223,11 @@ const chainAreas = [
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account#leaderboard",
+      },
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
       },
     ],
     pastEvents: [],
