@@ -1182,9 +1182,9 @@ function Dashboard({
     eagle: false,
     scorpion: false,
     cyclops: false,
-    puzzleMadness: false
+    puzzleMadness: false,
   });
-  const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0)
+  const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -3411,7 +3411,7 @@ function Dashboard({
   const fetchPreviousWinnersMat = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "LeaderboardMatChainDaily",
+        StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
@@ -10656,7 +10656,12 @@ function Dashboard({
                 Number(midleEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(skaleEarnUsd) +
-                Number(coingeckoEarnUsd)
+                Number(coingeckoEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(mantaEarnUsd) +
+                Number(matEarnUsd) +
+                Number(bnbEarnUsd) +
+                Number(coreEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10665,21 +10670,75 @@ function Dashboard({
               userRank={userData?.position ?? 0}
               userRankCore={userDataCore?.position ?? 0}
               userRankSkale={userDataSkale?.position ?? 0}
-              userBnbScore={userData?.statValue ?? 0}
-              userCoreScore={userDataCore?.statValue ?? 0}
+              userBnbScore={
+                (userDataSkale?.statValue === 0
+                  ? 0
+                  : userDataSkale?.position > 100
+                  ? 0
+                  : bnbStars[userDataSkale?.position]) ?? 0
+              }
+              userCoreScore={
+                (userDataCore?.statValue === 0
+                  ? 0
+                  : userDataCore?.position > 100
+                  ? 0
+                  : baseStars[userDataCore?.position]) ?? 0
+              }
               userRankViction={userDataViction?.position ?? 0}
-              userVictionScore={userDataViction?.statValue ?? 0}
+              userVictionScore={
+                (userDataViction?.statValue === 0
+                  ? 0
+                  : userDataViction?.position > 100
+                  ? 0
+                  : baseStars[userDataViction?.position]) ?? 0
+              }
               userRankMat={userDataMat?.position ?? 0}
-              userMatScore={userDataMat?.statValue ?? 0}
+              userMatScore={
+                userDataMat?.statValue === 0
+                  ? 0
+                  : userDataMat?.position > 100
+                  ? 0
+                  : matStars[userDataMat?.position]
+              }
               userRankSei={userDataSei?.position ?? 0}
-              userSeiScore={userDataSei?.statValue ?? 0}
+              userSeiScore={
+                userDataSei?.statValue === 0
+                  ? 0
+                  : userDataSei?.position > 100
+                  ? 0
+                  : seiStars[userDataSei?.position]
+              }
               userRankManta={userDataManta?.position ?? 0}
-              userMantaScore={userDataManta?.statValue ?? 0}
+              userMantaScore={
+                (userDataManta?.statValue === 0
+                  ? 0
+                  : userDataManta?.position > 100
+                  ? 0
+                  : baseStars[userDataManta?.position]) ?? 0
+              }
               userRankBase={userDataBase?.position ?? 0}
-              userBaseScore={userDataBase?.statValue ?? 0}
+              userBaseScore={
+                (userDataBase?.statValue === 0
+                  ? 0
+                  : userDataBase?.position > 100
+                  ? 0
+                  : baseStars[userDataBase?.position]) ?? 0
+              }
               userRankTaiko={userDataTaiko?.position ?? 0}
-              userTaikoScore={userDataTaiko?.statValue ?? 0}
-              userSkaleScore={userDataSkale?.statValue ?? 0}
+              userTaikoScore={
+                (userDataTaiko?.statValue === 0
+                  ? 0
+                  : userDataTaiko?.position > 100
+                  ? 0
+                  : taikoStars[userDataTaiko?.position]) ?? 0
+              }
+              userSkaleScore={
+                (userDataSkale?.statValue === 0
+                  ? 0
+                  : userDataSkale?.position > 100
+                  ? 0
+                  : skaleStars[userDataSkale?.position]) ?? 0
+              }
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}

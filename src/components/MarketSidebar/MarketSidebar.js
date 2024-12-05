@@ -122,20 +122,24 @@ const MarketSidebar = () => {
                         isActive
                           ? "d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : `d-flex ms-lg-3 p-2 align-items-center gap-2 sidebar-item ${
-                              location.pathname.includes("conflux") ||
-                              location.pathname.includes("coin98") ||
-                              location.pathname.includes("coingecko") ||
-                              location.pathname.includes("base") ||
-                              location.pathname.includes("coinmarketcap") ||
-                              location.pathname.includes("doge") ||
-                              location.pathname.includes("skale") ||
-                              location.pathname.includes("gate") ||
-                              location.pathname.includes("skale") ||
-                              location.pathname.includes("core") ||
-                              location.pathname.includes("viction") ||
-                              location.pathname.includes("sei") ||
-                              location.pathname.includes("bnb") ||
-                              location.pathname.includes("multivers")
+                              location.pathname.includes("beta-pass/conflux") ||
+                              location.pathname.includes("beta-pass/coin98") ||
+                              location.pathname.includes(
+                                "beta-pass/coingecko"
+                              ) ||
+                              location.pathname.includes("beta-pass/base") ||
+                              location.pathname.includes(
+                                "beta-pass/coinmarketcap"
+                              ) ||
+                              location.pathname.includes("beta-pass/doge") ||
+                              location.pathname.includes("beta-pass/skale") ||
+                              location.pathname.includes("beta-pass/gate") ||
+                              location.pathname.includes("beta-pass/skale") ||
+                              location.pathname.includes("beta-pass/core") ||
+                              location.pathname.includes("beta-pass/viction") ||
+                              location.pathname.includes("beta-pass/sei") ||
+                              location.pathname.includes("beta-pass/bnb") ||
+                              location.pathname.includes("beta-pass/multivers")
                                 ? "sidebar-item-active nft-active"
                                 : null
                             }`
@@ -144,7 +148,6 @@ const MarketSidebar = () => {
                       {/* <div className="icon-wrapper"></div> */}
                       <div className="d-flex align-items-center gap-5">
                         <span className={`nft-sidebar-title`}>Beta Pass</span>
-                      
                       </div>
                     </NavLink>
                     <NavLink
@@ -266,15 +269,15 @@ const MarketSidebar = () => {
             }}
           />
           <NavLink
-            to="/shop/mint/timepiece"
+            to="/shop/mint/sei"
             end
             className={({ isActive }) =>
-              isActive
+              isActive || location.pathname.includes("mint/timepiece")
                 ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
                 : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
-              const icon = isActive ? "mintIconActive" : "mintIcon";
+              const icon = isActive  || location.pathname.includes("mint/timepiece")? "mintIconActive" : "mintIcon";
               return (
                 <>
                   <img

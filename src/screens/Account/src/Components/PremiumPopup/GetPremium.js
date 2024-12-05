@@ -2575,15 +2575,17 @@ const GetPremiumPopup = ({
               <h6 className="premium-benefits-popup-title mb-0">Benefits</h6>
             </div>
             <div className="sidebar-separator2 m-0"></div>
-            <div className="premium-benefits-wrapper d-flex gap-3 justify-content-between p-3">
+            <div className="row w-100 premium-benefits-wrapper p-3 align-items-center justify-content-center mx-0">
               {allBenefits.map((item, index) => {
                 return (
-                  <div key={index} className="benefit-item">
+                 <div key={index} className="col-12 col-lg-3 mb-3">
+                   <div  className="benefit-item">
                     <div className="d-flex flex-column gap-3">
                       <img src={item.image} alt="" className="benefitimg" />
                       <span className="benefittitle p-3">{item.title}</span>
                     </div>
                   </div>
+                 </div>
                 );
               })}
             </div>

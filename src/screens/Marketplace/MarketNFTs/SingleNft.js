@@ -3117,7 +3117,7 @@ const SingleNft = ({
                       nftAddress.toLowerCase() ===
                         window.config.nft_caws_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
-                        : nftAddress.toLowerCase() ===
+                        :   nftAddress.toLowerCase() ===
                             window.config.nft_land_address.toLowerCase() ||
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_bnb_address.toLowerCase() ||
@@ -3126,57 +3126,41 @@ const SingleNft = ({
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_coingecko_address.toLowerCase()
+                        : type==='coingecko'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_gate_address.toLowerCase()
+                        : type==='gate'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress === window.config.nft_conflux_address
+                        : type==='conflux'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_manta_address.toLowerCase()
+                        : type==='manta'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_taiko_address.toLowerCase()
+                        : type==='taiko'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_cookie3_address.toLowerCase()
+                        : type==='cookie3'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
-                        : nftAddress ===
-                          window.config.nft_mat_address
+                        : type==='mat'
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_doge_address.toLowerCase()
+                        : type==='doge'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_cmc_address.toLowerCase()
+                        : type==='cmc'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_core_address.toLowerCase()
+                        : type==='core'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : nftAddress ===
-                          window.config.nft_viction_address
+                        : type==='viction'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_multivers_address.toLowerCase()
+                        : type==='multivers'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : nftAddress === window.config.nft_base_address
+                        : type==='base'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_skale_address.toLowerCase()
+                        : type==='skale'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_bnb_address.toLowerCase()
+                        : type==='bnb'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_opbnb_address.toLowerCase()
+                        : type==='opbnb'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_immutable_address.toLowerCase()
+                        : type==='immutable'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
-                        : nftAddress ===
-                        window.config.nft_sei_address
+                        : type==='sei'
                       ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
@@ -3272,7 +3256,7 @@ const SingleNft = ({
                       ? "Immutable"
                       : type === "manta"
                       ? "Manta Network"
-                      : type === "dri"
+                      : type === "sei"
                       ? "SEI Network"
                       : "Ethereum"}
                   </span>
