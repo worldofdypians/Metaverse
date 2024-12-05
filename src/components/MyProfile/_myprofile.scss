@@ -190,6 +190,38 @@
     height: 155px;
   }
 }
+.wod-domain-name-wrapper {
+  background-image: url(./assets/domainNameBg.svg);
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 145px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  background-position: center;
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+}
+
+.wod-domain-icon{
+  width: 70px;
+  @media screen and (max-width: 786px) {
+    width: 120px;
+  }
+}
+
+.wod-domain-name-span{
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+width: 80%;
+
+}
 
 .new-special-rewards-wrapper:hover {
   border: 2px solid #9e3c7a;
