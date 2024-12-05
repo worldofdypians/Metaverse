@@ -560,7 +560,7 @@ const MarketMint = ({
 
   let countToLiveConflux = new Date("2023-10-10T11:00:00.000+02:00");
   let countToExpireConflux = new Date("2024-08-05T16:00:00.000+02:00");
-  let countToExpireOpbnb = new Date("2024-08-14T24:00:00.000+02:00");
+  let countToExpiresei = new Date("2024-12-19T24:00:00.000+02:00");
   let countToExpireImmutable = new Date("2024-08-15T24:00:00.000+02:00");
 
   let countToExpireManta = new Date("2024-08-15T24:00:00.000+02:00");
@@ -1192,7 +1192,7 @@ const MarketMint = ({
                               className="genesis-desc position-relative"
                               style={{ bottom: "5px" }}
                             >
-                              <h6 className="font-organetto land-desc">
+                              <h6 className="font-montserrat land-desc" style={{fontSize: 25}}>
                                 {selectedMint?.cardTitle}
                               </h6>
                             </div>
@@ -1717,9 +1717,7 @@ const MarketMint = ({
                                   <div className="d-flex align-items-center gap-2">
                                     <Countdown
                                       date={
-                                        mintTitle === "manta"
-                                          ? countToExpireManta
-                                          : countToExpireOpbnb
+                                         countToExpiresei
                                       }
                                       renderer={renderer2}
                                     />

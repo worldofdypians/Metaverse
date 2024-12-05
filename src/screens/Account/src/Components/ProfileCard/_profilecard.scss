@@ -1003,7 +1003,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border: 2px solid transparent;
+  transition: all .25s;
   cursor: pointer;
 }
 
@@ -1025,15 +1025,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border: 2px solid transparent;
+  transition: all .25s;
 }
 
 .total-stars-premium-wrapper2:hover {
-  border: 2px solid #ac1186;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .golden-pass-wrapper2:hover {
-  border: 2px solid #53a5be;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .activate-btn {
