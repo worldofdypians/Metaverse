@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const EventSliderCard = ({ data, mintTitle, onSelectCard }) => {
+ 
   return (
     <NavLink
       to={`/shop/mint/${data.eventId}`}

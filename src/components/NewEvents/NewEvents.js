@@ -1593,17 +1593,25 @@ const NewEvents = ({
   };
 
   const checkWalletAddr = () => {
-    if (coinbase && wallet) {
-      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
+    if (coinbase!==undefined && wallet!==undefined) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId !== 56) {
         setCheckWallet(false);
+        setStatus("Please make sure you're on BNB Chain in order to activate the event.")
+      } else if (coinbase?.toLowerCase() !== wallet?.toLowerCase() && chainId === 56) {
+        setCheckWallet(false);
+        setStatus("Please make sure you're using the wallet address associated to your game profile.")
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
         chainId === 56
       ) {
         setCheckWallet(true);
+        setStatus("")
+
       }
     } else if (wallet) {
       setCheckWallet(true);
+      setStatus("Please connect your wallet in order to activate the event")
+
     } else setCheckWallet(false);
   };
 
@@ -1671,7 +1679,7 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet, chainId, email]);
+  }, [wallet,coinbase, chainId, email]);
 
   const eventinfos = [
     {
@@ -2149,7 +2157,6 @@ const NewEvents = ({
     // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
-  console.log(explorerHuntData, greatCollectionData);
 
   const html = document.querySelector("html");
 
@@ -2164,7 +2171,7 @@ const NewEvents = ({
   return (
     <>
       <div
-        className="custom-container mt-5"
+        className="custom-container mt-3"
         id={selectedEvent ? selectedEvent : ""}
         style={{ scrollMarginTop: "100px" }}
       >
@@ -2178,7 +2185,8 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                      <NavLink
+                    <div className="d-flex flex-column">
+                    <NavLink
                         to={
                           eventinfos.find((item) => {
                             return item.day === utcDayIndex;
@@ -2199,7 +2207,7 @@ const NewEvents = ({
                             eventId !== "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge(
                               eventinfos.find((item) => {
@@ -2221,14 +2229,17 @@ const NewEvents = ({
                           <h6 className="mb-0">Legendary Beast Siege</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/maze-day">
+                      <div className="sidebar-separator2"></div>
+                    </div>
+                          <div className="d-flex flex-column">
+                          <NavLink to="/account/challenges/maze-day">
                         <div
                           className={`${
                             challenge === "maze-day" ||
                             selectedEvent === "maze-day"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("maze-day");
                             setActiveEvent(mazeGardenInfo);
@@ -2238,14 +2249,17 @@ const NewEvents = ({
                           <h6 className="mb-0">BNB Chain Maze Day</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/treasure-hunt">
+                      <div className="sidebar-separator2"></div>
+                          </div>
+                    <div className="d-flex flex-column">
+                    <NavLink to="/account/challenges/treasure-hunt">
                         <div
                           className={`${
                             challenge === "treasure-hunt" ||
                             selectedEvent === "treasure-hunt"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("treasure-hunt");
                           }}
@@ -2254,6 +2268,8 @@ const NewEvents = ({
                           <h6 className="mb-0">Treasure Hunt</h6>
                         </div>
                       </NavLink>
+                      <div className="sidebar-separator2"></div>
+                    </div>
 
                       {/* <NavLink to="/account/challenges/golden-pass">
                         <div
@@ -2271,14 +2287,15 @@ const NewEvents = ({
                           <h6 className="mb-0">Golden Pass</h6>
                         </div>
                       </NavLink> */}
-                      <NavLink to="/account/challenges/puzzle-madness">
+                    <div className="d-flex flex-column">
+                    <NavLink to="/account/challenges/puzzle-madness">
                         <div
                           className={`${
                             challenge === "puzzle-madness" ||
                             selectedEvent === "puzzle-madness"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("puzzle-madness");
                             setActiveEvent(puzzleMadnessInfo);
@@ -2288,7 +2305,9 @@ const NewEvents = ({
                           <h6 className="mb-0">Puzzle Madness</h6>
                         </div>
                       </NavLink>
-
+                      <div className="sidebar-separator2"></div>
+                    </div>
+                      <div className="d-flex flex-column">                       
                       <NavLink to="/account/challenges/explorer-hunt">
                         <div
                           className={`${
@@ -2296,7 +2315,7 @@ const NewEvents = ({
                             selectedEvent === "explorer-hunt"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("explorer-hunt");
                             setActiveEvent(explorerHuntInfo);
@@ -2306,14 +2325,17 @@ const NewEvents = ({
                           <h6 className="mb-0">Explorer Hunt</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/great-collection">
+                      <div className="sidebar-separator2"></div>
+                      </div>
+                     <div className="d-flex flex-column">
+                     <NavLink to="/account/challenges/great-collection">
                         <div
                           className={`${
                             challenge === "great-collection" ||
                             selectedEvent === "great-collection"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("great-collection");
                             setActiveEvent(greatCollectionInfo);
@@ -2323,14 +2345,17 @@ const NewEvents = ({
                           <h6 className="mb-0">The Great Collection</h6>
                         </div>
                       </NavLink>
-                      <NavLink to="/account/challenges/critical-hit">
+                      <div className="sidebar-separator2"></div>
+                     </div>
+                     <div className="d-flex flex-column">
+                     <NavLink to="/account/challenges/critical-hit">
                         <div
                           className={`${
                             challenge === "critical-hit" ||
                             selectedEvent === "critical-hit"
                               ? "active-challenge-item"
                               : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
+                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
                           onClick={() => {
                             setChallenge("critical-hit");
                             setActiveEvent(criticalHitInfos);
@@ -2340,6 +2365,8 @@ const NewEvents = ({
                           <h6 className="mb-0">Critical Hit</h6>
                         </div>
                       </NavLink>
+                      <div className="sidebar-separator2"></div>
+                     </div>
 
                       {/* <NavLink to="/account/challenges/dragon-ruins">
                         <div
@@ -2943,7 +2970,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3039,7 +3066,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3131,7 +3158,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3227,7 +3254,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3323,7 +3350,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3418,7 +3445,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3781,7 +3808,7 @@ const NewEvents = ({
                                           <div className="d-flex align-items-center gap-2">
                                             {(!isConnected || !email) && (
                                               <button
-                                                className="beast-siege-btn-inactive"
+                                                className="beast-siege-btn"
                                                 onClick={onConnectWallet}
 
                                               >

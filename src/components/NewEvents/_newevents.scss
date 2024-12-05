@@ -156,6 +156,10 @@ text-transform: capitalize;
     font-weight: 600;
     // line-height: 24px;
     text-transform: uppercase;
+    @media screen and (max-width: 1550px) {
+      font-size: 10px;
+      white-space: nowrap;
+    }
     @media screen and (max-width: 600px) {
       font-size: 11px;
     }
@@ -175,6 +179,10 @@ text-transform: capitalize;
     font-weight: 600;
     // line-height: 24px;
     text-transform: uppercase;
+    @media screen and (max-width: 1550px) {
+      font-size: 10px;
+      white-space: nowrap;
+    }
     @media screen and (max-width: 600px) {
       font-size: 11px;
     }
@@ -555,6 +563,11 @@ text-transform: capitalize;
   padding-bottom: 0.5rem !important;
   padding-right: 1.5rem !important;
   padding-left: 1.5rem !important;
+}
+
+.beast-siege-btn:hover {
+  background: #53a5be !important;
+  color: #ebeeff !important;
 }
 
 .dragon-siege-info {

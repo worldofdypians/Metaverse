@@ -3507,9 +3507,7 @@ const NewDailyBonus = ({
                               </div>
                               <span
                                 className="percentage-span"
-                                style={{
-                                  color: chain === "core" ? "#fff" : "gray",
-                                }}
+                               
                               >
                                 {parseInt(corePercentage)}%
                               </span>
@@ -3821,9 +3819,7 @@ const NewDailyBonus = ({
                               </div>
                               <span
                                 className="percentage-span"
-                                style={{
-                                  color: chain === "viction" ? "#fff" : "gray",
-                                }}
+                                
                               >
                                 {parseInt(victionPercentage)}%
                               </span>
