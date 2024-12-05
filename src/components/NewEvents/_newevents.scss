@@ -565,6 +565,11 @@ text-transform: capitalize;
   padding-left: 1.5rem !important;
 }
 
+.beast-siege-btn:hover {
+  background: #53a5be !important;
+  color: #ebeeff !important;
+}
+
 .dragon-siege-info {
   background-image: url("./assets/banners/dragonRuinsBanner.webp");
   background-size: cover;
