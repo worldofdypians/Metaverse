@@ -968,7 +968,7 @@
 .chainstatustxt {
   color: #edeeff;
   font-family: Montserrat;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px; /* 240% */
@@ -1171,4 +1171,18 @@
 .rankChain {
   position: absolute;
   left: -10px;
+}
+
+.rank-chain-status-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px; 
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1,1fr);
+  }
+}
+
+.rank-chain-status-item{
+  border-radius: 10px;
+  background: #2c2d52;
 }
