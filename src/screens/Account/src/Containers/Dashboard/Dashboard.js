@@ -3411,7 +3411,7 @@ function Dashboard({
   const fetchPreviousWinnersMat = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "LeaderboardMatChainDaily",
+        StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,

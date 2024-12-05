@@ -1593,17 +1593,25 @@ const NewEvents = ({
   };
 
   const checkWalletAddr = () => {
-    if (coinbase && wallet) {
-      if (coinbase?.toLowerCase() !== wallet?.toLowerCase() || chainId !== 56) {
+    if (coinbase!==undefined && wallet!==undefined) {
+      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId !== 56) {
         setCheckWallet(false);
+        setStatus("Please make sure you're on BNB Chain in order to activate the event.")
+      } else if (coinbase?.toLowerCase() !== wallet?.toLowerCase() && chainId === 56) {
+        setCheckWallet(false);
+        setStatus("Please make sure you're using the wallet address associated to your game profile.")
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
         chainId === 56
       ) {
         setCheckWallet(true);
+        setStatus("")
+
       }
     } else if (wallet) {
       setCheckWallet(true);
+      setStatus("Please connect your wallet in order to activate the event")
+
     } else setCheckWallet(false);
   };
 
@@ -1671,7 +1679,7 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet, chainId, email]);
+  }, [wallet,coinbase, chainId, email]);
 
   const eventinfos = [
     {
@@ -2962,7 +2970,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3058,7 +3066,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3150,7 +3158,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3246,7 +3254,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
 
                                           >
@@ -3342,7 +3350,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3437,7 +3445,7 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn-inactive"
+                                            className="beast-siege-btn"
                                             onClick={onConnectWallet}
                                           >
                                             {" "}
@@ -3800,7 +3808,7 @@ const NewEvents = ({
                                           <div className="d-flex align-items-center gap-2">
                                             {(!isConnected || !email) && (
                                               <button
-                                                className="beast-siege-btn-inactive"
+                                                className="beast-siege-btn"
                                                 onClick={onConnectWallet}
 
                                               >
