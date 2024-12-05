@@ -862,11 +862,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 11
+                        {userActiveEvents === 13
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/11"}
+                          : userActiveEvents + "/13"}
                       </span>
                     </div>
                     {/* <img

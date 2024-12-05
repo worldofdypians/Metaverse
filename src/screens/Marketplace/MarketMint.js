@@ -131,6 +131,7 @@ const MarketMint = ({
   matMintAllowed,
   myMatNFTs,
   myMatNFTsCreated,
+  seiMintAllowed
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -279,7 +280,7 @@ const MarketMint = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(timepieceData);
-  const [mintTitle, setMintTitle] = useState("taiko");
+  const [mintTitle, setMintTitle] = useState("sei");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -468,6 +469,32 @@ const MarketMint = ({
     }
   };
 
+  const handleSeiPool = async () => {
+    if (window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x531")
+            .then(() => {
+              handleSwitchNetwork(1329);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.ethereum?.isBinance) {
+          window.alertify.error(
+            "This network is not available on Binance Web3 Wallet"
+          );
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    } else {
+      window.alertify.error(
+        "This network is not available on Binance Web3 Wallet"
+      );
+    }
+  };
+
   const handleTaikoPool = async () => {
     if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
@@ -516,6 +543,9 @@ const MarketMint = ({
     } else if (location.pathname.includes("taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
+    }  else if (location.pathname.includes("sei")) {
+      setSelectedMint(seiData);
+      setMintTitle("sei");
     } 
     // else if (location.pathname.includes("matchain")) {
     //   setSelectedMint(matData);
@@ -614,14 +644,15 @@ const MarketMint = ({
     //   class: "mint-viction",
     // },
 
-    // {
-    //   title: "SEI Pass",
-    //   eventId: "sei",
-    //   desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
-    //   img: seiActive,
-    //   data: seiData,
-    //   class: "mint-sei",
-    // },
+    {
+      title: "SEI Pass",
+      eventId: "sei",
+      id: "sei",
+      desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
+      img: seiActive,
+      data: seiData,
+      class: "mint-sei",
+    },
     // {
     //   title: "BNB Chain Pass",
     //   eventId: "bnbchain",
@@ -943,6 +974,14 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
+        }else if (selectedMint.id === "sei") {
+          if (chainId !== 1329) {
+            setactiveButton(false);
+            setStatus("Switch to Sei to continue minting.");
+          } else if (chainId === 1329) {
+            setactiveButton(true);
+            setStatus("");
+          }
         }
       }
     }
@@ -1072,7 +1111,7 @@ const MarketMint = ({
                           </div>
                         </>
                       )}
-                      {/* <Slider ref={(c) => (slider.current = c)} {...settings}>
+                      <Slider ref={(c) => (slider.current = c)} {...settings}>
                         {dummyCards.map((item, index) => (
                           <EventSliderCard
                             key={index}
@@ -1084,7 +1123,7 @@ const MarketMint = ({
                             mintTitle={mintTitle}
                           />
                         ))}
-                      </Slider> */}
+                      </Slider>
                     </div>
                   )}
                   {selectedMint && (
@@ -1664,6 +1703,8 @@ const MarketMint = ({
                                         ? mantaMintAllowed
                                         : mintTitle === "mat"
                                         ? matMintAllowed
+                                        : mintTitle === "sei"
+                                        ? seiMintAllowed
                                         : 0}{" "}
                                       NFT
                                     </h6>
@@ -1732,86 +1773,86 @@ const MarketMint = ({
                             <div className="d-flex w-100 justify-content-center">
                               {selectedMint.id === "sei" && (
                                 <button
-                                  className={`py-2 ${
-                                    mintloading === "error"
-                                      ? "filled-error-btn"
-                                      : (isConnected === true &&
-                                          chainId !== 713715) ||
-                                        (status !== "Connect your wallet." &&
-                                          status !== "") ||
-                                        totalseiNft > 0
-                                      ? "outline-btn-disabled"
-                                      : "stake-wod-btn"
-                                  }  px-4 w-100`}
-                                  onClick={() => {
-                                    isConnected === true && chainId === 713715
-                                      ? handleBaseNftMint()
-                                      : showWalletConnect();
-                                  }}
-                                  disabled={
-                                    mintloading === "error" ||
-                                    mintloading === "success" ||
-                                    (isConnected === true &&
-                                      chainId !== 713715) ||
-                                    (status !== "Connect your wallet." &&
-                                      status !== "") ||
-                                    totalseiNft > 0
-                                      ? true
-                                      : false
-                                  }
-                                  onMouseEnter={() => {
-                                    setMouseOver(true);
-                                  }}
-                                  onMouseLeave={() => {
-                                    setMouseOver(false);
-                                  }}
-                                >
-                                  {(isConnected === false ||
-                                    chainId !== 713715) && (
-                                    <img
-                                      src={
-                                        mouseOver === true
-                                          ? blackWallet
-                                          : whitewallet
-                                      }
-                                      alt=""
-                                      style={{
-                                        width: "23px",
-                                        height: "23px",
-                                      }}
-                                    />
-                                  )}{" "}
-                                  {mintloading === "initial" &&
+                                className={`py-2 ${
+                                  mintloading === "error"
+                                    ? "fail-button"
+                                    : (isConnected === true &&
+                                        chainId !== 1329) ||
+                                      (status !== "Connect your wallet." &&
+                                        status !== "") ||
+                                      totalseiNft > 0
+                                    ? "outline-btn-disabled"
+                                    : "stake-wod-btn"
+                                }  px-4 w-100`}
+                                onClick={() => {
+                                  isConnected === true && chainId === 1329
+                                    ? handleMint()
+                                   : isConnected === true && chainId !== 1329
+                                    ? handleSeiPool()
+                                    : showWalletConnect();
+                                }}
+                                disabled={
+                                  mintloading === "error" ||
+                                  mintloading === "success" ||
+                                  (isConnected === true && chainId !== 1329) ||
+                                  (status !== "Connect your wallet." &&
+                                    status !== "") ||
+                                  totalseiNft > 0
+                                    ? true
+                                    : false
+                                }
+                                onMouseEnter={() => {
+                                  setMouseOver(true);
+                                }}
+                                onMouseLeave={() => {
+                                  setMouseOver(false);
+                                }}
+                              >
+                                {isConnected === false && (
+                                  <img
+                                    src={
+                                      mouseOver === true
+                                      ? blackWallet
+                                      : whitewallet
+                                    }
+                                    alt=""
+                                    style={{
+                                      width: "23px",
+                                      height: "23px",
+                                    }}
+                                  />
+                                )}{" "}
+                                {mintloading === "initial" &&
+                                isConnected === true &&
+                                chainId === 1329  ? (
+                                  "Mint"
+                                ) : mintloading === "mint" &&
                                   isConnected === true &&
-                                  chainId === 713715 ? (
-                                    "Mint"
-                                  ) : mintloading === "mint" &&
-                                    isConnected === true &&
-                                    chainId === 713715 ? (
-                                    <>
-                                      <div
-                                        className="spinner-border "
-                                        role="status"
-                                        style={{height: '1rem', width: '1rem'}}
-                                      ></div>
-                                    </>
-                                  ) : mintloading === "error" &&
-                                    isConnected === true &&
-                                    chainId === 713715 ? (
-                                    "Failed"
-                                  ) : mintloading === "success" &&
-                                    isConnected === true &&
-                                    activeButton ===
-                                      (isConnected === true &&
-                                        chainId === 713715) ? (
-                                    "Success"
-                                  ) : isConnected === true &&
-                                    chainId !== 713715 ? (
-                                    " Switch Chain"
-                                  ) : (
-                                    "Connect wallet"
-                                  )}
-                                </button>
+                                  chainId === 1329 ? (
+                                  <>
+                                    <div
+                                      className="spinner-border "
+                                      role="status"
+                                      style={{height: '1rem', width: '1rem'}}
+                                    ></div>
+                                  </>
+                                ) : mintloading === "error" &&
+                                  isConnected === true &&
+                                  chainId === 1329 ? (
+                                  "Failed"
+                                ) : mintloading === "success" &&
+                                  isConnected === true &&
+                                  activeButton ===
+                                    (isConnected === true &&
+                                      chainId === 1329) ? (
+                                  "Success"
+                                ) : isConnected === true &&
+                                  chainId !== 1329 ? (
+                                  " Switch Chain"
+                                ) : (
+                                  "Connect wallet"
+                                )}
+                              </button>
                               )}
 
                               {selectedMint.id === "mat" && (
@@ -2102,7 +2143,7 @@ const MarketMint = ({
                     />
                   </div> */}
 
-                  <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  {/* <div className="upcoming-mint-wrapper upcoming-sei-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">SEI Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2120,7 +2161,7 @@ const MarketMint = ({
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="upcoming-mint-wrapper upcoming-multivers-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
