@@ -14,19 +14,18 @@
 }
 
 .yellow-text-amount {
-  color: #FFC808;
-font-family: Montserrat;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-letter-spacing: 1.2px;
-text-transform: capitalize;
+  color: #ffc808;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1.2px;
+  text-transform: capitalize;
 }
 
-
 .small-text-amount {
-  color: #EEEDFF;
+  color: #eeedff;
   text-align: center;
   font-family: Montserrat;
   font-size: 12px;
@@ -205,6 +204,19 @@ text-transform: capitalize;
   }
 }
 
+.brands-yellow-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+}
+
+
+
 .dragon-siege {
   background: linear-gradient(109deg, #2e3842 0%, #121b1e 49%);
   position: relative;
@@ -375,7 +387,7 @@ text-transform: capitalize;
   z-index: -1;
 }
 .puzzle-madness-card {
-  background: linear-gradient(109deg, #055F67 0%, #00293E 49%);
+  background: linear-gradient(109deg, #055f67 0%, #00293e 49%);
   position: relative;
 }
 
@@ -396,7 +408,7 @@ text-transform: capitalize;
   z-index: -1;
 }
 .critical-hit-card {
-  background: linear-gradient(109deg, #712B1F 0%, #3E0A04 49%);
+  background: linear-gradient(109deg, #712b1f 0%, #3e0a04 49%);
   position: relative;
 }
 
@@ -417,7 +429,7 @@ text-transform: capitalize;
   z-index: -1;
 }
 .explorer-hunt-card {
-  background: linear-gradient(109deg, #491961 0%, #2E0A40 49%);
+  background: linear-gradient(109deg, #491961 0%, #2e0a40 49%);
   position: relative;
 }
 
@@ -438,7 +450,7 @@ text-transform: capitalize;
   z-index: -1;
 }
 .great-collection-card {
-  background: linear-gradient(109deg, #71511F 0%, #503203 49%);
+  background: linear-gradient(109deg, #71511f 0%, #503203 49%);
   position: relative;
 }
 
@@ -517,6 +529,10 @@ text-transform: capitalize;
   @media screen and (max-width: 786px) {
     font-size: 12px;
   }
+}
+
+.get-land-link{
+  color: #d3d5d7 !important;
 }
 
 .beast-siege-btn {
@@ -645,9 +661,9 @@ text-transform: capitalize;
   color: #0a308d !important;
   background: #f1edff !important;
 }
-.critical-hit-button{
-  color: #420D07 !important;
-  background: #C77F72 !important;
+.critical-hit-button {
+  color: #420d07 !important;
+  background: #c77f72 !important;
 }
 
 .maze-day-button {
@@ -660,12 +676,12 @@ text-transform: capitalize;
   width: 100%;
   margin-bottom: 31px;
   object-fit: cover;
-@media screen and (max-width: 786px) {
-  height: 100px;
-}
+  @media screen and (max-width: 786px) {
+    height: 100px;
+  }
 }
 
-.new-events-circle-2{
+.new-events-circle-2 {
   width: 120px;
   height: 120px;
   border-radius: 50%;

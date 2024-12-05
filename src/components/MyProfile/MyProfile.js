@@ -32,7 +32,7 @@ import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
 import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
 import prime from "./assets/dailyProgress/prime.png";
 import puzzleMadnessBanner from "./assets/dailyProgress/puzzleMadness.webp";
-import wodDomainArrow from './assets/wodDomainArrow.svg'
+import wodDomainArrow from "./assets/wodDomainArrow.svg";
 import coldBiteBanner from "./assets/dailyProgress/coldBiteBanner.webp";
 import dragonRuinsBanner from "./assets/dailyProgress/dragonRuinsBanner.webp";
 import furyBeastBanner from "./assets/dailyProgress/furyBeastBanner.webp";
@@ -40,7 +40,7 @@ import scorpionKingBanner from "./assets/dailyProgress/scorpionKingBanner.webp";
 import stoneEyeBanner from "./assets/dailyProgress/stoneEyeBanner.webp";
 import wingStormBanner from "./assets/dailyProgress/wingStormBanner.webp";
 import bnbMazeBanner from "./assets/dailyProgress/bnbMazeBanner.webp";
-import domainNameIcon from './assets/domainNameIcon.png'
+import domainNameIcon from "./assets/domainNameIcon.png";
 import coldBiteArrow from "./assets/dailyProgress/arrows/coldBiteArrow.svg";
 import dragonRuinsArrow from "./assets/dailyProgress/arrows/dragonRuinsArrow.svg";
 import furyBeastArrow from "./assets/dailyProgress/arrows/furyBeastArrow.svg";
@@ -79,6 +79,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -180,13 +181,23 @@ const MyProfile = ({
   userMatScore,
   userRankSei,
   userSeiScore,
-  puzzleMadnessTimer
+  puzzleMadnessTimer,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
 
   const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (rankDropdown === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [rankDropdown]);
 
   const dailyEvents = [
     {
@@ -644,54 +655,64 @@ const MyProfile = ({
                       <span className="user-data-item-left">Collection</span>
                     </div>
                     <div className="d-flex">
-                      <span className="user-data-item-right"> {getFormattedNumber(
-                            greatCollectionData[0]?.statValue ?? 0
-                          )}</span>
-
+                      <span className="user-data-item-right">
+                        {" "}
+                        {getFormattedNumber(
+                          greatCollectionData[0]?.statValue ?? 0
+                        )}
+                      </span>
                     </div>
                   </div>
                 </NavLink>
                 {rankDropdown === true && (
-                  <RankSmallPopup
-                    onClose={() => {
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
                       setRankDropdown(false);
                     }}
-                    primeStars={primeStars}
-                    userRank={userRank}
-                    userRankSkale={userRankSkale}
-                    userBnbScore={userBnbScore}
-                    userSkaleScore={userSkaleScore}
-                    userRankCore={userRankCore}
-                    userCoreScore={userCoreScore}
-                    userRankViction={userRankViction}
-                    userVictionScore={userVictionScore}
-                    rankData={rankData}
-                    userDataStar={userDataStar}
-                    userRankManta={userRankManta}
-                    userMantaScore={userMantaScore}
-                    userRankMat={userRankMat}
-                    userMatScore={userMatScore}
-                    userRankSei={userRankSei}
-                    userSeiScore={userSeiScore}
-                    userRankBase={userRankBase}
-                    userBaseScore={userBaseScore}
-                    userRankTaiko={userRankTaiko}
-                    userTaikoScore={userTaikoScore}
-                    userRankName={userRankName}
-                    onRankPopupClick={() => {
-                      onOpenRankPopup();
-                      setRankDropdown(false);
-                    }}
-                    globalMonthly={
-                      userDataStar.position ? userDataStar.position + 1 : "---"
-                    }
-                    globalWeekly={
-                      userDataStarWeekly.position
-                        ? userDataStarWeekly.position + 1
-                        : "---"
-                    }
-                    isPremium={isPremium}
-                  />
+                  >
+                    <RankSmallPopup
+                      onClose={() => {
+                        setRankDropdown(false);
+                      }}
+                      primeStars={primeStars}
+                      userRank={userRank}
+                      userRankSkale={userRankSkale}
+                      userBnbScore={userBnbScore}
+                      userSkaleScore={userSkaleScore}
+                      userRankCore={userRankCore}
+                      userCoreScore={userCoreScore}
+                      userRankViction={userRankViction}
+                      userVictionScore={userVictionScore}
+                      rankData={rankData}
+                      userDataStar={userDataStar}
+                      userRankManta={userRankManta}
+                      userMantaScore={userMantaScore}
+                      userRankMat={userRankMat}
+                      userMatScore={userMatScore}
+                      userRankSei={userRankSei}
+                      userSeiScore={userSeiScore}
+                      userRankBase={userRankBase}
+                      userBaseScore={userBaseScore}
+                      userRankTaiko={userRankTaiko}
+                      userTaikoScore={userTaikoScore}
+                      userRankName={userRankName}
+                      onRankPopupClick={() => {
+                        onOpenRankPopup();
+                        setRankDropdown(false);
+                      }}
+                      globalMonthly={
+                        userDataStar.position
+                          ? userDataStar.position + 1
+                          : "---"
+                      }
+                      globalWeekly={
+                        userDataStarWeekly.position
+                          ? userDataStarWeekly.position + 1
+                          : "---"
+                      }
+                      isPremium={isPremium}
+                    />
+                  </OutsideClickHandler>
                 )}
               </div>
               <div className="sidebar-separator2 my-2"></div>
@@ -1175,12 +1196,23 @@ const MyProfile = ({
                   target="_blank"
                   className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
                 >
-                 <div className="d-flex flex-column justify-content-between h-100">
-                 <h6 className="special-rewards-title" style={{color: "#FFD9F1"}}>.WOD</h6>
-                 <span className="wod-domain-name-span">Claim Your Identity</span>
-                  <img src={wodDomainArrow} width={20} height={20} alt="" />
-                 </div>
-                 <img src={domainNameIcon} className="wod-domain-icon" alt="" />
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <h6
+                      className="special-rewards-title"
+                      style={{ color: "#FFD9F1" }}
+                    >
+                      .WOD
+                    </h6>
+                    <span className="wod-domain-name-span">
+                      Claim Your Identity
+                    </span>
+                    <img src={wodDomainArrow} width={20} height={20} alt="" />
+                  </div>
+                  <img
+                    src={domainNameIcon}
+                    className="wod-domain-icon"
+                    alt=""
+                  />
                 </a>
               </div>
               <div className="col-12 col-lg-6 mt-3">
@@ -1377,14 +1409,16 @@ const MyProfile = ({
                 >
                   <div className="d-flex flex-column justify-content-between h-100">
                     <div className="d-flex flex-column gap-2">
-                      <h6 className="leaderboards-title mb-0">PUZZLE MADNESS</h6>
+                      <h6 className="leaderboards-title mb-0">
+                        PUZZLE MADNESS
+                      </h6>
                       {/* <span
                         className={`utcEventContent w-75`}
                         style={{ color: "#CCE8F5" }}
                       >
                         Test your puzzle solving skills and boost score
                       </span> */}
-                          {beastSiegeStatus.puzzleMadness ? (
+                      {beastSiegeStatus.puzzleMadness ? (
                         //   <div className="d-flex flex-column gap-1">
                         //   <span className="beast-siege-ends-in">Available until:</span>
                         //   <Countdown renderer={renderer4} date={midnight} />
@@ -1392,14 +1426,20 @@ const MyProfile = ({
                         <>
                           <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
                             <div className="ready-circle-2 d-flex flex-column gap-1">
-                              <Countdown renderer={renderer4} date={puzzleMadnessTimer} />
+                              <Countdown
+                                renderer={renderer4}
+                                date={puzzleMadnessTimer}
+                              />
                             </div>
                             <span className="new-time-remaining">
                               Time Remaining
                             </span>
                           </div>
                           <div className="d-flex d-lg-none">
-                            <Countdown renderer={renderer4} date={puzzleMadnessTimer} />
+                            <Countdown
+                              renderer={renderer4}
+                              date={puzzleMadnessTimer}
+                            />
                           </div>
                         </>
                       ) : (
@@ -1412,54 +1452,48 @@ const MyProfile = ({
                           </span>
                         </>
                       )}
-                        <div
+                      <div
                         className={`d-flex flex-column gap-1 infotips-holder`}
                       >
-                        <div
-                              className="d-flex align-items-center gap-1"
-                            >
-                              <div className="yellow-dot"></div>
-                              <span
-                                className="beast-siege-timer"
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 400,
-                                  color: "#fff",
-                                }}
-                              >
-                                Up to 160,000 points
-                              </span>
-                            </div>
-                        <div
-                              className="d-flex align-items-center gap-1"
-                            >
-                              <div className="yellow-dot"></div>
-                              <span
-                                className="beast-siege-timer"
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 400,
-                                  color: "#fff",
-                                }}
-                              >
-                                x2-x8 multiplier
-                              </span>
-                            </div>
-                        <div
-                              className="d-flex align-items-center gap-1"
-                            >
-                              <div className="yellow-dot"></div>
-                              <span
-                                className="beast-siege-timer"
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 400,
-                                  color: "#fff",
-                                }}
-                              >
-                                Multiple activations
-                              </span>
-                            </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Up to 160,000 points
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            x2-x8 multiplier
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Multiple activations
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <img
@@ -1469,7 +1503,10 @@ const MyProfile = ({
                       alt=""
                     />
                   </div>
-                  <img src={puzzleMadnessBanner} className="eventbannerimg puzzle-eventbannerimg" />
+                  <img
+                    src={puzzleMadnessBanner}
+                    className="eventbannerimg puzzle-eventbannerimg"
+                  />
                 </NavLink>
               </div>
             </div>
@@ -1560,7 +1597,6 @@ const MyProfile = ({
         } */}
         </div>
       </div>
-      
     </>
   );
 };
