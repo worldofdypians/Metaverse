@@ -4450,7 +4450,7 @@ function Dashboard({
   const fetchGenesisPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "GenesisLandRewards",
+        StatisticName: "TheGreatCollection",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: version - 1,
@@ -4582,9 +4582,9 @@ function Dashboard({
 
   const fetchGenesisRecords = async () => {
     const data2 = {
-      StatisticName: "GenesisLandRewards",
+      StatisticName: "TheGreatCollection",
       StartPosition: 0,
-      MaxResultsCount: 10,
+      MaxResultsCount: 100,
     };
 
     const result2 = await axios
@@ -11072,7 +11072,7 @@ function Dashboard({
                   className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
                   style={{ fontSize: "24px" }}
                 >
-                  Genesis Rewards
+                  Great Collection
                 </h2>
 
                 <img
@@ -11096,7 +11096,8 @@ function Dashboard({
                 dailyplayerData={dailyplayerData}
                 weeklyplayerData={weeklyplayerData}
                 monthlyplayerData={monthlyplayerData}
-                genesisData={genesisData}
+                data={genesisData}
+                previousdata={previousgenesisData}
               />
             </div>
           </OutsideClickHandler>

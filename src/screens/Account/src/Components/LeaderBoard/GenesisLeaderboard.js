@@ -72,7 +72,7 @@ const renderer = ({ hours, minutes, seconds }) => {
   );
 };
 
-const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
+const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address,data,previousdata }) => {
   var settings = {
     dots: false,
     arrows: false,
@@ -792,7 +792,7 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                 <span className="reset-time-lb-value">Monthly (00:00 UTC)</span>
               </div>
             </div>
-            <div className="p-2">
+            <div className="p-2 pt-0 table-outer-margin">
               <table className="playerTable w-100">
                 <tbody>
                   <tr className="playerRow">
@@ -800,13 +800,13 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                     <th className="playerHeader font-montserrat">Player</th>
 
                     <th className="playerHeader text-center font-montserrat">
-                      Reward
+                      Collected
                     </th>
                   </tr>
-                  {genesisData &&
-                    genesisData.length > 0 &&
+                  {data &&
+                    data.length > 0 &&
                     inactiveBoard === false &&
-                    genesisData.map((item, index) => {
+                    data.map((item, index) => {
                       return (
                         <tr
                           key={index}
@@ -846,7 +846,7 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             )}
                           </td>
                           <td className="playerScore col-2 text-center font-montserrat">
-                            ${getFormattedNumber(item.statValue, 0)}
+                            {getFormattedNumber(item.statValue, 0)}
                           </td>
                           {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
@@ -871,10 +871,10 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                       );
                     })}
 
-                  {previousgenesisData &&
+                  {previousdata &&
                     inactiveBoard === true &&
-                    previousgenesisData.length > 0 &&
-                    previousgenesisData.map((item, index) => {
+                    previousdata.length > 0 &&
+                    previousdata.map((item, index) => {
                       return (
                         <tr
                           key={index}
@@ -914,7 +914,7 @@ const GenesisLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             )}
                           </td>
                           <td className="playerScore col-2 text-center font-montserrat">
-                            ${getFormattedNumber(item.statValue, 0)}
+                            {getFormattedNumber(item.statValue, 0)}
                           </td>
                           {/* <td
                             className={`playerReward text-center col-2 font-montserrat ${
