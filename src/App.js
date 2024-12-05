@@ -1524,21 +1524,9 @@ function App() {
     },
   ];
 
-  const searchWodDomain = async () => {
-    const spaceid_main_sc = new window.bscWeb3.eth.Contract(
-      window.SPACEID_ABI,
-      window.config.spaceId_address
-    );
-
-    const spaceid_searchSc = new window.bscWeb3.eth.Contract(
-      window.SPACEID_SEARCH_ABI,
-      window.config.spaceId_search_address
-    );
-  };
-
   const searchDomain = async (domain) => {
     if (domain && domain.length >= 3) {
-      if (window.ethereum && window.WALLET_TYPE !== "binance") {
+      if (window.ethereum) {
         // const provider = new ethers.providers.Web3Provider(window.ethereum);
         // const signer = provider.getSigner();
         // const register = new SIDRegister({ signer, chainId: 56 });
@@ -1563,7 +1551,6 @@ function App() {
         const hash = ethers.utils.keccak256(bytes);
 
         const id = ethers.BigNumber.from(hash);
-
         const isAvailable = await spaceid_searchSc.methods
           .available(id)
           .call()
@@ -1574,22 +1561,28 @@ function App() {
         const priceObject = spaceid_price.find(
           (item) => item[domain.length > 5 ? 5 : domain.length]
         );
-        console.log(spaceid_searchSc.methods.available(id).call());
-        setDomainPrice(priceObject[domain.length].wodPrice);
-      } else if (window.WALLET_TYPE === "binance" && library) {
-        const provider = library;
-        const signer = provider.getSigner();
-        const register = new SIDRegister({ signer, chainId: 56 });
-        const available = await register.getAvailable(domain);
-        const price = await register.getRentPrice(domain, 1);
-        const newPrice = new BigNumber(price._hex / 1e18).toFixed();
-        setDomainPrice(newPrice);
-        if (domain == "") {
-          setAvailableDomain("initial");
-        } else {
-          setAvailableDomain(available);
+
+        if (priceObject) {
+          setDomainPrice(
+            priceObject[domain.length > 5 ? 5 : domain.length].wodPrice
+          );
         }
       }
+
+      // else if (window.WALLET_TYPE === "binance" && library) {
+      //   const provider = library;
+      //   const signer = provider.getSigner();
+      //   const register = new SIDRegister({ signer, chainId: 56 });
+      //   const available = await register.getAvailable(domain);
+      //   const price = await register.getRentPrice(domain, 1);
+      //   const newPrice = new BigNumber(price._hex / 1e18).toFixed();
+      //   setDomainPrice(newPrice);
+      //   if (domain == "") {
+      //     setAvailableDomain("initial");
+      //   } else {
+      //     setAvailableDomain(available);
+      //   }
+      // }
     }
   };
 
@@ -1610,7 +1603,7 @@ function App() {
           years * window.config.spaceId_duration,
           window.config.spaceId_resolver_address,
           true,
-          []
+          ["0x"]
         )
         .send({ from: coinbase })
         .then(() => {
@@ -1690,25 +1683,34 @@ function App() {
         window.config.wod_token_address
       );
       const newPrice = new BigNumber(price * 1e18).toFixed();
-      await tokenSc.methods
-        .approve(window.config.spaceId_address, newPrice)
-        .send({ from: coinbase })
-        .then(() => {
-          setLoadingDomain(false);
-          setdomainStatus("deposit");
-          setTimeout(() => {
-            setLoadingDomain(true);
-            handlePurchaseDomain(label, years);
-          }, 1000);
-        })
-        .catch((e) => {
-          console.error(e);
-          setLoadingDomain(false);
-          setdomainStatus("error");
-          setTimeout(() => {
-            setdomainStatus("initial");
-          }, 4000);
-        });
+      const allowance = await tokenSc.methods
+        .allowance(coinbase, window.config.spaceId_address)
+        .call({ from: coinbase });
+      if (Number(allowance) >= Number(newPrice)) {
+        setdomainStatus("deposit");
+        setLoadingDomain(true);
+        handlePurchaseDomain(label, years);
+      } else {
+        await tokenSc.methods
+          .approve(window.config.spaceId_address, newPrice)
+          .send({ from: coinbase })
+          .then(() => {
+            setLoadingDomain(false);
+            setdomainStatus("deposit");
+            setTimeout(() => {
+              setLoadingDomain(true);
+              handlePurchaseDomain(label, years);
+            }, 1000);
+          })
+          .catch((e) => {
+            console.error(e);
+            setLoadingDomain(false);
+            setdomainStatus("error");
+            setTimeout(() => {
+              setdomainStatus("initial");
+            }, 4000);
+          });
+      }
     } else if (window.WALLET_TYPE === "binance" && library) {
       setLoadingDomain(true);
       setdomainStatus("loading-approve");
@@ -3504,7 +3506,6 @@ function App() {
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
-    searchWodDomain();
   }, []);
 
   useEffect(() => {
@@ -4785,6 +4786,7 @@ function App() {
       if (name && name !== null) {
         setDomainName(name);
         const metadata = await web3Name.getMetadata({ name: name });
+        console.log(metadata);
         setDomainMetaData(metadata);
       } else {
         setDomainMetaData(null);
