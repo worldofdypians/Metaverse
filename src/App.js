@@ -498,7 +498,7 @@ function App() {
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
-  let seiLastDay = new Date("2025-04-04T14:00:00.000+02:00");
+  let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
   const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
@@ -1055,6 +1055,8 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
               seiEvent[0].reward.earn.multiplier;
@@ -1088,6 +1090,8 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
+            userActiveEvents = userActiveEvents + 1;
+
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
               mantaEvent[0].reward.earn.multiplier;
@@ -2159,7 +2163,10 @@ function App() {
         setMantaMintAllowed(NFTS.length > 0 ? 0 : 1);
         setMyMantaNFTsCreated(NFTS);
       });
-
+      getMyNFTS(coinbase, "sei").then((NFTS) => {
+        setTotalseiNft(NFTS.length);
+        setMyseiNfts(NFTS);  
+      });
       //setmyBaseNFTs
     } else {
       setMyNFTSCaws([]);
@@ -2525,6 +2532,78 @@ function App() {
               }, 5000);
               getMyNFTS(coinbase, "mat").then((NFTS) => {
                 setMyMatNfts(NFTS);
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+              setmintloading("error");
+              settextColor("#d87b7b");
+
+              if (typeof e == "object" && e.message) {
+                setmintStatus(e.message);
+              } else {
+                setmintStatus(
+                  "Oops, something went wrong! Refresh the page and try again!"
+                );
+              }
+              setTimeout(() => {
+                setmintloading("initial");
+                setmintStatus("");
+              }, 5000);
+            });
+        } else {
+          // setShowWhitelistLoadingModal(true);
+        }
+      } catch (e) {
+        setmintloading("error");
+
+        if (typeof e == "object" && e.message) {
+          setmintStatus(e.message);
+        } else {
+          setmintStatus(
+            "Oops, something went wrong! Refresh the page and try again!"
+          );
+        }
+        window.alertify.error(
+          typeof e == "object" && e.message
+            ? e.message
+            : typeof e == "string"
+            ? String(e)
+            : "Oops, something went wrong! Refresh the page and try again!"
+        );
+        setTimeout(() => {
+          setmintloading("initial");
+          setmintStatus("");
+        }, 5000);
+      }
+    }
+  };
+
+  
+  const handleSeiNftMint = async () => {
+    if (isConnected && coinbase) {
+      try {
+        //Check Whitelist
+        let whitelist = 1;
+console.log('mint sei')
+        if (parseInt(whitelist) === 1) {
+          setmintloading("mint");
+          setmintStatus("Minting in progress...");
+          settextColor("rgb(123, 216, 176)");
+          // console.log(data,finalCaws, totalCawsDiscount);
+          let tokenId = await window.sei_nft
+            .mintSeiNFT()
+            .then(() => {
+              setmintStatus("Success! Your Nft was minted successfully!");
+              setmintloading("success");
+              settextColor("rgb(123, 216, 176)");
+              setTimeout(() => {
+                setmintStatus("");
+                setmintloading("initial");
+              }, 5000);
+              getMyNFTS(coinbase, "sei").then((NFTS) => {
+                setMyseiNfts(NFTS);
+                setTotalseiNft(NFTS.length)
               });
             })
             .catch((e) => {
@@ -3679,41 +3758,46 @@ function App() {
         eventDate: "Dec 04, 2024",
       },
     }, 
+    
     {
-      title: "VICTION",
-      logo: victionLogo,
+      title: "SEI",
+      logo: seiLogo,
       eventStatus: "Live",
-      totalRewards: "$20,000 in VIC Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Find",
-      eventDate: "Nov 29, 2024",
+      rewardType: "SEI",
+      rewardAmount: "$20,000",
+      location: [-0.06787060104021504, 0.08728981018066406],
+      image: "seiBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-
       marker: markers.treasureMarker,
-      backgroundImage: victionBg,
-      image: "victionBanner.png",
-      userEarnUsd: victionEarnUsd,
-      userEarnCrypto: victionEarnToken,
-      userEarnPoints: victionPoints,
+      totalRewards: "$20,000 in SEI Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 05, 2024",
+      backgroundImage: seiBg,
+      userEarnUsd: seiEarnUsd,
+      userEarnCrypto: seiEarnToken,
+      userEarnPoints: seiEarnPoints,
       popupInfo: {
-        title: "VICTION",
-        chain: "VICTION Chain",
-        linkState: "viction",
-        rewards: "VIC",
+        title: "SEI",
+        chain: "Sei Network",
+        linkState: "sei",
+        rewards: "SEI",
         status: "Live",
-        id: "event14",
-        eventType: "Explore & Find",
-        totalRewards: "$20,000 in VIC Rewards",
-        eventDuration: victionLastDay,
+        id: "event13",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in SEI Rewards",
+        eventDuration: seiLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Nov 29, 2024",
+        eventDate: "Dec 05, 2024",
       },
     },
+
+
   
     {
       title: "Easy2Stake",
@@ -3838,48 +3922,45 @@ function App() {
       },
     },
 
-
     {
-      title: "SEI",
-      logo: seiLogo,
-      eventStatus: "Coming Soon",
-      rewardType: "SEI",
-      rewardAmount: "$20,000",
-      location: [-0.06787060104021504, 0.08728981018066406],
-      image: "seiBanner.png",
+      title: "VICTION",
+      logo: victionLogo,
+      eventStatus: "Live",
+      totalRewards: "$20,000 in VIC Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Find",
+      eventDate: "Nov 29, 2024",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
+
       marker: markers.treasureMarker,
-      totalRewards: "$20,000 in SEI Rewards",
-      myEarnings: 0.0,
-      eventType: "Explore & Mine",
-      eventDate: "Dec 05, 2024",
-      backgroundImage: seiBg,
-      userEarnUsd: seiEarnUsd,
-      userEarnCrypto: seiEarnToken,
-      userEarnPoints: seiEarnPoints,
+      backgroundImage: victionBg,
+      image: "victionBanner.png",
+      userEarnUsd: victionEarnUsd,
+      userEarnCrypto: victionEarnToken,
+      userEarnPoints: victionPoints,
       popupInfo: {
-        title: "SEI",
-        chain: "Sei Network",
-        linkState: "sei",
-        rewards: "SEI",
-        status: "Coming Soon",
-        id: "event13",
-        eventType: "Explore & Mine",
-        totalRewards: "$20,000 in SEI Rewards",
-        eventDuration: seiLastDay,
+        title: "VICTION",
+        chain: "VICTION Chain",
+        linkState: "viction",
+        rewards: "VIC",
+        status: "Live",
+        id: "event14",
+        eventType: "Explore & Find",
+        totalRewards: "$20,000 in VIC Rewards",
+        eventDuration: victionLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Dec 05, 2024",
+        eventDate: "Nov 29, 2024",
       },
     },
      {
       title: "Manta",
       logo: mantaLogo,
-      eventStatus: "Coming Soon",
+      eventStatus: "Live",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
       location: [-0.033817289296309505, 0.09595870971679689],
@@ -3901,11 +3982,11 @@ function App() {
         chain: "Manta",
         linkState: "manta",
         rewards: "MANTA",
-        status: "Coming Soon",
+        status: "Live",
         id: "event21",
         eventType: "Explore & Mine",
         totalRewards: "$20,000 in MANTA Rewards",
-        eventDuration: mantaLastDay,
+        eventDuration: seiLastDay,
         minRewards: "0.5",
         maxRewards: "20",
         minPoints: "5,000",
@@ -6102,6 +6183,8 @@ function App() {
                 }}
                 totalMatNfts={myMatNFTs.length}
                 matMintAllowed={1 - myMatNFTs.length}
+                seiMintAllowed={1 - myseiNfts.length}
+
                 myMatNFTs={myMatNFTs}
                 myMatNFTsCreated={myMatNFTs}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6666,46 +6749,46 @@ function App() {
                 />
               }
             /> */}
-          {/* <Route
+          <Route
               exact
               path="/shop/mint/sei"
               element={
                 <MarketMint
-                  coinbase={coinbase}
-                  showWalletConnect={() => {
-                    setwalletModal(true);
-                  }}
-                  cawsArray={allCawsForTimepieceMint}
-                  mintloading={mintloading}
-                  isConnected={isConnected}
-                  chainId={networkId}
-                  handleMint={handleTimepieceMint}
-                  mintStatus={mintStatus}
-                  textColor={textColor}
-                  calculateCaws={calculateCaws}
-                  totalCreated={totalTimepieceCreated}
-                  timepieceMetadata={timepieceMetadata}
-                  myConfluxNFTsCreated={myConfluxNFTsCreated}
-                  mybaseNFTsCreated={mybaseNFTsCreated}
-                  myskaleNFTsCreated={myskaleNFTsCreated}
-                  handleConfluxMint={handleConfluxNftMint}
-                  handleBaseNftMint={handleBaseNftMint}
-                  confluxMintAllowed={confluxMintAllowed}
-                  baseMintAllowed={baseMintAllowed}
-                  skaleMintAllowed={skaleMintAllowed}
-                  totalCoreNft={totalCoreNft}
-                  myCoreNfts={myCoreNfts}
-                  totalMultiversNft={totalMultiversNft}
-                  totalImmutableNft={totalImmutableNft}
-                  myImmutableNfts={myImmutableNfts}
-                  myMultiversNfts={myMultiversNfts}
-                  totalseiNft={totalseiNft}
-                  myseiNfts={myseiNfts}
-                  totalVictionNft={totalVictionNft}
-                  myVictionNfts={myVictionNfts}
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                totalMatNfts={myMatNFTs.length}
+                matMintAllowed={1 - myMatNFTs.length}
+                seiMintAllowed={1 - myseiNfts.length}
+
+                myMatNFTs={myMatNFTs}
+                myMatNFTsCreated={myMatNFTs}
+                handleSwitchNetwork={handleSwitchNetwork}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                binanceWallet={coinbase}
+                totalMantaNft={totalMantaNft}
+                mantaMintAllowed={mantaMintAllowed}
+                myMantaNfts={myMantaNfts}
+                myMantaNFTsCreated={myMantaNFTsCreated}
+                cawsArray={allCawsForTimepieceMint}
+                mintloading={mintloading}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleMint={handleSeiNftMint}
+                mintStatus={mintStatus}
+                textColor={textColor}
+                calculateCaws={calculateCaws}
+                totalCreated={totalTimepieceCreated}
+                timepieceMetadata={timepieceMetadata}
+                mybaseNFTsCreated={mybaseNFTsCreated}
+                handleBaseNftMint={handleBaseNftMint}
+                totalseiNft={totalseiNft}
+                myseiNfts={myseiNfts}
                 />
               }
-            /> */}
+            />
           <Route
             exact
             path="/map"

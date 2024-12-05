@@ -3411,7 +3411,7 @@ function Dashboard({
   const fetchPreviousWinnersMat = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "LeaderboardMatChainDaily",
+        StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
@@ -10656,7 +10656,12 @@ function Dashboard({
                 Number(midleEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(skaleEarnUsd) +
-                Number(coingeckoEarnUsd)
+                Number(coingeckoEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(mantaEarnUsd)+
+                Number(matEarnUsd)+
+                Number(bnbEarnUsd)+
+                Number(coreEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
