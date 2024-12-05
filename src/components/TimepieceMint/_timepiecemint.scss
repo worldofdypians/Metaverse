@@ -427,11 +427,11 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px !important;
 
-  // @media screen and (max-width: 786px) {
-  //   background-image: none;
-  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-  // }
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
 }
 
 .market-mint-skale {
@@ -458,7 +458,6 @@
   // }
 }
 
-
 .market-mint-viction {
   background-image: url("./assets/victionMarketMint.webp");
   background-size: 100% 100%;
@@ -482,6 +481,18 @@
   // }
 }
 
+.market-mint-sei {
+  background-image: url("./assets/seiMintHero.webp");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px !important;
+
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
+}
+
 .market-mint-opbnb {
   background-image: url("./assets/opbnbMarketMint.webp");
   background-size: 100% 100%;
@@ -493,7 +504,6 @@
   //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   // }
 }
-
 
 .market-mint-immutable {
   background-image: url("./assets/immutableMarketBanner.png");
@@ -519,28 +529,28 @@
   // }
 }
 
-.market-stake-bg{
+.market-stake-bg {
   background-image: url("./assets/cawsStakeBanner.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px !important;
 
-  // @media screen and (max-width: 786px) {
-  //   background-image: none;
-  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-  // }
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
 }
 
-.market-land-stake-bg{
+.market-land-stake-bg {
   background-image: url("./assets/landStakeBanner.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px !important;
 
-  // @media screen and (max-width: 786px) {
-  //   background-image: none;
-  //   background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-  // }
+  @media screen and (max-width: 786px) {
+    height: auto !important;
+  }
 }
 .conflux-mint-bg {
   background-image: url("./assets/confluxBackground.png");
@@ -691,7 +701,6 @@
   }
 }
 
-
 .base-mint-bg {
   background-image: url("./assets/baseBackground.png");
   background-size: cover;
@@ -704,7 +713,6 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
-
 
 .skale-mint-bg {
   background-image: url("./assets/skaleBackground.png");
@@ -780,7 +788,6 @@
   }
 }
 
-
 .matchain-mint-bg {
   background-image: url("./assets/matchainBg.webp");
   background-size: cover;
@@ -841,9 +848,6 @@
   }
 }
 
-
- 
-
 .cookie3-mint-bg {
   background-image: url("./assets/cookieBackground.webp");
   background-size: cover;
@@ -855,7 +859,6 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
-
 
 .viction-mint-bg {
   background-image: url("./assets/victionBackground.webp");
@@ -892,8 +895,6 @@
     background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
   }
 }
-
-
 
 // .mint-wrappernew::before {
 //   content: "";
@@ -1004,7 +1005,6 @@
   // top: 80%;
 }
 
-
 .genesis-desc-game {
   width: 180px;
   background: linear-gradient(180deg, #5b08d0 -17.02%, #7f2df7 100%);
@@ -1061,8 +1061,6 @@
   //   display: flex;
   //   white-space: normal;
   // }
-
-
 }
 
 .genesis-badge {
@@ -1109,7 +1107,6 @@
   // top: 80px;
 }
 
-
 .genesis-wrapper-game {
   --mask: linear-gradient(-150deg, #0000 25px, #000 0);
   -webkit-mask: var(--mask);
@@ -1123,14 +1120,13 @@
   box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.32);
   border-radius: 6px;
   width: 180px;
-  height: 200px;  
+  height: 200px;
 }
 
 .genesis-wrapper-game:nth-child(even) {
   position: relative;
   // top: 80px;
 }
-
 
 .land-tiers {
   font-weight: 800;
@@ -1823,7 +1819,6 @@
   }
 }
 
-
 .new-benefits-grid2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1851,7 +1846,7 @@
   position: relative;
   top: -10px;
   @media screen and (max-width: 576px) {
-  display: none;
+    display: none;
   }
 }
 
@@ -1919,7 +1914,8 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 786px) {
-  .genesis-wrapper:nth-child(4), .genesis-wrapper-game:nth-child(4) {
+  .genesis-wrapper:nth-child(4),
+  .genesis-wrapper-game:nth-child(4) {
     padding-bottom: 100px !important;
   }
 
@@ -2075,9 +2071,8 @@ input::-webkit-inner-spin-button {
   line-height: normal;
 }
 
-.daily-rewards-popup{
+.daily-rewards-popup {
   background: rgba(8, 11, 42, 0.8) !important;
-
 }
 
 .mint-popup {
@@ -2177,7 +2172,7 @@ input::-webkit-inner-spin-button {
 
 .cmc-btn {
   border-radius: 20px;
-  background: linear-gradient(90deg, #755FEF -13.56%, #C43FB5 129.3%);
+  background: linear-gradient(90deg, #755fef -13.56%, #c43fb5 129.3%);
   text-decoration: none;
   color: #fff;
   font-size: 12px;
@@ -2226,7 +2221,6 @@ input::-webkit-inner-spin-button {
   animation: pulseDot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
 }
 
-
 @keyframes shake {
   0% {
     transform: translateX(0);
@@ -2246,21 +2240,20 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.shake-img{
+.shake-img {
   position: absolute;
   width: 200px;
   height: 200px;
   left: -50px;
   animation: shake 5s ease-in-out infinite;
-
 }
 
-.rewards-title{
-  color: #18FFFF;
-text-align: right;
-font-size: 30px;
-font-style: normal;
-font-style: italic;
-font-weight: 900;
-text-transform: uppercase;
+.rewards-title {
+  color: #18ffff;
+  text-align: right;
+  font-size: 30px;
+  font-style: normal;
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
 }

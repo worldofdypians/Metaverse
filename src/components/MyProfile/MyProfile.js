@@ -32,7 +32,7 @@ import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
 import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
 import prime from "./assets/dailyProgress/prime.png";
 import puzzleMadnessBanner from "./assets/dailyProgress/puzzleMadness.webp";
-
+import wodDomainArrow from './assets/wodDomainArrow.svg'
 import coldBiteBanner from "./assets/dailyProgress/coldBiteBanner.webp";
 import dragonRuinsBanner from "./assets/dailyProgress/dragonRuinsBanner.webp";
 import furyBeastBanner from "./assets/dailyProgress/furyBeastBanner.webp";
@@ -40,7 +40,7 @@ import scorpionKingBanner from "./assets/dailyProgress/scorpionKingBanner.webp";
 import stoneEyeBanner from "./assets/dailyProgress/stoneEyeBanner.webp";
 import wingStormBanner from "./assets/dailyProgress/wingStormBanner.webp";
 import bnbMazeBanner from "./assets/dailyProgress/bnbMazeBanner.webp";
-
+import domainNameIcon from './assets/domainNameIcon.png'
 import coldBiteArrow from "./assets/dailyProgress/arrows/coldBiteArrow.svg";
 import dragonRuinsArrow from "./assets/dailyProgress/arrows/dragonRuinsArrow.svg";
 import furyBeastArrow from "./assets/dailyProgress/arrows/furyBeastArrow.svg";
@@ -862,11 +862,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 11
+                        {userActiveEvents === 13
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/11"}
+                          : userActiveEvents + "/13"}
                       </span>
                     </div>
                     {/* <img
@@ -1088,7 +1088,6 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-
               <div className="col-12 col-lg-6 mt-3">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
@@ -1154,9 +1153,9 @@ const MyProfile = ({
                   <img src={cyanArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-3 mt-3">
                 <div
-                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3"
+                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between p-3 h-100"
                   onClick={openSpecialRewards}
                 >
                   <h6 className="special-rewards-title">Special Rewards</h6>
@@ -1169,7 +1168,21 @@ const MyProfile = ({
                   <img src={redArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-
+              <div className="col-12 col-lg-3 mt-3">
+                <a
+                  href="https://wod.space.id"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
+                >
+                 <div className="d-flex flex-column justify-content-between h-100">
+                 <h6 className="special-rewards-title" style={{color: "#FFD9F1"}}>.WOD</h6>
+                 <span className="wod-domain-name-span">Claim Your Identity</span>
+                  <img src={wodDomainArrow} width={20} height={20} alt="" />
+                 </div>
+                 <img src={domainNameIcon} className="wod-domain-icon" alt="" />
+                </a>
+              </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/account/prime">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
@@ -1215,7 +1228,6 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-
               <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -1259,7 +1271,6 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
                   to={dailyEvents[utcDayIndex].link}
@@ -1549,6 +1560,7 @@ const MyProfile = ({
         } */}
         </div>
       </div>
+      
     </>
   );
 };

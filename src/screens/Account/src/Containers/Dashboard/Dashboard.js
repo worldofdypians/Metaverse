@@ -10656,7 +10656,12 @@ function Dashboard({
                 Number(midleEarnUsd) +
                 Number(taikoEarnUsd) +
                 Number(skaleEarnUsd) +
-                Number(coingeckoEarnUsd)
+                Number(coingeckoEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(mantaEarnUsd)+
+                Number(matEarnUsd)+
+                Number(bnbEarnUsd)+
+                Number(coreEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
