@@ -773,9 +773,7 @@ const MyProfile = ({
                     <img src={dailyBonusStd} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd === 0
-                          ? "Ready"
-                          : allClaimedChestsstd < 90
+                        {allClaimedChestsstd < 90
                           ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
@@ -795,9 +793,7 @@ const MyProfile = ({
                     <img src={dailyBonusPrime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium === 0
-                          ? "Ready"
-                          : allClaimedChestsPremium < 90
+                        {allClaimedChestsPremium < 90
                           ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
