@@ -23,7 +23,7 @@ const Governance = ({
   const [govStatus, setgovStatus] = useState("initial");
   const [allProposals, setallProposals] = useState([]);
   const [totalProposals, settotalProposals] = useState(0);
-
+  const today = new Date();
 
   const getProposalInfo = async () => {
     const governanceSc = new window.bscWeb3.eth.Contract(
@@ -76,12 +76,9 @@ const Governance = ({
     let newProposals = [];
     let newProposals2 = [];
 
- 
-
     for (let i = total_proposals; i >= 1; i--) {
       const checkproposal = await getProposal(i);
       if (checkproposal != undefined) {
-        
         newProposals.push(checkproposal);
       }
     }
@@ -90,6 +87,9 @@ const Governance = ({
 
     const newnewProposalsFinal = newProposals.map((item) => {
       let action = item._proposalAction;
+      const proposalStartTime =
+        item._proposalStartTime * 1e3 +
+        window.config.vote_duration_in_seconds * 1e3;
 
       let actionText =
         {
@@ -100,9 +100,12 @@ const Governance = ({
           4: "Feature Request",
           5: "General",
         }[action] || "";
-    
 
-      return { ...item, subject: actionText };
+      return {
+        ...item,
+        subject: actionText,
+        expired: today.getTime() > Number(proposalStartTime) ? true : false,
+      };
     });
 
     // newProposals = newProposals.map(p => {

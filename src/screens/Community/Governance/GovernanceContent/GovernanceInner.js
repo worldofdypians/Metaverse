@@ -15,8 +15,7 @@ const GovernanceInner = ({
   handleSwitchNetwork,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
-  refreshBalance
-
+  refreshBalance,
 }) => {
   const { proposalId } = useParams();
   const [currentProposal, setCurrentProposal] = useState([]);
@@ -29,6 +28,7 @@ const GovernanceInner = ({
   const [withdrawAmount, setwithdrawAmount] = useState(0);
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
+  const [selectOption, setselectOption] = useState("");
 
   const { BigNumber, reward_token_wod } = window;
 
@@ -60,7 +60,6 @@ const GovernanceInner = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
 
   const getProposal = async (_proposalId) => {
     if (_proposalId) {
@@ -96,7 +95,6 @@ const GovernanceInner = ({
       setmyDepositedTokens(balanceFormatted);
     }
   };
-
 
   const handleApprove = (e) => {
     // e.preventDefault();
@@ -147,50 +145,51 @@ const GovernanceInner = ({
       });
   };
 
-  const handleRemoveVote = async(proposalId) => {
+  const handleRemoveVote = async (proposalId) => {
     // e.preventDefault();
-    setwithdrawLoading(true)
+    setwithdrawLoading(true);
     window.web3 = new Web3(window.ethereum);
     const governanceSc = new window.web3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
-      let amount = withdrawAmount;
-      amount = new BigNumber(amount).times(1e18).toFixed(0);
-      await governanceSc.methods
-        .removeVotes(proposalId, amount)
-        .then(() => {
+    let amount = withdrawAmount;
+    amount = new BigNumber(amount).times(1e18).toFixed(0);
+    await governanceSc.methods
+      .removeVotes(proposalId, amount)
+      .then(() => {
+        setwithdrawLoading(false);
+        setwithdrawStatus("success");
+      })
+      .catch((e) => {
+        setwithdrawLoading(false);
+        setwithdrawStatus("error");
+        window.alertify.error(e?.message);
+        setTimeout(() => {
           setwithdrawLoading(false);
-          setwithdrawStatus("success");
-        })
-        .catch((e) => {
-          setwithdrawLoading(false);
-          setwithdrawStatus("error");
-          window.alertify.error(e?.message )
-          setTimeout(() => {
-            setwithdrawLoading(false);
-            setwithdrawStatus("initial");
-            setwithdrawAmount(0)
-          }, 8000);
-        });
-    
+          setwithdrawStatus("initial");
+          setwithdrawAmount(0);
+        }, 8000);
+      });
   };
 
-  const handleClaim = async() => {
+  const handleClaim = async () => {
     window.web3 = new Web3(window.ethereum);
     const governanceSc = new window.web3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
- 
-      await governanceSc.methods.withdrawAllTokens().send({from: coinbase}).then(()=>{
-         refreshBalance();
-      }).catch((e)=>{console.error(e)});
-     
- 
+
+    await governanceSc.methods
+      .withdrawAllTokens()
+      .send({ from: coinbase })
+      .then(() => {
+        refreshBalance();
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
-
-
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -318,7 +317,8 @@ const GovernanceInner = ({
                     </div>
                     {isConnected ? (
                       myDepositedTokens !== undefined &&
-                      myDepositedTokens > 0 && chainId === 56? (
+                      myDepositedTokens > 0 &&
+                      chainId === 56 ? (
                         <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                           <div className="d-flex flex-column">
                             <span className="my-votes-amount">
@@ -327,23 +327,63 @@ const GovernanceInner = ({
                             <span className="my-votes-desc">My Votes</span>
                           </div>
                           <div className="d-flex align-items-center gap-2">
-                            <button className="btn-withdraw-gov px-2 px-lg-5 py-2">
-                              Withdraw
+                            <button
+                              className="btn-withdraw-gov px-2 px-lg-5 py-2"
+                              onClick={handleRemoveVote}
+                            >
+                              {withdrawLoading ? (
+                                <div
+                                  class="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span class="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : withdrawStatus === "initial" ? (
+                                <>Withdraw</>
+                              ) : withdrawStatus === "success" ? (
+                                <>Success</>
+                              ) : (
+                                <>
+                                  {/* <img src={failMark} alt="" /> */}
+                                  Failed
+                                </>
+                              )}
                             </button>
                           </div>
                         </div>
                       ) : myDepositedTokens !== undefined &&
-                        Number(myDepositedTokens) === 0 && chainId === 56? (
+                        Number(myDepositedTokens) === 0 &&
+                        chainId === 56 ? (
                         <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                           <span className="single-proposal-description-green">
                             Vote
                           </span>
                           <div className="d-flex align-items-center gap-2">
-                            <button className="getpremium-btn px-2 px-lg-5 py-2">
-                              Option 1
+                            <button
+                              className={` ${
+                                selectOption === "0"
+                                  ? "getpremium-active-btn"
+                                  : "getpremium-btn"
+                              }  px-2 px-lg-5 py-2`}
+                              onClick={() => {
+                                setselectOption("0");
+                              }}
+                            >
+                              Yes
                             </button>
-                            <button className="getpremium-btn px-2 px-lg-5 py-2">
-                              Option 2
+                            <button
+                              className={` ${
+                                selectOption === "1"
+                                  ? "getpremium-active-btn"
+                                  : "getpremium-btn"
+                              }  px-2 px-lg-5 py-2`}
+                              onClick={() => {
+                                setselectOption("1");
+                              }}
+                            >
+                              No
                             </button>
                           </div>
                         </div>
