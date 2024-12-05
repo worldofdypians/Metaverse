@@ -971,7 +971,9 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(bnbEvent[0].reward.earn.totalPoints > 0) {
+               userActiveEvents = userActiveEvents + 1;
+            }
 
             const userEarnedusd =
               bnbEvent[0].reward.earn.total /
@@ -984,7 +986,10 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(immutableEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
+          
 
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
@@ -997,8 +1002,9 @@ function App() {
           }
 
           if (easy2stakeEvent && easy2stakeEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
-
+            if(easy2stakeEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
             const userEarnedusd =
               easy2stakeEvent[0].reward.earn.total /
               easy2stakeEvent[0].reward.earn.multiplier;
@@ -1010,7 +1016,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(taikoEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -1022,7 +1030,10 @@ function App() {
           }
 
           if (midleEvent && midleEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(midleEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
+
 
             const userEarnedusd =
               midleEvent[0].reward.earn.total /
@@ -1045,7 +1056,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(coreEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1057,7 +1070,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(seiEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1068,7 +1083,9 @@ function App() {
             setSeiEarnToken(userEarnedusd / seiPrice);
           }
           if (matEvent && matEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(matEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -1080,7 +1097,9 @@ function App() {
           }
 
           if (victionEvent && victionEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(victionEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
@@ -1092,7 +1111,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(mantaEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -1122,7 +1143,9 @@ function App() {
           }
 
           if (coingeckoEvent && coingeckoEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(coingeckoEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
@@ -1147,7 +1170,9 @@ function App() {
             }
           }
           if (skaleEvent && skaleEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(skaleEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const points = skaleEvent[0].reward.earn.totalPoints;
             setSkalePoints(points);
@@ -1204,7 +1229,9 @@ function App() {
           }
 
           if (baseEvent && baseEvent[0]) {
-            userActiveEvents = userActiveEvents + 1;
+            if(baseEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);

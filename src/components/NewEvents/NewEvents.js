@@ -117,7 +117,13 @@ import {
   wing_storm_address,
 } from "./abi";
 import Web3 from "web3";
-import { CircularProgress } from "@mui/material";
+import {
+  CircularProgress,
+  ClickAwayListener,
+  styled,
+  Tooltip,
+  tooltipClasses,
+} from "@mui/material";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -126,6 +132,21 @@ const renderer = ({ days, hours, minutes }) => {
     </span>
   );
 };
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    padding: "12px",
+    maxWidth: "250px !important",
+    minWidth: "250px !important",
+    fontSize: theme.typography.pxToRem(12),
+    display: "flex",
+    justifyContent: "center",
+  },
+}));
 
 const NewEvents = ({
   events,
@@ -208,10 +229,21 @@ const NewEvents = ({
   const [cyclopsDepositState, setCyclopsDepositState] = useState("initial");
   const [cyclopsShowApproval, setCyclopsShowApproval] = useState(true);
   const [hasBoughtCyclops, setHasBoughtCyclops] = useState(false);
+  const [hasLand, setHasLand] = useState(false);
   const [page, setPage] = useState(1);
   const sliderRef = useRef();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
+
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipToggle = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
 
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
@@ -1593,25 +1625,30 @@ const NewEvents = ({
   };
 
   const checkWalletAddr = () => {
-    if (coinbase!==undefined && wallet!==undefined) {
+    if (coinbase !== undefined && wallet !== undefined) {
       if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId !== 56) {
         setCheckWallet(false);
-        setStatus("Please make sure you're on BNB Chain in order to activate the event.")
-      } else if (coinbase?.toLowerCase() !== wallet?.toLowerCase() && chainId === 56) {
+        setStatus(
+          "Please make sure you're on BNB Chain in order to activate the event."
+        );
+      } else if (
+        coinbase?.toLowerCase() !== wallet?.toLowerCase() &&
+        chainId === 56
+      ) {
         setCheckWallet(false);
-        setStatus("Please make sure you're using the wallet address associated to your game profile.")
+        setStatus(
+          "Please make sure you're using the wallet address associated to your game profile."
+        );
       } else if (
         coinbase?.toLowerCase() === wallet?.toLowerCase() &&
         chainId === 56
       ) {
         setCheckWallet(true);
-        setStatus("")
-
+        setStatus("");
       }
     } else if (wallet) {
       setCheckWallet(true);
-      setStatus("Please connect your wallet in order to activate the event")
-
+      setStatus("Please connect your wallet in order to activate the event");
     } else setCheckWallet(false);
   };
 
@@ -1679,7 +1716,7 @@ const NewEvents = ({
       setScorpionShowApproval(false);
       setScorpionBundleState("initial");
     }
-  }, [wallet,coinbase, chainId, email]);
+  }, [wallet, coinbase, chainId, email]);
 
   const eventinfos = [
     {
@@ -2157,7 +2194,6 @@ const NewEvents = ({
     // }
   }, [selectedEvent, sliderRef?.current, eventCardCount]);
 
-
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -2185,91 +2221,91 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                    <div className="d-flex flex-column">
-                    <NavLink
-                        to={
-                          eventinfos.find((item) => {
-                            return item.day === utcDayIndex;
-                          }) !== undefined
-                            ? eventinfos.find((item) => {
-                                return item.day === utcDayIndex;
-                              }).link
-                            : eventinfos[0].link
-                        }
-                      >
-                        <div
-                          className={`${
-                            eventId !== "treasure-hunt" &&
-                            eventId !== "maze-day" &&
-                            eventId !== "great-collection" &&
-                            eventId !== "explorer-hunt" &&
-                            eventId !== "critical-hit" &&
-                            eventId !== "puzzle-madness"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge(
-                              eventinfos.find((item) => {
-                                return item.day === utcDayIndex;
-                              }) !== undefined
-                                ? eventinfos.find((item) => {
-                                    return item.day === utcDayIndex;
-                                  }).challange
-                                : eventinfos[0].challange
-                            );
-                            setActiveEvent(
-                              eventinfos.find((item) => {
-                                return item.day === utcDayIndex;
-                              }) ?? eventinfos[0]
-                            );
-                          }}
+                      <div className="d-flex flex-column">
+                        <NavLink
+                          to={
+                            eventinfos.find((item) => {
+                              return item.day === utcDayIndex;
+                            }) !== undefined
+                              ? eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }).link
+                              : eventinfos[0].link
+                          }
                         >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">Legendary Beast Siege</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
-                    </div>
-                          <div className="d-flex flex-column">
-                          <NavLink to="/account/challenges/maze-day">
-                        <div
-                          className={`${
-                            challenge === "maze-day" ||
-                            selectedEvent === "maze-day"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("maze-day");
-                            setActiveEvent(mazeGardenInfo);
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">BNB Chain Maze Day</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
+                          <div
+                            className={`${
+                              eventId !== "treasure-hunt" &&
+                              eventId !== "maze-day" &&
+                              eventId !== "great-collection" &&
+                              eventId !== "explorer-hunt" &&
+                              eventId !== "critical-hit" &&
+                              eventId !== "puzzle-madness"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge(
+                                eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }) !== undefined
+                                  ? eventinfos.find((item) => {
+                                      return item.day === utcDayIndex;
+                                    }).challange
+                                  : eventinfos[0].challange
+                              );
+                              setActiveEvent(
+                                eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }) ?? eventinfos[0]
+                              );
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">Legendary Beast Siege</h6>
                           </div>
-                    <div className="d-flex flex-column">
-                    <NavLink to="/account/challenges/treasure-hunt">
-                        <div
-                          className={`${
-                            challenge === "treasure-hunt" ||
-                            selectedEvent === "treasure-hunt"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("treasure-hunt");
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">Treasure Hunt</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
-                    </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/maze-day">
+                          <div
+                            className={`${
+                              challenge === "maze-day" ||
+                              selectedEvent === "maze-day"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("maze-day");
+                              setActiveEvent(mazeGardenInfo);
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">BNB Chain Maze Day</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/treasure-hunt">
+                          <div
+                            className={`${
+                              challenge === "treasure-hunt" ||
+                              selectedEvent === "treasure-hunt"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("treasure-hunt");
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">Treasure Hunt</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
 
                       {/* <NavLink to="/account/challenges/golden-pass">
                         <div
@@ -2287,86 +2323,86 @@ const NewEvents = ({
                           <h6 className="mb-0">Golden Pass</h6>
                         </div>
                       </NavLink> */}
-                    <div className="d-flex flex-column">
-                    <NavLink to="/account/challenges/puzzle-madness">
-                        <div
-                          className={`${
-                            challenge === "puzzle-madness" ||
-                            selectedEvent === "puzzle-madness"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("puzzle-madness");
-                            setActiveEvent(puzzleMadnessInfo);
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">Puzzle Madness</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
-                    </div>
-                      <div className="d-flex flex-column">                       
-                      <NavLink to="/account/challenges/explorer-hunt">
-                        <div
-                          className={`${
-                            challenge === "explorer-hunt" ||
-                            selectedEvent === "explorer-hunt"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("explorer-hunt");
-                            setActiveEvent(explorerHuntInfo);
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">Explorer Hunt</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/puzzle-madness">
+                          <div
+                            className={`${
+                              challenge === "puzzle-madness" ||
+                              selectedEvent === "puzzle-madness"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("puzzle-madness");
+                              setActiveEvent(puzzleMadnessInfo);
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">Puzzle Madness</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
                       </div>
-                     <div className="d-flex flex-column">
-                     <NavLink to="/account/challenges/great-collection">
-                        <div
-                          className={`${
-                            challenge === "great-collection" ||
-                            selectedEvent === "great-collection"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("great-collection");
-                            setActiveEvent(greatCollectionInfo);
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">The Great Collection</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
-                     </div>
-                     <div className="d-flex flex-column">
-                     <NavLink to="/account/challenges/critical-hit">
-                        <div
-                          className={`${
-                            challenge === "critical-hit" ||
-                            selectedEvent === "critical-hit"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                          onClick={() => {
-                            setChallenge("critical-hit");
-                            setActiveEvent(criticalHitInfos);
-                          }}
-                        >
-                          {/* <img src={treasureHuntIcon} alt="" /> */}
-                          <h6 className="mb-0">Critical Hit</h6>
-                        </div>
-                      </NavLink>
-                      <div className="sidebar-separator2"></div>
-                     </div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/explorer-hunt">
+                          <div
+                            className={`${
+                              challenge === "explorer-hunt" ||
+                              selectedEvent === "explorer-hunt"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("explorer-hunt");
+                              setActiveEvent(explorerHuntInfo);
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">Explorer Hunt</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/great-collection">
+                          <div
+                            className={`${
+                              challenge === "great-collection" ||
+                              selectedEvent === "great-collection"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("great-collection");
+                              setActiveEvent(greatCollectionInfo);
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">The Great Collection</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
+                      <div className="d-flex flex-column">
+                        <NavLink to="/account/challenges/critical-hit">
+                          <div
+                            className={`${
+                              challenge === "critical-hit" ||
+                              selectedEvent === "critical-hit"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge("critical-hit");
+                              setActiveEvent(criticalHitInfos);
+                            }}
+                          >
+                            {/* <img src={treasureHuntIcon} alt="" /> */}
+                            <h6 className="mb-0">Critical Hit</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
+                      </div>
 
                       {/* <NavLink to="/account/challenges/dragon-ruins">
                         <div
@@ -3068,7 +3104,6 @@ const NewEvents = ({
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
-
                                           >
                                             {" "}
                                             Connect Wallet
@@ -3160,7 +3195,6 @@ const NewEvents = ({
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
-
                                           >
                                             {" "}
                                             Connect Wallet
@@ -3256,7 +3290,6 @@ const NewEvents = ({
                                           <button
                                             className="beast-siege-btn"
                                             onClick={onConnectWallet}
-
                                           >
                                             {" "}
                                             Connect Wallet
@@ -3696,34 +3729,55 @@ const NewEvents = ({
                                         </NavLink>
                                       </>
                                     ) : activeEvent.title === "Critical Hit" ? (
-                                      <div className="d-flex flex-column gap-2">
-                                        <NavLink
-                                          to={"/shop/land"}
-                                          className="beast-siege-btn critical-hit-button"
+                                      <>
+                                        <div
+                                          className="d-flex flex-column align-items-center gap-1"
+                                          style={{ width: "fit-content" }}
                                         >
-                                          Buy on Shop
-                                        </NavLink>
-                                        <NavLink
-                                          to={
-                                            "https://opensea.io/collection/worldofdypians"
-                                          }
-                                          target="_blank"
-                                          className="beast-siege-btn critical-hit-button d-flex align-items-center gap-2"
-                                        >
-                                          <img src={opensea} alt="" />
-                                          Buy on Opensea
-                                        </NavLink>
-                                      </div>
+                                          <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
+                                            <span className="beast-siege-wod-price">
+                                              $0
+                                            </span>
+                                          </div>
+                                          <span className="beast-siege-event-price">
+                                            Earnings
+                                          </span>
+                                        </div>
+                                        {hasLand ? (
+                                          <div className="beast-siege-event-price">
+                                            You own a Land NFT
+                                          </div>
+                                        ) : (
+                                          <div className="d-flex align-items-center gap-1">
+                                            <NavLink
+                                            to={"/game#land"}
+                                              className="beast-siege-event-price get-land-link"
+                                              style={{
+                                                textDecoration: "underline",
+                                                cursor: "pointer",
+                                              }}
+                                            >
+                                              Get Land NFT
+                                            </NavLink>
+                                          </div>
+                                        )}
+                                      </>
                                     ) : activeEvent.title ===
                                       "The Great Collection" ? (
                                       <>
-                                        <div className="d-flex flex-column gap-1">
-                                          <span className="beast-siege-wod-price">
-                                            {getFormattedNumber(
-                                              greatCollectionData[0]?.statValue,
-                                              0
-                                            )}
-                                          </span>
+                                        <div
+                                          className="d-flex flex-column align-items-center gap-1"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
+                                            <span className="beast-siege-wod-price">
+                                              {getFormattedNumber(
+                                                greatCollectionData[0]
+                                                  ?.statValue,
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
                                           <span className="beast-siege-event-price">
                                             Brands Collected
                                           </span>
@@ -3733,13 +3787,18 @@ const NewEvents = ({
                                     ) : activeEvent.title ===
                                       "Explorer Hunt" ? (
                                       <>
-                                        <div className="d-flex flex-column gap-1">
-                                          <span className="beast-siege-wod-price">
-                                            {getFormattedNumber(
-                                              explorerHuntData[0]?.statValue,
-                                              0
-                                            )}
-                                          </span>
+                                        <div
+                                          className="d-flex flex-column align-items-center gap-1"
+                                          style={{ width: "fit-content" }}
+                                        >
+                                          <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
+                                            <span className="beast-siege-wod-price">
+                                              {getFormattedNumber(
+                                                explorerHuntData[0]?.statValue,
+                                                0
+                                              )}
+                                            </span>
+                                          </div>
                                           <span className="beast-siege-event-price">
                                             Partners Saved
                                           </span>
@@ -3810,7 +3869,6 @@ const NewEvents = ({
                                               <button
                                                 className="beast-siege-btn"
                                                 onClick={onConnectWallet}
-
                                               >
                                                 {" "}
                                                 Connect Wallet
