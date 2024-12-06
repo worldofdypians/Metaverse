@@ -21,6 +21,33 @@
   line-height: 100%;
 }
 
+.getwodon-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.getwod-item {
+  width: 100%;
+  padding: 5px;
+}
+
+.buywodimg {
+  width: 23px;
+  height: 23px;
+}
+
+.getwod-item:hover{
+  border-radius: 6px;
+    background: rgba(113, 127, 255, 0.20);
+}
+
+.whitearrowUp {
+  transform: rotate(180deg);
+}
+
 .user-data-item-right {
   color: #ffd37e;
   text-align: center;
@@ -197,35 +224,32 @@
   background-repeat: no-repeat;
   height: 145px;
   cursor: pointer;
-  
+
   transition: all 0.25s ease;
   background-position: center;
   @media screen and (max-width: 786px) {
     height: 155px;
   }
 }
-.wod-domain-name-wrapper:hover{
+.wod-domain-name-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
 
-
-
-.wod-domain-icon{
+.wod-domain-icon {
   width: 70px;
   @media screen and (max-width: 786px) {
     width: 120px;
   }
 }
 
-.wod-domain-name-span{
+.wod-domain-name-span {
   color: #fff;
   font-family: "Montserrat";
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-width: 80%;
-
+  width: 80%;
 }
 
 .new-special-rewards-wrapper:hover {
@@ -254,16 +278,15 @@ width: 80%;
   background-image: url(./assets/leaderboardsBg.png);
   background-size: 100% 100%;
   border-radius: 10px;
-  transition: all .25s;
+  transition: all 0.25s;
   @media screen and (max-width: 991px) {
     height: 155px !important;
   }
 }
 
-.game-leaderboards-wrapper:hover{
+.game-leaderboards-wrapper:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
 }
-
 
 .leaderboards-title {
   color: #fff;
@@ -489,9 +512,8 @@ width: 80%;
   }
 }
 
-.my-rewards-wrapper-new:hover{
+.my-rewards-wrapper-new:hover {
   filter: drop-shadow(0px 0px 10px #c09645);
-  
 }
 
 .new-stake-nft-wrapper:hover,
@@ -686,9 +708,9 @@ width: 80%;
   h6 {
     color: #eeedff;
     font-family: "Montserrat";
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 16px; /* 100% */
   }
 }
@@ -761,7 +783,6 @@ width: 80%;
   }
 }
 
-
 .ready-circle {
   position: absolute;
   left: 0;
@@ -783,10 +804,7 @@ width: 80%;
   }
 }
 
-
-
-
-.ready-circle-2-position{
+.ready-circle-2-position {
   position: absolute;
   left: 0;
   right: 0;
@@ -809,7 +827,7 @@ width: 80%;
   }
 }
 
-.countdown-position-beast{
+.countdown-position-beast {
   position: absolute;
   left: 0;
   right: 0;
@@ -819,7 +837,7 @@ width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all .25s;
+  transition: all 0.25s;
   @media screen and (max-width: 786px) {
     position: relative;
     left: auto;
@@ -831,19 +849,19 @@ width: 80%;
   }
 }
 
-.profile-banner-class-thing{
+.profile-banner-class-thing {
   overflow: hidden;
 }
 
-.new-stake-nft-wrapper:hover{
+.new-stake-nft-wrapper:hover {
   .ready-circle {
     box-shadow: 0px 0px 20px gold;
   }
   .ready-circle-2 {
     box-shadow: 0px 0px 20px gold;
   }
-  .countdown-position-beast{
-  filter: drop-shadow(0px 0px 5px gold);
+  .countdown-position-beast {
+    filter: drop-shadow(0px 0px 5px gold);
   }
 }
 
@@ -854,8 +872,8 @@ width: 80%;
   .ready-circle-2 {
     box-shadow: 0px 0px 20px gold;
   }
-  .countdown-position-beast{
-  filter: drop-shadow(0px 0px 5px gold);
+  .countdown-position-beast {
+    filter: drop-shadow(0px 0px 5px gold);
   }
 }
 
@@ -891,7 +909,7 @@ width: 80%;
   line-height: normal;
 }
 
-.defeated-red{
+.defeated-red {
   position: absolute;
   height: 90px;
   right: 0;
@@ -909,7 +927,7 @@ width: 80%;
   z-index: 0;
   // filter: grayscale(1);
 }
-.puzzle-eventbannerimg{
+.puzzle-eventbannerimg {
   right: -35px;
 }
 
@@ -998,8 +1016,7 @@ width: 80%;
   }
 }
 
-
-.new-time-remaining{
+.new-time-remaining {
   color: #d3d5d7;
   font-family: "Montserrat";
   font-size: 12px;

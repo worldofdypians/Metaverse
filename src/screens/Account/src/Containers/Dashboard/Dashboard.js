@@ -195,7 +195,7 @@ function Dashboard({
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
-  chainlinkEarnUsd
+  chainlinkEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -4430,6 +4430,17 @@ function Dashboard({
     }
   };
 
+  const fillPreviousRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setpreviousgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setpreviousgenesisData(finalData);
+    }
+  };
+
   const fetchPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
@@ -4451,7 +4462,7 @@ function Dashboard({
   const fetchGenesisPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "GenesisLandRewards",
+        StatisticName: "TheGreatCollection",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: version - 1,
@@ -4460,7 +4471,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsGenesis(result.data.data.leaderboard);
+      // fillPreviousRecordsGenesis(result.data.data.leaderboard);
 
       setpreviousgenesisData(result.data.data.leaderboard);
     }
@@ -4583,9 +4594,9 @@ function Dashboard({
 
   const fetchGenesisRecords = async () => {
     const data2 = {
-      StatisticName: "GenesisLandRewards",
+      StatisticName: "TheGreatCollection",
       StartPosition: 0,
-      MaxResultsCount: 10,
+      MaxResultsCount: 100,
     };
 
     const result2 = await axios
@@ -10151,7 +10162,7 @@ function Dashboard({
     fetchDailyRecordsCore();
     // fetchWeeklyRecordsCore();
     // fetchMonthlyRecordsCore();
-    // fetchDailyRecordsViction();
+    fetchDailyRecordsViction();
     // fetchWeeklyRecordsViction();
     // fetchMonthlyRecordsViction();
     fetchDailyRecordsManta();
@@ -10462,7 +10473,9 @@ function Dashboard({
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
-      leaderboard === true
+      leaderboard === true ||
+      globalLeaderboard === true ||
+      genesisLeaderboard === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -10470,7 +10483,13 @@ function Dashboard({
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
+  }, [
+    dailyBonusPopup,
+    dailyrewardpopup,
+    leaderboard,
+    globalLeaderboard,
+    genesisLeaderboard,
+  ]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -10531,9 +10550,6 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
-
-  
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -10571,6 +10587,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              wodBalance={wodBalance}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -10665,7 +10682,8 @@ function Dashboard({
                 Number(mantaEarnUsd) +
                 Number(matEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(coreEarnUsd) + Number(chainlinkEarnUsd)
+                Number(coreEarnUsd) +
+                Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -11136,14 +11154,15 @@ function Dashboard({
               id="leaderboard"
               style={{ width: "35%", pointerEvents: "auto" }}
             >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{ fontSize: "24px" }}
-                >
-                  Genesis Rewards
-                </h2>
-
+              <div
+                className="d-flex align-items-center justify-content-end position-absolute"
+                style={{
+                  position: "absolute",
+                  right: "22px",
+                  zIndex: 2,
+                  top: "22px",
+                }}
+              >
                 <img
                   src={xMark}
                   onClick={() => setGenesisLeaderboard(false)}
@@ -11153,19 +11172,14 @@ function Dashboard({
               </div>
 
               <GenesisLeaderboard
-                username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
-                availableTime={goldenPassRemainingTime}
+                data={genesisData}
+                previousdata={previousgenesisData}
+                playerdata={greatCollectionData}
+                username={username}
+                activePlayer={
+                  greatCollectionData[0]?.position < 100 ? true : false
+                }
                 email={email}
-                isPremium={isPremium}
-                allBnbData={allBnbData}
-                allSkaleData={allSkaleData}
-                dailyplayerData={dailyplayerData}
-                weeklyplayerData={weeklyplayerData}
-                monthlyplayerData={monthlyplayerData}
-                genesisData={genesisData}
               />
             </div>
           </OutsideClickHandler>

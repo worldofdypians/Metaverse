@@ -69,6 +69,7 @@ userTaikoScore,
 userSkaleScore,
 userCoreScore,
 userVictionScore,
+onPrimeClick
 }) => {
 
 
@@ -404,7 +405,7 @@ userVictionScore,
             </div>
           </div>
         </div>
-        <NavLink to="/account/prime">
+        <NavLink to="/account/prime" onClick={onPrimeClick}>
           <div className="rank-premium-status-wrapper p-2 mt-2">
             <div className="d-flex align-items-center gap-2 justify-content-between">
               <div className="d-flex align-items-center gap-2">
