@@ -790,10 +790,8 @@ const GenesisLeaderboard = ({
         className="leaderboard-item d-flex flex-column p-0 w-100"
         style={{ background: "none" }}
       >
-        <div
-          className="greatcollection-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative"
-        
-        >
+        <div className="greatcollection-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
+       
           <div className="position-absolute" style={{ top: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
@@ -840,6 +838,18 @@ const GenesisLeaderboard = ({
               </div>
             </OutsideClickHandler>
           </div>
+          <div className="d-flex flex-column">
+              <h6 className="global-leaderboard-title mb-0">Great</h6>
+              <h6
+                className="global-leaderboard-title mb-0 d-flex algin-items-center"
+                style={{ color: "#F4E27B" }}
+              >
+                Collection
+              </h6>
+              {/* <span className="text-white" style={{ fontSize: 14 }}>
+                (Top 100)
+              </span> */}
+            </div>
         </div>
         <div className="p-2 pt-0 table-outer-margin">
           <table className="playerTable w-100">

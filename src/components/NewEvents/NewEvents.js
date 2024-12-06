@@ -3730,7 +3730,7 @@ const NewEvents = ({
                                        to={"/#buy-wod"}
                                        className="beast-siege-btn maze-day-button"
                                      >
-                                       Buy WOD
+                                       Get WOD
                                      </NavLink>
                                      :
                                      <div style={{height: "38px"}}></div> 

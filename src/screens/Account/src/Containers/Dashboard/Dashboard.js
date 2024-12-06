@@ -10162,7 +10162,7 @@ function Dashboard({
     fetchDailyRecordsCore();
     // fetchWeeklyRecordsCore();
     // fetchMonthlyRecordsCore();
-    // fetchDailyRecordsViction();
+    fetchDailyRecordsViction();
     // fetchWeeklyRecordsViction();
     // fetchMonthlyRecordsViction();
     fetchDailyRecordsManta();
@@ -10473,7 +10473,9 @@ function Dashboard({
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
-      leaderboard === true
+      leaderboard === true||
+      globalLeaderboard === true||
+      genesisLeaderboard === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -10481,7 +10483,7 @@ function Dashboard({
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
+  }, [dailyBonusPopup, dailyrewardpopup, leaderboard,globalLeaderboard,genesisLeaderboard]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -10582,6 +10584,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+            wodBalance={wodBalance}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -11147,14 +11150,7 @@ function Dashboard({
               id="leaderboard"
               style={{ width: "35%", pointerEvents: "auto" }}
             >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{ fontSize: "24px" }}
-                >
-                  Great Collection
-                </h2>
-
+              <div className="d-flex align-items-center justify-content-end">
                 <img
                   src={xMark}
                   onClick={() => setGenesisLeaderboard(false)}

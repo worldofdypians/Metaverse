@@ -7,7 +7,7 @@ import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
-import landIcon from "./assets/landIcon.svg";
+import landIcon from "./assets/landIcon.png";
 import redArrow from "./assets/redArrow.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
@@ -54,24 +54,25 @@ import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
 import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
 import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
 import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
-
-import premiumDummy from "./assets/premiumDummy.png";
-import dummyDragon from "./assets/dummyDragon.png";
-import dummyCaws from "./assets/dummyCaws.png";
-import doneTag from "./assets/doneTag.svg";
-import emptyTag from "./assets/emptyTag.svg";
+import wodLogo from "../../assets/wodAssets/wodToken.svg";
+import whiteArrows from "./assets/whiteArrows.svg";
+// import premiumDummy from "./assets/premiumDummy.png";
+// import dummyDragon from "./assets/dummyDragon.png";
+// import dummyCaws from "./assets/dummyCaws.png";
+// import doneTag from "./assets/doneTag.svg";
+// import emptyTag from "./assets/emptyTag.svg";
 import portfolio from "./assets/portfolio.svg";
 import starterProfile from "./assets/starterProfile.png";
-import rookieProfile from "./assets/rookieProfile.png";
-import underdogProfile from "./assets/underdogProfile.png";
-import championProfile from "./assets/championProfile.png";
-import unstoppableProfile from "./assets/unstoppableProfile.png";
+// import rookieProfile from "./assets/rookieProfile.png";
+// import underdogProfile from "./assets/underdogProfile.png";
+// import championProfile from "./assets/championProfile.png";
+// import unstoppableProfile from "./assets/unstoppableProfile.png";
 
 import starterProfilePremium from "./assets/starterProfilePremium.png";
-import rookieProfilePremium from "./assets/rookieProfilePremium.png";
-import underdogProfilePremium from "./assets/underdogProfilePremium.png";
-import championProfilePremium from "./assets/championProfilePremium.png";
-import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
+// import rookieProfilePremium from "./assets/rookieProfilePremium.png";
+// import underdogProfilePremium from "./assets/underdogProfilePremium.png";
+// import championProfilePremium from "./assets/championProfilePremium.png";
+// import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
 import errorChain from "./assets/errorchain.svg";
 import Slider from "react-slick";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
@@ -80,6 +81,14 @@ import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
 import OutsideClickHandler from "react-outside-click-handler";
+import Clipboard from "react-clipboard.js";
+import copy from "../../components/Header/assets/copy.svg";
+import check from "../../components/Header/assets/check.svg";
+import kucoin from "../../screens/Home/VideoWrapper/assets/buyWodAssets/kucoin.svg";
+import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
+import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
+import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancakeSwap.svg";
+import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -191,9 +200,11 @@ const MyProfile = ({
   userTaikoStars,
   userMatStars,
   userSeiStars,
+  wodBalance,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
   const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
@@ -299,7 +310,7 @@ const MyProfile = ({
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
-  const [allEvents, setAllEvents] = useState(false);
+  const [showBuyTooltip, setshowBuyTooltip] = useState(false);
   const [finished, setFinished] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
@@ -465,24 +476,43 @@ const MyProfile = ({
                           <span className={`profile-wallet-span mb-2`}>
                             Wallet Address
                           </span>
-                          <span
-                            className={`${
-                              isConnected &&
-                              address &&
-                              email &&
-                              coinbase &&
-                              syncStatus !== "" &&
-                              address.toLowerCase() !== coinbase.toLowerCase()
-                                ? "wallet-addr-error"
-                                : "wallet-addr"
-                            } `}
-                          >
-                            {email !== undefined && address
-                              ? shortAddress(address)
-                              : coinbase
-                              ? shortAddress(coinbase)
-                              : "--"}
-                          </span>
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className={`${
+                                isConnected &&
+                                address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address.toLowerCase() !== coinbase.toLowerCase()
+                                  ? "wallet-addr-error"
+                                  : "wallet-addr"
+                              } `}
+                            >
+                              {email !== undefined && address
+                                ? shortAddress(address)
+                                : coinbase
+                                ? shortAddress(coinbase)
+                                : "--"}
+                            </span>
+                            <Clipboard
+                              component="div"
+                              data-event="click"
+                              data-tip="Copied To Clipboard!"
+                              data-clipboard-text={address}
+                              className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
+                            >
+                              <span
+                                className="menuitem2 p-0"
+                                onClick={() => {
+                                  setTooltip(true);
+                                  setTimeout(() => setTooltip(false), 2000);
+                                }}
+                              >
+                                <img src={tooltip ? check : copy} alt="" />{" "}
+                              </span>
+                            </Clipboard>
+                          </div>
                         </div>
                         {isConnected &&
                           address &&
@@ -546,11 +576,124 @@ const MyProfile = ({
                       address.toLowerCase() === coinbase.toLowerCase()) ||
                     (isConnected && !email && coinbase) ? (
                       <div
-                        className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
-                        onClick={openPortfolio}
+                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 p-2"
+                        onClick={() => {
+                          setshowBuyTooltip(true);
+                        }}
                       >
-                        <img src={portfolio} width={25} height={25} alt="" />
-                        <h6 className="mb-0">My Portfolio</h6>
+                        <div className="d-flex align-items-center gap-2">
+                          <img src={wodLogo} width={20} height={20} alt="" />
+                          <h6 className="mb-0">
+                            {getFormattedNumber(wodBalance, 2)}
+                          </h6>
+                        </div>
+                        <img
+                          src={whiteArrows}
+                          alt=""
+                          style={{ width: 20, height: 20 }}
+                          className={showBuyTooltip ? "whitearrowUp" : ""}
+                        />
+                        {showBuyTooltip === true && (
+                          <div className="position-absolute w-100">
+                            <OutsideClickHandler
+                              onOutsideClick={() => {
+                                setshowBuyTooltip(false);
+                              }}
+                            >
+                              <div
+                                className="wodtooltip d-flex py-4 px-3"
+                                style={{ opacity: 1 }}
+                              >
+                                <div className="d-flex w-100 flex-column gap-2 align-items-start">
+                                  <div className="d-flex justify-content-center align-items-center flex-column w-100">
+                                    <h6 className="getwodon-title mb-0">
+                                      Get WOD on
+                                    </h6>
+                                    <div className="sidebar-separator2 my-1"></div>
+                                  </div>
+                                  <a
+                                    href="https://www.kucoin.com/trade/WOD-USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={kucoin} className="buywodimg" />
+                                      Kucoin
+                                    </h6>
+                                  </a>
+                                  <a
+                                    href="https://www.gate.io/trade/WOD_USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={gate} className="buywodimg" />
+                                      Gate.io
+                                    </h6>
+                                  </a>
+
+                                  <a
+                                    href="https://www.mexc.com/exchange/WOD_USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={mexc} className="buywodimg" />
+                                      MEXC Global
+                                    </h6>
+                                  </a>
+
+                                  <a
+                                    href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={pancake}
+                                        className="buywodimg"
+                                      />
+                                      PancakeSwap
+                                    </h6>
+                                  </a>
+                                  <a
+                                    href="https://short.trustwallet.com/app-download"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={trustwallet}
+                                        className="buywodimg"
+                                      />
+                                      TrustWallet
+                                    </h6>
+                                  </a>
+                                </div>
+                              </div>
+                            </OutsideClickHandler>
+                          </div>
+                        )}
                       </div>
                     ) : !isConnected ? (
                       <button
@@ -654,25 +797,15 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <NavLink
-                  to={"/account/challenges/great-collection"}
+                <div
+                  onClick={openPortfolio}
                   className="wallet-address-wrapper2 p-2 w-100"
                 >
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Great</span>
-                      <span className="user-data-item-left">Collection</span>
-                    </div>
-                    <div className="d-flex">
-                      <span className="user-data-item-right">
-                        {" "}
-                        {getFormattedNumber(
-                          greatCollectionData[0]?.statValue ?? 0
-                        )}
-                      </span>
-                    </div>
+                  <div className="d-flex gap-2 align-items-center justify-content-start">
+                    <img src={portfolio} width={25} height={25} alt="" />
+                    <h6 className="user-data-item-left mb-0">My Portfolio</h6>
                   </div>
-                </NavLink>
+                </div>
                 {rankDropdown === true && (
                   <OutsideClickHandler
                     onOutsideClick={() => {
