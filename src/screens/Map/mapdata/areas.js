@@ -83,9 +83,7 @@ const chainAreas = [
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [
-     
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/BNBCHAIN",
@@ -155,8 +153,7 @@ const chainAreas = [
       {
         title: "Leaderboard",
         image: leaderboardInfo,
-        link: 
-        "/account#leaderboard",
+        link: "/account#leaderboard",
       },
       {
         title: "Daily Bonus",
@@ -164,9 +161,7 @@ const chainAreas = [
         link: "/account#dailybonus",
       },
     ],
-    pastEvents: [
-     
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/Coredao_Org",
@@ -873,7 +868,13 @@ const chainAreas = [
         [-0.06885765325506008, 0.08509039878845216],
       ],
     ],
-    events: [],
+    events: [
+      {
+        title: "Treasure Hunt",
+        image: treasureHuntInfo,
+        link: "/account/challenges/treasure-hunt",
+      },
+    ],
     pastEvents: [],
     socials: [
       {
@@ -1217,15 +1218,14 @@ const chainAreas = [
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account#leaderboard",
-      },{
+      },
+      {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
       },
     ],
-    pastEvents: [
-      
-    ],
+    pastEvents: [],
     socials: [
       {
         link: "https://x.com/mantanetwork",
@@ -1491,7 +1491,8 @@ const chainAreas = [
         title: "Leaderboard",
         image: leaderboardInfo,
         link: "/account#leaderboard",
-      },{
+      },
+      {
         title: "Treasure Hunt",
         image: treasureHuntInfo,
         link: "/account/challenges/treasure-hunt",
