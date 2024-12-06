@@ -36,21 +36,21 @@ const RankSmallPopup = ({
   onClose,
   userRank,
   userRankSkale,
-  userBnbScore,
-  userSkaleScore,
+  userBnbStars,
+  userSkaleStars,
   userRankCore,
-  userCoreScore,
+  userCoreStars,
   userRankViction,
-  userVictionScore,
+  userVictionStars,
   rankData,
   userDataStar,
   userRankManta,
-  userMantaScore,
+  userMantaStars,
   userRankBase,
-  userBaseScore,
+  userBaseStars,
   userRankTaiko,
-  userTaikoScore,
-  userMatScore,
+  userTaikoStars,
+  userMatStars,
   userRankName,
   onRankPopupClick,
   primeStars,
@@ -59,8 +59,20 @@ const RankSmallPopup = ({
   isPremium,
   userRankMat,
   userRankSei,
-  userSeiScore,
+  userSeiStars,
+  userBnbScore,
+userMatScore,
+userSeiScore,
+userMantaScore,
+userBaseScore,
+userTaikoScore,
+userSkaleScore,
+userCoreScore,
+userVictionScore,
 }) => {
+
+
+
   return (
     <div className="package-popup-wrapper">
       <div className="package-popup my-progress-popup p-4">
@@ -110,392 +122,271 @@ const RankSmallPopup = ({
             <div className="d-flex align-items-center justify-content-between w-100">
               <span className="chainstatustxt">Daily Status</span>
             </div>
-            {/* <div className="d-flex w-100 flex-column gap-1">
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={bnbActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRank + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Stars</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userBnbScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={matActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankMat + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userMatScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={seiIcon}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankSei + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userSeiScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={mantaActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankManta + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userMantaScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={baseLogo}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankBase + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userBaseScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={taikoLogo}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankTaiko + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userTaikoScore, 0)}
-                  </span>
-                </div>
-              </div>
-    
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={skaleActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankSkale + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userSkaleScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={coreActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankCore + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userCoreScore, 0)}
-                  </span>
-                </div>
-              </div>
-              <div className="rank-dropdown-item ms-2 gap-3 p-2 d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-2">
-                  <img
-                    src={victionActive}
-                    width={25}
-                    className="rankChain"
-                    height={25}
-                    alt=""
-                  />
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Rank</span>
-                  <span className="rank-dropdown-text-yellow">
-                    #{getFormattedNumber(userRankViction + 1, 0)}
-                  </span>
-                </div>
-                <div className="rank-item-wrapper p-2">
-                  <span className="rank-dropdown-text">Score</span>
-                  <span className="rank-dropdown-text-yellow">
-                    {getFormattedNumber(userVictionScore, 0)}
-                  </span>
-                </div>
-              </div>
-            </div> */}
             <div className="rank-chain-status-grid w-100">
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={bnbActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRank + 1, 0)}
+                     {userBnbScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRank + 1, 0)}`}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userBnbScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userBnbStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={matActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankMat + 1, 0)}
+                   
+                     {userMatScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankMat + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userMatScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userMatStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={seiIcon} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankSei + 1, 0)}
+                    {userSeiScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankSei + 1, 0)}`}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userSeiScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSeiStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={mantaActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankManta + 1, 0)}
+                    {userMantaScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankManta + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userMantaScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userMantaStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={baseLogo} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankBase + 1, 0)}
+                    {userBaseScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankBase + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userBaseScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userBaseStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={taikoLogo} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankTaiko + 1, 0)}
+                    {userTaikoScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankTaiko + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userTaikoScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userTaikoStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={skaleActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankSkale + 1, 0)}
+                    {userSkaleScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankSkale + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userSkaleScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userSkaleStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={coreActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankCore + 1, 0)}
+                    {userCoreScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankCore + 1, 0)}`}
+
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
-                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text">Score</span>
                     <span className="rank-dropdown-text-yellow">
                       {getFormattedNumber(userCoreScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
                 </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Stars</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userCoreStars, 0)}
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
               </div>
-              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-3">
+              <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
                 <img src={victionActive} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
                     <span className="rank-dropdown-text-yellow">
-                      #{getFormattedNumber(userRankViction + 1, 0)}
+                    {userVictionScore === 0 ? "No Rank" : ` #${getFormattedNumber(userRankViction + 1, 0)}`}
+
+                    </span>
+                  </div>
+                  <div className="sidebar-separator2"></div>
+                </div>
+                <div className="d-flex flex-column w-100">
+                  <div className="d-flex align-items-center justify-content-between w-100">
+                    <span className="rank-dropdown-text">Score</span>
+                    <span className="rank-dropdown-text-yellow">
+                      {getFormattedNumber(userVictionScore, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>
@@ -504,7 +395,7 @@ const RankSmallPopup = ({
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Stars</span>
                     <span className="rank-dropdown-text-yellow">
-                      {getFormattedNumber(userVictionScore, 0)}
+                      {getFormattedNumber(userVictionStars, 0)}
                     </span>
                   </div>
                   <div className="sidebar-separator2"></div>

@@ -182,6 +182,15 @@ const MyProfile = ({
   userRankSei,
   userSeiScore,
   puzzleMadnessTimer,
+  userBnbStars,
+  userSkaleStars,
+  userCoreStars,
+  userVictionStars,
+  userMantaStars,
+  userBaseStars,
+  userTaikoStars,
+  userMatStars,
+  userSeiStars,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -262,7 +271,7 @@ const MyProfile = ({
     },
     {
       image: bnbMazeDay, // Friday
-      title: "BNB Maze Day",
+      title: "BNB Chain Maze Day",
       bannerImg: bnbMazeBanner,
       titleColor: "#DDF8D7",
       contentColor: "#FFFFFF",
@@ -696,6 +705,15 @@ const MyProfile = ({
                       userRankTaiko={userRankTaiko}
                       userTaikoScore={userTaikoScore}
                       userRankName={userRankName}
+                      userBnbStars={userBnbStars}
+                      userSkaleStars={userSkaleStars}
+                      userCoreStars={userCoreStars}
+                      userVictionStars={userVictionStars}
+                      userMantaStars={userMantaStars}
+                      userBaseStars={userBaseStars}
+                      userTaikoStars={userTaikoStars}
+                      userMatStars={userMatStars}
+                      userSeiStars={userSeiStars}
                       onRankPopupClick={() => {
                         onOpenRankPopup();
                         setRankDropdown(false);
@@ -881,8 +899,7 @@ const MyProfile = ({
                       <span>
                         {userActiveEvents === 14
                           ? "Completed"
-                          : userActiveEvents === 0
-                          ? "Ready"
+                           
                           : userActiveEvents + "/14"}
                       </span>
                     </div>
@@ -1326,11 +1343,8 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                      {dailyEvents[utcDayIndex].active ? (
-                        //   <div className="d-flex flex-column gap-1">
-                        //   <span className="beast-siege-ends-in">Available until:</span>
-                        //   <Countdown renderer={renderer4} date={midnight} />
-                        // </div>
+                      {dailyEvents[utcDayIndex].title ===
+                      "BNB Chain Maze Day" ? (
                         <>
                           <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
                             <div className="ready-circle-2 d-flex flex-column gap-1">
@@ -1346,12 +1360,40 @@ const MyProfile = ({
                         </>
                       ) : (
                         <>
-                          <div className="ready-circle d-none d-lg-flex">
-                            <span className="beast-siege-timer">Ready</span>
-                          </div>
-                          <span className="beast-siege-timer d-flex d-lg-none">
-                            Ready
-                          </span>
+                          {dailyEvents[utcDayIndex].active ? (
+                            //   <div className="d-flex flex-column gap-1">
+                            //   <span className="beast-siege-ends-in">Available until:</span>
+                            //   <Countdown renderer={renderer4} date={midnight} />
+                            // </div>
+                            <>
+                              <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                                <div className="ready-circle-2 d-flex flex-column gap-1">
+                                  <Countdown
+                                    renderer={renderer4}
+                                    date={midnight}
+                                  />
+                                </div>
+                                <span className="new-time-remaining">
+                                  Time Remaining
+                                </span>
+                              </div>
+                              <div className="d-flex d-lg-none">
+                                <Countdown
+                                  renderer={renderer4}
+                                  date={midnight}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="ready-circle d-none d-lg-flex">
+                                <span className="beast-siege-timer">Ready</span>
+                              </div>
+                              <span className="beast-siege-timer d-flex d-lg-none">
+                                Ready
+                              </span>
+                            </>
+                          )}
                         </>
                       )}
                       <div
