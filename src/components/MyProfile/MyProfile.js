@@ -879,11 +879,11 @@ const MyProfile = ({
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 13
+                        {userActiveEvents === 14
                           ? "Completed"
                           : userActiveEvents === 0
                           ? "Ready"
-                          : userActiveEvents + "/13"}
+                          : userActiveEvents + "/14"}
                       </span>
                     </div>
                     {/* <img
