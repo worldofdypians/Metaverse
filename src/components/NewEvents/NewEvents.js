@@ -166,6 +166,7 @@ const NewEvents = ({
   explorerHuntData,
   setPuzzleMadnessTimer,
   onConnectWallet,
+  wodBalance
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -2204,6 +2205,9 @@ const NewEvents = ({
     }
   }, [showPopup]);
 
+
+  
+
   return (
     <>
       <div
@@ -3721,12 +3725,16 @@ const NewEvents = ({
                                             Event Requirement
                                           </span>
                                         </div>
-                                        <NavLink
-                                          to={"/#buy-wod"}
-                                          className="beast-siege-btn maze-day-button"
-                                        >
-                                          Buy WOD
-                                        </NavLink>
+                                       {Number(wodBalance) <= 400 ? 
+                                       <NavLink
+                                       to={"/#buy-wod"}
+                                       className="beast-siege-btn maze-day-button"
+                                     >
+                                       Buy WOD
+                                     </NavLink>
+                                     :
+                                     <div style={{height: "38px"}}></div> 
+                                      }
                                       </>
                                     ) : activeEvent.title === "Critical Hit" ? (
                                       <>
