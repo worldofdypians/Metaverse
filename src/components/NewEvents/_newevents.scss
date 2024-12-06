@@ -696,3 +696,19 @@
   align-items: center;
   transition: all 0.25s;
 }
+
+.wod-balance-position{
+  position: absolute;
+  top: -40px;
+}
+
+.maze-day-balance-holder{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #081c00;
+  border-radius: 12px;
+  span{
+    color: #fff !important;
+  }
+}
