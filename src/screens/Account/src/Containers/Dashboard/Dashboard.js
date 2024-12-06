@@ -4430,6 +4430,17 @@ function Dashboard({
     }
   };
 
+  const fillPreviousRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setpreviousgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setpreviousgenesisData(finalData);
+    }
+  };
+
   const fetchPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
@@ -4460,7 +4471,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsGenesis(result.data.data.leaderboard);
+      // fillPreviousRecordsGenesis(result.data.data.leaderboard);
 
       setpreviousgenesisData(result.data.data.leaderboard);
     }
@@ -11140,20 +11151,13 @@ function Dashboard({
               </div>
 
               <GenesisLeaderboard
-                username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
-                availableTime={goldenPassRemainingTime}
-                email={email}
-                isPremium={isPremium}
-                allBnbData={allBnbData}
-                allSkaleData={allSkaleData}
-                dailyplayerData={dailyplayerData}
-                weeklyplayerData={weeklyplayerData}
-                monthlyplayerData={monthlyplayerData}
                 data={genesisData}
                 previousdata={previousgenesisData}
+                playerdata={greatCollectionData}
+                username={username}
+                activePlayer={greatCollectionData[0]
+                  ?.position < 100 ? true : false}
+                email={email}
               />
             </div>
           </OutsideClickHandler>

@@ -881,8 +881,6 @@ const MyProfile = ({
                       <span>
                         {userActiveEvents === 14
                           ? "Completed"
-                          : userActiveEvents === 0
-                          ? "Ready"
                           : userActiveEvents + "/14"}
                       </span>
                     </div>
@@ -1098,7 +1096,7 @@ const MyProfile = ({
                     >
                       <img src={landFlag} className="w-100" alt="" />
                       <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                        <span className="flag-title">Genesis</span>
+                        <span className="flag-title">Collection</span>
                         <img src={landIcon} height={50} width={50} alt="" />
                       </div>
                     </div>
