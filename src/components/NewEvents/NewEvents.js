@@ -1950,7 +1950,7 @@ const NewEvents = ({
     desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
     day: 5,
     dayText: "FRI",
-    title: "Maze Day",
+    title: "BNB CHAIN Maze Day",
     topBanner: bnbMazeDayTopBanner,
     class: "maze-garden-card",
     infoClass: "maze-garden-info",
@@ -3674,7 +3674,7 @@ const NewEvents = ({
                                     className={`beast-siege-wrapper gap-4 gap-lg-0 ${
                                       activeEvent.class
                                     } ${
-                                      activeEvent.title === "Maze Day" &&
+                                      activeEvent.title === "BNB CHAIN Maze Day" &&
                                       adjustedDay !== 5
                                         ? "luminosity"
                                         : ""
@@ -3690,12 +3690,12 @@ const NewEvents = ({
                                       <h6 className="beast-siege-title mb-0">
                                         {activeEvent.title}
                                       </h6>
-                                      {activeEvent.title === "Maze Day" &&
+                                      {activeEvent.title === "BNB CHAIN Maze Day" &&
                                       adjustedDay !== 5 ? (
                                         <span className="beast-siege-sub">
                                           Available on Friday
                                         </span>
-                                      ) : activeEvent.title === "Maze Day" &&
+                                      ) : activeEvent.title === "BNB CHAIN Maze Day" &&
                                         adjustedDay === 5 ? (
                                         <span className="beast-siege-sub">
                                           Ready
@@ -3721,7 +3721,7 @@ const NewEvents = ({
                                         </span>
                                       )}
                                     </div>
-                                    {activeEvent.title === "Maze Day" ? (
+                                    {activeEvent.title === "BNB CHAIN Maze Day" ? (
                                       <>
                                         <div className="d-flex flex-column gap-1">
                                           <span className="beast-siege-wod-price">

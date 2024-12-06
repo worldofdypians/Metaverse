@@ -289,7 +289,7 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
-      infoTips: ["200,000 points", "Up to 800 stars", "$10"],
+      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $10"],
 
       imageClass: "mazeDayEventBanner",
     },
@@ -816,6 +816,9 @@ const MyProfile = ({
                       onClose={() => {
                         setRankDropdown(false);
                       }}
+                      onPrimeClick={() => {
+                        html.classList.remove("hidescroll");
+                      }}
                       primeStars={primeStars}
                       userRank={userRank}
                       userRankSkale={userRankSkale}
@@ -925,9 +928,19 @@ const MyProfile = ({
                     className="daily-progress-item position-relative"
                   >
                     <img src={prime} alt="" />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {primeStars === true ? "+ 50 Stars" : "In Progress"}
+                    <div
+                      className={"daily-progress-value-golden"}
+                      style={{
+                        border:
+                          !isPremium || !primeStars ? "1px solid gray" : "",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: !isPremium || !primeStars ? "gray" : "",
+                        }}
+                      >
+                        +50 Stars
                       </span>
                     </div>
                     <span className="bundle-title-bottom">Prime</span>
