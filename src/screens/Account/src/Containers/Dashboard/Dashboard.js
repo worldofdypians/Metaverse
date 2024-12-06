@@ -195,7 +195,7 @@ function Dashboard({
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
-  chainlinkEarnUsd
+  chainlinkEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -10473,8 +10473,8 @@ function Dashboard({
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
-      leaderboard === true||
-      globalLeaderboard === true||
+      leaderboard === true ||
+      globalLeaderboard === true ||
       genesisLeaderboard === true
     ) {
       html.classList.add("hidescroll");
@@ -10483,7 +10483,13 @@ function Dashboard({
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup, leaderboard,globalLeaderboard,genesisLeaderboard]);
+  }, [
+    dailyBonusPopup,
+    dailyrewardpopup,
+    leaderboard,
+    globalLeaderboard,
+    genesisLeaderboard,
+  ]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -10544,9 +10550,6 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
-
-  
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -10584,7 +10587,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
-            wodBalance={wodBalance}
+              wodBalance={wodBalance}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -10679,7 +10682,8 @@ function Dashboard({
                 Number(mantaEarnUsd) +
                 Number(matEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(coreEarnUsd) + Number(chainlinkEarnUsd)
+                Number(coreEarnUsd) +
+                Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -11150,7 +11154,15 @@ function Dashboard({
               id="leaderboard"
               style={{ width: "35%", pointerEvents: "auto" }}
             >
-              <div className="d-flex align-items-center justify-content-end">
+              <div
+                className="d-flex align-items-center justify-content-end position-absolute"
+                style={{
+                  position: "absolute",
+                  right: "22px",
+                  zIndex: 2,
+                  top: "22px",
+                }}
+              >
                 <img
                   src={xMark}
                   onClick={() => setGenesisLeaderboard(false)}
@@ -11164,8 +11176,9 @@ function Dashboard({
                 previousdata={previousgenesisData}
                 playerdata={greatCollectionData}
                 username={username}
-                activePlayer={greatCollectionData[0]
-                  ?.position < 100 ? true : false}
+                activePlayer={
+                  greatCollectionData[0]?.position < 100 ? true : false
+                }
                 email={email}
               />
             </div>

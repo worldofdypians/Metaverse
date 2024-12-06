@@ -3680,7 +3680,7 @@ const NewEvents = ({
                                         : ""
                                     } p-3 d-flex flex-column justify-content-between w-100 position-relative`}
                                   >
-                                    {activeEvent.title === "Maze Day" &&
+                                    {activeEvent.title === "BNB CHAIN Maze Day" &&
                                     <div className="maze-day-balance-holder d-flex flex-column align-items-center gap-1 p-2">
                                         <span className="beast-siege-event-price">My Balance:</span>
                                         <span className="beast-siege-event-price">{getFormattedNumber(wodBalance, hasNoMoreThanTwoDecimalPlaces(Number(wodBalance)) ? 0 : 2 )} WOD</span>
