@@ -783,7 +783,7 @@ const GenesisLeaderboard = ({
 
   return (
     <div
-      className="d-flex flex-column gap-3 leaderboard-wrapper mt-4 position-relative"
+      className="d-flex flex-column gap-3 leaderboard-wrapper mt-0 position-relative"
       style={{ alignSelf: "baseline", minWidth: "100%", maxWidth: "100%" }}
     >
       <div
@@ -792,7 +792,7 @@ const GenesisLeaderboard = ({
       >
         <div className="greatcollection-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
        
-          <div className="position-absolute" style={{ top: 8, right: 8 }}>
+          <div className="position-absolute" style={{ bottom: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
                 <span className={`text-white`} style={{ fontSize: 14 }}>
@@ -839,13 +839,19 @@ const GenesisLeaderboard = ({
             </OutsideClickHandler>
           </div>
           <div className="d-flex flex-column">
-              <h6 className="global-leaderboard-title mb-0">Great</h6>
+              {/* <h6 className="global-leaderboard-title mb-0">Great</h6>
               <h6
                 className="global-leaderboard-title mb-0 d-flex algin-items-center"
                 style={{ color: "#F4E27B" }}
               >
                 Collection
-              </h6>
+              </h6> */}
+                   <h2
+                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
+                  style={{ fontSize: "24px" }}
+                >
+                  Great Collection
+                </h2>
               {/* <span className="text-white" style={{ fontSize: 14 }}>
                 (Top 100)
               </span> */}
