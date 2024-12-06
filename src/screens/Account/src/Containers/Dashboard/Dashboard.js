@@ -10531,6 +10531,14 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
+
+  console.log((userData?.statValue === 0
+    ? 0
+    : userData?.position > 100
+    ? 0
+    : bnbStars[userData?.position]) ?? 0, "userData");
+  
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -10671,14 +10679,14 @@ function Dashboard({
               userRank={userData?.position ?? 0}
               userRankCore={userDataCore?.position ?? 0}
               userRankSkale={userDataSkale?.position ?? 0}
-              userBnbScore={
-                (userDataSkale?.statValue === 0
+              userBnbStars={
+                (userData?.statValue === 0
                   ? 0
-                  : userDataSkale?.position > 100
+                  : userData?.position > 100
                   ? 0
-                  : bnbStars[userDataSkale?.position]) ?? 0
+                  : bnbStars[userData?.position]) ?? 0
               }
-              userCoreScore={
+              userCoreStars={
                 (userDataCore?.statValue === 0
                   ? 0
                   : userDataCore?.position > 100
@@ -10686,7 +10694,7 @@ function Dashboard({
                   : baseStars[userDataCore?.position]) ?? 0
               }
               userRankViction={userDataViction?.position ?? 0}
-              userVictionScore={
+              userVictionStars={
                 (userDataViction?.statValue === 0
                   ? 0
                   : userDataViction?.position > 100
@@ -10694,7 +10702,7 @@ function Dashboard({
                   : baseStars[userDataViction?.position]) ?? 0
               }
               userRankMat={userDataMat?.position ?? 0}
-              userMatScore={
+              userMatStars={
                 userDataMat?.statValue === 0
                   ? 0
                   : userDataMat?.position > 100
@@ -10702,7 +10710,7 @@ function Dashboard({
                   : matStars[userDataMat?.position]
               }
               userRankSei={userDataSei?.position ?? 0}
-              userSeiScore={
+              userSeiStars={
                 userDataSei?.statValue === 0
                   ? 0
                   : userDataSei?.position > 100
@@ -10710,7 +10718,7 @@ function Dashboard({
                   : seiStars[userDataSei?.position]
               }
               userRankManta={userDataManta?.position ?? 0}
-              userMantaScore={
+              userMantaStars={
                 (userDataManta?.statValue === 0
                   ? 0
                   : userDataManta?.position > 100
@@ -10718,7 +10726,7 @@ function Dashboard({
                   : baseStars[userDataManta?.position]) ?? 0
               }
               userRankBase={userDataBase?.position ?? 0}
-              userBaseScore={
+              userBaseStars={
                 (userDataBase?.statValue === 0
                   ? 0
                   : userDataBase?.position > 100
@@ -10726,20 +10734,29 @@ function Dashboard({
                   : baseStars[userDataBase?.position]) ?? 0
               }
               userRankTaiko={userDataTaiko?.position ?? 0}
-              userTaikoScore={
+              userTaikoStars={
                 (userDataTaiko?.statValue === 0
                   ? 0
                   : userDataTaiko?.position > 100
                   ? 0
                   : taikoStars[userDataTaiko?.position]) ?? 0
               }
-              userSkaleScore={
+              userSkaleStars={
                 (userDataSkale?.statValue === 0
                   ? 0
                   : userDataSkale?.position > 100
                   ? 0
                   : skaleStars[userDataSkale?.position]) ?? 0
               }
+              userBnbScore={userData?.statValue}
+              userMatScore={userDataMat?.statValue}
+              userSeiScore={userDataSei?.statValue}
+              userMantaScore={userDataManta?.statValue}
+              userBaseScore={userDataBase?.statValue}
+              userTaikoScore={userDataTaiko?.statValue}
+              userSkaleScore={userDataSkale?.statValue}
+              userCoreScore={userDataCore?.statValue}
+              userVictionScore={userDataViction?.statValue}
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
