@@ -91,7 +91,6 @@ import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancake
 import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 
-
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -1041,7 +1040,9 @@ const MyProfile = ({
                     />
                   )} */}
                     <span className="bundle-title-bottom">
-                      {dailyEvents[utcDayIndex].title}
+                      {dailyEvents[utcDayIndex].title === "BNB Chain Maze Day"
+                        ? "Maze Day"
+                        : dailyEvents[utcDayIndex].title}
                     </span>
                   </NavLink>
 
