@@ -95,6 +95,8 @@ import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIc
 import matchainLogo from "./components/Header/assets/matchain.svg";
 import seiLogo from "./components/Header/assets/sei.svg";
 import midleLogo from "./screens/Map/assets/chainIcons/midle.png";
+import chainlinkIcon from "./screens/Map/assets/chainIcons/chainlinkIcon.svg";
+
 
 import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
 import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
@@ -123,6 +125,8 @@ import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.pn
 import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
 import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
 import seiBg from "./screens/Marketplace/assets/seiBg.webp";
+import chainlinkBg from "./screens/Marketplace/assets/chainlinkBg.webp";
+
 
 import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
 import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
@@ -499,7 +503,7 @@ function App() {
   let taikoLastDay = new Date("2025-04-03T14:00:00.000+02:00");
   let immutableLastDay = new Date("2024-11-13T14:00:00.000+02:00");
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
-  let matchainLastDay = new Date("2025-04-03T14:00:00.000+02:00");
+  let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
 
   const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
@@ -667,6 +671,10 @@ function App() {
   const [seiEarnUsd, setSeiEarnUsd] = useState(0);
   const [seiEarnToken, setSeiEarnToken] = useState(0);
   const [seiEarnPoints, setSeiEarnPoints] = useState(0);
+
+  const [chainlinkEarnUsd, setChainlinkEarnUsd] = useState(0);
+  const [chainlinkEarnToken, setChainlinkEarnToken] = useState(0);
+  const [chainlinkEarnPoints, setChainlinkEarnPoints] = useState(0);
 
   const [skaleEarnUsd, setSkaleEarnUsd] = useState(0);
   const [skaleEarnToken, setSkaleEarnToken] = useState(0);
@@ -960,6 +968,10 @@ function App() {
             return obj.id === "midleEvent1";
           });
 
+          const chainlinkEvent = responseData.events.filter((obj) => {
+            return obj.id === "chainlinkEvent10";
+          });
+
           if (dypPremiumEvent && dypPremiumEvent[0]) {
             const userEarnedusd =
               dypPremiumEvent[0].reward.earn.total /
@@ -1043,7 +1055,20 @@ function App() {
             setMidleEarnUsd(userEarnedusd);
             setMidleEarnToken(userEarnedusd / bnbPrice);
           }
+          if (chainlinkEvent && chainlinkEvent[0]) {
+            if(chainlinkEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
+           }
 
+
+            const userEarnedusd =
+              chainlinkEvent[0].reward.earn.total /
+              chainlinkEvent[0].reward.earn.multiplier;
+            const pointschainlink = chainlinkEvent[0].reward.earn.totalPoints;
+            setChainlinkEarnPoints(pointschainlink);
+            setChainlinkEarnUsd(userEarnedusd);
+            setChainlinkEarnToken(userEarnedusd / bnbPrice);
+          }
           if (cookieEvent && cookieEvent[0]) {
             const userEarnedusd =
               cookieEvent[0].reward.earn.total /
@@ -3826,6 +3851,43 @@ console.log('mint sei')
       },
     },
 
+    {
+      title: "Chainlink",
+      logo: chainlinkIcon,
+      eventStatus: "Live",
+      rewardType: "BNB",
+      rewardAmount: "$20,000",
+      location: [-0.06912771797944854, 0.0847846269607544],
+      image: "chainlinkBanner.png",
+      type: "Treasure Hunt",
+      infoType: "Treasure Hunt",
+      marker: markers.treasureMarker,
+      totalRewards: "$20,000 in BNB Rewards",
+      myEarnings: 0.0,
+      eventType: "Explore & Mine",
+      eventDate: "Dec 06, 2024",
+      backgroundImage: chainlinkBg,
+      userEarnUsd: chainlinkEarnUsd,
+      userEarnCrypto: chainlinkEarnToken,
+      userEarnPoints: chainlinkEarnPoints,
+      popupInfo: {
+        title: "Chainlink",
+        chain: "BNB Chain",
+        linkState: "chainlink",
+        rewards: "BNB",
+        status: "Live",
+        id: "event28",
+        eventType: "Explore & Mine",
+        totalRewards: "$20,000 in BNB Rewards",
+        eventDuration: chainlinkLastDay,
+        minRewards: "0.5",
+        maxRewards: "20",
+        minPoints: "5,000",
+        maxPoints: "50,000",
+        learnMore: "",
+        eventDate: "Dec 06, 2024",
+      },
+    },
 
   
     {
@@ -5272,6 +5334,8 @@ console.log('mint sei')
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
+                chainlinkEarnUsd={chainlinkEarnUsd}
+
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -5343,6 +5407,8 @@ console.log('mint sei')
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
+                chainlinkEarnUsd={chainlinkEarnUsd}
+
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -6078,6 +6144,8 @@ console.log('mint sei')
                 seiEarnUsd={seiEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
+                chainlinkEarnUsd={chainlinkEarnUsd}
+
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
