@@ -195,6 +195,7 @@ function Dashboard({
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
+  chainlinkEarnUsd
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -10661,7 +10662,7 @@ function Dashboard({
                 Number(mantaEarnUsd) +
                 Number(matEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(coreEarnUsd)
+                Number(coreEarnUsd) + Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -10794,6 +10795,7 @@ function Dashboard({
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
             matEarnUsd={matEarnUsd}
+            chainlinkEarnUsd={chainlinkEarnUsd}
             immutableEarnUsd={immutableEarnUsd}
             coreEarnUsd={coreEarnUsd}
             userRankRewards={userRankRewards}
@@ -11289,6 +11291,7 @@ function Dashboard({
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 matEarnUsd={matEarnUsd}
+                chainlinkEarnUsd={chainlinkEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 userRankRewards={userRankRewards}

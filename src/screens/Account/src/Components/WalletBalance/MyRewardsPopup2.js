@@ -32,6 +32,8 @@ import victionIcon from "../../../../../components/NewDailyBonus/assets/victionI
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
 import easy2stakeLogo from "../WalletBalance/assets/easy2stakeLogo.svg";
 import midleIcon from "../../../../Map/assets/chainIcons/midle.png";
+import chainlinkLogo from "../../../../Map/assets/chainIcons/chainlinkIcon.svg";
+
 
 
 import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.svg";
@@ -91,7 +93,8 @@ const MyRewardsPopupNew = ({
   matEarnUsd,
   easy2StakeEarnUsd,
   midleEarnUsd,
-  coingeckoEarnUsd
+  coingeckoEarnUsd,
+  chainlinkEarnUsd
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -818,7 +821,8 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySkale) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(easy2StakeEarnUsd) +
+                      Number(easy2StakeEarnUsd)+
+                      Number(chainlinkEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(taikoEarnUsd) +
                       Number(skaleEarnUsd) +
@@ -1118,6 +1122,7 @@ const MyRewardsPopupNew = ({
                       Number(immutableEarnUsd) +
                       Number(baseEarnUSD)+
                       Number(easy2StakeEarnUsd) +
+                      Number(chainlinkEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(skaleEarnUsd) +
                       Number(taikoEarnUsd) +
@@ -1706,6 +1711,21 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(bnbEarnUsd, 2)}
+                  </span>
+                </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                       chainlinkLogo
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Chainlink
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(chainlinkEarnUsd, 2)}
                   </span>
                 </div>
               
