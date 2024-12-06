@@ -899,8 +899,7 @@ const MyProfile = ({
                       <span>
                         {userActiveEvents === 14
                           ? "Completed"
-                          : userActiveEvents === 0
-                          ? "Ready"
+                           
                           : userActiveEvents + "/14"}
                       </span>
                     </div>
