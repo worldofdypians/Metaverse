@@ -12,7 +12,7 @@ import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
-import landIcon from "./assets/landIcon.svg";
+import landIcon from "./assets/landIcon.png";
 import Slider from "react-slick";
 import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";

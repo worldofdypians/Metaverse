@@ -236,15 +236,14 @@ const NewEvents = ({
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
 
-  const [open, setOpen] = useState(false);
 
-  const handleTooltipToggle = () => {
-    setOpen((prev) => !prev);
-  };
+  function hasNoMoreThanTwoDecimalPlaces(num) {
+    // Check if the number has up to 2 decimal places
+    return Number.isInteger(num) || num.toFixed(2) == num.toString();
+  }
 
-  const handleTooltipClose = () => {
-    setOpen(false);
-  };
+
+  
 
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
@@ -1254,6 +1253,7 @@ const NewEvents = ({
     }
   };
 
+  
   //SCORPION KING
 
   const getBundlePrizesScorpion = async () => {
@@ -3678,8 +3678,14 @@ const NewEvents = ({
                                       adjustedDay !== 5
                                         ? "luminosity"
                                         : ""
-                                    } p-3 d-flex flex-column justify-content-between w-100`}
+                                    } p-3 d-flex flex-column justify-content-between w-100 position-relative`}
                                   >
+                                    {activeEvent.title === "Maze Day" &&
+                                    <div className="maze-day-balance-holder d-flex flex-column align-items-center gap-1 p-2">
+                                        <span className="beast-siege-event-price">My Balance:</span>
+                                        <span className="beast-siege-event-price">{getFormattedNumber(wodBalance, hasNoMoreThanTwoDecimalPlaces(Number(wodBalance)) ? 0 : 2 )} WOD</span>
+                                    </div>
+                                    }
                                     <div className="d-flex flex-column gap-1">
                                       <h6 className="beast-siege-title mb-0">
                                         {activeEvent.title}
@@ -3726,14 +3732,19 @@ const NewEvents = ({
                                           </span>
                                         </div>
                                        {Number(wodBalance) <= 400 ? 
-                                       <NavLink
+                                      // <div className="position-relative mt-5 mt-lg-0">
+                                          <NavLink
                                        to={"/#buy-wod"}
                                        className="beast-siege-btn maze-day-button"
                                      >
-                                       Buy WOD
+                                       Get WOD
                                      </NavLink>
+                                      // </div>
                                      :
-                                     <div style={{height: "38px"}}></div> 
+                                     <div style={{height: "38px"}} className="d-flex align-items-center">
+                                        <span className="beast-siege-event-price w-50 text-white">You are elligible for participation</span>
+
+                                     </div> 
                                       }
                                       </>
                                     ) : activeEvent.title === "Critical Hit" ? (

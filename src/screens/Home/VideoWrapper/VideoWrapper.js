@@ -287,7 +287,7 @@ const VideoWrapper = ({
               >
                 {/* <img src={buyWod} alt="" /> */}
                 {/* Buy  */}
-                Buy WOD
+                Get WOD
               </button>
               <NavLink
                 to={"/staking"}
@@ -415,7 +415,7 @@ const VideoWrapper = ({
         >
           <div className="challenge-popup-wrapper popup-active p-3">
             <div className="d-flex align-items-center justify-content-between mb-3">
-              <h6 className="mb-0 buy-wod-popup-title">Buy WOD</h6>
+              <h6 className="mb-0 buy-wod-popup-title">Get WOD</h6>
               <img
                 src={xMarkBuyWod}
                 width={22}
