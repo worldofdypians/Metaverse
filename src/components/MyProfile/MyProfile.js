@@ -89,6 +89,20 @@ import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
 import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
 import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancakeSwap.svg";
 import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
+import { styled, Tooltip, tooltipClasses } from "@mui/material";
+
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "200px !important",
+    minWidth: "90px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -927,7 +941,18 @@ const MyProfile = ({
                     to={"/account/prime"}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={prime} alt="" />
+                    <HtmlTooltip
+                      placement="top"
+                      title={
+                        <span className="card-eth-chain-text">
+                          With Prime enabled, earn 50 extra stars if you're in
+                          the top 100 of any leaderboard!
+                        </span>
+                      }
+                    >
+                      <img src={prime} alt="" />
+                    </HtmlTooltip>
+
                     <div
                       className={"daily-progress-value-golden"}
                       style={{
