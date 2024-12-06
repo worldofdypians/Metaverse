@@ -10532,11 +10532,6 @@ function Dashboard({
   ]);
 
 
-  console.log((userData?.statValue === 0
-    ? 0
-    : userData?.position > 100
-    ? 0
-    : bnbStars[userData?.position]) ?? 0, "userData");
   
 
   return (
@@ -10771,6 +10766,7 @@ function Dashboard({
               onConnectWallet={() => {
                 setshowWalletModal(true);
               }}
+              wodBalance={wodBalance}
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
