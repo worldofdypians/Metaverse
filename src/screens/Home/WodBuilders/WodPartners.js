@@ -165,10 +165,7 @@ const WodPartners = ({ full }) => {
       name: "SpaceID",
       icon: "spaceId.svg",
     },
-    {
-      name: "Hamster Chain",
-      icon: "hamsterChain.png",
-    },
+
 
     {
       name: "Balance",
@@ -276,7 +273,7 @@ const WodPartners = ({ full }) => {
                       style={{
                         width: "60px",
                         height: "60px",
-                        scale: partner.icon === "hamsterChain.png" ? "1.8" : "",
+                       
                       }}
                     />
                   </div>

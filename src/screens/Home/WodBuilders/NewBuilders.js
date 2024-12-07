@@ -251,12 +251,7 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-    {
-      name: "Hamster Chain",
-      icon: "hamsterChain",
-      banner: "kucoinBanner.png",
-      backer: false,
-    },
+   
 
     {
       name: "Balance",
@@ -354,15 +349,14 @@ const NewBuilders = () => {
                   item.icon === "alterverse" ||
                   item.icon === "worldshards" ||
                   item.icon === "binanceWeb3" ||
-                  item.icon === "savingDao" ||
-                  item.icon === "hamsterChain" ||
+                  item.icon === "savingDao"  ||
                   item.icon === "creoengine" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={45}
                       height={45}
                       alt=""
-                      style={{ scale: item.icon === "hamsterChain" ? "2" : "" }}
+                      
                     />
                   ) : (
                     <img
