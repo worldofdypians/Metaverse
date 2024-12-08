@@ -220,6 +220,12 @@
   font-weight: 700;
   line-height: 10px; /* 125% */
   text-transform: uppercase;
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+
+  }
+
 }
 
 @-webkit-keyframes glowText {
