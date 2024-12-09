@@ -1792,15 +1792,15 @@ function App() {
   const checkConnection = async () => {
     await window.getCoinbase().then((data) => {
       setCoinbase(data);
-      axios
-        .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
-        .then((res) => {
-          if (res.data?.username) {
-            setUsername(res.data?.username);
-          } else {
-            setUsername("");
-          }
-        });
+      // axios
+      //   .get(`https://api-image.dyp.finance/api/v1/username/${data}`)
+      //   .then((res) => {
+      //     if (res.data?.username) {
+      //       setUsername(res.data?.username);
+      //     } else {
+      //       setUsername("");
+      //     }
+      //   });
     });
   };
   // console.log(isConnected, coinbase);
@@ -1810,11 +1810,11 @@ function App() {
       if (window.gatewallet) {
         setCoinbase(account);
         setIsConnected(isActive);
-        fetchAvatar(account);
+        // fetchAvatar(account);
       } else {
         await window.getCoinbase().then((data) => {
           if (data) {
-            fetchAvatar(data);
+            // fetchAvatar(data);
             setCoinbase(data);
             setIsConnected(true);
           } else {
@@ -3061,6 +3061,7 @@ console.log('mint sei')
     }
 
     if (isAuthenticated) {
+      
       if (!playerId) {
         return (
           <React.Fragment>
@@ -3250,7 +3251,7 @@ console.log('mint sei')
     ) {
       setIsConnected(isActive);
       if (account) {
-        fetchAvatar(account);
+        // fetchAvatar(account);
         setCoinbase(account);
       }
     } else if (window.WALLET_TYPE !== "binance") {
@@ -3264,7 +3265,7 @@ console.log('mint sei')
       logout === "false"
     ) {
       if (account) {
-        fetchAvatar(account);
+        // fetchAvatar(account);
         setCoinbase(account);
         setIsConnected(true);
       } else {

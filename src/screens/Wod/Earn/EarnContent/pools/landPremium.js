@@ -92,7 +92,20 @@ const LandDetailsPremium = ({
     setMyNFTs(nfts);
   };
 
+  const handleSecondTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
+
   const refreshStakes = () => {
+    handleSecondTask(coinbase)
+
     setnewStakes(newStakes + 1);
   };
 

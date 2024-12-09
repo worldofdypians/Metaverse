@@ -53,7 +53,16 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
   const [checked, setIschecked] = useState(false);
 
   const [value, setValue] = React.useState(0);
-
+  const handleFirstTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setLoginValues(() => {
@@ -65,6 +74,8 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
   };
 
   if (isAuthenticated && playerId) {
+    handleFirstTask(coinbase);
+
     return <Navigate to={"/account"} />;
   }
 
@@ -76,16 +87,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
   //   return <Navigate to={"/player"} />;
   // }
 
-  const handleFirstTask = async (wallet) => {
-    const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
-      .catch((e) => {
-        console.error(e);
-      });
-    if (result2 && result2.status === 200) {
-      console.log(result2);
-    }
-  };
+
 
   return (
     <div
@@ -113,7 +115,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
-                // handleFirstTask(coinbase);
+                handleFirstTask(coinbase);
                 console.log("success");
                 onSuccessLogin();
               }}
