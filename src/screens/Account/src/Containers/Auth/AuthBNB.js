@@ -177,11 +177,10 @@ function AuthBNB({
   };
 
   const handleFirstTask = async (wallet) => {
+    const result2 = await axios
 
-      const result2 = await axios
-      .get(
-        `https://api.worldofdypians.com/api/olympiad/task1/${wallet}`
-      )
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+
       .catch((e) => {
         console.error(e);
       });
@@ -210,7 +209,7 @@ function AuthBNB({
         },
       }).then(() => {
         onWalletLinkComplete();
-        // handleFirstTask(coinbase);
+        handleFirstTask(coinbase);
       });
     } catch (error) {
       console.log(error);
@@ -328,7 +327,7 @@ function AuthBNB({
                           }}
                           onSuccessLogin={() => {
                             handleManageLoginStates();
-                            // handleFirstTask(coinbase);
+                            handleFirstTask(coinbase);
                           }}
                           handleGoToSignup={() => {
                             handleChange("click", 1);

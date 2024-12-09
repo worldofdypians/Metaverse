@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_earn.scss";
 import EarnHero from "./EarnHero/EarnHero";
 import EarnContent from "./EarnContent/EarnContent";
+import axios from "axios";
 // import useWindowSize from "../../../hooks/useWindowSize";
 
 const Earn = ({
@@ -17,10 +18,8 @@ const Earn = ({
   wodBalance,
   tokenPools,
   userPools,
-  onSuccessfulStake
+  onSuccessfulStake,
 }) => {
- 
-
   // const nftPools = [
   //   {
   //     tokenName: "CAWS NFT",
@@ -62,7 +61,10 @@ const Earn = ({
   const allPools = [...tokenPools, ...nftPools, ...nftTokenPools];
 
   const [selectedFilter, setSelectedFilter] = useState("All");
-  const [stakingPools, setStakingPools] = useState([...tokenPools, ...nftPools]);
+  const [stakingPools, setStakingPools] = useState([
+    ...tokenPools,
+    ...nftPools,
+  ]);
   const [showPopup, setshowPopup] = useState(false);
   const [aprTooltip, setaprTooltip] = useState(false);
   const [selectedViewStyle, setselectedViewStyle] = useState("table");
@@ -70,7 +72,7 @@ const Earn = ({
 
   const handleSetPools = (poolFilter, isExpired) => {
     if (poolFilter === "All") {
-      const allPools = [...tokenPools, ...nftPools]
+      const allPools = [...tokenPools, ...nftPools];
       if (isExpired === false) {
         let poolsActive = allPools.filter((item) => {
           return item.expired === "No";
@@ -100,13 +102,30 @@ const Earn = ({
         });
         setStakingPools(nftPoolsExpired);
       }
-    } 
+    }
+  };
+
+  const handleSecondTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Staking";
   }, []);
+
+  useEffect(() => {
+    if (isConnected && coinbase) {
+      handleSecondTask(coinbase);
+    }
+  }, [isConnected, coinbase]);
 
   useEffect(() => {
     if (nftPools && nftPools.length > 0) {
@@ -117,21 +136,19 @@ const Earn = ({
     <>
       <div className="container-fluid earn-mainhero-wrapper token-wrapper px-0">
         <div className="d-flex flex-column gap-3">
-          <EarnHero
-          
-          />
+          <EarnHero />
           <EarnContent
-           onSelectFilter={(value, expirevalue) => {
-            setSelectedFilter(value);
-            handleSetPools(value, expirevalue);
-          }}
-          onSelectViewStyle={(value) => {
-            setselectedViewStyle(value);
-          }}
-          onViewPastPools={(filterValue, value) => {
-            setExpired(value);
-            handleSetPools(filterValue, value);
-          }}
+            onSelectFilter={(value, expirevalue) => {
+              setSelectedFilter(value);
+              handleSetPools(value, expirevalue);
+            }}
+            onSelectViewStyle={(value) => {
+              setselectedViewStyle(value);
+            }}
+            onViewPastPools={(filterValue, value) => {
+              setExpired(value);
+              handleSetPools(filterValue, value);
+            }}
             isConnected={isConnected}
             coinbase={coinbase}
             chainId={chainId}

@@ -127,17 +127,6 @@ const NewChestItem = ({
     }
   };
 
-  const handleSecondTask = async (wallet) => {
-    const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task2/${wallet}`)
-      .catch((err) => {
-        console.error(err);
-      });
-
-    if (result2 && result2.status === 200) {
-      console.log(result2);
-    }
-  };
 
   const getUserRewardsByChest = async (
     userEmail,
@@ -312,6 +301,18 @@ const NewChestItem = ({
     }
   };
 
+  const handleThirdTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task3/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
+
+
   const handleOpenChest = async () => {
     onChestStatus("waiting");
     onLoadingChest(true);
@@ -387,6 +388,7 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "opbnb"
               );
+              handleThirdTask(coinbase)
             })
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -413,6 +415,8 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "opbnb"
               );
+              handleThirdTask(coinbase)
+
             })
             .catch((e) => {
               console.error(e);
@@ -455,6 +459,8 @@ const NewChestItem = ({
               chestIndex - 1,
               "opbnb"
             );
+            handleThirdTask(coinbase)
+
           }
         } else if (rewardTypes === "standard") {
           const txResponse = await daily_bonus_contract_opbnb_binance
@@ -479,6 +485,8 @@ const NewChestItem = ({
               chestIndex - 1,
               "opbnb"
             );
+            handleThirdTask(coinbase)
+
           }
         }
       }
@@ -1390,6 +1398,8 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "bnb"
               );
+              handleThirdTask(coinbase)
+
             })
             .catch((e) => {
               window.alertify.error(e?.message);
@@ -1441,6 +1451,8 @@ const NewChestItem = ({
                 chestIndex - 1,
                 "bnb"
               );
+              handleThirdTask(coinbase)
+
             })
             .catch((e) => {
               console.error(e);
@@ -1518,6 +1530,8 @@ const NewChestItem = ({
               chestIndex - 1,
               "bnb"
             );
+            handleThirdTask(coinbase)
+
           }
         } else if (rewardTypes === "standard") {
           const gasPrice = await binanceW3WProvider.getGasPrice();
@@ -1567,6 +1581,8 @@ const NewChestItem = ({
               chestIndex - 1,
               "bnb"
             );
+            handleThirdTask(coinbase)
+
           }
         }
       }

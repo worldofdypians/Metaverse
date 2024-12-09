@@ -78,7 +78,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
 
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -113,7 +113,7 @@ function Auth({ isConnected, coinbase, onSuccessLogin, onNewsLetterClick }) {
           {value === 0 && (
             <Login
               onSuccessLogin={() => {
-                // handleFirstTask(coinbase);
+                handleFirstTask(coinbase);
                 console.log("success");
                 onSuccessLogin();
               }}
