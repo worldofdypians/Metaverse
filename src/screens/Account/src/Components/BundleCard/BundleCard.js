@@ -3,8 +3,7 @@ import "./_bundle.scss";
 import dypius from "../../Images/userProfile/dypius.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
 import filledCircle from "../../Images/userProfile/filled-circlecheck.svg";
-import bnbChain from "../../Images/userProfile/bnbChain.svg";
-import dragon from "../../Images/userProfile/dragon.png";
+import bnbChain from "../../Images/userProfile/bnbChain.svg"; 
 import {
   wod_abi,
   token_abi,

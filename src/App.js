@@ -53,11 +53,9 @@ import MarketMint from "./screens/Marketplace/MarketMint";
 import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
-import { useEagerlyConnect } from "web3-connector";
 import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
-import { disconnect, connectWallet, ConnectionType } from "web3-connector";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
@@ -480,7 +478,7 @@ function App() {
   const { connector, account, chainId, active, isActive, isActivating, error } =
     useWeb3React();
 
-  useEagerlyConnect();
+    
   const { activate, deactivate, library, provider } = useWeb3React();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -1922,16 +1920,8 @@ function App() {
           checkConnection();
         } else
           window.alertify.error("No web3 detected. Please install Metamask!");
-      } else {
-        await connectWallet(ConnectionType.INJECTED);
-        setCoinbase(account);
-        setIsConnected(isActive);
-        setwalletModal(false);
-        setShowForms2(true);
-        setSuccess(true);
-        setChainId(parseInt(window.gatewallet.chainId));
       }
-
+      
       //
       // window.gatewallet.enable()
       // setCoinbase(account);
@@ -4736,7 +4726,7 @@ console.log('mint sei')
         window.WALLET_TYPE = "";
       }, 500);
     } else {
-      disconnect(connector);
+    
       localStorage.setItem("logout", "true");
     }
   };

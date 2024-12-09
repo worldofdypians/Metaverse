@@ -4,8 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
-
-import { getConnectors } from "web3-connector";
+ 
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
 import { ApolloProvider } from "@apollo/client";
 import client from "./screens/Account/src/apolloConfig";

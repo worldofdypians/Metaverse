@@ -11,7 +11,7 @@ import x4rounded from "./assets/x4Rounded.svg";
 import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
 import globalRank from "../WalletBalance/newAssets/globalRank.svg";
 // import Countdown from "react-countdown";
-import dypMedal from "../../Images/userProfile/dyp-medal.svg";
+
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
 import Clipboard from "react-clipboard.js";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
