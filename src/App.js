@@ -3061,6 +3061,7 @@ console.log('mint sei')
     }
 
     if (isAuthenticated) {
+      
       if (!playerId) {
         return (
           <React.Fragment>
