@@ -107,14 +107,14 @@ white-space: nowrap;
 }
 
 .build-business-wrapper {
-  background-image: url("./assets/wodpartnersBg.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/wodpartnersBg.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
   position: relative;
   scroll-margin-top: 100px;
   @media screen and (max-width: 786px) {
-  background-image: url("./assets/wodpartnersBgMobile.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/wodpartnersBgMobile.png");
     
   }
 }
@@ -166,7 +166,7 @@ white-space: nowrap;
 }
 
 .builders-bg{
-  background-image: url('./assets/buildersBg.webp');
+  background-image: url('https://cdn.worldofdypians.com/wod/buildersBg.webp');
   padding-top: 20px;
   padding-bottom: 20px;
   background-size: 100% 100%;
@@ -177,7 +177,7 @@ border-bottom: 3px solid black;
 }
 
 .builders-bg-large{
-  background-image: url('./assets/buildersBgLarge.webp') !important;
+  background-image: url('https://cdn.worldofdypians.com/wod/buildersBgLarge.webp') !important;
   @media screen and (max-width: 786px) {
     background-size: auto !important;
   }

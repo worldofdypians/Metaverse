@@ -25,7 +25,6 @@ import newEvents from "./assets/newEvents.png";
 import betaPassAddition from "./assets/betaPassAddition.png";
 import globalEvents from "./assets/globalEvents.png";
 import partnershipAddition from "./assets/partnershipAddition.png";
-import epicwhite from "./assets/epicwhite.svg";
 import wodAnimalsBanner from "./assets/wodAnimalsBanner.png";
 import wodLeaderBoardBanner from "./assets/wodLeaderboardBanner.png";
 import dailyBonusBanner from "./assets/dailyBonusBanner.png";

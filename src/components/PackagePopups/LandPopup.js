@@ -3,7 +3,7 @@ import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import landPopup from "./assets/landPopup.webp";
 import cityMap from "./assets/cityMap.webp";
 import islandMap from "./assets/islandMap.webp";
-import epicblack from "../../assets/epicblack.svg";
+
 import opensea from "../../assets/opensea.svg";
 import { NavLink } from "react-router-dom";
 

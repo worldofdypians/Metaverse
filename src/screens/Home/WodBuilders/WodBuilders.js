@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import "./_wodbuilders.scss";
 import { useState } from "react";
 import useWindowSize from "../../../hooks/useWindowSize";
-import partnersDropdown from "./assets/partnersDropdown.svg";
+
+
+
+
 
 const WodBuilders = ({ page }) => {
   const [slice, setSlice] = useState(2);
@@ -373,7 +376,7 @@ const WodBuilders = ({ page }) => {
               >
                 <div className="partner-banner-holder overflow-hidden">
                   <img
-                    src={require(`./assets/${item.banner}`)}
+                    src={`https://cdn.worldofdypians.com/wod/${item.banner}`}
                     className="w-100 partner-banner"
                     alt=""
                   />
@@ -387,14 +390,14 @@ const WodBuilders = ({ page }) => {
                   item.icon === "creoengine" ||
                   item.icon === "binanceWeb3" ? (
                     <img
-                      src={require(`./assets/${item.icon}.png`)}
+                      src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                       width={24}
                       height={24}
                       alt=""
                     />
                   ) : (
                     <img
-                      src={require(`./assets/${item.icon}.svg`)}
+                      src={`https://cdn.worldofdypians.com/wod/${item.icon}.svg`}
                       width={24}
                       height={24}
                       alt=""
@@ -417,7 +420,7 @@ const WodBuilders = ({ page }) => {
                   {" "}
                   {slice === 2 ? "View More" : "View Less"}
                 </span>
-                <img src={partnersDropdown} width={20} height={20} style={{transform: slice === 2 ? "none" : "rotate(180deg)"}} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} style={{transform: slice === 2 ? "none" : "rotate(180deg)"}} alt="" />
               </div>
             </div>
           ) : (
@@ -432,7 +435,7 @@ const WodBuilders = ({ page }) => {
                   {slice === 8 ? "View More" : "View Less"}
                 </span>
 
-                <img src={partnersDropdown} width={20} height={20} style={{transform: slice === 8 ? "none" : "rotate(180deg)"}} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} style={{transform: slice === 8 ? "none" : "rotate(180deg)"}} alt="" />
               </div>
             </div>
           )}

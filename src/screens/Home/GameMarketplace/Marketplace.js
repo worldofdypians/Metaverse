@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_marketplace.scss";
-import CawsItemCard from "../../../components/CawsItemCard/CawsItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
-import Slider from "react-slick";
 import Marquee from "react-fast-marquee";
-import marketDummy from "../../../assets/marketDummy.png";
 import playIcon from "../../../assets/gameAssets/playIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import VideoPopup from "../../Game/VideoPopup";

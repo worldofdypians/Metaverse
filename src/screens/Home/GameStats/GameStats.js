@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_gamestats.scss";
-import transactionsBannerSmall from "./assets/transactionsBannerSmall.webp";
-import darkLordSpaceBannerSmall from "./assets/darkLordSpaceBannerSmall.webp";
-import groupBannerSmall from "./assets/groupBannerSmall.webp";
-import cityBannerSmall from "./assets/cityBannerSmall.webp";
-import secondCityBannerSmall from "./assets/secondCityBannerSmall.webp";
-import lizardBannerSmall from "./assets/lizardBannerSmall.webp";
-import epicblack from "../../../assets/epicblack.svg";
-import getFormattedNumber from "../../Caws/functions/get-formatted-number";
+
+
 import { NavLink } from "react-router-dom";
 
 const GameStats = ({ totalSupply, monthlyPlayers }) => {
@@ -32,7 +26,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
-            src={transactionsBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/transactionsBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
@@ -64,7 +58,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
-            src={lizardBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/lizardBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
@@ -92,7 +86,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
                   className="explore-btn col-lg-4 py-2 d-flex align-items-center gap-2"
                   style={{ whiteSpace: "nowrap" }}
                 >
-                  <img src={epicblack} width={24} height={24} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/epicblack.svg"} width={24} height={24} alt="" />
                   Join the Fight
                 </NavLink>
                 <NavLink
@@ -110,7 +104,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex p-0">
           <img
-            src={darkLordSpaceBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/darkLordSpaceBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
@@ -145,7 +139,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
-            src={cityBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/cityBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
@@ -176,7 +170,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex  p-0">
           <img
-            src={groupBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/groupBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
@@ -211,7 +205,7 @@ const GameStats = ({ totalSupply, monthlyPlayers }) => {
       <div>
         <div className="container-fluid d-flex p-0">
           <img
-            src={secondCityBannerSmall}
+            src={"https://cdn.worldofdypians.com/wod/secondCityBannerSmall.webp"}
             className="small-transaction-banner"
             alt=""
           />
