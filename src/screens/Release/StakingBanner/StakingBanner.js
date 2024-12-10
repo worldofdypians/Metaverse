@@ -1,6 +1,4 @@
-import React from "react";
-import wodApr from "../assets/wodApr.svg";
-import wodTokens from "../assets/wodTokens.webp";
+import React from "react"; 
 import "./_stakingbanner.scss";
 import { NavLink } from "react-router-dom";
 
@@ -30,8 +28,8 @@ const StakingBanner = () => {
                 </span>
               </div>
               <div className="d-flex align-items-center justify-content-between w-100">
-                <img src={wodApr} alt="wodApr" />
-                <img src={wodTokens} alt="wodTokens" style={{ height: 85 }} />
+                <img src={'https://cdn.worldofdypians.com/wod/wodApr.svg'} alt="wodApr" />
+                <img src={'https://cdn.worldofdypians.com/wod/wodTokens.webp'} alt="wodTokens" style={{ height: 85 }} />
               </div>
             </div>
           </div>

@@ -1163,19 +1163,7 @@ const Header = ({
                 </div>
               </div>
             </div>
-            {/* {!coinbase ? (
-              <NavLink to={"/account"}>
-                <img src={personNoCoinbase} className="account-icon" alt="" />
-              </NavLink>
-            ) : (
-              <NavLink to={"/account"}>
-                <img
-                  src={avatar ? avatar : personCoinbase}
-                  className="account-icon"
-                  alt=""
-                />
-              </NavLink>
-            )} */}
+       
 
             {!coinbase ? (
               // <div className="linearborder2">
