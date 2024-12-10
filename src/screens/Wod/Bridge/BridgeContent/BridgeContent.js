@@ -1,19 +1,9 @@
 import React, { useState } from "react";
 import "./_bridgecontent.scss";
-import eth from "../../../../components/Header/assets/eth.svg";
-import bnb from "../../../../components/Header/assets/bnb.svg";
-import wallet from "../../../../assets/wodAssets/wallet.svg";
-import tooltip from "../../../../assets/wodAssets/tooltip.svg";
-import bridgeSwitch from "../../../../assets/wodAssets/bridgeSwitch.svg";
-import bridgeGuide from "../../../../assets/wodAssets/bridgeGuide.svg";
-import copy from "../../../../assets/wodAssets/copy.svg";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
-import { shortAddress } from "../../../Caws/functions/shortAddress";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import bridgeIcon from "../assets/bridgeIcon.svg";
-import ethIcon from "../assets/ethIcon.svg";
-import bnbIcon from "../assets/bnbIcon.svg";
 import wodIcon from "../assets/wodIcon.svg";
 
 const StyledTextField = styled(TextField)({
@@ -101,7 +91,7 @@ const BridgeContent = ({
                   <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
                     <span className="bridge-network-span">Network</span>
                     <div className="d-flex align-items-center gap-2">
-                      <img src={bnbIcon} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                       <h6 className="mb-0 bridge-network-title">BNB Chain</h6>
                     </div>
                   </div>

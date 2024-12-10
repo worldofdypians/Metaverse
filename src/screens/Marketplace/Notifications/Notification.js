@@ -1,30 +1,7 @@
 import React, { useEffect, useState } from "react";
-import allIcon from "./assets/allIcon.svg";
-import allIconActive from "./assets/allIconActive.svg";
-import cartIcon from "./assets/cartIcon.svg";
-import cartIconActive from "./assets/cartIconActive.svg";
-import eventIcon from "./assets/eventIcon.svg";
-import eventIconActive from "./assets/eventIconActive.svg";
-import markReadIcon from "./assets/markReadIcon.svg";
-import markReadIconActive from "./assets/markReadIconActive.svg";
-import newsIcon from "./assets/newsIcon.svg";
-import newsIconActive from "./assets/newsIconActive.svg";
-import offerIcon from "./assets/offerIcon.svg";
-import offerIconActive from "./assets/offerIconActive.svg";
-import transferIcon from "./assets/transferIcon.svg";
-import transferIconActive from "./assets/transferIconActive.svg";
-import updateIcon from "./assets/updateIcon.svg";
-import updateIconActive from "./assets/updateIconActive.svg";
-
-import welcomeIcon from "./assets/welcomeIcon.svg";
-import welcomeIconActive from "./assets/welcomeIconActive.svg";
-
-import deleteIcon from "./assets/deleteIcon.svg";
-import deleteIconActive from "./assets/deleteIconActive.svg";
-import orangeDeleteIcon from "./assets/orangeDeleteIcon.svg";
-import notifBell from "./assets/notifbell.svg";
-import notificationDropdown from "./assets/notificationDropdown.svg";
 import { NavLink } from "react-router-dom";
+
+
 
 const Notification = ({
   item,
@@ -57,37 +34,37 @@ const Notification = ({
             <img
               src={
                 item.bought === "yes" && item.read === false
-                  ? cartIconActive
+                  ? "https://cdn.worldofdypians.com/wod/cartIconActive.svg"
                   : item.bought === "yes" && item.read === true
-                  ? cartIcon
+                  ? "https://cdn.worldofdypians.com/wod/cartIcon.svg" 
                   : item.offer === "yes" && item.read === false
-                  ? offerIconActive
+                  ?  "https://cdn.worldofdypians.com/wod/offerIconActive.svg" 
                   : item.offer === "yes" && item.read === true
-                  ? offerIcon
+                  ? "https://cdn.worldofdypians.com/wod/offerIcon.svg" 
                   : item.buy === "yes" && item.read === false
-                  ? transferIconActive
+                  ? "https://cdn.worldofdypians.com/wod/transferIconActive.svg" 
                   : item.buy === "yes" && item.read === true
-                  ? transferIcon
+                  ? "https://cdn.worldofdypians.com/wod/transferIcon.svg" 
                   : //welcome
                   item.welcome === "yes" && item.read === false
-                  ? welcomeIconActive
+                  ? "https://cdn.worldofdypians.com/wod/welcomeIconActive.svg" 
                   : item.welcome === "yes" && item.read === true
-                  ? welcomeIcon
+                  ? "https://cdn.worldofdypians.com/wod/welcomeIcon.svg" 
                   : //news
                   item.news === "yes" && item.read === false
-                  ? newsIconActive
+                  ? "https://cdn.worldofdypians.com/wod/newsIconActive.svg" 
                   : item.news === "yes" && item.read === true
-                  ? newsIcon
+                  ? "https://cdn.worldofdypians.com/wod/newsIcon.svg" 
                   : //updates
                   item.update === "yes" && item.read === false
-                  ? updateIconActive
+                  ? "https://cdn.worldofdypians.com/wod/updateIconActive.svg" 
                   : item.update === "yes" && item.read === true
-                  ? updateIcon
+                  ? "https://cdn.worldofdypians.com/wod/updateIcon.svg" 
                   : //events
                   item.event === "yes" && item.read === false
-                  ? eventIconActive
+                  ? "https://cdn.worldofdypians.com/wod/eventIconActive.svg" 
                   : item.event === "yes" && item.read === true
-                  ? eventIcon
+                  ? "https://cdn.worldofdypians.com/wod/eventIcon.svg" 
                   : null
               }
               alt=""
@@ -158,7 +135,7 @@ const Notification = ({
           </div>
           {item.offer === 'no' && item.bought === 'no' && item.buy === 'no' &&
           <img
-            src={notificationDropdown}
+            src={"https://cdn.worldofdypians.com/wod/notificationDropdown.svg"}
             alt=""
             style={{ transform: active ? "rotate(180deg)" : "none" }}
           /> }
@@ -195,7 +172,7 @@ const Notification = ({
               setActive(false);
             }}
           >
-            <img src={orangeDeleteIcon} width={20} height={20} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/orangeDeleteIcon.svg"} width={20} height={20} alt="" />
             <span className="delete-notif">Delete</span>
           </div>
         </div>

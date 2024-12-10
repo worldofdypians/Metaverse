@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./_challenges.scss";
 import goldenPassBanner from "./assets/goldenPassBanner.png";
-import bnb from "./assets/bnb.svg";
+
 import dypIcon from "./assets/dypIcon.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
 import syncIcon from "./assets/syncIcon.svg";
@@ -457,7 +457,7 @@ const GoldenPass = ({ coinbase, wallet, chainId, binanceW3WProvider,onPopupClick
         <h6 className="mb-0 purchase-package-title">Purchase</h6>
         <div className="d-flex align-items-end gap-2">
           <span className="available-on">Available on</span>
-          <img src={bnb} width={20} height={20} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} width={20} height={20} alt="" />
           <span className="purchase-chain">BNB Chain</span>
         </div>
       </div>

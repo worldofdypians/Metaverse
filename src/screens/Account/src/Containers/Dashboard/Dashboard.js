@@ -36,9 +36,7 @@ import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
-import seiLogo from "../../../../../components/Header/assets/sei.svg";
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";  
 
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
@@ -11622,7 +11620,7 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={matchainLogo}
+                            src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11632,7 +11630,7 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={seiLogo}
+                            src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11641,7 +11639,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={require(`../../../../../components/Header/assets/manta.png`)}
+                            src={'https://cdn.worldofdypians.com/wod/manta.png'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11650,8 +11648,7 @@ function Dashboard({
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
-                              require(`../../../../../components/Header/assets/taiko.svg`)
-                                .default
+                             'https://cdn.worldofdypians.com/wod/taiko.svg'
                             }
                             alt=""
                             style={{ width: 18, height: 18 }}
@@ -11821,7 +11818,7 @@ function Dashboard({
                                         onClick={handleMatPool}
                                       >
                                         <img
-                                          src={matchainLogo}
+                                          src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                                           style={{
                                             width: 18,
                                             height: 18,
@@ -11838,7 +11835,7 @@ function Dashboard({
                                         onClick={handleSeiPool}
                                       >
                                         <img
-                                          src={seiLogo}
+                                          src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                           style={{
                                             width: 18,
                                             height: 18,

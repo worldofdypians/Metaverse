@@ -8,8 +8,7 @@ import premiumIcon from "../../Images/premium/premiumIcon.webp";
 import Web3 from "web3";
 import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
-import seiIcon from "../../../../../components/Header/assets/sei.svg";
+ 
 
 
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -2745,7 +2744,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={matchainLogo}
+                      src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2753,7 +2752,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                           <img
-                            src={seiIcon}
+                            src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -2764,7 +2763,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={require(`../../../../../components/Header/assets/manta.png`)}
+                      src={'https://cdn.worldofdypians.com/wod/manta.png'}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2773,8 +2772,7 @@ const GetPremiumPopup = ({
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
-                        require(`../../../../../components/Header/assets/taiko.svg`)
-                          .default
+                       'https://cdn.worldofdypians.com/wod/taiko.svg'
                       }
                       alt=""
                       style={{ width: 18, height: 18 }}
@@ -2873,7 +2871,7 @@ const GetPremiumPopup = ({
               {dropdownIcon.toUpperCase()}
             </span>
           </div>
-          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0">
+          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0" style={{overflowX: 'clip'}}>
             <div className="d-flex flex-column flex-lg-row align-items-lg-end gap-lg-4">
               <div className="d-flex flex-column gap-lg-3">
                 <span className="token-amount-placeholder">Select chain</span>
@@ -2931,7 +2929,7 @@ const GetPremiumPopup = ({
                           onClick={handleMatPool}
                         >
                           <img
-                            src={matchainLogo}
+                            src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                             style={{ width: 18, height: 18 }}
                             alt=""
                           />
@@ -2945,7 +2943,7 @@ const GetPremiumPopup = ({
                                         onClick={handleSeiPool}
                                       >
                                         <img
-                                          src={seiIcon}
+                                          src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                           style={{
                                             width: 18,
                                             height: 18,
@@ -3127,7 +3125,7 @@ const GetPremiumPopup = ({
                                       onClick={handleSeiPool}
                                     >
                                       <img
-                                        src={seiIcon}
+                                        src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                         alt=""
                                         style={{
                                           width: "18px",

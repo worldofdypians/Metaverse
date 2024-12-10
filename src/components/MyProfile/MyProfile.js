@@ -82,8 +82,6 @@ import useWindowSize from "../../hooks/useWindowSize";
 import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
-import copy from "../../components/Header/assets/copy.svg";
-import check from "../../components/Header/assets/check.svg";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -517,7 +515,7 @@ const MyProfile = ({
                                   setTimeout(() => setTooltip(false), 2000);
                                 }}
                               >
-                                <img src={tooltip ? check : copy} alt="" />{" "}
+                               <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
                               </span>
                             </Clipboard>
                           </div>

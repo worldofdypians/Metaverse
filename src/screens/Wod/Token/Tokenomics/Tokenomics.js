@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./_tokenomics.scss";
 import Clipboard from "react-clipboard.js";
-import bnb from "../../../../components/Header/assets/bnb.svg";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
 import { NavLink } from "react-router-dom";
@@ -224,7 +223,7 @@ const Tokenomics = () => {
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <img src={bnb} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                   <div className="d-flex flex-column">
                     <span className="wod-copy-span">WOD Contract Address</span>
                     <div className="d-flex align-items-center gap-2">

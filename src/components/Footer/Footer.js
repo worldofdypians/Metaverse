@@ -3,7 +3,6 @@ import "./_footer.scss";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import { useLocation } from "react-router-dom";
-import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 import validateEmail from "../../hooks/validateEmail";

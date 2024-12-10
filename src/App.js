@@ -88,26 +88,16 @@ import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
-import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
-import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
-import matchainLogo from "./components/Header/assets/matchain.svg";
-import seiLogo from "./components/Header/assets/sei.svg";
+
 import midleLogo from "./screens/Map/assets/chainIcons/midle.png";
 import chainlinkIcon from "./screens/Map/assets/chainIcons/chainlinkIcon.svg";
 
 
-import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
-import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
-import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
-import baseLogo2 from "./screens/Home/VideoWrapper/assets/baseLogo.svg";
 
 import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
-import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
 import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
-import immutableLogo from "./screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg";
 import easy2stakeLogo from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeLogo.svg";
 
-import mantaLogo from "./screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
 import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
 import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
@@ -137,7 +127,6 @@ import cmc from "./screens/Marketplace/MarketNFTs/assets/cmc.svg";
 import doge from "./screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
 import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
 import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
-import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
@@ -3548,7 +3537,7 @@ console.log('mint sei')
     // },
     {
       title: "BNB Chain",
-      logo: bnbLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/bnbIcon.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -3583,7 +3572,7 @@ console.log('mint sei')
     },
     {
       title: "Matchain",
-      logo: matchainLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/matchainIcon.svg',
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3620,7 +3609,7 @@ console.log('mint sei')
     },
     {
       title: "Base",
-      logo: baseLogo2,
+      logo: 'https://cdn.worldofdypians.com/wod/base.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -3654,7 +3643,7 @@ console.log('mint sei')
     },
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
       eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
@@ -3728,7 +3717,7 @@ console.log('mint sei')
     },
     {
       title: "Immutable",
-      logo: immutableLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/immutable.svg',
       eventStatus: "Live",
       rewardType: "IMX",
       rewardAmount: "$20,000",
@@ -3768,7 +3757,7 @@ console.log('mint sei')
     },
     {
       title: "CORE",
-      logo: coreLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/core.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
@@ -3804,7 +3793,7 @@ console.log('mint sei')
     
     {
       title: "SEI",
-      logo: seiLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/seiLogo.svg',
       eventStatus: "Live",
       rewardType: "SEI",
       rewardAmount: "$20,000",
@@ -4004,7 +3993,7 @@ console.log('mint sei')
 
     {
       title: "VICTION",
-      logo: victionLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/viction.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
@@ -4039,7 +4028,7 @@ console.log('mint sei')
     },
      {
       title: "Manta",
-      logo: mantaLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/manta.png',
       eventStatus: "Live",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
@@ -4077,7 +4066,7 @@ console.log('mint sei')
     },
     {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
@@ -4281,7 +4270,7 @@ console.log('mint sei')
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: 'https://cdn.worldofdypians.com/wod/confluxIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,

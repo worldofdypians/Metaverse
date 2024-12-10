@@ -34,8 +34,7 @@ import victionActive from "./assets/victionActive.webp";
 import seiActive from "./assets/seiActive.webp";
 import multiversActive from "./assets/multiversActive.webp";
 import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
-import mantaLogo from "./assets/mantaLogo.png";
-import matchainLogo from "../../components/Header/assets/matchain.svg";
+import mantaLogo from "./assets/mantaLogo.png"; 
 
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
@@ -1749,7 +1748,7 @@ const MarketMint = ({
                                   mintTitle === "manta"
                                     ? mantaLogo
                                     : mintTitle === "mat"
-                                    ? matchainLogo
+                                    ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                                     : seiLogo
                                 }
                                 alt=""

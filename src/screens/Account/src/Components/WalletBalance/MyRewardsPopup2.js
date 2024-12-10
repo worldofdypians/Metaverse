@@ -25,8 +25,7 @@ import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg"; 
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
@@ -1210,21 +1209,20 @@ const MyRewardsPopupNew = ({
             <img src={bnbLogo} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
             <img
-              src={require("../../../../../components/Header/assets/manta.png")}
+              src={'https://cdn.worldofdypians.com/wod/manta.png'}
               style={{ width: 16, height: 16 }}
               alt=""
             />
             <img
               src={
-                require("../../../../../components/Header/assets/taiko.svg")
-                  .default
+               'https://cdn.worldofdypians.com/wod/taiko.svg'
               }
               style={{ width: 16, height: 16 }}
               alt=""
             />
             <img
               src={
-                matchainLogo
+                'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
               }
               style={{ width: 16, height: 16 }}
               alt=""
@@ -1748,8 +1746,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                        require("../../../../../components/Header/assets/taiko.svg")
-                          .default
+                      'https://cdn.worldofdypians.com/wod/taiko.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1764,7 +1761,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                       matchainLogo
+                       'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}

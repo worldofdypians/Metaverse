@@ -47,7 +47,7 @@ import stoneEyeText from "../../assets/gameAssets/challengeCards/stoneEyeText.pn
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
 import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
 import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
-import bnb from "../Challenges/assets/bnb.svg";
+
 import dypIcon from "../Challenges/assets/dypIcon.svg";
 import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
