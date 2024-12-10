@@ -48,27 +48,27 @@ const VideoWrapper = ({
   const exchanges = [
     {
       title: "Kucoin",
-      logo: "kucoin.svg",
+      logo: "kucoinBuyWod.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
     },
     {
       title: "Gate.io",
-      logo: "gate.svg",
+      logo: "gateBuyWod.svg",
       link: "https://www.gate.io/trade/WOD_USDT",
     },
     {
       title: "MEXC Global",
-      logo: "mexc.svg",
+      logo: "mexcBuyWod.svg",
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
       title: "PancakeSwap",
-      logo: "pancakeSwap.svg",
+      logo: "pancakeSwapBuyWod.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
     },
     {
       title: "TrustWallet",
-      logo: "trustWallet.svg",
+      logo: "trustWalletBuyWod.svg",
       link: "https://short.trustwallet.com/app-download",
     },
   ];

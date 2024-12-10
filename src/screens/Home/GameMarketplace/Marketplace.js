@@ -7,11 +7,8 @@ import OutsideClickHandler from "react-outside-click-handler";
 import VideoPopup from "../../Game/VideoPopup";
 
 const MarketPlace = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [activeSlide2, setActiveSlide2] = useState(0);
   const [videoPopup, setVideoPopup] = useState(false);
   const [videoLink, setVideoLink] = useState(null);
-
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -22,90 +19,6 @@ const MarketPlace = () => {
     }
   }, [videoPopup]);
 
-  var settings = {
-    dots: true,
-    arrows: false,
-    dotsClass: "button__bar",
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 0,
-    beforeChange: (current, next) => setActiveSlide(next),
-    afterChange: (current) => setActiveSlide2(current),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 0,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 0,
-        },
-      },
-    ],
-  };
-
-  const mediaItems = [
-    "media1.png",
-    "media2.png",
-    "media3.png",
-    "media4.png",
-    "media5.png",
-    "media6.png",
-    "media7.png",
-    "media8.png",
-    "media9.png",
-    "media10.png",
-    "media11.png",
-    "media12.png",
-    "media13.png",
-    "media14.png",
-    "media15.png",
-    "media16.png",
-    "media17.png",
-    "media18.png",
-    "media19.png",
-    "media20.png",
-  ];
-
-  function shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
-
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array;
-  }
-
-  const shuffledMedia = shuffle(mediaItems);
-
-  const windowSize = useWindowSize();
 
   const videoGallery = [
     {

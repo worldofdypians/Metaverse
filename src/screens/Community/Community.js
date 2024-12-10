@@ -998,7 +998,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                     >
                       <img
                         src={
-                          require("../../assets/footerIcons/epicgames.svg")
+                          require("https://cdn.worldofdypians.com/epicblack.svg")
                             .default
                         }
                         width={109}
