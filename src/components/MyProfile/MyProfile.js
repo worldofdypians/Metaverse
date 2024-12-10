@@ -84,11 +84,6 @@ import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
 import copy from "../../components/Header/assets/copy.svg";
 import check from "../../components/Header/assets/check.svg";
-import kucoin from "../../screens/Home/VideoWrapper/assets/buyWodAssets/kucoin.svg";
-import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
-import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
-import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancakeSwap.svg";
-import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -634,7 +629,7 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={kucoin} className="buywodimg" />
+                                      <img src={"https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"} className="buywodimg" />
                                       Kucoin
                                     </h6>
                                   </a>
@@ -648,7 +643,7 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={gate} className="buywodimg" />
+                                      <img src={"https://cdn.worldofdypians.com/wod/gateBuyWod.svg"} className="buywodimg" />
                                       Gate.io
                                     </h6>
                                   </a>
@@ -663,7 +658,7 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={mexc} className="buywodimg" />
+                                      <img src={"https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"} className="buywodimg" />
                                       MEXC Global
                                     </h6>
                                   </a>
@@ -679,7 +674,7 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={pancake}
+                                        src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
                                         className="buywodimg"
                                       />
                                       PancakeSwap
@@ -696,7 +691,7 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={trustwallet}
+                                        src={"https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"}
                                         className="buywodimg"
                                       />
                                       TrustWallet

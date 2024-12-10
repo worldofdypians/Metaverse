@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./_wodbuilders.scss";
-import partnersDropdown from "./assets/partnersDropdown.svg";
 import { NavLink } from "react-router-dom";
 
 const WodPartners = ({ full }) => {
@@ -283,7 +282,7 @@ const WodPartners = ({ full }) => {
               onClick={() => setSlice(partners.length)}
             >
               <span className="view-all-partners ">View All</span>
-              <img src={partnersDropdown} width={20} height={20} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} alt="" />
             </div>
           ) : (
             <div
@@ -292,7 +291,7 @@ const WodPartners = ({ full }) => {
             >
               <span className="view-all-partners ">View Less</span>
               <img
-                src={partnersDropdown}
+                src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"}
                 width={20}
                 height={20}
                 style={{ transform: "rotate(180deg)" }}

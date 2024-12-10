@@ -65,7 +65,7 @@ const ExplorerGrid = ({
                 className="dappRadar-full"
                 target="_blank"
               >
-                <img src={"https://cdn.worldofdypians.com/wod/dappRadarFull.svg"} className="w-100" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/dappradarFull.svg"} className="w-100" alt="" />
               </a>
               <h6 className="mb-0 new-stats-value">
                 {" "}

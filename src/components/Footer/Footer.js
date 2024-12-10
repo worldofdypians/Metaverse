@@ -77,28 +77,28 @@ const Footer = () => {
 
   const socials = [
     {
-      icon: "twitter",
+      icon: "twitterFooter",
       link: "https://twitter.com/worldofdypians",
     },
 
     {
-      icon: "telegram",
+      icon: "telegramFooter",
       link: "https://t.me/worldofdypians",
     },
     {
-      icon: "discord",
+      icon: "discordFooter",
       link: "https://discord.gg/worldofdypians",
     },
     {
-      icon: "github",
+      icon: "githubFooter",
       link: "https://github.com/worldofdypians/",
     },
     {
-      icon: "instagram",
+      icon: "instagramFooter",
       link: "https://www.instagram.com/worldofdypians",
     },
     {
-      icon: "facebook",
+      icon: "facebookFooter",
       link: "https://www.facebook.com/worldofdypians",
     },
     // {
@@ -110,31 +110,31 @@ const Footer = () => {
     //   link: "https://www.tiktok.com/@worldofdypians",
     // },
     {
-      icon: "youtube",
+      icon: "youtubeFooter",
       link: "https://www.youtube.com/@Dypius",
     },
     {
-      icon: "medium",
+      icon: "mediumFooter",
       link: "https://medium.com/@worldofdypians",
     },
     {
-      icon: "email",
+      icon: "emailFooter",
       link: "mailto:contact@worldofdypians.com",
     },
     {
-      icon: "linkedin",
+      icon: "linkedinFooter",
       link: "https://www.linkedin.com/company/worldofdypians",
     },
     {
-      icon: "miniapp",
+      icon: "miniappFooter",
       link: "https://t.me/WorldOfDypians_bot",
     },
     {
-      icon: "cmc",
+      icon: "cmcFooter",
       link: "https://coinmarketcap.com/currencies/world-of-dypians/",
     },
     {
-      icon: "coingecko",
+      icon: "coingeckoFooter",
       link: "https://www.coingecko.com/en/coins/world-of-dypians",
     },
   ];
@@ -226,7 +226,7 @@ const Footer = () => {
         <hr className="footer-divider my-4" />
         <div className="d-flex flex-column-reverse flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
           <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5 mt-4 mt-lg-0">
-            <img src={metaverse} height={64} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/metaverse.svg"} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
               <span className="copyright-text">
                 ©{year} World of Dypians Ltd
@@ -257,7 +257,7 @@ const Footer = () => {
             {socials.map((item, index) => (
               <a href={item.link} key={index} target="_blank" rel="noreferrer">
                 <img
-                  src={require(`../../assets/footerIcons/${item.icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${item.icon}.svg`}
                   alt=""
                   height={25}
                   width={25}
