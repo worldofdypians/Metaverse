@@ -46,7 +46,6 @@ import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 // import festivecampaign from "../../components/TimepieceMint/assets/festiveCampaign.webp";
 
 // import multiversXPopupBg from "../../components/TimepieceMint/assets/multiversXPopupBg.webp";
-// import bnbPhase4 from "./WodBuilders/assets/bnbPhase4.png";
 
 // import confluxTreasureHunt from "../../components/TimepieceMint/assets/confluxTreasureHunt.png";
 // import LiveEvents from "./LiveEvents/LiveEvents";

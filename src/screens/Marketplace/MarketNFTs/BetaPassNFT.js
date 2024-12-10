@@ -112,7 +112,6 @@ import SignUpConflux from "../../Account/src/Containers/SingUp/SignUpConflux";
 import PlayerCreationConflux from "../../Account/src/Containers/PlayerCreation/PlayerCreationConflux";
 import whitePickaxe from "../assets/whitePickAxe.svg";
 import whiteCalendar from "../assets/whiteCalendar.svg";
-import epicwhite from "../assets/epicwhite.svg";
 import Countdown from "react-countdown";
 import axios from "axios";
 
@@ -1944,7 +1943,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2060,7 +2059,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2178,7 +2177,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2295,7 +2294,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2421,7 +2420,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2547,7 +2546,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2673,7 +2672,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2800,7 +2799,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -2926,7 +2925,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3056,7 +3055,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3183,7 +3182,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3316,7 +3315,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3442,7 +3441,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3569,7 +3568,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3696,7 +3695,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -3814,7 +3813,7 @@ const BetaPassNFT = ({
                                     target="_blank"
                                   >
                                     <img
-                                      src={epicwhite}
+                                      src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                       alt="icon"
                                       className="epicgame2"
                                     />
@@ -4072,7 +4071,7 @@ const BetaPassNFT = ({
                                   target="_blank"
                                 >
                                   <img
-                                    src={epicwhite}
+                                    src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                     alt="icon"
                                     className="epicgame2"
                                   />
@@ -4174,7 +4173,7 @@ const BetaPassNFT = ({
                                   target="_blank"
                                 >
                                   <img
-                                    src={epicwhite}
+                                    src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                                     alt="icon"
                                     className="epicgame2"
                                   />

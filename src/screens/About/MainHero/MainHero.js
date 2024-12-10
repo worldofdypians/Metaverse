@@ -1,6 +1,6 @@
 import React from "react";
 import "./_mainheroabout.scss";
-import epicblack from "../../../assets/epicblack.svg";
+
 import anchorArrow from "../../../assets/anchorArrow.svg";
 import { NavLink } from "react-router-dom";
 
@@ -19,19 +19,7 @@ const MainHero = () => {
             other players to destroy the enemy's bases.
           </p>
           <div className="d-flex align-items-center gap-3">
-            {/* <a
-              className="explore-btn px-4 py-1"
-              href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-              target="_blank"
-            >
-              <img
-                src={epicblack}
-                alt="icon"
-                className="epicgame2"
-                style={{ width: "auto", height: "30px" }}
-              />{" "}
-              Download
-            </a> */}
+   
             <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">
               Join Beta
             </NavLink>

@@ -45,7 +45,7 @@ import { TextField, Tooltip, tooltipClasses } from "@mui/material";
 import axios from "axios";
 import validateEmail from "../../hooks/validateEmail";
 import Countdown from "react-countdown";
-import epicblack from "../../assets/epicblack.svg";
+
 import victionLogo from "../Home/VideoWrapper/assets/victionLogo.svg";
 import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
 import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
@@ -1012,7 +1012,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                         href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                         target="_blank"
                       >
-                        <img src={epicblack} alt="icon" className="epicgame2" />
+                        <img src={"https://cdn.worldofdypians.com/wod/epicblack.svg"} alt="icon" className="epicgame2" />
                         Download
                       </a>
                     </div>

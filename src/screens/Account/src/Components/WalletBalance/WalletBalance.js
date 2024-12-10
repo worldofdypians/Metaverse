@@ -63,8 +63,7 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
-import epicblack from "./newAssets/epicblack.svg";
-import epicwhite from "./newAssets/epicwhite.svg";
+w
 import multiplayer from "../../../../../assets/multiplayer.svg";
 
 const WalletBalance = ({
@@ -1610,7 +1609,7 @@ const WalletBalance = ({
                         target="_blank"
                       >
                         <img
-                          src={epicwhite}
+                          src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                           alt="icon"
                           style={{ width: 20, height: 24 }}
                         />

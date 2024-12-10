@@ -9,8 +9,7 @@ import { TextField } from "@mui/material";
 import validateEmail from "../../hooks/validateEmail";
 import axios from "axios";
 import styled from "styled-components";
-import epicwhite from "../../assets/epicwhite.svg";
-import epicblack from "../../assets/epicblack.svg";
+
 
 const theme = createTheme({
   palette: {
@@ -220,7 +219,7 @@ const Footer = () => {
                   href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                   target="_blank"
                 >
-                  <img src={hoverState ? epicwhite : epicblack} alt="icon" className="epicgame2" />
+                  <img src={hoverState ? "https://cdn.worldofdypians.com/wod/epicwhite.svg" : "https://cdn.worldofdypians.com/wod/epicblack.svg"} alt="icon" className="epicgame2" />
                   Download
                 </a>
         </div>

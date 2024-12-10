@@ -6,8 +6,7 @@ import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
 import { useNavigate } from "react-router-dom";
-import epicwhite from "../../assets/epicwhite.svg";
-import epicblack from "../../assets/epicblack.svg";
+
 
 const GameHero = ({ showPopup, setShowPopup }) => {
   const [activeSlide, setActiveSlide] = useState();
@@ -150,7 +149,7 @@ const GameHero = ({ showPopup, setShowPopup }) => {
               target="_blank"
             >
               <img
-                src={hoverState ? epicwhite : epicblack}
+                src={hoverState ? "https://cdn.worldofdypians.com/wod/epicwhite.svg" : "https://cdn.worldofdypians.com/wod/epicblack.svg"}
                 alt="icon"
                 className="epicgame2"
               />

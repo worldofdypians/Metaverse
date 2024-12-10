@@ -63,8 +63,7 @@ import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.
 import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
 import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
-import epicblack from "./newAssets/epicblack.svg";
-import epicwhite from "./newAssets/epicwhite.svg";
+
 import multiplayer from "../../../../../assets/multiplayer.svg";
 
 const Portfolio = ({
