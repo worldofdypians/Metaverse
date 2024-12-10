@@ -3,7 +3,6 @@ import "./_footer.scss";
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import { useLocation } from "react-router-dom";
-import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 import validateEmail from "../../hooks/validateEmail";
@@ -226,7 +225,7 @@ const Footer = () => {
         <hr className="footer-divider my-4" />
         <div className="d-flex flex-column-reverse flex-lg-row flex-md-row align-items-lg-center justify-content-between mb-5">
           <div className="d-flex flex-column flex-lg-row flex-md-row align-items-center gap-4 gap-lg-5 mt-4 mt-lg-0">
-            <img src={metaverse} height={64} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/metaverse.svg'} height={64} alt="" />
             <div className="d-flex flex-column justify-content-between">
               <span className="copyright-text">
                 ©{year} World of Dypians Ltd

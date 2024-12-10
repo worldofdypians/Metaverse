@@ -26,9 +26,7 @@ import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
 import coreLogo from "../assets/coreLogo.svg";
-import victionLogo from "../assets/victionLogo.svg";
-import matchainLogo from "../../../components/Header/assets/matchain.svg";
-import seiLogo from "../../../components/Header/assets/sei.svg";
+import victionLogo from "../assets/victionLogo.svg";  
 
 
 import multiversLogo from "../assets/multiversLogo.svg";
@@ -3207,13 +3205,13 @@ const SingleNft = ({
                           : type === "viction"
                           ? victionLogo
                           : type === "mat"
-                          ? matchainLogo
+                          ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                           : type === "multivers"
                           ? multiversLogo
                           : type === "immutable"
                           ? immutableLogo
                           : type === "sei"
-                          ? seiLogo
+                          ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
                           : ethIcon
                       }
                       alt=""

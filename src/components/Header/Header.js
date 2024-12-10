@@ -1,95 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./_header.scss";
-import metaverse from "../../assets/navbarAssets/metaverse.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import person from "./assets/person.svg";
-import personCoinbase from "./assets/personCoinbase.png";
-import personNoCoinbase from "./assets/personNoCoinbase.png";
-import headerArrow from "./assets/headerArrow.svg";
-import copy from "./assets/copy.svg";
-import check from "./assets/check.svg";
-import user from "./assets/user.svg";
-import logoutLogo from "./assets/logout.svg";
-import Clipboard from "react-clipboard.js";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import bellIcon from "./assets/bellIcon.svg";
-import axios from "axios";
-import viewAllArrow from "./assets/viewAllArrow.svg";
-import core from "./assets/core.svg";
-import viction from "./assets/viction.svg";
-import allIcon from "../../screens/Marketplace/Notifications/assets/allIcon.svg";
-import allIconActive from "../../screens/Marketplace/Notifications/assets/allIconActive.svg";
-import cartIcon from "../../screens/Marketplace/Notifications/assets/cartIcon.svg";
-import cartIconActive from "../../screens/Marketplace/Notifications/assets/cartIconActive.svg";
-import eventIcon from "../../screens/Marketplace/Notifications/assets/eventIcon.svg";
-import eventIconActive from "../../screens/Marketplace/Notifications/assets/eventIconActive.svg";
-import markReadIcon from "../../screens/Marketplace/Notifications/assets/markReadIcon.svg";
-import markReadIconActive from "../../screens/Marketplace/Notifications/assets/markReadIconActive.svg";
-import newsIcon from "../../screens/Marketplace/Notifications/assets/newsIcon.svg";
-import newsIconActive from "../../screens/Marketplace/Notifications/assets/newsIconActive.svg";
-import offerIcon from "../../screens/Marketplace/Notifications/assets/offerIcon.svg";
-import offerIconActive from "../../screens/Marketplace/Notifications/assets/offerIconActive.svg";
-import transferIcon from "../../screens/Marketplace/Notifications/assets/transferIcon.svg";
-import transferIconActive from "../../screens/Marketplace/Notifications/assets/transferIconActive.svg";
-import updateIcon from "../../screens/Marketplace/Notifications/assets/updateIcon.svg";
-import updateIconActive from "../../screens/Marketplace/Notifications/assets/updateIconActive.svg";
-import welcomeIcon from "../../screens/Marketplace/Notifications/assets/welcomeIcon.svg";
-import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBetaIcon.svg";
-import welcomeIconActive from "../../screens/Marketplace/Notifications/assets/welcomeIconActive.svg";
-import orangeDeleteIcon from "../../screens/Marketplace/Notifications/assets/orangeDeleteIcon.svg";
-import domainIcon from "./assets/domainIcon.svg";
-import tgVerified from "./assets/tgVerified.svg";
-import popupXmark from "./assets/popupXmark.svg";
-import searchIconDomain from "./assets/searchIconDomain.svg";
-import registerDomainIcon from "./assets/registerDomainIcon.svg";
-import avax from "./assets/avax.svg";
-import bnb from "./assets/bnb.svg";
-import skale from "./assets/skale.svg";
-import eth from "./assets/eth.svg";
-import base from "./assets/base.svg";
-import conflux from "./assets/conflux.svg";
-import manta from "./assets/manta.png";
-import taiko from "./assets/taiko.svg";
-import matchain from "./assets/matchain.svg";
-
-import sei from "./assets/sei.svg";
-import multiversx from "./assets/multiversx.svg";
-
-import immutable from "./assets/immutableLogo.svg";
-import twitterHeader from "./assets/twitterHeader.svg";
-import telegramHeader from "./assets/telegramHeader.svg";
-import discordHeader from "./assets/discordHeader.svg";
-import instagramHeader from "./assets/instagramHeader.svg";
-import youtubeHeader from "./assets/youtubeHeader.svg";
-import mediumHeader from "./assets/mediumHeader.svg";
-import facebookHeader from "./assets/facebookHeader.svg";
-import linkedinHeader from "./assets/linkedinHeader.svg";
-import githubHeader from "./assets/githubHeader.svg";
-import emailHeader from "./assets/emailHeader.svg";
-import error from "./assets/error.svg";
-import personIcon from "./assets/personIcon.svg";
-import dropdownicon from "./assets/dropdown.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
-import logouticon from "./assets/logout.svg";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
-import cartIcon2 from "./assets/dropdownAssets/cartIcon.svg";
-import epicIcon from "./assets/dropdownAssets/epicIcon.svg";
-import guestIcon from "./assets/dropdownAssets/guestIcon.svg";
-import linkedIcon from "./assets/dropdownAssets/linkedIcon.svg";
-import logoutIcon from "./assets/dropdownAssets/logoutIcon.svg";
-import registerIcon from "./assets/dropdownAssets/registerIcon.svg";
-import supportIcon from "./assets/dropdownAssets/supportIcon.svg";
-import premiumIcon from "./assets/dropdownAssets/premiumIcon.svg";
-import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
+import axios from "axios";
 
-import unlinkedIcon from "./assets/dropdownAssets/unlinkedIcon.svg";
-import userIcon from "./assets/dropdownAssets/userIcon.svg";
-import walletIcon from "./assets/dropdownAssets/walletIcon.svg";
+import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
 
 const Header = ({
   handleSignUp,
@@ -557,7 +479,11 @@ const Header = ({
                 window.scrollTo(0, 0);
               }}
             >
-              <img src={metaverse} alt="metaverse" height={32} />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/metaverse.svg"}
+                alt="metaverse"
+                height={32}
+              />
             </NavLink>
             <div
               className={` nav-anchor header-dropdown-link position-relative d-flex align-items-center gap-2 ${
@@ -574,7 +500,10 @@ const Header = ({
               onMouseLeave={() => handleDropdown(null)}
             >
               WOD
-              <img src={headerArrow} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/headerArrow.svg"}
+                alt=""
+              />
               <div
                 className={`header-dropdown p-2  ${
                   dropdown.wod === "wod" ? "header-dropdown-active" : ""
@@ -668,7 +597,10 @@ const Header = ({
               onMouseLeave={() => handleDropdown(null)}
             >
               Community
-              <img src={headerArrow} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/headerArrow.svg"}
+                alt=""
+              />
               <div
                 className={`header-dropdown  p-2 d-flex flex-column gap-2 ${
                   dropdown.community === "community"
@@ -718,7 +650,12 @@ const Header = ({
                     }
                   >
                     Telegram Mini App
-                    <img src={tgVerified} height={20} width={20} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/tgVerified.svg"}
+                      height={20}
+                      width={20}
+                      alt=""
+                    />
                   </NavLink>
                   <hr className="header-divider my-0" />
                   <div className="d-flex align-items-center justify-content-between px-2 mb-2">
@@ -727,35 +664,65 @@ const Header = ({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={twitterHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/twitterHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://t.me/worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={telegramHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/telegramHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://discord.gg/worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={discordHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/discordHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://github.com/worldofdypians/"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={githubHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/githubHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://www.instagram.com/worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={instagramHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/instagramHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                   </div>
                   <div className="d-flex align-items-center justify-content-between px-2 mb-2">
@@ -764,35 +731,65 @@ const Header = ({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={facebookHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/facebookHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://www.youtube.com/@Dypius"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={youtubeHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/youtubeHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://medium.com/@worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={mediumHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/mediumHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="mailto:contact@worldofdypians.com"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={emailHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/emailHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                     <a
                       href="https://www.linkedin.com/company/worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <img src={linkedinHeader} width={25} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/linkedinHeader.svg"
+                        }
+                        width={25}
+                        alt=""
+                      />
                     </a>
                   </div>
                 </div>
@@ -812,7 +809,10 @@ const Header = ({
               >
                 About
               </NavLink>
-              <img src={headerArrow} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/headerArrow.svg"}
+                alt=""
+              />
               <div
                 className={`header-dropdown p-2 d-flex flex-column gap-2 ${
                   dropdown.about === "about" ? "header-dropdown-active" : ""
@@ -897,13 +897,19 @@ const Header = ({
                   className="d-flex align-items-center gap-2  account-btn-hover p-2 h-100"
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={personIcon} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/personIcon.svg"}
+                    alt=""
+                  />
                   <h6 className="mb-0 account-txt">
                     {username !== undefined && email !== undefined
                       ? username
                       : "Account"}
                   </h6>
-                  <img src={headerArrow} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/headerArrow.svg"}
+                    alt=""
+                  />
 
                   <div
                     className={`header-dropdown p-4 d-flex flex-column gap-2 ${
@@ -931,7 +937,9 @@ const Header = ({
                             <img
                               width={20}
                               height={20}
-                              src={guestIcon}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/guestIcon.svg"
+                              }
                               alt=""
                             />
                             Continue as Guest
@@ -947,7 +955,9 @@ const Header = ({
                             <img
                               width={20}
                               height={20}
-                              src={registerIcon}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/registerIcon.svg"
+                              }
                               alt=""
                             />
                             Sign Up
@@ -964,13 +974,20 @@ const Header = ({
                                 : "dropdown-nav nav-active p-2 d-flex align-items-center gap-2 position-relative"
                             }
                           >
-                            <img width={20} height={20} src={userIcon} alt="" />
+                            <img
+                              width={20}
+                              height={20}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/userIcon.svg"
+                              }
+                              alt=""
+                            />
                             {username ?? "Guest"}
                             <img
                               src={
                                 account.linked === false
-                                  ? unlinkedIcon
-                                  : linkedIcon
+                                  ? "https://cdn.worldofdypians.com/wod/unlinkedIcon.svg"
+                                  : "https://cdn.worldofdypians.com/wod/linkedIcon.svg"
                               }
                               className="link-icon"
                               width={20}
@@ -991,7 +1008,9 @@ const Header = ({
                                 <img
                                   width={20}
                                   height={20}
-                                  src={walletIcon}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                                  }
                                   alt=""
                                 />
                                 <div className="d-flex flex-column gap-2">
@@ -1028,7 +1047,14 @@ const Header = ({
                             : "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
                       >
-                        <img width={20} height={20} src={premiumIcon} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/premiumIcon.svg"
+                          }
+                          alt=""
+                        />
                         Prime
                       </NavLink>
 
@@ -1040,7 +1066,14 @@ const Header = ({
                             : "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
                       >
-                        <img width={20} height={20} src={cartIcon2} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/cartIcon.svg"
+                          }
+                          alt=""
+                        />
                         Shop
                       </NavLink>
                       <NavLink
@@ -1051,7 +1084,14 @@ const Header = ({
                             : "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
                       >
-                        <img width={20} height={20} src={joinBetaIcon} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/joinBetaIcon.svg"
+                          }
+                          alt=""
+                        />
                         Become a Beta Tester
                       </NavLink>
                       <a
@@ -1062,7 +1102,14 @@ const Header = ({
                           "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
                       >
-                        <img width={20} height={20} src={epicIcon} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/epicwhite.svg"
+                          }
+                          alt=""
+                        />
                         Download
                       </a>
                       <NavLink
@@ -1073,7 +1120,14 @@ const Header = ({
                             : "dropdown-nav p-2 d-flex align-items-center gap-2"
                         }
                       >
-                        <img width={20} height={20} src={supportIcon} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/supportIcon.svg"
+                          }
+                          alt=""
+                        />
                         Contact us
                       </NavLink>
                       {email && (
@@ -1094,7 +1148,9 @@ const Header = ({
                             }}
                           >
                             <img
-                              src={logouticon}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/logout.svg"
+                              }
                               alt=""
                               className="logout-icon"
                             />{" "}
@@ -1137,7 +1193,7 @@ const Header = ({
               <div className="d-flex align-items-center gap-3">
                 <div className="position-relative">
                   <img
-                    src={bellIcon}
+                    src={"https://cdn.worldofdypians.com/wod/bellIcon.svg"}
                     width={30}
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -1183,7 +1239,12 @@ const Header = ({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <span className="pending-text mb-0">View All</span>
-                          <img src={viewAllArrow} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/viewAllArrow.svg"
+                            }
+                            alt=""
+                          />
                         </div>
                       </NavLink>
                       <div className="inner-notifications">
@@ -1220,50 +1281,50 @@ const Header = ({
                                       src={
                                         nft.bought === "yes" &&
                                         nft.read === false
-                                          ? cartIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/cartIconActive.svg"
                                           : nft.bought === "yes" &&
                                             nft.read === true
-                                          ? cartIcon
+                                          ? "https://cdn.worldofdypians.com/wod/cartIcon.svg"
                                           : nft.offer === "yes" &&
                                             nft.read === false
-                                          ? offerIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/offerIconActive.svg"
                                           : nft.offer === "yes" &&
                                             nft.read === true
-                                          ? offerIcon
+                                          ? "https://cdn.worldofdypians.com/wod/offerIcon.svg"
                                           : nft.buy === "yes" &&
                                             nft.read === false
-                                          ? transferIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/transferIconActive.svg"
                                           : nft.buy === "yes" &&
                                             nft.read === true
-                                          ? transferIcon
+                                          ? "https://cdn.worldofdypians.com/wod/transferIcon.svg"
                                           : //welcome
                                           nft.welcome === "yes" &&
                                             nft.read === false
-                                          ? welcomeIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/welcomeIconActive.svg"
                                           : nft.welcome === "yes" &&
                                             nft.read === true
-                                          ? welcomeIcon
+                                          ? "https://cdn.worldofdypians.com/wod/welcomeIcon.svg"
                                           : //news
                                           nft.news === "yes" &&
                                             nft.read === false
-                                          ? newsIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/newsIconActive.svg"
                                           : nft.news === "yes" &&
                                             nft.read === true
-                                          ? newsIcon
+                                          ? "https://cdn.worldofdypians.com/wod/newsIcon.svg"
                                           : //updates
                                           nft.update === "yes" &&
                                             nft.read === false
-                                          ? updateIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/updateIconActive.svg"
                                           : nft.update === "yes" &&
                                             nft.read === true
-                                          ? updateIcon
+                                          ? "https://cdn.worldofdypians.com/wod/updateIcon.svg"
                                           : //events
                                           nft.event === "yes" &&
                                             nft.read === false
-                                          ? eventIconActive
+                                          ? "https://cdn.worldofdypians.com/wod/eventIconActive.svg"
                                           : nft.event === "yes" &&
                                             nft.read === true
-                                          ? eventIcon
+                                          ? "https://cdn.worldofdypians.com/wod/eventIcon.svg"
                                           : null
                                       }
                                       alt=""
@@ -1384,40 +1445,45 @@ const Header = ({
                               <img
                                 src={
                                   ethState === true
-                                    ? eth
+                                    ? 'https://cdn.worldofdypians.com/wod/eth.svg'
                                     : bnbState === true
-                                    ? bnb
+                                    ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                     : opbnbState === true
-                                    ? bnb
+                                    ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                     : avaxState === true
-                                    ? avax
+                                    ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
                                     : baseState === true
-                                    ? base
+                                    ? 'https://cdn.worldofdypians.com/wod/base.svg'
                                     : confluxState === true
-                                    ? conflux
+                                    ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
                                     : skaleState === true
-                                    ? skale
+                                    ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
                                     : coreState === true
-                                    ? core
+                                    ? 'https://cdn.worldofdypians.com/wod/core.svg'
                                     : victionState === true
-                                    ? viction
+                                    ? 'https://cdn.worldofdypians.com/wod/viction.svg'
                                     : immutableState === true
-                                    ? immutable
+                                    ? 'https://cdn.worldofdypians.com/wod/immutable.svg'
                                     : mantaState === true
-                                    ? manta
+                                    ? 'https://cdn.worldofdypians.com/wod/manta.png'
                                     : taikoState === true
-                                    ? taiko
+                                    ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
                                     : matState === true
-                                    ? matchain
+                                    ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                                     : seiState === true
-                                    ? sei
-                                    : error
+                                    ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
+                                    : "https://cdn.worldofdypians.com/wod/error.svg"
                                 }
                                 width={20}
                                 height={20}
                                 alt=""
                               />
-                              <img src={dropdownicon} alt="" />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/dropdown.svg"
+                                }
+                                alt=""
+                              />
                             </div>
                           </span>
                         }
@@ -1443,27 +1509,28 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x1", 1)}
                             >
-                              <img src={eth} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" width={20} height={20} />
                               Ethereum
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x38", 56)}
                             >
-                              <img src={bnb} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" width={20} height={20} />
                               BNB Chain
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xcc", 204)}
                             >
-                              <img src={bnb} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" width={20} height={20} />
                               opBNB Chain
                             </Dropdown.Item>
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x2ba", 698)}
                                 >
                                   <img
-                                    src={matchain}
+                                    src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1475,17 +1542,18 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa9", 169)}
                             >
-                              <img src={manta} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/manta.png'} alt="" width={20} height={20} />
                               Manta
                             </Dropdown.Item>
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() =>
                                     switchNetwork("0x28c58", 167000)
                                   }
                                 >
                                   <img
-                                    src={taiko}
+                                    src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1494,12 +1562,13 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x45c", 1116)}
                                 >
                                   <img
-                                    src={core}
+                                    src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1510,15 +1579,16 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x2105", 8453)}
                             >
-                              <img src={base} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/base.svg'} alt="" width={20} height={20} />
                               Base
                             </Dropdown.Item>
-                            {(window.WALLET_TYPE !== "binance" &&  !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x531", 1329)}
                                 >
                                   <img
-                                    src={sei}
+                                    src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1527,12 +1597,13 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x58", 88)}
                                 >
                                   <img
-                                    src={viction}
+                                    src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1543,17 +1614,18 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa86a", 43114)}
                             >
-                              <img src={avax} alt="" width={20} height={20} />
+                              <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" width={20} height={20} />
                               Avalanche
                             </Dropdown.Item>
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() =>
                                     switchNetwork("0x585eb4b1", 1482601649)
                                   }
                                 >
                                   <img
-                                    src={skale}
+                                    src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                     alt=""
                                     width={20}
                                     height={20}
@@ -1561,12 +1633,13 @@ const Header = ({
                                   SKALE
                                 </Dropdown.Item>
                               )}
-                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
+                            {window.WALLET_TYPE !== "binance" &&
+                              !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x343b", 13371)}
                                 >
                                   <img
-                                    src={immutable}
+                                    src={'https://cdn.worldofdypians.com/wod/immutable.svg'}
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1578,7 +1651,7 @@ const Header = ({
                               onClick={() => switchNetwork("0x406", 1030)}
                             >
                               <img
-                                src={conflux}
+                                src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                                 alt=""
                                 width={20}
                                 height={20}
@@ -1600,7 +1673,9 @@ const Header = ({
                               }}
                             >
                               <img
-                                src={domainIcon}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/domainIcon.svg"
+                                }
                                 width={16}
                                 height={16}
                                 alt=""
@@ -1615,7 +1690,9 @@ const Header = ({
                             }}
                           >
                             <img
-                              src={logouticon}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/logout.svg"
+                              }
                               alt=""
                               className="logout-icon"
                             />
@@ -1658,7 +1735,14 @@ const Header = ({
                             setShowMenu(false);
                           }}
                         >
-                          <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/domainIcon.svg"
+                            }
+                            width={16}
+                            height={16}
+                            alt=""
+                          />{" "}
                           Domain Name{" "}
                         </span>
                       </a>
@@ -1669,7 +1753,15 @@ const Header = ({
                           setTimeout(() => setTooltip(false), 2000);
                         }}
                       >
-                        <img src={tooltip ? check : copy} alt="" /> Copy{" "}
+                        <img
+                          src={
+                            tooltip
+                              ? "https://cdn.worldofdypians.com/wod/check.svg"
+                              : "https://cdn.worldofdypians.com/wod/copy.svg"
+                          }
+                          alt=""
+                        />{" "}
+                        Copy{" "}
                       </span>
 
                       <span
@@ -1679,7 +1771,11 @@ const Header = ({
                           manageDisconnect();
                         }}
                       >
-                        <img src={logoutLogo} alt="" /> Disconnect{" "}
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/logout.svg"}
+                          alt=""
+                        />{" "}
+                        Disconnect{" "}
                       </span>
                     </div>
                   </div>
@@ -1703,7 +1799,14 @@ const Header = ({
                           setshowmenuAccount(false);
                         }}
                       >
-                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/domainIcon.svg"
+                          }
+                          width={16}
+                          height={16}
+                          alt=""
+                        />{" "}
                         Account
                       </span>
 
@@ -1717,7 +1820,9 @@ const Header = ({
                           }}
                         >
                           <img
-                            src={logouticon}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/logout.svg"
+                            }
                             alt=""
                             className="logout-icon"
                           />{" "}
@@ -1734,7 +1839,13 @@ const Header = ({
                             setshowmenuAccount(false);
                           }}
                         >
-                          <img src={logouticon} alt="" /> Sign in
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/logout.svg"
+                            }
+                            alt=""
+                          />{" "}
+                          Sign in
                         </button>
                       )}
                     </div>

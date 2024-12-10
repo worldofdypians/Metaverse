@@ -30,8 +30,7 @@ import taikoLogo from "./assets/taikoLogo.svg";
 import multiversLogo from "../assets/multiversLogo.svg";
 
 import victionLogo from "../assets/victionLogo.svg";
-import cookie3Logo from "../assets/cookie3Logo.svg";
-import matchainLogo from "../../../components/Header/assets/matchain.svg";
+import cookie3Logo from "../assets/cookie3Logo.svg"; 
 
 
 import seiLogo from "../assets/seiLogo.svg";
@@ -1072,7 +1071,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={matchainLogo}
+                          src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1363,7 +1362,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={matchainLogo}
+                        src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1773,7 +1772,7 @@ const BetaPassNFT = ({
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                         >
                           <img
-                            src={matchainLogo}
+                            src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -2465,7 +2464,7 @@ const BetaPassNFT = ({
                                 <div className="d-flex flex-column gap-4">
                                   <div className="d-flex gap-2 align-items-center">
                                     <img
-                                      src={matchainLogo}
+                                      src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                                       width={32}
                                       height={32}
                                       alt=""

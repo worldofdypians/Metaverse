@@ -4,8 +4,7 @@ import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
 import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
 import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
 import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
-import matActive from "../../../../../components/Header/assets/matchain.svg";
-import seiIcon from "../../../../../components/Header/assets/sei.svg";
+  
 import tooltipIcon from "./assets/tooltipIconYellow.svg";
 import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -155,7 +154,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={matActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -187,7 +186,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={seiIcon} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>

@@ -82,8 +82,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
 import OutsideClickHandler from "react-outside-click-handler";
 import Clipboard from "react-clipboard.js";
-import copy from "../../components/Header/assets/copy.svg";
-import check from "../../components/Header/assets/check.svg";
+
 import kucoin from "../../screens/Home/VideoWrapper/assets/buyWodAssets/kucoin.svg";
 import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
 import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
@@ -522,7 +521,7 @@ const MyProfile = ({
                                   setTimeout(() => setTooltip(false), 2000);
                                 }}
                               >
-                                <img src={tooltip ? check : copy} alt="" />{" "}
+                               <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
                               </span>
                             </Clipboard>
                           </div>

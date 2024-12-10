@@ -5,8 +5,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import NftPopup from "./NftPopup";
-import avax from "./assets/avax.svg";
-import bnb from "./assets/bnb.svg";
+import avax from "./assets/avax.svg"; 
 import eth from "./assets/eth.svg";
 import base from "./assets/base.svg";
 import ccipLogo from "./assets/ccipLogo.svg";
@@ -2123,7 +2122,7 @@ const NFTBridge = ({
                                 filterTitle === "Ethereum"
                                   ? eth
                                   : filterTitle === "BNB Chain"
-                                  ? bnb
+                                  ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                   : filterTitle === "Avalanche"
                                   ? avax
                                   : base
@@ -2157,7 +2156,7 @@ const NFTBridge = ({
                         }}
                       >
                         <span className="d-flex align-items-center gap-2">
-                          <img src={bnb} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                           BNB Chain
                         </span>
                       </li>
@@ -2205,7 +2204,7 @@ const NFTBridge = ({
                                 destinationFilterTitle === "Ethereum"
                                   ? eth
                                   : destinationFilterTitle === "BNB Chain"
-                                  ? bnb
+                                  ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                   : destinationFilterTitle === "Avalanche"
                                   ? avax
                                   : base
