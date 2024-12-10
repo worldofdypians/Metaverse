@@ -32,7 +32,7 @@ const EarnContent = ({
   tvl,
   wodBalance,
   userPools,
-  onSuccessfulStake
+  onSuccessfulStake,
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -207,7 +207,9 @@ const EarnContent = ({
                               style={{ color: "#4ed5d2" }}
                             >
                               <img
-                                src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/wodToken.png"
+                                }
                                 alt=""
                                 style={{ width: 20, height: 20 }}
                               />
@@ -316,12 +318,20 @@ const EarnContent = ({
                       APR
                       <div className="d-flex flex-column">
                         <img
-                          src={sorting === true ? "https://cdn.worldofdypians.com/wod/arrowUpActive.svg" : "https://cdn.worldofdypians.com/wod/arrowUp.svg"}
+                          src={
+                            sorting === true
+                              ? "https://cdn.worldofdypians.com/wod/arrowUpActive.svg"
+                              : "https://cdn.worldofdypians.com/wod/arrowUp.svg"
+                          }
                           alt=""
                           className=""
                         />
                         <img
-                          src={sorting === false ? "https://cdn.worldofdypians.com/wod/arrowDownActive.svg" : "https://cdn.worldofdypians.com/wod/arrowDown.svg"}
+                          src={
+                            sorting === false
+                              ? "https://cdn.worldofdypians.com/wod/arrowDownActive.svg"
+                              : "https://cdn.worldofdypians.com/wod/arrowDown.svg"
+                          }
                           alt=""
                           className="arrowBtns"
                           onClick={() => {
@@ -423,12 +433,19 @@ const EarnContent = ({
                               : false
                           }
                           isNewPool={item.new_pool === "Yes" ? true : false}
-                          isStaked={ (userPools && userPools.length > 0 && userPools.find((obj)=>{return obj
-                            .contract_address.toLowerCase() === item.id.toLowerCase()}) !==undefined)}
+                          isStaked={
+                            userPools &&
+                            userPools.length > 0 &&
+                            userPools.find((obj) => {
+                              return (
+                                obj.contract_address.toLowerCase() ===
+                                item.id.toLowerCase()
+                              );
+                            }) !== undefined
+                          }
                           isAccount={true}
                           expired={item.expired === "Yes" ? true : false}
-                          isHover={isHover === index }
-                          
+                          isHover={isHover === index}
                         />
                       </button>
                     </div>
@@ -669,7 +686,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}
@@ -700,7 +716,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}
@@ -731,7 +746,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}

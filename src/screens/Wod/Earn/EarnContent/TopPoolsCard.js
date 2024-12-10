@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./top-pools.css";
-import greenArrow from "../assets/greenarrow.svg";
-import newPool from "../assets/newPool.png";
-import staked from "../assets/staked.svg";
-import stakeTag from "../assets/stakeTag.svg";
-import cawsLabel from "../assets/cawsLabel.png";
+// import greenArrow from "../assets/greenarrow.svg";
+// import staked from "../assets/staked.svg";
+
+
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 
 const TopPoolsCard = ({
@@ -74,11 +73,11 @@ const TopPoolsCard = ({
         {/* {tvl === '--' && (
           <img src={comingSoon} className="comingsoon" alt="top pick" />
         )} */}
-        {isNewPool && <img src={newPool} className="new-pool" alt="new pool" />}
+        {isNewPool && <img src={"https://cdn.worldofdypians.com/wod/newPool.png"} className="new-pool" alt="new pool" />}
         {tag && (
           <img
             src={
-              tag === "stake" ? stakeTag : tag === "nft" ? cawsLabel : stakeTag
+              tag === "stake" ? `https://cdn.worldofdypians.com/wod/stakeTag.svg` : tag === "nft" ? "https://cdn.worldofdypians.com/wod/cawsLabel.png" : `https://cdn.worldofdypians.com/wod/stakeTag.svg`
             }
             alt="pool-tag"
             className="dashboard-pool-tag d-none d-lg-flex"
