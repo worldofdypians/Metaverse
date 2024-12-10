@@ -6,7 +6,7 @@ import "./_stakingWod.scss";
 import failMark from "../../assets/failMark.svg";
 import statsIcon from "../../assets/statsIcon.svg";
 
-import wodToken from "../../assets/tokens/wodToken.png";
+
 import moreinfo from "../../assets/more-info.svg";
 import Modal from "../../../../../components/General/Modal";
 import { Tooltip } from "@mui/material";

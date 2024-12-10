@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../_earn.scss";
-import arrowUp from "../assets/arrowUp.svg";
-import arrowUpActive from "../assets/arrowUpActive.svg";
-import arrowDown from "../assets/arrowDown.svg";
-import arrowDownActive from "../assets/arrowDownActive.svg";
-import wodToken from "../assets/tokens/wodToken.png";
 import TopPoolsCard from "./TopPoolsCard";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import CawsDetails from "./pools/caws";
@@ -212,7 +207,7 @@ const EarnContent = ({
                               style={{ color: "#4ed5d2" }}
                             >
                               <img
-                                src={wodToken}
+                                src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
                                 alt=""
                                 style={{ width: 20, height: 20 }}
                               />
@@ -321,12 +316,12 @@ const EarnContent = ({
                       APR
                       <div className="d-flex flex-column">
                         <img
-                          src={sorting === true ? arrowUpActive : arrowUp}
+                          src={sorting === true ? "https://cdn.worldofdypians.com/wod/arrowUpActive.svg" : "https://cdn.worldofdypians.com/wod/arrowUp.svg"}
                           alt=""
                           className=""
                         />
                         <img
-                          src={sorting === false ? arrowDownActive : arrowDown}
+                          src={sorting === false ? "https://cdn.worldofdypians.com/wod/arrowDownActive.svg" : "https://cdn.worldofdypians.com/wod/arrowDown.svg"}
                           alt=""
                           className="arrowBtns"
                           onClick={() => {
