@@ -1458,8 +1458,7 @@ const Header = ({
                               <img src={bnb} alt="" width={20} height={20} />
                               opBNB Chain
                             </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x2ba", 698)}
                                 >
@@ -1479,8 +1478,7 @@ const Header = ({
                               <img src={manta} alt="" width={20} height={20} />
                               Manta
                             </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() =>
                                     switchNetwork("0x28c58", 167000)
@@ -1496,8 +1494,7 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x45c", 1116)}
                                 >
@@ -1516,8 +1513,7 @@ const Header = ({
                               <img src={base} alt="" width={20} height={20} />
                               Base
                             </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" &&  !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x531", 1329)}
                                 >
@@ -1531,8 +1527,7 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x58", 88)}
                                 >
@@ -1551,8 +1546,7 @@ const Header = ({
                               <img src={avax} alt="" width={20} height={20} />
                               Avalanche
                             </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() =>
                                     switchNetwork("0x585eb4b1", 1482601649)
@@ -1567,8 +1561,7 @@ const Header = ({
                                   SKALE
                                 </Dropdown.Item>
                               )}
-                            {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                            {(window.WALLET_TYPE !== "binance" && !window.ethereum?.isBinance) && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x343b", 13371)}
                                 >
