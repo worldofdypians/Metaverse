@@ -322,6 +322,7 @@ const NewDailyBonus = ({
   const dummyRewards = [
     {
       title: "Points",
+      title2: "",
       amount: "Points",
       img: "points",
       error: true,
@@ -329,86 +330,45 @@ const NewDailyBonus = ({
     },
     {
       title: "Money",
+      title2: "",
       amount: "$0.5 - $5",
       img: 2,
       error: false,
-      threshold: [],
+      threshold: [0.5, 5],
       min: 0.5,
       max: 5,
     },
     {
-      title: "Money",
-      amount: "$15-$20",
-      img: 5,
+      title: "Stars",
+      title2: "",
+      amount: "Stars",
+      img: 'star',
       error: true,
       threshold: [],
-      min: 15,
-      max: 20,
+      min: 10,
+      max: 50,
     },
     {
       title: "Money",
+      title2: "needCaws",
       amount: "$20-$30",
       img: 30,
-      error: false,
-      threshold: [],
-      min: 20,
-      max: 30,
-    },
-    {
-      title: "Money",
-      title2: "needPremium",
-      amount: "$20-$30",
-      img: 50,
       error: true,
-      threshold: [],
+      threshold: [20, 30],
       min: 20,
       max: 30,
     },
     {
       title: "Money",
-      amount: "$30-$300",
-      img: 300,
-      error: false,
-      threshold: [],
-      min: 50,
-      max: 300,
-    },
-    {
-      title: "Money",
+      title2: "needLand",
       amount: "$350-$700",
-      img: 700,
-      error: true,
-      threshold: [],
+      img: 1500,
+      error: false,
+      threshold: [350,700],
       min: 350,
       max: 700,
     },
-    {
-      title: "Money",
-      amount: "$1,000-$1,500",
-      img: 1500,
-      error: false,
-      threshold: [],
-      min: 1000,
-      max: 1500,
-    },
-    {
-      title: "Money",
-      amount: "$2,000-$3,000",
-      img: 3000,
-      error: true,
-      threshold: [],
-      min: 2000,
-      max: 3000,
-    },
-    {
-      title: "Money",
-      amount: "$4,000-$5,000",
-      img: 5000,
-      error: false,
-      threshold: [],
-      min: 4000,
-      max: 5000,
-    },
+
   ];
 
   const [chain, setChain] = useState("bnb");
@@ -423,6 +383,16 @@ const NewDailyBonus = ({
   const [isActive, setIsActive] = useState();
   const [isActiveIndex, setIsActiveIndex] = useState();
   const [countListedNfts, setcountListedNfts] = useState(0);
+
+  const [totalStars, settotalStars] = useState(0);
+  const [totalSkaleStars, settotalSkaleStars] = useState(0);
+
+  const [totalCoreStars, settotalCoreStars] = useState(0);
+  const [totalVictionStars, settotalVictionStars] = useState(0);
+  const [totalMantaStars, settotalMantaStars] = useState(0);
+  const [totalBaseStars, settotalBaseStars] = useState(0);
+  const [totalTaikoStars, settotalTaikoStars] = useState(0);
+  const [totalMatStars, settotalMatStars] = useState(0);
 
   const [totalPoints, settotalPoints] = useState(0);
   const [totalUsd, settotalUsd] = useState(0);
@@ -445,6 +415,7 @@ const NewDailyBonus = ({
 
   const [totalSeiPoints, settotalSeiPoints] = useState(0);
   const [totalSeiUsd, settotalSeiUsd] = useState(0);
+  const [totalSeiStars, settotalSeiStars] = useState(0);
 
   const [tooltip, setTooltip] = useState(false);
   const [claimingChest, setClaimingChest] = useState(false);
@@ -453,6 +424,7 @@ const NewDailyBonus = ({
     if (allChests && allChests.length > 0) {
       let resultPoints = 0;
       let resultUsd = 0;
+      let resultstars = 0;
 
       allChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -460,6 +432,9 @@ const NewDailyBonus = ({
             chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
                 resultPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
@@ -481,17 +456,23 @@ const NewDailyBonus = ({
       });
 
       settotalPoints(resultPoints);
+      settotalStars(resultstars);
       settotalUsd(resultUsd);
     }
 
     if (allSkaleChests && allSkaleChests.length > 0) {
       let resultSkalePoints = 0;
       let resultSkaleUsd = 0;
+      let resultstars = 0;
 
       allSkaleChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
+
               if (innerChest.rewardType === "Points") {
                 resultSkalePoints += Number(innerChest.reward);
               }
@@ -516,11 +497,13 @@ const NewDailyBonus = ({
 
       settotalSkalePoints(resultSkalePoints);
       settotalSkaleUsd(resultSkaleUsd);
+      settotalSkaleStars(resultstars);
     }
 
     if (allCoreChests && allCoreChests.length > 0) {
       let resultCorePoints = 0;
       let resultCoreUsd = 0;
+      let resultstars = 0;
 
       allCoreChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -529,6 +512,10 @@ const NewDailyBonus = ({
               if (innerChest.rewardType === "Points") {
                 resultCorePoints += Number(innerChest.reward);
               }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
+
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
@@ -550,11 +537,13 @@ const NewDailyBonus = ({
 
       settotalCorePoints(resultCorePoints);
       settotalCoreUsd(resultCoreUsd);
+      settotalCoreStars(resultstars);
     }
 
     if (allVictionChests && allVictionChests.length > 0) {
       let resultVictionPoints = 0;
       let resultVictionUsd = 0;
+      let resultstars = 0;
 
       allVictionChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -562,6 +551,9 @@ const NewDailyBonus = ({
             chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
                 resultVictionPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
@@ -584,11 +576,13 @@ const NewDailyBonus = ({
 
       settotalVictionPoints(resultVictionPoints);
       settotalVictionUsd(resultVictionUsd);
+      settotalVictionStars(resultstars);
     }
 
     if (allMantaChests && allMantaChests.length > 0) {
       let resultMantaPoints = 0;
       let resultMantaUsd = 0;
+      let resultstars = 0;
 
       allMantaChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -596,6 +590,9 @@ const NewDailyBonus = ({
             chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
                 resultMantaPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
@@ -615,6 +612,7 @@ const NewDailyBonus = ({
           }
         }
       });
+      settotalMantaStars(resultstars);
 
       settotalMantaPoints(resultMantaPoints);
       settotalMantaUsd(resultMantaUsd);
@@ -623,11 +621,15 @@ const NewDailyBonus = ({
     if (allBaseChests && allBaseChests.length > 0) {
       let resultBasePoints = 0;
       let resultBaseUsd = 0;
+      let resultstars = 0;
 
       allBaseChests.forEach((chest) => {
         if (chest.isOpened === true) {
           if (chest.rewards.length > 1) {
             chest.rewards.forEach((innerChest) => {
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
               if (innerChest.rewardType === "Points") {
                 resultBasePoints += Number(innerChest.reward);
               }
@@ -649,6 +651,7 @@ const NewDailyBonus = ({
           }
         }
       });
+      settotalBaseStars(resultstars);
 
       settotalBasePoints(resultBasePoints);
       settotalBaseUsd(resultBaseUsd);
@@ -657,6 +660,7 @@ const NewDailyBonus = ({
     if (allTaikoChests && allTaikoChests.length > 0) {
       let resultTaikoPoints = 0;
       let resultTaikoUsd = 0;
+      let resultstars = 0;
 
       allTaikoChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -664,6 +668,9 @@ const NewDailyBonus = ({
             chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
                 resultTaikoPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
@@ -683,6 +690,7 @@ const NewDailyBonus = ({
           }
         }
       });
+      settotalTaikoStars(resultstars);
 
       settotalTaikoPoints(resultTaikoPoints);
       settotalTaikoUsd(resultTaikoUsd);
@@ -691,6 +699,7 @@ const NewDailyBonus = ({
     if (allMatChests && allMatChests.length > 0) {
       let resultMatPoints = 0;
       let resultMatUsd = 0;
+      let resultstars = 0;
 
       allMatChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -698,6 +707,9 @@ const NewDailyBonus = ({
             chest.rewards.forEach((innerChest) => {
               if (innerChest.rewardType === "Points") {
                 resultMatPoints += Number(innerChest.reward);
+              }
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
               }
               if (
                 innerChest.rewardType === "Money" &&
@@ -717,6 +729,7 @@ const NewDailyBonus = ({
           }
         }
       });
+      settotalMatStars(resultstars);
 
       settotalMatPoints(resultMatPoints);
       settotalMatUsd(resultMatUsd);
@@ -725,6 +738,7 @@ const NewDailyBonus = ({
     if (allSeiChests && allSeiChests.length > 0) {
       let resultSeiPoints = 0;
       let resultSeiUsd = 0;
+      let resultstars = 0;
 
       allSeiChests.forEach((chest) => {
         if (chest.isOpened === true) {
@@ -733,6 +747,11 @@ const NewDailyBonus = ({
               if (innerChest.rewardType === "Points") {
                 resultSeiPoints += Number(innerChest.reward);
               }
+
+              if (innerChest.rewardType === "Stars") {
+                resultstars += Number(innerChest.reward);
+              }
+
               if (
                 innerChest.rewardType === "Money" &&
                 innerChest.status !== "Unclaimed" &&
@@ -751,6 +770,7 @@ const NewDailyBonus = ({
           }
         }
       });
+      settotalSeiStars(resultstars)
 
       settotalSeiPoints(resultSeiPoints);
       settotalSeiUsd(resultSeiUsd);
@@ -1098,108 +1118,72 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
-
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      console.log(result);
-      console.log(filteredResult);
-      if (result) {
-        setMessage("caws");
-      } else if (!result && resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
+
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Money" &&
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
+          );
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1211,107 +1195,72 @@ const NewDailyBonus = ({
     const filteredResult = value;
 
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      console.log(result);
-      console.log(filteredResult);
-      if (result) {
-        setMessage("caws");
-      } else if (!result && resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1319,111 +1268,77 @@ const NewDailyBonus = ({
     }
     new Audio(successSound).play();
   };
-
+console.log(rewardData)
   const showLiveRewardDataSkale = (value) => {
     const filteredResult = value;
 
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (!result && resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1440,107 +1355,72 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1555,110 +1435,75 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    } else {
+    }  else {
       setLiveRewardData([]);
     }
   };
@@ -1671,110 +1516,75 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    } else {
+    }  else {
       setLiveRewardData([]);
     }
   };
@@ -1787,107 +1597,72 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1902,110 +1677,75 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    } else {
+    }  else {
       setLiveRewardData([]);
     }
   };
@@ -2018,110 +1758,75 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    } else {
+    }  else {
       setLiveRewardData([]);
     }
   };
@@ -2133,107 +1838,72 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -2248,107 +1918,72 @@ const NewDailyBonus = ({
     setIsActive(chestID);
     setIsActiveIndex(chestIndex + 1);
     if (filteredResult) {
-      const result = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "CAWS"
-        );
-      });
-
-      const resultLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "LAND"
-        );
-      });
-
-      const resultPremium = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimed" &&
-          obj.claimType === "PREMIUM"
-        );
-      });
-
-      const resultWon = filteredResult.rewards.find((obj) => {
-        return obj.rewardType === "Money" && obj.status === "Claimed";
-      });
-
       const resultPoints = filteredResult.rewards.length === 1;
+      const resultPointsStars =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money"
+        }) === undefined;
 
-      const resultWonMoneyNoCaws = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs."
-        );
-      });
+      const resultPointsMoney =
+        filteredResult.rewards.length === 2 &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" || obj.rewardType === "Points";
+        }) !== undefined &&
+        filteredResult.rewards.find((obj) => {
+          return obj.rewardType === "Money" && obj.status === "Claimed";
+        }) !== undefined;
 
-      const resultWonMoneyNotEnoughLands = filteredResult.rewards.find(
-        (obj) => {
+      const resultWonMoneyNoLand =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs.") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined;
+
+        const resultWonMoneyNoCaws = 
+        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+          return (
+            obj.rewardType === "Stars" ||
+            (obj.rewardType === "Money" &&
+              obj.status === "Unclaimable" &&
+              obj.details ===
+                "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
+            obj.rewardType === "Points"
+          );
+        }) !== undefined 
+      
+        const resultPremium = filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward since you do not hold two Genesis Lands."
+            obj.status === "Unclaimed" &&
+            obj.claimType === "PREMIUM"
           );
-        }
-      );
-
-      const resultWonMoneyhasNftsNoPremium = filteredResult.rewards.find(
-        (obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimable" &&
-            obj.details ===
-              "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs and have a Premium Subscription."
-          );
-        }
-      );
-
-      const resultWonMoneyNoLand = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward since you do not hold any Genesis Land NFTs."
-        );
-      });
-
-      const resultWonMoneyhasNftsNoDyp = filteredResult.rewards.find((obj) => {
-        return (
-          obj.rewardType === "Money" &&
-          obj.status === "Unclaimable" &&
-          obj.details ===
-            "Unfortunately, you are unable to claim this reward as you need to own Genesis and CAWS NFTs, have a Premium Subscription, and hold at least $1,000 worth of DYP tokens."
-        );
-      });
-
-      if (result) {
-        setMessage("caws");
-      } else if (resultLand) {
-        setMessage("wod");
-      } else if (!result && !resultLand && resultPremium) {
-        setMessage("needPremium");
-      } else if (resultWon) {
-        setMessage("won");
-      } else if (resultPoints) {
+        });
+  
+        
+      if (resultPoints) {
         setMessage("wonPoints");
-      } else if (resultWonMoneyNoCaws) {
-        setMessage("winDangerCaws");
+      } else if (resultPointsStars) {
+        setMessage("wonPointsStars");
       } else if (resultWonMoneyNoLand) {
         setMessage("winDangerLand");
-      } else if (resultWonMoneyNotEnoughLands) {
-        setMessage("winDangerNotEnoughLand");
-      } else if (resultWonMoneyhasNftsNoPremium) {
-        setMessage("winDangerHasNftsNoPremium");
-      } else if (resultWonMoneyhasNftsNoDyp) {
-        setMessage("winDangerHasNftsPremiumNoDyp");
-      }
-
+      } else if (resultPointsMoney) {
+        setMessage("won");
+      } else if (resultWonMoneyNoCaws) {
+        setMessage("winDangerCaws");
+      } else if (resultPremium) {
+        setMessage("needPremium");
+      } 
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -2367,6 +2002,8 @@ const NewDailyBonus = ({
     allTaikoChests,
     allMatChests,
     allCoreChests,
+    allSeiChests,
+
   ]);
 
   // useEffect(() => {
@@ -2843,145 +2480,144 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "matchain") {
-      // if (window.WALLET_TYPE !== "binance") {
-      //   if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedMatChests + claimedMatPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedMatChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedMatChests + claimedMatPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedMatChests + claimedMatPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 698
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedMatChests + claimedMatPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 698
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedMatChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 698
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedMatChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 698
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedMatChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 698
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("login");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
     } else if (chain === "sei") {
-      // if (window.WALLET_TYPE !== "binance") {
-      //   if (email && coinbase && address) {
-      //     if (coinbase.toLowerCase() === address.toLowerCase()) {
-      //       if (isPremium) {
-      //         if (
-      //           claimedMatChests + claimedMatPremiumChests === 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase()
-      //         ) {
-      //           setMessage("complete");
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests + claimedMatPremiumChests < 20 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       } else if (!isPremium) {
-      //         if (
-      //           claimedMatChests === 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("premium");
-      //           setDisable(true);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId === 698
-      //         ) {
-      //           setMessage("");
-      //           setDisable(false);
-      //         } else if (
-      //           claimedMatChests < 10 &&
-      //           // rewardData.length === 0 &&
-      //           address.toLowerCase() === coinbase.toLowerCase() &&
-      //           chainId !== 698
-      //         ) {
-      //           setMessage("switch");
-      //           setDisable(true);
-      //         }
-      //       }
-      //     } else {
-      //       setMessage("switchAccount");
-      //       setDisable(true);
-      //     }
-      //   } else {
-      //     setMessage("login");
-      //     setDisable(true);
-      //   }
-      // } else if (
-      //   window.WALLET_TYPE === "binance" ||
-      //   window.ethereum?.isBinance
-      // ) {
-      //   setMessage("notsupported");
-      // }
-      setMessage("comingsoon");
+      if (window.WALLET_TYPE !== "binance") {
+        if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedSeiChests + claimedSeiPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedSeiChests + claimedSeiPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSeiChests + claimedSeiPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1329
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedSeiChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedSeiChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 1329
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedSeiChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 1329
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
+          }
+        } else {
+          setMessage("login");
+          setDisable(true);
+        }
+      } else if (
+        window.WALLET_TYPE === "binance" ||
+        window.ethereum?.isBinance
+      ) {
+        setMessage("notsupported");
+      }
+      // setMessage("comingsoon");
     }
   }, [
     email,
@@ -3006,6 +2642,8 @@ const NewDailyBonus = ({
     claimedTaikoPremiumChests,
     claimedMatChests,
     claimedMatPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
     rewardData,
   ]);
 
@@ -3081,9 +2719,8 @@ const NewDailyBonus = ({
                         </div>
                         Some of the rewards opened in the chests might require
                         an action, such as buying a CAWS or Genesis Land NFT, or
-                        upgrading to Prime, in order to claim the
-                        reward. The deadline for taking the action is 00:00 UTC
-                        each day.
+                        upgrading to Prime, in order to claim the reward. The
+                        deadline for taking the action is 00:00 UTC each day.
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">
@@ -3139,13 +2776,38 @@ const NewDailyBonus = ({
                       : chain === "matchain"
                       ? totalMatPoints
                       : chain === "sei"
-                      ? 0
+                      ? totalSeiPoints
                       : totalSkalePoints,
                     0
                   )}{" "}
                 </h6>
                 <span className="new-total-points-type d-none d-lg-flex mb-0">
-                  Leaderboard Points
+                   Points
+                </span>
+                <h6 className="new-total-points  mb-0">
+                  {getFormattedNumber(
+                    chain === "bnb"
+                      ? totalStars
+                      : chain === "core"
+                      ? totalCoreStars
+                      : chain === "viction"
+                      ? totalVictionStars
+                      : chain === "manta"
+                      ? totalMantaStars
+                      : chain === "base"
+                      ? totalBaseStars
+                      : chain === "taiko"
+                      ? totalTaikoStars
+                      : chain === "matchain"
+                      ? totalMatStars
+                      : chain === "sei"
+                      ? totalSeiStars
+                      : totalSkaleStars,
+                    0
+                  )}{" "}
+                </h6>
+                <span className="new-total-points-type d-none d-lg-flex mb-0">
+                  Stars
                 </span>
               </div>
               <div className="new-total-rewards-wrapper d-flex align-items-center gap-2">
@@ -3167,7 +2829,7 @@ const NewDailyBonus = ({
                       : chain === "matchain"
                       ? totalMatUsd
                       : chain === "sei"
-                      ? 0
+                      ? totalSeiUsd
                       : totalSkaleUsd,
                     2
                   )}{" "}
@@ -3306,6 +2968,215 @@ const NewDailyBonus = ({
                               </div>
                               <span className="percentage-span">
                                 {parseInt(bnbPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "matchain" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon}
+                            className={`chain-img ${
+                              chain === "matchain" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "matchain" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("matchain");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 698
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMatPool}
+                              >
+                                {" "}
+                                <img
+                                  src={matchainLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Matchain
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    matPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(matPercentage)}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon2}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" && "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center gap-2">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 20
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 40
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 60
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage >= 80
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                                <img
+                                  className="percent-img"
+                                  src={
+                                    seiPercentage === 100
+                                      ? percentageFilled
+                                      : percentageEmpty
+                                  }
+                                  height={8}
+                                  alt=""
+                                />
+                              </div>
+                              <span className="percentage-span">
+                                {parseInt(seiPercentage)}%
+                                {/* Coming Soon */}
                               </span>
                             </div>
                           </div>
@@ -3520,7 +3391,7 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div>
-                    
+
                         <div
                           className={`position-relative chain-item ${
                             chain === "core" && "chain-item-active"
@@ -3636,9 +3507,7 @@ const NewDailyBonus = ({
                               </div>
                               <span
                                 className="percentage-span"
-                                style={{
-                                  color: chain === "core" ? "#fff" : "gray",
-                                }}
+                               
                               >
                                 {parseInt(corePercentage)}%
                               </span>
@@ -3950,9 +3819,7 @@ const NewDailyBonus = ({
                               </div>
                               <span
                                 className="percentage-span"
-                                style={{
-                                  color: chain === "viction" ? "#fff" : "gray",
-                                }}
+                                
                               >
                                 {parseInt(victionPercentage)}%
                               </span>
@@ -3960,112 +3827,7 @@ const NewDailyBonus = ({
                           </div>
                         </div>
 
-                        <div
-                          className={`position-relative chain-item ${
-                            chain === "matchain" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={comingSoon}
-                            className={`chain-img ${
-                              chain === "matchain" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "matchain" &&
-                              "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("matchain");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 698
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleMatPool}
-                              >
-                                {" "}
-                                <img
-                                  src={matchainLogo}
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Matchain
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div> */}
-                              <span className="percentage-span">
-                                {/* {parseInt(matPercentage)}% */}
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
- {/* <div className={`position-relative chain-item w-100`}>
+                        {/* <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon}
                             className={`chain-img`}
@@ -4081,111 +3843,8 @@ const NewDailyBonus = ({
                             </div>
                           </div>
                         </div> */}
-                        
-                        <div className={`position-relative chain-item ${
-                            chain === "sei" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={comingSoon2}
-                            className={`chain-img ${
-                              chain === "sei" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "sei" &&
-                              "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("sei");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 1329
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleSeiPool}
-                              >
-                                {" "}
-                                <img
-                                  src={seiIcon}
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                SEI
-                              </button>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                              {/* <div className="d-flex align-items-center">
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                                <img
-                                  className="percent-img"
-                                  src={
-                                    matPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
-                                  }
-                                  height={8}
-                                  alt=""
-                                />
-                              </div> */}
-                              <span className="percentage-span">
-                                {/* {parseInt(matPercentage)}% */}
-                                Coming Soon
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+
+                  
                         <div className={`position-relative chain-item w-100`}>
                           <img
                             src={comingSoon3}
@@ -4266,6 +3925,100 @@ const NewDailyBonus = ({
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
                                 opBNB
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "matchain" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon}
+                            className={`chain-img ${
+                              chain === "matchain" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "matchain" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("matchain");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 698
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleMatPool}
+                              >
+                                {" "}
+                                <img
+                                  src={matchainLogo}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                Matchain
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`position-relative chain-item ${
+                            chain === "sei" && "chain-item-active"
+                          } w-100`}
+                        >
+                          <img
+                            src={comingSoon2}
+                            className={`chain-img ${
+                              chain === "sei" && "chain-img-active"
+                            }`}
+                            alt=""
+                          />
+                          <div
+                            className={`chain-title-wrapper ${
+                              chain === "sei" &&
+                              "chain-title-wrapper-active"
+                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
+                            onClick={() => {
+                              setChain("sei");
+                              setIsActive();
+                              setIsActiveIndex();
+                              setRewardData([]);
+                            }}
+                          >
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ width: "fit-content" }}
+                            >
+                              <button
+                                className={` ${
+                                  chainId === 1329
+                                    ? "new-chain-active-btn"
+                                    : "new-chain-inactive-btn"
+                                } d-flex gap-1 align-items-center`}
+                                onClick={handleSeiPool}
+                              >
+                                {" "}
+                                <img
+                                  src={seiIcon}
+                                  alt=""
+                                  style={{ width: 20, height: 20 }}
+                                />{" "}
+                                SEI
                               </button>
                             </div>
                           </div>
@@ -4372,55 +4125,6 @@ const NewDailyBonus = ({
 
                         <div
                           className={`position-relative chain-item ${
-                            chain === "matchain" && "chain-item-active"
-                          } w-100`}
-                        >
-                          <img
-                            src={comingSoon}
-                            className={`chain-img ${
-                              chain === "matchain" && "chain-img-active"
-                            }`}
-                            alt=""
-                          />
-                          <div
-                            className={`chain-title-wrapper ${
-                              chain === "matchain" &&
-                              "chain-title-wrapper-active"
-                            } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
-                            onClick={() => {
-                              setChain("matchain");
-                              setIsActive();
-                              setIsActiveIndex();
-                              setRewardData([]);
-                            }}
-                          >
-                        
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ width: "fit-content" }}
-                            >
-                              <button
-                                className={` ${
-                                  chainId === 698
-                                    ? "new-chain-active-btn"
-                                    : "new-chain-inactive-btn"
-                                } d-flex gap-1 align-items-center`}
-                                onClick={handleMatPool}
-                              >
-                                {" "}
-                                <img
-                                  src={matchainLogo}
-                                  alt=""
-                                  style={{ width: 20, height: 20 }}
-                                />{" "}
-                                Matchain
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          className={`position-relative chain-item ${
                             chain === "skale" && "chain-item-active"
                           } w-auto`}
                         >
@@ -4442,7 +4146,7 @@ const NewDailyBonus = ({
                               setIsActiveIndex();
                               setRewardData([]);
                             }}
-                          > 
+                          >
                             <div
                               className=" d-flex align-items-center gap-2 "
                               style={{ width: "fit-content" }}
@@ -5235,8 +4939,7 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-
-                              : chain === "sei"
+                          : chain === "sei"
                           ? allSeiChests && allSeiChests.length > 0
                             ? allSeiChests.map((item, index) => (
                                 <NewChestItem
@@ -5336,8 +5039,6 @@ const NewDailyBonus = ({
                                   }
                                 />
                               ))
-
-
                           : chain === "viction"
                           ? allVictionChests && allVictionChests.length > 0
                             ? allVictionChests.map((item, index) => (
@@ -5754,26 +5455,26 @@ const NewDailyBonus = ({
                               BASE Network
                             </span>
                           </h6>
-                        ) : (
-                          // : chain === "sei" ? (
-                          //   <h6
-                          //     className="loader-text mb-0"
-                          //     style={{ color: "#ce5d1b" }}
-                          //   >
-                          //     Switch to{" "}
-                          //     <span
-                          //       style={{
-                          //         textDecoration: "underline",
-                          //         cursor: "pointer",
-                          //       }}
-                          //       // onClick={handleSeiPool}
-                          //     >
-                          //       Sei Network
-                          //     </span>
-                          //   </h6>
-                          // )
+                        ) 
+                          : chain === "sei" ? (
+                            <h6
+                              className="loader-text mb-0"
+                              style={{ color: "#ce5d1b" }}
+                            >
+                              Switch to{" "}
+                              <span
+                                style={{
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleSeiPool}
+                              >
+                                Sei Network
+                              </span>
+                            </h6>
+                          ) :
                           <></>
-                        )}
+                        }
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>
@@ -6174,6 +5875,56 @@ const NewDailyBonus = ({
                           className="win-confetti"
                         />
                       </div>
+                    ) : message === "wonPointsStars" ? (
+                      <div className="d-flex align-items-center position-relative flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
+                        <div
+                          className="chain-desc-wrapper p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6 className="win-text mb-0">You Won</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 win-rewards-container">
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Points";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                              Leaderboard Points
+                            </span>
+                          </div>
+                          <h6 className="win-amount mb-0">+</h6>
+
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Stars";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Stars</span>
+                          </div>
+                        </div>
+
+                        <img
+                          src={winConfetti}
+                          alt=""
+                          className="win-confetti"
+                        />
+                      </div>
                     ) : message === "premium" ? (
                       <div
                         className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
@@ -6410,6 +6161,21 @@ const NewDailyBonus = ({
                             </span>
                           </div>
                           <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
+                            <h6 className="win-amount mb-0">
+                              {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Stars";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">
+                           Stars
+                            </span>
+                          </div>
                           <div className="d-flex flex-column align-items-center danger-border p-1">
                             <h6 className="win-amount mb-0">
                               $
@@ -6603,9 +6369,25 @@ const NewDailyBonus = ({
                             </span>
                           </div>
                           <h6 className="win-amount mb-0">+</h6>
-                          <div className="d-flex flex-column align-items-center danger-border p-1">
+
+                          <div className="d-flex flex-column align-items-center neutral-border p-1">
                             <h6 className="win-amount mb-0">
                               {getFormattedNumber(
+                                rewardData.rewards
+                                  ? rewardData.rewards.find((obj) => {
+                                      return obj.rewardType === "Stars";
+                                    }).reward
+                                  : 0,
+                                0
+                              )}
+                            </h6>
+                            <span className="win-amount-desc">Stars</span>
+                          </div>
+
+                          <h6 className="win-amount mb-0">+</h6>
+                          <div className="d-flex flex-column align-items-center danger-border p-1">
+                            <h6 className="win-amount mb-0">
+                              ${getFormattedNumber(
                                 rewardData.rewards
                                   ? rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
@@ -7494,7 +7276,16 @@ const NewDailyBonus = ({
                                 return (
                                   obj.rewardType !== "Points" &&
                                   Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max
+                                  Number(obj.reward) <= item.max && item.title === obj.rewardType
+                                );
+                              }) &&
+                              message != "needPremium")
+                              ||
+                            (rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType === "Stars" &&
+                                  obj.rewardType === item.title
                                 );
                               }) &&
                               message != "needPremium")
@@ -7536,10 +7327,21 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType !== "Points" &&
                                     Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max
+                                    Number(obj.reward) <= item.max && item.title === obj.rewardType
                                   );
-                                }) &&
+                                })
+                                 &&
                                 message != "needPremium")
+                                ||
+                                (rewardData &&
+                                  rewardData.rewards?.find((obj) => {
+                                    return (
+                                      obj.rewardType === "Stars" &&
+                                      obj.rewardType === item.title
+                                    );
+                                  }) &&
+                                  message != "needPremium")
+                                  
                               ? "Active"
                               : ""
                             : (rewardData &&
@@ -7670,6 +7472,14 @@ const NewDailyBonus = ({
                               );
                             })
                               ? "#F2C624"
+                             : rewardData &&
+                              rewardData.rewards?.find((obj) => {
+                                return (
+                                  obj.rewardType === "Stars" &&
+                                obj.rewardType === item.title
+                                );
+                              })
+                                ? "#F2C624"
                               : item.title2 !== "needPremium"
                               ? rewardData.rewards?.find((obj) => {
                                   return (
@@ -7991,11 +7801,8 @@ const NewDailyBonus = ({
                     rewardData.chestId,
                     isActiveIndex - 1
                   )
-                  : chain === "sei"
-                  ? showSingleRewardDataSei(
-                      rewardData.chestId,
-                      isActiveIndex - 1
-                    )
+                : chain === "sei"
+                ? showSingleRewardDataSei(rewardData.chestId, isActiveIndex - 1)
                 : showSingleRewardDataSkale(
                     rewardData.chestId,
                     isActiveIndex - 1

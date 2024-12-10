@@ -114,6 +114,13 @@ const GameHero = ({ showPopup, setShowPopup }) => {
 
   console.log(showPopup);
 
+  useEffect(() => {
+    if (window.location.hash === "#land") {
+      setShowPopup("land")
+    }
+  }, []);
+
+
   return (
     <>
       <div

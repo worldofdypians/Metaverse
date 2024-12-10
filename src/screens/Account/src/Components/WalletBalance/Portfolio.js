@@ -123,7 +123,8 @@ const Portfolio = ({
   myMantaNfts,
   myTaikoNfts,
   myCookieNfts,
-  wodBalance
+  wodBalance,
+  mySeiNfts
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -484,6 +485,8 @@ const Portfolio = ({
     let mantaNftsArray = [];
     let taikoNftsArray = [];
     let cookieNftsArray = [];
+    let seiNftsArray = [];
+
     let matNftsArray = [];
     // console.log(allListed, "allListed");
 
@@ -887,6 +890,22 @@ const Portfolio = ({
           })
         );
       }
+      if (mySeiNfts && mySeiNfts.length > 0) {
+        await Promise.all(
+          mySeiNfts.map(async (i) => {
+            seiNftsArray.push({
+              nftAddress: window.config.nft_sei_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "sei",
+              chain: 1329,
+              isStaked: false,
+              isListed: false,
+            });
+          })
+        );
+      }
+
 
       if (mySkaleNfts && mySkaleNfts.length > 0) {
         await Promise.all(
@@ -1060,6 +1079,8 @@ const Portfolio = ({
       finalCollection = [
         ...baseNftsArray,
         ...bnbNftsArray,
+        ...matNftsArray,
+        ...seiNftsArray,
         ...opbnbNftsArray,
         ...cookieNftsArray,
         ...multiversNftsArray,
@@ -1067,7 +1088,6 @@ const Portfolio = ({
         ...immutableNftsArray,
         ...mantaNftsArray,
         ...taikoNftsArray,
-        ...matNftsArray,
         ...coreNftsArray,
         ...confluxNftsArray,
         ...gateNftsArray,
@@ -1322,6 +1342,10 @@ const Portfolio = ({
         (item) => item.nftAddress === window.config.nft_cookie3_address
       );
 
+      let seiFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_sei_address
+      );
+
       let matFilter = collectedItems.filter(
         (item) => item.nftAddress === window.config.nft_mat_address
       );
@@ -1334,6 +1358,8 @@ const Portfolio = ({
         ...mantaFilter,
         ...taikoFilter,
         ...cookie3Filter,
+        ...seiFilter,
+
         ...cmcFilter,
         ...matFilter,
         ...baseFilter,
@@ -1995,6 +2021,8 @@ const Portfolio = ({
                                   ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
                                   : item.type === "cookie3"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
+                                  : item.type === "sei"
+                                  ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
                                   : item.type === "base"
                                   ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+50px.png`
                                   : item.type === "gate"
@@ -2046,6 +2074,8 @@ const Portfolio = ({
                                   ? "MCBP"
                                   : item.type === "cookie3"
                                   ? "CKBP"
+                                  : item.type === "sei"
+                                  ? "SEBP"
                                   : item.type === "gate"
                                   ? "GTBP"
                                   : item.type === "bnb"
@@ -3103,6 +3133,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
+                                : nft.nftAddress ===
+                                  window.config.nft_sei_address
+                                ? "sei"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3183,6 +3216,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
+                                    : nft.nftAddress ===
+                                    window.config.nft_sei_address
+                                  ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_opbnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
@@ -3283,6 +3319,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
+                                    : nft.nftAddress ===
+                                    window.config.nft_sei_address
+                                  ? "SEBP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
@@ -3473,6 +3512,9 @@ const Portfolio = ({
                                 : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
+                                : nft.nftAddress ===
+                                window.config.nft_sei_address
+                              ? "sei"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3574,6 +3616,9 @@ const Portfolio = ({
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
+                                    window.config.nft_sei_address
+                                  ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
+                                    : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`
                                     : `https://timepiece.worldofdypians.com/thumbs50/${nft.tokenId}.png`
@@ -3654,6 +3699,9 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
+                                    : nft.nftAddress ===
+                                      window.config.nft_sei_address
+                                    ? "SEBP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address

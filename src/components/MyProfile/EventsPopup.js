@@ -32,6 +32,8 @@ import eventsArrow from "../../screens/Account/src/Components/WalletBalance/asse
 import mantaThumb from "../../screens/Account/src/Components/WalletBalance/assets/mantaThumb.png";
 import taikoThumb from "../../screens/Account/src/Components/WalletBalance/assets/taikoThumb.webp";
 import cookie3Thumb from "../../screens/Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
+import chainlinkThumb from "../../screens/Account/src/Components/WalletBalance/assets/chainlinkThumb.webp";
+
 import skalePopupImage from "../../screens/Account/src/Components/WalletBalance/assets/skalePopupImage.png";
 import eventPopupImageDypius2 from "../../screens/Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
 
@@ -152,6 +154,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                     ? taikoThumb
                     : dummyEvent.popupInfo.linkState === "cookie3"
                     ? cookie3Thumb
+                    : dummyEvent.popupInfo.linkState === "chainlink"
+                    ? chainlinkThumb
                     : dummyEvent.popupInfo.linkState === "matchain"
                     ? eventPopupImageMatchain
                     : dummyEvent.popupInfo.linkState === "easy2stake"
@@ -302,7 +306,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   and venture into the Midle area to uncover hidden
                   treasures.
                 </p>
-              ): dummyEvent.id === "event21" ? (
+              ): dummyEvent.popupInfo.id === "event21" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Manta Beta Pass NFT</b>. You can get the Manta Beta
@@ -346,7 +350,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   daily and venture into the downtown area to uncover hidden
                   treasures.
                 </p>
-              ) : dummyEvent.id === "event6" ? (
+              ) : dummyEvent.popupInfo.id === "event6" ? (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
                   <b>hold a Gate Beta Pass NFT</b>. You can get the Gate Beta
@@ -481,6 +485,18 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                   the game daily and venture into the Matchain area to uncover
                   hidden treasures.
                 </p>
+              ):  dummyEvent.popupInfo.id === "event28" ? (
+                <p className="popup-event-desc">
+                  To participate in the event, players are required to&nbsp;
+                  <b>hold a BNB Chain Beta Pass NFT</b>. You can get the BNB Chain
+                  Beta Pass NFT from the World of Dypians Shop. By
+                  engaging in the game on a daily basis and exploring the
+                  Chainlink area, players not only stand a chance to secure
+                  daily rewards in BNB, but also earn points for their
+                  placement on the global leaderboard. Remember to log in to
+                  the game daily and venture into the Chainlink area to uncover
+                  hidden treasures.
+                </p>
               ): (
                 <p className="popup-event-desc">
                   To participate in the event, players are required to&nbsp;
@@ -584,6 +600,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             ? "Easy2Stake"
             : dummyEvent.popupInfo.id === "event27"
             ? "Midle"
+            : dummyEvent.popupInfo.id === "event28"
+            ? "Chainlink"
             : "Base Network"}
         </h6>
         {dummyEvent.popupInfo.id === "event1" ? (
@@ -652,6 +670,13 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             // style={{ fontSize: "12px", fontWeight: "500" }}
           >
            Midle is the web and mobile app that boosts user acquisition, retention and engagement.  
+          </p>
+        ) : dummyEvent.popupInfo.id === "event28" ? (
+          <p
+            className="popup-event-desc"
+            // style={{ fontSize: "12px", fontWeight: "500" }}
+          >
+          Chainlink connects existing systems to any public or private blockchain and enables secure cross-chain communication. World-class developer experience.
           </p>
         ) : dummyEvent.popupInfo.id === "event22" ? (
           <p
@@ -857,8 +882,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://x.com/SeiNetwork"
                 : dummyEvent.popupInfo.id === "event26"
                 ? "https://x.com/easy2stake"
-                 : dummyEvent.popupInfo.id === "event27"
+                : dummyEvent.popupInfo.id === "event27"
                 ? "https://x.com/midle_official"
+                : dummyEvent.popupInfo.id === "event28"
+                ? "https://x.com/chainlink"
                 : "https://twitter.com/buildonbase"
             }
             target="_blank"
@@ -909,6 +936,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://t.me/easy2stake"
                 : dummyEvent.popupInfo.id === "event27"
                 ? "https://t.me/midlecommunity"
+                : dummyEvent.popupInfo.id === "event28"
+                ? "https://t.me/chainlinkofficial"
                 : "https://base.org/discord"
             }
             target="_blank"
@@ -972,8 +1001,10 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 ? "https://www.matchain.io/"
                 : dummyEvent.popupInfo.id === "event26"
                 ? "https://www.easy2stake.com"
-                 : dummyEvent.popupInfo.id === "event27"
+                : dummyEvent.popupInfo.id === "event27"
                 ? "https://app.midle.io/"
+                : dummyEvent.popupInfo.id === "event28"
+                ? "https://chain.link/"
                 : "https://base.org/"
             }
             target="_blank"

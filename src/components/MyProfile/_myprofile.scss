@@ -15,10 +15,37 @@
 
 .user-data-item-left {
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%;
+}
+
+.getwodon-title {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+
+.getwod-item {
+  width: 100%;
+  padding: 5px;
+}
+
+.buywodimg {
+  width: 23px;
+  height: 23px;
+}
+
+.getwod-item:hover{
+  border-radius: 6px;
+    background: rgba(113, 127, 255, 0.20);
+}
+
+.whitearrowUp {
+  transform: rotate(180deg);
 }
 
 .user-data-item-right {
@@ -48,7 +75,6 @@
   background: linear-gradient(90deg, #c64c85 0%, #b936f5 100%);
   background-position: 0 0;
   color: #eeedff !important;
-
 }
 .my-profile-email {
   color: #b8b8e0;
@@ -78,10 +104,12 @@
   background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: all 0.25s;
+  border: 0.5px solid #ffd37e;
 }
 
 .wallet-address-wrapper2:hover {
   background: rgba(255, 129, 104, 0.4);
+  box-shadow: 0px 0px 10px #ffd37e;
 }
 
 .wallet-address-wrapper-error {
@@ -182,16 +210,50 @@
   background-repeat: no-repeat;
   height: 145px;
   cursor: pointer;
-  border: 2px solid transparent;
+
   transition: all 0.25s ease;
   background-position: center;
   @media screen and (max-width: 786px) {
     height: 155px;
   }
 }
+.wod-domain-name-wrapper {
+  background-image: url(./assets/domainNameBg.svg);
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 145px;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  background-position: center;
+  @media screen and (max-width: 786px) {
+    height: 155px;
+  }
+}
+.wod-domain-name-wrapper:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
+
+.wod-domain-icon {
+  width: 70px;
+  @media screen and (max-width: 786px) {
+    width: 120px;
+  }
+}
+
+.wod-domain-name-span {
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 80%;
+}
 
 .new-special-rewards-wrapper:hover {
-  border: 2px solid #9e3c7a;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 .special-rewards-title {
   color: #9e3c7a;
@@ -216,9 +278,14 @@
   background-image: url(./assets/leaderboardsBg.png);
   background-size: 100% 100%;
   border-radius: 10px;
+  transition: all 0.25s;
   @media screen and (max-width: 991px) {
     height: 155px !important;
   }
+}
+
+.game-leaderboards-wrapper:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .leaderboards-title {
@@ -251,6 +318,9 @@
   transition: all 0.25s;
   @media screen and (max-width: 786px) {
     width: 22%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 26%;
   }
 }
 
@@ -404,14 +474,14 @@
   height: 155px;
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
-  border: 2px solid transparent;
   transition: all 0.25s ease;
- 
-    .utcEventContent {
-       
-
-      @media screen and (max-width: 786px) {
-         width: 50% !important;
+  overflow: hidden;
+  @media screen and (max-width: 786px) {
+    height: 180px;
+  }
+  .utcEventContent {
+    @media screen and (max-width: 786px) {
+      width: 50% !important;
     }
   }
 }
@@ -437,7 +507,6 @@
   background-size: cover;
   height: 145px;
   cursor: pointer;
-  border: 2px solid transparent;
   background-repeat: no-repeat;
   background-position: center;
   transition: all 0.25s ease;
@@ -446,10 +515,19 @@
   }
 }
 
-.my-rewards-wrapper-new:hover, .new-stake-nft-wrapper:hover, .furyBeastBannerItem:hover, .wingStormBannerItem:hover
-, .scorpionKingBannerItem:hover
-, .mazeDayBannerItem:hover, .coldBiteBannerItem:hover, .dragonRuinsBannerItem:hover, .stoneEyeBannerItem:hover {
-  border: 2px solid #11fed2;
+.my-rewards-wrapper-new:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
+
+.new-stake-nft-wrapper:hover,
+.furyBeastBannerItem:hover,
+.wingStormBannerItem:hover,
+.scorpionKingBannerItem:hover,
+.mazeDayBannerItem:hover,
+.coldBiteBannerItem:hover,
+.dragonRuinsBannerItem:hover,
+.stoneEyeBannerItem:hover {
+  // border: 2px solid gold;
 }
 
 .miner-img {
@@ -503,6 +581,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
   img {
     width: 80px;
     height: auto;
@@ -521,6 +601,11 @@
     }
   }
 }
+
+.daily-progress-item:hover {
+  filter: drop-shadow(0px 0px 10px #c09645);
+}
+
 .daily-progress-value {
   display: flex;
   justify-content: center;
@@ -626,9 +711,9 @@
   h6 {
     color: #eeedff;
     font-family: "Montserrat";
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 16px; /* 100% */
   }
 }
@@ -641,22 +726,26 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #0b3398 0%, #062663 62%);
   height: 155px;
-  border: 2px solid transparent;
-
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 }
 
 .dragonRuinsBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #2e3842 0%, #121a1e 62%);
   height: 155px;
-  border: 2px solid transparent;
-  
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 }
 
 .coldBiteBannerItem {
   height: 155px;
   border-radius: 10px;
-  border: 2px solid transparent;
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 
   background: linear-gradient(90deg, #003bb9 0%, #0a0849 62%);
 }
@@ -665,40 +754,145 @@
   border-radius: 10px;
   background: linear-gradient(90deg, #262f29 0%, #29302c 62%);
   height: 155px;
-  border: 2px solid transparent;
-
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 }
 
 .wingStormBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #004e7f 0%, #073755 62%);
   height: 155px;
-  border: 2px solid transparent;
-
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 }
 
 .scorpionKingBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #732802 0%, #ab621e 62%);
   height: 155px;
-  border: 2px solid transparent;
-
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
 }
 
 .mazeDayBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #081c00 0%, #081c00 65%);
   height: 155px;
-  border: 2px solid transparent;
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
+}
 
+.ready-circle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 25px;
+  margin: auto;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+  @media screen and (max-width: 1500px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.ready-circle-2-position {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 25px;
+}
+
+.ready-circle-2 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+  @media screen and (max-width: 1500px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.countdown-position-beast {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+  @media screen and (max-width: 786px) {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    margin: 0;
+    justify-content: start;
+    filter: none !important;
+  }
+}
+
+.profile-banner-class-thing {
+  overflow: hidden;
+}
+
+.new-stake-nft-wrapper:hover {
+  .ready-circle {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .ready-circle-2 {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .countdown-position-beast {
+    filter: drop-shadow(0px 0px 5px gold);
+  }
+}
+
+.profile-banner-class-thing:hover {
+  .ready-circle {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .ready-circle-2 {
+    box-shadow: 0px 0px 20px gold;
+  }
+  .countdown-position-beast {
+    filter: drop-shadow(0px 0px 5px gold);
+  }
 }
 
 .puzzleMadnessBannerItem {
   border-radius: 10px;
   background: linear-gradient(90deg, #055f67 0%, #00293e 100%);
   height: 155px;
-  border: 2px solid transparent;
+  // border: 2px solid transparent;
+  @media screen and (max-width: 500px) {
+    height: 170px;
+  }
+}
 
+.mazeDayEventBanner {
+  height: 100% !important;
+  right: -30px !important;
 }
 
 .utcEventTitle {
@@ -718,11 +912,26 @@
   line-height: normal;
 }
 
+.defeated-red {
+  position: absolute;
+  height: 90px;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  z-index: 2;
+}
+
 .eventbannerimg {
   position: absolute;
-  height: 151px;
+  height: 130px;
   right: 0;
-  top: 0;
+  bottom: 0;
+  z-index: 0;
+  // filter: grayscale(1);
+}
+.puzzle-eventbannerimg {
+  right: -35px;
 }
 
 .score-text-wrapper {
@@ -789,20 +998,35 @@
   line-height: normal;
 }
 
-.beast-siege-ends-in{
-  color: #D3D5D7;
-font-family: "Montserrat";
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+.beast-siege-ends-in {
+  color: #d3d5d7;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.beast-siege-timer{
-  color: #D3D5D7;
-font-family: "Montserrat";
-font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.beast-siege-timer {
+  color: #d3d5d7;
+  font-family: "Montserrat";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  @media screen and (max-width: 1500px) {
+    font-size: 18px;
+  }
+}
+
+.new-time-remaining {
+  color: #d3d5d7;
+  font-family: "Montserrat";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  @media screen and (max-width: 1500px) {
+    font-size: 9px;
+  }
 }

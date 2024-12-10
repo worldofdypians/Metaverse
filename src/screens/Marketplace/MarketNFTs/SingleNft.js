@@ -27,6 +27,10 @@ import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
 import coreLogo from "../assets/coreLogo.svg";
 import victionLogo from "../assets/victionLogo.svg";
+import matchainLogo from "../../../components/Header/assets/matchain.svg";
+import seiLogo from "../../../components/Header/assets/sei.svg";
+
+
 import multiversLogo from "../assets/multiversLogo.svg";
 import immutableLogo from "../assets/immutableLogo.svg";
 
@@ -249,7 +253,8 @@ const SingleNft = ({
       type !== "opbnb" &&
       type !== "multivers" &&
       type !== "immutable"&&
-      type !== "mat"
+      type !== "mat"&&
+      type !== "sei"
     ) {
       // const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
       // const token_address_old = "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17";
@@ -559,6 +564,22 @@ const SingleNft = ({
       const nft_contract = new window.mantaWeb3.eth.Contract(
         window.MANTA_NFT_ABI,
         window.config.nft_manta_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+      return owner;
+    } else if (nftType === "sei") {
+      const nft_contract = new window.seiWeb3.eth.Contract(
+        window.SEI_NFT_ABI,
+        window.config.nft_sei_address
       );
       const owner = await nft_contract.methods
         .ownerOf(Id)
@@ -2611,6 +2632,10 @@ const SingleNft = ({
     ) {
       setType("taiko");
     } else if (
+      nftAddress.toLowerCase() === window.config.nft_sei_address.toLowerCase()
+    ) {
+      setType("sei");
+    } else if (
       nftAddress.toLowerCase() ===
       window.config.nft_cookie3_address.toLowerCase()
     ) {
@@ -2709,6 +2734,9 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
+        : nftAddress ===
+        window.config.nft_sei_address
+      ? "sei"
         : nftAddress === window.config.nft_conflux_address
         ? "conflux"
         : nftAddress.toLowerCase() ===
@@ -2914,6 +2942,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            ) : type === "sei" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  Sei{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : type === "cookie3" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -3077,7 +3117,7 @@ const SingleNft = ({
                       nftAddress.toLowerCase() ===
                         window.config.nft_caws_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
-                        : nftAddress.toLowerCase() ===
+                        :   nftAddress.toLowerCase() ===
                             window.config.nft_land_address.toLowerCase() ||
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_bnb_address.toLowerCase() ||
@@ -3086,55 +3126,42 @@ const SingleNft = ({
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_coingecko_address.toLowerCase()
+                        : type==='coingecko'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_gate_address.toLowerCase()
+                        : type==='gate'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : nftAddress === window.config.nft_conflux_address
+                        : type==='conflux'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_manta_address.toLowerCase()
+                        : type==='manta'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_taiko_address.toLowerCase()
+                        : type==='taiko'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_cookie3_address.toLowerCase()
+                        : type==='cookie3'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
-                        : nftAddress ===
-                          window.config.nft_mat_address
+                        : type==='mat'
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_doge_address.toLowerCase()
+                        : type==='doge'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_cmc_address.toLowerCase()
+                        : type==='cmc'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_core_address.toLowerCase()
+                        : type==='core'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : nftAddress ===
-                          window.config.nft_viction_address
+                        : type==='viction'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_multivers_address.toLowerCase()
+                        : type==='multivers'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : nftAddress === window.config.nft_base_address
+                        : type==='base'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_skale_address.toLowerCase()
+                        : type==='skale'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_bnb_address.toLowerCase()
+                        : type==='bnb'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_opbnb_address.toLowerCase()
+                        : type==='opbnb'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
-                        : nftAddress.toLowerCase() ===
-                          window.config.nft_immutable_address.toLowerCase()
+                        : type==='immutable'
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
+                        : type==='sei'
+                      ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -3180,11 +3207,13 @@ const SingleNft = ({
                           : type === "viction"
                           ? victionLogo
                           : type === "mat"
-                          ? victionLogo
+                          ? matchainLogo
                           : type === "multivers"
                           ? multiversLogo
                           : type === "immutable"
                           ? immutableLogo
+                          : type === "sei"
+                          ? seiLogo
                           : ethIcon
                       }
                       alt=""
@@ -3227,6 +3256,8 @@ const SingleNft = ({
                       ? "Immutable"
                       : type === "manta"
                       ? "Manta Network"
+                      : type === "sei"
+                      ? "SEI Network"
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
@@ -3283,6 +3314,8 @@ const SingleNft = ({
                         ? "Base Beta Pass"
                         : type === "opbnb"
                         ? "opBNB Chain Beta Pass"
+                        : type === "sei"
+                        ? "SEI Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
@@ -3426,6 +3459,7 @@ const SingleNft = ({
                       type !== "skale" &&
                       type !== "immutable"  &&
                       type !== "mat" &&
+                      type !== "sei" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3594,7 +3628,8 @@ const SingleNft = ({
                       type !== "landbase" &&
                       type !== "skale" &&
                       type !== "immutable" &&
-                      type !== "mat" && (
+                      type !== "mat"&&
+                      type !== "sei" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -3794,7 +3829,8 @@ const SingleNft = ({
                         type === "landavax" ||
                         type === "landbnb" ||
                         type === "landbase"||
-                        type === "mat") && (
+                        type === "mat"||
+                        type === "sei") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -3842,6 +3878,8 @@ const SingleNft = ({
                                   ? `https://opbnbscan.com/address/${owner}`
                                   : type === "mat"
                                   ? `https://matchscan.io/address/${owner}`
+                                  : type === "sei"
+                                  ? `https://seitrace.com/address/${owner}`
                                   : `https://etherscan.io/address/${owner}`
                               }
                               target="_blank"
@@ -4037,7 +4075,8 @@ const SingleNft = ({
                         type !== "landavax" &&
                         type !== "landbnb" &&
                         type !== "landbase" &&
-                        type !== "mat" && (
+                        type !== "mat"&&
+                        type !== "sei" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -4116,7 +4155,8 @@ const SingleNft = ({
                         type !== "landbnb" &&
                         type !== "immutable" &&
                         type !== "landbase" &&
-                        type !== "mat"&& (
+                        type !== "mat"&&
+                        type !== "sei"&& (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -4153,7 +4193,8 @@ const SingleNft = ({
                         type !== "landavax" &&
                         type !== "landbnb" &&
                         type !== "landbase" &&
-                        type !== "mat"&& (
+                        type !== "mat"&&
+                        type !== "sei"&& (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -4200,7 +4241,8 @@ const SingleNft = ({
             type !== "viction" &&
             type !== "multivers" &&
             type !== "immutable" &&
-            type !== "mat" && (
+            type !== "mat" &&
+            type !== "sei" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4474,7 +4516,8 @@ const SingleNft = ({
             type === "viction" ||
             type === "multivers" ||
             type === "immutable" ||
-            type === "mat") && (
+            type === "mat" ||
+            type === "sei") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4519,6 +4562,8 @@ const SingleNft = ({
                             ? "IMX"
                             : type === "cookie3"
                             ? "COOKIE"
+                            : type === "sei"
+                            ? "SEI"
                             : "BNB"}{" "}
                           rewards
                         </span>

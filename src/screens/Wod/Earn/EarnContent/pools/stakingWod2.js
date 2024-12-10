@@ -207,6 +207,17 @@ const StakeWodDetails2 = ({
     setpopup(false);
   };
 
+  const handleSecondTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
+  };
+
   const getPriceDYP = async () => {
     const dypprice = await axios
       .get(
@@ -488,6 +499,7 @@ const StakeWodDetails2 = ({
       await staking
         .stake(amount, referrer)
         .then(() => {
+          handleSecondTask(coinbase)
           setdepositLoading(false);
           setdepositStatus("success");
           refreshBalance();

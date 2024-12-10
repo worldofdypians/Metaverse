@@ -2,13 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./_bundle.scss";
 import dypius from "../../Images/userProfile/dypius.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
-import filledCircle from "../../Images/userProfile/filled-circlecheck.svg";
-import bnbChain from "../../Images/userProfile/bnbChain.svg";
-import dragon from "../../Images/userProfile/dragon.png";
-import dragonPackage from "./assets/dragonPackageIcon.webp";
-import criticalHit from "./assets/criticalHit.webp";
-import goldenPass from "./assets/goldenPass.png";
-import puzzleMadness from "./assets/puzzleMadness.png";
 import "react-circular-progressbar/dist/styles.css";
 import newLandTooltip from "./assets/newLandTooltip.svg";
 import {

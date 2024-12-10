@@ -248,12 +248,7 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-    {
-      name: "Hamster Chain",
-      icon: "hamsterChain",
-      banner: "kucoinBanner.png",
-      backer: false,
-    },
+
 
     {
       name: "Balance",
@@ -390,14 +385,12 @@ const WodBuilders = ({ page }) => {
                   item.icon === "alterverse" ||
                   item.icon === "worldshards" ||
                   item.icon === "creoengine" ||
-                  item.icon === "binanceWeb3" ||
-                  item.icon === "hamsterChain" ? (
+                  item.icon === "binanceWeb3" ? (
                     <img
                       src={require(`./assets/${item.icon}.png`)}
                       width={24}
                       height={24}
                       alt=""
-                      style={{ scale: item.icon === "hamsterChain" ? "2" : "" }}
                     />
                   ) : (
                     <img

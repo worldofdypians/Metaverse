@@ -10,8 +10,7 @@
               gap: "30px",
               height: "auto",
               minHeight: "100%",
-            }}
-            img={dashboardBackground}
+            }} 
           >
             {loadingPlayer ? (
               <>

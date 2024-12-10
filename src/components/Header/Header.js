@@ -213,7 +213,7 @@ const Header = ({
         setImmutableState(false);
         setMantaState(false);
         setTaikoState(false);
-      } else if (chainId === 56 || chainId === 97) {
+      } else if (chainId === 56) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(true);
@@ -360,8 +360,7 @@ const Header = ({
         setSeiState(false);
         setImmutableState(false);
         setTaikoState(true);
-      }
-      else if (chainId === 1329 ) {
+      } else if (chainId === 1329) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -376,8 +375,7 @@ const Header = ({
         setSeiState(true);
         setImmutableState(false);
         setTaikoState(false);
-      }
-      else {
+      } else {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -1596,21 +1594,27 @@ const Header = ({
                             </Dropdown.Item>
                           </div>
                           <hr className="header-divider my-0" />
-                          <span
-                            className="dropdown-nav p-2 d-flex align-items-center gap-2"
-                            onClick={() => {
-                              handleOpenDomains();
-                              setShowMenu(false);
-                            }}
+                          <a
+                            href="https://wod.space.id"
+                            rel="noreferrer"
+                            target="_blank"
                           >
-                            <img
-                              src={domainIcon}
-                              width={16}
-                              height={16}
-                              alt=""
-                            />{" "}
-                            Domain Name{" "}
-                          </span>
+                            <span
+                              className="dropdown-nav p-2 d-flex align-items-center gap-2"
+                              onClick={() => {
+                                // handleOpenDomains();
+                                setShowMenu(false);
+                              }}
+                            >
+                              <img
+                                src={domainIcon}
+                                width={16}
+                                height={16}
+                                alt=""
+                              />{" "}
+                              Domain Name{" "}
+                            </span>
+                          </a>
                           <button
                             className="sign-out-btn p-2  d-flex align-items-center gap-2 justify-content-start"
                             onClick={() => {
@@ -1649,16 +1653,22 @@ const Header = ({
                 >
                   <div className="menuwrapper">
                     <div className="d-flex flex-column gap-2">
-                      <span
-                        className="menuitem2"
-                        onClick={() => {
-                          handleOpenDomains();
-                          setShowMenu(false);
-                        }}
+                      <a
+                        href="https://wod.space.id"
+                        rel="noreferrer"
+                        target="_blank"
                       >
-                        <img src={domainIcon} width={16} height={16} alt="" />{" "}
-                        Domain Name{" "}
-                      </span>
+                        <span
+                          className="menuitem2"
+                          onClick={() => {
+                            handleOpenDomains();
+                            setShowMenu(false);
+                          }}
+                        >
+                          <img src={domainIcon} width={16} height={16} alt="" />{" "}
+                          Domain Name{" "}
+                        </span>
+                      </a>
                       <span
                         className="menuitem2"
                         onClick={() => {

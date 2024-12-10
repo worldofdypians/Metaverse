@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { loginBackground } from "../../Themes/Images";
+import PropTypes from "prop-types"; 
 import classes from "./LoginWrapper.module.css";
 
 function LoginWrapper({ img, children, style }) {
@@ -24,8 +23,6 @@ LoginWrapper.propTypes = {
   style: PropTypes.object,
 };
 
-LoginWrapper.defaultProps = {
-  // img: loginBackground,
-};
+ 
 
 export default LoginWrapper;

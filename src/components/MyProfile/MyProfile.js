@@ -7,7 +7,7 @@ import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
-import landIcon from "./assets/landIcon.svg";
+import landIcon from "./assets/landIcon.png";
 import redArrow from "./assets/redArrow.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
 import pinkArrow from "./assets/pinkArrow.svg";
@@ -17,7 +17,7 @@ import mageFinish from "../../screens/Account/src/Components/WalletBalance/asset
 import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
 import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
 import goldenPassBadge from "./assets/goldenPassBadge.png";
-
+import defeatedRed from "./assets/defeated-red.png";
 import myRewardsMiner from "./assets/myRewardsMiner.png";
 import Countdown from "react-countdown";
 import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
@@ -32,7 +32,7 @@ import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
 import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
 import prime from "./assets/dailyProgress/prime.png";
 import puzzleMadnessBanner from "./assets/dailyProgress/puzzleMadness.webp";
-
+import wodDomainArrow from "./assets/wodDomainArrow.svg";
 import coldBiteBanner from "./assets/dailyProgress/coldBiteBanner.webp";
 import dragonRuinsBanner from "./assets/dailyProgress/dragonRuinsBanner.webp";
 import furyBeastBanner from "./assets/dailyProgress/furyBeastBanner.webp";
@@ -40,7 +40,7 @@ import scorpionKingBanner from "./assets/dailyProgress/scorpionKingBanner.webp";
 import stoneEyeBanner from "./assets/dailyProgress/stoneEyeBanner.webp";
 import wingStormBanner from "./assets/dailyProgress/wingStormBanner.webp";
 import bnbMazeBanner from "./assets/dailyProgress/bnbMazeBanner.webp";
-
+import domainNameIcon from "./assets/domainNameIcon.png";
 import coldBiteArrow from "./assets/dailyProgress/arrows/coldBiteArrow.svg";
 import dragonRuinsArrow from "./assets/dailyProgress/arrows/dragonRuinsArrow.svg";
 import furyBeastArrow from "./assets/dailyProgress/arrows/furyBeastArrow.svg";
@@ -54,24 +54,25 @@ import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
 import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
 import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
 import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
-
-import premiumDummy from "./assets/premiumDummy.png";
-import dummyDragon from "./assets/dummyDragon.png";
-import dummyCaws from "./assets/dummyCaws.png";
-import doneTag from "./assets/doneTag.svg";
-import emptyTag from "./assets/emptyTag.svg";
+import wodLogo from "../../assets/wodAssets/wodToken.svg";
+import whiteArrows from "./assets/whiteArrows.svg";
+// import premiumDummy from "./assets/premiumDummy.png";
+// import dummyDragon from "./assets/dummyDragon.png";
+// import dummyCaws from "./assets/dummyCaws.png";
+// import doneTag from "./assets/doneTag.svg";
+// import emptyTag from "./assets/emptyTag.svg";
 import portfolio from "./assets/portfolio.svg";
 import starterProfile from "./assets/starterProfile.png";
-import rookieProfile from "./assets/rookieProfile.png";
-import underdogProfile from "./assets/underdogProfile.png";
-import championProfile from "./assets/championProfile.png";
-import unstoppableProfile from "./assets/unstoppableProfile.png";
+// import rookieProfile from "./assets/rookieProfile.png";
+// import underdogProfile from "./assets/underdogProfile.png";
+// import championProfile from "./assets/championProfile.png";
+// import unstoppableProfile from "./assets/unstoppableProfile.png";
 
 import starterProfilePremium from "./assets/starterProfilePremium.png";
-import rookieProfilePremium from "./assets/rookieProfilePremium.png";
-import underdogProfilePremium from "./assets/underdogProfilePremium.png";
-import championProfilePremium from "./assets/championProfilePremium.png";
-import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
+// import rookieProfilePremium from "./assets/rookieProfilePremium.png";
+// import underdogProfilePremium from "./assets/underdogProfilePremium.png";
+// import championProfilePremium from "./assets/championProfilePremium.png";
+// import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
 import errorChain from "./assets/errorchain.svg";
 import Slider from "react-slick";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
@@ -79,6 +80,28 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
+import OutsideClickHandler from "react-outside-click-handler";
+import Clipboard from "react-clipboard.js";
+import copy from "../../components/Header/assets/copy.svg";
+import check from "../../components/Header/assets/check.svg";
+import kucoin from "../../screens/Home/VideoWrapper/assets/buyWodAssets/kucoin.svg";
+import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
+import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
+import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancakeSwap.svg";
+import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
+import { styled, Tooltip, tooltipClasses } from "@mui/material";
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252743 !important",
+    color: "rgba(0, 0, 0, 0.87)",
+    maxWidth: "200px !important",
+    minWidth: "90px !important",
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -113,12 +136,14 @@ const renderer3 = ({ days, hours }) => {
 const renderer4 = ({ hours, minutes, seconds }) => {
   return (
     <span className="beast-siege-timer">
-      {hours}h:{minutes}m:{seconds}s
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
     </span>
   );
 };
 
 const MyProfile = ({
+  greatCollectionData,
+  explorerHuntData,
   canBuy,
   email,
   isPremium,
@@ -173,12 +198,39 @@ const MyProfile = ({
   onEventCardClick,
   userDataStarWeekly,
   onLinkWallet,
+  beastSiegeStatus,
+  userRankMat,
+  userMatScore,
+  userRankSei,
+  userSeiScore,
+  puzzleMadnessTimer,
+  userBnbStars,
+  userSkaleStars,
+  userCoreStars,
+  userVictionStars,
+  userMantaStars,
+  userBaseStars,
+  userTaikoStars,
+  userMatStars,
+  userSeiStars,
+  wodBalance,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
+  const [tooltip, setTooltip] = useState(false);
 
-  const chestPercentage = (totalClaimedChests / 140) * 100;
+  const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (rankDropdown === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [rankDropdown]);
 
   const dailyEvents = [
     {
@@ -190,6 +242,8 @@ const MyProfile = ({
       class: "stoneEyeBannerItem",
       arrow: stoneEyeArrow,
       link: "/account/challenges/stone-eye",
+      active: beastSiegeStatus.cyclops,
+      infoTips: ["80,000 points", "Up to 600 stars."],
     },
     {
       image: dragonRuins, // Monday
@@ -200,6 +254,8 @@ const MyProfile = ({
       class: "dragonRuinsBannerItem",
       arrow: dragonRuinsArrow,
       link: "/account/challenges/dragon-ruins",
+      active: beastSiegeStatus.dragon,
+      infoTips: ["16,000 points", "Up to 200 stars."],
     },
     {
       image: coldBite, // Tuesday
@@ -210,6 +266,8 @@ const MyProfile = ({
       class: "coldBiteBannerItem",
       arrow: coldBiteArrow,
       link: "/account/challenges/cold-bite",
+      active: beastSiegeStatus.bear,
+      infoTips: ["30,000 points", "Up to 300 stars."],
     },
     {
       image: furyBeast, // Wednesday
@@ -220,6 +278,8 @@ const MyProfile = ({
       class: "furyBeastBannerItem",
       arrow: furyBeastArrow,
       link: "/account/challenges/fury-beast",
+      active: beastSiegeStatus.beast,
+      infoTips: ["60,000 points", "Up to 400 stars."],
     },
     {
       image: wingStorm, // Thursday
@@ -230,16 +290,21 @@ const MyProfile = ({
       class: "wingStormBannerItem",
       arrow: wingStormArrow,
       link: "/account/challenges/wing-storm",
+      active: beastSiegeStatus.eagle,
+      infoTips: ["70,000 points", "Up to 500 stars."],
     },
     {
       image: bnbMazeDay, // Friday
-      title: "BNB Maze Day",
+      title: "BNB Chain Maze Day",
       bannerImg: bnbMazeBanner,
       titleColor: "#DDF8D7",
       contentColor: "#FFFFFF",
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
+      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $10"],
+
+      imageClass: "mazeDayEventBanner",
     },
     {
       image: scorpionKing, // Saturday
@@ -250,13 +315,15 @@ const MyProfile = ({
       class: "scorpionKingBannerItem",
       arrow: scorpionKingArrow,
       link: "/account/challenges/maze-day",
+      active: beastSiegeStatus.scorpion,
+      infoTips: ["120,000 points", "Up to 1000 stars."],
     },
   ];
 
   let now = new Date().getTime();
   const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
-  const [allEvents, setAllEvents] = useState(false);
+  const [showBuyTooltip, setshowBuyTooltip] = useState(false);
   const [finished, setFinished] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
   const [showFirstNext, setShowFirstNext] = useState();
@@ -351,27 +418,24 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                      userRankName.name === "starter"
-                        ? isPremium
-                          ? starterProfilePremium
-                          : starterProfile
-                        : userRankName.name === "rookie"
-                        ? isPremium
-                          ? rookieProfilePremium
-                          : rookieProfile
-                        : userRankName.name === "underdog"
-                        ? isPremium
-                          ? underdogProfilePremium
-                          : underdogProfile
-                        : userRankName.name === "champion"
-                        ? isPremium
-                          ? championProfilePremium
-                          : championProfile
-                        : userRankName.name === "unstoppable"
-                        ? isPremium
-                          ? unstoppableProfilePremium
-                          : unstoppableProfile
-                        : starterProfile
+                      isPremium ? starterProfilePremium : starterProfile
+                      // : userRankName.name === "rookie"
+                      // ? isPremium
+                      //   ? rookieProfilePremium
+                      //   : rookieProfile
+                      // : userRankName.name === "underdog"
+                      // ? isPremium
+                      //   ? underdogProfilePremium
+                      //   : underdogProfile
+                      // : userRankName.name === "champion"
+                      // ? isPremium
+                      //   ? championProfilePremium
+                      //   : championProfile
+                      // : userRankName.name === "unstoppable"
+                      // ? isPremium
+                      //   ? unstoppableProfilePremium
+                      //   : unstoppableProfile
+                      // : starterProfile
                     }
                     alt=""
                   />
@@ -401,10 +465,10 @@ const MyProfile = ({
                         </NavLink>
                       )}
                     </div>
-
+                    {/* 
                     <span className="current-rank-text text-capitalize">
                       {email && username ? userRankName.name : ""}
-                    </span>
+                    </span> */}
                   </div>
                   <span className="my-profile-email mb-2">{email}</span>
                   <div className="d-flex flex-column flex-lg-row gap-2">
@@ -425,24 +489,43 @@ const MyProfile = ({
                           <span className={`profile-wallet-span mb-2`}>
                             Wallet Address
                           </span>
-                          <span
-                            className={`${
-                              isConnected &&
-                              address &&
-                              email &&
-                              coinbase &&
-                              syncStatus !== "" &&
-                              address.toLowerCase() !== coinbase.toLowerCase()
-                                ? "wallet-addr-error"
-                                : "wallet-addr"
-                            } `}
-                          >
-                            {email !== undefined && address
-                              ? shortAddress(address)
-                              : coinbase
-                              ? shortAddress(coinbase)
-                              : "--"}
-                          </span>
+                          <div className="d-flex align-items-center gap-2">
+                            <span
+                              className={`${
+                                isConnected &&
+                                address &&
+                                email &&
+                                coinbase &&
+                                syncStatus !== "" &&
+                                address.toLowerCase() !== coinbase.toLowerCase()
+                                  ? "wallet-addr-error"
+                                  : "wallet-addr"
+                              } `}
+                            >
+                              {email !== undefined && address
+                                ? shortAddress(address)
+                                : coinbase
+                                ? shortAddress(coinbase)
+                                : "--"}
+                            </span>
+                            <Clipboard
+                              component="div"
+                              data-event="click"
+                              data-tip="Copied To Clipboard!"
+                              data-clipboard-text={address}
+                              className="wallet-wrapper p-0 d-flex align-items-center gap-2 position-relative"
+                            >
+                              <span
+                                className="menuitem2 p-0"
+                                onClick={() => {
+                                  setTooltip(true);
+                                  setTimeout(() => setTooltip(false), 2000);
+                                }}
+                              >
+                                <img src={tooltip ? check : copy} alt="" />{" "}
+                              </span>
+                            </Clipboard>
+                          </div>
                         </div>
                         {isConnected &&
                           address &&
@@ -459,14 +542,20 @@ const MyProfile = ({
                           coinbase &&
                           syncStatus !== "" &&
                           address.toLowerCase() === coinbase.toLowerCase() && (
-                            <img
-                              src={domainIcon}
-                              width={30}
-                              height={30}
-                              alt=""
-                              style={{ cursor: "pointer" }}
-                              onClick={onDomainClick}
-                            />
+                            <a
+                              href="https://wod.space.id"
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <img
+                                src={domainIcon}
+                                width={30}
+                                height={30}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                                // onClick={onDomainClick}
+                              />
+                            </a>
                           )}
                         {!domainName &&
                           isConnected &&
@@ -475,14 +564,20 @@ const MyProfile = ({
                           coinbase &&
                           syncStatus !== "" &&
                           address.toLowerCase() !== coinbase.toLowerCase() && (
-                            <img
-                              src={errordomainIcon}
-                              width={30}
-                              height={30}
-                              alt=""
-                              style={{ cursor: "pointer" }}
-                              onClick={onDomainClick}
-                            />
+                            <a
+                              href="https://wod.space.id"
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              <img
+                                src={errordomainIcon}
+                                width={30}
+                                height={30}
+                                alt=""
+                                style={{ cursor: "pointer" }}
+                                // onClick={onDomainClick}
+                              />
+                            </a>
                           )}
                       </div>
                     </div>
@@ -494,11 +589,124 @@ const MyProfile = ({
                       address.toLowerCase() === coinbase.toLowerCase()) ||
                     (isConnected && !email && coinbase) ? (
                       <div
-                        className="portfolio-wrapper d-flex w-100 align-items-center gap-2 p-2"
-                        onClick={openPortfolio}
+                        className="portfolio-wrapper position-relative d-flex justify-content-between w-100 align-items-center gap-2 p-2"
+                        onClick={() => {
+                          setshowBuyTooltip(true);
+                        }}
                       >
-                        <img src={portfolio} width={25} height={25} alt="" />
-                        <h6 className="mb-0">My Portfolio</h6>
+                        <div className="d-flex align-items-center gap-2">
+                          <img src={wodLogo} width={20} height={20} alt="" />
+                          <h6 className="mb-0">
+                            {getFormattedNumber(wodBalance, 2)}
+                          </h6>
+                        </div>
+                        <img
+                          src={whiteArrows}
+                          alt=""
+                          style={{ width: 20, height: 20 }}
+                          className={showBuyTooltip ? "whitearrowUp" : ""}
+                        />
+                        {showBuyTooltip === true && (
+                          <div className="position-absolute w-100">
+                            <OutsideClickHandler
+                              onOutsideClick={() => {
+                                setshowBuyTooltip(false);
+                              }}
+                            >
+                              <div
+                                className="wodtooltip d-flex py-4 px-3"
+                                style={{ opacity: 1 }}
+                              >
+                                <div className="d-flex w-100 flex-column gap-2 align-items-start">
+                                  <div className="d-flex justify-content-center align-items-center flex-column w-100">
+                                    <h6 className="getwodon-title mb-0">
+                                      Get WOD on
+                                    </h6>
+                                    <div className="sidebar-separator2 my-1"></div>
+                                  </div>
+                                  <a
+                                    href="https://www.kucoin.com/trade/WOD-USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={kucoin} className="buywodimg" />
+                                      Kucoin
+                                    </h6>
+                                  </a>
+                                  <a
+                                    href="https://www.gate.io/trade/WOD_USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={gate} className="buywodimg" />
+                                      Gate.io
+                                    </h6>
+                                  </a>
+
+                                  <a
+                                    href="https://www.mexc.com/exchange/WOD_USDT"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img src={mexc} className="buywodimg" />
+                                      MEXC Global
+                                    </h6>
+                                  </a>
+
+                                  <a
+                                    href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={pancake}
+                                        className="buywodimg"
+                                      />
+                                      PancakeSwap
+                                    </h6>
+                                  </a>
+                                  <a
+                                    href="https://short.trustwallet.com/app-download"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={trustwallet}
+                                        className="buywodimg"
+                                      />
+                                      TrustWallet
+                                    </h6>
+                                  </a>
+                                </div>
+                              </div>
+                            </OutsideClickHandler>
+                          </div>
+                        )}
                       </div>
                     ) : !isConnected ? (
                       <button
@@ -561,7 +769,7 @@ const MyProfile = ({
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between">
-                    <span className="user-data-item-left">My Progress</span>
+                    {/* <span className="user-data-item-left">My Progress</span> */}
                     <div className="d-flex flex-column">
                       <div className="d-flex">
                         <span className="user-data-item-right">
@@ -602,54 +810,76 @@ const MyProfile = ({
                     </div>
                   </div>
                 </div> */}
-                <div className="wallet-address-wrapper2 p-2 w-100">
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex flex-column">
-                      <span className="user-data-item-left">Brands</span>
-                      <span className="user-data-item-left">Collected</span>
-                    </div>
-                    <div className="d-flex">
-                      <span className="user-data-item-right">Upcoming</span>
-                    </div>
+                <div
+                  onClick={openPortfolio}
+                  className="wallet-address-wrapper2 p-2 w-100"
+                >
+                  <div className="d-flex gap-2 align-items-center justify-content-start">
+                    <img src={portfolio} width={25} height={25} alt="" />
+                    <h6 className="user-data-item-left mb-0">My Portfolio</h6>
                   </div>
                 </div>
                 {rankDropdown === true && (
-                  <RankSmallPopup
-                    onClose={() => {
+                  <OutsideClickHandler
+                    onOutsideClick={() => {
                       setRankDropdown(false);
                     }}
-                    primeStars={primeStars}
-                    userRank={userRank}
-                    userRankSkale={userRankSkale}
-                    userBnbScore={userBnbScore}
-                    userSkaleScore={userSkaleScore}
-                    userRankCore={userRankCore}
-                    userCoreScore={userCoreScore}
-                    userRankViction={userRankViction}
-                    userVictionScore={userVictionScore}
-                    rankData={rankData}
-                    userDataStar={userDataStar}
-                    userRankManta={userRankManta}
-                    userMantaScore={userMantaScore}
-                    userRankBase={userRankBase}
-                    userBaseScore={userBaseScore}
-                    userRankTaiko={userRankTaiko}
-                    userTaikoScore={userTaikoScore}
-                    userRankName={userRankName}
-                    onRankPopupClick={() => {
-                      onOpenRankPopup();
-                      setRankDropdown(false);
-                    }}
-                    globalMonthly={
-                      userDataStar.position ? userDataStar.position + 1 : "---"
-                    }
-                    globalWeekly={
-                      userDataStarWeekly.position
-                        ? userDataStarWeekly.position + 1
-                        : "---"
-                    }
-                    isPremium={isPremium}
-                  />
+                  >
+                    <RankSmallPopup
+                      onClose={() => {
+                        setRankDropdown(false);
+                      }}
+                      onPrimeClick={() => {
+                        html.classList.remove("hidescroll");
+                      }}
+                      primeStars={primeStars}
+                      userRank={userRank}
+                      userRankSkale={userRankSkale}
+                      userBnbScore={userBnbScore}
+                      userSkaleScore={userSkaleScore}
+                      userRankCore={userRankCore}
+                      userCoreScore={userCoreScore}
+                      userRankViction={userRankViction}
+                      userVictionScore={userVictionScore}
+                      rankData={rankData}
+                      userDataStar={userDataStar}
+                      userRankManta={userRankManta}
+                      userMantaScore={userMantaScore}
+                      userRankMat={userRankMat}
+                      userMatScore={userMatScore}
+                      userRankSei={userRankSei}
+                      userSeiScore={userSeiScore}
+                      userRankBase={userRankBase}
+                      userBaseScore={userBaseScore}
+                      userRankTaiko={userRankTaiko}
+                      userTaikoScore={userTaikoScore}
+                      userRankName={userRankName}
+                      userBnbStars={userBnbStars}
+                      userSkaleStars={userSkaleStars}
+                      userCoreStars={userCoreStars}
+                      userVictionStars={userVictionStars}
+                      userMantaStars={userMantaStars}
+                      userBaseStars={userBaseStars}
+                      userTaikoStars={userTaikoStars}
+                      userMatStars={userMatStars}
+                      userSeiStars={userSeiStars}
+                      onRankPopupClick={() => {
+                        onOpenRankPopup();
+                        setRankDropdown(false);
+                      }}
+                      globalMonthly={
+                        userDataStar.position
+                          ? userDataStar.position + 1
+                          : "---"
+                      }
+                      globalWeekly={
+                        userDataStarWeekly.position
+                          ? userDataStarWeekly.position + 1
+                          : "---"
+                      }
+                      isPremium={isPremium}
+                    />
+                  </OutsideClickHandler>
                 )}
               </div>
               <div className="sidebar-separator2 my-2"></div>
@@ -706,11 +936,35 @@ const MyProfile = ({
                     />
                   )}
                 </div> */}
-                  <div className="daily-progress-item position-relative">
-                    <img src={prime} alt="" />
-                    <div className="daily-progress-value-golden">
-                      <span>
-                        {primeStars === true ? "+ 50 Stars" : "In Progress"}
+                  <NavLink
+                    to={"/account/prime"}
+                    className="daily-progress-item position-relative"
+                  >
+                    <HtmlTooltip
+                      placement="top"
+                      title={
+                        <span className="card-eth-chain-text">
+                          With Prime enabled, earn 50 extra stars if you're in
+                          the top 100 of any leaderboard!
+                        </span>
+                      }
+                    >
+                      <img src={prime} alt="" />
+                    </HtmlTooltip>
+
+                    <div
+                      className={"daily-progress-value-golden"}
+                      style={{
+                        border:
+                          !isPremium || !primeStars ? "1px solid gray" : "",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: !isPremium || !primeStars ? "gray" : "",
+                        }}
+                      >
+                        +50 Stars
                       </span>
                     </div>
                     <span className="bundle-title-bottom">Prime</span>
@@ -720,15 +974,16 @@ const MyProfile = ({
                     alt=""
                     className="daily-progress-status"
                   /> */}
-                  </div>
-                  <div className="daily-progress-item position-relative">
+                  </NavLink>
+                  <div
+                    className="daily-progress-item position-relative"
+                    onClick={openDailyBonus}
+                  >
                     <img src={dailyBonusStd} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsstd === 0
-                          ? "Ready"
-                          : allClaimedChestsstd < 70
-                          ? allClaimedChestsstd + "/70"
+                        {allClaimedChestsstd < 90
+                          ? allClaimedChestsstd + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -740,14 +995,15 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <div className="daily-progress-item position-relative">
+                  <div
+                    className="daily-progress-item position-relative"
+                    onClick={openDailyBonus}
+                  >
                     <img src={dailyBonusPrime} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {allClaimedChestsPremium === 0
-                          ? "Ready"
-                          : allClaimedChestsPremium < 70
-                          ? allClaimedChestsPremium + "/70"
+                        {allClaimedChestsPremium < 90
+                          ? allClaimedChestsPremium + "/90"
                           : "Completed"}
                       </span>
                     </div>
@@ -761,7 +1017,10 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                   </div>
-                  <div className="daily-progress-item position-relative">
+                  <NavLink
+                    to={dailyEvents[utcDayIndex].link}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={dailyEvents[utcDayIndex].image} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -770,7 +1029,7 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        Ready
+                        {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
                       </span>
                     </div>
                     {/* {userDailyBundles?.dragonRuinsCount > 0 && (
@@ -781,11 +1040,16 @@ const MyProfile = ({
                     />
                   )} */}
                     <span className="bundle-title-bottom">
-                      {dailyEvents[utcDayIndex].title}
+                      {dailyEvents[utcDayIndex].title === "BNB Chain Maze Day"
+                        ? "Maze Day"
+                        : dailyEvents[utcDayIndex].title}
                     </span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/critical-hit"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={criticalHit} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
@@ -796,17 +1060,18 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Critical Hit</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/treasure-hunt"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={treasureHunt} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
-                        {userActiveEvents === 5
+                        {userActiveEvents === 14
                           ? "Completed"
-                          : userActiveEvents === 0
-                          ? "Ready"
-                          : userActiveEvents + "/5"}
+                          : userActiveEvents + "/14"}
                       </span>
                     </div>
                     {/* <img
@@ -815,12 +1080,21 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Treasure Hunt</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/explorer-hunt"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={explorerHunt} alt="" />
                     <div className="daily-progress-value-golden">
-                      <span>Ready</span>
+                      <span>
+                        {explorerHuntData[0]?.statValue
+                          ? explorerHuntData[0]?.statValue === 0
+                            ? "Ready"
+                            : explorerHuntData[0]?.statValue
+                          : "Ready"}
+                      </span>
                     </div>
                     {/* <img
                     src={emptyTag}
@@ -828,9 +1102,12 @@ const MyProfile = ({
                     className="daily-progress-status"
                   /> */}
                     <span className="bundle-title-bottom">Explorer Hunt</span>
-                  </div>
+                  </NavLink>
 
-                  <div className="daily-progress-item position-relative">
+                  <NavLink
+                    to={"/account/challenges/puzzle-madness"}
+                    className="daily-progress-item position-relative"
+                  >
                     <img src={puzzleMadness} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
@@ -850,7 +1127,7 @@ const MyProfile = ({
                     />
                   )} */}
                     <span className="bundle-title-bottom">Puzzle Madness</span>
-                  </div>
+                  </NavLink>
 
                   {/* <div className="daily-progress-item position-relative">
                   <img
@@ -1009,14 +1286,13 @@ const MyProfile = ({
                     >
                       <img src={landFlag} className="w-100" alt="" />
                       <div className="flag-content d-flex flex-column gap-2 align-items-center">
-                        <span className="flag-title">Genesis</span>
+                        <span className="flag-title">Collection</span>
                         <img src={landIcon} height={50} width={50} alt="" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div className="col-12 col-lg-6 mt-3">
                 <div
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
@@ -1082,9 +1358,9 @@ const MyProfile = ({
                   <img src={cyanArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-              <div className="col-12 col-lg-6 mt-3">
+              <div className="col-12 col-lg-3 mt-3">
                 <div
-                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between gap-2 p-3"
+                  className="new-special-rewards-wrapper d-flex flex-column justify-content-between p-3 h-100"
                   onClick={openSpecialRewards}
                 >
                   <h6 className="special-rewards-title">Special Rewards</h6>
@@ -1097,7 +1373,32 @@ const MyProfile = ({
                   <img src={redArrow} width={20} height={20} alt="" />
                 </div>
               </div>
-
+              <div className="col-12 col-lg-3 mt-3">
+                <a
+                  href="https://wod.space.id"
+                  rel="noreferrer"
+                  target="_blank"
+                  className="wod-domain-name-wrapper d-flex align-items-center justify-content-between gap-2 p-3"
+                >
+                  <div className="d-flex flex-column justify-content-between h-100">
+                    <h6
+                      className="special-rewards-title"
+                      style={{ color: "#FFD9F1" }}
+                    >
+                      .WOD
+                    </h6>
+                    <span className="wod-domain-name-span">
+                      Claim Your Identity
+                    </span>
+                    <img src={wodDomainArrow} width={20} height={20} alt="" />
+                  </div>
+                  <img
+                    src={domainNameIcon}
+                    className="wod-domain-icon"
+                    alt=""
+                  />
+                </a>
+              </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink to="/account/prime">
                   <div className="total-stars-premium-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
@@ -1143,7 +1444,6 @@ const MyProfile = ({
                   </div>
                 </NavLink>
               </div>
-
               <div className="col-12 col-lg-6 mt-3" onClick={onGoldenpassClick}>
                 <div className="golden-pass-wrapper2 d-flex align-items-center gap-5 justify-content-between p-2">
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
@@ -1187,24 +1487,26 @@ const MyProfile = ({
                   </div>
                 </div>
               </div>
-
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
                   to={dailyEvents[utcDayIndex].link}
                   onClick={onEventCardClick}
                 >
                   <div
-                    className={`${dailyEvents[utcDayIndex].class} position-relative p-3 d-flex`}
+                    className={`${dailyEvents[utcDayIndex].class} profile-banner-class-thing position-relative p-3 d-flex`}
                   >
-                    <div className=" d-flex flex-column justify-content-between gap-2 ">
-                      <div className="d-flex flex-column gap-2">
-                        <span
-                          className={`utcEventTitle`}
-                          style={{ color: dailyEvents[utcDayIndex].titleColor }}
-                        >
-                          {dailyEvents[utcDayIndex].title}
-                        </span>
-                        {/* <span
+                    <div
+                      className=" d-flex flex-column justify-content-between gap-2 "
+                      style={{ zIndex: 1 }}
+                    >
+                      {/* <div className="d-flex flex-column gap-1" style={{zIndex: 1}}> */}
+                      <span
+                        className={`utcEventTitle`}
+                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                      >
+                        {dailyEvents[utcDayIndex].title}
+                      </span>
+                      {/* <span
                           className={`utcEventContent`}
                           style={{
                             color: dailyEvents[utcDayIndex].contentColor,
@@ -1212,22 +1514,98 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                        <div className="d-flex flex-column gap-1">
-                          <span className="beast-siege-ends-in">Ends in:</span>
-                          <Countdown renderer={renderer4} date={midnight} />
-                        </div>
+                      {dailyEvents[utcDayIndex].title ===
+                      "BNB Chain Maze Day" ? (
+                        <>
+                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                            <div className="ready-circle-2 d-flex flex-column gap-1">
+                              <Countdown renderer={renderer4} date={midnight} />
+                            </div>
+                            <span className="new-time-remaining">
+                              Time Remaining
+                            </span>
+                          </div>
+                          <div className="d-flex d-lg-none">
+                            <Countdown renderer={renderer4} date={midnight} />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {dailyEvents[utcDayIndex].active ? (
+                            //   <div className="d-flex flex-column gap-1">
+                            //   <span className="beast-siege-ends-in">Available until:</span>
+                            //   <Countdown renderer={renderer4} date={midnight} />
+                            // </div>
+                            <>
+                              <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                                <div className="ready-circle-2 d-flex flex-column gap-1">
+                                  <Countdown
+                                    renderer={renderer4}
+                                    date={midnight}
+                                  />
+                                </div>
+                                <span className="new-time-remaining">
+                                  Time Remaining
+                                </span>
+                              </div>
+                              <div className="d-flex d-lg-none">
+                                <Countdown
+                                  renderer={renderer4}
+                                  date={midnight}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="ready-circle d-none d-lg-flex">
+                                <span className="beast-siege-timer">Ready</span>
+                              </div>
+                              <span className="beast-siege-timer d-flex d-lg-none">
+                                Ready
+                              </span>
+                            </>
+                          )}
+                        </>
+                      )}
+                      <div
+                        className={`d-flex flex-column gap-1 infotips-holder ${
+                          dailyEvents[utcDayIndex].title === "BNB Maze Day" &&
+                          "bnb-infotips-holder"
+                        }`}
+                      >
+                        {dailyEvents[utcDayIndex].infoTips.map(
+                          (item, index) => (
+                            <div
+                              key={index}
+                              className="d-flex align-items-center gap-1"
+                            >
+                              <div className="yellow-dot"></div>
+                              <span
+                                className="beast-siege-timer"
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 400,
+                                  color: "#fff",
+                                }}
+                              >
+                                {item}
+                              </span>
+                            </div>
+                          )
+                        )}
                       </div>
+                      {/* </div> */}
                       <img
                         src={dailyEvents[utcDayIndex].arrow}
                         alt=""
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
-
+                    {/* <img src={defeatedRed} className="defeated-red" alt="" /> */}
                     <img
                       src={dailyEvents[utcDayIndex].bannerImg}
                       alt=""
-                      className="eventbannerimg"
+                      className={`eventbannerimg ${dailyEvents[utcDayIndex]?.imageClass}`}
                     />
                   </div>
                 </NavLink>
@@ -1239,14 +1617,93 @@ const MyProfile = ({
                   onClick={onEventCardClick}
                 >
                   <div className="d-flex flex-column justify-content-between h-100">
-                    <div className="d-flex flex-column">
-                      <h6 className="leaderboards-title">PUZZLE MADNESS</h6>
-                      <span
+                    <div className="d-flex flex-column gap-2">
+                      <h6 className="leaderboards-title mb-0">
+                        PUZZLE MADNESS
+                      </h6>
+                      {/* <span
                         className={`utcEventContent w-75`}
                         style={{ color: "#CCE8F5" }}
                       >
                         Test your puzzle solving skills and boost score
-                      </span>
+                      </span> */}
+                      {beastSiegeStatus.puzzleMadness ? (
+                        //   <div className="d-flex flex-column gap-1">
+                        //   <span className="beast-siege-ends-in">Available until:</span>
+                        //   <Countdown renderer={renderer4} date={midnight} />
+                        // </div>
+                        <>
+                          <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
+                            <div className="ready-circle-2 d-flex flex-column gap-1">
+                              <Countdown
+                                renderer={renderer4}
+                                date={puzzleMadnessTimer}
+                              />
+                            </div>
+                            <span className="new-time-remaining">
+                              Time Remaining
+                            </span>
+                          </div>
+                          <div className="d-flex d-lg-none">
+                            <Countdown
+                              renderer={renderer4}
+                              date={puzzleMadnessTimer}
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="ready-circle d-none d-lg-flex">
+                            <span className="beast-siege-timer">Ready</span>
+                          </div>
+                          <span className="beast-siege-timer d-flex d-lg-none">
+                            Ready
+                          </span>
+                        </>
+                      )}
+                      <div
+                        className={`d-flex flex-column gap-1 infotips-holder`}
+                      >
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Up to 160,000 points
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            x2-x8 multiplier
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Multiple activations
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     <img
                       src={puzzleMadnessArrow}
@@ -1255,7 +1712,10 @@ const MyProfile = ({
                       alt=""
                     />
                   </div>
-                  <img src={puzzleMadnessBanner} className="eventbannerimg" />
+                  <img
+                    src={puzzleMadnessBanner}
+                    className="eventbannerimg puzzle-eventbannerimg"
+                  />
                 </NavLink>
               </div>
             </div>

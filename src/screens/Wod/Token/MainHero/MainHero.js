@@ -163,7 +163,7 @@ const MainHero = () => {
                 </span>
                 <div className="d-flex align-items-center gap-3">
                   <button className="stake-wod-btn px-4 py-2">Stake WOD</button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
+                  <button className="buy-wod-btn px-4 py-2">Get WOD</button>
                 </div>
               </div>
             </div>

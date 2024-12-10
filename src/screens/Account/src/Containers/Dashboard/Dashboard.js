@@ -66,6 +66,8 @@ import {
   taikoStars,
   weeklyStarPrizes,
   weeklyExtraStarPrizes,
+  seiStars,
+  matStars,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 
@@ -191,7 +193,9 @@ function Dashboard({
   showSync,
   onCloseSync,
   easy2StakeEarnUsd,
-  midleEarnUsd
+  midleEarnUsd,
+  coingeckoEarnUsd,
+  chainlinkEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -201,7 +205,6 @@ function Dashboard({
     borderColor: "#554fd8",
   };
 
-  
   const allBenefits = [
     {
       title: "Exclusive access to the game",
@@ -232,8 +235,6 @@ function Dashboard({
       image: prioritySupportBg,
     },
   ];
-
-
 
   const {
     data,
@@ -295,11 +296,10 @@ function Dashboard({
       name: "Matchain",
       symbol: "matchain",
     },
-
-    // {
-    //   name: "SEI",
-    //   symbol: "sei",
-    // },
+    {
+      name: "SEI",
+      symbol: "sei",
+    },
   ];
 
   const chestImagesBnb = [
@@ -553,6 +553,8 @@ function Dashboard({
   const [myMantaNfts, setmyMantaNfts] = useState([]);
   const [myTaikoNfts, setmyTaikoNfts] = useState([]);
   const [myCookieNfts, setmyCookieNfts] = useState([]);
+  const [mySeiNfts, setmySeiNfts] = useState([]);
+
   const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
@@ -651,7 +653,6 @@ function Dashboard({
   const [allBaseChests, setallBaseChests] = useState([]);
   const [allMatChests, setallMatChests] = useState([]);
 
-  const [countdown700, setcountdown700] = useState();
   const [countdown, setcountdown] = useState();
   const [countdown3500, setcountdown3500] = useState();
 
@@ -665,6 +666,7 @@ function Dashboard({
   const [taikocount, settaikocount] = useState(0);
   const [basecount, setbasecount] = useState(0);
   const [matcount, setmatcount] = useState(0);
+  const [seicount, setseicount] = useState(0);
 
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
@@ -774,7 +776,9 @@ function Dashboard({
 
       if (email !== "" && mediaUrl !== "" && coinbase !== "") {
         const send = await axios
-          .post("https://api.worldofdypians.com/api/submissions", data)
+          .post("https://api.worldofdypians.com/api/submissions", data, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          })
           .then(function (result) {
             console.log(result.data);
             setSpecialRewardsSuccess("Email sent successfully");
@@ -979,6 +983,7 @@ function Dashboard({
   const [allTaikoData, setAllTaikoData] = useState([]);
   const [allBaseData, setAllBaseData] = useState([]);
   const [allMatData, setAllMatData] = useState([]);
+  const [allSeiData, setAllSeiData] = useState([]);
 
   const [dailyRecordsCore, setDailyRecordsCore] = useState([]);
   const [weeklyRecordsCore, setWeeklyRecordsCore] = useState([]);
@@ -1017,6 +1022,8 @@ function Dashboard({
   const [userRankSkale, setUserRankSkale] = useState("");
   const [userSkaleScore, setUserSkaleScore] = useState(0);
   const [eventCardCount, seteventCardCount] = useState(0);
+  const [explorerHuntData, setexplorerHuntData] = useState([]);
+  const [greatCollectionData, setgreatCollectionData] = useState([]);
 
   const [allStarData, setAllStarData] = useState({});
   const [starRecords, setStarRecords] = useState([]);
@@ -1070,6 +1077,24 @@ function Dashboard({
   const [monthlyDataAmountManta, setMonthlyDataAmountManta] = useState([]);
   const [userRankManta, setUserRankManta] = useState("");
   const [userMantaScore, setUserMantaScore] = useState(0);
+
+  const [dailyRecordsSei, setDailyRecordsSei] = useState([]);
+  const [weeklyRecordsSei, setWeeklyRecordsSei] = useState([]);
+  const [monthlyRecordsSei, setMonthlyRecordsSei] = useState([]);
+  const [activePlayerSei, setActivePlayerSei] = useState(false);
+  const [activePlayerSeiWeekly, setActivePlayerSeiWeekly] = useState(false);
+  const [activePlayerSeiMonthly, setActivePlayerSeiMonthly] = useState(false);
+  const [userDataSei, setUserDataSei] = useState({});
+  const [userDataSeiWeekly, setUserDataSeiWeekly] = useState({});
+  const [userDataSeiMonthly, setUserDataSeiMonthly] = useState({});
+  const [prevDataSei, setPrevDataSei] = useState([]);
+  const [prevDataSeiWeekly, setPrevDataSeiWeekly] = useState([]);
+  const [prevDataSeiMonthly, setPrevDataSeiMonthly] = useState([]);
+  const [dailyDataAmountSei, setDailyDataAmountSei] = useState([]);
+  const [weeklyDataAmountSei, setWeeklyDataAmountSei] = useState([]);
+  const [monthlyDataAmountSei, setMonthlyDataAmountSei] = useState([]);
+  const [userRankSei, setUserRankSei] = useState("");
+  const [userSeiScore, setUserSeiScore] = useState(0);
 
   const [dailyRecordsBase, setDailyRecordsBase] = useState([]);
   const [weeklyRecordsBase, setWeeklyRecordsBase] = useState([]);
@@ -1151,6 +1176,16 @@ function Dashboard({
   const [previousgenesisData, setpreviousgenesisData] = useState([]);
   const [specialRewardsSuccess, setSpecialRewardsSuccess] = useState(false);
   const [treasureRewardMoney, setTreasureRewardMoney] = useState(0);
+  const [beastSiegeStatus, setBeastSiegeStatus] = useState({
+    dragon: false,
+    bear: false,
+    beast: false,
+    eagle: false,
+    scorpion: false,
+    cyclops: false,
+    puzzleMadness: false,
+  });
+  const [puzzleMadnessTimer, setPuzzleMadnessTimer] = useState(0);
 
   const fillRecords = (itemData) => {
     if (itemData.length === 0) {
@@ -2243,6 +2278,372 @@ function Dashboard({
     }
   };
 
+  const fillRecordsSei = (itemData) => {
+    if (itemData.length === 0) {
+      setDailyRecordsSei(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setDailyRecordsSei(finalData);
+    }
+  };
+  // const fillRecordsWeeklySei = (itemData) => {
+  //   if (itemData.length === 0) {
+  //     setWeeklyRecordsSei(placeholderplayerData);
+  //   } else if (itemData.length <= 10) {
+  //     const testArray = itemData;
+  //     const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+  //     const finalData = [...testArray, ...placeholderArray];
+  //     setWeeklyRecordsSei(finalData);
+  //   }
+  // };
+  const fillRecordsMonthlySei = (itemData) => {
+    if (itemData.length === 0) {
+      setMonthlyRecordsSei(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setMonthlyRecordsSei(finalData);
+    }
+  };
+
+  const fetchPreviousWinnersSei = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSeiDaily",
+        StartPosition: 0,
+        MaxResultsCount: 100,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+      setPrevDataSei(result.data.data.leaderboard);
+    } else {
+      setPrevDataSei(placeholderplayerData);
+    }
+
+    // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  // const fetchPreviousWeeklyWinnersSei = async (version) => {
+  //   if (version != 0) {
+  //     const data = {
+  //       StatisticName: "LeaderboardSeiWeekly",
+  //       StartPosition: 0,
+  //       MaxResultsCount: 10,
+  //       Version: version - 1,
+  //     };
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboard?Version=-1`,
+  //       data
+  //     );
+
+  //     setPrevDataSeiWeekly(result.data.data.leaderboard);
+  //   } else {
+  //     setPrevDataSeiWeekly(placeholderplayerData);
+  //   }
+  // };
+
+  const fetchPreviousMonthlyWinnersSei = async (version) => {
+    if (version != 0) {
+      const data = {
+        StatisticName: "LeaderboardSeiMonthly",
+        StartPosition: 0,
+        MaxResultsCount: 10,
+        Version: version - 1,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboard?Version=-1`,
+        data
+      );
+
+      setPrevDataSeiMonthly(result.data.data.leaderboard);
+    } else {
+      setPrevDataSeiMonthly(placeholderplayerData);
+    }
+  };
+
+  const fetchDailyRecordsSei = async () => {
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsSei([]);
+      });
+
+    fetchPreviousWinnersSei(parseInt(result.data.data.version));
+    setDailyRecordsSei(result.data.data.leaderboard);
+    fillRecordsSei(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSei(true);
+        fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      } else if (testArray.length === 0) {
+        setActivePlayerSei(false);
+        fetchDailyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsSei = async () => {
+  //   const data = {
+  //     StatisticName: "LeaderboardSeiWeekly",
+  //     StartPosition: 0,
+  //     MaxResultsCount: 100,
+  //   };
+  //   const result = await axios
+  //     .post(`${backendApi}/auth/GetLeaderboard`, data)
+  //     .catch((e) => {
+  //       console.error(e);
+  //       fillRecordsWeeklySei([]);
+  //     });
+  //   setWeeklyRecordsSei(result.data.data.leaderboard);
+
+  //   fetchPreviousWeeklyWinnersSei(parseInt(result.data.data.version));
+  //   fillRecordsWeeklySei(result.data.data.leaderboard);
+  //   if (userId && username) {
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     if (testArray.length > 0) {
+  //       setActivePlayerSeiWeekly(true);
+  //       fetchWeeklyRecordsAroundPlayerSei(result.data.data.leaderboard);
+  //     }
+  //     if (testArray.length === 0) {
+  //       setActivePlayerSeiWeekly(false);
+  //       fetchWeeklyRecordsAroundPlayerSei(result.data.data.leaderboard);
+  //     }
+  //   }
+  // };
+  const fetchMonthlyRecordsSei = async () => {
+    const data = {
+      StatisticName: "LeaderboardSeiMonthly",
+      StartPosition: 0,
+      MaxResultsCount: 100,
+    };
+    const result = await axios
+      .post(`${backendApi}/auth/GetLeaderboard`, data)
+      .catch((e) => {
+        console.error(e);
+        fillRecordsMonthlySei([]);
+      });
+    setMonthlyRecordsSei(result.data.data.leaderboard);
+
+    fetchPreviousMonthlyWinnersSei(parseInt(result.data.data.version));
+
+    fillRecordsMonthlySei(result.data.data.leaderboard);
+    if (userId && username) {
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+      if (testArray.length > 0) {
+        setActivePlayerSeiMonthly(true);
+        fetchMonthlyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+
+      if (testArray.length === 0) {
+        setActivePlayerSeiMonthly(false);
+        fetchMonthlyRecordsAroundPlayerSei(result.data.data.leaderboard);
+      }
+    }
+  };
+
+  const fetchDailyRecordsAroundPlayerSei = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSeiDaily",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+
+      // if (isPremium && testArray[0].statValue != 0) {
+      //   setDailyDataAmountSei(
+      //     testArray[0].statValue !== 0
+      //       ? userPosition > 10
+      //         ? 0
+      //         : userPosition === 10
+      //         ? Number(skaleStars[9]) + Number(skaleStarsPremium[9])
+      //         : Number(skaleStars[userPosition]) +
+      //           Number(skaleStarsPremium[userPosition])
+      //       : 0
+      //   );
+      // } else if (!isPremium && testArray[0].statValue != 0) {
+      //   setDailyDataAmountSei(
+      //     testArray[0].statValue !== 0
+      //       ? userPosition > 10
+      //         ? 0
+      //         : userPosition === 10
+      //         ? Number(skaleStars[9])
+      //         : Number(skaleStars[userPosition])
+      //       : 0
+      //   );
+      // } else setDailyDataAmountSei(0);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerSei(true);
+          setUserDataSei(...testArray);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerSei(false);
+          setUserDataSei(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerSei(false);
+        setUserDataSei(...testArray);
+      }
+    }
+  };
+
+  // const fetchWeeklyRecordsAroundPlayerSei = async (itemData) => {
+  //   const data = {
+  //     StatisticName: "LeaderboardSeiWeekly",
+  //     MaxResultsCount: 6,
+  //     PlayerId: userId,
+  //   };
+  //   if (userId) {
+  //     const result = await axios.post(
+  //       `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+  //       data
+  //     );
+  //     var testArray = result.data.data.leaderboard.filter(
+  //       (item) => item.displayName === username
+  //     );
+
+  //     const userPosition = testArray[0].position;
+  //     if (goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountSei(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9]) +
+  //               Number(skalePrizesWeeklyGolden[9])
+  //             : Number(skalePrizesWeekly[userPosition]) +
+  //               Number(skalePrizesWeeklyGolden[userPosition])
+  //           : 0
+  //       );
+  //     } else if (!goldenPassRemainingTime && testArray[0].statValue != 0) {
+  //       setWeeklyDataAmountSei(
+  //         testArray[0].statValue !== 0
+  //           ? userPosition > 10
+  //             ? 0
+  //             : userPosition === 10
+  //             ? Number(skalePrizesWeekly[9])
+  //             : Number(skalePrizesWeekly[userPosition])
+  //           : 0
+  //       );
+  //     } else setWeeklyDataAmountSei(0);
+
+  //     if (itemData.length > 0) {
+  //       var testArray2 = Object.values(itemData).filter(
+  //         (item) => item.displayName === username
+  //       );
+
+  //       if (testArray.length > 0 && testArray2.length > 0) {
+  //         setActivePlayerSeiWeekly(true);
+  //         setUserDataSeiWeekly([]);
+  //       } else if (testArray.length > 0 && testArray2.length === 0) {
+  //         setActivePlayerSeiWeekly(false);
+  //         setUserDataSeiWeekly(...testArray);
+  //       }
+  //     } else if (testArray.length > 0) {
+  //       setActivePlayerSeiWeekly(false);
+  //       setUserDataSeiWeekly(...testArray);
+  //     }
+  //   }
+  // };
+
+  const fetchMonthlyRecordsAroundPlayerSei = async (itemData) => {
+    const data = {
+      StatisticName: "LeaderboardSeiMonthly",
+      MaxResultsCount: 6,
+      PlayerId: userId,
+    };
+    if (userId) {
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+
+      var testArray = result.data.data.leaderboard.filter(
+        (item) => item.displayName === username
+      );
+
+      const userPosition = testArray[0].position;
+      // console.log(userPosition)
+
+      if (goldenPassRemainingTime) {
+        setMonthlyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9]) +
+                Number(skalePrizesMonthlyGolden[9])
+              : Number(skalePrizesMonthly[userPosition]) +
+                Number(skalePrizesMonthlyGolden[userPosition])
+            : 0
+        );
+      } else if (!goldenPassRemainingTime) {
+        setMonthlyDataAmountSei(
+          testArray[0].statValue !== 0
+            ? userPosition > 10
+              ? 0
+              : userPosition === 10
+              ? Number(skalePrizesMonthly[9])
+              : Number(skalePrizesMonthly[userPosition])
+            : 0
+        );
+      }
+
+      setUserRankSei(testArray[0].position);
+      setUserSeiScore(testArray[0].statValue);
+
+      if (itemData.length > 0) {
+        var testArray2 = Object.values(itemData).filter(
+          (item) => item.displayName === username
+        );
+
+        if (testArray.length > 0 && testArray2.length > 0) {
+          setActivePlayerSeiMonthly(true);
+          setUserDataSeiMonthly([]);
+        } else if (testArray.length > 0 && testArray2.length === 0) {
+          setActivePlayerSeiMonthly(false);
+          setUserDataSeiMonthly(...testArray);
+        }
+      } else if (testArray.length > 0) {
+        setActivePlayerSeiMonthly(false);
+        setUserDataSeiMonthly(...testArray);
+      }
+    }
+  };
+
   const fillRecordsBase = (itemData) => {
     if (itemData.length === 0) {
       setDailyRecordsBase(placeholderplayerData);
@@ -3011,7 +3412,7 @@ function Dashboard({
   const fetchPreviousWinnersMat = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "LeaderboardMatChainDaily",
+        StatisticName: "LeaderboardMatchainDaily",
         StartPosition: 0,
         MaxResultsCount: 100,
         Version: version - 1,
@@ -3769,7 +4170,7 @@ function Dashboard({
       const data = {
         StatisticName: "GlobalStarMonthlyLeaderboard",
         StartPosition: 0,
-        MaxResultsCount: 10,
+        MaxResultsCount: 100,
         Version: version - 1,
       };
       const result = await axios.post(
@@ -3782,6 +4183,38 @@ function Dashboard({
     }
 
     // setdailyplayerData(result.data.data.leaderboard);
+  };
+
+  const fetchExplorerHunt = async () => {
+    if (userId) {
+      const data = {
+        StatisticName: "ExploreHuntEventKillCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setexplorerHuntData(result.data.data.leaderboard);
+    }
+  };
+
+  const fetchGreatCollection = async () => {
+    if (userId) {
+      const data = {
+        StatisticName: "TheGreatCollection",
+        StartPosition: 0,
+        MaxResultsCount: 1,
+        PlayerId: userId,
+      };
+      const result = await axios.post(
+        `${backendApi}/auth/GetLeaderboardAroundPlayer`,
+        data
+      );
+      setgreatCollectionData(result.data.data.leaderboard);
+    }
   };
 
   const fetchRecordsStar = async () => {
@@ -3997,6 +4430,17 @@ function Dashboard({
     }
   };
 
+  const fillPreviousRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setpreviousgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setpreviousgenesisData(finalData);
+    }
+  };
+
   const fetchPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
@@ -4018,7 +4462,7 @@ function Dashboard({
   const fetchGenesisPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "GenesisLandRewards",
+        StatisticName: "TheGreatCollection",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: version - 1,
@@ -4027,7 +4471,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsGenesis(result.data.data.leaderboard);
+      // fillPreviousRecordsGenesis(result.data.data.leaderboard);
 
       setpreviousgenesisData(result.data.data.leaderboard);
     }
@@ -4150,9 +4594,9 @@ function Dashboard({
 
   const fetchGenesisRecords = async () => {
     const data2 = {
-      StatisticName: "GenesisLandRewards",
+      StatisticName: "TheGreatCollection",
       StartPosition: 0,
-      MaxResultsCount: 10,
+      MaxResultsCount: 100,
     };
 
     const result2 = await axios
@@ -4269,32 +4713,39 @@ function Dashboard({
     if (username !== undefined && userId !== undefined) {
       fetchDailyRecords();
       // fetchWeeklyRecords();
-      fetchMonthlyRecords();
+      // fetchMonthlyRecords();
       fetchGenesisRecords();
       fetchDailyRecordsCore();
       // fetchWeeklyRecordsCore();
-      fetchMonthlyRecordsCore();
+      // fetchMonthlyRecordsCore();
       fetchDailyRecordsViction();
       // fetchWeeklyRecordsViction();
-      fetchMonthlyRecordsViction();
+      // fetchMonthlyRecordsViction();
       fetchDailyRecordsManta();
       // fetchWeeklyRecordsManta();
-      fetchMonthlyRecordsManta();
+      // fetchMonthlyRecordsManta();
+
+      fetchDailyRecordsSei();
+      // fetchWeeklyRecordsSei();
+      // fetchMonthlyRecordsSei();
+
       fetchDailyRecordsBase();
       // fetchWeeklyRecordsBase();
-      fetchMonthlyRecordsBase();
+      // fetchMonthlyRecordsBase();
       fetchDailyRecordsTaiko();
       // fetchWeeklyRecordsTaiko();
-      fetchMonthlyRecordsTaiko();
+      // fetchMonthlyRecordsTaiko();
 
-      // fetchDailyRecordsMat();
+      fetchDailyRecordsMat();
       // fetchWeeklyRecordsMat();
       // fetchMonthlyRecordsMat();
 
       fetchDailyRecordsSkale();
       // fetchWeeklyRecordsSkale();
-      fetchMonthlyRecordsSkale();
+      // fetchMonthlyRecordsSkale();
       fetchRecordsStar();
+      fetchGreatCollection();
+      fetchExplorerHunt();
       fetchRecordsStarWeekly();
     }
   }, [username, userId, goldenPassRemainingTime]);
@@ -4350,12 +4801,19 @@ function Dashboard({
     }
   }, [taikocount]);
 
-  // useEffect(() => {
-  //   if (matcount !== 0) {
-  //     fetchDailyRecordsMat();
-  //     getAllMatChests(email);
-  //   }
-  // }, [matcount]);
+  useEffect(() => {
+    if (matcount !== 0) {
+      fetchDailyRecordsMat();
+      getAllMatChests(email);
+    }
+  }, [matcount]);
+
+  useEffect(() => {
+    if (seicount !== 0) {
+      fetchDailyRecordsSei();
+      getAllSeiChests(email);
+    }
+  }, [seicount]);
 
   useEffect(() => {
     // if (!lastUpdated.current) {
@@ -4513,6 +4971,7 @@ function Dashboard({
       activePlayerSkale,
       activePlayerViction,
       activePlayerTaiko,
+      activePlayerMat,
     ];
     const allFalse = playerActiveArray.every((v) => v === false);
 
@@ -4797,6 +5256,7 @@ function Dashboard({
     activePlayerSkale,
     activePlayerViction,
     activePlayerTaiko,
+    activePlayerMat,
   ]);
 
   useEffect(() => {
@@ -5005,8 +5465,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: mantaStars,
-        previous_rewards: mantaStars,
+        rewards: baseStars,
+        previous_rewards: baseStars,
         activeData: dailyRecordsManta,
         previousData: prevDataManta,
         player_data: userDataManta,
@@ -5048,6 +5508,57 @@ function Dashboard({
     activePlayerManta,
     activePlayerMantaMonthly,
     activePlayerMantaWeekly,
+  ]);
+
+  useEffect(() => {
+    setAllSeiData([
+      {
+        title: "DAILY",
+        reset: "Daily (00:00 UTC)",
+        type: "stars",
+        rewards: seiStars,
+        previous_rewards: seiStars,
+        activeData: dailyRecordsSei,
+        previousData: prevDataSei,
+        player_data: userDataSei,
+        is_active: activePlayerSei, //change when apis are ready
+      },
+      {
+        title: "WEEKLY",
+        reset: "Monday (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesWeekly,
+        previous_rewards: skalePrizesWeeklyGolden,
+        activeData: weeklyRecordsSei,
+        previousData: prevDataSeiWeekly,
+        player_data: userDataSeiWeekly,
+        is_active: activePlayerSeiWeekly,
+      },
+      {
+        title: "MONTHLY",
+        reset: "Monthly (00:00 UTC)",
+        type: "cash",
+        rewards: skalePrizesMonthly,
+        previous_rewards: skalePrizesMonthlyGolden,
+        activeData: monthlyRecordsSei,
+        previousData: prevDataSeiMonthly,
+        player_data: userDataSeiMonthly,
+        is_active: activePlayerSeiMonthly, //change when apis are ready
+      },
+    ]);
+  }, [
+    dailyRecordsSei,
+    weeklyRecordsSei,
+    monthlyRecordsSei,
+    prevDataSei,
+    prevDataSeiWeekly,
+    prevDataSeiMonthly,
+    userDataSei,
+    userDataSeiWeekly,
+    userDataSeiMonthly,
+    activePlayerSei,
+    activePlayerSeiMonthly,
+    activePlayerSeiWeekly,
   ]);
 
   useEffect(() => {
@@ -5158,8 +5669,8 @@ function Dashboard({
         title: "DAILY",
         reset: "Daily (00:00 UTC)",
         type: "stars",
-        rewards: baseStars,
-        previous_rewards: baseStars,
+        rewards: matStars,
+        previous_rewards: matStars,
         activeData: dailyRecordsMat,
         previousData: prevDataMat,
         player_data: userDataMat,
@@ -5216,9 +5727,11 @@ function Dashboard({
     const purchaseTimestamp = await goldenPassContract.methods
       .getTimeOfExpireBuff(coinbase)
       .call();
+    const today = new Date();
 
-    setcountdown700(purchaseTimestamp);
-    handleSetAvailableTime(purchaseTimestamp);
+    if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
+      handleSetAvailableTime(purchaseTimestamp);
+    }
   };
 
   const countUserDailyBundles = async (address) => {
@@ -5251,7 +5764,7 @@ function Dashboard({
   let wbnbAddress = "0x55d398326f99059fF775485246999027B3197955";
   let wavaxAddress = "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7";
   let wskaleAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
-  let wseiAddress = "0xCC205196288B7A26f6D43bBD68AaA98dde97276d";
+  let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
   let wvictionAddress = "0x381B31409e4D220919B2cFF012ED94d70135A59e";
   let wmantaddress = "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f";
   let wtaikoaddress = "0x2DEF195713CF4a606B49D07E520e22C17899a736";
@@ -5655,7 +6168,7 @@ function Dashboard({
 
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -5699,9 +6212,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(account);
 
-          // if (isonlink) {
-          //   handleFirstTask(account);
-          // }
+          if (isonlink) {
+            handleFirstTask(account);
+          }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -5733,9 +6246,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
-          // if (isonlink) {
-          //   handleFirstTask(binanceWallet);
-          // }
+          if (isonlink) {
+            handleFirstTask(binanceWallet);
+          }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -6284,7 +6797,8 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests < 20 ||
           claimedBaseChests + claimedBasePremiumChests < 20 ||
           claimedTaikoChests + claimedTaikoPremiumChests < 20 ||
-          claimedMatChests + claimedMatPremiumChests < 20
+          claimedMatChests + claimedMatPremiumChests < 20 ||
+          claimedSeiChests + claimedSeiPremiumChests < 20
         ) {
           setCanBuy(true);
         } else if (
@@ -6295,7 +6809,8 @@ function Dashboard({
           claimedMantaChests + claimedMantaPremiumChests === 20 &&
           claimedBaseChests + claimedBasePremiumChests === 20 &&
           claimedTaikoChests + claimedTaikoPremiumChests === 20 &&
-          claimedMatChests + claimedMatPremiumChests === 20
+          claimedMatChests + claimedMatPremiumChests === 20 &&
+          claimedSeiChests + claimedSeiPremiumChests === 20
         ) {
           setCanBuy(false);
         }
@@ -6308,7 +6823,8 @@ function Dashboard({
           claimedMantaChests < 10 ||
           claimedBaseChests < 10 ||
           claimedTaikoChests < 10 ||
-          claimedMatChests < 10
+          claimedMatChests < 10 ||
+          claimedSeiChests < 10
         ) {
           setCanBuy(true);
         } else if (
@@ -6319,7 +6835,8 @@ function Dashboard({
           claimedMantaChests === 10 &&
           claimedBaseChests === 10 &&
           claimedTaikoChests === 10 &&
-          claimedMatChests === 10
+          claimedMatChests === 10 &&
+          claimedSeiChests === 10
         ) {
           setCanBuy(false);
         }
@@ -6866,6 +7383,9 @@ function Dashboard({
     getMyNFTS(userWallet ? userWallet : coinbase, "cookie3").then((NFTS) =>
       setmyCookieNfts(NFTS)
     );
+    getMyNFTS(userWallet ? userWallet : coinbase, "sei").then((NFTS) =>
+      setmySeiNfts(NFTS)
+    );
   };
 
   const getOtherNfts = async () => {
@@ -7134,7 +7654,7 @@ function Dashboard({
         ? window.config.subscriptionskale_tokens[token]?.decimals
         : chainId === 1116
         ? window.config.subscriptioncore_tokens[token]?.decimals
-        : chainId === 713715
+        : chainId === 1329
         ? window.config.subscriptionsei_tokens[token]?.decimals
         : chainId === 88
         ? window.config.subscriptionviction_tokens[token]?.decimals
@@ -7186,11 +7706,12 @@ function Dashboard({
             token,
             discountPercentageMat
           )
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
+
     window.web3 = new Web3(window.ethereum);
 
     let formattedTokenPrice = getFormattedNumber(
@@ -7592,7 +8113,7 @@ function Dashboard({
               ? matsubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price
@@ -7643,7 +8164,7 @@ function Dashboard({
               ? taikosubscribeAddress
               : chainId === 1116
               ? coresubscribeAddress
-              : chainId === 713715
+              : chainId === 1329
               ? seisubscribeAddress
               : cfxsubscribeAddress,
             price,
@@ -7804,7 +8325,7 @@ function Dashboard({
           )
         : chainId === 1116
         ? await window.getEstimatedTokenSubscriptionAmountCore(token)
-        : chainId === 713715
+        : chainId === 1329
         ? await window.getEstimatedTokenSubscriptionAmountSei(token)
         : await window.getEstimatedTokenSubscriptionAmount(token);
 
@@ -7853,7 +8374,7 @@ function Dashboard({
           setisApproved(false);
           setapproveStatus("initial");
         }
-      } else if (chainId === 713715) {
+      } else if (chainId === 1329) {
         const result = await subscribeTokencontractsei.methods
           .allowance(coinbase, seisubscribeAddress)
           .call()
@@ -8218,8 +8739,8 @@ function Dashboard({
             ? "SUBSCRIPTION_MAT"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
       const today = Date.now();
@@ -8255,7 +8776,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8269,24 +8790,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8335,7 +8856,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8346,24 +8867,24 @@ function Dashboard({
             onSubscribeSuccess();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeBNB",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeBNB",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8417,7 +8938,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8428,24 +8949,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "viction subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "viction subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8494,7 +9015,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8505,24 +9026,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "taiko subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "taiko subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8573,7 +9094,7 @@ function Dashboard({
                   ? "core"
                   : chainId === 698
                   ? "matchain"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8584,24 +9105,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "tamchain subscribeNFT",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "tamchain subscribeNFT",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setgetPremiumPopup(false);
               onSubscribeSuccess();
@@ -8646,7 +9167,7 @@ function Dashboard({
                   ? "manta"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : chainId === 167000
                   ? "taiko"
@@ -8660,24 +9181,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: chainId.toString(),
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8723,8 +9244,8 @@ function Dashboard({
             ? "SUBSCRIPTION_TAIKO"
             : chainId === 1116
             ? "SUBSCRIPTION_CORE"
-            : chainId === 713715
-            ? "SUBSCRIPTION_SKALE"
+            : chainId === 1329
+            ? "SUBSCRIPTION_SEI"
             : "",
       });
       const today = Date.now();
@@ -8781,7 +9302,7 @@ function Dashboard({
                 ? "taiko"
                 : chainId === 1116
                 ? "core"
-                : chainId === 713715
+                : chainId === 1329
                 ? "sei"
                 : "";
             setselectedChainforPremium(selectedchain);
@@ -8792,24 +9313,24 @@ function Dashboard({
           setloadspinnerSub(false);
           handleUpdatePremiumUser(coinbase);
           setapproveStatus("successsubscribe");
-          await axios
-            .patch(
-              `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-              {
-                multiplier: "yes",
-                chain: "bnb subscribeNFT BinanceWallet",
-                premiumTimestamp: today.toString(),
-              },
-              {
-                headers: { Authorization: `Bearer ${authToken}` },
-              }
-            )
-            .then(() => {
-              getRankData();
-            })
-            .catch((e) => {
-              console.error(e);
-            });
+          // await axios
+          //   .patch(
+          //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+          //     {
+          //       multiplier: "yes",
+          //       chain: "bnb subscribeNFT BinanceWallet",
+          //       premiumTimestamp: today.toString(),
+          //     },
+          //     {
+          //       headers: { Authorization: `Bearer ${authToken}` },
+          //     }
+          //   )
+          //   .then(() => {
+          //     getRankData();
+          //   })
+          //   .catch((e) => {
+          //     console.error(e);
+          //   });
           setTimeout(() => {
             setgetPremiumPopup(false);
             onSubscribeSuccess();
@@ -8846,7 +9367,7 @@ function Dashboard({
                   ? "taiko"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8855,24 +9376,24 @@ function Dashboard({
             onSubscribeSuccess();
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: "bnb subscribeBNB BinanceWallet",
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: "bnb subscribeBNB BinanceWallet",
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -8923,7 +9444,7 @@ function Dashboard({
                   ? "taiko"
                   : chainId === 1116
                   ? "core"
-                  : chainId === 713715
+                  : chainId === 1329
                   ? "sei"
                   : "";
               setselectedChainforPremium(selectedchain);
@@ -8935,24 +9456,24 @@ function Dashboard({
             setloadspinnerSub(false);
             handleUpdatePremiumUser(coinbase);
             setapproveStatus("successsubscribe");
-            await axios
-              .patch(
-                `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
-                {
-                  multiplier: "yes",
-                  chain: chainId.toString(),
-                  premiumTimestamp: today.toString(),
-                },
-                {
-                  headers: { Authorization: `Bearer ${authToken}` },
-                }
-              )
-              .then(() => {
-                getRankData();
-              })
-              .catch((e) => {
-                console.error(e);
-              });
+            // await axios
+            //   .patch(
+            //     `https://api.worldofdypians.com/api/userRanks/multiplier/${coinbase}`,
+            //     {
+            //       multiplier: "yes",
+            //       chain: chainId.toString(),
+            //       premiumTimestamp: today.toString(),
+            //     },
+            //     {
+            //       headers: { Authorization: `Bearer ${authToken}` },
+            //     }
+            //   )
+            //   .then(() => {
+            //     getRankData();
+            //   })
+            //   .catch((e) => {
+            //     console.error(e);
+            //   });
             setTimeout(() => {
               setloadspinnerSub(false);
               setloadspinner(false);
@@ -9201,10 +9722,10 @@ function Dashboard({
   const handleSeiPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0xae3f3")
+        await handleSwitchNetworkhook("0x531")
           .then(() => {
-            handleSwitchNetwork(713715);
-            setChainDropdown(chainDropdowns[8]);
+            handleSwitchNetwork(1329);
+            setChainDropdown(chainDropdowns[11]);
           })
           .catch((e) => {
             console.log(e);
@@ -9277,7 +9798,8 @@ function Dashboard({
     userVictionScore +
     userMantaScore +
     userBaseScore +
-    userTaikoScore;
+    userTaikoScore +
+    userMatScore;
 
   const handleMatPool = async () => {
     if (window.ethereum) {
@@ -9327,19 +9849,19 @@ function Dashboard({
 
     const totalScore_multiplied =
       rankData && rankData.multiplier === "yes" ? totalScore * 4 : totalScore;
-    if (totalScore_multiplied > 13999999 && totalScore_multiplied < 26000000) {
+    if (totalScore_multiplied > 15999999 && totalScore_multiplied < 28000000) {
       setUserRankRewards(5);
     } else if (
-      totalScore_multiplied >= 26000000 &&
-      totalScore_multiplied < 39000000
+      totalScore_multiplied >= 28000000 &&
+      totalScore_multiplied < 41000000
     ) {
       setUserRankRewards(10);
     } else if (
-      totalScore_multiplied >= 39000000 &&
-      totalScore_multiplied < 64000000
+      totalScore_multiplied >= 41000000 &&
+      totalScore_multiplied < 66000000
     ) {
       setUserRankRewards(25);
-    } else if (totalScore_multiplied >= 64000000) {
+    } else if (totalScore_multiplied >= 66000000) {
       setUserRankRewards(100);
     }
   };
@@ -9351,37 +9873,37 @@ function Dashboard({
     } else if (rankData && rankData.multiplier === "no") {
       allScore = userTotalScore;
     }
-    if (allScore > 63999999) {
+    if (allScore > 65999999) {
       setUserRankName({
         name: "unstoppable",
         id: 4,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(4);
       setUserProgress(100);
-    } else if (allScore > 38999999) {
+    } else if (allScore > 40999999) {
       setUserRankName({
         name: "champion",
         id: 3,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 64000000) * 100);
-    } else if (allScore > 25999999) {
+      setUserProgress((allScore / 66000000) * 100);
+    } else if (allScore > 27999999) {
       setUserRankName({
         name: "underdog",
         id: 2,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 39000000) * 100);
-    } else if (allScore > 13999999) {
+      setUserProgress((allScore / 41000000) * 100);
+    } else if (allScore > 15999999) {
       setUserRankName({
         name: "rookie",
         id: 1,
       });
       sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 26000000) * 100);
+      setUserProgress((allScore / 28000000) * 100);
     } else {
       sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 14000000) * 100);
+      setUserProgress((allScore / 16000000) * 100);
     }
   };
 
@@ -9411,16 +9933,15 @@ function Dashboard({
       if (rankData.rank == userRankName.id) {
         return;
       } else if (rankData.rank < userRankName.id) {
-        await axios
-          .patch(
-            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
-            {
-              rank: userRankName.id,
-            }
-          )
-          .then(async () => {
-            getRankData();
-          });
+        await axios.patch(
+          `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
+          {
+            rank: userRankName.id,
+          }
+        );
+        // .then(async () => {
+        //   getRankData();
+        // });
       }
     }
   };
@@ -9580,32 +10101,50 @@ function Dashboard({
       });
     }
 
+    if (openedSeiChests && openedSeiChests.length > 0) {
+      openedSeiChests.forEach((chest) => {
+        if (chest.isOpened === true) {
+          if (chest.rewards.length > 1) {
+            chest.rewards.forEach((innerChest) => {
+              if (
+                innerChest.rewardType === "Money" &&
+                innerChest.status !== "Unclaimed" &&
+                innerChest.status !== "Unclaimable" &&
+                innerChest.status === "Claimed"
+              ) {
+                moneyResult += Number(innerChest.reward);
+              }
+            });
+          }
+        }
+      });
+    }
     setTreasureRewardMoney(moneyResult);
   };
 
-  useEffect(() => {
-    handleRankRewards();
-  }, [
-    userBnbScore,
-    userSkaleScore,
-    userCoreScore,
-    userVictionScore,
-    userMantaScore,
-    userBaseScore,
-    userTaikoScore,
-    userMatScore,
-    rankData,
-  ]);
+  // useEffect(() => {
+  //   handleRankRewards();
+  // }, [
+  //   userBnbScore,
+  //   userSkaleScore,
+  //   userCoreScore,
+  //   userVictionScore,
+  //   userMantaScore,
+  //   userBaseScore,
+  //   userTaikoScore,
+  //   userMatScore,
+  //   rankData,
+  // ]);
 
-  useEffect(() => {
-    updateUserRank();
-  }, [handleUserRank]);
+  // useEffect(() => {
+  //   updateUserRank();
+  // }, [handleUserRank]);
 
-  useEffect(() => {
-    if (coinbase) {
-      getRankData();
-    }
-  }, [coinbase]);
+  // useEffect(() => {
+  //   if (coinbase) {
+  //     getRankData();
+  //   }
+  // }, [coinbase]);
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -9618,32 +10157,39 @@ function Dashboard({
     // if (username !== undefined && userId !== undefined) {
     fetchDailyRecords();
     // fetchWeeklyRecords();
-    fetchMonthlyRecords();
+    // fetchMonthlyRecords();
     fetchGenesisRecords();
     fetchDailyRecordsCore();
     // fetchWeeklyRecordsCore();
-    fetchMonthlyRecordsCore();
+    // fetchMonthlyRecordsCore();
     fetchDailyRecordsViction();
     // fetchWeeklyRecordsViction();
-    fetchMonthlyRecordsViction();
+    // fetchMonthlyRecordsViction();
     fetchDailyRecordsManta();
     // fetchWeeklyRecordsManta();
-    fetchMonthlyRecordsManta();
+    // fetchMonthlyRecordsManta();
+
+    fetchDailyRecordsSei();
+    // fetchWeeklyRecordsSei();
+    // fetchMonthlyRecordsSei();
+
     fetchDailyRecordsBase();
     // fetchWeeklyRecordsBase();
-    fetchMonthlyRecordsBase();
+    // fetchMonthlyRecordsBase();
     fetchDailyRecordsTaiko();
     // fetchWeeklyRecordsTaiko();
-    fetchMonthlyRecordsTaiko();
+    // fetchMonthlyRecordsTaiko();
 
     fetchDailyRecordsMat();
     // fetchWeeklyRecordsMat();
-    fetchMonthlyRecordsMat();
+    // fetchMonthlyRecordsMat();
 
     fetchDailyRecordsSkale();
     // fetchWeeklyRecordsSkale();
-    fetchMonthlyRecordsSkale();
+    // fetchMonthlyRecordsSkale();
     fetchRecordsStar();
+    fetchGreatCollection();
+    fetchExplorerHunt();
     fetchRecordsStarWeekly();
 
     // }
@@ -9711,18 +10257,16 @@ function Dashboard({
       );
       handleSubscriptionTokenChange(wcoreAddress);
       handleCheckIfAlreadyApproved(wcoreAddress);
-    }
-    // else if (chainId === 713715) {
-    //   setChainDropdown(chainDropdowns[8]);
-    //   setdropdownIcon("usdt");
-    //   setdropdownTitle("usdt");
-    //   setselectedSubscriptionToken(
-    //     Object.keys(window.config.subscriptionsei_tokens)[0]
-    //   );
-    //   handleSubscriptionTokenChange(wseiAddress);
-    //   handleCheckIfAlreadyApproved(wseiAddress);
-    // }
-    else if (chainId === 56) {
+    } else if (chainId === 1329) {
+      setChainDropdown(chainDropdowns[11]);
+      setdropdownIcon("usdt");
+      setdropdownTitle("usdt");
+      setselectedSubscriptionToken(
+        Object.keys(window.config.subscriptionsei_tokens)[0]
+      );
+      handleSubscriptionTokenChange(wseiAddress);
+      handleCheckIfAlreadyApproved(wseiAddress);
+    } else if (chainId === 56) {
       setChainDropdown(chainDropdowns[1]);
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
@@ -9845,13 +10389,12 @@ function Dashboard({
         window.config.subscriptioncore_tokens[selectedSubscriptionToken]
           ?.decimals
       );
+    } else if (chainId === 1329 && selectedSubscriptionToken !== "") {
+      settokenDecimals(
+        window.config.subscriptionsei_tokens[selectedSubscriptionToken]
+          ?.decimals
+      );
     }
-    // else if (chainId === 713715 && selectedSubscriptionToken !== "") {
-    //   settokenDecimals(
-    //     window.config.subscriptionsei_tokens[selectedSubscriptionToken]
-    //       ?.decimals
-    //   );
-    // }
   }, [chainId, selectedSubscriptionToken]);
 
   useEffect(() => {
@@ -9885,6 +10428,8 @@ function Dashboard({
     claimedVictionPremiumChests,
     claimedMantaChests,
     claimedMantaPremiumChests,
+    claimedSeiChests,
+    claimedSeiPremiumChests,
     claimedTaikoChests,
     claimedTaikoPremiumChests,
     claimedMatChests,
@@ -9909,8 +10454,13 @@ function Dashboard({
   useEffect(() => {
     getOtherNfts();
     getDypBalance(userWallet ? userWallet : coinbase);
-    fetchUserFavorites(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
+
+  useEffect(() => {
+    if (authToken && email && isConnected) {
+      fetchUserFavorites(userWallet ? userWallet : coinbase);
+    }
+  }, [account, userWallet, isConnected, authToken, email]);
 
   useEffect(() => {
     refetchPlayer();
@@ -9923,7 +10473,9 @@ function Dashboard({
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
-      leaderboard === true
+      leaderboard === true ||
+      globalLeaderboard === true ||
+      genesisLeaderboard === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -9931,7 +10483,13 @@ function Dashboard({
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
+  }, [
+    dailyBonusPopup,
+    dailyrewardpopup,
+    leaderboard,
+    globalLeaderboard,
+    genesisLeaderboard,
+  ]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -9944,8 +10502,8 @@ function Dashboard({
       getAllMantaChests(email);
       getAllBaseChests(email);
       getAllTaikoChests(email);
-      // getAllMatChests(email);
-      // getAllSeiChests(email);
+      getAllMatChests(email);
+      getAllSeiChests(email);
     }
   }, [email]);
 
@@ -9987,6 +10545,7 @@ function Dashboard({
     openedVictionChests,
     openedSkaleChests,
     openedMantaChests,
+    openedSeiChests,
     openedBaseChests,
     openedTaikoChests,
   ]);
@@ -9997,12 +10556,11 @@ function Dashboard({
       style={{ minHeight: "72vh", maxWidth: "2400px", overflow: "hidden" }}
     >
       <div className="d-none">
-        {goldenPassRemainingTime !== "0" && goldenPassRemainingTime && (
+        {goldenPassRemainingTime !== undefined && (
           <Countdown
             date={Number(goldenPassRemainingTime) * 1000}
             onComplete={() => {
-              setcountdown700();
-              setGoldenPassRemainingTime();
+              handleSetAvailableTime();
             }}
           />
         )}
@@ -10029,6 +10587,9 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              wodBalance={wodBalance}
+              greatCollectionData={greatCollectionData}
+              explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
               userDataStarWeekly={userDataStarWeekly}
               primeStars={primeStars}
@@ -10036,12 +10597,15 @@ function Dashboard({
               dragonRuinsCountdown={countdown}
               puzzleMadnessCountdown={countdown3500}
               userActiveEvents={userActiveEvents}
+              beastSiegeStatus={beastSiegeStatus}
+              puzzleMadnessTimer={puzzleMadnessTimer}
               onGoldenpassClick={() => setgoldenPassPopup(true)}
               allClaimedChests={
                 openedBaseChests.length +
                 openedChests.length +
                 openedCoreChests.length +
                 openedMantaChests.length +
+                openedSeiChests.length +
                 openedSkaleChests.length +
                 openedTaikoChests.length +
                 openedMatChests.length +
@@ -10051,6 +10615,7 @@ function Dashboard({
                 claimedBasePremiumChests +
                 claimedCorePremiumChests +
                 claimedMantaPremiumChests +
+                claimedSeiPremiumChests +
                 claimedMatPremiumChests +
                 claimedTaikoPremiumChests +
                 claimedVictionPremiumChests +
@@ -10061,6 +10626,7 @@ function Dashboard({
                 claimedBaseChests +
                 claimedCoreChests +
                 claimedMantaChests +
+                claimedSeiChests +
                 claimedMatChests +
                 claimedTaikoChests +
                 claimedVictionChests +
@@ -10107,26 +10673,103 @@ function Dashboard({
                 Number(immutableEarnUsd) +
                 Number(victionEarnUsd) +
                 Number(baseEarnUSD) +
-                Number(easy2StakeEarnUsd) + Number(midleEarnUsd)
+                Number(easy2StakeEarnUsd) +
+                Number(midleEarnUsd) +
+                Number(taikoEarnUsd) +
+                Number(skaleEarnUsd) +
+                Number(coingeckoEarnUsd) +
+                Number(seiEarnUsd) +
+                Number(mantaEarnUsd) +
+                Number(matEarnUsd) +
+                Number(bnbEarnUsd) +
+                Number(coreEarnUsd) +
+                Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
               onSyncClick={handleShowSyncModal}
               rankData={rankData}
-              userRank={userRank}
-              userRankCore={userRankCore}
-              userRankSkale={userRankSkale}
-              userBnbScore={userBnbScore}
-              userCoreScore={userCoreScore}
-              userRankViction={userRankViction}
-              userVictionScore={userVictionScore}
-              userRankManta={userRankManta}
-              userMantaScore={userMantaScore}
-              userRankBase={userRankBase}
-              userBaseScore={userBaseScore}
-              userRankTaiko={userRankTaiko}
-              userTaikoScore={userTaikoScore}
-              userSkaleScore={userSkaleScore}
+              userRank={userData?.position ?? 0}
+              userRankCore={userDataCore?.position ?? 0}
+              userRankSkale={userDataSkale?.position ?? 0}
+              userBnbStars={
+                (userData?.statValue === 0
+                  ? 0
+                  : userData?.position > 100
+                  ? 0
+                  : bnbStars[userData?.position]) ?? 0
+              }
+              userCoreStars={
+                (userDataCore?.statValue === 0
+                  ? 0
+                  : userDataCore?.position > 100
+                  ? 0
+                  : baseStars[userDataCore?.position]) ?? 0
+              }
+              userRankViction={userDataViction?.position ?? 0}
+              userVictionStars={
+                (userDataViction?.statValue === 0
+                  ? 0
+                  : userDataViction?.position > 100
+                  ? 0
+                  : baseStars[userDataViction?.position]) ?? 0
+              }
+              userRankMat={userDataMat?.position ?? 0}
+              userMatStars={
+                userDataMat?.statValue === 0
+                  ? 0
+                  : userDataMat?.position > 100
+                  ? 0
+                  : matStars[userDataMat?.position]
+              }
+              userRankSei={userDataSei?.position ?? 0}
+              userSeiStars={
+                userDataSei?.statValue === 0
+                  ? 0
+                  : userDataSei?.position > 100
+                  ? 0
+                  : seiStars[userDataSei?.position]
+              }
+              userRankManta={userDataManta?.position ?? 0}
+              userMantaStars={
+                (userDataManta?.statValue === 0
+                  ? 0
+                  : userDataManta?.position > 100
+                  ? 0
+                  : baseStars[userDataManta?.position]) ?? 0
+              }
+              userRankBase={userDataBase?.position ?? 0}
+              userBaseStars={
+                (userDataBase?.statValue === 0
+                  ? 0
+                  : userDataBase?.position > 100
+                  ? 0
+                  : baseStars[userDataBase?.position]) ?? 0
+              }
+              userRankTaiko={userDataTaiko?.position ?? 0}
+              userTaikoStars={
+                (userDataTaiko?.statValue === 0
+                  ? 0
+                  : userDataTaiko?.position > 100
+                  ? 0
+                  : taikoStars[userDataTaiko?.position]) ?? 0
+              }
+              userSkaleStars={
+                (userDataSkale?.statValue === 0
+                  ? 0
+                  : userDataSkale?.position > 100
+                  ? 0
+                  : skaleStars[userDataSkale?.position]) ?? 0
+              }
+              userBnbScore={userData?.statValue}
+              userMatScore={userDataMat?.statValue}
+              userSeiScore={userDataSei?.statValue}
+              userMantaScore={userDataManta?.statValue}
+              userBaseScore={userDataBase?.statValue}
+              userTaikoScore={userDataTaiko?.statValue}
+              userSkaleScore={userDataSkale?.statValue}
+              userCoreScore={userDataCore?.statValue}
+              userVictionScore={userDataViction?.statValue}
               onEventCardClick={() => {
                 seteventCardCount(eventCardCount + 1);
               }}
@@ -10138,6 +10781,13 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
+              onConnectWallet={() => {
+                setshowWalletModal(true);
+              }}
+              wodBalance={wodBalance}
+              setPuzzleMadnessTimer={setPuzzleMadnessTimer}
+              greatCollectionData={greatCollectionData}
+              explorerHuntData={explorerHuntData}
               availableTime={goldenPassRemainingTime}
               coinbase={coinbase}
               wallet={data?.getPlayer?.wallet?.publicAddress}
@@ -10148,6 +10798,7 @@ function Dashboard({
               eventCardCount={eventCardCount}
               email={email}
               isConnected={isConnected}
+              setBeastSiegeStatus={setBeastSiegeStatus}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -10175,6 +10826,7 @@ function Dashboard({
             mantaEarnUsd={mantaEarnUsd}
             taikoEarnUsd={taikoEarnUsd}
             matEarnUsd={matEarnUsd}
+            chainlinkEarnUsd={chainlinkEarnUsd}
             immutableEarnUsd={immutableEarnUsd}
             coreEarnUsd={coreEarnUsd}
             userRankRewards={userRankRewards}
@@ -10185,7 +10837,7 @@ function Dashboard({
             baseEarnUSD={baseEarnUSD}
             easy2StakeEarnUsd={easy2StakeEarnUsd}
             midleEarnUsd={midleEarnUsd}
-
+            coingeckoEarnUsd={coingeckoEarnUsd}
           />
         ) : location.pathname === "/account/prime" ? (
           <GetPremiumPopup
@@ -10300,7 +10952,7 @@ function Dashboard({
               setmatcount(matcount + 1);
             }}
             onSeiChestClaimed={() => {
-              setCount(count + 1);
+              setseicount(seicount + 1);
             }}
             dummypremiumChests={dummypremiumChests}
             onPremiumClick={() => {
@@ -10422,6 +11074,7 @@ function Dashboard({
                 allBaseData={allBaseData}
                 allTaikoData={allTaikoData}
                 allMatData={allMatData}
+                allSeiData={allSeiData}
                 dailyplayerData={dailyplayerData}
                 weeklyplayerData={weeklyplayerData}
                 monthlyplayerData={monthlyplayerData}
@@ -10501,14 +11154,15 @@ function Dashboard({
               id="leaderboard"
               style={{ width: "35%", pointerEvents: "auto" }}
             >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{ fontSize: "24px" }}
-                >
-                  Genesis Rewards
-                </h2>
-
+              <div
+                className="d-flex align-items-center justify-content-end position-absolute"
+                style={{
+                  position: "absolute",
+                  right: "22px",
+                  zIndex: 2,
+                  top: "22px",
+                }}
+              >
                 <img
                   src={xMark}
                   onClick={() => setGenesisLeaderboard(false)}
@@ -10518,19 +11172,14 @@ function Dashboard({
               </div>
 
               <GenesisLeaderboard
-                username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
-                availableTime={goldenPassRemainingTime}
+                data={genesisData}
+                previousdata={previousgenesisData}
+                playerdata={greatCollectionData}
+                username={username}
+                activePlayer={
+                  greatCollectionData[0]?.position < 100 ? true : false
+                }
                 email={email}
-                isPremium={isPremium}
-                allBnbData={allBnbData}
-                allSkaleData={allSkaleData}
-                dailyplayerData={dailyplayerData}
-                weeklyplayerData={weeklyplayerData}
-                monthlyplayerData={monthlyplayerData}
-                genesisData={genesisData}
               />
             </div>
           </OutsideClickHandler>
@@ -10669,6 +11318,7 @@ function Dashboard({
                 mantaEarnUsd={mantaEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 matEarnUsd={matEarnUsd}
+                chainlinkEarnUsd={chainlinkEarnUsd}
                 immutableEarnUsd={immutableEarnUsd}
                 coreEarnUsd={coreEarnUsd}
                 userRankRewards={userRankRewards}
@@ -10678,8 +11328,8 @@ function Dashboard({
                 cookieEarnUsd={cookieEarnUsd}
                 baseEarnUSD={baseEarnUSD}
                 easy2StakeEarnUsd={easy2StakeEarnUsd}
-            midleEarnUsd={midleEarnUsd}
-
+                midleEarnUsd={midleEarnUsd}
+                coingeckoEarnUsd={coingeckoEarnUsd}
               />
             </div>
           </OutsideClickHandler>
@@ -10751,6 +11401,7 @@ function Dashboard({
                 myMantaNfts={myMantaNfts}
                 myTaikoNfts={myTaikoNfts}
                 myCookieNfts={myCookieNfts}
+                mySeiNfts={mySeiNfts}
                 mySkaleNfts={mySkaleNfts}
                 latestBoughtNFTS={latest20BoughtNFTS}
                 myOffers={myOffers}
@@ -10979,16 +11630,14 @@ function Dashboard({
                             Matchain
                           </span>
                         </div>
-                        {/* <div className="d-flex align-items-center gap-2">
+                        <div className="d-flex align-items-center gap-2">
                           <img
                             src={seiLogo}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
-                          <span className="subscription-chain mb-0">
-                            SEI
-                          </span>
-                        </div> */}
+                          <span className="subscription-chain mb-0">SEI</span>
+                        </div>
 
                         <div className="d-flex align-items-center gap-2">
                           <img
@@ -11182,6 +11831,23 @@ function Dashboard({
                                         Matchain
                                       </li>
                                     )}
+                                  {window.WALLET_TYPE !== "binance" &&
+                                    !window.ethereum?.isBinance && (
+                                      <li
+                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                                        onClick={handleSeiPool}
+                                      >
+                                        <img
+                                          src={seiLogo}
+                                          style={{
+                                            width: 18,
+                                            height: 18,
+                                          }}
+                                          alt=""
+                                        />
+                                        SEI
+                                      </li>
+                                    )}
 
                                   <li
                                     className="dropdown-item launchpad-item d-flex align-items-center gap-2"
@@ -11328,7 +11994,10 @@ function Dashboard({
                                   </span>
                                   <div
                                     className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                                    style={{ height: "34px", overflow: 'unset' }}
+                                    style={{
+                                      height: "34px",
+                                      overflow: "unset",
+                                    }}
                                   >
                                     <span className="subscription-price-text mb-0">
                                       Subscription Price:
@@ -11396,7 +12065,7 @@ function Dashboard({
                                               : chainId === 1116
                                               ? window.config
                                                   .subscriptioncore_tokens
-                                              : chainId === 713715
+                                              : chainId === 1329
                                               ? window.config
                                                   .subscriptionsei_tokens
                                               : window.config
@@ -11463,7 +12132,7 @@ function Dashboard({
                                                           .subscriptioncore_tokens[
                                                           t
                                                         ]?.symbol
-                                                      : chainId === 713715
+                                                      : chainId === 1329
                                                       ? window.config
                                                           .subscriptionsei_tokens[
                                                           t
@@ -11519,7 +12188,7 @@ function Dashboard({
                                                       : chainId === 1116
                                                       ? window.config
                                                           .subscriptioncore_tokens
-                                                      : chainId === 713715
+                                                      : chainId === 1329
                                                       ? window.config
                                                           .subscriptionsei_tokens[
                                                           t
@@ -11591,7 +12260,7 @@ function Dashboard({
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
-                                                    : chainId === 713715
+                                                    : chainId === 1329
                                                     ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
                                                         t
                                                       ]?.symbol.toLowerCase()}Icon.svg`)
@@ -11650,7 +12319,7 @@ function Dashboard({
                                                 ? window.config
                                                     .subscriptionmat_tokens[t]
                                                     ?.symbol
-                                                : chainId === 713715
+                                                : chainId === 1329
                                                 ? window.config
                                                     .subscriptionsei_tokens[t]
                                                     ?.symbol

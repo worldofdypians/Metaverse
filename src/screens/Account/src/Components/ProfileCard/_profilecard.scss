@@ -1,6 +1,5 @@
 .user-cardBg {
   // background-color: transparent;
-  // background-image: url("../../Images/userProfile/user-cardBg.png");
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -968,7 +967,7 @@
 .chainstatustxt {
   color: #edeeff;
   font-family: Montserrat;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: 24px; /* 240% */
@@ -1003,8 +1002,20 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.domain-name-wrapper2 {
+  background: linear-gradient(to right, #0078a6, #49c278);
+  border-radius: 12px;
   border: 2px solid transparent;
   cursor: pointer;
+  transition: all .25s;
+}
+
+.domain-name-wrapper2:hover{
+  border: 2px solid #2980e8;
 }
 
 .total-stars-premium-wrapper2 {
@@ -1013,15 +1024,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border: 2px solid transparent;
+  transition: all .25s;
 }
 
 .total-stars-premium-wrapper2:hover {
-  border: 2px solid #ac1186;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .golden-pass-wrapper2:hover {
-  border: 2px solid #53a5be;
+  filter: drop-shadow(0px 0px 10px #c09645);
 }
 
 .activate-btn {
@@ -1159,4 +1170,18 @@
 .rankChain {
   position: absolute;
   left: -10px;
+}
+
+.rank-chain-status-grid{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px; 
+  @media screen and (max-width: 786px) {
+    grid-template-columns: repeat(1,1fr);
+  }
+}
+
+.rank-chain-status-item{
+  border-radius: 10px;
+  background: #2c2d52;
 }

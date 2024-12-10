@@ -53,7 +53,7 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  height: 20%;
+  height: 14%;
   filter: drop-shadow(0, 0, 0, 1000px rgba(0, 0, 0, 0.5));
   @media screen and (max-width: 991px) {
     // width: 100%;
@@ -384,7 +384,7 @@
 .new-total-points-wrapper {
   position: absolute;
   left: 17%;
-  bottom: 3%;
+  bottom: 4%;
   @media screen and (max-width: 991px) {
     bottom: 4%;
     left: 18%;
@@ -394,7 +394,7 @@
 .new-total-rewards-wrapper {
   position: absolute;
   right: 17%;
-  bottom: 3%;
+  bottom: 4%;
   @media screen and (max-width: 991px) {
     bottom: 4%;
     right: 18%;
@@ -403,7 +403,7 @@
 
 .new-total-points {
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
@@ -413,7 +413,7 @@
 }
 .new-total-points-type {
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
@@ -422,7 +422,7 @@
 .chain-desc-wrapper {
   position: absolute;
   bottom: 0;
-  width: 40%;
+  width: 37%;
   transition: all 0.25s;
   pointer-events: none;
 

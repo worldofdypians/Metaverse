@@ -11,7 +11,7 @@ import x4rounded from "./assets/x4Rounded.svg";
 import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
 import globalRank from "../WalletBalance/newAssets/globalRank.svg";
 // import Countdown from "react-countdown";
-import dypMedal from "../../Images/userProfile/dyp-medal.svg";
+
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
 import Clipboard from "react-clipboard.js";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
@@ -190,67 +190,7 @@ const ProfileCard = ({
     userTaikoScore+
     userMatScore;
 
-  const handleUserRank = () => {
-    let allScore;
-    if (rankData && rankData.multiplier === "yes") {
-      allScore = userTotalScore * 4;
-    } else if (rankData && rankData.multiplier === "no") {
-      allScore = userTotalScore;
-    }
-    if (allScore > 65999999) {
-      setUserRankName({
-        name: "unstoppable",
-        id: 4,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(4);
-      setUserProgress(100);
-    } else if (allScore > 40999999) {
-      setUserRankName({
-        name: "champion",
-        id: 3,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(3);
-      setUserProgress((allScore / 66000000) * 100);
-    } else if (allScore > 27999999) {
-      setUserRankName({
-        name: "underdog",
-        id: 2,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(2);
-      setUserProgress((allScore / 41000000) * 100);
-    } else if (allScore > 15999999) {
-      setUserRankName({
-        name: "rookie",
-        id: 1,
-      });
-      sliderRef?.current?.innerSlider?.slickGoTo(1);
-      setUserProgress((allScore / 28000000) * 100);
-    } else {
-      sliderRef?.current?.innerSlider?.slickGoTo(0);
-      setUserProgress((allScore / 16000000) * 100);
-    }
-  };
-
-  const updateUserRank = async () => {
-    if (rankData && userRankName) {
-      if (rankData.rank == userRankName.id) {
-        return;
-      } else if (rankData.rank < userRankName.id) {
-        await axios
-          .patch(
-            `https://api.worldofdypians.com/api/userRanks/rank/${coinbase}`,
-            {
-              rank: userRankName.id,
-            }, {
-              headers: { Authorization: `Bearer ${authToken}` },
-            }
-          )
-          .then(async () => {
-            getRankData();
-          });
-      }
-    }
-  };
+ 
 
   var settings = {
     dots: false,
@@ -435,23 +375,7 @@ const ProfileCard = ({
     }
   }, [address]);
 
-  useEffect(() => {
-    handleUserRank();
-  }, [
-    userRank,
-    userRankSkale,
-    userBnbScore,
-    userRankCore,
-    userRankViction,
-    userRankManta,
-    userRankBase,
-    userCoreScore,
-    userVictionScore,
-    userMantaScore,
-    userBaseScore,
-    userMatScore,
-    userTaikoScore,
-  ]);
+ 
 
   const html = document.querySelector("html");
 
@@ -920,22 +844,14 @@ const ProfileCard = ({
                           >
                             <img
                               src={
-                                userRankName.name === "starter"
-                                  ? starterBust
-                                  : userRankName.name === "rookie"
-                                  ? rookieBust
-                                  : userRankName.name === "underdog"
-                                  ? underdogBust
-                                  : userRankName.name === "champion"
-                                  ? championBust
-                                  : userRankName.name === "unstoppable"
-                                  ? unstoppableBust
-                                  : starterBust
+                               
+                                  starterBust
+                                 
                               }
                               alt=""
                               className="player-bust"
                             />
-                            <div className="d-flex flex-column">
+                            {/* <div className="d-flex flex-column">
                               <span className="my-rank-text">My Rank</span>
                               <h6
                                 className="player-rank-text mb-0"
@@ -945,7 +861,7 @@ const ProfileCard = ({
                               >
                                 {userRankName.name}
                               </h6>
-                            </div>
+                            </div> */}
                           </div>
                           {rankDropdown && (
                             <OutsideClickHandler
