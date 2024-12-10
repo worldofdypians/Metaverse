@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import "./_token.scss";
 import { NavLink } from "react-router-dom";
-import inGameEconomyChart from "./assets/inGameEconomyChart.svg";
+ 
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const InGameEconomy = () => {
-  const imageUrl = inGameEconomyChart;
+  const imageUrl = 'https://cdn.worldofdypians.com/wod/inGameEconomyChart.svg';
 
   useEffect(() => {
     // Bind Fancybox to elements with `data-fancybox` attribute

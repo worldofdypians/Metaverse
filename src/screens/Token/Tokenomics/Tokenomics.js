@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import "./_tokenomics.scss";
-import chart from "../assets/dyp-chart2.svg";
-import copy from "../assets/copy.svg";
-import check from "../assets/check.svg";
+ 
 import Clipboard from "react-clipboard.js";
-import copyIcon from "../assets/copyIcon.svg";
-import tokenomicsChart from "../assets/tokenomicsChart.svg";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import useWindowSize from "../../../hooks/useWindowSize";
 import bnb from "../../../components/Header/assets/bnb.svg";
@@ -221,7 +217,7 @@ const Tokenomics = () => {
                             setTimeout(() => setTooltip(false), 2000);
                           }}
                         >
-                          <img src={tooltip ? check : copy} alt="" />{" "}
+                          <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
                         </span>
                       </Clipboard>
                     </div>
@@ -229,7 +225,7 @@ const Tokenomics = () => {
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
-                    src={tokenomicsChart}
+                    src={'https://cdn.worldofdypians.com/wod/tokenomicsChart.svg'}
                     alt=""
                     className="tokenomics-chart"
                   />

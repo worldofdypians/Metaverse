@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./_tokenomics.scss";
-import chart from "../../../../assets/wodAssets/dyp-chart2.svg";
-import copy from "../../../../components/Header/assets/copy.svg";
-import check from "../../../../components/Header/assets/check.svg";
 import Clipboard from "react-clipboard.js";
-import copyIcon from "../../../../assets/wodAssets/copyIcon.svg";
-import tokenomicsChart from "../../../../assets/wodAssets/tokenomicsChart.svg";
 import bnb from "../../../../components/Header/assets/bnb.svg";
 import useWindowSize from "../../../../hooks/useWindowSize";
 import { shortAddress } from "../../../Caws/functions/shortAddress";
 import { NavLink } from "react-router-dom";
-import inGameEconomyChart from "../../../Token/assets/inGameEconomyChart.svg";
+ 
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
 
-  const imageUrl = inGameEconomyChart;
+  const imageUrl = 'https://cdn.worldofdypians.com/wod/inGameEconomyChart.svg';
 
   const tokenomicsData = [
     {
@@ -260,7 +255,7 @@ const Tokenomics = () => {
                             setTimeout(() => setTooltip(false), 2000);
                           }}
                         >
-                          <img src={tooltip ? check : copy} alt="" />{" "}
+                         <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />
                         </span>
                       </Clipboard>
                     </div>
@@ -268,7 +263,7 @@ const Tokenomics = () => {
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
-                    src={tokenomicsChart}
+                    src={'https://cdn.worldofdypians.com/wod/tokenomicsChart.svg'}
                     alt=""
                     className="tokenomics-chart"
                   />
