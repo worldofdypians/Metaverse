@@ -1,7 +1,5 @@
 import React from "react";
-import "./_brand.scss";
-import brandBanner from "../../../assets/brandBanner.webp";
-
+import "./_brand.scss"; 
 const Brand = () => {
   return (
     <div
@@ -20,7 +18,7 @@ const Brand = () => {
           communications.
         </div>
         <div className="position-relative">
-          <img src={brandBanner} className="w-100 brandBanner" alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/brandBanner.webp'} className="w-100 brandBanner" alt="" />
           {/* <div
             className="multiplayer-linear-border download-brand"
             style={{

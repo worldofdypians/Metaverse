@@ -36,49 +36,6 @@
     }
   }
 
-  .roadmap-main-update {
-    background-image: url("./assets/mainUpdateFrame.png");
-    background-size: 100% 100%;
-    height: 180px;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    .main-update-title-wrapper {
-      // background: linear-gradient(180deg, #5b08d0 -341.29%, #7f2df7 -177.5%);
-      background: rgba(0, 0,0, 0.5);
-      border-radius: 6px;
-      padding: 20px 10px;
-      position: absolute;
-      bottom: 0;
-      --mask: linear-gradient(-153.5deg, #0000 30.57px, #000 0);
-      -webkit-mask: var(--mask);
-      mask: var(--mask);
-
-      .main-update-title {
-        font-weight: 800;
-        font-size: 16px;
-        line-height: 24px;
-        color: #ffffff;
-      }
-      .main-update-date {
-        font-style: normal;
-        font-weight: 800;
-        font-size: 10px;
-        line-height: 16px;
-    color: #7bd8b0;
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-      }
-    }
-
-    .main-update-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-  }
 
   .roadmap-items {
     --mask: linear-gradient(-53.5deg, #0000 30.57px, #000 0);
@@ -162,7 +119,7 @@
 }
 
 .roadmapbg {
-  background-image: url('./assets//roadmapbg.png');
+  background-image: url('https://cdn.worldofdypians.com/wod/roadmapbg.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
