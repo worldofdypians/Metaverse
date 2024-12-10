@@ -3,7 +3,7 @@ import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
 import popupLinear from "./assets/popupLinear.png";
 import goldenPopup from "./assets/goldenPopup.webp";
 import { NavLink } from "react-router-dom";
-import wodIcon from "../../screens/Wod/Earn/assets/tokens/wodToken.png";
+
 import { GOLDEN_PASS_ABI, golden_pass_address } from "../NewEvents/abi";
 import {
   goldenPassAddress,
@@ -465,7 +465,7 @@ const GoldenPassPopup = ({
             <span className="event-price-span">Event Price</span>
             <div className="d-flex align-items-center gap-3">
               <div className="d-flex align-items-center gap-1">
-                <img src={wodIcon} height={30} width={30} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/wodToken.png"} height={30} width={30} alt="" />
                 <h6 className="event-price-coin mb-0">
                   {getFormattedNumber(goldenPassWodAmount)} WOD
                 </h6>

@@ -3,18 +3,16 @@ import axios from "axios";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import "../top-pools.css";
 import "./_stakingWod.scss";
-import arrowup from "../../assets/arrow-up.svg";
-import moreinfo from "../../assets/more-info.svg";
-import wallet from "../../assets/wallet.svg";
+// import arrowup from "../../assets/arrow-up.svg";
+// import wallet from "../../assets/wallet.svg";
 import { Tooltip } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
-import weth from "../../assets/tokens/weth.svg";
 import StakeLandModal from "../../../../../components/StakeModal/StakeLandModal";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
-import statsIcon from "../../assets/statsIcon.svg";
+
 
 const LandDetails = ({
   coinbase,
@@ -533,7 +531,7 @@ const LandDetails = ({
                         </div>
                       }
                     >
-                      <img src={moreinfo} alt="" />
+                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
                     </Tooltip>
                   </h6>
                 </div>
@@ -636,7 +634,7 @@ const LandDetails = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={statsIcon} alt="" /> Details
+                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
               </h6>
             </div>
           </div>

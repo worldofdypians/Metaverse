@@ -53,10 +53,8 @@ import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
 import syncIcon from "../Challenges/assets/syncIcon.svg";
 import Countdown from "react-countdown";
-import wodIcon from "../../screens/Wod/Earn/assets/tokens/wodToken.png";
 import goldenPassCard from "./assets/banners/goldenPassBanner.webp";
 import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
-
 import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
 import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
 import furyBeastThumb from "./assets/banners/furyBeastThumb.webp";
