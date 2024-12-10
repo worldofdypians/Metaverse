@@ -21,7 +21,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import progress1 from "./assets/progress1.svg";
 import progress2 from "./assets/progress2.svg";
 import axios from "axios";
-import opensea from "./assets/opensea.svg";
+
 import Slider from "rc-slider";
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -1347,7 +1347,7 @@ const BundleCard = ({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={opensea} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
                   Genesis Land
                 </a>
               </div>

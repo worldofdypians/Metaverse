@@ -1,5 +1,4 @@
 import React from "react";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import landType from "../../assets/landAssets/landType.svg";
@@ -67,7 +66,7 @@ const LandTiers = () => {
             >
               {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
               <img
-                src={require(`../../assets/landAssets/${tier.icon}`)}
+                src={`https://cdn.worldofdypians.com/wod/${tier.icon}`}
                 className={`genesis-badge ${tier.title === "Genesis Land" && 'd-none'}`}
                 alt="badge"
               />

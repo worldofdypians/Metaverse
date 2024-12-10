@@ -11,7 +11,7 @@ import subtractActive from "../../assets/landAssets/subtractActive.svg";
 import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
 import blackWallet from "../../assets/wallet-black.svg";
 import whitewallet from "../../assets/wallet-white.svg";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
+
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import marketMintBanner from "./assets/marketMintBanner.png";
@@ -1181,7 +1181,7 @@ const MarketMint = ({
                               style={{ height: 312 }}
                             >
                               <img
-                                src={dummyBadge}
+                                src={"https://cdn.worldofdypians.com/wod/dummyBadge.png"}
                                 className="genesis-badge"
                                 style={{ visibility: "hidden" }}
                                 alt="badge"

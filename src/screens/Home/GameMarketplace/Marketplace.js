@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./_marketplace.scss";
 import useWindowSize from "../../../hooks/useWindowSize";
 import Marquee from "react-fast-marquee";
-import playIcon from "../../../assets/gameAssets/playIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import VideoPopup from "../../Game/VideoPopup";
 
@@ -139,7 +138,7 @@ const MarketPlace = () => {
                  }}
                >
                  <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
-                   <img src={playIcon} width={32} height={32} alt="Play Icon" />
+                   <img src={"https://cdn.worldofdypians.com/wod/playIcon.svg"} width={32} height={32} alt="Play Icon" />
                  </div>
                  <img
                    src={`https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`}
@@ -162,7 +161,7 @@ const MarketPlace = () => {
                     }}
                   >
                     <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
-                      <img src={playIcon} width={32} height={32} alt="Play Icon" />
+                      <img src={"https://cdn.worldofdypians.com/wod/playIcon.svg"} width={32} height={32} alt="Play Icon" />
                     </div>
                     <img
                       src={`https://img.youtube.com/vi/${item.id}/maxresdefault.jpg`}
@@ -178,7 +177,7 @@ const MarketPlace = () => {
           {videoGallery.map((item, index) => (
             <div className="video-gallery-item" key={index}>
               <div className="gallery-play-icon-wrapper d-flex justify-content-center align-items-center">
-                <img src={playIcon} width={32} height={32} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/playIcon.svg"} width={32} height={32} alt="" />
               </div>
               <img src={item.imageLink} className="gallery-video-thumb" alt="" />
             </div>

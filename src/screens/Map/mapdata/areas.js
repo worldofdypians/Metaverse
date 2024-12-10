@@ -39,19 +39,6 @@ import treasureHuntInfo from "../assets/treasureHuntInfo.png";
 import dailyBonusInfo from "../assets/dailyBonusInfo.png";
 import mazeGardenInfo from "../assets/mazeGardenInfo.png";
 import leaderboardInfo from "../assets/leaderboardInfo.png";
-import goldenPassPopup from "../../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
-import dragonRuinsPopup from "../../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
-import scorpionKingPopup from "../../../assets/gameAssets/challengeCards/scorpionKingPopup.webp";
-import coldBitePopup from "../../../assets/gameAssets/challengeCards/coldBitePopup.webp";
-import furyBeastPopup from "../../../assets/gameAssets/challengeCards/furyBeastPopup.webp";
-import wingStormPopup from "../../../assets/gameAssets/challengeCards/wingStormPopup.webp";
-import criticalHitPopup from "../../../assets/gameAssets/challengeCards/criticalHitPopup.webp";
-import mazeGardenPopup from "../../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
-import puzzleMadnessPopup from "../../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
-import treasureHuntPopup from "../../../assets/gameAssets/challengeCards/treasureHuntPopup.webp";
-import stoneEyePopup from "../../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
-import explorerHuntPopup from "../../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
-import greatCollectionPopup from "../../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
 
 const chainAreas = [
   {
@@ -4868,7 +4855,7 @@ const challenges = [
     type: "event",
     infoType: "Daily Opportunity",
     marker: markers.criticalHitMarker,
-    popupImage: criticalHitPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/criticalHitPopup.webp",
 
     location: [-0.06178739905312879, 0.09370563518485311],
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
@@ -4898,7 +4885,7 @@ const challenges = [
     infoType: "Legendary Beast Siege",
     marker: markers.dragonMarker,
     location: [-0.07085058232491746, 0.07364278764323107],
-    popupImage: dragonRuinsPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/dragonRuinsPopup.webp",
     day: 1,
     popupDesc:
       "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
@@ -4925,7 +4912,7 @@ const challenges = [
 
     marker: markers.coldFuryMarker,
     location: [-0.06136893052665028, 0.128016471862793],
-    popupImage: coldBitePopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/coldBitePopup.webp",
     popupDesc:
       "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
     workList: [
@@ -4951,7 +4938,7 @@ const challenges = [
 
     marker: markers.furyBeastMarker,
     location: [-0.0658321235765625, 0.05362272262573243],
-    popupImage: furyBeastPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/furyBeastPopup.webp",
 
     popupDesc:
       "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
@@ -4978,7 +4965,7 @@ const challenges = [
 
     marker: markers.eagleMarker,
     location: [-0.051476948488459, 0.034632682800292976],
-    popupImage: wingStormPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/wingStormPopup.webp",
 
     popupDesc:
       "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
@@ -5004,7 +4991,7 @@ const challenges = [
 
     marker: markers.scorpionMarker,
     location: [-0.022588222633792756, 0.07132530212402345],
-    popupImage: scorpionKingPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/scorpionKingPopup.webp",
     day: 6,
 
     popupDesc:
@@ -5032,7 +5019,7 @@ const challenges = [
 
     marker: markers.cyclopsMarker,
     location: [-0.11007779025336882, 0.09102344512939455],
-    popupImage: stoneEyePopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/stoneEyePopup.webp",
 
     popupDesc:
       "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
@@ -5057,7 +5044,7 @@ const challenges = [
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
     location: [-0.06562827582557527, 0.08779406547546388],
-    popupImage: mazeGardenPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/mazeGardenPopup.webp",
     day: 5,
 
     popupDesc:
@@ -5083,7 +5070,7 @@ const challenges = [
     infoType: "The Great Hunt",
     marker: markers.puzzleMarker,
     link: "/account/challenges/puzzle-madness",
-    popupImage: puzzleMadnessPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/puzzleMadnessPopup.webp",
 
     popupDesc:
       "In the Puzzle Madness event, players search for 10 hidden pieces across the Island Zero and Dypians City maps. These pieces hold points that contribute to the BNB Chain leaderboard. One piece contains a multiplier (x2 to x8) that activates only after all pieces are found, significantly boosting your score.",
@@ -5105,7 +5092,7 @@ const challenges = [
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
-    popupImage: treasureHuntPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/treasureHuntPopup.webp",
 
     popupDesc:
       "Embark on a daily Treasure Hunt event where you’ll explore partner areas to uncover hidden items. These items could be Chests, Eggs, or Magma, each offering unique rewards. The event challenges players to carefully investigate specific areas each day to find the hidden treasures. Once collected, these treasures will either grant leaderboard points or direct rewards, making this event a must for adventurers looking to climb the ranks or earn exciting prizes.",
@@ -5128,7 +5115,7 @@ const challenges = [
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
-    popupImage: explorerHuntPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/explorerHuntPopup.webp",
 
     popupDesc:
       "Defend the world from the alien explorers who have landed to assess the terrain before their invasion. Players will hear an alert signaling the arrival of these intruders in a specific area, and your task is to defend the city by defeating them. The event features three levels of explorers, each more powerful and challenging than the last. Be prepared to strategize and face increasingly formidable opponents as you protect your homeland.",
@@ -5151,7 +5138,7 @@ const challenges = [
     type: "event",
     infoType: "The Great Hunt",
     marker: markers.mazeMarker,
-    popupImage: greatCollectionPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
 
     popupDesc:
       "The Great Collection is a thrilling event where players are tasked with gathering rare and unique partner branded coins scattered across the game. This event challenges your exploration and problem-solving skills as you work to collect as many coins as possible. Compete against other players to amass the largest collection and earn exclusive rewards based on your ranking.",

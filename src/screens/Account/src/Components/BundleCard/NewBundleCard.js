@@ -33,7 +33,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import progress1 from "./assets/progress1.svg";
 import progress2 from "./assets/progress2.svg";
 import axios from "axios";
-import opensea from "./assets/opensea.svg";
+
 import Slider from "rc-slider";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import useWindowSize from "../../../../../hooks/useWindowSize";

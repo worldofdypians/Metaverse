@@ -1,6 +1,6 @@
 import React from "react";
 import timepieceBanner1 from "./assets/timepieceBanner1.webp";
-import opensea from './assets/opensea.svg'
+
 
 const TimePieceSticker = () => {
   return (
@@ -26,7 +26,7 @@ const TimePieceSticker = () => {
           </p>
           <div className={"linear-border-purple mt-4"} style={{width: 'fit-content'}}>
                 <a className={`btn purple-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/cawstimepiece' target='_blank' rel='noreferrer'>
-                  <img src={opensea} alt=''/>
+                  <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt=''/>
                   Buy on OpenSea
                 </a>
               </div>

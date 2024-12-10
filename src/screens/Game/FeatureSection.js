@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_game.scss";
-import gameFeatureArrow from "../../assets/gameAssets/gameFeatureArrow.svg";
-import gameLeaderboard from "../../assets/gameAssets/gameLeaderboard.svg";
-import gameGoldenPass from "../../assets/gameAssets/gameGoldenPass.png";
-import goldenPassCard from "../../assets/gameAssets/challengeCards/goldenPassCard.png";
-import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
 import OutsideClickHandler from "react-outside-click-handler";
 import GlobalLeaderboard from "../../components/LeaderBoard/GlobalLeaderboard";
-import xMark from "../../assets/navbarAssets/xMark.svg";
 
 const FeatureSection = ({
   onSelectEvent,
@@ -16,8 +10,8 @@ const FeatureSection = ({
   allStarData,
 }) => {
   const goldenPassEvent = {
-    image: goldenPassCard,
-    popupImage: goldenPassPopup,
+    image: "https://cdn.worldofdypians.com/wod/goldenPassCard.png",
+    popupImage: "https://cdn.worldofdypians.com/wod/goldenPassPopup.webp",
 
     desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
     title: "Golden Pass",
@@ -61,10 +55,10 @@ const FeatureSection = ({
             </p>
             <div className="d-flex align-items-center gap-1">
               <span className="game-feature-redirect">View Rankings</span>
-              <img src={gameFeatureArrow} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/gameFeatureArrow.svg"} alt="" />
             </div>
           </div>
-          <img src={gameLeaderboard} className="game-feature-img" alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/gameLeaderboard.svg"} className="game-feature-img" alt="" />
         </div>
         <div
           className="golden-pass-game-wrapper d-flex align-items-center justify-content-between p-3 p-lg-5"
@@ -74,7 +68,7 @@ const FeatureSection = ({
             setPopupActive(true);
           }}
         >
-          <img src={gameGoldenPass} className="game-feature-img" alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/gameGoldenPass.png"} className="game-feature-img" alt="" />
 
           <div className="d-flex flex-column align-items-end gap-3 gap-lg-5">
             <h6 className="mb-0 game-feature-title text-end">Golden Pass</h6>
@@ -89,7 +83,7 @@ const FeatureSection = ({
               <span className="game-feature-redirect text-end">
                 Get Golden Pass
               </span>
-              <img src={gameFeatureArrow} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/gameFeatureArrow.svg"} alt="" />
             </div>
           </div>
         </div>
@@ -103,7 +97,7 @@ const FeatureSection = ({
           >
             <div className="d-flex align-items-start justify-content-end">
               <img
-                src={xMark}
+                src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                 alt="x mark"
                 className="position-relative"
                 style={{ cursor: "pointer" }}

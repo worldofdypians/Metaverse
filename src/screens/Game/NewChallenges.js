@@ -1,35 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_game.scss";
-import dragonRuinsCard from "../../assets/gameAssets/challengeCards/dragonRuinsCard.png";
-import scorpionKingCard from "../../assets/gameAssets/challengeCards/scorpionKingCard.png";
-import coldBiteCard from "../../assets/gameAssets/challengeCards/coldBiteCard.png";
-import furyBeastCard from "../../assets/gameAssets/challengeCards/furyBeastCard.png";
-import wingStormCard from "../../assets/gameAssets/challengeCards/wingStormCard.png";
-import criticalHitCard from "../../assets/gameAssets/challengeCards/criticalHitCard.png";
-import mazeGardenCard from "../../assets/gameAssets/challengeCards/mazeGardenCard.png";
-import puzzleMadnessCard from "../../assets/gameAssets/challengeCards/puzzleMadnessCard.png";
-import treasureHuntCard from "../../assets/gameAssets/challengeCards/treasureHuntCard.png";
-import stoneEyeCard from "../../assets/gameAssets/challengeCards/stoneEyeCard.png";
-import explorerHuntCard from "../../assets/gameAssets/challengeCards/explorerHuntCard.png";
-import dailyBonusCard from "../../assets/gameAssets/challengeCards/dailyBonusCard.png";
-import starsCard from "../../assets/gameAssets/challengeCards/starsCard.png";
-import dailyBonusPrimeCard from "../../assets/gameAssets/challengeCards/dailyBonusPrimeCard.png";
-import greatCollectionCard from "../../assets/gameAssets/challengeCards/greatCollectionCard.png";
-import dragonRuinsPopup from "../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
-import scorpionKingPopup from "../../assets/gameAssets/challengeCards/scorpionKingPopup.webp";
-import coldBitePopup from "../../assets/gameAssets/challengeCards/coldBitePopup.webp";
-import furyBeastPopup from "../../assets/gameAssets/challengeCards/furyBeastPopup.webp";
-import wingStormPopup from "../../assets/gameAssets/challengeCards/wingStormPopup.webp";
-import criticalHitPopup from "../../assets/gameAssets/challengeCards/criticalHitPopup.webp";
-import mazeGardenPopup from "../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
-import puzzleMadnessPopup from "../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
-import treasureHuntPopup from "../../assets/gameAssets/challengeCards/treasureHuntPopup.webp";
-import stoneEyePopup from "../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
-import explorerHuntPopup from "../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
-import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
-import dailyBonusPopup from "../../assets/gameAssets/challengeCards/dailyBonusPopup.webp";
-import dailyBonusPrimePopup from "../../assets/gameAssets/challengeCards/dailyBonusPrimePopup.webp";
-import starsPopup from "../../assets/gameAssets/challengeCards/starsPopup.webp";
 import Slider from "react-slick";
 import ChallengePopup from "../../components/ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -154,8 +124,8 @@ const NewChallenges = ({
 
   const challengeDaily = [
     {
-      image: dailyBonusCard,
-      popupImage: dailyBonusPopup,
+      image: "https://cdn.worldofdypians.com/wod/dailyBonusCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/dailyBonusPopup.webp",
       desc: "Open up to 10 daily bonus chests to collect rewards and keep your progress steady. Perfect for consistent adventurers.",
       title: "Daily Bonus",
       popupDesc:
@@ -170,8 +140,8 @@ const NewChallenges = ({
       link: "/account#dailybonus",
     },
     {
-      image: dailyBonusPrimeCard,
-      popupImage: dailyBonusPrimePopup,
+      image: "https://cdn.worldofdypians.com/wod/dailyBonusPrimeCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/dailyBonusPrimePopup.webp",
       desc: "Upgrade to prime access and unlock up to 20 daily bonus chests for even greater benefits and exclusive rewards.",
       title: "Daily Bonus Prime",
       popupDesc:
@@ -186,8 +156,8 @@ const NewChallenges = ({
       link: "/account#dailybonus",
     },
     {
-      image: criticalHitCard,
-      popupImage: criticalHitPopup,
+      image: "https://cdn.worldofdypians.com/wod/criticalHitCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/criticalHitPopup.webp",
 
       desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
       title: "Critical Hit",
@@ -210,8 +180,8 @@ const NewChallenges = ({
       ],
     },
     {
-      image: starsCard,
-      popupImage: starsPopup,
+      image: "https://cdn.worldofdypians.com/wod/starsCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/starsPopup.webp",
       desc: "Collect stars from different game activities to boost your global rank and earn amazing rewards.",
       title: "Daily Bonus",
       popupDesc:
@@ -234,8 +204,8 @@ const NewChallenges = ({
   const challengeBeasts = [
     {
       title: "Dragon Ruins",
-      image: dragonRuinsCard,
-      popupImage: dragonRuinsPopup,
+      image: "https://cdn.worldofdypians.com/wod/dragonRuinsCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/dragonRuinsPopup.webp",
       desc: "Enter the fiery depths of the Dragon Ruins, where a ferocious dragon guards its treasure. Explore the ruins, overcome challenges, and claim the hidden rewards.",
       day: 1,
       dayText: "MON",
@@ -255,8 +225,8 @@ const NewChallenges = ({
       link: "/account/challenges/dragon-ruins",
     },
     {
-      image: coldBiteCard,
-      popupImage: coldBitePopup,
+      image: "https://cdn.worldofdypians.com/wod/coldBiteCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/coldBitePopup.webp",
 
       desc: "Journey into the icy wilderness, where a fearsome polar bear awaits. Test your survival skills in this frozen adventure and uncover treasures hidden in the snow.",
       day: 2,
@@ -278,8 +248,8 @@ const NewChallenges = ({
       link: "/account/challenges/cold-bite",
     },
     {
-      image: furyBeastCard,
-      popupImage: furyBeastPopup,
+      image: "https://cdn.worldofdypians.com/wod/furyBeastCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/furyBeastPopup.webp",
       desc: "Navigate through the dense jungle and face the wrath of a wild beast. Discover hidden paths, overcome obstacles, and seize the rewards within this thrilling jungle adventure.",
       day: 3,
       dayText: "WED",
@@ -300,8 +270,8 @@ const NewChallenges = ({
       link: "/account/challenges/fury-beast",
     },
     {
-      image: wingStormCard,
-      popupImage: wingStormPopup,
+      image: "https://cdn.worldofdypians.com/wod/wingStormCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/wingStormPopup.webp",
       desc: "Soar into the skies and explore intricate pathways guarded by majestic eagle. Use your wits to uncover treasures hidden in this breathtaking aerial journey.",
       day: 4,
       dayText: "THU",
@@ -322,8 +292,8 @@ const NewChallenges = ({
       link: "/account/challenges/wing-storm",
     },
     {
-      image: scorpionKingCard,
-      popupImage: scorpionKingPopup,
+      image: "https://cdn.worldofdypians.com/wod/scorpionKingCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/scorpionKingPopup.webp",
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
       dayText: "SAT",
@@ -344,8 +314,8 @@ const NewChallenges = ({
       link: "/account/challenges/scorpion-king",
     },
     {
-      image: stoneEyeCard,
-      popupImage: stoneEyePopup,
+      image: "https://cdn.worldofdypians.com/wod/stoneEyeCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/stoneEyePopup.webp",
       desc: "Engage in an epic battle against the mighty Cyclops. Outsmart this towering foe to secure victory and claim valuable rewards hidden within its lair.",
       day: 7,
       dayText: "SUN",
@@ -369,8 +339,8 @@ const NewChallenges = ({
 
   const challengeHunts = [
     {
-      image: mazeGardenCard,
-      popupImage: mazeGardenPopup,
+      image: "https://cdn.worldofdypians.com/wod/mazeGardenCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/mazeGardenPopup.webp",
       desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
       day: 5,
       dayText: "FRI",
@@ -391,8 +361,8 @@ const NewChallenges = ({
       link: "/account/challenges/maze-day",
     },
     {
-      image: puzzleMadnessCard,
-      popupImage: puzzleMadnessPopup,
+      image: "https://cdn.worldofdypians.com/wod/puzzleMadnessCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/puzzleMadnessPopup.webp",
       desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
       title: "Puzzle Madness",
       link: "/account/challenges/puzzle-madness",
@@ -410,8 +380,8 @@ const NewChallenges = ({
       ],
     },
     {
-      image: treasureHuntCard,
-      popupImage: treasureHuntPopup,
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/treasureHuntPopup.webp",
       desc: "Embark on a thrilling quest to locate hidden puzzle pieces scattered across the map. Put them together to unlock exciting rewards.",
       title: "Treasure Hunt",
       popupDesc:
@@ -429,8 +399,8 @@ const NewChallenges = ({
       link: "/account/challenges/treasure-hunt",
     },
     {
-      image: explorerHuntCard,
-      popupImage: explorerHuntPopup,
+      image: "https://cdn.worldofdypians.com/wod/explorerHuntCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/explorerHuntPopup.webp",
       desc: "Explore the vast world and partner areas to find hidden items. Discover valuable treasures while delving into unique zones.",
       title: "Explorer Hunt",
       popupDesc:
@@ -448,8 +418,8 @@ const NewChallenges = ({
       link: "/account/challenges/explorer-hunt",
     },
     {
-      image: greatCollectionCard,
-      popupImage: greatCollectionPopup,
+      image: "https://cdn.worldofdypians.com/wod/greatCollectionCard.png",
+      popupImage: "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
       desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
       title: "The Great Collection",
       popupDesc:
