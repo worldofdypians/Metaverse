@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_newdailybonus.scss";
-import bnbChain from "./assets/bnbChain.png";
-import skaleChain from "./assets/skaleChain.png";
-import matchainLogo from "../../components/Header/assets/matchain.svg";
+
 
 import comingSoon from "./assets/comingSoon.png";
 import comingSoon2 from "./assets/comingSoon2.png";
@@ -27,20 +25,17 @@ import coreBg from "./assets/coreBg.png";
 import taikoBg from "./assets/taikoBg.png";
 import victionBg from "./assets/victionBg.png";
 import winConfetti from "./assets/winConfetti.png";
-import xMark from "./assets/xMark2.svg";
 import coreIcon from "./assets/coreIcon.svg";
 import victionIcon from "./assets/victionIcon.svg";
 import emptyXmark from "./assets/emptyXmark.svg";
 import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
-import skaleIcon from "./assets/skaleIcon.svg";
-import manta from "./assets/manta.png";
+import skaleIcon from "./assets/skaleIcon.svg"; 
 import taiko from "./assets/taikoIcon.svg";
 import baseLogo from "./assets/base.svg";
 
 import seiIcon from "./assets/seiIcon.svg";
-import multiversxIcon from "./assets/multiversxIcon.svg";
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
@@ -3011,7 +3006,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={matchainLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3218,7 +3213,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={manta}
+                                  src={'https://cdn.worldofdypians.com/wod/manta.png'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3967,7 +3962,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={matchainLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4063,7 +4058,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={manta}
+                                  src={'https://cdn.worldofdypians.com/wod/manta.png'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}

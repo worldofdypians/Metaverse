@@ -47,7 +47,6 @@ import coreInactive from "./assets/coreInactive.svg";
 import baseActive from "./assets/baseActive.svg";
 import baseInactive from "./assets/baseInactive.svg";
 
-import matchainActive from "../../../../../components/Header/assets/matchain.svg";
 
 import victionActive from "./assets/victionActive.svg";
 import victionInactive from "./assets/victionInactive.svg";
@@ -515,7 +514,7 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "matchain"
-                              ? matchainActive
+                              ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                               : optionText2 !== "matchain" &&
                                 hoverState === "matchain"
                               ? matchainWhite

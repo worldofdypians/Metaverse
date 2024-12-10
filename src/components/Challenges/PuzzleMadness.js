@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import puzzleMadnessBanner from "./assets/puzzleMadnessBanner.png";
-import bnb from "./assets/bnb.svg";
+
 import idypIcon from "./assets/idypIcon.svg";
 import tooltipIcon from "./assets/tooltipIcon.svg";
 import syncIcon from "./assets/syncIcon.svg";
@@ -210,7 +210,7 @@ const PuzzleMadness = ({ coinbase, chainId, wallet, binanceW3WProvider, onPopupC
         <h6 className="mb-0 purchase-package-title">Purchase</h6>
         <div className="d-flex align-items-end gap-2">
           <span className="available-on">Available on</span>
-          <img src={bnb} width={20} height={20} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} width={20} height={20} alt="" />
           <span className="purchase-chain">BNB Chain</span>
         </div>
       </div>
