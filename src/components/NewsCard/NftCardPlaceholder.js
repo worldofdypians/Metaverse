@@ -1,5 +1,4 @@
 import React from "react";
-import opensea from "./opensea.svg";
 
 const NftCardPlaceholder = ({count, flag}) => {
   return (
@@ -28,7 +27,7 @@ const NftCardPlaceholder = ({count, flag}) => {
               target="_blank"
               rel="noreferrer"
             >
-              <img src={opensea} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
               {flag === "ph"
                       ? `Bumili sa Opensea`
                       : `Buy on Opensea`}

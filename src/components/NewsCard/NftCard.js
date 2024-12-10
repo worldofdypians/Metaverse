@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import opensea from "./opensea.svg";
+
 import ethLogo from "../../assets/eth.svg";
 
 const NftCard = ({ image, title, content, id }) => {
@@ -37,7 +37,7 @@ const NftCard = ({ image, title, content, id }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <img src={opensea} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
                 OpenSea
               </a>
             </div>

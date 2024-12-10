@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import blackWallet from "../../assets/wallet-black.svg";
 import whitewallet from "../../assets/wallet-white.svg";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
+
 import questionMark from "../../assets/landAssets/questionMark.svg";
 import addActive from "../../assets/landAssets/addActive.svg";
 import addInactive from "../../assets/landAssets/addInactive.svg";
@@ -16,7 +16,7 @@ import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import { shortAddress } from "../Caws/functions/shortAddress";
-import opensea from './mintAssets/opensea.svg'
+
 import { NavLink } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -756,7 +756,7 @@ const LandStaking = ({
               <div className="d-flex flex-column flex-lg-row align-items-center gap-2 w-100">
               <div className={"linear-border-purple mt-4"}>
                 <a className={`btn purple-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/worldofdypians' target='_blank' rel='noreferrer'>
-                  <img src={opensea} alt=''/>
+                  <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt=''/>
                   Buy on OpenSea
                 </a>
               </div>

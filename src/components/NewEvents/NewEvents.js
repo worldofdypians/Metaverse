@@ -1,81 +1,46 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_newevents.scss";
-
 import TreasureHunt from "../Challenges/TreasureHunt";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import ChallengePopup from "../ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
-import dragonRuinsPopup from "../../assets/gameAssets/challengeCards/dragonRuinsPopup.webp";
-import scorpionKingPopup from "../../assets/gameAssets/challengeCards/scorpionKingPopup.webp";
-import coldBitePopup from "../../assets/gameAssets/challengeCards/coldBitePopup.webp";
-import furyBeastPopup from "../../assets/gameAssets/challengeCards/furyBeastPopup.webp";
-import wingStormPopup from "../../assets/gameAssets/challengeCards/wingStormPopup.webp";
-import criticalHitPopup from "../../assets/gameAssets/challengeCards/criticalHitPopup.webp";
 import criticalHitBanner from "./assets/banners/criticalHitBanner.webp";
-import mazeGardenPopup from "../../assets/gameAssets/challengeCards/mazeGardenPopup.webp";
-import puzzleMadnessPopup from "../../assets/gameAssets/challengeCards/puzzleMadnessPopup.webp";
 import puzzleMadnessBanner from "./assets/banners/puzzleMadnessBanner.webp";
-import stoneEyePopup from "../../assets/gameAssets/challengeCards/stoneEyePopup.webp";
-import explorerHuntPopup from "../../assets/gameAssets/challengeCards/explorerHuntPopup.webp";
 import dragonRuinsBanner from "./assets/banners/dragonRuinsBanner.webp";
 import wingStormBanner from "./assets/banners/wingStormBanner.webp";
 import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
 import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
 import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
 import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
-import bnbMazeDayCard from "./assets/banners/bnbMazeDayCard.png";
-import opensea from "../../assets/opensea.svg";
 import bnbMazeDayTopBanner from "./assets/banners/bnbMazeDayTopBanner.webp";
 import criticalHitTopBanner from "./assets/banners/criticalHitTopBanner.webp";
 import explorerHuntTopBanner from "./assets/banners/explorerHuntTopBanner.webp";
 import greatCollectionTopBanner from "./assets/banners/greatCollectionTopBanner.webp";
 import puzzleMadnessTopBanner from "./assets/banners/puzzleMadnessTopBanner.webp";
-import greatCollectionPopup from "../../assets/gameAssets/challengeCards/greatCollectionPopup.webp";
-import dragonRuinsText from "../../assets/gameAssets/challengeCards/dragonRuinsText.png";
-import dragonRuinsHead from "../../assets/gameAssets/challengeCards/dragonRuinsHead.png";
-import coldBiteHead from "../../assets/gameAssets/challengeCards/coldBiteHead.png";
-import furyBeastHead from "../../assets/gameAssets/challengeCards/furyBeastHead.png";
-import wingStormHead from "../../assets/gameAssets/challengeCards/wingStormHead.png";
-import scorpionKingHead from "../../assets/gameAssets/challengeCards/scorpionKingHead.png";
-import stoneEyeHead from "../../assets/gameAssets/challengeCards/stoneEyeHead.png";
-import coldBiteText from "../../assets/gameAssets/challengeCards/coldBiteText.png";
-import furyBeastText from "../../assets/gameAssets/challengeCards/furyBeastText.png";
-import wingStormText from "../../assets/gameAssets/challengeCards/wingStormText.png";
-import scorpionKingText from "../../assets/gameAssets/challengeCards/scorpionKingText.png";
-import stoneEyeText from "../../assets/gameAssets/challengeCards/stoneEyeText.png";
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
 import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
 import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
-
-import dypIcon from "../Challenges/assets/dypIcon.svg";
 import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
-import whiteTooltip from "../Challenges/assets/whiteTooltip.svg";
-import syncIcon from "../Challenges/assets/syncIcon.svg";
 import Countdown from "react-countdown";
-import goldenPassCard from "./assets/banners/goldenPassBanner.webp";
-import goldenPassPopup from "../../assets/gameAssets/challengeCards/goldenPassPopup.webp";
 import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
 import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
 import furyBeastThumb from "./assets/banners/furyBeastThumb.webp";
 import stoneEyeThumb from "./assets/banners/stoneEyeThumb.webp";
 import wingStormThumb from "./assets/banners/wingStormThumb.webp";
 import dragonRuinsThumb from "./assets/banners/dragonRuinsThumb.webp";
-
 import coldBiteActiveThumb from "./assets/banners/coldBiteActiveThumb.webp";
 import scorpionKingActiveThumb from "./assets/banners/scorpionKingActiveThumb.webp";
 import furyBeastActiveThumb from "./assets/banners/furyBeastActiveThumb.webp";
 import stoneEyeActiveThumb from "./assets/banners/stoneEyeActiveThumb.webp";
 import wingStormActiveThumb from "./assets/banners/wingStormActiveThumb.webp";
 import dragonRuinsActiveThumb from "./assets/banners/dragonRuinsActiveThumb.webp";
-
 import coldBiteThumbMobile from "./assets/banners/coldBiteThumbMobile.webp";
 import scorpionKingThumbMobile from "./assets/banners/scorpionKingThumbMobile.webp";
 import furyBeastThumbMobile from "./assets/banners/furyBeastThumbMobile.webp";
 import stoneEyeThumbMobile from "./assets/banners/stoneEyeThumbMobile.webp";
 import wingStormThumbMobile from "./assets/banners/wingStormThumbMobile.webp";
 import dragonRuinsThumbMobile from "./assets/banners/dragonRuinsThumbMobile.webp";
-
 import coldBiteActiveThumbMobile from "./assets/banners/coldBiteActiveThumbMobile.webp";
 import scorpionKingActiveThumbMobile from "./assets/banners/scorpionKingActiveThumbMobile.webp";
 import furyBeastActiveThumbMobile from "./assets/banners/furyBeastActiveThumbMobile.webp";
@@ -1722,14 +1687,14 @@ const NewEvents = ({
       id: "dragon",
       challange: "dragon-ruins",
       title: "Dragon Ruins",
-      popupImage: dragonRuinsPopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/dragonRuinsPopup.webp",
       image: dragonRuinsBanner,
       thumbImage: dragonRuinsThumb,
       thumbImageActive: dragonRuinsActiveThumb,
       mobileThumbImage: dragonRuinsThumbMobile,
       mobileThumbImageActive: dragonRuinsActiveThumbMobile,
-      textImage: dragonRuinsText,
-      headImage: dragonRuinsHead,
+      textImage: "https://cdn.worldofdypians.com/wod/dragonRuinsText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/dragonRuinsHead.png",
       wodAmount: dragonRuinsWodAmount,
       class: "dragon-siege",
       usdPrice: 2.0,
@@ -1757,13 +1722,13 @@ const NewEvents = ({
       challange: "cold-bite",
       id: "coldbite",
       image: coldBiteBanner,
-      popupImage: coldBitePopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/coldBitePopup.webp",
       thumbImage: coldBiteThumb,
       thumbImageActive: coldBiteActiveThumb,
       mobileThumbImage: coldBiteThumbMobile,
       mobileThumbImageActive: coldBiteActiveThumbMobile,
-      textImage: coldBiteText,
-      headImage: coldBiteHead,
+      textImage: "https://cdn.worldofdypians.com/wod/coldBiteText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/coldBiteHead.png",
       wodAmount: coldBiteWodAmount,
       usdPrice: 2.5,
       class: "bear-siege",
@@ -1794,13 +1759,13 @@ const NewEvents = ({
       challange: "fury-beast",
       id: "furyBeast",
       image: furyBeastBanner,
-      popupImage: furyBeastPopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/furyBeastPopup.webp",
       thumbImage: furyBeastThumb,
       thumbImageActive: furyBeastActiveThumb,
       mobileThumbImage: furyBeastThumbMobile,
       mobileThumbImageActive: furyBeastActiveThumbMobile,
-      textImage: furyBeastText,
-      headImage: furyBeastHead,
+      textImage: "https://cdn.worldofdypians.com/wod/furyBeastText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/furyBeastHead.png",
       wodAmount: furyBeastWodAmount,
       class: "beast-siege",
 
@@ -1832,14 +1797,14 @@ const NewEvents = ({
       challange: "wing-storm",
       id: "wingstorm",
       image: wingStormBanner,
-      popupImage: wingStormPopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/wingStormPopup.webp",
       thumbImage: wingStormThumb,
       thumbImageActive: wingStormActiveThumb,
       mobileThumbImage: wingStormThumbMobile,
       mobileThumbImageActive: wingStormActiveThumbMobile,
       wodAmount: wingStormWodAmount,
-      textImage: wingStormText,
-      headImage: wingStormHead,
+      textImage: "https://cdn.worldofdypians.com/wod/wingStormText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/wingStormHead.png",
       class: "eagle-siege",
 
       usdPrice: 3.0,
@@ -1869,15 +1834,15 @@ const NewEvents = ({
     {
       challange: "scorpion-king",
       id: "scorpion",
-      popupImage: scorpionKingPopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/scorpionKingPopup.webp",
       image: scorpionKingBanner,
       thumbImage: scorpionKingThumb,
       thumbImageActive: scorpionKingActiveThumb,
       mobileThumbImage: scorpionKingThumbMobile,
       mobileThumbImageActive: scorpionKingActiveThumbMobile,
       wodAmount: scorpionKingWodAmount,
-      textImage: scorpionKingText,
-      headImage: scorpionKingHead,
+      textImage: "https://cdn.worldofdypians.com/wod/scorpionKingText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/scorpionKingHead.png",
       class: "scorpion-siege",
 
       usdPrice: 3.5,
@@ -1907,14 +1872,14 @@ const NewEvents = ({
       challange: "stone-eye",
       id: "stoneEye",
       image: stoneEyeBanner,
-      popupImage: stoneEyePopup,
+      popupImage: "https://cdn.worldofdypians.com/wod/stoneEyePopup.webp",
       thumbImage: stoneEyeThumb,
       thumbImageActive: stoneEyeActiveThumb,
       mobileThumbImage: stoneEyeThumbMobile,
       mobileThumbImageActive: stoneEyeActiveThumbMobile,
       wodAmount: stoneEyeWodAmount,
-      textImage: stoneEyeText,
-      headImage: stoneEyeHead,
+      textImage: "https://cdn.worldofdypians.com/wod/stoneEyeText.png",
+      headImage: "https://cdn.worldofdypians.com/wod/stoneEyeHead.png",
       class: "cyclops-siege",
 
       usdPrice: 3.0,
@@ -1943,7 +1908,7 @@ const NewEvents = ({
 
   const mazeGardenInfo = {
     id: "maze",
-    popupImage: mazeGardenPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/mazeGardenPopup.webp",
     image: mazeGardenBanner,
     desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
     day: 5,
@@ -1972,7 +1937,7 @@ const NewEvents = ({
   const greatCollectionInfo = {
     id: "greatCollection",
     image: greatCollectionBanner,
-    popupImage: greatCollectionPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
     topBanner: greatCollectionTopBanner,
     class: "great-collection-card",
     infoClass: "great-collection-info",
@@ -1996,7 +1961,7 @@ const NewEvents = ({
   const explorerHuntInfo = {
     id: "explorer-hunt",
     image: explorerHuntBanner,
-    popupImage: explorerHuntPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/explorerHuntPopup.webp",
     topBanner: explorerHuntTopBanner,
     class: "explorer-hunt-card",
     infoClass: "explorer-hunt-info",
@@ -2022,7 +1987,7 @@ const NewEvents = ({
   const criticalHitInfos = {
     id: "critical",
     image: criticalHitBanner,
-    popupImage: criticalHitPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/criticalHitPopup.webp",
     topBanner: criticalHitTopBanner,
     class: "critical-hit-card",
     infoClass: "critical-hit-info",
@@ -2050,7 +2015,7 @@ const NewEvents = ({
 
   const puzzleMadnessInfo = {
     id: "puzzle",
-    popupImage: puzzleMadnessPopup,
+    popupImage: "https://cdn.worldofdypians.com/wod/puzzleMadnessPopup.webp",
     image: puzzleMadnessBanner,
     usdPrice: 4.0,
     topBanner: puzzleMadnessTopBanner,
@@ -2076,24 +2041,6 @@ const NewEvents = ({
     ],
   };
 
-  const goldenPassInfo = {
-    id: "golden",
-    popupImage: goldenPassPopup,
-    image: goldenPassCard,
-    desc: "Break the Genesis Gem located on your land to unleash unique benefits and claim powerful rewards. A perfect chance to boost your progress.",
-    title: "Golden Pass",
-    link: "/account/challenges/golden-pass",
-    usdPrice: 2.0,
-    popupDesc:
-      "The Golden Pass Event lets players earn extra rewards from the leaderboards. The pass is valid for one calendar month, regardless of purchase date.",
-    secondaryDesc:
-      "Example: If you buy the Golden Pass on the 7th, it remains active until the end of the month (e.g., from the 7th to the 30th/31st). However, it will reset on the 1st of the following month and must be repurchased to stay active.",
-    workList: [
-      "Purchase the bundle from the Challenge & Events.",
-      "The golden pass is valid for one calendar month, resetting on the 1st, regardless of the purchase date.",
-      "Extra rewards are given based on leaderboard rank as long as the golden pass is active.",
-    ],
-  };
 
   useEffect(() => {
     const today = new Date();
