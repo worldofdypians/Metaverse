@@ -1,7 +1,6 @@
 import React from "react";
 import "./_mainheroabout.scss";
-
-import anchorArrow from "../../../assets/anchorArrow.svg";
+ 
 import { NavLink } from "react-router-dom";
 
 const MainHero = () => {
@@ -31,21 +30,21 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Tokenomics</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
           <NavLink
             to={"/about#security"}
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Security</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
           <NavLink
             to={"/about#roadmap"}
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Roadmap</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -53,7 +52,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Team</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -61,7 +60,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Partners</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -69,7 +68,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Brand</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
         </div>
       </div>

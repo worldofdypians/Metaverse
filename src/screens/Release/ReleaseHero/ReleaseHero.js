@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./_releasehero.scss";
 import Slider from "react-slick";
-import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 
 const ReleaseHero = ({ onSelectRound }) => {

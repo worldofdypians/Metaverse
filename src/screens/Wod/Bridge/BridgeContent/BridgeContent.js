@@ -3,8 +3,7 @@ import "./_bridgecontent.scss";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
-import bridgeIcon from "../assets/bridgeIcon.svg";
-import wodIcon from "../assets/wodIcon.svg";
+
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -85,13 +84,13 @@ const BridgeContent = ({
             <div className="bridge-input-wrapper d-flex flex-column gap-2">
                 <div className="bridge-input-upper-wrapper  d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center p-3 gap-2">
-                    <img src={wodIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/wodToken.png'} alt="" style={{height: 24, width: 24}}/>
                     <h6 className="mb-0 bridge-wod-title">WOD</h6>
                   </div>
                   <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
                     <span className="bridge-network-span">Network</span>
                     <div className="d-flex align-items-center gap-2">
-                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt=""  style={{height: 24, width: 24}}/>
                       <h6 className="mb-0 bridge-network-title">BNB Chain</h6>
                     </div>
                   </div>
@@ -113,12 +112,12 @@ const BridgeContent = ({
                 </div>
               </div>
                   <div className="d-flex justify-content-center w-100">
-                  <img src={bridgeIcon} width={30} height={30} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/bridgeIcon.svg'} width={30} height={30} alt="" />
                   </div>
               <div className="bridge-input-wrapper d-flex flex-column gap-2">
                 <div className="bridge-input-upper-wrapper  d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center p-3 gap-2">
-                    <img src={wodIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/wodToken.png'} alt=""  style={{height: 24, width: 24}}/>
                     <h6 className="mb-0 bridge-wod-title">WOD</h6>
                   </div>
                   <div className="d-flex flex-column gap-1 p-3 bridge-network-wrapper col-6 col-lg-5">
