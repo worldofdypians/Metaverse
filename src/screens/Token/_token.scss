@@ -1,10 +1,10 @@
 .economy-banner{
-    background-image: url('./assets/igEconomyBg.webp');
+    background-image: url('https://cdn.worldofdypians.com/wod/igEconomyBg.webp');
     background-size: 100%;
      background-repeat: no-repeat;
      border-bottom: 3px solid black;
     @media screen and (max-width: 786px) {
-        background-image: url('./assets/igEconomyBgMobile.webp');
+        background-image: url('https://cdn.worldofdypians.com/wod/igEconomyBgMobile.webp');
     }
 }
 

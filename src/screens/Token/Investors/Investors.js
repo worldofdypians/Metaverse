@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_investors.scss";
-import WodBuilders from "../../Home/WodBuilders/WodBuilders";
 import NewBuilders from "../../Home/WodBuilders/NewBuilders";
-import partnersDropdown from "../../Home/WodBuilders/assets/partnersDropdown.svg";
+ 
 
 const Investors = ({ page }) => {
   const investors = [
@@ -43,7 +42,7 @@ const Investors = ({ page }) => {
     },
     {
       title: "Financial Move",
-      logo: "financialMove.svg",
+      logo: "financialmove.svg",
       link: "https://financialmove.com.br/",
     },
     {
@@ -51,11 +50,6 @@ const Investors = ({ page }) => {
       logo: "mpcEducation.svg",
       link: "https://meuplanocrypto.com/",
     },
-    // {
-    //   title: "Crypto Adventure",
-    //   logo: "cryptoAdventure.svg",
-    //   link: "https://cryptoadventure.com/",
-    // },
     {
       title: "Conflux",
       logo: "confluxBackers.svg",
@@ -112,7 +106,7 @@ const Investors = ({ page }) => {
               key={index}
             >
               <img
-                src={require(`./assets/${item.logo}`)}
+                src={(`https://cdn.worldofdypians.com/wod/${item.logo}`)}
                 className="investors-img"
                 alt=""
               />
@@ -144,7 +138,7 @@ const Investors = ({ page }) => {
               {!show ? "View Partners" : "View Less"}
             </span>
             <img
-              src={partnersDropdown}
+              src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"}
               width={20}
               height={20}
               style={{ transform: !show ? "none" : "rotate(180deg)" }}
