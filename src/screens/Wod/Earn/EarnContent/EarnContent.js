@@ -740,6 +740,37 @@ const EarnContent = ({
                             />
                           </div>
                         )}
+
+{item?.id ===
+                          "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652" && (
+                          <div
+                            onClick={() => {
+                              isHover !== undefined
+                                ? onShowDetailsClick(item)
+                                : onHideDetailsClick(item);
+                            }}
+                          >
+                            <StakeWodDetails2
+                              coinbase={coinbase}
+                              isConnected={isConnected}
+                              chainId={chainId?.toString()}
+                              handleConnection={onConnectWallet}
+                              expired={false}
+                              staking={window.constant_staking_wod5}
+                              apr={item.apy_percent}
+                              expiration_time={"11 Dec 2025"}
+                              poolCap={item.poolCap}
+                              start_date={"11 Dec 2024"}
+                              fee={item.performancefee}
+                              binanceW3WProvider={binanceW3WProvider}
+                              handleSwitchNetwork={handleSwitchNetwork}
+                              listType={selectedViewStyle}
+                              lockTime={item.lock_time}
+                              onSuccessfulStake={onSuccessfulStake}
+
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -764,11 +764,25 @@ function App() {
         .catch((e) => {
           console.error(e);
         });
+
+        const totaldesposited_wod5 = await tokenSc.methods
+        .balanceOf(window.constant_staking_wod5._address)
+        .call()
+        .catch((e) => {
+          console.error(e);
+        });
+
       const totaldesposited_wod4_formatted = new window.BigNumber(
         totaldesposited_wod4
       )
         .div(1e18)
         .toFixed(6);
+
+        const totaldesposited_wod5_formatted = new window.BigNumber(
+          totaldesposited_wod5
+        )
+          .div(1e18)
+          .toFixed(6);
 
       const poolcapArray = [
         {
@@ -790,6 +804,11 @@ function App() {
           id: "0x0675B497f52a0426874151c1e3267801fAA15C18",
           poolCap: 9000000,
           totaldeposited: totaldesposited_wod4_formatted,
+        },
+        {
+          id: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
+          poolCap: 5000000,
+          totaldeposited: totaldesposited_wod5_formatted,
         },
       ];
 
