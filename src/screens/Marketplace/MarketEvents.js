@@ -30,7 +30,7 @@ import multiversLogo from "./assets/multiversLogo.svg";
 
 import coreLogo from "./assets/coreLogo.svg";
 import mantaLogo from "./assets/mantaLogo2.png";
-import cookie3Logo from "./assets/cookie3Logo.svg";
+ 
  
 import victionLogo from "./assets/victionLogo.svg";
 import immutableLogo from "./assets/immutableLogo.svg";
@@ -90,7 +90,7 @@ import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
-import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
+// import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingSkale from "./assets/upcomingSkale.webp";
 import upcomingCookie from "./assets/cookieBg.webp";
@@ -120,11 +120,7 @@ import taikoMobileBg from "./assets/taikoActive.png";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
-import mantaMobileBg from "./assets/mantaMobileBg.png";
-import immutableMobileBg from "./assets/immutableActive.webp";
 import seiMobileBg from "./assets/seiActive.webp";
-import coreMobileBg from "./assets/coreActive.webp";
-import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
 import bnbLogo from "./assets/bnbIcon.svg";
 import dailyBonus from "./assets/dailyBonus.webp";
@@ -407,7 +403,7 @@ const MarketEvents = ({
 
     {
       title: "Cookie3",
-      logo: cookie3Logo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -981,7 +977,7 @@ const MarketEvents = ({
   };
   const betaPassPackageData = {
     title: "Beta Pass",
-    image: "betaPassDummy.png",
+    image: "newCriticalBg.webp",
     benefits: [
       "Exclusive access for Beta Pass owners",
       "Opportunity to win rewards",
@@ -1557,12 +1553,12 @@ const MarketEvents = ({
                             }`}
                             onClick={() => setSelectedPackage("treasure-hunt")}
                           >
-                            <img
+                            {/* <img
                               src={require("./assets/treasure.jpg")}
                               className="w-100"
                               style={{ borderRadius: "16px" }}
                               alt=""
-                            />
+                            /> */}
                             <span className="event-package-title">
                               Treasure Hunt
                             </span>
@@ -1701,11 +1697,11 @@ const MarketEvents = ({
                             </span>
                           </div>
 
-                          <img
+                          {/* <img
                             src={upcomingDailyBonus}
                             alt=""
                             className="upcoming-mint-img"
-                          />
+                          /> */}
                         </div>
                       </div>
                     ) : (

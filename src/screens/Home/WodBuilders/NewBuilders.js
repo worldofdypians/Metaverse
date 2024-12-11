@@ -77,7 +77,7 @@ const NewBuilders = () => {
     },
     {
       name: "Manta",
-      icon: "manta.png",
+      icon: "mantaLogoBig.png",
       banner: "mantaBanner.png",
       link: "https://x.com/MantaNetwork/status/1819260085945749903",
       backer: true,

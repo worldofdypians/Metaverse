@@ -6,21 +6,14 @@ import { NavLink } from "react-router-dom";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
-import Slider from "react-slick";
-import nextArrow from "./assets/nextArrow1.svg";
+import Slider from "react-slick"; 
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
 import { Skeleton } from "@mui/material";
 import greenArrow from "./assets/greenArrow.svg";
-import timepieceHome from "./assets/timepieceHome.png";
-import confluxHome from "./assets/confluxHome.png";
-import baseUpcoming from "./assets/baseUpcoming.png";
-import OutsideClickHandler from "react-outside-click-handler";
-import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
-import GameEvents from "../Game/GameEvents";
-import NewEvents from "../../components/NewEvents/NewEvents";
+
 import NewChallenges from "../Game/NewChallenges";
 
 const Marketplace = ({
@@ -643,14 +636,14 @@ const Marketplace = ({
             >
               {activeSlide > 0 && (
                 <div className="prev-arrow-nft" onClick={firstPrev}>
-                  <img src={nextArrow} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
                 </div>
               )}
               {showFirstNext === activeSlide
                 ? null
                 : recentListed.length > sliderCut && (
                     <div className="next-arrow-nft" onClick={firstNext}>
-                      <img src={nextArrow} alt="1" />
+                      <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="1" />
                     </div>
                   )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
@@ -945,14 +938,14 @@ const Marketplace = ({
             >
               {activeSlide2 > 0 && (
                 <div className="prev-arrow-nft" onClick={secondPrev}>
-                  <img src={nextArrow} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
                 </div>
               )}
               {showSecondNext === activeSlide2
                 ? null
                 : recentSold.length > sliderCut && (
                     // <img
-                    //   src={nextArrow}
+                    //   src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'}
                     //   width={40}
                     //   height={40}
                     //   onClick={secondNext}
@@ -960,7 +953,7 @@ const Marketplace = ({
                     //   alt=""
                     // />
                     <div className="next-arrow-nft" onClick={secondNext}>
-                      <img src={nextArrow} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
                     </div>
                   )}
 
@@ -1288,11 +1281,7 @@ const Marketplace = ({
                             ))}
                           </div>
                         </div>
-                        <img
-                          src={require("./assets/smallMintBg.png")}
-                          alt=""
-                          className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
-                        />
+                         
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/timepiece">
@@ -1341,11 +1330,7 @@ const Marketplace = ({
                             ))}
                           </div>
                         </div> */}
-                        {/* <img
-                          src={require("./assets/smallMintBg.png")}
-                          alt=""
-                          className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
-                        /> */}
+                        
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/timepiece">
@@ -1393,11 +1378,7 @@ const Marketplace = ({
                             ))}
                           </div>
                         </div> */}
-                        {/* <img
-                          src={require("./assets/smallMintBg.png")}
-                          alt=""
-                          className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
-                        /> */}
+                        
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/sei">

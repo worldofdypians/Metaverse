@@ -52,9 +52,7 @@ import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 
 import starAlert from "./assets/star-alert.svg";
-import axios from "axios";
-import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
-import Countdown from "react-countdown";
+import axios from "axios"; 
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";

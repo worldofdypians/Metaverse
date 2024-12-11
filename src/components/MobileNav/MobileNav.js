@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./_mobilenav.scss";
 import { NavLink, useLocation } from "react-router-dom";
-import cawsLogo from "../../screens/Marketplace/assets/cawsLogo.png";
-import wodLogo from "../../screens/Marketplace/assets/wodLogo.png";
 import collectionsIcon from "../MarketSidebar/assets/collectionsIcon.svg";
 import collectionsIconActive from "../MarketSidebar/assets/collectionsIconActive.svg";
 import { useState } from "react";
