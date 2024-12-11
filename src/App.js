@@ -122,9 +122,7 @@ import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
 import cmcUpcoming from "./screens/Marketplace/assets/upcomingCmc.webp";
 import taikoBg from "./screens/Marketplace/assets/taikoBg.webp";
 import mantaBg from "./screens/Marketplace/assets/mantaBg.webp";
-import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg";
-import cmc from "./screens/Marketplace/MarketNFTs/assets/cmc.svg";
-import doge from "./screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg"; 
 import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
 import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
@@ -4135,7 +4133,7 @@ console.log('mint sei')
     },
     {
       title: "CMC",
-      logo: cmc,
+      logo: 'https://cdn.worldofdypians.com/wod/cmcIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -4175,7 +4173,7 @@ console.log('mint sei')
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
-      logo: doge,
+      logo: 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg',
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
       userEarnCrypto: dogeEarnBNB,

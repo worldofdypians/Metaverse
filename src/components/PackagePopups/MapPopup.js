@@ -1,5 +1,4 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import React from "react"; 
 import mapPopup from "./assets/mapPopup.webp";
 import cityMap from "./assets/cityMap.webp";
 import islandMap from "./assets/islandMap.webp";
@@ -25,7 +24,7 @@ const MapPopup = ({ onClosePopup }) => {
               </mark>
             </h6>
             <img
-              src={popupXmark}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               className="popup-closer-map"
               onClick={onClosePopup}
               alt=""

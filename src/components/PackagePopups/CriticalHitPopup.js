@@ -1,5 +1,4 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import React from "react"; 
 import criticalPopupBanner from "../../screens/Marketplace/assets/criticalPopupBanner.png";
 import popupLinear from "./assets/popupLinear.png";
 import criticalPopup from "./assets/criticalPopup.webp";
@@ -22,7 +21,7 @@ const CriticalHitPopup = ({ onClosePopup }) => {
             </mark>
           </h6>
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClosePopup}
             alt=""

@@ -1,5 +1,4 @@
-import React from "react";
-// import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import React from "react"; 
 import { NavLink } from "react-router-dom";
 
 const LandPopup = ({ onClosePopup }) => {

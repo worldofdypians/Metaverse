@@ -6,52 +6,25 @@ import { NavLink } from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { useMutation, useQuery } from "@apollo/client";
 import { ethers } from "ethers";
-import coingecko from "./assets/coingecko.svg";
-import conflux from "./assets/conflux.svg";
-import cmc from "./assets/cmc.svg";
 import { useLocation } from "react-router-dom";
-import blockChainIcon from "../assets/blockChainIcon.svg";
-import confluxLogo from "../assets/confluxLogo.svg"; 
-import bnbLogo from "../assets/bnbIcon.svg";
-import skaleLogo from "../assets/skaleLogo.svg";
-import coreLogo from "../assets/coreLogo.svg";
-import multiversLogo from "../assets/multiversLogo.svg";
-import victionLogo from "../assets/victionLogo.svg"; 
-import seiLogo from "../assets/seiLogo.svg";
-import dogeLogo from "./assets/dogeLogo.svg";
-
-// import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
-// import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
-import pinkArea from "./assets/pinkArea.svg";
-import pinkAreaConflux from "./assets/pinkAreaConflux.svg";
-import pinkAreaBase from "./assets/pinkAreaBase.svg";
-import pinkAreaDoge from "./assets/pinkAreaDoge.svg";
-import pinkAreaCmc from "./assets/pinkAreaCmc.svg";
-import termsArrow from "./assets/termsArrow.svg";
-import popupXmark from "../assets/popupXmark.svg";
-import user from "./assets/user.svg";
-import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
+import { shortAddress } from "../../Caws/functions/shortAddress";
+import { handleSwitchNetworkhook } from "../../../hooks/hooks";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
 import {
   GENERATE_NONCE,
   GET_PLAYER,
   VERIFY_WALLET,
 } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import OutsideClickHandler from "react-outside-click-handler";
-import switchIcon from "./assets/switchIcon.svg";
-import metamaskIcon from "./assets/metamaskIcon.svg";
-import coin98Wallet from "./wallets/coin98.png";
-import trustWallet from "./wallets/trustwallet.png";
-import coinbaseWallet from "./wallets/coinbase.png";
-import safepalWallet from "./wallets/safepal.png";
-import gateWallet from "./wallets/gateWallet.png";
-import { shortAddress } from "../../Caws/functions/shortAddress";
-import { handleSwitchNetworkhook } from "../../../hooks/hooks";
-import { useParams } from "react-router-dom";
-import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
-import whitePickaxe from "../assets/whitePickAxe.svg";
-import whiteCalendar from "../assets/whiteCalendar.svg";
-// import Countdown from "react-countdown";
 import axios from "axios";
+import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
+// import SignUpGecko from "../../Account/src/Containers/SingUp/SignUpGecko";
+// import PlayerCreationGecko from "../../Account/src/Containers/PlayerCreation/PlayerCreationGecko";
+ 
+ 
+
+// import Countdown from "react-countdown";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -123,7 +96,7 @@ const BetaPassNFT = ({
     id: "avax",
     cardTitle: "Avalanche Beta Pass",
     title: "Avalanche Beta Pass",
-    background: "avalanche-mint-bg",
+    background: "avax-mint-bg",
     mainTitle: "Avalanche",
   };
 
@@ -972,7 +945,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1010,7 +985,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
+                          src={"https://cdn.worldofdypians.com/wod/cookie3.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1028,7 +1003,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                          src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1046,7 +1021,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/manta.png'}
+                          src={"https://cdn.worldofdypians.com/wod/manta.png"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1064,7 +1039,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={bnbLogo}
+                          src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1082,7 +1057,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={coreLogo}
+                          src={"https://cdn.worldofdypians.com/wod/core.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1100,7 +1075,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={multiversLogo}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/multiversx.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1118,7 +1095,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={seiLogo}
+                          src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1136,7 +1113,7 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={victionLogo}
+                          src={"https://cdn.worldofdypians.com/wod/viction.svg"}
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1155,7 +1132,9 @@ const BetaPassNFT = ({
                       >
                         {/* <img src={comingSoon} alt='' className="position-absolute comingSoonimg" /> */}
                         <img
-                          src={skaleLogo}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1172,7 +1151,11 @@ const BetaPassNFT = ({
                           setMintTitle("cmc");
                         }}
                       >
-                        <img src={cmc} className="beta-pass-chain-img" alt="" />
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
+                          className="beta-pass-chain-img"
+                          alt=""
+                        />
                         <span>CoinMarketCap</span>
                       </NavLink>
                       <NavLink
@@ -1187,7 +1170,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={dogeLogo}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1206,7 +1191,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={coingecko}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1224,7 +1211,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={gateWallet}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/gateIcon.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1242,7 +1231,9 @@ const BetaPassNFT = ({
                         }}
                       >
                         <img
-                          src={conflux}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                          }
                           className="beta-pass-chain-img"
                           alt=""
                         />
@@ -1278,7 +1269,9 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                        }
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1318,7 +1311,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
+                        src={"https://cdn.worldofdypians.com/wod/cookie3.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1336,7 +1329,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                        src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1354,7 +1347,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={'https://cdn.worldofdypians.com/wod/manta.png'}
+                        src={"https://cdn.worldofdypians.com/wod/manta.png"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1372,7 +1365,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={bnbLogo}
+                        src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1390,7 +1383,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={coreLogo}
+                        src={"https://cdn.worldofdypians.com/wod/core.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1408,7 +1401,9 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={multiversLogo}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/multiversx.svg"
+                        }
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1426,7 +1421,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={seiLogo}
+                        src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1444,7 +1439,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={victionLogo}
+                        src={"https://cdn.worldofdypians.com/wod/viction.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1463,7 +1458,7 @@ const BetaPassNFT = ({
                     >
                       {/* <img src={comingSoon} alt='' className="position-absolute comingSoonimg" /> */}
                       <img
-                        src={skaleLogo}
+                        src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1480,7 +1475,11 @@ const BetaPassNFT = ({
                         setMintTitle("cmc");
                       }}
                     >
-                      <img src={cmc} className="beta-pass-chain-img" alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
+                        className="beta-pass-chain-img"
+                        alt=""
+                      />
                       <span>CoinMarketCap</span>
                     </NavLink>
                     <NavLink
@@ -1495,7 +1494,9 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={dogeLogo}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg"
+                        }
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1514,7 +1515,9 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={coingecko}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
+                        }
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1532,7 +1535,7 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={gateWallet}
+                        src={"https://cdn.worldofdypians.com/wod/gateIcon.svg"}
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1550,7 +1553,9 @@ const BetaPassNFT = ({
                       }}
                     >
                       <img
-                        src={conflux}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                        }
                         className="beta-pass-chain-img"
                         alt=""
                       />
@@ -1622,49 +1627,35 @@ const BetaPassNFT = ({
                               </span>
                             </div>
                           ))}
-
-                          {
-                            // mintTitle === "base" ? (
-                            //   <div className="d-flex align-items-center gap-2">
-                            //     <img
-                            //       src={blockChainIcon}
-                            //       width={32}
-                            //       height={32}
-                            //       alt=""
-                            //     />
-                            //     <span className="mint-benefits-title">
-                            //       Minting is available on Base Network
-                            //     </span>
-                            //   </div>
-                            // ) :
-                            mintTitle === "coin98" ? (
-                              <div className="d-flex align-items-center gap-2">
-                                <img
-                                  src={blockChainIcon}
-                                  width={32}
-                                  height={32}
-                                  alt=""
-                                />
-                                <span className="mint-benefits-title">
-                                  Minting is available on BNB Chain
-                                </span>
-                              </div>
-                            ) : null
-                          }
                         </div>
                         {mintTitle === "coingecko" && (
                           <div className="position-relative">
-                            <img src={pinkArea} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkArea.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                         {mintTitle === "gate" && (
                           <div className="position-relative">
-                            <img src={pinkAreaConflux} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkAreaConflux.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                         {mintTitle === "conflux" && (
                           <div className="position-relative">
-                            <img src={pinkAreaConflux} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkAreaConflux.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                         {(mintTitle === "base" ||
@@ -1675,17 +1666,32 @@ const BetaPassNFT = ({
                           mintTitle === "multiversx" ||
                           mintTitle === "mat") && (
                           <div className="position-relative">
-                            <img src={pinkAreaBase} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkAreaBase.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                         {mintTitle === "cmc" && (
                           <div className="position-relative">
-                            <img src={pinkAreaCmc} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkAreaCmc.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                         {mintTitle === "doge" && (
                           <div className="position-relative">
-                            <img src={pinkAreaDoge} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/pinkAreaDoge.svg"
+                              }
+                              alt=""
+                            />
                           </div>
                         )}
                       </div>
@@ -1694,7 +1700,9 @@ const BetaPassNFT = ({
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                         >
                           <img
-                            src={seiLogo}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                            }
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -1706,7 +1714,9 @@ const BetaPassNFT = ({
                           className={`cmc-btn text-decoration-none px-3 py-2 d-flex align-items-center justify-content-center gap-2`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                            }
                             style={{ width: 20, height: 20 }}
                             alt=""
                           />{" "}
@@ -1808,7 +1818,12 @@ const BetaPassNFT = ({
                             <div className="coingecko-eventwrapper p-3">
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2">
-                                  <img src={coingecko} alt="" />
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
+                                    }
+                                    alt=""
+                                  />
                                   <div className="d-flex flex-column gap-1">
                                     <span className="coingecko-eventname">
                                       CoinGecko
@@ -1830,19 +1845,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 03, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 03, 2025
                                       </span>
@@ -1854,20 +1884,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -1898,7 +1920,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -1922,7 +1944,12 @@ const BetaPassNFT = ({
                             <div className="conflux-eventwrapper p-3">
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2">
-                                  <img src={conflux} alt="" />
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                    }
+                                    alt=""
+                                  />
                                   <div className="d-flex flex-column gap-1">
                                     <span className="coingecko-eventname">
                                       Conflux
@@ -1948,19 +1975,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Oct. 06, 2023
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Nov. 06, 2023
                                       </span>
@@ -1972,20 +2014,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2016,7 +2050,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2041,7 +2075,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={gateWallet}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/gateIcon.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2067,19 +2103,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Oct. 20, 2023
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Nov. 20, 2023
                                       </span>
@@ -2091,20 +2142,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2135,7 +2178,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2160,7 +2203,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={dogeLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2186,19 +2231,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 22, 2023
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 02, 2024
                                       </span>
@@ -2210,20 +2270,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2254,7 +2306,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2288,7 +2340,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={bnbLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2314,19 +2368,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 04, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 04, 2025
                                       </span>
@@ -2338,20 +2407,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2382,7 +2443,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2444,19 +2505,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 04, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 04, 2025
                                       </span>
@@ -2468,20 +2544,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2512,7 +2580,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2546,7 +2614,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={seiLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2572,19 +2642,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 05, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 05, 2025
                                       </span>
@@ -2596,20 +2681,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2640,7 +2717,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2675,7 +2752,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={coreLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/core.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2701,19 +2780,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 04, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 04, 2025
                                       </span>
@@ -2725,20 +2819,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2769,7 +2855,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2803,7 +2889,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={victionLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/viction.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2829,19 +2917,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Nov. 29, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Mar. 29, 2025
                                       </span>
@@ -2853,20 +2956,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -2897,7 +2992,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -2931,7 +3026,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={multiversLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/multiversx.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -2957,19 +3054,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Coming Soon
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Coming Soon
                                       </span>
@@ -2981,20 +3093,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3025,7 +3129,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3060,7 +3164,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3086,19 +3192,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Oct. 07, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Feb. 18, 2025
                                       </span>
@@ -3110,20 +3231,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3154,7 +3267,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3195,7 +3308,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={cmc}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/cmcIcon.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3221,19 +3336,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 26, 2023
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 11, 2024
                                       </span>
@@ -3245,20 +3375,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3289,7 +3411,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3323,7 +3445,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={skaleLogo}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3349,19 +3473,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 03, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 03, 2025
                                       </span>
@@ -3373,20 +3512,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3417,7 +3548,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3452,7 +3583,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/manta.png'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/manta.png"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3478,19 +3611,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 05, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 05, 2025
                                       </span>
@@ -3502,20 +3650,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3546,7 +3686,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3581,7 +3721,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3607,19 +3749,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Dec. 03, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Apr. 03, 2025
                                       </span>
@@ -3631,20 +3788,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3675,7 +3824,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -3701,7 +3850,9 @@ const BetaPassNFT = ({
                               <div className="d-flex flex-column gap-4">
                                 <div className="d-flex gap-2 align-items-center">
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/cookie3.svg"
+                                    }
                                     width={32}
                                     height={32}
                                     alt=""
@@ -3727,19 +3878,34 @@ const BetaPassNFT = ({
                                   </div>
                                   <div className="d-flex flex-column gap-2">
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whitePickaxe} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whitePickAxe.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Explore &amp; Mine
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         Start: Aug. 26, 2024
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
-                                      <img src={whiteCalendar} alt="" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/whiteCalendar.svg"
+                                        }
+                                        alt=""
+                                      />
                                       <span className="white-events-text mb-0">
                                         End: Nov. 24, 2024
                                       </span>
@@ -3751,20 +3917,12 @@ const BetaPassNFT = ({
                                     <span className="coingecko-eventdetails">
                                       Event details
                                     </span>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="12"
-                                      height="12"
-                                      viewBox="0 0 12 12"
-                                      fill="none"
-                                    >
-                                      <path
-                                        d="M4.5 9L7.5 6L4.5 3"
-                                        stroke="white"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/arrowRight.svg"
+                                      }
+                                      alt=""
+                                    />
                                   </NavLink>
                                 </div>
                               </div>
@@ -3795,7 +3953,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -4053,7 +4211,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -4153,7 +4311,7 @@ const BetaPassNFT = ({
                                 to="/account"
                                 className="accountbtn-coingecko btn d-flex align-items-center gap-1"
                               >
-                                <img src={user} alt="" className="user2" />
+                                <img src={'https://cdn.worldofdypians.com/wod/userBetapassWhite.svg'} alt="" className="user2" />
                                 My Account
                               </NavLink>
                             </div>
@@ -4173,7 +4331,7 @@ const BetaPassNFT = ({
                     <span className="terms-and-conditions mb-0">
                       Terms & Conditions
                     </span>
-                    <img src={termsArrow} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/termsArrow.svg'} alt="" />
                   </NavLink>
                 </div>
               )}
@@ -4181,104 +4339,8 @@ const BetaPassNFT = ({
           </div>
         </div>
       </div>
-      <OutsideClickHandler onOutsideClick={() => setOpenConflux(false)}>
-        <div
-          className={`popup-wrapper-2 ${
-            openConflux && "popup-active"
-          } p-4 gap-3 d-flex flex-column align-items-center`}
-          id="switch"
-        >
-          <div className="d-flex align-items-center justify-content-end w-100">
-            <img
-              src={popupXmark}
-              onClick={() => setOpenConflux(false)}
-              alt=""
-              style={{ cursor: "pointer" }}
-            />
-          </div>
-          <img src={confluxLogo} width={40} height={40} alt="" />
-          <h6 className="switch-network mb-0">Switch Network</h6>
-          <span className="switch-network-desc">
-            We've detected that you're connected to{" "}
-            {chainId === 1
-              ? "Ethereum Network"
-              : chainId === 56
-              ? "BNB Chain"
-              : chainId === 43113
-              ? "Avalanche"
-              : "Base"}
-            .
-          </span>
-          <div className="metamask-info-wrapper mt-2 w-100 d-flex p-3 align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <img
-                src={
-                  window.ethereum &&
-                  window.ethereum.isMetaMask &&
-                  !window.gatewallet &&
-                  !window.coin98
-                    ? metamaskIcon
-                    : window.coin98
-                    ? coin98Wallet
-                    : window.ethereum && window.ethereum.isTrust
-                    ? trustWallet
-                    : window.ethereum && window.ethereum.isCoinbaseWallet
-                    ? coinbaseWallet
-                    : window.gatewallet
-                    ? gateWallet
-                    : safepalWallet
-                }
-                width={32}
-                height={32}
-                alt=""
-              />
-              <div className="d-flex flex-column">
-                <h6 className="metamask-info-title">
-                  {window.ethereum &&
-                  window.ethereum.isMetaMask &&
-                  !window.gatewallet &&
-                  !window.coin98
-                    ? "MetaMask Wallet"
-                    : window.coin98
-                    ? "Coin98 Wallet"
-                    : window.ethereum && window.ethereum.isTrust
-                    ? "Trustwallet"
-                    : window.ethereum && window.ethereum.isCoinbaseWallet
-                    ? "Coinbase Wallet"
-                    : window.gatewallet
-                    ? "Gate Wallet"
-                    : "Safepal Wallet"}
-                </h6>
-                <span className="metamask-short-address mb-0">
-                  {shortAddress(coinbase)}
-                </span>
-              </div>
-            </div>
-            <div className="d-flex align-items-center gap-2">
-              <div
-                className="green-dot"
-                style={{ width: "5px", height: "5px" }}
-              ></div>
-              <span className="popup-chain">
-                {chainId === 1
-                  ? "Ethereum Network"
-                  : chainId === 56
-                  ? "BNB Chain"
-                  : chainId === 43113
-                  ? "Avalanche"
-                  : "Base"}
-              </span>
-            </div>
-          </div>
-          <button
-            className="btn switch-network-btn mt-3 d-flex align-items-center gap-2 px-5 py-2"
-            onClick={handleConfluxPool}
-          >
-            <img src={switchIcon} alt="" />
-            Switch to Conflux Network
-          </button>
-        </div>
-      </OutsideClickHandler>
+
+
       <OutsideClickHandler onOutsideClick={() => setOpenTerms(false)}>
         <div
           className={`popup-wrapper ${
@@ -4295,7 +4357,7 @@ const BetaPassNFT = ({
               Terms & Conditions
             </h6>
             <img
-              src={popupXmark}
+              src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
               onClick={() => setOpenTerms(false)}
               alt=""
               style={{ cursor: "pointer" }}

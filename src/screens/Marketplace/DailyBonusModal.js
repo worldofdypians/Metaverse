@@ -1,6 +1,5 @@
 import React from "react";
-import dailyBonusPopupImage from "./dailybonusassets/dailyBonusPopupImage.png";
-import closeMark from "./assets/popupXmark.svg";
+import dailyBonusPopupImage from "./dailybonusassets/dailyBonusPopupImage.png"; 
 import pointsIcon from "./dailybonusassets/pointsIcon.png";
 import largeRewardsIcon from "./dailybonusassets/largeRewardsIcon.png";
 import rewardsIcon from "./dailybonusassets/rewardsIcon.png";
@@ -72,7 +71,7 @@ const DailyBonusModal = ({ data, onClose }) => {
           </div>
         </div>
         <img
-          src={closeMark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           alt=""
           style={{ cursor: "pointer" }}
           onClick={onClose}

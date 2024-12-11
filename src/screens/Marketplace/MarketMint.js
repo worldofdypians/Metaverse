@@ -32,14 +32,12 @@ import immutableActive from "./assets/immutableActive.webp";
 import coreActive from "./assets/coreActive.webp";
 import victionActive from "./assets/victionActive.webp";
 import seiActive from "./assets/seiActive.webp";
-import multiversActive from "./assets/multiversActive.webp";
-import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
+import multiversActive from "./assets/multiversActive.webp"; 
 import mantaLogo from "./assets/mantaLogo.png"; 
 
 import timepieceActive from "./assets/timepieceActive.png";
 import gateActive from "./assets/gateActive.png";
-import kucoinActive from "./assets/kucoinActive.png";
-import blockChainIcon from "./assets/blockChainIcon.svg";
+import kucoinActive from "./assets/kucoinActive.png"; 
 import confluxLogo from "./assets/confluxLogo.svg";
 import baseLogo from "./assets/baseLogo.svg";
 import skaleLogo from "./assets/skaleIcon.svg";
@@ -1305,7 +1303,7 @@ const MarketMint = ({
                               {mintTitle === "manta" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
-                                    src={blockChainIcon}
+                                    src={'https://cdn.worldofdypians.com/wod/blockChainIcon.svg'}
                                     width={40}
                                     height={40}
                                     alt=""
@@ -1318,7 +1316,7 @@ const MarketMint = ({
                               {/* {mintTitle === "mat" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
-                                    src={blockChainIcon}
+                                    src={'https://cdn.worldofdypians.com/wod/blockChainIcon.svg'}
                                     width={40}
                                     height={40}
                                     alt=""
@@ -1488,7 +1486,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on Taiko
-                                <img src={taikoLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/taiko.svg'} alt="" />
                               </span>
                             ) : mintTitle === "avax" ? (
                               <span

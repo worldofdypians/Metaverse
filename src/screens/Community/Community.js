@@ -10,20 +10,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
-import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
-import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
+import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg"; 
 import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
-import cookieLogo from "../Marketplace/assets/cookie3Logo.svg";
-import taikoLogo from "../Account/src/Components/WalletBalance/assets/taikoLogo.svg";
+import cookieLogo from "../Marketplace/assets/cookie3Logo.svg"; 
 import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
 
 
 import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
-import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
-import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
-import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png"; 
 import ActiveProfileEvent from "../Account/src/Components/WalletBalance/ActiveProfileEvent";
 import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";
 import discord from "./assets/discord.png";
@@ -210,7 +205,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
 
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
@@ -225,7 +220,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "taiko",
         rewards: "TAIKO",
         status: "Live",
-        logo: taikoLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
         date: "Aug 19, 2024",
         id: "event22",
         eventType: "Explore & Mine",
@@ -306,7 +301,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     }, 
        {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
@@ -402,7 +397,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "CMC",
-      logo: cmc,
+      logo: 'https://cdn.worldofdypians.com/wod/cmcIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -441,7 +436,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
-      logo: doge,
+      logo: 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg',
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
       minRewards: "1",
@@ -587,7 +582,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: 'https://cdn.worldofdypians.com/wod/confluxIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,

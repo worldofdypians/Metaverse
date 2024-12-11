@@ -19,8 +19,7 @@ import dailyBonusActive from "./myrewardsAssets/newAssets/dailyBonusActive.png";
 import treasureHunt from "./myrewardsAssets/newAssets/treasureHunt.png";
 import treasureHuntActive from "./myrewardsAssets/newAssets/treasureHuntActive.png";
 
-import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
-import cmc from "./myrewardsAssets/newAssets/treasureHunt/cmc.svg";
+import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg"; 
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
@@ -40,8 +39,7 @@ import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.s
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
-import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
-import conflux from "./myrewardsAssets/newAssets/treasureHunt/conflux.svg";
+import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg"; 
 import dypiusPremium from "./myrewardsAssets/newAssets/treasureHunt/dypiusPremium.svg";
 import dogeCoin from "./myrewardsAssets/newAssets/treasureHunt/dogeCoin.svg";
 
@@ -1870,7 +1868,7 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={cmc} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/cmcIcon.svg'} alt="" />
                     CMC
                   </span>
                   <span className="item-name-right">
@@ -1884,7 +1882,7 @@ const MyRewardsPopupNew = ({
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={conflux} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'} alt="" />
                     Conflux
                   </span>
                   <span className="item-name-right">
