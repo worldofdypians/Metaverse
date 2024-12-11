@@ -20,8 +20,6 @@ import validateInfo from "./validateInfo";
 import { validateBusinessInfo } from "./validateBusinessInfo";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
-import modalClose from "../../assets/newsAssets/modalClose.svg";
-import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 import selectBtn from "./assets/selectBtn.svg";
 import FormContainer from "../../components/FormContainer/FormContainer";
 
@@ -922,13 +920,13 @@ const PartnerForm = () => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
             <span className="newsletter-modal-span font-poppins">
               You’ve sucessfully submited your request to World of Dypians
@@ -941,13 +939,13 @@ const PartnerForm = () => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setbusinessSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
             <span className="newsletter-modal-span font-poppins">
               You've sucessfully submited your request to World of Dypians

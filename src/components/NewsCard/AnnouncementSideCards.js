@@ -1,5 +1,5 @@
 import React from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
+
 import useWindowSize from "../../hooks/useWindowSize";
 
 const AnnouncementSideCard = ({
@@ -37,7 +37,7 @@ const AnnouncementSideCard = ({
       </div>
       <div className="d-flex flex-column gap-2 justify-content-between w-100">
         <span className="mainNews-date">
-          <img src={calendarIcon} width={20} height={20} alt="calendar" />
+          <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} width={20} height={20} alt="calendar" />
           {date.toLocaleDateString("en-US", options)}
         </span>
         <span

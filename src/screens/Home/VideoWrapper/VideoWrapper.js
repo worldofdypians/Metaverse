@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_videowrapper.scss";
-import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink, useLocation } from "react-router-dom";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
