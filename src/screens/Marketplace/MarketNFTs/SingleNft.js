@@ -3683,7 +3683,7 @@ const SingleNft = ({
                                     }}
                                   >
                                     <div className="d-flex align-items-center gap-2">
-                                      {/* <img src={filterIcon} alt="" /> */}
+                                   
                                       <h6 className="filter-nav-title mb-0">
                                         <img
                                           src={checkActive}

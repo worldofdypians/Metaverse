@@ -7,7 +7,6 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import { useMutation, useQuery } from "@apollo/client";
 import { ethers } from "ethers";
 import { useLocation } from "react-router-dom";
-import { shortAddress } from "../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
@@ -867,17 +866,7 @@ const BetaPassNFT = ({
                         basis.
                       </p>
                     )}
-                    {/* {mintTitle === "conflux" && (
-                      <NavLink
-                        to="/shop/mint/conflux"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <button className="btn mint-now-btn gap-2">
-                          <img src={mintNowIcon} alt="" />
-                          Available minting
-                        </button>
-                      </NavLink>
-                    )} */}
+                   
                   </div>
                 </div>
                 <div className="col-12 col-lg-4 px-0">
