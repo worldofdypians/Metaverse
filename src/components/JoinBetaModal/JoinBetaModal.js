@@ -366,7 +366,7 @@ const JoinBetaModal = ({
             <div className="separator"></div>
             <div
               className={
-                showOptions === false ? "linear-border m-auto" : "m-auto"
+                showOptions === false ? " m-auto" : "m-auto"
               }
               style={{
                 width: showOptions === false ? "fit-content" : "",
@@ -375,7 +375,7 @@ const JoinBetaModal = ({
             >
               {showOptions === false ? (
                 <button
-                  className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                  className="getpremium-btn px-3 py-2"
                   onClick={() => {
                     setShowOptions(true);
                   }}
