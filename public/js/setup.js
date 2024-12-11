@@ -593,7 +593,7 @@ window.constant_staking_wod4 = new CONSTANT_STAKING_WOD(
 );
 
 window.constant_staking_wod5 = new CONSTANT_STAKING_WOD(
-  "CONSTANT_STAKING_WOD4"
+  "CONSTANT_STAKING_WOD5"
 );
 
 
