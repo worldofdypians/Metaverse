@@ -49,23 +49,23 @@ const LandWhitelistModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coinbase",
-      icon: "coinbase.png",
+      icon: "coinbaseWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
     {
       name: "SafePal",
-      icon: "safepal.png",
+      icon: "safepalWallet.png",
     },
     {
       name: "Trust Wallet",
-      icon: "trustwallet.png",
+      icon: "trustwalletWallet.png",
     },
   ];
 
@@ -290,7 +290,7 @@ const LandWhitelistModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />

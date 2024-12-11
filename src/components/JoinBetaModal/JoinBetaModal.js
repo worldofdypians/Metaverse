@@ -44,11 +44,11 @@ const JoinBetaModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
   ];
 
@@ -405,7 +405,7 @@ const JoinBetaModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />

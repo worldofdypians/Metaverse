@@ -3,7 +3,6 @@ import AnnouncementMinCard from "./AnnouncementMinCards";
 import "./mainNews.scss";
 import goBackArrow from "./assets/goBackArrow.svg";
 import goBackArrowBlack from "./assets/goBackArrowBlack.svg";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import newsReddit from "./assets/newsReddit.svg";
 import newsShare from "./assets/newsShare.svg";
 import newsTelegram from "./assets/newsTelegram.svg";
@@ -66,7 +65,7 @@ const NewsModal = ({
               />
             </button>
             <span className="mainNews-date">
-              <img src={calendarIcon} alt="calendar" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />{" "}
               {date.toLocaleDateString("en-US", options)}
             </span>
           </div>

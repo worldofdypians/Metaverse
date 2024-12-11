@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./_news.scss";
 import NewsCard from "../../components/NewsCard/NewsCard";
-import newsletterIcon from "../../assets/newsAssets/newsletterIcon.svg";
+
 import { TextField } from "@mui/material";
-import newsLetterImage from "../../assets/newsAssets/newsLetterImage.svg";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import validateEmail from "../../hooks/validateEmail";
-import modalClose from "../../assets/newsAssets/modalClose.svg";
-import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
+
+
 import OutsideClickHandler from "react-outside-click-handler";
 import MainNewsCard from "../../components/NewsCard/MainNewsCard";
 import AnnouncementSideCard from "../../components/NewsCard/AnnouncementSideCards";
 import NewsModal from "../../components/NewsCard/NewsModal";
 import Slider from "react-slick";
 import { useRef } from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 import nextButton from "../../assets/landAssets/nextButton.svg";
 import { NavLink } from "react-router-dom";
@@ -570,7 +568,7 @@ const News = (props) => {
                       {selectedRelease.title}
                     </h6>
                     <div className="d-flex align-items-center gap-2">
-                      <img src={calendarIcon} alt="calendar" />
+                      <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />
                       <span className="news-date font-poppins">
                         {selectedRelease.date.toLocaleDateString(
                           "en-US",
@@ -596,7 +594,7 @@ const News = (props) => {
             <div className="col-12 col-lg-6">
               <div className="d-flex flex-column gap-3">
                 <img
-                  src={newsletterIcon}
+                  src={"https://cdn.worldofdypians.com/wod/newsletterIcon.svg"}
                   width={56}
                   height={56}
                   alt="newsletter icon"
@@ -639,7 +637,7 @@ const News = (props) => {
               </div>
             </div>
             <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-              <img src={newsLetterImage} alt="newsletter" />
+              <img src={"https://cdn.worldofdypians.com/wod/newsLetterImage.svg"} alt="newsletter" />
             </div>
           </div>
         </div>
@@ -649,13 +647,13 @@ const News = (props) => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
             <span className="newsletter-modal-span font-poppins">
               You’ve subscribed to World of Dypians newsletter

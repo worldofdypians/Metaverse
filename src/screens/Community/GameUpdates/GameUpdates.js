@@ -6,7 +6,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import Slider from "react-slick";
 import NewsCard from "../../../components/NewsCard/NewsCard";
 import nextButton from "../../../assets/landAssets/nextButton.svg";
-import calendarIcon from "../../../assets/newsAssets/calendarIcon.svg";
+
 
 const GameUpdates = () => {
   var settings = {
@@ -501,7 +501,7 @@ const GameUpdates = () => {
                         {selectedRelease.title}
                       </h6>
                       <div className="d-flex align-items-center gap-2">
-                        <img src={calendarIcon} alt="calendar" />
+                        <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />
                         <span className="news-date font-poppins">
                           {selectedRelease.date.toLocaleDateString(
                             "en-US",

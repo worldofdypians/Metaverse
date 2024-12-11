@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./_mobilenavbar.scss";
 
-import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
-import xMark from "../../assets/navbarAssets/xMark.svg";
 import { NavLink } from "react-router-dom";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import bellIcon from "./assets/bellIcon.svg";
@@ -616,7 +614,7 @@ const MobileNavbar = ({
             </div>
           ) : (
             <img
-              src={xMark}
+              src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
               alt="x mark"
               style={{ position: "relative", right: "18px", marginLeft: 10 }}
               onClick={() => setOpenNavbar(false)}
@@ -922,7 +920,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div> */}
 
@@ -939,7 +937,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Game</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
 
@@ -956,7 +954,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
           <div className="accordion" id="accordionExample2">
@@ -1198,7 +1196,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Map</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
 

@@ -25,7 +25,6 @@ import RegisterModal from "./components/RegisterModal/RegisterModal";
 import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelistModal";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
-import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
 import Roadmap from "./screens/Roadmap/Roadmap";
 import ScrollTop from "./components/ScrollTop";
@@ -5154,11 +5153,11 @@ console.log('mint sei')
             }
           />
           {/* <Route exact path="/team" element={<OurTeam />} /> */}
-          <Route
+          {/* <Route
             exact
             path="/explorer"
             element={<Explorer count={count2} setCount={setCount2} />}
-          />
+          /> */}
           {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />

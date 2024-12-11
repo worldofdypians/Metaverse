@@ -30,10 +30,6 @@ import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import OutsideClickHandler from "react-outside-click-handler";
-import newsletterIcon from "../../assets/newsAssets/newsletterIcon.svg";
-import newsLetterImage from "../../assets/newsAssets/newsLetterImage.svg";
-import modalClose from "../../assets/newsAssets/modalClose.svg";
-import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
 import { TextField, Tooltip, tooltipClasses } from "@mui/material";
@@ -1155,7 +1151,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <img
-                      src={newsletterIcon}
+                      src={"https://cdn.worldofdypians.com/wod/newsletterIcon.svg"}
                       width={56}
                       height={56}
                       alt="newsletter icon"
@@ -1204,7 +1200,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                   </div>
                 </div>
                 <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-                  <img src={newsLetterImage} alt="newsletter" />
+                  <img src={"https://cdn.worldofdypians.com/wod/newsLetterImage.svg"} alt="newsletter" />
                 </div>
               </div>
             </div>
@@ -1216,13 +1212,13 @@ const Community = ({socials, monthlyPlayers, percent}) => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
             <span className="newsletter-modal-span font-poppins">
               You’ve subscribed to World of Dypians newsletter
