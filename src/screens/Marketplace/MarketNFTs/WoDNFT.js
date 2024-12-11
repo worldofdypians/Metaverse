@@ -832,7 +832,7 @@ const WoDNFT = ({
               </div>
               <div className="col-12 col-lg-4">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/landCollectionBanner.webp"}
+                  src={`https://cdn.worldofdypians.com/wod/landCollectionBanner.webp`}
                   className="w-100"
                   alt=""
                 />

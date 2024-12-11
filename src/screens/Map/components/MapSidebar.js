@@ -2,17 +2,8 @@ import React, { useEffect, useState } from "react";
 import { allAreas } from "../mapdata/areas";
 import DypiusDropdown from "./DypiusDropdown";
 import IslandDropdown from "./IslandDropdown";
-import regionIcon from "../assets/sidebarIcons/regionIcon.svg";
-import regionIconActive from "../assets/sidebarIcons/regionIconActive.svg";
-import cityIcon from "../assets/sidebarIcons/cityIcon.svg";
-import cityIconActive from "../assets/sidebarIcons/cityIconActive.svg";
-import challengeIcon from "../assets/sidebarIcons/challengeIcon.svg";
-import challengeIconActive from "../assets/sidebarIcons/challengeIconActive.svg";
-import genesisIcon from "../assets/sidebarIcons/genesisIcon.svg";
-import minimize from "../assets/sidebarIcons/minimize.svg";
-import searchIcon from "../assets/sidebarIcons/searchIcon.svg";
 import useWindowSize from "../../../hooks/useWindowSize";
-import genesisPopup from "../assets/chainImages/genesisPopup.webp";
+
 const Sidebar = ({
   switches,
   setSwitches,
@@ -64,7 +55,7 @@ setActiveMarker
     special: true,
     type: "genesis",
     location: [-0.05965231771451968, 0.09518623352050783],
-    image: genesisPopup,
+    image: "https://cdn.worldofdypians.com/wod/genesisPopup.webp",
     link: "/shop/land",
     popupDesc:
       "The World of Dypians Land NFT Collection offers a unique opportunity for players to own and develop virtual land within the game. Only a limited edition of 1,000 NFTs, called Genesis Lands, representing prime virtual areas with exclusive benefits, has been launched. The total Land NFT supply will be 100,000, where each NFT in the collection allows players to build and develop their land, customize the area, bring their business to the game, unlock special in-game features, participate in dedicated events, and earn different rewards. The entire Land NFT collection presents an exciting opportunity for players looking to leave their mark on the game world.",
@@ -91,7 +82,7 @@ setActiveMarker
         <div className="d-flex map-sidebar-title-wrapper align-items-center justify-content-between p-3">
           <h6 className="map-sidebar-title mb-0">Map</h6>
           <img
-            src={minimize}
+            src={"https://cdn.worldofdypians.com/wod/minimize.svg"}
             className="ps-2 py-2"
             style={{ cursor: "pointer" }}
             alt=""
@@ -101,7 +92,7 @@ setActiveMarker
         <div className="d-flex align-items-center justify-content-end px-3">
           <div className="d-flex align-items-center gap-2 w-100">
             <div className="position-relative w-100" style={{ zIndex: 6 }}>
-              <img src={searchIcon} className="search-icon" alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/searchIcon.svg"} className="search-icon" alt="" />
               <input
                 type="text"
                 value={search}
@@ -185,7 +176,7 @@ setActiveMarker
                 <img
                   width={24}
                   height={24}
-                  src={switches.regions ? regionIconActive : regionIcon}
+                  src={switches.regions ? "https://cdn.worldofdypians.com/wod/regionIconActive.svg" : "https://cdn.worldofdypians.com/wod/regionIcon.svg"}
                   alt=""
                 />
                 <span>Regions</span>
@@ -204,7 +195,7 @@ setActiveMarker
                 <img
                   width={24}
                   height={24}
-                  src={switches.areas ? cityIconActive : cityIcon}
+                  src={switches.areas ? "https://cdn.worldofdypians.com/wod/cityIconActive.svg" : "https://cdn.worldofdypians.com/wod/cityIcon.svg"}
                   alt=""
                 />
                 <span>Cities</span>
@@ -224,7 +215,7 @@ setActiveMarker
                   width={24}
                   height={24}
                   src={
-                    switches.challenges ? challengeIconActive : challengeIcon
+                    switches.challenges ? "https://cdn.worldofdypians.com/wod/challengeIconActive.svg" : "https://cdn.worldofdypians.com/wod/challengeIcon.svg"
                   }
                   alt=""
                 />
@@ -237,7 +228,7 @@ setActiveMarker
                   setContent(genesisLocation.title);
                 }}
               >
-                <img width={24} height={24} src={genesisIcon} alt="" />
+                <img width={24} height={24} src={"https://cdn.worldofdypians.com/wod/genesisIcon.svg"} alt="" />
                 <span>Genesis Land</span>
               </div>
             </div>

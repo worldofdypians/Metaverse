@@ -795,7 +795,7 @@ const CawsNFT = ({
               </div>
               <div className="col-12 col-lg-4">
                 <img
-                  src={'https://cdn.worldofdypians.com/wod/cawsCollectionBanner.webp'}
+                  src={`https://cdn.worldofdypians.com/wod/cawsCollectionBanner.webp`}
                   className="w-100"
                   alt=""
                 />

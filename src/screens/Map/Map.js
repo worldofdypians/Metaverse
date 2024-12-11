@@ -44,7 +44,6 @@ import CustomMarker from "./components/CustomMarker";
 // import EventsBar from "./components/EventsBar";
 import CustomPolygon from "./components/CustomPolygon";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import landIcon from "./assets/landIcon.png";
 import ChainPolygon from "./components/ChainPolygon";
 import LogCoordinates from "./components/LogCoordinates";
 import DynamicBounds from "./components/DynamicBounds";
@@ -132,7 +131,7 @@ const Map = ({ dummyBetaPassData2 }) => {
   const customClusterIcon = useMemo(
     () =>
       L.icon({
-        iconUrl: landIcon,
+        iconUrl: "https://cdn.worldofdypians.com/wod/landIcon.png",
         iconSize: [40, 40],
         iconAnchor: [20, 40],
         popupAnchor: [0, -40],
@@ -421,7 +420,7 @@ const Map = ({ dummyBetaPassData2 }) => {
         onClick={() => setEvents(!events)}
       >
         <img
-          src={require("./assets/rightArrow.svg").default}
+          src={"https://cdn.worldofdypians.com/wod/rightArrowMap.svg"}
           width={24}
           height={24}
           alt=""
