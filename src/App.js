@@ -88,22 +88,14 @@ import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
-
-import midleLogo from "./screens/Map/assets/chainIcons/midle.png";
-import chainlinkIcon from "./screens/Map/assets/chainIcons/chainlinkIcon.svg";
-
-
-
 import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
 import easy2stakeLogo from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeLogo.svg";
-
 import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
 import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
 import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
 import easy2stakeBg from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeBg.webp";
 import midleBg from "./screens/Marketplace/assets/midleBg.webp";
-
 import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
 import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
 import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
@@ -3831,7 +3823,7 @@ console.log('mint sei')
 
     {
       title: "Chainlink",
-      logo: chainlinkIcon,
+      logo: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3875,7 +3867,7 @@ console.log('mint sei')
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
-      image: "easy2stakeBanner.webp",
+      image: "easy2stakeBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
 
@@ -3888,7 +3880,7 @@ console.log('mint sei')
       userEarnUsd: easy2StakeEarnUsd,
       userEarnCrypto: easy2StakeEarnToken,
       userEarnPoints: easy2StakePoints,
-      image: "easy2stakeBanner.webp",
+      image: "easy2stakeBanner.png",
 
       popupInfo: {
         title: "Easy2Stake",
@@ -3910,7 +3902,7 @@ console.log('mint sei')
     },
     {
       title: "Midle",
-      logo: midleLogo,
+      logo: "https://cdn.worldofdypians.com/wod/midle.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",

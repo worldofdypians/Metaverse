@@ -1,72 +1,35 @@
 import { activeMarkers, markers } from "./markers";
-import questDummy1 from "../assets/banners/questDummy1.webp";
-import questDummy2 from "../assets/banners/questDummy2.webp";
-import questDummy3 from "../assets/banners/questDummy3.webp";
-import questDummy4 from "../assets/banners/questDummy4.webp";
-import trainIcon from "../assets/trainIcon.svg";
-import teleportIcon from "../assets/teleportIcon.svg";
-import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
-import coreIcon from "../assets/chainIcons/coreIcon.svg";
-import baseIcon from "../assets/chainIcons/baseIcon.svg";
-import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
-import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
-import seiLogo from "../assets/chainIcons/seiLogo.svg";
-import victionIcon from "../assets/chainIcons/victionIcon.svg";
-import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
-import matchainIcon from "../assets/chainIcons/matchainIcon.svg";
-import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
-import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
-import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
-import babydogeIcon from "../assets/chainIcons/babydogeIcon.svg";
-import multiversx from "../assets/chainIcons/multiversx.svg";
-import avaxIcon from "../assets/chainIcons/avaxIcon.svg";
-import coin98Icon from "../assets/chainIcons/coin98Icon.svg";
-import gateIcon from "../assets/chainIcons/gateIcon.svg";
-import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
-import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
-import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
-import immutable from "../assets/chainIcons/immutable.svg";
-import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
-import midle from "../assets/chainIcons/midle.png";
-import cookie3 from "../assets/chainIcons/cookie3.svg";
-import dogecoin from "../assets/chainIcons/dogecoin.svg";
-import mantaIcon from "../assets/chainIcons/mantaIcon.png";
-import twitter from "../assets/twitter.svg";
-import telegram from "../assets/telegram.svg";
-import discord from "../assets/discord.svg";
-import website from "../assets/website.svg";
-import treasureHuntInfo from "../assets/treasureHuntInfo.png";
-import dailyBonusInfo from "../assets/dailyBonusInfo.png";
-import mazeGardenInfo from "../assets/mazeGardenInfo.png";
-import leaderboardInfo from "../assets/leaderboardInfo.png";
+
+
+
 
 const chainAreas = [
   {
     title: "BNB Chain Area",
     marker: markers.bnbMarker,
     activeMarker: activeMarkers.bnbMarker,
-    icon: bnbIcon,
+    icon: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
     location: [-0.06735561726792588, 0.08666753768920898],
     banner: "bnbBanner.png",
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
       {
         title: "Maze Day",
-        image: mazeGardenInfo,
+        image: "https://cdn.worldofdypians.com/wod/mazeGardenInfo.png",
         link: "/account/challenges/maze-day",
       },
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -74,19 +37,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/BNBCHAIN",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/bnbchain",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/bnbchain",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.bnbchain.org/en",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -114,8 +77,7 @@ const chainAreas = [
     title: "CORE Area",
     marker: markers.coreMarker,
     activeMarker: activeMarkers.coreMarker,
-
-    icon: coreIcon,
+    icon: "https://cdn.worldofdypians.com/wod/core.svg",
     location: [-0.06862698344579729, 0.08752048015594482],
     banner: "coreBanner.png",
     area: [
@@ -133,18 +95,18 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
 
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
     ],
@@ -152,19 +114,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/Coredao_Org",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/CoreDAOTelegram",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/coredaoofficial",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://coredao.org/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -184,7 +146,7 @@ const chainAreas = [
     marker: markers.matchainMarker,
     activeMarker: activeMarkers.matchainMarker,
 
-    icon: matchainIcon,
+    icon: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
     location: [-0.06703375240749239, 0.08581995964050293],
     banner: "matchainBanner.png",
     area: [
@@ -198,17 +160,17 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -216,19 +178,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/matchain_io",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/matchain_fam",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       // {
       //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: discord,
+      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       // },
       {
         link: "https://www.matchain.io/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -247,7 +209,7 @@ const chainAreas = [
     title: "Coingecko Area",
     marker: markers.coingeckoMarker,
     activeMarker: activeMarkers.coingeckoMarker,
-    icon: coingeckoIcon,
+    icon: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg",
     location: [-0.06883619559843743, 0.08705377578735353],
     banner: "coingeckoBanner.png",
     area: [
@@ -262,7 +224,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -270,19 +232,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/coingecko",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/coingecko",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/EhrkaCH",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.coingecko.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -302,7 +264,7 @@ const chainAreas = [
     marker: markers.baseMarker,
     activeMarker: activeMarkers.baseMarker,
 
-    icon: baseIcon,
+    icon: "https://cdn.worldofdypians.com/wod/base.svg",
     location: [-0.0694799252930712, 0.08724689483642578],
     banner: "baseBanner.png",
     area: [
@@ -316,17 +278,17 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -334,19 +296,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/base",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       // {
       //   link: "https://t.me/bnbchain",
-      //   icon: telegram,
+      //   icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       // },
       {
         link: "https://discord.com/invite/buildonbase",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.base.org/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -366,7 +328,7 @@ const chainAreas = [
     marker: markers.coin98Marker,
     activeMarker: activeMarkers.coin98Marker,
 
-    icon: coin98Icon,
+    icon: "https://cdn.worldofdypians.com/wod/coin98Icon.svg",
     location: [-0.06973741716847187, 0.08653879165649415],
     banner: "coin98Banner.png",
     area: [
@@ -382,19 +344,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/coin98_wallet",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/coin98wallet",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/ytkeARXYu9",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://coin98.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -414,7 +376,7 @@ const chainAreas = [
     marker: markers.immutableMarker,
     activeMarker: activeMarkers.immutableMarker,
 
-    icon: immutable,
+    icon: "https://cdn.worldofdypians.com/wod/immutable.svg",
     location: [-0.0671697067836984, 0.08526742458343507],
     banner: "immutableBanner.png",
     area: [
@@ -428,7 +390,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -436,19 +398,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/Immutable",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/immutablex",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/CYsjMdctsP",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.immutable.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -467,7 +429,7 @@ const chainAreas = [
     title: "SKALE Area",
     marker: markers.skaleMarker,
     activeMarker: activeMarkers.skaleMarker,
-    icon: skaleIcon,
+    icon: "https://cdn.worldofdypians.com/wod/skaleIcon.svg",
     location: [-0.0672560036280549, 0.08460395698547363],
     banner: "skaleBanner.png",
     area: [
@@ -484,18 +446,18 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -503,19 +465,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/SkaleNetwork",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/skaleofficial",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/gM5XBy6",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://skale.space/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -535,8 +497,7 @@ const chainAreas = [
     title: "MEXC Area",
     marker: markers.mexcMarker,
     activeMarker: activeMarkers.mexcMarker,
-
-    icon: mexcIcon,
+    icon: "https://cdn.worldofdypians.com/wod/mexcIcon.svg",
     location: [-0.06727163065611323, 0.0842052698135376],
     banner: "mexcBanner.png",
     area: [
@@ -554,19 +515,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/MEXC_Official",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/MEXCEnglish",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/AsDwGJ5T95",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.mexc.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -585,8 +546,7 @@ const chainAreas = [
     title: "Midle Area",
     marker: markers.midleMarker,
     activeMarker: activeMarkers.midleMarker,
-
-    icon: midle,
+    icon: "https://cdn.worldofdypians.com/wod/midle.svg",
     location: [-0.06773297028649591, 0.08424818515777588],
     banner: "midleBanner.png",
     area: [
@@ -600,7 +560,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -608,19 +568,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/midle_official",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/midlecommunity",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.gg/midle",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://app.midle.io/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -640,7 +600,7 @@ const chainAreas = [
     marker: markers.kucoinMarker,
     activeMarker: activeMarkers.kucoinMarker,
 
-    icon: kucoinIcon,
+    icon: "https://cdn.worldofdypians.com/wod/kucoinIcon.svg",
     location: [-0.06778661442929296, 0.08464515209198],
     banner: "kucoinBanner.png",
     area: [
@@ -656,19 +616,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/KuCoinCom",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/Kucoin_Exchange",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/kucoinofficialserver",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.kucoin.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -687,8 +647,7 @@ const chainAreas = [
     title: "Avalanche Area",
     marker: markers.avaxMarker,
     activeMarker: activeMarkers.avaxMarker,
-
-    icon: avaxIcon,
+    icon: "https://cdn.worldofdypians.com/wod/avaxIcon.svg",
     location: [-0.06854299683618559, 0.08485436439514162],
     banner: "avalancheBanner.png",
     area: [
@@ -704,19 +663,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/avax",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/avalancheavax",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/avax",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.avax.network/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -735,8 +694,7 @@ const chainAreas = [
     title: "GateIo Area",
     marker: markers.gateMarker,
     activeMarker: activeMarkers.gateMarker,
-
-    icon: gateIcon,
+    icon: "https://cdn.worldofdypians.com/wod/gateIcon.svg",
     location: [-0.06845180179486188, 0.08445203304290771],
     banner: "gateioBanner.png",
     area: [
@@ -751,26 +709,26 @@ const chainAreas = [
     pastEvents: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
       {
         link: "https://x.com/gate_io",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/gateio_en",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.gg/QZWFkuQvzP",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.gate.io/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -789,8 +747,7 @@ const chainAreas = [
     title: "Easy2Stake Area",
     marker: markers.easy2stakeMarker,
     activeMarker: activeMarkers.easy2stakeMarker,
-
-    icon: easy2stakeIcon,
+    icon: "https://cdn.worldofdypians.com/wod/easy2stakeIcon.svg",
     location: [-0.06881121754499282, 0.08454322814941408],
     banner: "easy2stakeBanner.png",
     area: [
@@ -804,7 +761,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -812,19 +769,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/easy2stake",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/easy2stake",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       // {
       //   link: "https://discord.com/invite/bnbchain",
-      //   icon: discord,
+      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       // },
       {
         link: "https://www.easy2stake.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -844,7 +801,7 @@ const chainAreas = [
     marker: markers.chainlinkMarker,
     activeMarker: activeMarkers.chainlinkMarker,
 
-    icon: chainlinkIcon,
+    icon: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
     location: [-0.06912771797944854, 0.0847846269607544],
     banner: "chainlinkBanner.png",
     area: [
@@ -858,7 +815,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -866,19 +823,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/chainlink",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/chainlinkofficial",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/chainlink",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://chain.link/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -898,7 +855,7 @@ const chainAreas = [
     marker: markers.victionMarker,
     activeMarker: activeMarkers.victionMarker,
 
-    icon: victionIcon,
+    icon: "https://cdn.worldofdypians.com/wod/viction.svg",
     location: [-0.07002709552661193, 0.08453786373138428],
     banner: "victionBanner.png",
     area: [
@@ -912,18 +869,18 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -931,19 +888,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/BuildOnViction",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/buildonviction",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/viction",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.viction.xyz/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -962,8 +919,7 @@ const chainAreas = [
     title: "Taiko Area",
     marker: markers.taikoMarker,
     activeMarker: activeMarkers.taikoMarker,
-
-    icon: taikoIcon,
+    icon: "https://cdn.worldofdypians.com/wod/taiko.svg",
     location: [-0.06942812516951939, 0.08510112762451173],
     banner: "taikoBanner.png",
     area: [
@@ -977,17 +933,17 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -995,19 +951,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/taikoxyz",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/TaikoEcosystem",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/taikoxyz",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://taiko.xyz/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1026,8 +982,7 @@ const chainAreas = [
     title: "Cookie3 Area",
     marker: markers.cookieMarker,
     activeMarker: activeMarkers.cookieMarker,
-
-    icon: cookie3,
+    icon: "https://cdn.worldofdypians.com/wod/cookie3.svg",
     location: [-0.0680959064388685, 0.0843554735183716],
     banner: "cookie3Banner.png",
     area: [
@@ -1041,7 +996,7 @@ const chainAreas = [
     events: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -1049,19 +1004,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/cookie3_com",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/cookie3_co",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/cookie3com",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.cookie3.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1081,7 +1036,7 @@ const chainAreas = [
     marker: markers.multiversxMarker,
     activeMarker: activeMarkers.multiversxMarker,
 
-    icon: multiversx,
+    icon: "https://cdn.worldofdypians.com/wod/multiversx.svg",
     location: [-0.0696194000590765, 0.08443593978881837],
     banner: "multiversxBanner.png",
     area: [
@@ -1097,19 +1052,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/MultiversX",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/MultiversX",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/multiversxbuilders",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://multiversx.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1129,7 +1084,7 @@ const chainAreas = [
     marker: markers.confluxMarker,
     activeMarker: activeMarkers.confluxMarker,
 
-    icon: confluxIcon,
+    icon: "https://cdn.worldofdypians.com/wod/confluxIcon.svg",
     location: [-0.06990907841795445, 0.08591651916503908],
     banner: "confluxBanner.png",
     area: [
@@ -1144,26 +1099,26 @@ const chainAreas = [
     pastEvents: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
       {
         link: "https://x.com/Conflux_Network",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/Conflux_English",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/confluxnetwork",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://confluxnetwork.org/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1183,7 +1138,7 @@ const chainAreas = [
     marker: markers.mantaMarker,
     activeMarker: activeMarkers.mantaMarker,
 
-    icon: mantaIcon,
+    icon: "https://cdn.worldofdypians.com/wod/manta.png",
     location: [-0.07001821071588557, 0.08503675460815431],
     banner: "mantaBanner.png",
     area: [
@@ -1197,18 +1152,18 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -1216,19 +1171,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/mantanetwork",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://www.t.me/mantanetworkofficial",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/mantanetwork",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://manta.network/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1247,8 +1202,7 @@ const chainAreas = [
     title: "BabyDoge Area",
     marker: markers.babydogeMarker,
     activeMarker: activeMarkers.babydogeMarker,
-
-    icon: babydogeIcon,
+    icon: "https://cdn.worldofdypians.com/wod/babydogeIcon.svg",
     location: [-0.06669579430174531, 0.08574485778808595],
     banner: "babyDogeBanner.png",
     area: [
@@ -1264,19 +1218,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/babydogecoin",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/babydogearmy",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/babydogecoin1",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://babydoge.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1295,8 +1249,7 @@ const chainAreas = [
     title: "DogeCoin Area",
     marker: markers.dogecoinMarker,
     activeMarker: activeMarkers.dogecoinMarker,
-
-    icon: dogecoin,
+    icon: "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg",
     location: [-0.06900249243705621, 0.08157670497894287],
     banner: "dogecoinBanner.png",
     area: [
@@ -1311,26 +1264,26 @@ const chainAreas = [
     pastEvents: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
       {
         link: "https://x.com/dogecoin",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       // {
       //   link: "https://t.me/bnbchain",
-      //   icon: telegram,
+      //   icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       // },
       {
         link: "https://discord.com/invite/X3fHfpvpCM",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://dogecoin.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1350,7 +1303,7 @@ const chainAreas = [
     marker: markers.cmcMarker,
     activeMarker: activeMarkers.cmcMarker,
 
-    icon: cmcIcon,
+    icon: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
     location: [-0.06756482942607475, 0.08595407009124757],
     banner: "coinmarketcapBanner.png",
     area: [
@@ -1365,26 +1318,26 @@ const chainAreas = [
     pastEvents: [
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
     socials: [
       {
         link: "https://x.com/CoinMarketCap",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/CoinMarketCapAnnouncements",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       // {
       //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: discord,
+      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       // },
       {
         link: "https://coinmarketcap.com/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1404,7 +1357,7 @@ const chainAreas = [
     marker: markers.ordifyMarker,
     activeMarker: activeMarkers.ordifyMarker,
 
-    icon: ordifyIcon,
+    icon: "https://cdn.worldofdypians.com/wod/ordify.svg",
     location: [-0.06787060104021504, 0.08728981018066406],
     banner: "ordifyBanner.png",
     area: [
@@ -1420,19 +1373,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/ordifyworld",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/ordifyann",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       // {
       //   link: "https://discord.com/invite/X3fHfpvpCM",
-      //   icon: discord,
+      //   icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       // },
       {
         link: "https://ordify.world/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1452,7 +1405,7 @@ const chainAreas = [
     marker: markers.seiMarker,
     activeMarker: activeMarkers.seiMarker,
 
-    icon: seiLogo,
+    icon: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
     location: [-0.06734488843929015, 0.08361518383026124],
     banner: "seiBanner.png",
     area: [
@@ -1470,18 +1423,18 @@ const chainAreas = [
     events: [
       {
         title: "Daily Bonus",
-        image: dailyBonusInfo,
+        image: "https://cdn.worldofdypians.com/wod/dailyBonusInfo.png",
         link: "/account#dailybonus",
       },
 
       {
         title: "Leaderboard",
-        image: leaderboardInfo,
+        image: "https://cdn.worldofdypians.com/wod/leaderboardInfo.png",
         link: "/account#leaderboard",
       },
       {
         title: "Treasure Hunt",
-        image: treasureHuntInfo,
+        image: "https://cdn.worldofdypians.com/wod/treasureHuntInfo.png",
         link: "/account/challenges/treasure-hunt",
       },
     ],
@@ -1489,19 +1442,19 @@ const chainAreas = [
     socials: [
       {
         link: "https://x.com/SeiNetwork",
-        icon: twitter,
+        icon: "https://cdn.worldofdypians.com/wod/twitterMap.svg",
       },
       {
         link: "https://t.me/seinetwork",
-        icon: telegram,
+        icon: "https://cdn.worldofdypians.com/wod/telegramMap.svg",
       },
       {
         link: "https://discord.com/invite/sei",
-        icon: discord,
+        icon: "https://cdn.worldofdypians.com/wod/discordMap.svg",
       },
       {
         link: "https://www.sei.io/",
-        icon: website,
+        icon: "https://cdn.worldofdypians.com/wod/websiteMap.svg",
       },
     ],
     city: "Dypians",
@@ -1670,31 +1623,31 @@ const dypiansTransport = [
     title: "Island Zero Teleport",
     location: [-0.06903467892188205, 0.08158743381500246],
     marker: markers.teleportMarker,
-    icon: teleportIcon,
+    icon: "https://cdn.worldofdypians.com/wod/teleportsIcon.svg",
   },
   {
     title: "Genesis Land Teleport",
     location: [-0.07081029996742978, 0.08242964744567872],
     marker: markers.teleportMarker,
-    icon: teleportIcon,
+    icon: "https://cdn.worldofdypians.com/wod/teleportsIcon.svg",
   },
   {
     title: "Onyx Train Station",
     location: [-0.07013438380695172, 0.08632421493530275],
     marker: markers.trainMarker,
-    icon: trainIcon,
+    icon: "https://cdn.worldofdypians.com/wod/trainIcon.svg",
   },
   {
     title: "Kepler Land Train Station",
     location: [-0.06864307668833743, 0.08873283863067628],
     marker: markers.trainMarker,
-    icon: trainIcon,
+    icon: "https://cdn.worldofdypians.com/wod/trainIcon.svg",
   },
   {
     title: "Hypatia Train Station",
     location: [-0.06732879519631745, 0.08794426918029787],
     marker: markers.trainMarker,
-    icon: trainIcon,
+    icon: "https://cdn.worldofdypians.com/wod/trainIcon.svg",
   },
 ];
 
@@ -1710,7 +1663,6 @@ const quests = [
     ],
     rewards: ["50x Gold", "2x Red Gem", "1x Serrated Blade", "500x Points"],
     questGiver: "Aragon The Brave",
-    banner: questDummy1,
   },
   {
     title: "Scorpion Hunt",
@@ -1718,7 +1670,6 @@ const quests = [
     conditions: ["8x Wolf Pelts", "6x Deer Horns", "3x Bunny Ears"],
     rewards: ["50x Gold", "2x Red Gem", "1x Serrated Blade"],
     questGiver: "Paraxys The Wicked",
-    banner: questDummy2,
   },
   {
     title: "Alchemy Reagents",
@@ -1726,7 +1677,6 @@ const quests = [
     conditions: ["8x Wolf Pelts", "6x Deer Horns"],
     rewards: ["50x Gold", "2x Red Gem"],
     questGiver: "Richard Lionheart",
-    banner: questDummy3,
   },
   {
     title: "Portal Fuel",
@@ -1734,7 +1684,6 @@ const quests = [
     conditions: ["8x Wolf Pelts"],
     rewards: ["50x Gold"],
     questGiver: "Napoleon Bonaparte",
-    banner: questDummy4,
   },
 ];
 

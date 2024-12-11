@@ -71,7 +71,7 @@ const EventsBar = ({
             onClick={onClose}
           >
             <img
-              src={require("../assets/rightArrow.svg").default}
+              src={"https://cdn.worldofdypians.com/wod/rightArrowMap.svg"}
               width={24}
               height={24}
               alt=""
@@ -144,7 +144,7 @@ const EventsBar = ({
                 </div>
               </div>
               <img
-                src={require(`../assets/chainImages/${item.image}`)}
+                src={`https://cdn.worldofdypians.com/wod/${item.image}`}
                 alt=""
                 className="map-event-img"
               />
