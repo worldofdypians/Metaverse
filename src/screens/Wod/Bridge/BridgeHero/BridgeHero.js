@@ -1,6 +1,6 @@
 import React from "react";
 import "./_bridgehero.scss";
-import bridgeIcon from "../../../../assets/wodAssets/bridgeIcon.svg";
+
 
 const BridgeHero = ({ onScroll }) => {
   return (

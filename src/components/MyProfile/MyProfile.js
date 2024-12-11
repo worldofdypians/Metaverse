@@ -54,7 +54,6 @@ import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
 import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
 import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
 import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
-import wodLogo from "../../assets/wodAssets/wodToken.svg";
 import whiteArrows from "./assets/whiteArrows.svg";
 // import premiumDummy from "./assets/premiumDummy.png";
 // import dummyDragon from "./assets/dummyDragon.png";
@@ -588,7 +587,7 @@ const MyProfile = ({
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
-                          <img src={wodLogo} width={20} height={20} alt="" />
+                          <img src={"https://cdn.worldofdypians.com/wod/wodLogosvg"} width={20} height={20} alt="" />
                           <h6 className="mb-0">
                             {getFormattedNumber(wodBalance, 2)}
                           </h6>
