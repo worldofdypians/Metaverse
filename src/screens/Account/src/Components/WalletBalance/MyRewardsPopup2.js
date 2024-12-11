@@ -6,7 +6,7 @@ import allImg from "./myrewardsAssets/newAssets/allImg.svg";
 import allActive from "./myrewardsAssets/newAssets/allActive.svg";
 import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
 import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
-import bnbLogo from "../../../../Marketplace/assets/bnbLogo.svg";
+ 
 import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
 import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
 
@@ -23,8 +23,7 @@ import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg"; 
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg"; 
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
@@ -1197,7 +1196,7 @@ const MyRewardsPopupNew = ({
             className="d-flex align-items-center gap-1 rounded p-1"
             style={{ background: "#536BBE" }}
           >
-            <img src={bnbLogo} style={{ width: 16, height: 16 }} alt="" />{" "}
+            <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
             <img
               src={'https://cdn.worldofdypians.com/wod/manta.png'}
@@ -1690,8 +1689,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                        require("../../../../Marketplace/assets/bnbLogo.svg")
-                          .default
+                       'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1817,7 +1815,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={cookieIcon}
+                      src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />

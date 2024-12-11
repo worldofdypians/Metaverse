@@ -87,6 +87,7 @@ import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
+
 import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
 import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
 import easy2stakeLogo from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeLogo.svg";
@@ -94,29 +95,15 @@ import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg
 import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
 import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
 import easy2stakeBg from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeBg.webp";
-import midleBg from "./screens/Marketplace/assets/midleBg.webp";
 import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
 import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
 import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
-import upcomingBase2 from "./screens/Marketplace/assets/upcomingBase2.webp";
-import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
-import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
-import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
-import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
-import seiBg from "./screens/Marketplace/assets/seiBg.webp";
-import chainlinkBg from "./screens/Marketplace/assets/chainlinkBg.webp";
-
-
-import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
-import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
-import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
-import cmcUpcoming from "./screens/Marketplace/assets/upcomingCmc.webp";
-import taikoBg from "./screens/Marketplace/assets/taikoBg.webp";
-import mantaBg from "./screens/Marketplace/assets/mantaBg.webp";
-import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg"; 
 import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
 import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
 import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
+     
+ 
+
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
@@ -1365,7 +1352,7 @@ function App() {
 
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
+      window.config.nft_viction_address.toLowerCase()
     );
 
     const coreContract = new window.coreWeb3.eth.Contract(
@@ -3532,7 +3519,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 04, 2024",
-      backgroundImage: upcomingBnb,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/upcomingBnb.png',
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
       userEarnPoints: bnbPoints,
@@ -3574,7 +3561,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 04, 2024",
-      backgroundImage: upcomingMatchain,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/matchainMintBg.webp',
       userEarnUsd: matEarnUsd,
       userEarnCrypto: matEarnToken,
       userEarnPoints: matPoints,
@@ -3607,7 +3594,7 @@ console.log('mint sei')
       eventDate: "Oct 21, 2024",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-      backgroundImage: upcomingBase2,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/upcomingBase2.webp',
       image: "baseBanner.png",
       userEarnUsd: 0,
       userEarnCrypto: 0,
@@ -3645,7 +3632,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: taikoBg,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/taikoBg.webp',
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
       userEarnPoints: taikoPoints,
@@ -3676,7 +3663,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: coingeckoUpcoming,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/coingeckoUpcoming.png',
       userEarnUsd: userEarnUsd,
       userEarnCrypto: userEarnETH,
       userEarnPoints: userPoints,
@@ -3795,7 +3782,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 05, 2024",
-      backgroundImage: seiBg,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/seiBg.webp',
       userEarnUsd: seiEarnUsd,
       userEarnCrypto: seiEarnToken,
       userEarnPoints: seiEarnPoints,
@@ -3833,7 +3820,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 06, 2024",
-      backgroundImage: chainlinkBg,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/chainlinkBg.webp',
       userEarnUsd: chainlinkEarnUsd,
       userEarnCrypto: chainlinkEarnToken,
       userEarnPoints: chainlinkEarnPoints,
@@ -3912,7 +3899,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Nov 29, 2024",
-      backgroundImage: midleBg,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/midleBg.webp',
       userEarnUsd: midleEarnUsd,
       userEarnCrypto: midleEarnToken,
       userEarnPoints: midlePoints,
@@ -3943,7 +3930,7 @@ console.log('mint sei')
    
     {
       title: "Cookie3",
-      logo: cookie3Logo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Expired",
       rewardType: "COOKIE",
       rewardAmount: "$20,000",
@@ -3957,7 +3944,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Aug 26, 2024",
-      backgroundImage: upcomingCookie,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/cookieBg.webp',
       userEarnUsd: cookieEarnUsd,
       userEarnCrypto: cookieEarnToken,
       userEarnPoints: cookiePoints,
@@ -4017,7 +4004,7 @@ console.log('mint sei')
     },
      {
       title: "Manta",
-      logo: 'https://cdn.worldofdypians.com/wod/manta.png',
+      logo: 'https://cdn.worldofdypians.com/wod/mantaLogoBig.png',
       eventStatus: "Live",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
@@ -4031,7 +4018,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 05, 2024",
-      backgroundImage: mantaBg,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/mantaMintBg.webp',
       userEarnUsd: mantaEarnUsd,
       userEarnCrypto: mantaEarnToken,
       userEarnPoints: mantaPoints,
@@ -4061,7 +4048,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: upcomingSkale,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/upcomingSkale.webp',
       userEarnUsd: skaleEarnUsd,
       userEarnCrypto: skaleEarnToken,
       userEarnPoints: skalePoints,
@@ -4097,7 +4084,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/dypiusBgPic2.webp',
       activeTab: "dypiusv2",
       userEarnUsd: dypiusPremiumEarnUsd,
       userEarnCrypto: dypiusPremiumEarnTokens,
@@ -4133,7 +4120,7 @@ console.log('mint sei')
       userEarnUsd: cmcuserEarnUsd,
       userEarnCrypto: cmcuserEarnETH,
       userEarnPoints: cmcuserPoints,
-      backgroundImage: cmcUpcoming,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/upcomingCmc.webp',
       popupInfo: {
         title: "CoinMarketCap",
         chain: "BNB Chain",
@@ -4169,7 +4156,7 @@ console.log('mint sei')
       eventDuration: dogeLastDay,
       userEarnCrypto: dogeEarnBNB,
       userEarnPoints: dogeUserPoints,
-      backgroundImage: upcomingDoge,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/upcomingDoge.webp',
       minRewards: "1",
       maxRewards: "100",
       minPoints: "5,000",

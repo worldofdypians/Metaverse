@@ -35,12 +35,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
-import skaleIcon from "./assets/skaleIcon.png";
-import skaleIconGray from "./assets/skaleIconGray.svg";
-import wodIcon from "./assets/wodIcon.png";
-import bnbIcon from "./assets/bnbIcon.svg";
-import arrowLeft from "./assets/arrowLeft.svg";
-import arrowRight from "./assets/arrowRight.svg";
+
 import coreActive from "./assets/coreActive.svg";
 import coreInactive from "./assets/coreInactive.svg";
 

@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import NftCardPlaceholder from "../../components/NewsCard/NftCardPlaceholder";
 import limitedOfferBadge from "../../assets/limitedoffer.svg";
 import Countdown from "react-countdown";
-import blackWallet from "../../assets/wallet-black.svg";
-import whitewallet from "../../assets/wallet-white.svg";
 import { shortAddress } from "../Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
@@ -381,7 +379,8 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                         >
                           <img
                             src={
-                              mouseOver === false ? whitewallet : blackWallet
+                              mouseOver === false ?  'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
                             }
                             alt=""
                             style={{ width: "23px", height: "23px" }}

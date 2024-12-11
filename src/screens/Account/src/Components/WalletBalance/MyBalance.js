@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import ethIcon from "./assets/ethIcon.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
+import axios from "axios";  
 import avaxIcon from "./assets/avaxIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -88,7 +86,7 @@ const MyBalance = ({
     >
       <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
         <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-2">
-          <img src={ethIcon} alt="" className="" />
+          <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" className="" />
           <span className="eth-chain-text">Ethereum</span>
         </div>
         <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
@@ -122,7 +120,7 @@ const MyBalance = ({
       <div className="balanceseparator"></div>
       <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
         <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
-          <img src={bnbIcon} alt="" className="" />
+          <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" className="" />
           <span className="bnb-chain-text">BNB Chain</span>
         </div>
         <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">

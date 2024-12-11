@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import X from "../../assets/x_close.png";
-import whitelistIcon from "../../assets/whitelist-icon.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
 import discord from "../../assets/discord.svg";
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
@@ -387,7 +384,8 @@ const JoinBetaModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
                     alt=""
                   />
                   Connect Wallet

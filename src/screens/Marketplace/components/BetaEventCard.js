@@ -2,7 +2,6 @@ import React from "react";
 import liveDot from "../assets/liveDot.svg";
 import eventsArrow from "../assets/eventsArrow.svg"; 
 import magnifier from "../assets/magnifier.svg";
-import premiumAvailable from "../assets/premiumAvailable.svg";
 
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
 
@@ -107,16 +106,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
               )}
             </h6>
           </div>
-          {/* ) : (
-          //   <div className="mybetaearnings" style={{ backgroundImage: "none" }}>
-          //     <img
-          //       src={premiumAvailable}
-          //       alt=""
-          //       height={145}
-          //       className="premiumAvailable"
-          //     />
-          //   </div>
-          )} */}
+       
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">

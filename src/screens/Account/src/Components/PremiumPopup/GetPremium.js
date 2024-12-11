@@ -2722,8 +2722,7 @@ const GetPremiumPopup = ({
                   <div className="d-flex align-items-center gap-2">
                     <img
                       src={
-                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                          .default
+                       'https://cdn.worldofdypians.com/wod/eth.svg'
                       }
                       style={{ width: 18, height: 18 }}
                       alt=""
@@ -2901,8 +2900,7 @@ const GetPremiumPopup = ({
                     >
                       <img
                         src={
-                          require(`../../Images/premium/tokens/ethIcon.svg`)
-                            .default
+                         'https://cdn.worldofdypians.com/wod/eth.svg'
                         }
                         alt=""
                       />

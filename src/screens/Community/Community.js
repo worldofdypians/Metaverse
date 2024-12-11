@@ -13,7 +13,7 @@ import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg"; 
 import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
 import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
-import cookieLogo from "../Marketplace/assets/cookie3Logo.svg"; 
+ 
 import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
 
 
@@ -233,7 +233,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Cookie3",
-      logo: cookieLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -247,7 +247,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "cookie3",
         rewards: "COOKIE",
         status: "Live",
-        logo: cookieLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
         date: "Aug 26, 2024",
         id: "event23",
         eventType: "Explore & Mine",

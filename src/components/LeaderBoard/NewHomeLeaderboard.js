@@ -17,7 +17,6 @@ import genesisBadge from "./assets/genesisBadge2.png";
 import tooltipIcon from "./assets/tooltip.svg";
 import skaleIcon from "./assets/skaleIcon.png";
 import skaleIconGray from "./assets/skaleIconGray.svg";
-// import wodIcon from "./assets/wodIcon.png";
 // import bnbIcon from "./assets/bnbIcon.svg";
 // import coreIcon from "./assets/coreIcon.svg";
 import bnbActive from "./assets/bnbActive.svg";

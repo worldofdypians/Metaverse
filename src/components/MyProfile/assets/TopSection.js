@@ -25,8 +25,7 @@ import victionAdMobile from "./assets/victionAdMobile.png";
 import goldenAd from "./assets/goldenAd.png";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
 import dragonAd from "./assets/dragonAd.png";
-import dragonAdMobile from "./assets/dragonAdMobile.png";
-import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
+import dragonAdMobile from "./assets/dragonAdMobile.png"; 
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {

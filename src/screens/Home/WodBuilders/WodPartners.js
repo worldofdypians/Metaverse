@@ -46,7 +46,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Manta",
-      icon: "manta.png",
+      icon: "mantaLogoBig.png",
     },
     {
       name: "Taiko",

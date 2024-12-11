@@ -1525,7 +1525,7 @@ const NewBundleCard = ({
                           <span className="new-bnb-chain d-flex align-items-center gap-1">
                             Available only on Ethereum{" "}
                             <img
-                              src={require("./assets/ethIcon.svg").default}
+                              src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                               alt=""
                             />
                           </span>

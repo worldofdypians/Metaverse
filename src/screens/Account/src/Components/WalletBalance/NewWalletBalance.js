@@ -88,8 +88,7 @@ import dypiusPremium from "./assets/dypiusPremium16.svg";
 
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
-import dypeventPopupImage from "./assets/dypEventImage.png";
-import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
+import dypeventPopupImage from "./assets/dypEventImage.png"; 
 import victionLogo from "./assets/victionLogo.svg";
 import multiversLogo from "./assets/multiversLogo.svg";
 
@@ -99,8 +98,7 @@ import multiversBg from "./assets/multiversBg.webp";
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
 import coreLogo from "./assets/coreLogo.svg"; 
-import mantaLogo from "./assets/mantaLogo2.png";
-import cookieLogo from "../../../../Marketplace/assets/cookie3Logo.svg";
+import mantaLogo from "./assets/mantaLogo2.png"; 
 
 import bnbLogo from "./assets/bnbIcon.svg";
 import coreBg from "./assets/coreBg.webp";
@@ -449,7 +447,7 @@ const NewWalletBalance = ({
 
   const dummyCookie3 = {
     title: "Cookie3",
-    logo: cookieLogo,
+    logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
     eventStatus: "Live",
     totalRewards: "$20,000 in COOKIE Rewards",
     myEarnings: 0.0,
@@ -598,7 +596,7 @@ const NewWalletBalance = ({
 
     {
       title: "Cookie3",
-      logo: cookieLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -610,7 +608,7 @@ const NewWalletBalance = ({
         linkState: "cookie3",
         rewards: "COOKIE",
         status: "Live",
-        logo: cookieLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
         date: "Aug 26, 2024",
         id: "event23",
         eventType: "Explore & Mine",
@@ -2128,10 +2126,10 @@ const NewWalletBalance = ({
             ref={releaseContent}
           >
             <div className="prev-arrow-nft" onClick={firstPrev}>
-              <img src={nextArrow} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
             </div>
             <div className="next-arrow-nft" onClick={firstNext}>
-              <img src={nextArrow} alt="1" />
+              <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="1" />
             </div>
             <Slider {...settings} ref={betaSlider}>
               {dummyBetaPassData2.map((item, index) => (

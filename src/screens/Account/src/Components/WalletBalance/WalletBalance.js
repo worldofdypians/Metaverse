@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./_walletbalance.scss";
-import ethIcon from "./assets/ethIcon.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
+import "./_walletbalance.scss"; 
 import avaxIcon from "./assets/avaxIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
@@ -1858,41 +1856,7 @@ const WalletBalance = ({
                     </span>
                   )}
 
-                  {/* {favoriteItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - favoriteItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+                 
                 </div>
               )}
 
@@ -2153,42 +2117,7 @@ const WalletBalance = ({
                       Connect your wallet to view your NFTs.
                     </span>
                   )}
-
-                  {/* {collectedItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - collectedItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+ 
                 </div>
               )}
 
@@ -2291,43 +2220,7 @@ const WalletBalance = ({
                     </span>
                   )}
 
-                  {/* {myCawsWodStakes.length + landStaked.length < 6 &&
-                  emptyArray
-                    .slice(0, 4 - myCawsWodStakes.length + landStaked.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-6 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <div className="d-flex align-items-center">
-                              <img
-                                src={accountEmptyLand}
-                                alt=""
-                                className="account-card-img"
-                              />
-                              <img
-                                src={accountEmptyCaws}
-                                alt=""
-                                className="account-card-img"
-                              />
-                            </div>
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                Get your CAWS NFT & Land NFT from the WoD Game
-                                Shop
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+               
                 </div>
               )}
 
@@ -2406,41 +2299,7 @@ const WalletBalance = ({
                       Connect your wallet to view your listed NFTs.
                     </span>
                   )}
-                  {/* {listedItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - listedItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+                  
                 </div>
               )}
 
@@ -2448,7 +2307,7 @@ const WalletBalance = ({
                 <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
-                      <img src={ethIcon} alt="" className="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" className="" />
                       <span className="eth-chain-text">Ethereum</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
@@ -2488,7 +2347,7 @@ const WalletBalance = ({
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img src={bnbIcon} alt="" className="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" className="" />
                       <span className="bnb-chain-text">BNB Chain</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">

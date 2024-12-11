@@ -3,8 +3,7 @@ import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
 import greenInfo from "./assets/greenInfo.svg";
-import cawsTag from "./assets/cawsTag.svg";
-import ethIcon from "./assets/ethIcon.svg";
+import cawsTag from "./assets/cawsTag.svg"; 
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
@@ -792,7 +791,7 @@ const CawsStakeModal = ({
                 <div className="d-flex gap-2 justify-content-between">
                   <div className="d-flex align-items-center gap-1">
                     <img
-                      src={ethIcon}
+                      src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />

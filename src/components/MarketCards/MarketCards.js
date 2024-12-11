@@ -1,8 +1,7 @@
 import React from "react";
 import "./_marketCards.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import ethlogo from "./assets/ethlogo.svg";
-import bnblogo from "./assets/bnblogo.svg";
+ 
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
@@ -73,7 +72,7 @@ const MarketCards = ({
               }
             >
               <img
-                src={ethlogo}
+                src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                 alt=""
                 className="ethgraylogo position-absolute"
               />
@@ -88,7 +87,7 @@ const MarketCards = ({
               }
             >
               <img
-                src={ethlogo}
+                src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                 alt=""
                 className="ethgraylogo position-absolute"
               />
@@ -101,7 +100,7 @@ const MarketCards = ({
               }
             >
               <img
-                src={bnblogo}
+                src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                 alt=""
                 className="ethgraylogo position-absolute"
               />

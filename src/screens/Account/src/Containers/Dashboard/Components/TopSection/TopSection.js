@@ -33,8 +33,7 @@ import goldenAdMobile from "./assets/goldenAdMobile.png";
 import dragonAd from "./assets/dragonAd.webp";
 import dragonAd2 from "./assets/dragonAd.png";
 
-import dragonAdMobile from "./assets/dragonAdMobile.png";
-import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
+import dragonAdMobile from "./assets/dragonAdMobile.png"; 
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 import circleArrow from "./assets/circleArrow.svg";

@@ -13,8 +13,6 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import discord from "../../assets/discord.svg";
 import telegram from "../../assets/telegram.svg";
 
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
 
 import purplecircle from "../../assets/landAssets/purplecircle.svg";
 import xmark from "../../assets/landAssets/xmark.svg";
@@ -272,7 +270,8 @@ const LandWhitelistModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
                     alt=""
                   />
                   Connect Wallet
