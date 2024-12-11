@@ -1,33 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_marketplace.scss";
-import { HashLoader } from "react-spinners";
-import wodLogo from "./assets/wodLogo.png";
-import cawsLogo from "./assets/cawsLogo.png";
 import ItemCard from "../../components/ItemCard/ItemCard";
 import { NavLink } from "react-router-dom";
-
-import ethIcon from "./assets/ethIcon.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
-import coreIcon from "./assets/coreLogo.svg";
-import skaleIcon from "./assets/skaleLogo.svg";
-import baseIcon from "./assets/baseLogo.svg";
-import confluxIcon from "./assets/confluxLogo.svg";
-import vicitonIcon from "./assets/victionLogo.svg";
-
-import dypIcon from "./assets/dypIcon.svg";
-import CountUp from "react-countup";
+ 
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import dypius from "../Account/src/Images/userProfile/dypius.svg";
-import dragonIcon from "../Account/src/Images/userProfile/dragonIcon.svg";
-import classes from "../Account/src/Containers/Dashboard/Dashboard.module.css";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import Slider from "react-slick";
-import topEth from "./assets/topEth.svg";
-import topDyp from "../../screens/Marketplace/assets/dypIcon.svg";
-import newCawsApr from "./assets/newCawsApr.svg";
-import cawsMarketplaceBannerMobile from "./assets/cawsMarketplaceBannerMobile.png";
-import { abbreviateNumber } from "js-abbreviation-number";
 import nextArrow from "./assets/nextArrow1.svg";
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";

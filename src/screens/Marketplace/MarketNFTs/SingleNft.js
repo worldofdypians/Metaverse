@@ -20,8 +20,7 @@ import heart from "../assets/heart.svg";
 import ethIcon from "../assets/ethIcon.svg";
 import bnbLogo from "../assets/bnbIcon.svg";
 import confluxLogo from "../assets/confluxLogo.svg";
-import mantaLogo from "../assets/mantaLogo.png";
-import taikoLogo from "./assets/taikoLogo.svg";
+import mantaLogo from "../assets/mantaLogo.png"; 
 import baseLogo from "../assets/baseLogo.svg";
 import avaxLogo from "../assets/avaxLogo.svg";
 import skaleLogo from "../assets/skaleIcon.svg";
@@ -3191,7 +3190,7 @@ const SingleNft = ({
                           : type === "manta"
                           ? mantaLogo
                           : type === "taiko"
-                          ? taikoLogo
+                          ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
@@ -3684,7 +3683,7 @@ const SingleNft = ({
                                     }}
                                   >
                                     <div className="d-flex align-items-center gap-2">
-                                      {/* <img src={filterIcon} alt="" /> */}
+                                   
                                       <h6 className="filter-nav-title mb-0">
                                         <img
                                           src={checkActive}

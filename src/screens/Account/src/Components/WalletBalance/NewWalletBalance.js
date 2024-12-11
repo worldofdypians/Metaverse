@@ -28,9 +28,8 @@ import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import UpcomingProfileEvent from "./UpcomingProfileEvent";
 import ExpiredProfileEvent from "./ExpiredProfileEvent";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
-import conflux from "./assets/conflux.svg";
-import gate from "./assets/gate.svg";
-import skaleLogo from "./assets/skaleLogo.svg";
+ 
+import gate from "./assets/gate.svg"; 
 import baseLogo from "../../../../Home/VideoWrapper/assets/baseLogo.svg";
 import baseThumb from "./assets/baseThumb.webp";
 
@@ -58,9 +57,7 @@ import coreThumb from "./assets/coreThumb.png";
 import bnbPopupImage from "./assets/bnbPopupImage.png";
 
 import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
-import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
+import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";  
 import newCawsStake from "../../../../Marketplace/assets/newCawsStake.png";
 import newCawsStakeMobile from "../../../../Marketplace/assets/newCawsStakeMobile.png";
 
@@ -101,8 +98,7 @@ import multiversBg from "./assets/multiversBg.webp";
 
 import seiLogo from "./assets/seiLogo.svg";
 import seiBg from "./assets/seiBg.webp";
-import coreLogo from "./assets/coreLogo.svg";
-import taikoLogo from "./assets/taikoLogo.svg";
+import coreLogo from "./assets/coreLogo.svg"; 
 import mantaLogo from "./assets/mantaLogo2.png";
 import cookieLogo from "../../../../Marketplace/assets/cookie3Logo.svg";
 
@@ -348,7 +344,7 @@ const NewWalletBalance = ({
     eventType: "Explore & Mine",
     eventDate: "Apr 15, 2024",
     date: "Apr 15, 2024",
-    logo: skaleLogo,
+    logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
     totalRewards: "$20,000 in SKL Rewards",
     eventDuration: skaleLastDay,
     minRewards: "0.5",
@@ -500,7 +496,7 @@ const NewWalletBalance = ({
 
   const dummyTaiko = {
     title: "Taiko",
-    logo: taikoLogo,
+    logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
     eventStatus: "Expired",
     totalRewards: "$20,000 in TAIKO Rewards",
     myEarnings: 0.0,
@@ -525,7 +521,7 @@ const NewWalletBalance = ({
 
   const dummyMatchain = {
     title: "Matchain",
-    logo: taikoLogo,
+    logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
     eventStatus: "Live",
     totalRewards: "$20,000 in BNB Rewards",
     myEarnings: 0.0,
@@ -656,7 +652,7 @@ const NewWalletBalance = ({
     },
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
@@ -669,7 +665,7 @@ const NewWalletBalance = ({
         linkState: "taiko",
         rewards: "TAIKO",
         status: "Expired",
-        logo: taikoLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
         date: "Aug 19, 2024",
         id: "event22",
         eventType: "Explore & Mine",
@@ -727,7 +723,7 @@ const NewWalletBalance = ({
         linkState: "matchain",
         rewards: "BNB",
         status: "Coming Soon",
-        logo: taikoLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
         date: "Aug 19, 2024",
         id: "event25",
         eventType: "Explore & Mine",
@@ -868,7 +864,7 @@ const NewWalletBalance = ({
 
     {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
@@ -927,7 +923,7 @@ const NewWalletBalance = ({
     },
     {
       title: "CMC",
-      logo: cmc,
+      logo: 'https://cdn.worldofdypians.com/wod/cmcIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -964,7 +960,7 @@ const NewWalletBalance = ({
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
-      logo: doge,
+      logo: 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg',
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
       minRewards: "1",
@@ -1102,7 +1098,7 @@ const NewWalletBalance = ({
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: 'https://cdn.worldofdypians.com/wod/confluxIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,

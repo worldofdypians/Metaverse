@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./_domainmodal.scss";
-import domainIcon from "./assets/domainIcon.svg";
-import popupXmark from "./assets/popupXmark.svg";
+import domainIcon from "./assets/domainIcon.svg"; 
 import searchIconDomain from "./assets/searchIconDomain.svg";
 import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -68,7 +67,7 @@ const DomainModal = ({
             <div className="d-flex align-items-center justify-content-between">
               <h6 className="popup-title mb-0">BNB Domain Name</h6>
               <img
-                src={popupXmark}
+                src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
                 alt=""
                 onClick={onClose}
                 style={{ cursor: "pointer" }}

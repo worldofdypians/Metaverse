@@ -29,8 +29,7 @@ import playerAvatar4 from "../../screens/Account/src/Components/LeaderBoard/asse
 import dappradar from "./assets/dappRadar.svg";
 
 import skaleActive from "./assets/skaleActive.svg";
-import yellowArrow from "./assets/yellowArrow.svg";
-import taikoLogo from "../../screens/Marketplace/MarketNFTs/assets/taikoLogo.svg";
+import yellowArrow from "./assets/yellowArrow.svg"; 
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
@@ -826,7 +825,7 @@ const GlobalLeaderboard = ({
             <div className="d-flex align-items-center gap-1">
               <img src={bnbIcon} width={20} height={20} alt="" />
               <img src={mantaActive} width={20} height={20} alt="" />
-              <img src={taikoLogo} width={20} height={20} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/taiko.svg'} width={20} height={20} alt="" />
               <img src={baseLogo} width={20} height={20} alt="" />
               <img src={coreIcon} width={20} height={20} alt="" />
               <img src={skaleActive} width={20} height={20} alt="" />

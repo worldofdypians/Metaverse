@@ -3,8 +3,7 @@ import boar from "../../screens/Marketplace/assets/boar.svg";
 import deer from "../../screens/Marketplace/assets/deer.svg";
 import wolf from "../../screens/Marketplace/assets/wolf.svg";
 import bear from "../../screens/Marketplace/assets/bear.svg";
-import dragon from "../../screens/Marketplace/assets/dragon.svg";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import dragon from "../../screens/Marketplace/assets/dragon.svg"; 
 import popupLinear from "./assets/popupLinear.png";
 import dragonPopup from "./assets/dragonPopup.webp";
 
@@ -26,7 +25,7 @@ const DragonPopup = ({ onClosePopup }) => {
             </mark>
           </h6>
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClosePopup}
             alt=""

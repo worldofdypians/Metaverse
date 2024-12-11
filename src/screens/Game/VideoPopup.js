@@ -1,7 +1,4 @@
-import React from 'react'
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
-import OutsideClickHandler from 'react-outside-click-handler';
-import videoBorder from '../../assets/videoBorder.png'
+import React from 'react' 
 
 const VideoPopup = ({videoLink, closeOverlay}) => {
   return (
@@ -22,7 +19,7 @@ const VideoPopup = ({videoLink, closeOverlay}) => {
           allowFullScreen
       ></iframe>
     </div>
-        <img src={popupXmark} style={{cursor: "pointer"}} onClick={closeOverlay} className='youtube-close-button' alt="" />
+        <img src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'} style={{cursor: "pointer"}} onClick={closeOverlay} className='youtube-close-button' alt="" />
   </div>
   )
 }

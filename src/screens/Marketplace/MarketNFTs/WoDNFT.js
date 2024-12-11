@@ -3,24 +3,12 @@ import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
-import MobileNav from "../../../components/MobileNav/MobileNav";
-import dropdownIcon from "../assets/dropdownIcon.svg";
-import searchIcon from "../assets/search.svg";
+import MobileNav from "../../../components/MobileNav/MobileNav"; 
 import { NavLink } from "react-router-dom";
 import { getWodNfts } from "../../../actions/convertUsd";
 import OutsideClickHandler from "react-outside-click-handler";
-import traitIcon from "./assets/traitIcon.svg";
-import priceIconUp from "./assets/priceIconUp.svg";
-import priceIconDown from "./assets/priceIconDown.svg";
-import priceIconNeutral from "./assets/priceIconNeutral.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import ethIcon from "./assets/ethIcon.svg";
-import dypIcon from "./assets/dypIcon.svg";
-import emptyCheck from "./assets/emptyCheck.svg";
-import fullCheck from "./assets/fullCheck.svg";
-import FilterCard from "./FilterCard";
-import traitXmark from "./assets/traitXmark.svg";
-import filtersXmark from "./assets/filtersXmark.svg";
+
+import FilterCard from "./FilterCard"; 
 import axios from "axios";
 import landmetadata from "../../../actions/landmetadata.json";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
@@ -863,10 +851,10 @@ const WoDNFT = ({
                   aria-expanded="false"
                 >
                   <div className="d-flex align-items-center gap-2">
-                    <img src={filterIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/filterIcon.svg'} alt="" />
                     <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
-                  <img src={dropdownIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                 </button>
                 <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                   <li
@@ -909,10 +897,10 @@ const WoDNFT = ({
                   <img
                     src={
                       priceCount === 0
-                        ? priceIconNeutral
+                        ? 'https://cdn.worldofdypians.com/wod/priceIconNeutral.svg'
                         : priceCount % 2 == 0
-                        ? priceIconDown
-                        : priceIconUp
+                        ? 'https://cdn.worldofdypians.com/wod/priceIconDown.svg'
+                        : 'https://cdn.worldofdypians.com/wod/priceIconUp.svg'
                     }
                     alt=""
                   />
@@ -935,7 +923,7 @@ const WoDNFT = ({
                   onClick={() => setOpenTraits(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={traitIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/traitIcon.svg'} alt="" />
                   <h6 className="filter-nav-title mb-0">Traits</h6>
                 </div>
               </div>
@@ -953,7 +941,7 @@ const WoDNFT = ({
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
-                    src={traitXmark}
+                    src={'https://cdn.worldofdypians.com/wod/traitXmark.svg'}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       displayFilters.length === 1
@@ -1573,7 +1561,7 @@ const WoDNFT = ({
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h6 className="filters-title mb-0">Filters</h6>
             <img
-              src={filtersXmark}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               style={{ cursor: "pointer" }}
               onClick={() => setOpenTraits(false)}
               alt=""

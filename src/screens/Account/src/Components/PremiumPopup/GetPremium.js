@@ -12,8 +12,7 @@ import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 
 
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
+import xMark from "../../Components/WalletBalance/newAssets/xMark.svg"; 
 import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
 import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
 import { ethers } from "ethers";
@@ -2803,7 +2802,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={conflux}
+                      src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -3000,7 +2999,7 @@ const GetPremiumPopup = ({
                       onClick={handleConfluxPool}
                     >
                       <img
-                        src={conflux}
+                        src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                         alt=""
                         style={{
                           width: "18px",
@@ -3059,7 +3058,7 @@ const GetPremiumPopup = ({
                       onClick={handleConfluxPool}
                     >
                       <img
-                        src={conflux}
+                        src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                         alt=""
                         style={{
                           width: "18px",

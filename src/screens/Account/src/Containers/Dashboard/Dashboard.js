@@ -40,7 +40,6 @@ import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.sv
 
 import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
@@ -11681,7 +11680,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={conflux}
+                            src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11911,7 +11910,7 @@ function Dashboard({
                                     onClick={handleConfluxPool}
                                   >
                                     <img
-                                      src={conflux}
+                                      src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
                                       alt=""
                                       style={{
                                         width: "18px",

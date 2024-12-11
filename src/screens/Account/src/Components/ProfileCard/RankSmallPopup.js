@@ -12,8 +12,7 @@ import star from "./assets/star.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 import x4 from "./assets/4x.svg";
-import arrowCircle from "./assets/arrowCircle.svg";
-import popupXmark from "../../../../Marketplace/assets/popupXmark.svg";
+import arrowCircle from "./assets/arrowCircle.svg"; 
 import goldenPopup from "./assets/rankBanner.webp";
 import premiumBadge from "./assets/premiumBadge.png";
 import { NavLink } from "react-router-dom";
@@ -79,7 +78,7 @@ onPrimeClick
         <div className=" package-popup-title-wrapper d-flex align-items-center position-relative justify-content-between mb-2">
           <div className="package-popup-title mb-0">My Progress</div>{" "}
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClose}
             alt=""

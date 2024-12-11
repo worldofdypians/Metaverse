@@ -6,62 +6,22 @@ import avaxIcon from "./assets/avaxIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import idyp from "../../Images/userProfile/idyp.svg";
-import globalRank from "./assets/globalRank.svg";
-import genesisImg from "./assets/genesisRank.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
-import { getAllNfts } from "../../../../../actions/convertUsd";
-import { HashLoader } from "react-spinners";
-import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
-import Slider from "react-slick";
-import ItemCard from "../../../../../components/ItemCard/ItemCard";
+
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
-import accountEmptyCaws from "./assets/accountEmptyCaws.svg";
-import accountEmptyLand from "./assets/accountEmptyLand.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import emptyCheck from "./assets/emptyCheck.svg";
+
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
-import ActiveProfileEvent from "./ActiveProfileEvent";
-import UpcomingProfileEvent from "./UpcomingProfileEvent";
-import ExpiredProfileEvent from "./ExpiredProfileEvent";
-import stakeNft from "./newAssets/stakeNft.png";
-import mintColl from "./newAssets/mintColl.png";
 
-import eventPopupImage from "./assets/eventPopupImage.png";
-import bnbPopupImage from "./assets/bnbPopupImage.png";
 import OutsideClickHandler from "react-outside-click-handler";
-import confluxActive from "../../../../Marketplace/assets/confluxActive.png";
-import coin98Active from "../../../../Marketplace/assets/coin98Active.png";
-import coingeckoActive from "../../../../Marketplace/assets/coingeckoActive.png";
-import baseActive from "../../../../Marketplace/assets/baseActive.png";
-import timepieceActive from "../../../../Marketplace/assets/timepieceActive.png";
+
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import grayCalendar from "./assets/grayCalendar.svg";
-import eventSkeleton from "./assets/eventSkeleton.png";
-import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
-import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
-import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
-import conflux from "./assets/conflux.svg";
-import gate from "./assets/gate.svg";
-import dypius from "./assets/dypIcon.svg";
-import upcomingDyp from "./assets/upcomingDyp.webp";
-import closeMark from "./assets/closeMark.svg";
-import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
-import coin98 from "./assets/coin98.svg";
-import coingecko from "./assets/coingecko.svg";
-import base from "./assets/baseLogo.svg";
-import confluxUpcoming from "./assets/confluxUpcoming.png";
-import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
-import dypeventPopupImage from "./assets/dypEventImage.png";
 
-import coin98Upcoming from "./assets/coin98Upcoming.png";
-import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
-import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
 w
 import multiplayer from "../../../../../assets/multiplayer.svg";

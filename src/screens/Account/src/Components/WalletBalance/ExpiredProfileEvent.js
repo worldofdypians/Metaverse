@@ -2,16 +2,12 @@ import React from "react";
 import grayDate from "./assets/grayDate.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import grayExplore from "./assets/grayExplore.svg";
-import grayFind from "./assets/grayFind.svg";
-import conflux from "./assets/conflux.svg";
+import grayFind from "./assets/grayFind.svg"; 
 import coingecko from "./assets/coingecko.svg";
 import gate from "./assets/gate.svg";
-import baseLogo from "./assets/baseLogo.svg";
-import cmc from "./assets/cmc.svg";
-import skale from '../../../../Marketplace/MarketNFTs/assets/skaleLogo.svg'
+import baseLogo from "./assets/baseLogo.svg"; 
 import dypius from "./assets/dypIcon.svg";
-import grayArrow from "./assets/grayArrow.svg";
-import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
+import grayArrow from "./assets/grayArrow.svg"; 
 import dypiusProfileBanner from "./assets/dypiusProfileBanner.png";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import dypiusPremium16 from "./assets/dypiusPremium16.svg";
@@ -33,19 +29,19 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
               event.title === "CoinGecko"
                 ? coingecko
                 : event.title === "Conflux"
-                ? conflux
+                ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
                 : event.title === "Base"
                 ? baseLogo
                 : event.title === "Dypius"
                 ? dypius
                 : event.title === "Dogecoin"
-                ? doge
+                ? 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg'
                 : event.title === "Dypius" || event.title === "Dypius Premium"
                 ? dypiusPremium16
                 : event.title === "CoinMarketCap"
-                ? cmc
+                ? 'https://cdn.worldofdypians.com/wod/cmcIcon.svg'
                 : event.title === "SKALE"
-                ? skale
+                ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
                 : event.logo
             }
             height={16}
