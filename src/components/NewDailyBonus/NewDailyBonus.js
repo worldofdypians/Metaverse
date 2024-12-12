@@ -7275,7 +7275,7 @@ console.log(rewardData)
                   >
                     <div className="position-relative">
                       <img
-                        src={require(`./assets/${item.img}${
+                        src={`https://cdn.worldofdypians.com/wod/${item.img}${
                           item.title2 !== "needPremium"
                             ? (rewardData &&
                                 rewardData.rewards?.find((obj) => {
@@ -7324,7 +7324,7 @@ console.log(rewardData)
                                 message === "needPremium")
                             ? "Active"
                             : ""
-                        }Icon.png`)}
+                        }Icon.png`}
                         width={60}
                         height={60}
                         alt=""
