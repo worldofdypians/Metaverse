@@ -1,6 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_newdailybonus.scss";
-
+import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+import { NavLink } from "react-router-dom";
+import BuyNftPopup from "./BuyNftPopup";
+import OutsideClickHandler from "react-outside-click-handler";
+import axios from "axios";
+import NewChestItem from "./NewChestItem";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material";
+import useWindowSize from "../../hooks/useWindowSize";
+import Slider from "react-slick";
+import successSound from "./assets/success.mp3";
 
 import comingSoon from "./assets/comingSoon.png";
 import comingSoon2 from "./assets/comingSoon2.png";
@@ -9,46 +20,28 @@ import comingSoon4 from "./assets/comingSoon4.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
 import dypiusIcon from "./assets/dypiusIcon.svg"; 
- 
 import cawsRound from "./assets/cawsRound.png";
 import wodRound from "./assets/wodRound.png";
- 
 import dypRound from "./assets/dypRound.png";
-
 import bnbBg from "./assets/bnbBg.png";
 import mantaBg from "./assets/mantaBg.png";
-
 import skaleBg from "./assets/skaleBg.png";
 import coreBg from "./assets/coreBg.png";
 import taikoBg from "./assets/taikoBg.png";
 import victionBg from "./assets/victionBg.png";
 import winConfetti from "./assets/winConfetti.png";
-import coreIcon from "./assets/coreIcon.svg";
-import victionIcon from "./assets/victionIcon.svg";
 import emptyXmark from "./assets/emptyXmark.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
 import greenCheck from "./assets/greenCheck.svg";
 import infoIcon from "./assets/infoIcon.svg";
-import skaleIcon from "./assets/skaleIcon.svg"; 
-import taiko from "./assets/taikoIcon.svg";
-import baseLogo from "./assets/base.svg";
 
-import seiIcon from "./assets/seiIcon.svg";
+
 import danger from "./assets/danger.svg";
 import warning from "./assets/warning.svg";
 import redX from "./assets/redX.svg";
-import NewChestItem from "./NewChestItem";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material";
-import useWindowSize from "../../hooks/useWindowSize";
-import Slider from "react-slick";
-import successSound from "./assets/success.mp3";
-import { handleSwitchNetworkhook } from "../../hooks/hooks";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import { NavLink } from "react-router-dom";
-import BuyNftPopup from "./BuyNftPopup";
-import OutsideClickHandler from "react-outside-click-handler";
-import axios from "axios";
+
+
+
+
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -2883,7 +2876,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2899,7 +2892,7 @@ console.log(rewardData)
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3107,7 +3100,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={seiIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3318,7 +3311,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={taiko}
+                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3438,7 +3431,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={coreIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -3544,7 +3537,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={baseLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3649,7 +3642,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={skaleIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3750,7 +3743,7 @@ console.log(rewardData)
                             >
                               {" "}
                               <img
-                                src={victionIcon}
+                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                 width={20}
                                 height={20}
                                 alt=""
@@ -3897,7 +3890,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3913,7 +3906,7 @@ console.log(rewardData)
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4007,7 +4000,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={seiIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4106,7 +4099,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={taiko}
+                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4154,7 +4147,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={skaleIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4216,7 +4209,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={coreIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -4266,7 +4259,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={baseLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4310,7 +4303,7 @@ console.log(rewardData)
                             >
                               {" "}
                               <img
-                                src={victionIcon}
+                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                 style={{ width: 20, height: 20 }}
                                 alt=""
                               />{" "}
