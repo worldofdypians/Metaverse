@@ -1,37 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import playerAvatar from "./assets/userAvatar2.png";
-import premiumAvatar from "./assets/premiumAvatar.png";
+ 
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import cawsBadge from "./assets/cawsBadge2.png";
-import genesisBadge from "./assets/genesisBadge2.png";
-import tooltipIcon from "./assets/tooltip.svg";
-import star from "./assets/star.svg";
-import axios from "axios";
 import Switch from "@mui/material/Switch";
 import "./_leaderboard.scss";
 import OutsideClickHandler from "react-outside-click-handler";
-import Countdown from "react-countdown";
-import useWindowSize from "../../hooks/useWindowSize";
-import globalIcon from "./assets/globalRanks/globalIcon.png";
-import goldenActive from "./assets/goldenActive.png";
-import goldenInactive from "./assets/goldenInactive.png";
 import { NavLink, useLocation } from "react-router-dom";
-import bnbIcon from "./assets/bnbIcon.svg";
-import victionActive from "./assets/victionActive.svg";
-import mantaActive from "./assets/mantaActive.png";
-import coreIcon from "./assets/coreIcon2.svg";
-import baseLogo from "../../screens/Home/VideoWrapper/assets/baseLogo.svg";
-
-import playerAvatar1 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar1.png";
-import playerAvatar2 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar2.png";
-import playerAvatar3 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar3.png";
-import playerAvatar4 from "../../screens/Account/src/Components/LeaderBoard/assets/userImgs/playerAvatar4.png";
-import dappradar from "./assets/dappRadar.svg";
-
-import skaleActive from "./assets/skaleActive.svg";
-import yellowArrow from "./assets/yellowArrow.svg"; 
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
-import inactiveUserPfp from "./assets/inactiveUserPfp.png";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -204,8 +178,7 @@ const GlobalLeaderboard = ({
           </div>
         </div>
       )} */}
-
-      {/* <div className="grandPrices-wrapper position-relative"></div> */}
+ 
       <div
         className="leaderboard-item d-flex flex-column  w-100 p-0"
         style={{ background: "none" }}
@@ -221,7 +194,7 @@ const GlobalLeaderboard = ({
                   (Top 100)
                 </span>
                 <img
-                  src={tooltipIcon}
+                  src={"https://cdn.worldofdypians.com/wod/tooltip.svg"}
                   alt=""
                   className="tooltip-icon"
                   style={{ cursor: "pointer", width: "20px", height: "20px" }}
@@ -277,7 +250,7 @@ const GlobalLeaderboard = ({
           )}
 
           <img
-            src={globalIcon}
+            src={'https://cdn.worldofdypians.com/wod/globalIcon.png'}
             alt=""
             className={screen === "dash" && "invisible"}
           />
@@ -339,18 +312,18 @@ const GlobalLeaderboard = ({
                           <img
                             src={
                               index + 1 <= 10
-                                ? require(`./assets/globalRanks/globalRank${
+                                ? `https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
-                                  }.png`)
+                                  }.png`
                                 : index + 1 >= 11 && index + 1 <= 20
-                                ? playerAvatar1
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
                                 : index + 1 >= 21 && index + 1 <= 30
-                                ? playerAvatar2
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
                                 : index + 1 >= 31 && index + 1 <= 70
-                                ? playerAvatar3
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
                                 : index + 1 >= 71 && index + 1 <= 100
-                                ? playerAvatar4
-                                : playerAvatar
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -364,7 +337,12 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                          <img src={star} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                            }
+                            alt=""
+                          />
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
@@ -408,7 +386,12 @@ const GlobalLeaderboard = ({
                                 </span>
                               }
                             >
-                              <img src={goldenActive} alt="" />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                }
+                                alt=""
+                              />
                             </HtmlTooltip>
                           ) : (
                             <HtmlTooltip
@@ -424,8 +407,8 @@ const GlobalLeaderboard = ({
                                   (username === item.displayName &&
                                     isactive === true) ||
                                   username !== item.displayName
-                                    ? goldenActive
-                                    : goldenInactive
+                                    ? "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                    : "https://cdn.worldofdypians.com/wod/goldenInactive.png"
                                 }
                                 alt=""
                               />
@@ -459,10 +442,10 @@ const GlobalLeaderboard = ({
                           <img
                             src={
                               index + 1 <= 10
-                                ? require(`./assets/globalRanks/globalRank${
+                                ?`https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
-                                  }.png`)
-                                : playerAvatar
+                                  }.png`
+                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -476,7 +459,12 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                          <img src={star} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                            }
+                            alt=""
+                          />
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
@@ -484,14 +472,14 @@ const GlobalLeaderboard = ({
                         className="playerScore col-2 text-center font-montserrat"
                         style={{ color: "#09F3D2" }}
                       >
-                       ${getFormattedNumber(allStarData.rewards[index], 0)}
+                        ${getFormattedNumber(allStarData.rewards[index], 0)}
                       </td>
                       <td
                         className="playerScore col-2 text-center font-montserrat d-flex align-items-center gap-2 w-100"
                         style={{ color: "#09F3D2" }}
                       >
                         <div className="d-flex align-items-center justify-content-end me-2 me-lg-3 gap-1 w-100">
-                        +$
+                          +$
                           {getFormattedNumber(
                             allStarData.premium_rewards[index],
                             0
@@ -501,8 +489,8 @@ const GlobalLeaderboard = ({
                               (username === item.displayName &&
                                 isactive === true) ||
                               username !== item.displayName
-                                ? goldenActive
-                                : goldenInactive
+                                ? "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                : "https://cdn.worldofdypians.com/wod/goldenInactive.png"
                             }
                             alt=""
                           />
@@ -534,18 +522,18 @@ const GlobalLeaderboard = ({
                           <img
                             src={
                               index + 1 <= 10
-                                ? require(`./assets/globalRanks/globalRank${
+                                ? `https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
-                                  }.png`)
+                                  }.png`
                                 : index + 1 >= 11 && index + 1 <= 20
-                                ? playerAvatar1
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
                                 : index + 1 >= 21 && index + 1 <= 30
-                                ? playerAvatar2
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
                                 : index + 1 >= 31 && index + 1 <= 70
-                                ? playerAvatar3
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
                                 : index + 1 >= 71 && index + 1 <= 100
-                                ? playerAvatar4
-                                : playerAvatar
+                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -559,7 +547,12 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                          <img src={star} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                            }
+                            alt=""
+                          />
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
@@ -607,7 +600,12 @@ const GlobalLeaderboard = ({
                                 </span>
                               }
                             >
-                              <img src={goldenActive} alt="" />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                }
+                                alt=""
+                              />
                             </HtmlTooltip>
                           ) : (
                             <HtmlTooltip
@@ -623,8 +621,8 @@ const GlobalLeaderboard = ({
                                   (username === item.displayName &&
                                     isactive === true) ||
                                   username !== item.displayName
-                                    ? goldenActive
-                                    : goldenInactive
+                                    ? "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                    : "https://cdn.worldofdypians.com/wod/goldenInactive.png"
                                 }
                                 alt=""
                               />
@@ -658,10 +656,10 @@ const GlobalLeaderboard = ({
                           <img
                             src={
                               index + 1 <= 10
-                                ? require(`./assets/globalRanks/globalRank${
+                                ? `https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
-                                  }.png`)
-                                : playerAvatar
+                                  }.png`
+                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -675,7 +673,12 @@ const GlobalLeaderboard = ({
                       </td>
                       <td className="playerScore col-2 text-center font-montserrat">
                         <div className="d-flex align-items-center justify-content-center gap-2">
-                          <img src={star} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                            }
+                            alt=""
+                          />
                           {getFormattedNumber(item.statValue, 0)}
                         </div>
                       </td>
@@ -704,8 +707,8 @@ const GlobalLeaderboard = ({
                               (username === item.displayName &&
                                 isactive === true) ||
                               username !== item.displayName
-                                ? goldenActive
-                                : goldenInactive
+                                ? "https://cdn.worldofdypians.com/wod/goldenActive.png"
+                                : "https://cdn.worldofdypians.com/wod/goldenInactive.png"
                             }
                             alt=""
                           />
@@ -733,7 +736,7 @@ const GlobalLeaderboard = ({
                 <div className="playerName d-flex align-items-center font-montserrat gap-2">
                   {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
-                    src={inactiveUserPfp}
+                    src={'https://cdn.worldofdypians.com/wod/inactiveUserPfp.png'}
                     alt=""
                     className="playerAvatar me-2"
                   />
@@ -751,7 +754,13 @@ const GlobalLeaderboard = ({
                     className="d-flex align-items-center justify-content-center gap-2"
                     style={{ fontSize: 20 }}
                   >
-                    <img src={star} alt="" style={{ width: 30, height: 30 }} />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                      }
+                      alt=""
+                      style={{ width: 30, height: 30 }}
+                    />
                     {getFormattedNumber(item.statValue, 0)}
                   </div>
                 </div>
@@ -774,7 +783,7 @@ const GlobalLeaderboard = ({
                 <div className="playerName d-flex align-items-center font-montserrat gap-2">
                   {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
-                    src={inactiveUserPfp}
+                    src={'https://cdn.worldofdypians.com/wod/inactiveUserPfp.png'}
                     alt=""
                     className="playerAvatar me-2"
                   />
@@ -792,7 +801,13 @@ const GlobalLeaderboard = ({
                     className="d-flex align-items-center justify-content-center gap-2"
                     style={{ fontSize: 20 }}
                   >
-                    <img src={star} alt="" style={{ width: 30, height: 30 }} />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                      }
+                      alt=""
+                      style={{ width: 30, height: 30 }}
+                    />
                     {getFormattedNumber(item.statValue, 0)}
                   </div>
                 </div>
@@ -823,15 +838,53 @@ const GlobalLeaderboard = ({
           <span>View Chain Leaderboards</span>
           <div className="d-flex align-items-center gap-2">
             <div className="d-flex align-items-center gap-1">
-              <img src={bnbIcon} width={20} height={20} alt="" />
-              <img src={mantaActive} width={20} height={20} alt="" />
-              <img src={'https://cdn.worldofdypians.com/wod/taiko.svg'} width={20} height={20} alt="" />
-              <img src={baseLogo} width={20} height={20} alt="" />
-              <img src={coreIcon} width={20} height={20} alt="" />
-              <img src={skaleActive} width={20} height={20} alt="" />
-              <img src={victionActive} width={20} height={20} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />{" "}
+              <img
+                src={"https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />{" "}
+              <img
+                src={"https://cdn.worldofdypians.com/wod/core.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/viction.svg"}
+                style={{ width: 20, height: 20 }}
+                alt=""
+              />
             </div>
-            <img src={yellowArrow} width={20} height={20} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/yellowArrow.svg'} width={20} height={20} alt="" />
           </div>
         </NavLink>
       )}

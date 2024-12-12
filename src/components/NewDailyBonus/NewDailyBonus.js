@@ -14,11 +14,6 @@ import Slider from "react-slick";
 import successSound from "./assets/success.mp3";
    
 
-
-
-
-
-
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({

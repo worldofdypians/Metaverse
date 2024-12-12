@@ -8,7 +8,7 @@ import premiumExclusive from "../../screens/Account/src/Components/ProfileCard/a
 import pointerArrow from "../../screens/Account/src/Components/ProfileCard/assets/pointerArrow.svg";
 import tooltipIcon from "../../screens/Account/src/Components/ProfileCard/assets/tooltipIcon.svg";
 import useWindowSize from "../../hooks/useWindowSize";
-import xMark from "../../screens/Account/src/Components/WalletBalance/newAssets/xMark.svg";
+ 
 import starterBust from "../../screens/Account/src/Components/ProfileCard/assets/starterBust.png";
 import rookieBust from "../../screens/Account/src/Components/ProfileCard/assets/rookieBust.png";
 import underdogBust from "../../screens/Account/src/Components/ProfileCard/assets/underdogBust.png";
@@ -212,7 +212,7 @@ const RankPopup = ({
             </div>
           </div>
           <img
-            src={xMark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             onClick={() => onClose()}
             alt=""
             style={{ cursor: "pointer" }}
