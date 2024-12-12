@@ -514,7 +514,14 @@ const MyProfile = ({
                                   setTimeout(() => setTooltip(false), 2000);
                                 }}
                               >
-                               <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
+                                <img
+                                  src={
+                                    tooltip
+                                      ? "https://cdn.worldofdypians.com/wod/check.svg"
+                                      : "https://cdn.worldofdypians.com/wod/copy.svg"
+                                  }
+                                  alt=""
+                                />{" "}
                               </span>
                             </Clipboard>
                           </div>
@@ -587,7 +594,14 @@ const MyProfile = ({
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
-                          <img src={"https://cdn.worldofdypians.com/wod/wodToken.svg"} width={20} height={20} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/wodToken.svg"
+                            }
+                            width={20}
+                            height={20}
+                            alt=""
+                          />
                           <h6 className="mb-0">
                             {getFormattedNumber(wodBalance, 2)}
                           </h6>
@@ -626,7 +640,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={"https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       Kucoin
                                     </h6>
                                   </a>
@@ -640,7 +659,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={"https://cdn.worldofdypians.com/wod/gateBuyWod.svg"} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       Gate.io
                                     </h6>
                                   </a>
@@ -655,7 +679,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={"https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       MEXC Global
                                     </h6>
                                   </a>
@@ -671,7 +700,9 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={"https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                                        }
                                         className="buywodimg"
                                       />
                                       PancakeSwap
@@ -688,7 +719,9 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={"https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                                        }
                                         className="buywodimg"
                                       />
                                       TrustWallet
@@ -766,7 +799,10 @@ const MyProfile = ({
                       <div className="d-flex">
                         <span className="user-data-item-right">
                           #
-                          {userDataStar.position
+                          {(!userDataStar?.statValue ||
+                          userDataStar?.statValue === 0)
+                            ? '---'
+                            : userDataStar.position
                             ? userDataStar.position + 1
                             : "---"}
                         </span>
