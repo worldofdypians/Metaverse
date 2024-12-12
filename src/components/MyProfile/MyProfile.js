@@ -294,7 +294,7 @@ const MyProfile = ({
       class: "mazeDayBannerItem",
       arrow: mazeDayArrow,
       link: "/account/challenges/maze-day",
-      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $10"],
+      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $100"],
 
       imageClass: "mazeDayEventBanner",
     },
