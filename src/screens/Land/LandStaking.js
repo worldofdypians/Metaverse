@@ -744,7 +744,7 @@ const LandStaking = ({
                 ))}
               </div>
               <img
-                src={require("../../components/LandPopup/landPopup.webp")}
+                src={"https://cdn.worldofdypians.com/landPopup.webp"}
                 alt="land nft"
                 className="w-100 d-flex d-lg-none"
               />

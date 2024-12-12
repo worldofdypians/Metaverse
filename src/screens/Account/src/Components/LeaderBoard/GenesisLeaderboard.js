@@ -1,55 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-// import price1 from "../../../../../components/LeaderBoard/assets/price1.svg";
-// import price2 from "../../../../../components/LeaderBoard/assets/price2.svg";
-// import price3 from "../../../../../components/LeaderBoard/assets/price3.svg";
-// import { CircularProgress } from "@mui/material";
-import playerAvatar from "../../../../../components/LeaderBoard/assets/userAvatar2.png";
-import premiumAvatar from "../../../../../components/LeaderBoard/assets/premiumAvatar.png";
-import premiumStar from "../../../../../components/LeaderBoard/assets/premiumStar.png";
-// import axios from "axios";
-// import Switch from "@mui/material/Switch";
-// import "./_leaderboard.scss";
-// import ComingSoon from "./ComingSoon";
-// import cawsBadge from "../../../../../components/LeaderBoard/assets/cawsBadge2.png";
-// import genesisBadge from "../../../../../components/LeaderBoard/assets/genesisBadge2.png";
-// import OutsideClickHandler from "react-outside-click-handler";
-// import tooltipIcon from "../../../../../components/LeaderBoard/assets/tooltip.svg";
-// import skaleIcon from "../../../../../components/LeaderBoard/assets/skaleIcon.png";
-// import skaleIconGray from "../../../../../components/LeaderBoard/assets/skaleIconGray.svg";
-// import bnbIcon from "../../../../../components/LeaderBoard/assets/bnbIcon.svg";
-// import coreIcon from "../../../../../components/LeaderBoard/assets/coreIcon.svg";
-// import bnbActive from "../../../../../components/LeaderBoard/assets/bnbActive.svg";
-// import bnbInactive from "../../../../../components/LeaderBoard/assets/bnbInactive.svg";
-// import skaleActive from "../../../../../components/LeaderBoard/assets/skaleActive.svg";
-// import skaleInactive from "../../../../../components/LeaderBoard/assets/skaleInactive.svg";
-// import wodActive from "../../../../../components/LeaderBoard/assets/wodActive.svg";
-// import wodInactive from "../../../../../components/LeaderBoard/assets/wodInactive.svg";
-// import leftArrow from "../../../../../components/LeaderBoard/assets/leftArrow.svg";
-// import rightArrow from "../../../../../components/LeaderBoard/assets/rightArrow.svg";
-// import star from "../../../../../components/LeaderBoard/assets/star.svg";
-// import premiumIcon from "../../../../../components/LeaderBoard/assets/premiumIcon.png";
-
-// import React, { useState, useEffect } from "react";
-// import price1 from "../../Images/userProfile/price1.svg";
-// import price2 from "../../Images/userProfile/price2.svg";
-// import price3 from "../../Images/userProfile/price3.svg";
-// import { CircularProgress } from "@mui/material";
-// import playerAvatar from "../../Images/userProfile/userAvatar2.png";
-// import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
-// import premiumStar from "../../Images/userProfile/premiumStar.png";
-import axios from "axios";
-import Switch from "@mui/material/Switch";
-// import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+ 
 import "./_leaderboard.scss";
-// import ComingSoon from "./ComingSoon";
-// import tooltipIcon from "./tooltipIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-// import { dyp700_abi } from "../../web3";
-// import Countdown from "react-countdown";
-// import Slider from "react-slick";
-// import useWindowSize from "../../../../../hooks/useWindowSize";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import tooltipIcon from "../../../../../components/LeaderBoard/assets/tooltip.svg";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -790,7 +743,6 @@ const GenesisLeaderboard = ({
         style={{ background: "none" }}
       >
         <div className="greatcollection-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
-       
           <div className="position-absolute" style={{ bottom: 8, right: 8 }}>
             <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
               <div className="d-flex align-items-center gap-2 position-relative">
@@ -798,7 +750,7 @@ const GenesisLeaderboard = ({
                   (Top 100)
                 </span>
                 <img
-                  src={tooltipIcon}
+                  src={"https://cdn.worldofdypians.com/wod/tooltip.svg"}
                   alt=""
                   className="tooltip-icon"
                   style={{ cursor: "pointer", width: "20px", height: "20px" }}
@@ -838,23 +790,23 @@ const GenesisLeaderboard = ({
             </OutsideClickHandler>
           </div>
           <div className="d-flex flex-column">
-              {/* <h6 className="global-leaderboard-title mb-0">Great</h6>
+            {/* <h6 className="global-leaderboard-title mb-0">Great</h6>
               <h6
                 className="global-leaderboard-title mb-0 d-flex algin-items-center"
                 style={{ color: "#F4E27B" }}
               >
                 Collection
               </h6> */}
-                   <h2
-                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
-                  style={{ fontSize: "24px" }}
-                >
-                  Great Collection
-                </h2>
-              {/* <span className="text-white" style={{ fontSize: 14 }}>
+            <h2
+              className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center   gap-2`}
+              style={{ fontSize: "24px" }}
+            >
+              Great Collection
+            </h2>
+            {/* <span className="text-white" style={{ fontSize: 14 }}>
                 (Top 100)
               </span> */}
-            </div>
+          </div>
         </div>
         <div className="p-2 pt-0 table-outer-margin">
           <table className="playerTable w-100">
@@ -900,7 +852,7 @@ const GenesisLeaderboard = ({
                         {item.displayName === username ? (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={premiumAvatar}
+                              src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                               alt=""
                               className="playerAvatar"
                             />
@@ -913,7 +865,9 @@ const GenesisLeaderboard = ({
                         ) : (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={playerAvatar}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/userAvatar2.png"
+                              }
                               alt=""
                               className="playerAvatar"
                             />{" "}
@@ -968,7 +922,7 @@ const GenesisLeaderboard = ({
                         {item.displayName === username ? (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={premiumAvatar}
+                              src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                               alt=""
                               className="playerAvatar"
                             />
@@ -981,7 +935,9 @@ const GenesisLeaderboard = ({
                         ) : (
                           <div className="position-relative d-flex align-items-center">
                             <img
-                              src={playerAvatar}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/userAvatar2.png"
+                              }
                               alt=""
                               className="playerAvatar"
                             />{" "}
@@ -1043,7 +999,7 @@ const GenesisLeaderboard = ({
                 <td className="playerName col-5 font-montserrat">
                   <div className="position-relative  d-flex align-items-center">
                     <img
-                      src={playerAvatar}
+                      src={"https://cdn.worldofdypians.com/wod/userAvatar2.png"}
                       alt=""
                       className="playerAvatar"
                       style={{

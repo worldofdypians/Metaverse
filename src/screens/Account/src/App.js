@@ -19,7 +19,7 @@ import client from "./apolloConfig.js";
 import Dashboard from "./Containers/Dashboard/Dashboard.js";
 import LandingScreen from "./Containers/LandingScreen/LandingScreen.js";
 import Web3Provider from "./Utils.js/Web3/Web3Provider.js";
-import LandFlyout from "./Components/LandFlyout/LandFlyout";
+
 
 Amplify.configure(awsExports);
 
