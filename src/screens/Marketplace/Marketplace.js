@@ -515,21 +515,7 @@ const Marketplace = ({
       style={{ minHeight: "72vh", maxWidth: "2400px" }}
     >
       {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
-      {/* <OutsideClickHandler
-        id="popup"
-        onOutsideClick={() => {
-          setActivePopup(false);
-          setCount(1);
-        }}
-      >
-        <DailyRewardsPopup
-          active={activePopup}
-          onClose={() => {
-            setActivePopup(false);
-            setCount(1);
-          }}
-        />
-      </OutsideClickHandler> */}
+
       <div className="container-nft2 mt-lg-5 d-flex align-items-start px-0 px-lg-4 position-relative">
         <div className="custom-container mx-0">
           <div className="market-upper-wrapper pb-5">

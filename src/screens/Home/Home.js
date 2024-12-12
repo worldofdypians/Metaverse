@@ -5,7 +5,6 @@ import VideoWrapper from "./VideoWrapper/VideoWrapper";
 import ExplorerGrid from "./ExplorerGrid/ExplorerGrid";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useState } from "react";
-import mantaPopup from "../../components/TimepieceMint/assets/mantaPopup.png";
 import WodBuilders from "./WodBuilders/WodBuilders";
 import GameStats from "./GameStats/GameStats";
 import Investors from "../Token/Investors/Investors";
@@ -20,22 +19,22 @@ const Home = ({
   wodHolders,
 totalVolumeNew
 }) => {
-  const mantaInfo = {
-    title: "Manta",
-    img: mantaPopup,
-    state: "manta",
-  };
+  // const mantaInfo = {
+  //   title: "Manta",
+  //   img: mantaPopup,
+  //   state: "manta",
+  // };
 
-  const [activePopup, setActivePopup] = useState(false);
+  // const [activePopup, setActivePopup] = useState(false);
 
-  const html = document.querySelector("html");
-  const hamburger = document.querySelector("#popup");
+  // const html = document.querySelector("html");
+  // const hamburger = document.querySelector("#popup");
 
-  useEffect(() => {
-    setTimeout(() => {
-      setActivePopup(true);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setActivePopup(true);
+  //   }, 500);
+  // }, []);
 
   // useEffect(() => {
   //   if (activePopup) {
@@ -53,16 +52,16 @@ totalVolumeNew
 
   return (
     <>
-      <OutsideClickHandler
+      {/* <OutsideClickHandler
         id="popup"
         onOutsideClick={() => setActivePopup(false)}
-      >
+      > */}
         {/* <MintPopup
           active={activePopup}
           data={basePopupInfo}
           onClose={() => setActivePopup(false)}
         /> */}
-      </OutsideClickHandler>
+      {/* </OutsideClickHandler> */}
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
           <VideoWrapper

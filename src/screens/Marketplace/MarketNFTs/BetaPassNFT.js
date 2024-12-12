@@ -1605,7 +1605,7 @@ const BetaPassNFT = ({
                           {benefits.map((item) => (
                             <div className="d-flex align-items-center gap-2">
                               <img
-                                src={require(`../../../components/TimepieceMint/assets/${item.icon}.png`)}
+                                src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                 alt=""
                                 style={{
                                   scale: item.icon === "expand" ? "0.8" : "1",

@@ -76,9 +76,7 @@ import multiversThumb from "../Account/src/Components/WalletBalance/assets/multi
 import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
-import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
-import baseThumb from "../Account/src/Components/WalletBalance/assets/baseThumb.webp";
-
+import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp"; 
 import cookie3Thumb from "../Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
 import baseLogo from "../Home/VideoWrapper/assets/baseLogo.svg";
 
@@ -2026,7 +2024,7 @@ const MarketEvents = ({
                         : dummyEvent.linkState === "base" && dummyEvent.id === 'event4'
                         ? eventPopupImageBase
                         : dummyEvent.id === 'event24'
-                        ? baseThumb
+                        ? 'https://cdn.worldofdypians.com/wod/baseThumb.webp'
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"

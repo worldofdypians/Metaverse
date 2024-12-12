@@ -30,8 +30,7 @@ import ExpiredProfileEvent from "./ExpiredProfileEvent";
 import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
  
 import gate from "./assets/gate.svg"; 
-import baseLogo from "../../../../Home/VideoWrapper/assets/baseLogo.svg";
-import baseThumb from "./assets/baseThumb.webp";
+import baseLogo from "../../../../Home/VideoWrapper/assets/baseLogo.svg"; 
 
 import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
 import dogePopupImage from "./assets/dogePopupImage.png";
@@ -83,8 +82,7 @@ import Countdown from "react-countdown";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
 import ReCaptchaV2 from "react-google-recaptcha";
-import dypius from "./assets/dypIcon.svg";
-import dypiusPremium from "./assets/dypiusPremium16.svg";
+import dypius from "./assets/dypIcon.svg"; 
 
 import upcomingDyp from "./assets/upcomingDyp.webp";
 import upcomingDyp2 from "./assets/dypiuspopup2.png";
@@ -891,7 +889,7 @@ const NewWalletBalance = ({
 
     {
       title: "Dypius Premium",
-      logo: dypiusPremium,
+      logo: 'https://cdn.worldofdypians.com/wod/dypiusPremium16.svg',
       eventStatus: "Expired",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -2235,7 +2233,7 @@ const NewWalletBalance = ({
                         : dummyEvent.id === "event4"
                         ? eventPopupImageBase
                         : dummyEvent.id === "event24"
-                        ? baseThumb
+                        ? 'https://cdn.worldofdypians.com/wod/baseThumb.webp'
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"
