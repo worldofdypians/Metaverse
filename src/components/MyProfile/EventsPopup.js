@@ -1,45 +1,17 @@
 import React from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
-import confluxPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImage.png";
-import eventPopupImageGecko from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImageGecko.png";
-import eventPopupImageMatchain from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImageMatchain.webp";
-
-import upcomingDyp from "../../screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
-import upcomingDyp2 from "../../screens/Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-import dypeventPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/dypEventImage.png";
-import eventPopupImageBase from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImageBase.png";
-import gatePopupImage from "../../screens/Account/src/Components/WalletBalance/assets/gatePopupImage.png";
-import dogePopupImage from "../../screens/Account/src/Components/WalletBalance/assets/dogePopupImage.png";
-import cmcPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/cmcPopupImage.png";
-import upcomingSkale from "../../screens/Account/src/Components/WalletBalance/assets/skalePopupImage.png";
-import victionThumb from "../../screens/Account/src/Components/WalletBalance/assets/victionThumb.png";
-import seiThumb from "../../screens/Account/src/Components/WalletBalance/assets/seiThumb.png";
-import multiversThumb from "../../screens/Account/src/Components/WalletBalance/assets/multiversThumb.png";
-import immutableThumb from "../../screens/Account/src/Components/WalletBalance/assets/immutableThumb.png";
-import easy2stakeThumb from "../../screens/Account/src/Components/WalletBalance/assets/easy2stakeThumb.webp";
-import midleThumb from "../../screens/Account/src/Components/WalletBalance/assets/midleThumb.webp";
-import coreThumb from "../../screens/Account/src/Components/WalletBalance/assets/coreThumb.png";
-import eventPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/eventPopupImage.png";
-import bnbPopupImage from "../../screens/Account/src/Components/WalletBalance/assets/bnbPopupImage.png";
+import Countdown from "react-countdown";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
+
 import twitter from "../../screens/Account/src/Components/WalletBalance/assets/greenTwitter.svg";
 import telegram from "../../screens/Account/src/Components/WalletBalance/assets/greentg.svg";
 import website from "../../screens/Account/src/Components/WalletBalance/assets/greenWebsite.svg";
 import discord from "../../screens/Account/src/Components/WalletBalance/assets/greenDiscord.svg";
 import grayDollar from "../../screens/Account/src/Components/WalletBalance/assets/grayDollar.svg";
 import eventsArrow from "../../screens/Account/src/Components/WalletBalance/assets/eventsArrow.svg";
-import mantaThumb from "../../screens/Account/src/Components/WalletBalance/assets/mantaThumb.png";
-import taikoThumb from "../../screens/Account/src/Components/WalletBalance/assets/taikoThumb.webp";
-import cookie3Thumb from "../../screens/Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
-import chainlinkThumb from "../../screens/Account/src/Components/WalletBalance/assets/chainlinkThumb.webp";
-
-import skalePopupImage from "../../screens/Account/src/Components/WalletBalance/assets/skalePopupImage.png";
-import eventPopupImageDypius2 from "../../screens/Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
 
 import infoIcon from "../../screens/Marketplace/assets/infoIcon.svg";
-
-import Countdown from "react-countdown";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -104,8 +76,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           </div>
           <img
             src={
-              require("../../screens/Account/src/Components/WalletBalance/assets/closeMark.svg")
-                .default
+              'https://cdn.worldofdypians.com/wod/popupXmark.svg'
             }
             alt=""
             style={{ cursor: "pointer" }}
@@ -121,48 +92,48 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
               <img
                 src={
                   dummyEvent.popupInfo?.id === "event5"
-                    ? dypeventPopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/dypEventImage.png'
                     : dummyEvent.popupInfo?.id === "event9"
-                    ? eventPopupImageDypius2
+                    ? 'https://cdn.worldofdypians.com/wod/dypiuspopup2.png'
                     : dummyEvent.popupInfo?.linkState === "coingecko"
-                    ? eventPopupImageGecko
+                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageGecko.png'
                     : dummyEvent.popupInfo.linkState === "gate"
-                    ? gatePopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/gatePopupImage.png'
                     : dummyEvent.popupInfo.linkState === "base"
-                    ? eventPopupImageBase
+                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageBase.png'
                     : dummyEvent.popupInfo.linkState === "doge"
-                    ? dogePopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/dogePopupImage.png'
                     : dummyEvent.popupInfo.linkState === "coinmarketcap"
-                    ? cmcPopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/cmcPopupImage.png'
                     : dummyEvent.popupInfo.linkState === "skale"
-                    ? skalePopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/skalePopupImage.png'
                     : dummyEvent.popupInfo.linkState === "core"
-                    ? coreThumb
+                    ? 'https://cdn.worldofdypians.com/wod/coreThumb.png'
                     : dummyEvent.popupInfo.linkState === "sei"
-                    ? seiThumb
+                    ? 'https://cdn.worldofdypians.com/wod/seiThumb.png'
                     : dummyEvent.popupInfo.linkState === "immutable"
-                    ? immutableThumb
+                    ? 'https://cdn.worldofdypians.com/wod/immutableThumb.png'
                     : dummyEvent.popupInfo.linkState === "viction"
-                    ? victionThumb
+                    ? 'https://cdn.worldofdypians.com/wod/victionThumb.png'
                     : dummyEvent.popupInfo.linkState === "multiversx"
-                    ? multiversThumb
+                    ? 'https://cdn.worldofdypians.com/wod/multiversThumb.png'
                     : dummyEvent.popupInfo.linkState === "bnb"
-                    ? bnbPopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/bnbPopupImage.png'
                     : dummyEvent.popupInfo.linkState === "manta"
-                    ? mantaThumb
+                    ? 'https://cdn.worldofdypians.com/wod/mantaThumb.png'
                     : dummyEvent.popupInfo.linkState === "taiko"
-                    ? taikoThumb
+                    ? 'https://cdn.worldofdypians.com/wod/taikoThumb.webp'
                     : dummyEvent.popupInfo.linkState === "cookie3"
-                    ? cookie3Thumb
+                    ? 'https://cdn.worldofdypians.com/wod/cookie3Thumb.png'
                     : dummyEvent.popupInfo.linkState === "chainlink"
-                    ? chainlinkThumb
+                    ? 'https://cdn.worldofdypians.com/wod/chainlinkThumb.webp'
                     : dummyEvent.popupInfo.linkState === "matchain"
-                    ? eventPopupImageMatchain
+                    ? 'https://cdn.worldofdypians.com/wod/eventPopupImageMatchain.webp'
                     : dummyEvent.popupInfo.linkState === "easy2stake"
-                    ? easy2stakeThumb
+                    ? 'https://cdn.worldofdypians.com/wod/easy2stakeThumb.webp'
                     : dummyEvent.popupInfo.linkState === "midle"
-                    ? midleThumb
-                    : eventPopupImage
+                    ? 'https://cdn.worldofdypians.com/wod/midleThumb.webp'
+                    : 'https://cdn.worldofdypians.com/wod/eventPopupImage.png'
                 }
                 alt=""
                 style={{

@@ -8,15 +8,13 @@ import comingSoon3 from "./assets/comingSoon3.png";
 import comingSoon4 from "./assets/comingSoon4.png";
 import percentageFilled from "./assets/percentageFilled.svg";
 import percentageEmpty from "./assets/percentageEmpty.svg";
-import dypiusIcon from "./assets/dypiusIcon.svg";
-import wodIcon from "./assets/wodIcon.png";
-import premiumIcon from "./assets/premiumIcon.webp";
+import dypiusIcon from "./assets/dypiusIcon.svg"; 
+ 
 import cawsRound from "./assets/cawsRound.png";
 import wodRound from "./assets/wodRound.png";
-import premiumRound from "./assets/premiumIcon.webp";
+ 
 import dypRound from "./assets/dypRound.png";
 
-import completedBg from "./assets/completedBg.png";
 import bnbBg from "./assets/bnbBg.png";
 import mantaBg from "./assets/mantaBg.png";
 
@@ -288,7 +286,7 @@ const NewDailyBonus = ({
       required: true,
     },
     {
-      image: premiumRound,
+      image: 'https://cdn.worldofdypians.com/wod/premiumIcon.webp',
       holder: false,
       message: "Prime Users",
       required: true,
@@ -5675,7 +5673,7 @@ console.log(rewardData)
                         <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                           <img
                             className="d-none d-lg-flex"
-                            src={premiumIcon}
+                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                             style={{ width: 70, height: 70 }}
                             alt=""
                           />
@@ -5949,7 +5947,7 @@ console.log(rewardData)
                         </div>
                         <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
                           <img
-                            src={premiumIcon}
+                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                             style={{ width: 60, height: 60 }}
                             alt=""
                           />
@@ -6204,7 +6202,7 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
                                           ? cawsRound
                                           : item.type === "LAND"
@@ -6270,7 +6268,7 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
                                             ? cawsRound
                                             : item.type === "LAND"
@@ -6412,7 +6410,7 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
                                           ? cawsRound
                                           : item.type === "LAND"
@@ -6478,7 +6476,7 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
                                             ? cawsRound
                                             : item.type === "LAND"
@@ -6605,7 +6603,7 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
                                           ? cawsRound
                                           : item.type === "LAND"
@@ -6671,7 +6669,7 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
                                             ? cawsRound
                                             : item.type === "LAND"
@@ -6798,7 +6796,7 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
                                           ? cawsRound
                                           : item.type === "LAND"
@@ -6864,7 +6862,7 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
                                             ? cawsRound
                                             : item.type === "LAND"
@@ -6991,7 +6989,7 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
                                           ? cawsRound
                                           : item.type === "LAND"
@@ -7057,7 +7055,7 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
                                             ? cawsRound
                                             : item.type === "LAND"

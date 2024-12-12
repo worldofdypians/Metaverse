@@ -783,7 +783,7 @@ const MarketMint = ({
     },
     {
       title: "Enhanced Interactions",
-      icon: "user",
+      icon: "userMint",
     },
     {
       title: "Special Rewards",
@@ -1224,7 +1224,7 @@ const MarketMint = ({
                               {benefits.map((item) => (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
-                                    src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
+                                    src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                     alt=""
                                     style={{
                                       scale:
@@ -1267,7 +1267,7 @@ const MarketMint = ({
                             </div>
                           </div>
                           <img
-                            src={require(`../../components/TimepieceMint/assets/${selectedMint?.mobileBg}`)}
+                            src={`https://cdn.worldofdypians.com/wod/${selectedMint?.mobileBg}`}
                             className="smaillmintbg d-block d-xl-none d-xxl-none d-lg-none"
                             alt=""
                           />

@@ -587,7 +587,7 @@ const MyProfile = ({
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
-                          <img src={"https://cdn.worldofdypians.com/wod/wodLogosvg"} width={20} height={20} alt="" />
+                          <img src={"https://cdn.worldofdypians.com/wod/wodToken.svg"} width={20} height={20} alt="" />
                           <h6 className="mb-0">
                             {getFormattedNumber(wodBalance, 2)}
                           </h6>

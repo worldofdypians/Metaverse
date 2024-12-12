@@ -18,16 +18,14 @@ import dailyBonusActive from "./myrewardsAssets/newAssets/dailyBonusActive.png";
 
 import treasureHunt from "./myrewardsAssets/newAssets/treasureHunt.png";
 import treasureHuntActive from "./myrewardsAssets/newAssets/treasureHuntActive.png";
-
-import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg"; 
+ 
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
 import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg"; 
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
-import easy2stakeLogo from "../WalletBalance/assets/easy2stakeLogo.svg";
+import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg"; 
 import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.svg";
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
@@ -1590,7 +1588,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={baseLogo}
+                      src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1603,7 +1601,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={easy2stakeLogo}
+                      src={'https://cdn.worldofdypians.com/wod/easy2stakeLogo.svg'}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />

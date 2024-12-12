@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./_walletbalance.scss";  
-import avaxIcon from "./assets/avaxIcon.svg";
-import dypIcon from "./assets/dypIcon.svg";
+import "./_walletbalance.scss"; 
+
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import idyp from "../../Images/userProfile/idyp.svg";
 import axios from "axios";
@@ -20,7 +19,6 @@ import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 
 import wodCoin from "./newAssets/wodCoin.svg";
-
 
 const Portfolio = ({
   dypBalance,
@@ -79,7 +77,7 @@ const Portfolio = ({
   myTaikoNfts,
   myCookieNfts,
   wodBalance,
-  mySeiNfts
+  mySeiNfts,
 }) => {
   const [userRank, setUserRank] = useState("");
   const [genesisRank, setGenesisRank] = useState("");
@@ -560,7 +558,6 @@ const Portfolio = ({
         );
       }
 
-      
       if (myMatNfts && myMatNfts.length > 0) {
         await Promise.all(
           myMatNfts.map(async (i) => {
@@ -860,7 +857,6 @@ const Portfolio = ({
           })
         );
       }
-
 
       if (mySkaleNfts && mySkaleNfts.length > 0) {
         await Promise.all(
@@ -1772,8 +1768,6 @@ const Portfolio = ({
                       Connect your wallet to view your favorite NFTs.
                     </span>
                   )}
-
-                
                 </div>
               )}
 
@@ -2038,8 +2032,6 @@ const Portfolio = ({
                       Connect your wallet to view your NFTs.
                     </span>
                   )}
-
-                  
                 </div>
               )}
 
@@ -2141,8 +2133,6 @@ const Portfolio = ({
                       Connect your wallet to view your staked NFTs.
                     </span>
                   )}
-
-                
                 </div>
               )}
 
@@ -2221,7 +2211,6 @@ const Portfolio = ({
                       Connect your wallet to view your listed NFTs.
                     </span>
                   )}
-                
                 </div>
               )}
 
@@ -2229,12 +2218,21 @@ const Portfolio = ({
                 <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
-                      <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" className="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/eth.svg"}
+                        alt=""
+                        className=""
+                      />
                       <span className="eth-chain-text">Ethereum</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
                       <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="dyp" className="dyp-icon" />
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
+                          alt="dyp"
+                          className="dyp-icon"
+                          style={{ height: 16, width: 16 }}
+                        />
                         <h6 className="wallet-amount mb-0">
                           {getFormattedNumber(dypBalance, 2)}
                         </h6>
@@ -2288,12 +2286,21 @@ const Portfolio = ({
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" className="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                        alt=""
+                        className=""
+                      />
                       <span className="bnb-chain-text">BNB Chain</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
                       <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="dyp" className="dyp-icon" />
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
+                          alt="dyp"
+                          className="dyp-icon"
+                          style={{ height: 16, width: 16 }}
+                        />
                         <h6 className="wallet-amount mb-0">
                           {getFormattedNumber(dypBalancebnb, 2)}
                         </h6>
@@ -2356,12 +2363,17 @@ const Portfolio = ({
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img src={avaxIcon} alt="" className="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" className="" />
                       <span className="avax-chain-text">Avalanche</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
                       <div className="d-flex align-items-center gap-2">
-                        <img src={dypIcon} alt="dyp" className="dyp-icon" />
+                        <img
+                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
+                          alt="dyp"
+                          className="dyp-icon"
+                          style={{ height: 16, width: 16 }}
+                        />
                         <h6 className="wallet-amount mb-0">
                           {getFormattedNumber(dypBalanceavax, 2)}
                         </h6>
@@ -2945,8 +2957,8 @@ const Portfolio = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
-                                window.config.nft_mat_address
-                              ? "mat"
+                                  window.config.nft_mat_address
+                                ? "mat"
                                 : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
@@ -3025,17 +3037,15 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-
                                     : nft.nftAddress ===
                                       window.config.nft_mat_address
                                     ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
-                                    
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_sei_address
-                                  ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
+                                      window.config.nft_sei_address
+                                    ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_opbnb_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+50.png`
@@ -3137,8 +3147,8 @@ const Portfolio = ({
                                       window.config.nft_cookie3_address
                                     ? "CKBP"
                                     : nft.nftAddress ===
-                                    window.config.nft_sei_address
-                                  ? "SEBP"
+                                      window.config.nft_sei_address
+                                    ? "SEBP"
                                     : "CAWS Timepiece"}{" "}
                                   {nft.nftAddress ===
                                   window.config.nft_immutable_address
@@ -3324,14 +3334,14 @@ const Portfolio = ({
                                   window.config.nft_taiko_address
                                 ? "taiko"
                                 : nft.nftAddress ===
-                                window.config.nft_mat_address
-                              ? "mat"
+                                  window.config.nft_mat_address
+                                ? "mat"
                                 : nft.nftAddress ===
                                   window.config.nft_cookie3_address
                                 ? "cookie3"
                                 : nft.nftAddress ===
-                                window.config.nft_sei_address
-                              ? "sei"
+                                  window.config.nft_sei_address
+                                ? "sei"
                                 : "timepiece",
                             // isOwner:
                             //   isVerified && email
@@ -3424,17 +3434,15 @@ const Portfolio = ({
                                     : nft.nftAddress ===
                                       window.config.nft_taiko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+50.png`
-
                                     : nft.nftAddress ===
                                       window.config.nft_mat_address
                                     ? `https://cdn.worldofdypians.com/media/matchbp50x50.png`
-
                                     : nft.nftAddress ===
                                       window.config.nft_cookie3_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+50.png`
                                     : nft.nftAddress ===
-                                    window.config.nft_sei_address
-                                  ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
+                                      window.config.nft_sei_address
+                                    ? `https://cdn.worldofdypians.com/media/seibp50x50.png`
                                     : nft.nftAddress ===
                                       window.config.nft_coingecko_address
                                     ? `https://dypmeta.s3.us-east-2.amazonaws.com/50x50_cg_pass.png`

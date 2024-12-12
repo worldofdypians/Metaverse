@@ -7,8 +7,8 @@ import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
-import { ERC20_ABI, iDYP_3500_ABI, WOD_ABI } from "../../web3/abis";
-import _, { chain } from "lodash";
+import { ERC20_ABI } from "../../web3/abis";
+import _  from "lodash";
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
@@ -17,12 +17,8 @@ import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import OutsideClickHandler from "react-outside-click-handler";
-import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
-import dappsIcon from "../../Images/premium/dappsIcon.svg";
-import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
-import greenCheck from "../../Images/premium/greenCheck.svg";
-import premiumIcon from "../../Images/premium/premiumIcon.webp";
+import xMark from "../../Components/WalletBalance/newAssets/xMark.svg"; 
+ 
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -31,25 +27,17 @@ import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
-import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
 
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";  
 
-import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
-import {
-  dyp700Address,
-  dyp700v1Address,
-  idyp3500Address,
-  dragonRuinsAddress,
-} from "../../web3";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+
+import { useLocation, useNavigate } from "react-router-dom";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 import {
@@ -67,14 +55,6 @@ import {
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 
-import dailyChestsBg from "../../Components/PremiumPopup/assets/dailyChestsBg.webp";
-import exclusiveBg from "../../Components/PremiumPopup/assets/exclusiveBg.webp";
-import extraDailyStarsBg from "../../Components/PremiumPopup/assets/extraDailyStarsBg.webp";
-import increasedRewardsBg from "../../Components/PremiumPopup/assets/increasedRewardsBg.webp";
-import prioritySupportBg from "../../Components/PremiumPopup/assets/prioritySupportBg.webp";
-import privateEventsBg from "../../Components/PremiumPopup/assets/privateEventsBg.webp";
-import treasureHuntBg from "../../Components/PremiumPopup/assets/treasureHuntBg.webp";
-
 import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
 import RankPopup from "../../../../../components/MyProfile/RankPopup";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
@@ -84,7 +64,7 @@ import {
   GOLDEN_PASS_ABI,
   golden_pass_address,
 } from "../../../../../components/NewEvents/abi";
-import { WbIncandescentTwoTone } from "@mui/icons-material";
+
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -201,34 +181,35 @@ function Dashboard({
     borderColor: "#554fd8",
   };
 
+
   const allBenefits = [
     {
       title: "Exclusive access to the game",
-      image: exclusiveBg,
+      image: "https://cdn.worldofdypians.com/wod/exclusiveBg.webp",
     },
     {
       title: "Unlock All Daily Bonus Chests",
-      image: dailyChestsBg,
+      image: "https://cdn.worldofdypians.com/wod/dailyChestsBg.webp",
     },
     {
       title: "Unlimited Treasure Hunts",
-      image: treasureHuntBg,
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntBg.webp",
     },
     {
       title: "Increased Rewards",
-      image: increasedRewardsBg,
+      image: "https://cdn.worldofdypians.com/wod/increasedRewardsBg.webp",
     },
     {
       title: "Earn Extra Daily Stars",
-      image: extraDailyStarsBg,
+      image: "https://cdn.worldofdypians.com/wod/extraDailyStarsBg.webp",
     },
     {
       title: "Access to Private Events",
-      image: privateEventsBg,
+      image: "https://cdn.worldofdypians.com/wod/privateEventsBg.webp",
     },
     {
       title: "Priority Support",
-      image: prioritySupportBg,
+      image: "https://cdn.worldofdypians.com/wod/prioritySupportBg.webp",
     },
   ];
 
@@ -11577,7 +11558,7 @@ function Dashboard({
                       )}
                     </div>
                     <img
-                      src={premiumIcon}
+                      src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                       alt=""
                       className="already-preium-badge"
                     />
@@ -11605,8 +11586,7 @@ function Dashboard({
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
-                              require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                .default
+                              'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                             }
                             style={{ width: 18, height: 18 }}
                             alt=""
@@ -11656,8 +11636,7 @@ function Dashboard({
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
-                              require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                .default
+                             'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
                             }
                             style={{ width: 18, height: 18 }}
                             alt=""
@@ -11669,7 +11648,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={baseLogo}
+                            src={'https://cdn.worldofdypians.com/wod/base.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11688,7 +11667,7 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={skaleIcon}
+                            src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11697,7 +11676,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={coreIcon}
+                            src={'https://cdn.worldofdypians.com/wod/core.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11705,7 +11684,7 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={vicitonIcon}
+                            src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11715,7 +11694,7 @@ function Dashboard({
                         </div>
                       </div>
                       <img
-                        src={premiumIcon}
+                        src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                         alt=""
                         className="already-preium-badge"
                       />
@@ -11777,7 +11756,7 @@ function Dashboard({
                                     />
                                     {chainDropdown.name}
                                   </div>
-                                  <img src={launchpadIndicator} alt="" />
+                                  <img src={'https://cdn.worldofdypians.com/wod/launchpadIndicator.svg'} alt="" />
                                 </button>
                                 <ul className="dropdown-menu w-100">
                                   <li
@@ -11799,8 +11778,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                          .default
+                                       'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11848,8 +11826,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/mantaIcon.svg`)
-                                          .default
+                                       'https://cdn.worldofdypians.com/wod/manta.png'
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11864,8 +11841,7 @@ function Dashboard({
                                       >
                                         <img
                                           src={
-                                            require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                              .default
+                                           'https://cdn.worldofdypians.com/wod/taiko.svg'
                                           }
                                           style={{ width: 18, height: 18 }}
                                           alt=""
@@ -11880,8 +11856,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                          .default
+                                        'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11893,7 +11868,7 @@ function Dashboard({
                                     onClick={handleBasePool}
                                   >
                                     <img
-                                      src={baseLogo}
+                                      src={'https://cdn.worldofdypians.com/wod/base.svg'}
                                       alt=""
                                       style={{
                                         width: "18px",
@@ -11923,7 +11898,7 @@ function Dashboard({
                                         onClick={handleSkalePool}
                                       >
                                         <img
-                                          src={skaleIcon}
+                                          src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -11940,7 +11915,7 @@ function Dashboard({
                                         onClick={handleCorePool}
                                       >
                                         <img
-                                          src={coreIcon}
+                                          src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -11957,7 +11932,7 @@ function Dashboard({
                                         onClick={handleVictionPool}
                                       >
                                         <img
-                                          src={vicitonIcon}
+                                          src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -12019,7 +11994,7 @@ function Dashboard({
                                             {/* {dropdownTitle} */}
                                           </div>
                                           <img
-                                            src={launchpadIndicator}
+                                            src={'https://cdn.worldofdypians.com/wod/launchpadIndicator.svg'}
                                             alt=""
                                           />
                                         </button>
