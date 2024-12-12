@@ -4,7 +4,7 @@ const VideoPopup = ({videoLink, closeOverlay}) => {
   return (
     <div className="overlay">
     <div className="overlay-content">
-        {/* <img src={videoBorder} alt="" className="video-border" /> */}
+
       <iframe
       className='video-player'
         src={`https://www.youtube.com/embed/${videoLink}`}

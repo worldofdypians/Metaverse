@@ -17,7 +17,7 @@ import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
 import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
 import { ethers } from "ethers";
 import axios from "axios";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+
 import "./_getpremium.scss";
 import dailyChestsBg from "./assets/dailyChestsBg.webp";
 import exclusiveBg from "./assets/exclusiveBg.webp";
@@ -2603,7 +2603,7 @@ const GetPremiumPopup = ({
             <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
               <div className="premiumRedTag position-absolute">
                 <div className="position-relative d-flex flex-column">
-                  <img src={premiumRedTag} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/redPremiumTag.svg"} alt="" />
                   <div className="d-flex flex-column position-absolute discountwrap">
                     <span className="discount-price2 font-oxanium">
                       {discountPercentage > 0

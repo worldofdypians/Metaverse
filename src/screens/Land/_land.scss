@@ -1,7 +1,7 @@
 .land-main-wrapper {
   gap: 80px;
   max-width: 2400px;
-  background-image: url("../../assets/siteBackground.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/siteBackground.webp");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   overflow-x: hidden;
@@ -227,7 +227,7 @@
     position: relative;
 
     @media screen and (max-width: 991px) {
-      background-image: url("../../assets/landAssets/newGenesisBg.webp");
+      background-image: url("https://cdn.worldofdypians.com/wod/newGenesisBg.webp");
       background-size: cover;
       background-repeat: no-repeat;
     }
@@ -347,7 +347,7 @@
     top: 0;
     margin: auto;
     // background: linear-gradient(126.67deg, #181636 35.2%, #7133e5 191.04%);
-    background-image: url("../../assets/landAssets/genesis-hero.png");
+    background-image: url("https://cdn.worldofdypians.com/wod/genesis-hero.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
@@ -698,7 +698,7 @@
   }
 
   .genesis-land {
-    background-image: url("../../assets/landAssets/landNft.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/landNft.webp");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1213,7 +1213,7 @@ font-weight: 800;
 
 
 .genesis-land-game {
-  background-image: url("../../assets/landAssets/landNft.webp") !important;
+  background-image: url("https://cdn.worldofdypians.com/wod/landNft.webp") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center !important;

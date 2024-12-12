@@ -4,7 +4,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import ToolTip from "../../screens/Caws/elements/ToolTip";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
- 
+
 import axios from "axios";
 
 const TimePieceMint = ({
@@ -283,8 +283,7 @@ const TimePieceMint = ({
                     width={18}
                     height={18}
                     src={
-                      require("../../assets/landAssets/alert-triangle.svg")
-                        .default
+                      "https://cdn.worldofdypians.com/wod/alert-triangle.svg"
                     }
                     alt=""
                   />{" "}

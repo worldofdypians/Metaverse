@@ -10,7 +10,7 @@ const NftCardPlaceholder = ({count, flag}) => {
         <div className="d-flex flex-column align-items-start justify-content-between gap-3">
           <div className="d-flex align-items-start">
             <img
-              src={require("../../assets/landAssets/landNft.webp")}
+              src={"https://cdn.worldofdypians.com/wod/landNft.webp"}
               alt="news image"
               className="nft-image"
             />

@@ -4,8 +4,7 @@ import axios from "axios";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import useWindowSize from "../../../hooks/useWindowSize";
 import Slider from "react-slick";
-import NewsCard from "../../../components/NewsCard/NewsCard";
-import nextButton from "../../../assets/landAssets/nextButton.svg";
+
 
 
 const GameUpdates = () => {
@@ -394,7 +393,7 @@ const GameUpdates = () => {
                 style={{ position: "static" }}
               >
                 <img
-                  src={nextButton}
+                  src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                   className="prev-button"
                   width={40}
                   height={40}
@@ -403,7 +402,7 @@ const GameUpdates = () => {
                   onClick={previous}
                 />
                 <img
-                  src={nextButton}
+                  src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                   className="next-button"
                   width={40}
                   height={40}
@@ -461,7 +460,7 @@ const GameUpdates = () => {
               <div className="d-flex justify-content-end mt-3">
                 <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
                   <img
-                    src={nextButton}
+                    src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                     className="prev-button"
                     style={{ opacity: "0.8" }}
                     width={40}
@@ -470,7 +469,7 @@ const GameUpdates = () => {
                     onClick={previous}
                   />
                   <img
-                    src={nextButton}
+                    src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                     className="next-button"
                     style={{ opacity: "0.8" }}
                     width={40}

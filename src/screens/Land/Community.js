@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import nextButton from "../../assets/landAssets/nextButton.svg";
+
 import ComunityNewsCard from "../../components/CommunityNewsCard/ComunityNewsCard";
 import Slider from "react-slick";
 import axios from "axios";
@@ -110,7 +110,7 @@ const Community = () => {
       </Slider>
       <div className="d-flex align-items-center gap-3 slider-buttons-wrapper">
         <img
-          src={nextButton}
+          src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
           className="prev-button"
           width={40}
           height={40}
@@ -118,7 +118,7 @@ const Community = () => {
           onClick={previous}
         />
         <img
-          src={nextButton}
+          src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
           className="next-button"
           width={40}
           height={40}

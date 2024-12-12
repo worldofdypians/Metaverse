@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
-import genesisBg from "../../assets/landAssets/genesisBg.svg";
+
+
 import ToolTip from "../Caws/elements/ToolTip";
 import wodLogo from "../Caws/assets/wodLogo.png";
 import Countdown from "react-countdown";
@@ -676,7 +676,7 @@ const LandStaking = ({
             style={{ minHeight: "463px" }}
           >
             <img
-              src={require("../../assets/landAssets/genesis-hero.png")}
+              src={"https://cdn.worldofdypians.com/wod/genesis-hero.png"}
               alt=""
               className="minthero d-none d-xl-flex d-lg-flex"
             />
@@ -946,9 +946,7 @@ const LandStaking = ({
               <img
                 width={18}
                 height={18}
-                src={
-                  require("../../assets/landAssets/alert-triangle.svg").default
-                }
+                src={"https://cdn.worldofdypians.com/wod/alert-triangle.svg"}
                 alt=""
               />{" "}
               Staking is expired. Please claim your rewards and unstake your
@@ -963,7 +961,7 @@ const LandStaking = ({
                   <div className="d-flex align-items-start align-items-lg-center gap-xxl-3 gap-lg-3 gap-md-3 gap-2">
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={mintEthIcon}
+                        src={"https://cdn.worldofdypians.com/wod/mintEthIcon.svg"}
                         width={20}
                         height={20}
                         alt="ethereum"

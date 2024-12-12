@@ -3,7 +3,7 @@ import _ from "lodash";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import X from "../../assets/x_close.png";
+
 import "../Caws/NftMinting/NftStakeChecklistModal/_nftStakeChecklistModal.scss";
 import useWindowSize from '../../hooks/useWindowSize'
 import TimepiecePlaceHolder from "./TimepiecePlaceHolder";
@@ -62,7 +62,7 @@ const TimepieceChecklistModal = ({
               </h6>
             </div>
             <img
-              src={X}
+              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
               alt=""
               className="position-absolute"
               onClick={() => {

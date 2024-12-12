@@ -65,7 +65,7 @@ import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -763,7 +763,7 @@ const ProfileCard = ({
                           <div className="premiumRedTag-profile position-absolute">
                             <div className="position-relative d-flex flex-column">
                               <img
-                                src={premiumRedTag}
+                                src={"https://cdn.worldofdypians.com/wod/redPremiumTag.svg"}
                                 alt=""
                                 className="premiumtag-img"
                               />

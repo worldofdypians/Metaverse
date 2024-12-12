@@ -50,7 +50,6 @@ import {
   dragonRuinsAddress,
 } from "../../web3";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 import {
@@ -11467,7 +11466,7 @@ function Dashboard({
                   <div className="premium-gold-popup mt-3 p-3 position-relative d-flex align-items-center justify-content-between">
                     <div className="premiumRedTag position-absolute">
                       <div className="position-relative d-flex flex-column">
-                        <img src={premiumRedTag} alt="" />
+                        <img src={"https://cdn.worldofdypians.com/wod/redPremiumTag.svg"} alt="" />
                         <div className="d-flex flex-column position-absolute discountwrap">
                           <span className="discount-price2 font-oxanium">
                             {discountPercentage > 0

@@ -16,7 +16,6 @@ import NewsModal from "../../components/NewsCard/NewsModal";
 import Slider from "react-slick";
 import { useRef } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
-import nextButton from "../../assets/landAssets/nextButton.svg";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -487,7 +486,7 @@ const News = (props) => {
                 style={{ position: "static" }}
               >
                 <img
-                  src={nextButton}
+                  src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                   className="prev-button"
                   width={40}
                   height={40}
@@ -496,7 +495,7 @@ const News = (props) => {
                   onClick={previous}
                 />
                 <img
-                  src={nextButton}
+                  src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                   className="next-button"
                   width={40}
                   height={40}
@@ -528,7 +527,7 @@ const News = (props) => {
               <div className="d-flex justify-content-end mt-3">
                 <div className="d-flex align-items-center gap-3 slider-buttons-wrapper mb-3 mb-lg-0">
                   <img
-                    src={nextButton}
+                    src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                     className="prev-button"
                     style={{ opacity: "0.8" }}
                     width={40}
@@ -537,7 +536,7 @@ const News = (props) => {
                     onClick={previous}
                   />
                   <img
-                    src={nextButton}
+                    src={"https://cdn.worldofdypians.com/wod/nextButton.svg"}
                     className="next-button"
                     style={{ opacity: "0.8" }}
                     width={40}
