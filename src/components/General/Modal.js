@@ -1,8 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Close from "./close.svg";
-import statsIcon from "./statsIcon.svg";
-import withdrawIcon from "./withdrawIcon.svg";
 
 
 const Modal = ({
@@ -38,7 +35,7 @@ const Modal = ({
           {/* <img src={require("../../../Assets/General/times-icon.svg").default} alt="" aria-hidden="true" className="close" data-dismiss="modal" aria-label="Close" /> */}
           {(title === "stats" || title === "withdraw") && (
             <div className="d-flex align-items-center ps-4 pt-4 gap-2">
-              <img src={title === "stats" ? statsIcon : title === "withdraw" ? withdrawIcon : null} height={25} width={25} alt="" />
+              <img src={title === "stats" ? "https://cdn.worldofdypians.com/wod/statsIconModal.svg" : title === "withdraw" ? "https://cdn.worldofdypians.com/wod/withdrawIcon.svg" : null} height={25} width={25} alt="" />
 
               <h6
                 style={{
@@ -68,7 +65,7 @@ const Modal = ({
             aria-label="Close"
             className="close-btn walletclose"
           >
-            <img src={Close} alt="" className="close-icon" />
+            <img src={"https://cdn.worldofdypians.com/wod/xMark.svg"} alt="" className="close-icon" />
           </span>
           {children}
         </div>

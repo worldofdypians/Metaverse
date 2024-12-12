@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./_domainmodal.scss";
-import domainIcon from "./assets/domainIcon.svg"; 
-import searchIconDomain from "./assets/searchIconDomain.svg";
-import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-
-import bnbIcon from "./assets/bnbIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import useWindowSize from "../../hooks/useWindowSize";
-import successMark from "./assets/successMark.svg";
+
 
 const DomainModal = ({
   onClose,
@@ -79,7 +74,7 @@ const DomainModal = ({
             </p>
             <div className="position-relative w-100 mt-3">
               <img
-                src={searchIconDomain}
+                src={"https://cdn.worldofdypians.com/wod/searchIconDomain.svg"}
                 className="domain-search-icon"
                 alt=""
               />
@@ -130,7 +125,7 @@ const DomainModal = ({
             <div className="d-flex align-items-center gap-2">
               <span className="domain-register mb-0">Register now</span>
               <img
-                src={registerDomainIcon}
+                src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"}
                 width={10}
                 height={10}
                 alt=""
@@ -205,7 +200,7 @@ const DomainModal = ({
                           Register now
                         </span>
                         <img
-                          src={registerDomainIcon}
+                          src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"}
                           width={10}
                           height={10}
                           alt=""
@@ -330,7 +325,7 @@ const DomainModal = ({
                         </span>
                         <div className="d-flex align-items-center gap-2">
                           <div className="d-flex align-items-center gap-1">
-                            <img src={bnbIcon} alt="" />
+                            <img src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"} alt="" />
                             <span className="domain-bnb-value mb-0">
                               {getFormattedNumber(price * registrationYear, 2)}
                             </span>
@@ -386,7 +381,7 @@ const DomainModal = ({
               </h6>
             </div>
             <div className="d-flex w-100 justify-content-center mb-4">
-              <img src={successMark} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/successMark.svg"} alt="" />
             </div>
             <div className="d-flex w-100 justify-content-center">
               <p
@@ -405,7 +400,7 @@ const DomainModal = ({
               </h6>
             </div>
             <div className="d-flex w-100 justify-content-center mb-4">
-              <img src={require("./assets/failMark.svg").default} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/failMarkDomain.svg"} alt="" />
             </div>
             <div className="d-flex w-100 justify-content-center">
               <p
@@ -466,7 +461,7 @@ const DomainModal = ({
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"} width={10} height={10} alt="" />
               </div>
             </div>
         </div>
@@ -496,7 +491,7 @@ const DomainModal = ({
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"} width={10} height={10} alt="" />
               </div>
             </div>
         </div>
@@ -526,7 +521,7 @@ const DomainModal = ({
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"} width={10} height={10} alt="" />
               </div>
             </div>
         </div>
@@ -559,7 +554,7 @@ const DomainModal = ({
               </div>
               <div className="d-flex align-items-center gap-2">
                 <span className="domain-register mb-0">Register now</span>
-                <img src={registerDomainIcon} width={10} height={10} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/registerDomainIcon.svg"} width={10} height={10} alt="" />
               </div>
             </div>
           </div>
@@ -586,7 +581,7 @@ const DomainModal = ({
                 </span>
                 <div className="d-flex align-items-center gap-2">
                   <div className="d-flex align-items-center gap-1">
-                    <img src={bnbIcon} alt="" />
+                    <img src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"} alt="" />
                     <span className="domain-bnb-value mb-0">0.025</span>
                   </div>
                   <span className="domain-usd-value mb-0">$100.00</span>
