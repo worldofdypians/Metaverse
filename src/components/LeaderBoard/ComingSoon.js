@@ -1,7 +1,6 @@
 import React from "react";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import "./_leaderboard.scss";
-import playerAvatar from "./assets/userAvatar2.png";
+import "./_leaderboard.scss"; 
 
 const ComingSoon = ({ optionText, data }) => {
   const placeholderplayerData = [
@@ -102,7 +101,7 @@ const ComingSoon = ({ optionText, data }) => {
                 </td>
                 <td className="playerName col-5">
                   <div className="position-relative d-flex align-items-center">
-                    <img src={playerAvatar} alt="" className="playerAvatar" />{" "}
+                    <img src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'} alt="" className="playerAvatar" />{" "}
                     {item.displayName}
                   </div>
                 </td>

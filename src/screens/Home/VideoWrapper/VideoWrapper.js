@@ -183,7 +183,7 @@ const VideoWrapper = ({
     <>
       <div className="video-wrapper position-relative">
         {/* <div
-          className="row leaderboard-bg gap-4 gap-lg-0"
+          className="row gap-4 gap-lg-0"
          
         > */}
         <div className="">
