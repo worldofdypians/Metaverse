@@ -1923,7 +1923,7 @@ const NewEvents = ({
       "The event runs exclusively on Fridays and requires holding at least 400 WOD to participate.",
       "To access the event, go to the Teleport Station and find the right portal or go directly to the BNB Chain area.",
       "Players must find their way to the maze’s center and destroy the gem to earn rewards.",
-      "Rewards include up to 200,000 points, 800 stars, and $10.",
+      "Rewards include up to 200,000 points, 800 stars, and $100.",
     ],
 
     tips: [

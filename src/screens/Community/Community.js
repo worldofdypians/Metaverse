@@ -1,34 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./_community.scss";
-import testBanner from "./assets/testBanner.png";
-import calendar from "./assets/calendar.svg";
-import entryCampaign from "./assets/entryCampaign.webp";
-import bnbExpedition from "./assets/bnbExpedition.webp";
-import dailyGameDelight from "./assets/dailyGameDelight.webp";
-import dypiansDiscovery from "./assets/dypiansDiscovery.webp";
 import { NavLink, useNavigate } from "react-router-dom";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
-import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
-import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg"; 
-import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
-import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
- 
-import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
-
-
-import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
-import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png"; 
 import ActiveProfileEvent from "../Account/src/Components/WalletBalance/ActiveProfileEvent";
-import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";
-import discord from "./assets/discord.png";
-import youtube from "./assets/youtube.png";
-import twitter from "./assets/twitter.png";
-import telegram from "./assets/telegram.png";
-import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
-import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
-import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
-import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
+import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";   
 import OutsideClickHandler from "react-outside-click-handler";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "styled-components";
@@ -37,10 +12,24 @@ import axios from "axios";
 import validateEmail from "../../hooks/validateEmail";
 import Countdown from "react-countdown";
 
-import victionLogo from "../Home/VideoWrapper/assets/victionLogo.svg";
+import calendar from "./assets/calendar.svg";
+import entryCampaign from "./assets/entryCampaign.webp";
+import bnbExpedition from "./assets/bnbExpedition.webp";
+import dailyGameDelight from "./assets/dailyGameDelight.webp";
+import dypiansDiscovery from "./assets/dypiansDiscovery.webp"; 
+import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
+import discord from "./assets/discord.png";
+import youtube from "./assets/youtube.png";
+import twitter from "./assets/twitter.png";
+import telegram from "./assets/telegram.png";
+import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
+import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
+import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
+import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
 import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
-import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import coreBg from "../Home/VideoWrapper/assets/coreBg.webp";
+
+import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import opbnbCampaign from './assets/opbnbCampaign.png'
 import wodFestive from './assets/wodfestive.webp'
 
@@ -140,7 +129,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
 
     {
       title: "Manta",
-      logo: bnblogo,
+      logo: 'https://cdn.worldofdypians.com/wod/manta.png',
       eventStatus: "Live",
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
@@ -170,7 +159,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Immutable",
-      logo: immutableLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/immutable.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in IMX Rewards",
       myEarnings: 0.0,
@@ -263,7 +252,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "CORE",
-      logo: coreLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/core.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
@@ -327,7 +316,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "VICTION",
-      logo: victionLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/viction.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
@@ -343,7 +332,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "viction",
         rewards: "VIC",
         status: "Expired",
-        logo: victionLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/viction.svg',
         backgroundImage: victionBg,
         date: "Jul 01, 2024",
 
@@ -361,14 +350,14 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Dypius Premium",
-      logo: dypius,
+      logo: 'https://cdn.worldofdypians.com/wod/dypius.svg',
       eventStatus: "Expired",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Feb 26, 2024",
       date: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/dypiuspopup2.png',
       eventDuration: dypius2LastDay,
       activeTab: "dypiusv2",
       popupInfo: {
@@ -492,7 +481,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     // },
     {
       title: "CoinGecko",
-      logo: coingecko,
+      logo: 'https://cdn.worldofdypians.com/wod/coingeckoIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -521,7 +510,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Dypius",
-      logo: dypius,
+      logo: 'https://cdn.worldofdypians.com/wod/dypius.svg',
       eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
@@ -548,7 +537,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Gate.io",
-      logo: gate,
+      logo: 'https://cdn.worldofdypians.com/wod/gateTreasureHunt.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,

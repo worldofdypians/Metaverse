@@ -4,7 +4,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import ToolTip from "../../screens/Caws/elements/ToolTip";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
- 
+
 import axios from "axios";
 
 const TimePieceMint = ({
@@ -222,7 +222,7 @@ const TimePieceMint = ({
           style={{ minHeight: "463px" }}
         >
           <img
-            src={require("./assets/timepiecehero.webp")}
+            src={"https://cdn.worldofdypians.com/wod/timepiecehero.webp"}
             alt=""
             className="minthero d-none d-xl-flex d-lg-flex"
           />
@@ -238,7 +238,7 @@ const TimePieceMint = ({
               {benefits.map((item) => (
                 <div className="d-flex align-items-center gap-2">
                   <img
-                    src={require(`./assets/${item.icon}.png`)}
+                    src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                     alt=""
                     style={{ scale: item.icon === "expand" ? "0.8" : "1" }}
                   />
@@ -283,8 +283,7 @@ const TimePieceMint = ({
                     width={18}
                     height={18}
                     src={
-                      require("../../assets/landAssets/alert-triangle.svg")
-                        .default
+                      "https://cdn.worldofdypians.com/wod/alert-triangle.svg"
                     }
                     alt=""
                   />{" "}

@@ -1,56 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_newdailybonus.scss";
-
-
-import comingSoon from "./assets/comingSoon.png";
-import comingSoon2 from "./assets/comingSoon2.png";
-import comingSoon3 from "./assets/comingSoon3.png";
-import comingSoon4 from "./assets/comingSoon4.png";
-import percentageFilled from "./assets/percentageFilled.svg";
-import percentageEmpty from "./assets/percentageEmpty.svg";
-import dypiusIcon from "./assets/dypiusIcon.svg";
-import wodIcon from "./assets/wodIcon.png";
-import premiumIcon from "./assets/premiumIcon.webp";
-import cawsRound from "./assets/cawsRound.png";
-import wodRound from "./assets/wodRound.png";
-import premiumRound from "./assets/premiumIcon.webp";
-import dypRound from "./assets/dypRound.png";
-
-import completedBg from "./assets/completedBg.png";
-import bnbBg from "./assets/bnbBg.png";
-import mantaBg from "./assets/mantaBg.png";
-
-import skaleBg from "./assets/skaleBg.png";
-import coreBg from "./assets/coreBg.png";
-import taikoBg from "./assets/taikoBg.png";
-import victionBg from "./assets/victionBg.png";
-import winConfetti from "./assets/winConfetti.png";
-import coreIcon from "./assets/coreIcon.svg";
-import victionIcon from "./assets/victionIcon.svg";
-import emptyXmark from "./assets/emptyXmark.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
-import greenCheck from "./assets/greenCheck.svg";
-import infoIcon from "./assets/infoIcon.svg";
-import skaleIcon from "./assets/skaleIcon.svg"; 
-import taiko from "./assets/taikoIcon.svg";
-import baseLogo from "./assets/base.svg";
-
-import seiIcon from "./assets/seiIcon.svg";
-import danger from "./assets/danger.svg";
-import warning from "./assets/warning.svg";
-import redX from "./assets/redX.svg";
-import NewChestItem from "./NewChestItem";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { styled } from "@mui/material";
-import useWindowSize from "../../hooks/useWindowSize";
-import Slider from "react-slick";
-import successSound from "./assets/success.mp3";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
 import BuyNftPopup from "./BuyNftPopup";
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
+import NewChestItem from "./NewChestItem";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material";
+import useWindowSize from "../../hooks/useWindowSize";
+import Slider from "react-slick";
+import successSound from "./assets/success.mp3";
+   
+
+
+
+
+
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -276,25 +243,25 @@ const NewDailyBonus = ({
 
   const winDangerItems = [
     {
-      image: wodRound,
+      image: 'https://cdn.worldofdypians.com/wod/wodRound.png',
       holder: false,
       message: "Hold >1 CAWS NFT",
       required: true,
     },
     {
-      image: wodRound,
+      image: 'https://cdn.worldofdypians.com/wod/wodRound.png',
       holder: true,
       message: "Hold Genesis NFT",
       required: true,
     },
     {
-      image: premiumRound,
+      image: 'https://cdn.worldofdypians.com/wod/premiumIcon.webp',
       holder: false,
       message: "Prime Users",
       required: true,
     },
     {
-      image: dypiusIcon,
+      image: 'https://cdn.worldofdypians.com/wod/dypius.svg',
       holder: true,
       message: "Hold >$1,000 in DYP v2",
       required: false,
@@ -2665,7 +2632,7 @@ console.log(rewardData)
                 className="close-daily-btn d-flex align-items-center justify-content-center"
                 onClick={onclose}
               >
-                <img src={emptyXmark} width={20} height={20} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/emptyXmark.svg'} width={20} height={20} alt="" />
               </div>
               <h6 className="rewards-upper-title mb-9 font-organetto">
                 Rewards
@@ -2704,7 +2671,7 @@ console.log(rewardData)
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">
-                          <img src={warning} alt="" width={20} height={20} />
+                          <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
                           <span
                             className="db-tooltip-desc"
                             style={{ color: "#F08526" }}
@@ -2719,7 +2686,7 @@ console.log(rewardData)
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">
-                          <img src={danger} alt="" width={20} height={20} />
+                          <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                           <span
                             className="db-tooltip-desc"
                             style={{ color: "#C92422" }}
@@ -2744,7 +2711,7 @@ console.log(rewardData)
                   >
                     <img
                       onClick={() => setTooltip(true)}
-                      src={infoIcon}
+                      src={'https://cdn.worldofdypians.com/wod/infoIcon.svg'}
                       width={35}
                       height={35}
                       style={{ cursor: "pointer" }}
@@ -2851,7 +2818,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={bnbBg}
+                            src={'https://cdn.worldofdypians.com/wod/bnbBg.png'}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
@@ -2885,7 +2852,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2901,7 +2868,7 @@ console.log(rewardData)
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2914,8 +2881,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -2924,8 +2891,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -2934,8 +2901,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -2944,8 +2911,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -2954,8 +2921,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     bnbPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -2974,7 +2941,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={comingSoon}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon.png'}
                             className={`chain-img ${
                               chain === "matchain" && "chain-img-active"
                             }`}
@@ -3019,8 +2986,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     matPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3029,8 +2996,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     matPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3039,8 +3006,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     matPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3049,8 +3016,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     matPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3059,8 +3026,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     matPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3078,7 +3045,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={comingSoon2}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
@@ -3109,7 +3076,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={seiIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3122,8 +3089,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3132,8 +3099,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3142,8 +3109,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3152,8 +3119,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3162,8 +3129,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     seiPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3182,7 +3149,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={mantaBg}
+                            src={'https://cdn.worldofdypians.com/wod/mantaBg.png'}
                             className={`chain-img ${
                               chain === "manta" && "chain-img-active"
                             }`}
@@ -3226,8 +3193,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3236,8 +3203,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3246,8 +3213,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3256,8 +3223,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3266,8 +3233,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     mantaPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3286,7 +3253,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={taikoBg}
+                            src={'https://cdn.worldofdypians.com/wod/taikoBg.png'}
                             className={`chain-img ${
                               chain === "taiko" && "chain-img-active"
                             }`}
@@ -3320,7 +3287,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={taiko}
+                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3333,8 +3300,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3343,8 +3310,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3353,8 +3320,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3363,8 +3330,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3373,8 +3340,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     taikoPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3401,13 +3368,13 @@ console.log(rewardData)
                             }
                           >
                             <img
-                              src={require("./assets/gift.png")}
+                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
                               alt=""
                               className="position-absolute manta-gift"
                             />
                           </HtmlTooltipGift>
                           <img
-                            src={coreBg}
+                            src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
@@ -3440,7 +3407,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={coreIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -3453,8 +3420,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     corePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3463,8 +3430,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     corePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3473,8 +3440,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     corePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3483,8 +3450,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     corePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3493,8 +3460,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     corePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3515,7 +3482,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={comingSoon4}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon4.png'}
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -3546,7 +3513,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={baseLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3559,8 +3526,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     basePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3569,8 +3536,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     basePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3579,8 +3546,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     basePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3589,8 +3556,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     basePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3599,8 +3566,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     basePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3618,7 +3585,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={skaleBg}
+                            src={'https://cdn.worldofdypians.com/wod/skaleBg.png'}
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
@@ -3651,7 +3618,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={skaleIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3664,8 +3631,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3674,8 +3641,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3684,8 +3651,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3694,8 +3661,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3704,8 +3671,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     skalePercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3724,7 +3691,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={victionBg}
+                            src={'https://cdn.worldofdypians.com/wod/victionBg.png'}
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
@@ -3752,7 +3719,7 @@ console.log(rewardData)
                             >
                               {" "}
                               <img
-                                src={victionIcon}
+                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                 width={20}
                                 height={20}
                                 alt=""
@@ -3765,8 +3732,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 20
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3775,8 +3742,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 40
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3785,8 +3752,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 60
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3795,8 +3762,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 80
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3805,8 +3772,8 @@ console.log(rewardData)
                                   className="percent-img"
                                   src={
                                     victionPercentage === 100
-                                      ? percentageFilled
-                                      : percentageEmpty
+                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
                                   }
                                   height={8}
                                   alt=""
@@ -3842,7 +3809,7 @@ console.log(rewardData)
                   
                         <div className={`position-relative chain-item w-100`}>
                           <img
-                            src={comingSoon3}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon3.png'}
                             className={`chain-img`}
                             alt=""
                           />
@@ -3865,7 +3832,7 @@ console.log(rewardData)
                           } w-auto`}
                         >
                           <img
-                            src={bnbBg}
+                            src={'https://cdn.worldofdypians.com/wod/bnbBg.png'}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
@@ -3899,7 +3866,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3915,7 +3882,7 @@ console.log(rewardData)
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={bnbIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3930,7 +3897,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={comingSoon}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon.png'}
                             className={`chain-img ${
                               chain === "matchain" && "chain-img-active"
                             }`}
@@ -3977,7 +3944,7 @@ console.log(rewardData)
                           } w-100`}
                         >
                           <img
-                            src={comingSoon2}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
@@ -4009,7 +3976,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={seiIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4024,7 +3991,7 @@ console.log(rewardData)
                           } w-auto`}
                         >
                           <img
-                            src={mantaBg}
+                            src={'https://cdn.worldofdypians.com/wod/mantaBg.png'}
                             className={`chain-img ${
                               chain === "manta" && "chain-img-active"
                             }`}
@@ -4074,7 +4041,7 @@ console.log(rewardData)
                           } w-auto`}
                         >
                           <img
-                            src={taikoBg}
+                            src={'https://cdn.worldofdypians.com/wod/taikoBg.png'}
                             className={`chain-img ${
                               chain === "taiko" && "chain-img-active"
                             }`}
@@ -4108,7 +4075,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={taiko}
+                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4124,7 +4091,7 @@ console.log(rewardData)
                           } w-auto`}
                         >
                           <img
-                            src={skaleBg}
+                            src={'https://cdn.worldofdypians.com/wod/skaleBg.png'}
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
@@ -4156,7 +4123,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={skaleIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4179,13 +4146,13 @@ console.log(rewardData)
                             }
                           >
                             <img
-                              src={require("./assets/gift.png")}
+                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
                               alt=""
                               className="position-absolute manta-gift"
                             />
                           </HtmlTooltipGift>
                           <img
-                            src={coreBg}
+                            src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
@@ -4218,7 +4185,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={coreIcon}
+                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -4234,7 +4201,7 @@ console.log(rewardData)
                           }  w-auto`}
                         >
                           <img
-                            src={comingSoon4}
+                            src={'https://cdn.worldofdypians.com/wod/comingSoon4.png'}
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -4268,7 +4235,7 @@ console.log(rewardData)
                               >
                                 {" "}
                                 <img
-                                  src={baseLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4284,7 +4251,7 @@ console.log(rewardData)
                           } w-auto`}
                         >
                           <img
-                            src={victionBg}
+                            src={'https://cdn.worldofdypians.com/wod/victionBg.png'}
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
@@ -4312,7 +4279,7 @@ console.log(rewardData)
                             >
                               {" "}
                               <img
-                                src={victionIcon}
+                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
                                 style={{ width: 20, height: 20 }}
                                 alt=""
                               />{" "}
@@ -5619,7 +5586,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={warning} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -5675,7 +5642,7 @@ console.log(rewardData)
                         <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                           <img
                             className="d-none d-lg-flex"
-                            src={premiumIcon}
+                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                             style={{ width: 70, height: 70 }}
                             alt=""
                           />
@@ -5698,7 +5665,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={warning} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
                             <span
                               className="win-desc mb-0"
                               style={{ fontSize: 10 }}
@@ -5830,7 +5797,7 @@ console.log(rewardData)
                         </div>
 
                         <img
-                          src={winConfetti}
+                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
                           alt=""
                           className="win-confetti"
                         />
@@ -5865,7 +5832,7 @@ console.log(rewardData)
                         </div>
 
                         <img
-                          src={winConfetti}
+                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
                           alt=""
                           className="win-confetti"
                         />
@@ -5915,7 +5882,7 @@ console.log(rewardData)
                         </div>
 
                         <img
-                          src={winConfetti}
+                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
                           alt=""
                           className="win-confetti"
                         />
@@ -5949,7 +5916,7 @@ console.log(rewardData)
                         </div>
                         <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
                           <img
-                            src={premiumIcon}
+                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
                             style={{ width: 60, height: 60 }}
                             alt=""
                           />
@@ -6011,7 +5978,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6097,7 +6064,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={item.holder ? greenCheck : redX}
+                                      src={item.holder ? 'https://cdn.worldofdypians.com/wod/greenCheck.svg' : 'https://cdn.worldofdypians.com/wod/redX.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6120,7 +6087,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6204,12 +6171,12 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
-                                          ? cawsRound
+                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                           : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
+                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                       }
                                       alt=""
                                       width={70}
@@ -6219,7 +6186,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={greenCheck}
+                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6270,12 +6237,12 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
-                                            ? cawsRound
+                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                             : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
+                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                         }
                                         alt=""
                                         width={70}
@@ -6286,7 +6253,7 @@ console.log(rewardData)
                                         }}
                                       />
                                       <img
-                                        src={redX}
+                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6328,7 +6295,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6412,12 +6379,12 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
-                                          ? cawsRound
+                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                           : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
+                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                       }
                                       alt=""
                                       width={70}
@@ -6427,7 +6394,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={greenCheck}
+                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6478,12 +6445,12 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
-                                            ? cawsRound
+                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                             : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
+                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                         }
                                         alt=""
                                         width={70}
@@ -6494,7 +6461,7 @@ console.log(rewardData)
                                         }}
                                       />
                                       <img
-                                        src={redX}
+                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6536,7 +6503,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6605,12 +6572,12 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
-                                          ? cawsRound
+                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                           : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
+                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                       }
                                       alt=""
                                       width={70}
@@ -6620,7 +6587,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={greenCheck}
+                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6671,12 +6638,12 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
-                                            ? cawsRound
+                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                             : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
+                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                         }
                                         alt=""
                                         width={70}
@@ -6687,7 +6654,7 @@ console.log(rewardData)
                                         }}
                                       />
                                       <img
-                                        src={redX}
+                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6729,7 +6696,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6798,12 +6765,12 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
-                                          ? cawsRound
+                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                           : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
+                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                       }
                                       alt=""
                                       width={70}
@@ -6813,7 +6780,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={greenCheck}
+                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6864,12 +6831,12 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
-                                            ? cawsRound
+                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                             : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
+                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                         }
                                         alt=""
                                         width={70}
@@ -6880,7 +6847,7 @@ console.log(rewardData)
                                         }}
                                       />
                                       <img
-                                        src={redX}
+                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6922,7 +6889,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={danger} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6991,12 +6958,12 @@ console.log(rewardData)
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? premiumRound
+                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                           : item.type === "CAWS"
-                                          ? cawsRound
+                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                           : item.type === "LAND"
-                                          ? wodRound
-                                          : dypRound
+                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                       }
                                       alt=""
                                       width={70}
@@ -7006,7 +6973,7 @@ console.log(rewardData)
                                       }}
                                     />
                                     <img
-                                      src={greenCheck}
+                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
                                       alt=""
                                       className="holder-check"
                                     />
@@ -7057,12 +7024,12 @@ console.log(rewardData)
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? premiumRound
+                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
                                             : item.type === "CAWS"
-                                            ? cawsRound
+                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
                                             : item.type === "LAND"
-                                            ? wodRound
-                                            : dypRound
+                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
+                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                                         }
                                         alt=""
                                         width={70}
@@ -7073,7 +7040,7 @@ console.log(rewardData)
                                         }}
                                       />
                                       <img
-                                        src={redX}
+                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
                                         alt=""
                                         className="holder-check"
                                       />
@@ -7115,7 +7082,7 @@ console.log(rewardData)
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={warning} alt="" width={20} height={20} />
+                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
                             <span
                               className="win-desc mb-0"
                               style={{ fontSize: 10 }}
@@ -7308,7 +7275,7 @@ console.log(rewardData)
                   >
                     <div className="position-relative">
                       <img
-                        src={require(`./assets/${item.img}${
+                        src={`https://cdn.worldofdypians.com/wod/${item.img}${
                           item.title2 !== "needPremium"
                             ? (rewardData &&
                                 rewardData.rewards?.find((obj) => {
@@ -7357,7 +7324,7 @@ console.log(rewardData)
                                 message === "needPremium")
                             ? "Active"
                             : ""
-                        }Icon.png`)}
+                        }Icon.png`}
                         width={60}
                         height={60}
                         alt=""
@@ -7378,7 +7345,7 @@ console.log(rewardData)
                         }) &&
                         message !== "needPremium" ? (
                           <img
-                            src={warning}
+                            src={'https://cdn.worldofdypians.com/wod/warning.svg'}
                             width={20}
                             height={20}
                             className="reward-warning"
@@ -7399,7 +7366,7 @@ console.log(rewardData)
                           }) &&
                           message !== "needPremium" ? (
                           <img
-                            src={danger}
+                            src={'https://cdn.worldofdypians.com/wod/danger.svg'}
                             width={20}
                             height={20}
                             className="reward-warning"
@@ -7423,7 +7390,7 @@ console.log(rewardData)
                         }) &&
                         message === "needPremium" ? (
                         <img
-                          src={warning}
+                          src={'https://cdn.worldofdypians.com/wod/warning.svg'}
                           width={20}
                           height={20}
                           className="reward-warning"
@@ -7444,7 +7411,7 @@ console.log(rewardData)
                         }) &&
                         message === "needPremium" ? (
                         <img
-                          src={danger}
+                          src={'https://cdn.worldofdypians.com/wod/danger.svg'}
                           width={20}
                           height={20}
                           className="reward-warning"
@@ -7616,7 +7583,7 @@ console.log(rewardData)
               //           }) &&
               //           message !== "needPremium" ? (
               //             <img
-              //               src={warning}
+              //               src={'https://cdn.worldofdypians.com/wod/warning.svg'}
               //               width={20}
               //               height={20}
               //               className="reward-warning"
@@ -7637,7 +7604,7 @@ console.log(rewardData)
               //             }) &&
               //             message !== "needPremium" ? (
               //             <img
-              //               src={danger}
+              //               src={'https://cdn.worldofdypians.com/wod/danger.svg'}
               //               width={20}
               //               height={20}
               //               className="reward-warning"
@@ -7661,7 +7628,7 @@ console.log(rewardData)
               //           }) &&
               //           message === "needPremium" ? (
               //           <img
-              //             src={warning}
+              //             src={'https://cdn.worldofdypians.com/wod/warning.svg'}
               //             width={20}
               //             height={20}
               //             className="reward-warning"
@@ -7682,7 +7649,7 @@ console.log(rewardData)
               //           }) &&
               //           message === "needPremium" ? (
               //           <img
-              //             src={danger}
+              //             src={'https://cdn.worldofdypians.com/wod/danger.svg'}
               //             width={20}
               //             height={20}
               //             className="reward-warning"

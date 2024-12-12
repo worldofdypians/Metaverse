@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import X from "../../assets/x_close.png";
-import discord from "../../assets/discord.svg";
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import validate from "../RegisterModal/validateHelpInfo";
-import successLogo from "../../assets/successLogo.svg";
-import waitlistLogo from "../../assets/waitlistLogo.svg";
-import failed from "../../assets/failed.svg";
-import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
+
+
+
 import "./_joinbetamodal.scss";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { Checkbox } from "@mui/material";
@@ -322,7 +319,7 @@ const JoinBetaModal = ({
                 Tester Application
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x"
                 onClick={() => {
@@ -590,7 +587,7 @@ const JoinBetaModal = ({
               /> */}
             </div>
 
-            <img src={successLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/successLogo.svg"} alt="" />
             <p className="text-white m-0">
               Congratulations, your World of Dypians Beta Tester application is
               successful. Please visit the Dypius Discord Server for more
@@ -616,7 +613,7 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -643,7 +640,7 @@ const JoinBetaModal = ({
                 style={{ right: "-25px", height: "50px" }}
               /> */}
             </div>
-            <img src={alreadyjoinedLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/alreadyjoinedLogo.svg"} alt="" />
             <p className="text-white m-0">
               Your application as a World of Dypians Beta Tester has already
               been received. Please check back soon.
@@ -668,7 +665,7 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -694,7 +691,7 @@ const JoinBetaModal = ({
                 style={{ right: "-25px", height: "50px" }}
               /> */}
             </div>
-            <img src={waitlistLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/waitlistLogo.svg"} alt="" />
             <p className="text-white m-0">
               Thank you for your application as a World of Dypius Beta Tester.
               Unfortunately, all current reservations are full and your
@@ -720,7 +717,7 @@ const JoinBetaModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -746,7 +743,7 @@ const JoinBetaModal = ({
                 style={{ right: "-25px", height: "50px" }}
               /> */}
             </div>
-            <img src={failed} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/failed.svg"} alt="" />
             <p className="text-white m-0">
               Unable to join the World of Dypius Beta Tester. Please try again.
             </p>

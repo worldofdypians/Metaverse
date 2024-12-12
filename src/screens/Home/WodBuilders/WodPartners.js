@@ -221,6 +221,22 @@ const WodPartners = ({ full }) => {
       name: "OpenFlux",
       icon: "openflux.svg",
     },
+    {
+      name: "PancakeSwap",
+      icon: "pancakeBuyWod.svg",
+    },
+    {
+      name: "CertiK",
+      icon: "certik.svg",
+    },
+    {
+      name: "SWFT",
+      icon: "swft.png",
+    },
+    {
+      name: "NFA",
+      icon: "nfaIcon.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

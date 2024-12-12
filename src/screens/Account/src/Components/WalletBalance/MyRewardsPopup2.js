@@ -2,38 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 
-import allImg from "./myrewardsAssets/newAssets/allImg.svg";
-import allActive from "./myrewardsAssets/newAssets/allActive.svg";
-import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
-import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
- 
-import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
-import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
-
-import specialRewards from "./myrewardsAssets/newAssets/specialRewards.svg";
-import specialRewardsActive from "./myrewardsAssets/newAssets/specialRewardsActive.svg";
-
-import dailyBonus from "./myrewardsAssets/newAssets/dailyBonus.png";
-import dailyBonusActive from "./myrewardsAssets/newAssets/dailyBonusActive.png";
-
-import treasureHunt from "./myrewardsAssets/newAssets/treasureHunt.png";
-import treasureHuntActive from "./myrewardsAssets/newAssets/treasureHuntActive.png";
-
-import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg"; 
-import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
-import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
-import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg"; 
-
-import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
-import easy2stakeLogo from "../WalletBalance/assets/easy2stakeLogo.svg";
-import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.svg";
-import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
-import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
-import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg"; 
-import dypiusPremium from "./myrewardsAssets/newAssets/treasureHunt/dypiusPremium.svg";
-import dogeCoin from "./myrewardsAssets/newAssets/treasureHunt/dogeCoin.svg";
 
 const MyRewardsPopupNew = ({
   address,
@@ -83,7 +51,7 @@ const MyRewardsPopupNew = ({
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
-  chainlinkEarnUsd
+  chainlinkEarnUsd,
 }) => {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const [previousRewards, setPreviousRewards] = useState(false);
@@ -94,7 +62,6 @@ const MyRewardsPopupNew = ({
 
   const [leaderboardTotalData, setleaderboardTotalData] = useState(0);
   const [leaderboardSkaleTotalData, setleaderboardSkaleTotalData] = useState(0);
- 
 
   const [cawsRewards, setCawsRewards] = useState(0);
   const [wodCawsRewards, setWodCawsRewards] = useState(0);
@@ -133,7 +100,6 @@ const MyRewardsPopupNew = ({
   const [pastUserRankUsd, setpastUserRankUsd] = useState(0);
 
   const [userSocialRewardsCached, setuserSocialRewardsCached] = useState(0);
- 
 
   const fetchUsersocialRewards = () => {
     const cachedUserSocialRewards = localStorage.getItem(
@@ -582,7 +548,6 @@ const MyRewardsPopupNew = ({
     setTreasureRewardMoneyTaiko(moneyResultTaiko);
     setTreasureRewardMoneyMat(moneyResultMat);
     setTreasureRewardMoneySei(moneyResultSei);
-
   };
 
   const fetchCachedData = () => {
@@ -649,10 +614,10 @@ const MyRewardsPopupNew = ({
     allVictionChests,
     allMantaChests,
     allBaseChests,
-    allSeiChests
+    allSeiChests,
   ]);
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchNftRewards(address);
     fetchGenesisGem(address);
     fetchLeaderboardData(address);
@@ -705,7 +670,7 @@ const MyRewardsPopupNew = ({
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
                 Number(cmcRewardsUSD) +
-                Number(dypPremiumUSD) ,
+                Number(dypPremiumUSD),
               2
             )}
           </span>
@@ -748,7 +713,7 @@ const MyRewardsPopupNew = ({
           }}
         >
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
-            <img src={rewardCategory === "all" ? allActive : allImg} alt="" />
+            <img src={rewardCategory === "all" ? 'https://cdn.worldofdypians.com/wod/allActive.svg' : 'https://cdn.worldofdypians.com/wod/allImg.svg'} alt="" />
             <span
               className={
                 rewardCategory === "all"
@@ -790,7 +755,7 @@ const MyRewardsPopupNew = ({
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
-                      Number(dypPremiumUSD)  +
+                      Number(dypPremiumUSD) +
                       Number(cookieEarnUsd),
                     2
                   )
@@ -801,8 +766,8 @@ const MyRewardsPopupNew = ({
                       Number(baseEarnUSD) +
                       Number(victionEarnUsd) +
                       Number(bnbEarnUsd) +
-                      Number(coreEarnUsd)+
-                      Number(matEarnUsd)+
+                      Number(coreEarnUsd) +
+                      Number(matEarnUsd) +
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
@@ -810,13 +775,13 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneySkale) +
                       Number(multiversEarnUsd) +
                       Number(seiEarnUsd) +
-                      Number(easy2StakeEarnUsd)+
+                      Number(easy2StakeEarnUsd) +
                       Number(chainlinkEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(taikoEarnUsd) +
                       Number(skaleEarnUsd) +
                       Number(coingeckoEarnUsd) +
-                      Number(mantaEarnUsd)+
+                      Number(mantaEarnUsd) +
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
@@ -864,8 +829,8 @@ const MyRewardsPopupNew = ({
             <img
               src={
                 rewardCategory === "leaderboard"
-                  ? leaderboardActive
-                  : leaderboard
+                  ? 'https://cdn.worldofdypians.com/wod/leaderboardActive.svg'
+                  : 'https://cdn.worldofdypians.com/wod/leaderboard.svg'
               }
               alt=""
             />
@@ -943,7 +908,7 @@ const MyRewardsPopupNew = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
             <img
               src={
-                rewardCategory === "nftStaking" ? nftStakingActive : nftStaking
+                rewardCategory === "nftStaking" ? 'https://cdn.worldofdypians.com/wod/nftStakingActive.svg' : 'https://cdn.worldofdypians.com/wod/nftStaking.svg'
               }
               alt=""
             />
@@ -996,7 +961,7 @@ const MyRewardsPopupNew = ({
           <div className="d-flex flex-column align-items-center justify-content-center gap-2">
             <img
               src={
-                rewardCategory === "dailyBonus" ? dailyBonusActive : dailyBonus
+                rewardCategory === "dailyBonus" ? 'https://cdn.worldofdypians.com/wod/dailyBonusActive.png' : 'https://cdn.worldofdypians.com/wod/dailyBonus.png'
               }
               style={{ width: 36, height: 36 }}
               alt=""
@@ -1034,7 +999,7 @@ const MyRewardsPopupNew = ({
                       Number(treasureRewardMoneyViction) +
                       Number(treasureRewardMoneyManta) +
                       Number(treasureRewardMoneyBase) +
-                      Number(treasureRewardMoneySkale)+
+                      Number(treasureRewardMoneySkale) +
                       Number(treasureRewardMoneySei),
                     2
                   )}
@@ -1057,8 +1022,8 @@ const MyRewardsPopupNew = ({
             <img
               src={
                 rewardCategory === "treasurehunt"
-                  ? treasureHuntActive
-                  : treasureHunt
+                  ? 'https://cdn.worldofdypians.com/wod/treasureHuntActive.png'
+                  : 'https://cdn.worldofdypians.com/wod/treasureHunt.png'
               }
               alt=""
               style={{ width: 36, height: 36 }}
@@ -1096,26 +1061,26 @@ const MyRewardsPopupNew = ({
                       Number(confluxRewardsUSD) +
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
-                      Number(dypPremiumUSD)+
+                      Number(dypPremiumUSD) +
                       Number(cookieEarnUsd),
                     2
                   )
                 : getFormattedNumber(
                     Number(seiEarnUsd) +
-                      Number(victionEarnUsd)  +
+                      Number(victionEarnUsd) +
                       Number(bnbEarnUsd) +
-                      Number(coreEarnUsd)+
-                      Number(matEarnUsd)+
+                      Number(coreEarnUsd) +
+                      Number(matEarnUsd) +
                       Number(mantaEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(immutableEarnUsd) +
-                      Number(baseEarnUSD)+
+                      Number(baseEarnUSD) +
                       Number(easy2StakeEarnUsd) +
                       Number(chainlinkEarnUsd) +
                       Number(midleEarnUsd) +
                       Number(skaleEarnUsd) +
                       Number(taikoEarnUsd) +
-                      Number(coingeckoEarnUsd) ,
+                      Number(coingeckoEarnUsd),
                     2
                   )}
             </span>
@@ -1138,8 +1103,8 @@ const MyRewardsPopupNew = ({
             <img
               src={
                 rewardCategory === "specialRewards"
-                  ? specialRewardsActive
-                  : specialRewards
+                  ? 'https://cdn.worldofdypians.com/wod/specialRewardsActive.svg'
+                  : 'https://cdn.worldofdypians.com/wod/specialRewards.svg'
               }
               alt=""
             />
@@ -1168,14 +1133,8 @@ const MyRewardsPopupNew = ({
             >
               $
               {previousRewards
-                ? getFormattedNumber(
-                    Number(0),
-                    2
-                  )
-                : getFormattedNumber(
-                    Number(userSocialRewardsCached),
-                    2
-                  )}
+                ? getFormattedNumber(Number(0), 2)
+                : getFormattedNumber(Number(userSocialRewardsCached), 2)}
             </span>
           </div>
         </div>
@@ -1196,37 +1155,51 @@ const MyRewardsPopupNew = ({
             className="d-flex align-items-center gap-1 rounded p-1"
             style={{ background: "#536BBE" }}
           >
-            <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} style={{ width: 16, height: 16 }} alt="" />{" "}
-            <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
             <img
-              src={'https://cdn.worldofdypians.com/wod/manta.png'}
+              src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
-            />
+            />{" "}
             <img
-              src={
-               'https://cdn.worldofdypians.com/wod/taiko.svg'
-              }
+              src={"https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
             <img
-              src={
-                'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
-              }
+              src={"https://cdn.worldofdypians.com/wod/manta.png"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
-              <img
-              src={
-                seiIcon
-              }
+            <img
+              src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
               style={{ width: 16, height: 16 }}
               alt=""
             />
-            <img src={skale} style={{ width: 16, height: 16 }} alt="" />{" "}
-            <img src={coreIcon} style={{ width: 16, height: 16 }} alt="" />
-            <img src={victionIcon} style={{ width: 16, height: 16 }} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/matchainIcon.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />{" "}
+            <img
+              src={"https://cdn.worldofdypians.com/wod/core.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/viction.svg"}
+              style={{ width: 16, height: 16 }}
+              alt=""
+            />
           </div>
         </span>
         <div
@@ -1502,7 +1475,8 @@ const MyRewardsPopupNew = ({
                     ? getFormattedNumber(0, 2)
                     : getFormattedNumber(treasureRewardMoneyCore, 2)}
                 </span>
-              </div> <div className="d-flex w-100 justify-content-between gap-2">
+              </div>{" "}
+              <div className="d-flex w-100 justify-content-between gap-2">
                 <span className="item-name-left">Sei</span>
                 <span className="item-name-right">
                   $
@@ -1590,7 +1564,9 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={baseLogo}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                      }
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1603,7 +1579,9 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={easy2stakeLogo}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/easy2stakeLogo.svg"
+                      }
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1615,7 +1593,12 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={coingecko} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
+                      }
+                      alt=""
+                    />
                     CoinGecko
                   </span>
                   <span className="item-name-right">
@@ -1625,7 +1608,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={coreIcon}
+                      src={"https://cdn.worldofdypians.com/wod/core.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1638,7 +1621,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={seiIcon}
+                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1653,7 +1636,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={victionIcon}
+                      src={"https://cdn.worldofdypians.com/wod/viction.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1678,7 +1661,11 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={skale} alt="" style={{ width: 16, height: 16 }} />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     SKALE
                   </span>
                   <span className="item-name-right">
@@ -1688,9 +1675,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={
-                       'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1704,7 +1689,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                       "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
+                        "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1715,13 +1700,12 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(chainlinkEarnUsd, 2)}
                   </span>
                 </div>
-              
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={immutableLogo}
+                      src={"https://cdn.worldofdypians.com/wod/immutable.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1734,9 +1718,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={
-                      'https://cdn.worldofdypians.com/wod/taiko.svg'
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1750,7 +1732,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                       'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
+                        "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1774,7 +1756,6 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(mantaEarnUsd, 2)}
                   </span>
                 </div>
-
               </div>
               {/* </div> */}
             </div>
@@ -1800,12 +1781,15 @@ const MyRewardsPopupNew = ({
           >
             <div className="treasure-hunt-item-wrapper">
               <div className="d-flex flex-column gap-2">
-           
-
-                
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={dypiusPremium} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/dypiusPremium16.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     Premium
                   </span>
                   <span className="item-name-right">
@@ -1815,7 +1799,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
+                      src={"https://cdn.worldofdypians.com/wod/cookie3.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1827,7 +1811,13 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={coingecko} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     CoinGecko
                   </span>
                   <span className="item-name-right">
@@ -1835,11 +1825,15 @@ const MyRewardsPopupNew = ({
                   </span>
                 </div>
               </div>
-              
+
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={dypius} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     Dypius
                   </span>
                   <span className="item-name-right">
@@ -1850,7 +1844,13 @@ const MyRewardsPopupNew = ({
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={gate} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/gateTreasureHunt.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     Gate.io
                   </span>
                   <span className="item-name-right">
@@ -1859,7 +1859,11 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={'https://cdn.worldofdypians.com/wod/cmcIcon.svg'} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/cmcIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     CMC
                   </span>
                   <span className="item-name-right">
@@ -1867,13 +1871,16 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
-               
               </div>
 
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     Conflux
                   </span>
                   <span className="item-name-right">
@@ -1883,14 +1890,19 @@ const MyRewardsPopupNew = ({
 
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={dogeCoin} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
                     Dogecoin
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
                   </span>
                 </div>
-             
               </div>
             </div>
           </div>

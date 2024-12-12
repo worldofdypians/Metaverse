@@ -1,6 +1,6 @@
 import React from "react";
 import "./_cawssociety.scss";
-import cawsSecondBanner from "../../../assets/cawsSecondBanner.png";
+
 import { NavLink } from "react-router-dom";
 
 const CawsWorld = () => {
@@ -27,7 +27,7 @@ const CawsWorld = () => {
         </div>
       </div>
       <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end">
-        <img src={cawsSecondBanner} alt="caws banner" className="caws-banner" />
+        <img src={"https://cdn.worldofdypians.com/wod/cawsSecondBanner.png"} alt="caws banner" className="caws-banner" />
       </div>
     </div>
   );

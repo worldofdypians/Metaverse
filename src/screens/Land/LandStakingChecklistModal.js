@@ -5,13 +5,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import ToolTip from "../Caws/elements/ToolTip";
-import X from "../../assets/x_close.png";
+
 import LandPlaceHolder from "./LandPlaceholder";
 import LandItem from "./LandItem";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import "../Caws/NftMinting/NftStakeChecklistModal/_nftStakeChecklistModal.scss";
-import ethereum from "../../assets/landAssets/ethereum.svg";
+
 import useWindowSize from '../../hooks/useWindowSize'
 
 
@@ -351,7 +351,7 @@ const LandStakingChecklistModal = ({
               </h6>
             </div>
             <img
-              src={X}
+              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
               alt=""
               className="position-absolute"
               onClick={() => {
@@ -774,7 +774,7 @@ const LandStakingChecklistModal = ({
                     {getFormattedNumber(ETHrewards, 2)} WETH{"   "}({" "}
                     {formattedNum(ethToUSD, true)})
                     <img
-                      src={ethereum}
+                      src={"https://cdn.worldofdypians.com/wod/ethereum.svg"}
                       alt=""
                       style={{ width: 24, height: 24 }}
                     />

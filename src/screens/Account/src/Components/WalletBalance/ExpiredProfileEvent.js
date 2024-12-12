@@ -2,15 +2,10 @@ import React from "react";
 import grayDate from "./assets/grayDate.svg";
 import grayDollar from "./assets/grayDollar.svg";
 import grayExplore from "./assets/grayExplore.svg";
-import grayFind from "./assets/grayFind.svg"; 
-import coingecko from "./assets/coingecko.svg";
-import gate from "./assets/gate.svg";
-import baseLogo from "./assets/baseLogo.svg"; 
-import dypius from "./assets/dypIcon.svg";
+import grayFind from "./assets/grayFind.svg";   
+ 
 import grayArrow from "./assets/grayArrow.svg"; 
-import dypiusProfileBanner from "./assets/dypiusProfileBanner.png";
-import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import dypiusPremium16 from "./assets/dypiusPremium16.svg";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number" ;
 
 const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
   return (
@@ -27,17 +22,17 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
           <img
             src={
               event.title === "CoinGecko"
-                ? coingecko
+                ? 'https://cdn.worldofdypians.com/wod/coingeckoIcon.svg'
                 : event.title === "Conflux"
                 ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
                 : event.title === "Base"
-                ? baseLogo
+                ? 'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'
                 : event.title === "Dypius"
-                ? dypius
+                ? 'https://cdn.worldofdypians.com/wod/dypius.svg'
                 : event.title === "Dogecoin"
                 ? 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg'
                 : event.title === "Dypius" || event.title === "Dypius Premium"
-                ? dypiusPremium16
+                ? 'https://cdn.worldofdypians.com/wod/dypiusPremium16.svg'
                 : event.title === "CoinMarketCap"
                 ? 'https://cdn.worldofdypians.com/wod/cmcIcon.svg'
                 : event.title === "SKALE"
@@ -88,7 +83,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
         {userEarnedUsd  != undefined &&
         <div className="d-flex align-items-center gap-1">
         {event.title === "Dypius" ? (
-          <img src={dypius} height={15} width={15} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/dypius.svg'} height={15} width={15} alt="" />
         ) : (
           <img src={grayDollar} height={15} width={15} alt="" />
         )}

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";  
-import avaxIcon from "./assets/avaxIcon.svg";
-import dypIcon from "./assets/dypIcon.svg";
+import axios from "axios";   
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import idyp from "../../Images/userProfile/idyp.svg";
 import useWindowSize from "../../../../../hooks/useWindowSize";
@@ -91,7 +89,7 @@ const MyBalance = ({
         </div>
         <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
-            <img src={dypIcon} alt="dyp" className="dyp-icon" />
+            <img src={'https://cdn.worldofdypians.com/wod/dypius.svg'} alt="dyp" className="dyp-icon" style={{ height: 16, width: 16 }}/>
             <h6 className="wallet-amount mb-0">
               {getFormattedNumber(dypBalance, 2)}
             </h6>
@@ -125,7 +123,7 @@ const MyBalance = ({
         </div>
         <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
-            <img src={dypIcon} alt="dyp" className="dyp-icon" />
+            <img src={'https://cdn.worldofdypians.com/wod/dypius.svg'} alt="dyp" className="dyp-icon" style={{ height: 16, width: 16 }}/>
             <h6 className="wallet-amount mb-0">
               {getFormattedNumber(dypBalancebnb, 2)}
             </h6>
@@ -154,12 +152,12 @@ const MyBalance = ({
       <div className="balanceseparator"></div>
       <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
         <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-2">
-          <img src={avaxIcon} alt="" className="" />
+          <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" className="" />
           <span className="avax-chain-text">Avalanche</span>
         </div>
         <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
-            <img src={dypIcon} alt="dyp" className="dyp-icon" />
+            <img src={'https://cdn.worldofdypians.com/wod/dypius.svg'} alt="dyp" className="dyp-icon" style={{ height: 16, width: 16 }}/>
             <h6 className="wallet-amount mb-0">
               {getFormattedNumber(dypBalanceavax, 2)}
             </h6>
