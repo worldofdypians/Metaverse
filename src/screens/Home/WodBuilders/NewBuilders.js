@@ -321,6 +321,26 @@ const NewBuilders = () => {
       icon: "openflux.svg",
       backer: false,
     },
+    {
+      name: "PancakeSwap",
+      icon: "pancakeBuyWod.svg",
+      backer: false,
+    },
+    {
+      name: "CertiK",
+      icon: "certik.svg",
+      backer: false,
+    },
+    {
+      name: "SWFT",
+      icon: "swft.png",
+      backer: false,
+    },
+    {
+      name: "NFA",
+      icon: "nfaIcon.svg",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
