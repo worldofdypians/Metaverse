@@ -6,7 +6,7 @@ import allImg from "./myrewardsAssets/newAssets/allImg.svg";
 import allActive from "./myrewardsAssets/newAssets/allActive.svg";
 import nftStaking from "./myrewardsAssets/newAssets/nftStaking.svg";
 import nftStakingActive from "./myrewardsAssets/newAssets/nftStakingActive.svg";
-import bnbLogo from "../../../../Marketplace/assets/bnbLogo.svg";
+ 
 import leaderboard from "./myrewardsAssets/newAssets/leaderboard.svg";
 import leaderboardActive from "./myrewardsAssets/newAssets/leaderboardActive.svg";
 
@@ -19,30 +19,19 @@ import dailyBonusActive from "./myrewardsAssets/newAssets/dailyBonusActive.png";
 import treasureHunt from "./myrewardsAssets/newAssets/treasureHunt.png";
 import treasureHuntActive from "./myrewardsAssets/newAssets/treasureHuntActive.png";
 
-import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg";
-import cmc from "./myrewardsAssets/newAssets/treasureHunt/cmc.svg";
+import base from "./myrewardsAssets/newAssets/treasureHunt/base.svg"; 
 import coingecko from "./myrewardsAssets/newAssets/treasureHunt/coingecko.svg";
 import skale from "./myrewardsAssets/newAssets/treasureHunt/skale.svg";
 import seiIcon from "../../../../../components/NewDailyBonus/assets/seiIcon.svg";
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import cookieIcon from "./myrewardsAssets/newAssets/treasureHunt/cookie3Logo.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
+import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg"; 
 
 import victionIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
 import immutableLogo from "../../../../../components/NewDailyBonus/assets/immutableLogo.svg";
 import easy2stakeLogo from "../WalletBalance/assets/easy2stakeLogo.svg";
-import midleIcon from "../../../../Map/assets/chainIcons/midle.png";
-import chainlinkLogo from "../../../../Map/assets/chainIcons/chainlinkIcon.svg";
-
-
-
 import baseLogo from "../../../../../screens/Home/VideoWrapper/assets/baseLogo.svg";
-
 import multiversIcon from "../../../../../components/NewDailyBonus/assets/multiversxIcon.svg";
-
 import dypius from "./myrewardsAssets/newAssets/treasureHunt/dypius.svg";
-import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg";
-import conflux from "./myrewardsAssets/newAssets/treasureHunt/conflux.svg";
+import gate from "./myrewardsAssets/newAssets/treasureHunt/gate.svg"; 
 import dypiusPremium from "./myrewardsAssets/newAssets/treasureHunt/dypiusPremium.svg";
 import dogeCoin from "./myrewardsAssets/newAssets/treasureHunt/dogeCoin.svg";
 
@@ -1207,24 +1196,23 @@ const MyRewardsPopupNew = ({
             className="d-flex align-items-center gap-1 rounded p-1"
             style={{ background: "#536BBE" }}
           >
-            <img src={bnbLogo} style={{ width: 16, height: 16 }} alt="" />{" "}
+            <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} style={{ width: 16, height: 16 }} alt="" />{" "}
             <img src={baseLogo} style={{ width: 16, height: 16 }} alt="" />
             <img
-              src={require("../../../../../components/Header/assets/manta.png")}
+              src={'https://cdn.worldofdypians.com/wod/manta.png'}
               style={{ width: 16, height: 16 }}
               alt=""
             />
             <img
               src={
-                require("../../../../../components/Header/assets/taiko.svg")
-                  .default
+               'https://cdn.worldofdypians.com/wod/taiko.svg'
               }
               style={{ width: 16, height: 16 }}
               alt=""
             />
             <img
               src={
-                matchainLogo
+                'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
               }
               style={{ width: 16, height: 16 }}
               alt=""
@@ -1678,7 +1666,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={midleIcon}
+                      src={"https://cdn.worldofdypians.com/wod/midle.svg"}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1701,8 +1689,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                        require("../../../../Marketplace/assets/bnbLogo.svg")
-                          .default
+                       'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1717,7 +1704,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                       chainlinkLogo
+                       "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1748,8 +1735,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                        require("../../../../../components/Header/assets/taiko.svg")
-                          .default
+                      'https://cdn.worldofdypians.com/wod/taiko.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1764,7 +1750,7 @@ const MyRewardsPopupNew = ({
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
                       src={
-                       matchainLogo
+                       'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                       }
                       alt=""
                       style={{ width: 16, height: 16 }}
@@ -1829,7 +1815,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={cookieIcon}
+                      src={'https://cdn.worldofdypians.com/wod/cookie3.svg'}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />
@@ -1873,7 +1859,7 @@ const MyRewardsPopupNew = ({
                 </div>
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={cmc} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/cmcIcon.svg'} alt="" />
                     CMC
                   </span>
                   <span className="item-name-right">
@@ -1887,7 +1873,7 @@ const MyRewardsPopupNew = ({
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex gap-2 align-items-center justify-content-between">
                   <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img src={conflux} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'} alt="" />
                     Conflux
                   </span>
                   <span className="item-name-right">

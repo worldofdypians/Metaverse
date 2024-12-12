@@ -1,70 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./_walletbalance.scss";
-import ethIcon from "./assets/ethIcon.svg";
-import bnbIcon from "./assets/bnbIcon.svg";
+import "./_walletbalance.scss"; 
 import avaxIcon from "./assets/avaxIcon.svg";
 import dypIcon from "./assets/dypIcon.svg";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import idyp from "../../Images/userProfile/idyp.svg";
-import globalRank from "./assets/globalRank.svg";
-import genesisImg from "./assets/genesisRank.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
-import { getAllNfts } from "../../../../../actions/convertUsd";
-import { HashLoader } from "react-spinners";
-import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
-import Slider from "react-slick";
-import ItemCard from "../../../../../components/ItemCard/ItemCard";
+
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
-import accountEmptyCaws from "./assets/accountEmptyCaws.svg";
-import accountEmptyLand from "./assets/accountEmptyLand.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import emptyCheck from "./assets/emptyCheck.svg";
+
 import dropdownIcon from "./assets/dropdownIcon.svg";
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
-import ActiveProfileEvent from "./ActiveProfileEvent";
-import UpcomingProfileEvent from "./UpcomingProfileEvent";
-import ExpiredProfileEvent from "./ExpiredProfileEvent";
-import stakeNft from "./newAssets/stakeNft.png";
-import mintColl from "./newAssets/mintColl.png";
 
-import eventPopupImage from "./assets/eventPopupImage.png";
-import bnbPopupImage from "./assets/bnbPopupImage.png";
 import OutsideClickHandler from "react-outside-click-handler";
-import confluxActive from "../../../../Marketplace/assets/confluxActive.png";
-import coin98Active from "../../../../Marketplace/assets/coin98Active.png";
-import coingeckoActive from "../../../../Marketplace/assets/coingeckoActive.png";
-import baseActive from "../../../../Marketplace/assets/baseActive.png";
-import timepieceActive from "../../../../Marketplace/assets/timepieceActive.png";
+
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import grayCalendar from "./assets/grayCalendar.svg";
-import eventSkeleton from "./assets/eventSkeleton.png";
-import sliderEventSkeleton from "./assets/sliderEventSkeleton.svg";
-import BetaEventCard from "../../../../Marketplace/components/BetaEventCard";
-import NewBetaEventCard from "../../../../Marketplace/components/NewBetaEventCard";
-import conflux from "./assets/conflux.svg";
-import gate from "./assets/gate.svg";
-import dypius from "./assets/dypIcon.svg";
-import upcomingDyp from "./assets/upcomingDyp.webp";
-import closeMark from "./assets/closeMark.svg";
-import eventPopupImageGecko from "./assets/eventPopupImageGecko.png";
-import coin98 from "./assets/coin98.svg";
-import coingecko from "./assets/coingecko.svg";
-import base from "./assets/baseLogo.svg";
-import confluxUpcoming from "./assets/confluxUpcoming.png";
-import gateUpcoming from "../../../../Marketplace/assets/gateUpcoming.webp";
-import dypeventPopupImage from "./assets/dypEventImage.png";
 
-import coin98Upcoming from "./assets/coin98Upcoming.png";
-import coingeckoUpcoming from "../../../../Marketplace/assets/coingeckoUpcoming.png";
-import baseUpcoming from "../../../../Marketplace/assets/baseUpcoming.webp";
-import halfCircleArrow from "./newAssets/halfCircleArrow.svg";
 import arrowCircle from "./newAssets/arrowCircle.svg";
-import epicblack from "./newAssets/epicblack.svg";
-import epicwhite from "./newAssets/epicwhite.svg";
+w
 import multiplayer from "../../../../../assets/multiplayer.svg";
 
 const WalletBalance = ({
@@ -1610,7 +1567,7 @@ const WalletBalance = ({
                         target="_blank"
                       >
                         <img
-                          src={epicwhite}
+                          src={"https://cdn.worldofdypians.com/wod/epicwhite.svg"}
                           alt="icon"
                           style={{ width: 20, height: 24 }}
                         />
@@ -1899,41 +1856,7 @@ const WalletBalance = ({
                     </span>
                   )}
 
-                  {/* {favoriteItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - favoriteItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+                 
                 </div>
               )}
 
@@ -2194,42 +2117,7 @@ const WalletBalance = ({
                       Connect your wallet to view your NFTs.
                     </span>
                   )}
-
-                  {/* {collectedItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - collectedItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+ 
                 </div>
               )}
 
@@ -2332,43 +2220,7 @@ const WalletBalance = ({
                     </span>
                   )}
 
-                  {/* {myCawsWodStakes.length + landStaked.length < 6 &&
-                  emptyArray
-                    .slice(0, 4 - myCawsWodStakes.length + landStaked.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-6 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <div className="d-flex align-items-center">
-                              <img
-                                src={accountEmptyLand}
-                                alt=""
-                                className="account-card-img"
-                              />
-                              <img
-                                src={accountEmptyCaws}
-                                alt=""
-                                className="account-card-img"
-                              />
-                            </div>
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                Get your CAWS NFT & Land NFT from the WoD Game
-                                Shop
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+               
                 </div>
               )}
 
@@ -2447,41 +2299,7 @@ const WalletBalance = ({
                       Connect your wallet to view your listed NFTs.
                     </span>
                   )}
-                  {/* {listedItems.length < 6 &&
-                  emptyArray
-                    .slice(0, 6 - listedItems.length)
-                    .map((item, index) => (
-                      <NavLink
-                        key={index}
-                        to={`/shop`}
-                        style={{ textDecoration: "none" }}
-                        className="col-12 col-lg-6 col-xxl-4 mb-3"
-                      >
-                        <div className="">
-                          <div className="account-nft-card w-100 d-flex align-items-center gap-3">
-                            <img
-                              src={
-                                index % 2 !== 0
-                                  ? accountEmptyCaws
-                                  : accountEmptyLand
-                              }
-                              alt=""
-                              className="account-card-img"
-                            />
-                            <div className="d-flex flex-column align-items-start justify-content-center">
-                              <span
-                                className="account-nft-type"
-                                style={{ width: "80%" }}
-                              >
-                                {index % 2 !== 0
-                                  ? "Get your CAWS NFT from the WoD Game Shop"
-                                  : "Get your World of Dypians Land NFT from the WoD Game Shop"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </NavLink>
-                    ))} */}
+                  
                 </div>
               )}
 
@@ -2489,7 +2307,7 @@ const WalletBalance = ({
                 <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
-                      <img src={ethIcon} alt="" className="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" className="" />
                       <span className="eth-chain-text">Ethereum</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">
@@ -2529,7 +2347,7 @@ const WalletBalance = ({
                   <div className="balanceseparator"></div>
                   <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
                     <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img src={bnbIcon} alt="" className="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" className="" />
                       <span className="bnb-chain-text">BNB Chain</span>
                     </div>
                     <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-4">

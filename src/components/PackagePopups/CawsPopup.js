@@ -1,9 +1,6 @@
 import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
-import cawsPopup from "./assets/cawsPopup.webp";
-import rarity from "./assets/rarity.svg";
+
 import { NavLink } from "react-router-dom";
-import opensea from '../../assets/opensea.svg'
 import ChevronArrowSvg from "../../screens/Caws/assets/General/ChevronArrowSvg/ChevronArrowSvg";
 
 const CawsPopup = ({ onClosePopup }) => {
@@ -30,7 +27,8 @@ const CawsPopup = ({ onClosePopup }) => {
        
       <div className=" d-flex align-items-center justify-content-between w-100 m-0 mb-2 p-3 new-popup-title-wrapper">
           <h6 className="market-banner-title m-0">CAWS NFT COLLECTION</h6>
-          <img src={popupXmark} onClick={onClosePopup} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/xMark.svg"} height={29} width={39} onClick={onClosePopup} alt="" />
+
         </div>
 
         <div className="package-popup-content-land mx-1 p-4 pt-0 d-flex flex-column gap-2">
@@ -77,7 +75,7 @@ const CawsPopup = ({ onClosePopup }) => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={rarity} alt="" /> Rarity tools{" "}
+                  <img src={"https://cdn.worldofdypians.com/wod/rarity.svg"} alt="" /> Rarity tools{" "}
                   <ChevronArrowSvg color="white" />
                 </a>
               </div>
@@ -105,7 +103,7 @@ const CawsPopup = ({ onClosePopup }) => {
               target="_blank"
               className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
             >
-              <img src={opensea} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
               Buy on Opensea
             </NavLink>
           </div>

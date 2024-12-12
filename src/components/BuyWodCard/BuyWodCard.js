@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./_buywodcard.scss";
-import whiteArrow from "../../screens/Home/VideoWrapper/assets/buyWodAssets/whiteArrow.svg";
-import blueArrow from "../../screens/Home/VideoWrapper/assets/buyWodAssets/blueArrow.svg";
+
 import { NavLink } from "react-router-dom";
 
 const BuyWodCard = ({ item }) => {
@@ -16,14 +15,14 @@ const BuyWodCard = ({ item }) => {
       onMouseEnter={() => setSwitchArrow(true)}
       onMouseLeave={() => setSwitchArrow(false)}
     >
-      <div className="d-flex align-items-center gap-2">
+    <div className="d-flex align-items-center gap-2">
         <img
-          src={require(`../../screens/Home/VideoWrapper/assets/buyWodAssets/${item.logo}`)}
+          src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
           alt=""
         />
         <h6 className="mb-0 buy-wod-title">{item.title}</h6>
       </div>
-      <img src={switchArrow ? blueArrow : whiteArrow} alt="" />
+      <img src={switchArrow ? "https://cdn.worldofdypians.com/wod/blueArrowBuyWod.svg" : "https://cdn.worldofdypians.com/wod/whiteArrowBuyWod.svg"} alt="" />
     </NavLink>
   );
 };

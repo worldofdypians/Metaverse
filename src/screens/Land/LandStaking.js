@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-import blackWallet from "../../assets/wallet-black.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
-import questionMark from "../../assets/landAssets/questionMark.svg";
-import addActive from "../../assets/landAssets/addActive.svg";
-import addInactive from "../../assets/landAssets/addInactive.svg";
-import subtractActive from "../../assets/landAssets/subtractActive.svg";
-import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
+
 import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
 import genesisBg from "../../assets/landAssets/genesisBg.svg";
 import ToolTip from "../Caws/elements/ToolTip";
-import wodLogo from '../Caws/assets/wodLogo.png'
+import wodLogo from "../Caws/assets/wodLogo.png";
 import Countdown from "react-countdown";
 import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import { shortAddress } from "../Caws/functions/shortAddress";
-import opensea from './mintAssets/opensea.svg'
+
 import { NavLink } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -95,7 +88,7 @@ const LandStaking = ({
   limit,
   landName,
   textColor,
-  handleSwitchChain
+  handleSwitchChain,
 }) => {
   const [nftCount, setNftCount] = useState(1);
   const [nftStatus, setNftStatus] = useState("*10 NFT limit");
@@ -696,7 +689,9 @@ const LandStaking = ({
             <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
               <h6 className="newminttitle font-organetto">
                 Genesis land{" "}
-                <span className="newminttitle-marked font-organetto">Sold out!</span>
+                <span className="newminttitle-marked font-organetto">
+                  Sold out!
+                </span>
               </h6>
 
               <div className="d-flex align-items-center justify-content-between p-3 mint-types">
@@ -754,18 +749,29 @@ const LandStaking = ({
                 className="w-100 d-flex d-lg-none"
               />
               <div className="d-flex flex-column flex-lg-row align-items-center gap-2 w-100">
-              <div className={"linear-border-purple mt-4"}>
-                <a className={`btn purple-btn px-4 d-flex gap-2 align-items-center`} href='https://opensea.io/collection/worldofdypians' target='_blank' rel='noreferrer'>
-                  <img src={opensea} alt=''/>
-                  Buy on OpenSea
-                </a>
-              </div>
-              <div className={"linear-border-purple2 mt-4"}>
-                <NavLink to={'/shop/land'} className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`} >
-                  <img src={wodLogo} width={25} height={25} alt=''/>
-                  Buy on WOD
-                </NavLink>
-              </div>
+                <div className={"linear-border-purple mt-4"}>
+                  <a
+                    className={`btn purple-btn px-4 d-flex gap-2 align-items-center`}
+                    href="https://opensea.io/collection/worldofdypians"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/opensea.svg"}
+                      alt=""
+                    />
+                    Buy on OpenSea
+                  </a>
+                </div>
+                <div className={"linear-border-purple2 mt-4"}>
+                  <NavLink
+                    to={"/shop/land"}
+                    className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`}
+                  >
+                    <img src={wodLogo} width={25} height={25} alt="" />
+                    Buy on WOD
+                  </NavLink>
+                </div>
               </div>
             </div>
           </div>
@@ -822,7 +828,7 @@ const LandStaking = ({
                 </div>
               </div>
 
-              {coinbase && chainId === 1  && status === "" ? (
+              {coinbase && chainId === 1 && status === "" ? (
                 <span
                   className="create-land-title font-poppins"
                   style={{ fontSize: "14px" }}
@@ -850,18 +856,16 @@ const LandStaking = ({
                 >
                   <button
                     className={`btn ${
-                       (isConnected === true && chainId !== 1) ||
-                          (status !== "Connect your wallet." &&
-                            status !== "") 
+                      (isConnected === true && chainId !== 1) ||
+                      (status !== "Connect your wallet." && status !== "")
                         ? "outline-btn-green"
                         : "filled-btn"
                     }  px-4 w-100`}
                     onClick={() => {
-                      isConnected === true && chainId !== 1 ? handleSwitchChain()
-                      :
-                      showWalletConnect();
+                      isConnected === true && chainId !== 1
+                        ? handleSwitchChain()
+                        : showWalletConnect();
                     }}
-                   
                     onMouseEnter={() => {
                       setMouseOver(true);
                     }}
@@ -869,15 +873,20 @@ const LandStaking = ({
                       setMouseOver(false);
                     }}
                   >
-                    {(isConnected === false) && (
+                    {isConnected === false && (
                       <img
-                        src={mouseOver === false ? blackWallet : whitewallet}
+                        src={
+                          mouseOver === false
+                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                        }
                         alt=""
                         style={{ width: "23px", height: "23px" }}
                       />
-                    )}{ (chainId !== 1 && coinbase) ? "Switch Chain" : 'Connect wallet'}
-
-                   
+                    )}
+                    {chainId !== 1 && coinbase
+                      ? "Switch Chain"
+                      : "Connect wallet"}
                   </button>
                 </div>
               )}
@@ -891,7 +900,12 @@ const LandStaking = ({
                     APR
                   </span>
                 </h6>
-                <span className="land-lock-time" style={{whiteSpace: 'nowrap'}}>No lock time</span>
+                <span
+                  className="land-lock-time"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  No lock time
+                </span>
               </div>
               <div
                 className={
@@ -899,8 +913,8 @@ const LandStaking = ({
                   // activeButton === false ||
                   // createdNft === 0
                   //   ?
-                     "linear-border-disabled"
-                    // : "linear-border"
+                  "linear-border-disabled"
+                  // : "linear-border"
                 }
               >
                 <button
@@ -908,9 +922,9 @@ const LandStaking = ({
                     // isConnected === false ||
                     // activeButton === false ||
                     // createdNft === 0
-                    //   ? 
-                      "outline-btn-disabled"
-                      // : "filled-btn"
+                    //   ?
+                    "outline-btn-disabled"
+                    // : "filled-btn"
                   } px-5 w-100`}
                   disabled={
                     // isConnected === false ||
@@ -927,19 +941,19 @@ const LandStaking = ({
                   Stake NFT
                 </button>
               </div>
-            
-            </div>  <span className="errormsg w-100">
-                    <img
-                      width={18}
-                      height={18}
-                      src={
-                        require("../../assets/landAssets/alert-triangle.svg")
-                          .default
-                      }
-                      alt=""
-                    />{" "}
-                    Staking is expired. Please claim your rewards and unstake your NFT.
-                  </span>
+            </div>{" "}
+            <span className="errormsg w-100">
+              <img
+                width={18}
+                height={18}
+                src={
+                  require("../../assets/landAssets/alert-triangle.svg").default
+                }
+                alt=""
+              />{" "}
+              Staking is expired. Please claim your rewards and unstake your
+              NFT.
+            </span>
             <hr className="mint-divider" />
             <div className="d-flex align-items-end flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between  align-items-end gap-2">
               <div className="d-flex flex-column gap-1 w-100">

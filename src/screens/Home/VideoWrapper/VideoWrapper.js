@@ -1,80 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./_videowrapper.scss";
-import xMark from "../../../assets/navbarAssets/xMark.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink, useLocation } from "react-router-dom";
-import epicwhite from "../../../assets/epicwhite.svg";
-import epicblack from "../../../assets/epicblack.svg";
-import LeaderBoard from "../../../components/LeaderBoard/LeaderBoard";
-import coingecko from "../../Marketplace/MarketNFTs/assets/coingecko.svg";
-import coinbaseimg from "./assets/baseLogo.svg";
-import dypius from "../../Marketplace/MarketNFTs/assets/dypiusPremium16.svg";
-import doge from "../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from "../../Marketplace/MarketNFTs/assets/cmc.svg";
-import multiplayer from "../../../assets/multiplayer.svg";
-import whiteCircleArrow from "../../../assets/whiteCircleArrow.svg";
-import skaleLogo from "../../Marketplace/MarketNFTs/assets/skaleLogo.svg";
-import bnbLogo from "../../Marketplace/MarketNFTs/assets/bnblogo.svg";
-import homeEpicGames from "../../../assets/homeEpicGames.svg";
-import homeLine from "../../../assets/homeLine.svg";
-import victionLogo from "./assets/victionLogo.svg";
-import buyWod from "./assets/buyWod.svg";
-import victionBg from "./assets/victionBg.webp";
-import seiLogo from "./assets/seiLogo.svg";
-import seiBg from "./assets/seiBg.webp";
-import coreLogo from "./assets/coreLogo.svg";
-import taikoLogo from "./assets/taikoLogo.svg";
-import mantaLogo from "./assets/mantaLogo.png";
-import cookieLogo from "./assets/cookie3Logo.svg";
-
-import coreBg from "./assets/coreBg.webp";
-import immutableLogo from "./assets/immutableLogo.svg";
-import immutableBg from "./assets/immutableBg.webp";
-
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 import Slider from "react-slick";
 import useWindowSize from "../../../hooks/useWindowSize";
-import NewHomeLeaderboard from "../../../components/LeaderBoard/NewHomeLeaderboard";
 import GlobalLeaderboard from "../../../components/LeaderBoard/GlobalLeaderboard";
-import axios from "axios";
-import wodToken from "../../../assets/wodAssets/wodToken.svg";
-import Countdown from "react-countdown";
-import gate from "./assets/buyWodAssets/gate.svg";
-import kucoin from "./assets/buyWodAssets/kucoin.svg";
-import mexc from "./assets/buyWodAssets/mexc.svg";
-import pancakeSwap from "./assets/buyWodAssets/pancakeSwap.svg";
-import trustWallet from "./assets/buyWodAssets/trustWallet.svg";
-import xMarkBuyWod from "./assets/buyWodAssets/xMark.svg";
 import BuyWodCard from "../../../components/BuyWodCard/BuyWodCard";
-import { set } from "lodash";
 
-const renderer = ({ days, hours, minutes }) => {
-  return (
-    <div className="timer-wrapper d-flex align-items-start gap-2 justify-content-center">
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">
-          {days < 10 ? "0" + days : days}
-        </h6>
-        <span className="ways-to-amplify-desc">Days</span>
-      </div>
-      <h6 className="main-hero-title mb-0">:</h6>
-
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">
-          {hours < 10 ? "0" + hours : hours}
-        </h6>
-        <span className="ways-to-amplify-desc">Hours</span>
-      </div>
-      <h6 className="main-hero-title mb-0">:</h6>
-      <div className="d-flex flex-column gap-1 align-items-center">
-        <h6 className="main-hero-title mb-0">
-          {minutes < 10 ? "0" + minutes : minutes}
-        </h6>
-        <span className="ways-to-amplify-desc">Minutes</span>
-      </div>
-    </div>
-  );
-};
 
 const VideoWrapper = ({
   handleRegister,
@@ -114,27 +47,27 @@ const VideoWrapper = ({
   const exchanges = [
     {
       title: "Kucoin",
-      logo: "kucoin.svg",
+      logo: "kucoinBuyWod.svg",
       link: "https://www.kucoin.com/trade/WOD-USDT",
     },
     {
       title: "Gate.io",
-      logo: "gate.svg",
+      logo: "gateBuyWod.svg",
       link: "https://www.gate.io/trade/WOD_USDT",
     },
     {
       title: "MEXC Global",
-      logo: "mexc.svg",
+      logo: "mexcBuyWod.svg",
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
       title: "PancakeSwap",
-      logo: "pancakeSwap.svg",
+      logo: "pancakeSwapBuyWod.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
     },
     {
       title: "TrustWallet",
-      logo: "trustWallet.svg",
+      logo: "trustWalletBuyWod.svg",
       link: "https://short.trustwallet.com/app-download",
     },
   ];
@@ -303,9 +236,9 @@ const VideoWrapper = ({
                 href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                 target="_blank"
               >
-                <img src={homeEpicGames} className="home-epic" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/homeEpicGames.svg"} className="home-epic" alt="" />
               </a>
-              <img src={homeLine} className="home-line" alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/homeLine.svg"} className="home-line" alt="" />
             </div>
             {/* <div className="join-beta-ribbon p-2 w-100">
                 <NavLink to="join-beta">
@@ -388,7 +321,7 @@ const VideoWrapper = ({
           >
             <div className="d-flex align-items-start justify-content-end">
               <img
-                src={xMark}
+                src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                 alt="x mark"
                 className="position-relative"
                 style={{ cursor: "pointer" }}
@@ -417,7 +350,7 @@ const VideoWrapper = ({
             <div className="d-flex align-items-center justify-content-between mb-3">
               <h6 className="mb-0 buy-wod-popup-title">Get WOD</h6>
               <img
-                src={xMarkBuyWod}
+                src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                 width={22}
                 height={22}
                 style={{ cursor: "pointer" }}

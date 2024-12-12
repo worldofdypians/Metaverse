@@ -1,7 +1,6 @@
 import React from "react";
 import "./_mainheroabout.scss";
-import epicblack from "../../../assets/epicblack.svg";
-import anchorArrow from "../../../assets/anchorArrow.svg";
+ 
 import { NavLink } from "react-router-dom";
 
 const MainHero = () => {
@@ -19,19 +18,7 @@ const MainHero = () => {
             other players to destroy the enemy's bases.
           </p>
           <div className="d-flex align-items-center gap-3">
-            {/* <a
-              className="explore-btn px-4 py-1"
-              href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-              target="_blank"
-            >
-              <img
-                src={epicblack}
-                alt="icon"
-                className="epicgame2"
-                style={{ width: "auto", height: "30px" }}
-              />{" "}
-              Download
-            </a> */}
+   
             <NavLink to="/join-beta" className="getpremium-btn px-4 py-2">
               Join Beta
             </NavLink>
@@ -43,21 +30,21 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Tokenomics</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
           <NavLink
             to={"/about#security"}
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Security</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
           <NavLink
             to={"/about#roadmap"}
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Roadmap</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -65,7 +52,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Team</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -73,7 +60,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Partners</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
 
           <NavLink
@@ -81,7 +68,7 @@ const MainHero = () => {
             className="d-flex align-items-center gap-2"
           >
             <span className="anchor-title">Brand</span>
-            <img src={anchorArrow} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/anchorArrow.svg'} alt="" />
           </NavLink>
         </div>
       </div>

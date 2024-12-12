@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import X from "../../assets/x_close.png";
-import whitelistIcon from "../../assets/whitelist-icon.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
 import discord from "../../assets/discord.svg";
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
@@ -44,11 +41,11 @@ const JoinBetaModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
   ];
 
@@ -366,7 +363,7 @@ const JoinBetaModal = ({
             <div className="separator"></div>
             <div
               className={
-                showOptions === false ? "linear-border m-auto" : "m-auto"
+                showOptions === false ? " m-auto" : "m-auto"
               }
               style={{
                 width: showOptions === false ? "fit-content" : "",
@@ -375,7 +372,7 @@ const JoinBetaModal = ({
             >
               {showOptions === false ? (
                 <button
-                  className="btn outline-btn px-5 d-flex gap-1 align-items-center"
+                  className="getpremium-btn px-3 py-2"
                   onClick={() => {
                     setShowOptions(true);
                   }}
@@ -387,7 +384,8 @@ const JoinBetaModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
                     alt=""
                   />
                   Connect Wallet
@@ -405,7 +403,7 @@ const JoinBetaModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />

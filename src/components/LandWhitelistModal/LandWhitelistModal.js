@@ -13,8 +13,6 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import discord from "../../assets/discord.svg";
 import telegram from "../../assets/telegram.svg";
 
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
 
 import purplecircle from "../../assets/landAssets/purplecircle.svg";
 import xmark from "../../assets/landAssets/xmark.svg";
@@ -49,23 +47,23 @@ const LandWhitelistModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coinbase",
-      icon: "coinbase.png",
+      icon: "coinbaseWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
     {
       name: "SafePal",
-      icon: "safepal.png",
+      icon: "safepalWallet.png",
     },
     {
       name: "Trust Wallet",
-      icon: "trustwallet.png",
+      icon: "trustwalletWallet.png",
     },
   ];
 
@@ -272,7 +270,8 @@ const LandWhitelistModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
                     alt=""
                   />
                   Connect Wallet
@@ -290,7 +289,7 @@ const LandWhitelistModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />

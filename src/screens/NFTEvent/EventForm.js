@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import NftCardPlaceholder from "../../components/NewsCard/NftCardPlaceholder";
 import limitedOfferBadge from "../../assets/limitedoffer.svg";
 import Countdown from "react-countdown";
-import blackWallet from "../../assets/wallet-black.svg";
-import whitewallet from "../../assets/wallet-white.svg";
 import { shortAddress } from "../Caws/functions/shortAddress";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
@@ -17,8 +15,7 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import OutsideClickHandler from "react-outside-click-handler";
-import modalClose from "../../assets/newsAssets/modalClose.svg";
-import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
+
 
 const { BigNumber } = window;
 
@@ -382,7 +379,8 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
                         >
                           <img
                             src={
-                              mouseOver === false ? whitewallet : blackWallet
+                              mouseOver === false ?  'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
                             }
                             alt=""
                             style={{ width: "23px", height: "23px" }}
@@ -470,13 +468,13 @@ const EventForm = ({ showWalletConnect, coinbase, flag }) => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">
               {flag === "ph" ? `Salamat` : `Thank you`}
             </h6>

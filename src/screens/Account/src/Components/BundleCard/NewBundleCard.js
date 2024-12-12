@@ -2,13 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./_bundle.scss";
 import dypius from "../../Images/userProfile/dypius.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
-import filledCircle from "../../Images/userProfile/filled-circlecheck.svg";
-import bnbChain from "../../Images/userProfile/bnbChain.svg";
-import dragon from "../../Images/userProfile/dragon.png";
-import dragonPackage from "./assets/dragonPackageIcon.webp";
-import criticalHit from "./assets/criticalHit.webp";
-import goldenPass from "./assets/goldenPass.png";
-import puzzleMadness from "./assets/puzzleMadness.png";
 import "react-circular-progressbar/dist/styles.css";
 import newLandTooltip from "./assets/newLandTooltip.svg";
 import {
@@ -40,7 +33,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import progress1 from "./assets/progress1.svg";
 import progress2 from "./assets/progress2.svg";
 import axios from "axios";
-import opensea from "./assets/opensea.svg";
+
 import Slider from "rc-slider";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import useWindowSize from "../../../../../hooks/useWindowSize";
@@ -1532,7 +1525,7 @@ const NewBundleCard = ({
                           <span className="new-bnb-chain d-flex align-items-center gap-1">
                             Available only on Ethereum{" "}
                             <img
-                              src={require("./assets/ethIcon.svg").default}
+                              src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                               alt=""
                             />
                           </span>

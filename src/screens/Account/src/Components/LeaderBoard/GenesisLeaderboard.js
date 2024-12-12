@@ -16,7 +16,6 @@ import premiumStar from "../../../../../components/LeaderBoard/assets/premiumSta
 // import tooltipIcon from "../../../../../components/LeaderBoard/assets/tooltip.svg";
 // import skaleIcon from "../../../../../components/LeaderBoard/assets/skaleIcon.png";
 // import skaleIconGray from "../../../../../components/LeaderBoard/assets/skaleIconGray.svg";
-// import wodIcon from "../../../../../components/LeaderBoard/assets/wodIcon.png";
 // import bnbIcon from "../../../../../components/LeaderBoard/assets/bnbIcon.svg";
 // import coreIcon from "../../../../../components/LeaderBoard/assets/coreIcon.svg";
 // import bnbActive from "../../../../../components/LeaderBoard/assets/bnbActive.svg";

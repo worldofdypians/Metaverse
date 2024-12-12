@@ -1,9 +1,8 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import React from "react"; 
 import mapPopup from "./assets/mapPopup.webp";
 import cityMap from "./assets/cityMap.webp";
 import islandMap from "./assets/islandMap.webp";
-import epicblack from "../../assets/epicblack.svg";
+
 
 const MapPopup = ({ onClosePopup }) => {
   return (
@@ -25,7 +24,7 @@ const MapPopup = ({ onClosePopup }) => {
               </mark>
             </h6>
             <img
-              src={popupXmark}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               className="popup-closer-map"
               onClick={onClosePopup}
               alt=""
@@ -82,7 +81,7 @@ const MapPopup = ({ onClosePopup }) => {
                 href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                 target="_blank"
               >
-                <img src={epicblack} alt="icon" className="epicgame2 w-auto h-auto" />
+                <img src={"https://cdn.worldofdypians.com/wod/epicblack.svg"} alt="icon" className="epicgame2 w-auto h-auto" />
                 Download
               </a>
             </div>

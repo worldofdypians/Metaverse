@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./release.css";
-
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
-// import wallet from "../FARMINNG/assets/wallet.svg";
-import moment from "moment";
-import axios from "axios";
-import { TOKEN_LOCK_ABI, IDO_ABI } from "./abis";
-import Countdown from "react-countdown";
+import { IDO_ABI } from "./abis";
 import ReleaseHero from "./ReleaseHero/ReleaseHero";
 import ReleaseContent from "./ReleaseContent/ReleaseContent";
 import StakingBanner from "./StakingBanner/StakingBanner";

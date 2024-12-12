@@ -1,29 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav";
-import searchIcon from "../assets/search.svg";
-import dropdownIcon from "../assets/dropdownIcon.svg";
+ 
 import { NavLink } from "react-router-dom";
-import { getCawsNfts } from "../../../actions/convertUsd";
-import "./_filters.scss";
-import filtersXmark from "./assets/filtersXmark.svg";
-import axios from "axios";
-import { Checkbox, Skeleton } from "@mui/material";
-import OutsideClickHandler from "react-outside-click-handler";
-import traitIcon from "./assets/traitIcon.svg";
-import priceIconUp from "./assets/priceIconUp.svg";
-import priceIconDown from "./assets/priceIconDown.svg";
-import priceIconNeutral from "./assets/priceIconNeutral.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import ethIcon from "./assets/ethIcon.svg";
-import dypIcon from "./assets/dypIcon.svg";
-import emptyCheck from "./assets/emptyCheck.svg";
-import fullCheck from "./assets/fullCheck.svg";
-import FilterCard from "./FilterCard";
-import traitXmark from "./assets/traitXmark.svg";
+import "./_filters.scss"; 
+import {  Skeleton } from "@mui/material";
+import OutsideClickHandler from "react-outside-click-handler"; 
+ 
+import FilterCard from "./FilterCard"; 
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 import cawsmetadata from "../../../actions/cawsmetadatas2.json";
 import cawstraits from "../../../actions/cawstraits.json";
@@ -520,7 +506,6 @@ const CawsNFT = ({
       });
       setCawsNFTS(lso);
     } else if (sortValue === "lto") {
-       
       let otl = allCawsNfts.sort((a, b) => {
         return b.date - a.date;
       });
@@ -550,7 +535,7 @@ const CawsNFT = ({
             isListed: true,
             isLatestSale: false,
             type: "caws",
-            
+
             LastSold: cawsArray2[index]?.price,
             soldPriceType: cawsArray2[index]?.payment_priceType,
           };
@@ -747,10 +732,10 @@ const CawsNFT = ({
   }, [count]);
 
   useEffect(() => {
-    if (cawsBought && caws && caws.length>0) {
+    if (cawsBought && caws && caws.length > 0) {
       getListedCaws();
     }
-  }, [cawsBought, nftCount, allCawsNfts.length,caws]);
+  }, [cawsBought, nftCount, allCawsNfts.length, caws]);
 
   useEffect(() => {
     getCawsCollection();
@@ -771,7 +756,6 @@ const CawsNFT = ({
     }
     sortNfts("lth");
   }, [cawsNFTS]);
-
 
   return (
     <div
@@ -805,14 +789,13 @@ const CawsNFT = ({
                     earn multiple <b>Rewards</b>.
                   </p>
                   <NavLink to="/caws" style={{ width: "fit-content" }}>
-                  <button className="pill-btn2 px-3 py-2">Explore</button>
-
+                    <button className="pill-btn2 px-3 py-2">Explore</button>
                   </NavLink>
                 </div>
               </div>
               <div className="col-12 col-lg-4">
                 <img
-                  src={require("./assets/cawsCollectionBanner.webp")}
+                  src={`https://cdn.worldofdypians.com/wod/cawsCollectionBanner.webp`}
                   className="w-100"
                   alt=""
                 />
@@ -831,10 +814,10 @@ const CawsNFT = ({
                   aria-expanded="false"
                 >
                   <div className="d-flex align-items-center gap-2">
-                    <img src={filterIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/filterIcon.svg'} alt="" />
                     <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
-                  <img src={dropdownIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                 </button>
                 <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                   <li
@@ -877,10 +860,10 @@ const CawsNFT = ({
                   <img
                     src={
                       priceCount === 0
-                        ? priceIconNeutral
-                        : priceCount % 2 == 0
-                        ? priceIconDown
-                        : priceIconUp
+                      ? 'https://cdn.worldofdypians.com/wod/priceIconNeutral.svg'
+                      : priceCount % 2 == 0
+                      ? 'https://cdn.worldofdypians.com/wod/priceIconDown.svg'
+                      : 'https://cdn.worldofdypians.com/wod/priceIconUp.svg'
                     }
                     alt=""
                   />
@@ -903,7 +886,7 @@ const CawsNFT = ({
                   onClick={() => setOpenTraits(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={traitIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/traitIcon.svg'} alt="" />
                   <h6 className="filter-nav-title mb-0">Traits</h6>
                 </div>
               </div>
@@ -921,7 +904,7 @@ const CawsNFT = ({
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
-                    src={traitXmark}
+                    src={'https://cdn.worldofdypians.com/wod/traitXmark.svg'}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       displayFilters.length === 1
@@ -1523,7 +1506,7 @@ const CawsNFT = ({
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h6 className="filters-title mb-0">Filters</h6>
             <img
-              src={filtersXmark}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               style={{ cursor: "pointer" }}
               onClick={() => setOpenTraits(false)}
               alt=""

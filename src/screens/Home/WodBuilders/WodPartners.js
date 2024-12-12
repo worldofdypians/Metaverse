@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import "./_wodbuilders.scss";
-import partnersDropdown from "./assets/partnersDropdown.svg";
 import { NavLink } from "react-router-dom";
 
 const WodPartners = ({ full }) => {
   const partners = [
     {
       name: "Bnb Chain",
-      icon: "bnb.svg",
+      icon: "bnbIcon.svg",
     },
     {
       name: "Trust Wallet",
-      icon: "trustWallet.svg",
+      icon: "trustWalletLogo.svg",
     },
     {
       name: "Matchain",
@@ -31,11 +30,11 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "CMC",
-      icon: "cmc.svg",
+      icon: "cmcIcon.svg",
     },
     {
       name: "Coingecko",
-      icon: "coingecko.svg",
+      icon: "coingeckoIcon.svg",
     },
     {
       name: "Viction",
@@ -43,11 +42,11 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "SKALE",
-      icon: "skale.svg",
+      icon: "skaleIcon.svg",
     },
     {
       name: "Manta",
-      icon: "manta.png",
+      icon: "mantaLogoBig.png",
     },
     {
       name: "Taiko",
@@ -55,7 +54,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "KuCoin",
-      icon: "kucoin.svg",
+      icon: "kucoinIcon.svg",
     },
     {
       name: "Binance Web3",
@@ -67,33 +66,33 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Coin98",
-      icon: "coin98.svg",
+      icon: "coin98Icon.svg",
     },
     {
       name: "Avalanche",
-      icon: "avalanche.svg",
+      icon: "avaxIcon.svg",
     },
     {
       name: "Chainlink",
-      icon: "chainlink.svg",
+      icon: "chainlinkIcon.svg",
     },
 
     {
       name: "Gate.Io",
-      icon: "gateio.svg",
+      icon: "gateIcon.svg",
     },
     {
       name: "Mexc Global",
-      icon: "mexc.svg",
+      icon: "mexcIcon.svg",
     },
     {
       name: "Easy2Stake",
-      icon: "easy2stake.svg",
+      icon: "easy2stakeIcon.svg",
     },
 
     {
       name: "Conflux",
-      icon: "conflux.svg",
+      icon: "confluxIcon.svg",
     },
     {
       name: "SEI",
@@ -106,20 +105,11 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Midle",
-      icon: "midle.png",
+      icon: "midle.svg",
     },
-    {
-      name: "DogeCoin",
-      icon: "dogecoinIcon.svg",
-    },
-    {
-      name: "Crypto Adventure",
-      icon: "cryptoadventure.svg",
-    },
-
     {
       name: "Financial Move",
-      icon: "financialmove.svg",
+      icon: "financialmoveLogo.svg",
     },
     // {
     //   name: "Playground",
@@ -135,15 +125,15 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Magic Store",
-      icon: "magicstore.svg",
+      icon: "magic.svg",
     },
     {
       name: "BabyDoge",
-      icon: "babydoge.svg",
+      icon: "babydogeIcon.svg",
     },
     {
       name: "GGG",
-      icon: "ggg.png",
+      icon: "ggplay.svg",
     },
     {
       name: "KAPGAMES",
@@ -151,7 +141,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Castrum Capital",
-      icon: "castrum.png",
+      icon: "castrumLogo.png",
     },
     {
       name: "Micro3",
@@ -189,7 +179,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Finceptor",
-      icon: "finceptor.svg",
+      icon: "finceptorLogo.svg",
     },
     {
       name: "Creo Engine",
@@ -218,7 +208,7 @@ const WodPartners = ({ full }) => {
 
     {
       name: "MPC Education",
-      icon: "mpceducation.svg",
+      icon: "mpceducationLogo.svg",
     },
     {
       name: "Mintpad",
@@ -268,7 +258,7 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={require(`./assets/partners/${partner.icon}`)}
+                      src={(`https://cdn.worldofdypians.com/wod/${partner.icon}`)}
                       alt=""
                       style={{
                         width: "60px",
@@ -292,7 +282,7 @@ const WodPartners = ({ full }) => {
               onClick={() => setSlice(partners.length)}
             >
               <span className="view-all-partners ">View All</span>
-              <img src={partnersDropdown} width={20} height={20} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} alt="" />
             </div>
           ) : (
             <div
@@ -301,7 +291,7 @@ const WodPartners = ({ full }) => {
             >
               <span className="view-all-partners ">View Less</span>
               <img
-                src={partnersDropdown}
+                src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"}
                 width={20}
                 height={20}
                 style={{ transform: "rotate(180deg)" }}

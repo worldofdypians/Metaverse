@@ -3,8 +3,6 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import X from "../../assets/x_close.png";
 import whitelistIcon from "../../assets/whitelist-icon.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
 import discord from "../../assets/discord.svg";
 
 import axios from "axios";
@@ -59,11 +57,11 @@ const RegisterModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
   ];
 
@@ -347,7 +345,8 @@ const RegisterModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ?  "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                      : "https://cdn.worldofdypians.com/wod/wallet-white.svg"}
                     alt=""
                   />
                   Connect Wallet
@@ -365,7 +364,7 @@ const RegisterModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />

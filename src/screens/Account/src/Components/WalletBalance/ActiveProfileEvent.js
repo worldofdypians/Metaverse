@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
-import coin98 from "./assets/coin98.svg";
-import coingecko from "./assets/coingecko.svg";
-import gate from "./assets/gate.svg";
-import baseLogo from "./assets/baseLogo.svg";
-import skaleLogo from "./assets/skaleLogo.svg";
-import bnblogo from "./assets/bnblogo.svg";
 
-import doge from "../../../../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from "../../../../Marketplace/MarketNFTs/assets/cmc.svg";
-
-import dypiusPremium16 from "./assets/dypiusPremium16.svg";
 import cyanArrow from "./assets/cyanArrow.svg";
-import conflux from "./assets/conflux.svg";
 import cyanDate from "./assets/cyanDate.svg";
 import cyanDollar from "./assets/cyanDollar.svg";
 import cyanExplore from "./assets/cyanExplore.svg";

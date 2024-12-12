@@ -4,14 +4,7 @@ import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import ToolTip from "../../screens/Caws/elements/ToolTip";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
-import addActive from "../../assets/landAssets/addActive.svg";
-import addInactive from "../../assets/landAssets/addInactive.svg";
-import subtractActive from "../../assets/landAssets/subtractActive.svg";
-import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
-import blackWallet from "../../assets/wallet-black.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
-import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
+ 
 import axios from "axios";
 
 const TimePieceMint = ({
@@ -66,10 +59,10 @@ const TimePieceMint = ({
     }
   };
 
-  const getTimepieceLatestMint = async()=>{
-    const result = await window.caws_timepiece.getTimepieceLatestMint()
-    setlatestMintId(result-1);
-  }
+  const getTimepieceLatestMint = async () => {
+    const result = await window.caws_timepiece.getTimepieceLatestMint();
+    setlatestMintId(result - 1);
+  };
 
   const benefits = [
     {
@@ -101,8 +94,7 @@ const TimePieceMint = ({
             setNftCount(cawsArray.length);
             setNftStatus("*50 NFT limit.");
           }, 3000);
-        }
-       else if (nftCount > 50 && cawsArray.length === 50) {
+        } else if (nftCount > 50 && cawsArray.length === 50) {
           setNftStatus("*Exceeded mint limit of 10 NFTs.");
           setTimeout(() => {
             setNftCount(cawsArray.length);
@@ -110,8 +102,7 @@ const TimePieceMint = ({
           }, 3000);
         } else if (cawsArray.length > 0 && cawsArray.length >= nftCount) {
           setNftStatus("*50 NFT limit.");
-          
-        };
+        }
       }
     }
   }, [nftCount, coinbase, cawsArray.length]);
@@ -124,15 +115,13 @@ const TimePieceMint = ({
           setStatus("Switch to Ethereum Chain to continue minting.");
         }
         if (chainId === 1) {
-        
           setactiveButton(true);
           setStatus("");
         }
       }
     }
-      getTimepieceLatestMint()
+    getTimepieceLatestMint();
   }, [isConnected, chainId, coinbase]);
-
 
   useEffect(() => {
     if (isConnected) {
@@ -140,21 +129,15 @@ const TimePieceMint = ({
         numberOfTokens: parseInt(nftCount),
       });
     }
-  }, [
-    nftCount,
-    isConnected,
-    coinbase,
-    chainId, cawsArray.length
-  ]);
+  }, [nftCount, isConnected, coinbase, chainId, cawsArray.length]);
 
-
-  useEffect(()=>{
-    if(coinbase && isConnected && chainId === 1) {
-      if(totalCreated > 0) {
-        setshowBadge(true)
+  useEffect(() => {
+    if (coinbase && isConnected && chainId === 1) {
+      if (totalCreated > 0) {
+        setshowBadge(true);
       }
     }
-  }, [coinbase, chainId, isConnected, totalCreated])
+  }, [coinbase, chainId, isConnected, totalCreated]);
 
   return (
     <div className="row justify-content-between align-items-center w-100 mx-0 px-3 py-3 p-lg-5 gap-5 gap-lg-0">
@@ -173,64 +156,65 @@ const TimePieceMint = ({
           unlock exclusive metaverse benefits.{" "}
         </span>
       </div>
-        <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
-          <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
-            <div className="d-flex flex-column position-relative">
-              {showBadge && totalCreated > 0 && (
-                <div className="totalcreated">
-                  <span>{totalCreated}</span>
-                </div>
-              )}
-              <div
-                className={`genesis-wrapper ${
-                  totalCreated > 0 ? "genesis-land" : "genesis-land-empty"
-                } d-flex justify-content-center align-items-center p-3 position-relative`}
-                style={{height: 312}}
-              >
-                <img
-                  src={dummyBadge}
-                  className="genesis-badge"
-                  style={{ visibility: "hidden" }}
-                  alt="badge"
-                />
+      <div className="col-12 col-md-12 col-xxl-2 ps-2 ps-lg-0 staking-height-2">
+        <div className="d-flex flex-column gap-3 justify-content-between staking-height-2">
+          <div className="d-flex flex-column position-relative">
+            {showBadge && totalCreated > 0 && (
+              <div className="totalcreated">
+                <span>{totalCreated}</span>
               </div>
-              <div
-                className="genesis-desc position-relative"
-                style={{ bottom: "5px" }}
-              >
-                <h6 className="font-organetto land-desc w-75">CAWS TIMEPIECE</h6>
-              </div>
+            )}
+            <div
+              className={`genesis-wrapper ${
+                totalCreated > 0 ? "genesis-land" : "genesis-land-empty"
+              } d-flex justify-content-center align-items-center p-3 position-relative`}
+              style={{ height: 312 }}
+            >
+              <img
+                src={"https://cdn.worldofdypians.com/wod/dummyBadge.png"}
+                className="genesis-badge"
+                style={{ visibility: "hidden" }}
+                alt="badge"
+              />
             </div>
             <div
-              className={
-                isConnected === false ||
-                activeButton === false  ||
-                totalCreated === 0
-                  ? "linear-border-disabled"
-                  : "linear-border"
-              }
+              className="genesis-desc position-relative"
+              style={{ bottom: "5px" }}
             >
-              <button
-                className={`btn ${
-                  isConnected === false ||
-                  activeButton === false  ||
-                  totalCreated === 0
-                    ? "outline-btn-disabled"
-                    : "outline-btn"
-                } px-5 w-100`}
-                disabled={
-                  isConnected === false ||
-                  activeButton === false ||
-                  totalCreated === 0
-                }
-                onClick={handleViewCollection}
-              >
-                View collection
-              </button>
+              <h6 className="font-organetto land-desc w-75">CAWS TIMEPIECE</h6>
             </div>
           </div>
+          <div
+            className={
+              isConnected === false ||
+              activeButton === false ||
+              totalCreated === 0
+                ? "linear-border-disabled"
+                : "linear-border"
+            }
+          >
+            <button
+              className={`btn ${
+                isConnected === false ||
+                activeButton === false ||
+                totalCreated === 0
+                  ? "outline-btn-disabled"
+                  : "outline-btn"
+              } px-5 w-100`}
+              disabled={
+                isConnected === false ||
+                activeButton === false ||
+                totalCreated === 0
+              }
+              onClick={handleViewCollection}
+            >
+              View collection
+            </button>
+          </div>
         </div>
-      <div className="col-12 col-md-12 col-xxl-6 mt-0 px-0"
+      </div>
+      <div
+        className="col-12 col-md-12 col-xxl-6 mt-0 px-0"
         style={{ overflowX: "hidden" }}
       >
         <div
@@ -243,19 +227,25 @@ const TimePieceMint = ({
             className="minthero d-none d-xl-flex d-lg-flex"
           />
           <h6 className="newminttitle font-organetto position-relative">
-            Mint your Timepiece <br />nft 
-            <span className="newminttitle-marked mx-2 font-organetto">now!</span>
+            Mint your Timepiece <br />
+            nft
+            <span className="newminttitle-marked mx-2 font-organetto">
+              now!
+            </span>
           </h6>
           <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
             <div className="mint-benefits-grid">
               {benefits.map((item) => (
                 <div className="d-flex align-items-center gap-2">
-                  <img src={require(`./assets/${item.icon}.png`)} alt="" style={{scale: item.icon === 'expand' ? '0.8' : '1'}}/>
+                  <img
+                    src={require(`./assets/${item.icon}.png`)}
+                    alt=""
+                    style={{ scale: item.icon === "expand" ? "0.8" : "1" }}
+                  />
                   <span className="mint-benefits-title">{item.title}</span>
                 </div>
               ))}
             </div>
-          
           </div>
         </div>
       </div>
@@ -263,12 +253,15 @@ const TimePieceMint = ({
         <div className="p-3 mint-wrappernew d-flex flex-column justify-content-between staking-height gap-2">
           <div className="row flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row flex-sm-row gap-1 align-items-center justify-content-between">
             <div className="d-flex justify-content-between gap-2 position-relative flex-column flex-xxl-row flex-lg-row flex-md-row">
-            <span className="land-name">
-            Available NFTs to mint:{" "}
-            <span className="addr-text" style={{ color: "rgb(123, 216, 176)" }}>
-              {cawsArray.length}
-            </span>
-          </span>
+              <span className="land-name">
+                Available NFTs to mint:{" "}
+                <span
+                  className="addr-text"
+                  style={{ color: "rgb(123, 216, 176)" }}
+                >
+                  {cawsArray.length}
+                </span>
+              </span>
               {coinbase && chainId === 1 && status === "" ? (
                 <span
                   className="create-land-title font-poppins"
@@ -300,12 +293,10 @@ const TimePieceMint = ({
               )}
             </div>
           </div>
-         
+
           <div className="d-flex mt-0 flex-column flex-lg-row align-items-start gap-2 justify-content-center justify-content-xxl-between justify-content-lg-between justify-content-md-between">
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name">
-                Name
-              </span>
+              <span className="land-name">Name</span>
               <div className="borderText borderText2" style={{ width: "100%" }}>
                 <h6
                   className="land-placeholder mb-0"
@@ -316,16 +307,17 @@ const TimePieceMint = ({
               </div>
             </div>
             <div className="d-flex flex-column gap-2 col-12 col-lg-6">
-              <span className="land-name">
-                Latest Mint
-              </span>
+              <span className="land-name">Latest Mint</span>
               <h6
-                  className="land-placeholder borderText"
-                  style={{ fontSize: "12px", paddingLeft: 14, lineHeight: '40px' }}
-                >
-                 # {latestMintId}
-                
-                  </h6>
+                className="land-placeholder borderText"
+                style={{
+                  fontSize: "12px",
+                  paddingLeft: 14,
+                  lineHeight: "40px",
+                }}
+              >
+                # {latestMintId}
+              </h6>
             </div>
           </div>
           <hr className="mint-divider m-0" />
@@ -349,8 +341,8 @@ const TimePieceMint = ({
                   isConnected === true &&
                   activeButton === true &&
                   status === ""
-                    ? subtractActive
-                    : subtractInactive
+                    ? "https://cdn.worldofdypians.com/wod/subtractActive.svg"
+                    : "https://cdn.worldofdypians.com/wod/subtractInactive.svg"
                 }
                 alt="subtract"
                 onClick={subtractNft}
@@ -374,8 +366,8 @@ const TimePieceMint = ({
                   isConnected === true &&
                   activeButton === true &&
                   status === ""
-                    ? addActive
-                    : addInactive
+                    ? "https://cdn.worldofdypians.com/wod/addActive.svg"
+                    : "https://cdn.worldofdypians.com/wod/addInactive.svg"
                 }
                 alt="add"
                 onClick={addNft}
@@ -415,17 +407,18 @@ const TimePieceMint = ({
               </span>
             </span>
           )}  */}
-           {mintStatus.length > 0 && (
-              <span style={{ color: textColor }}
-                className={
-                  mintStatus.includes("Success")
-                    ? "mint-span-success"
-                    : "mint-span"
-                }
-              >
-                {mintStatus}
-              </span>
-            )}
+          {mintStatus.length > 0 && (
+            <span
+              style={{ color: textColor }}
+              className={
+                mintStatus.includes("Success")
+                  ? "mint-span-success"
+                  : "mint-span"
+              }
+            >
+              {mintStatus}
+            </span>
+          )}
           <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-between">
             <div className="d-flex flex-column flex-lg-row align-items-center align-items-lg-center justify-content-xxl-end justify-content-lg-end justify-content-center w-100">
               <div className="d-flex flex-column flex-lg-row gap-3 align-items-center justify-content-center">
@@ -483,7 +476,11 @@ const TimePieceMint = ({
                   >
                     {(isConnected === false || chainId !== 1) && (
                       <img
-                        src={mouseOver === false ? blackWallet : whitewallet}
+                        src={
+                          mouseOver === false
+                            ? "https://cdn.worldofdypians.com/wod/wallet-black.svg"
+                            : "https://cdn.worldofdypians.com/wod/wallet-white.svg"
+                        }
                         alt=""
                         style={{ width: "23px", height: "23px" }}
                       />
@@ -514,7 +511,6 @@ const TimePieceMint = ({
                     )}
                   </button>
                 </div>
-              
               </div>
             </div>
           </div>

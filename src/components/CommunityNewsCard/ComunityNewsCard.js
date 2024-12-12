@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
-import halfArrow from "../../assets/newsAssets/halfArrow.svg";
-import twitterTag from "../../assets/newsAssets/twitterTag.svg";
-import playButton from "../../assets/landAssets/playButton.svg";
 import communityPlay from "../../assets/landAssets/communityPlay.svg";
 import useWindowSize from '../../hooks/useWindowSize'
 
@@ -54,7 +50,7 @@ const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
           ) : (
             <img src={image} className="community-image w-100" />
           )}
-          <img src={twitterTag} alt="twitter" className="twitter-tag" />
+          <img src={"https://cdn.worldofdypians.com/wod/twitterTag.svg"} alt="twitter" className="twitter-tag" />
           {/* <div className="play-button-wrapper d-flex align-items-center justify-content-center"> */}
             <img src={communityPlay} className={`play-button ${!playButton && 'd-none'}`} alt="play button" />
           {/* </div> */}
@@ -74,13 +70,13 @@ const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
         style={{ textDecoration: "none" }}
       >
         <div className="d-flex align-items-center gap-2">
-          <img src={calendarIcon} alt="calendar" width={24} height={24} />
+          <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" width={24} height={24} />
           <span className="community-date">
             {" "}
             {date.toLocaleDateString("en-US", options)}
           </span>
         </div>
-        <img src={halfArrow} alt="arrow" />
+        <img src={"https://cdn.worldofdypians.com/wod/halfArrow.svg"} alt="arrow" />
       </a>
     </div>
   );

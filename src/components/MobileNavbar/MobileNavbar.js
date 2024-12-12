@@ -1,44 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./_mobilenavbar.scss";
-import metaverse from "../../assets/navbarAssets/metaverse.svg";
-import mobileArrow from "../../assets/navbarAssets/mobileArrow.svg";
-import xMark from "../../assets/navbarAssets/xMark.svg";
+
 import { NavLink } from "react-router-dom";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import person from "../Header/assets/person.svg";
-import check from "../Header/assets/check.svg";
-import copy from "../Header/assets/copy.svg";
 import bellIcon from "./assets/bellIcon.svg";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
-import Clipboard from "react-clipboard.js";
+
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import avax from "../Header/assets/avax.svg";
-import bnb from "../Header/assets/bnb.svg";
-import eth from "../Header/assets/eth.svg";
-import base from "../Header/assets/base.svg";
-import conflux from "../Header/assets/conflux.svg";
-import skale from "../Header/assets/skale.svg";
-import sei from "../Header/assets/sei.svg";
-import viction from "../Header/assets/viction.svg";
-import core from "../Header/assets/core.svg";
-import manta from "../Header/assets/manta.png";
-import immutable from "../Header/assets/immutableLogo.svg";
-import taiko from "../Header/assets/taiko.svg";
-import matchain from "./assets/matchain.svg";
 
-import error from "../Header/assets/error.svg";
-import dropdown from "../Header/assets/dropdown.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 import sidebarArrow from "../MarketSidebar/assets/sidebarArrow.svg";
-import walletIcon from "../Header/assets/dropdownAssets/walletIcon.svg";
-import premiumIcon from "../Header/assets/dropdownAssets/premiumIcon.svg";
-import joinBetaIcon from "../../screens/Marketplace/Notifications/assets/joinBetaIcon.svg";
-import epicIcon from "../Header/assets/dropdownAssets/epicIcon.svg";
-import supportIcon from "../Header/assets/dropdownAssets/supportIcon.svg";
-import personIcon from "../Header/assets/personIcon.svg";
-import guestIcon from "../Header/assets/dropdownAssets/guestIcon.svg";
-import tgVerified from "../Header/assets/tgVerified.svg";
 
 const MobileNavbar = ({
   handleSignUp,
@@ -281,8 +253,7 @@ const MobileNavbar = ({
         setSeiState(false);
         setImmutableState(false);
         setTaikoState(true);
-      }
-      else if (chainId === 1329 ) {
+      } else if (chainId === 1329) {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -297,8 +268,7 @@ const MobileNavbar = ({
         setSeiState(true);
         setImmutableState(false);
         setTaikoState(false);
-      }
-      else {
+      } else {
         setMatState(false);
         setAvaxState(false);
         setBnbState(false);
@@ -388,7 +358,11 @@ const MobileNavbar = ({
             window.scrollTo(0, 0);
           }}
         >
-          <img src={metaverse} alt="metaverse" width={126} />
+          <img
+            src={"https://cdn.worldofdypians.com/wod/metaverse.svg"}
+            alt="metaverse"
+            width={126}
+          />
         </NavLink>
         <div className="d-flex align-items-center gap-3 justify-content-between">
           {coinbase && (
@@ -421,34 +395,34 @@ const MobileNavbar = ({
                     <img
                       src={
                         ethState === true
-                          ? eth
+                          ? "https://cdn.worldofdypians.com/wod/eth.svg"
                           : bnbState === true
-                          ? bnb
+                          ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : opbnbState === true
-                          ? bnb
+                          ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : avaxState === true
-                          ? avax
+                          ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : baseState === true
-                          ? base
+                          ? "https://cdn.worldofdypians.com/wod/base.svg"
                           : confluxState === true
-                          ? conflux
+                          ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
                           : skaleState === true
-                          ? skale
+                          ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : coreState === true
-                          ? core
+                          ? "https://cdn.worldofdypians.com/wod/core.svg"
                           : victionState === true
-                          ? viction
+                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           : immutableState === true
-                          ? immutable
+                          ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                           : mantaState === true
-                          ? manta
+                          ? "https://cdn.worldofdypians.com/wod/manta.png"
                           : taikoState === true
-                          ? taiko
+                          ? "https://cdn.worldofdypians.com/wod/taiko.svg"
                           : matState === true
-                          ? matchain
-                           : seiState === true
-                            ? sei
-                          :  error
+                          ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                          : seiState === true
+                          ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : "https://cdn.worldofdypians.com/wod/error.svg"
                       }
                       height={16}
                       width={16}
@@ -482,35 +456,69 @@ const MobileNavbar = ({
                         : matState === true
                         ? "Matchain"
                         : seiState === true
-                          ? "Sei"
-                         :  "Unsupported"}
+                        ? "Sei"
+                        : "Unsupported"}
                     </span>
 
-                    <img src={dropdown} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/dropdown.svg"}
+                      alt=""
+                    />
                   </span>
                 }
               >
                 <Dropdown.Item onClick={() => switchNetwork("0x1", 1)}>
-                  <img src={eth} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/eth.svg"}
+                    alt=""
+                  />
                   Ethereum
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => switchNetwork("0x38", 56)}>
-                  <img src={bnb} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                    alt=""
+                  />
                   BNB Chain
                 </Dropdown.Item>
                 {window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x2ba", 698)}>
-                      <img src={matchain} width={20} height={20} alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                        }
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
                       Matchain
                     </Dropdown.Item>
                   )}
+                {window.WALLET_TYPE !== "binance" &&
+                  !window.ethereum?.isBinance && (
+                    <Dropdown.Item onClick={() => switchNetwork("0x531", 1329)}>
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                      SEI
+                    </Dropdown.Item>
+                  )}
                 <Dropdown.Item onClick={() => switchNetwork("0xa9", 169)}>
-                  <img src={manta} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/manta.png"}
+                    alt=""
+                  />
                   Manta
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => switchNetwork("0xcc", 204)}>
-                  <img src={bnb} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                    alt=""
+                  />
                   opBNB Chain
                 </Dropdown.Item>
                 {window.WALLET_TYPE !== "binance" &&
@@ -518,15 +526,25 @@ const MobileNavbar = ({
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x28c58", 167000)}
                     >
-                      <img src={taiko} width={20} height={20} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
                       Taiko
                     </Dropdown.Item>
                   )}
-             
+
                 {window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x45c", 1116)}>
-                      <img src={core} width={20} height={20} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/core.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
                       CORE
                     </Dropdown.Item>
                   )}
@@ -535,12 +553,12 @@ const MobileNavbar = ({
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x585eb4b1", 1482601649)}
                     >
-                      <img src={skale} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'} alt="" />
                       SKALE
                     </Dropdown.Item>
                   )}
                 <Dropdown.Item onClick={() => switchNetwork("0x406", 1030)}>
-                  <img src={conflux} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'} alt="" />
                   Conflux
                 </Dropdown.Item>
                 {window.WALLET_TYPE !== "binance" &&
@@ -548,12 +566,15 @@ const MobileNavbar = ({
                     <Dropdown.Item
                       onClick={() => switchNetwork("0x343b", 13371)}
                     >
-                      <img src={immutable} width={20} height={20} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/immutable.svg'} width={20} height={20} alt="" />
                       Immutable
                     </Dropdown.Item>
                   )}
                 <Dropdown.Item onClick={() => switchNetwork("0x2105", 8453)}>
-                  <img src={base} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/base.svg"}
+                    alt=""
+                  />
                   Base
                 </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleSeiPool()}>
@@ -563,13 +584,13 @@ const MobileNavbar = ({
                 {window.WALLET_TYPE !== "binance" &&
                   !window.ethereum?.isBinance && (
                     <Dropdown.Item onClick={() => switchNetwork("0x58", 88)}>
-                      <img src={viction} width={20} height={20} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/viction.svg'} width={20} height={20} alt="" />
                       Viction
                     </Dropdown.Item>
                   )}
 
                 <Dropdown.Item onClick={() => switchNetwork("0xa86a", 43114)}>
-                  <img src={avax} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" />
                   Avalanche
                 </Dropdown.Item>
               </DropdownButton>
@@ -593,7 +614,7 @@ const MobileNavbar = ({
             </div>
           ) : (
             <img
-              src={xMark}
+              src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
               alt="x mark"
               style={{ position: "relative", right: "18px", marginLeft: 10 }}
               onClick={() => setOpenNavbar(false)}
@@ -631,7 +652,12 @@ const MobileNavbar = ({
                     <div className="d-flex align-items-center gap-2">
                       <h6 className="sidebar-title mb-0 d-flex align-items-center gap-2">
                         {" "}
-                        <img src={personIcon} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/personIcon.svg"
+                          }
+                          alt=""
+                        />
                         Account
                       </h6>
                     </div>
@@ -665,21 +691,27 @@ const MobileNavbar = ({
                       </NavLink>
                     ) : (
                       <NavLink
-                      to="/account"
-                      end
-                      className={({ isActive }) =>
-                        "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
-                      
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span className="header-wallet-span d-flex align-items-center gap-2">
-                        <img width={20} height={20} src={walletIcon} alt="" />
-                        {username}
-                        <span className="header-wallet">
-                          {shortAddress(coinbase)}
+                        to="/account"
+                        end
+                        className={({ isActive }) =>
+                          "d-flex px-2 py-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                        }
+                        onClick={() => setOpenNavbar(false)}
+                      >
+                        <span className="header-wallet-span d-flex align-items-center gap-2">
+                          <img
+                            width={20}
+                            height={20}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/walletIcon.svg"
+                            }
+                            alt=""
+                          />
+                          {username}
+                          <span className="header-wallet">
+                            {shortAddress(coinbase)}
+                          </span>
                         </span>
-                      </span>
                       </NavLink>
                     )}
 
@@ -695,8 +727,15 @@ const MobileNavbar = ({
                         onClick={() => setOpenNavbar(false)}
                       >
                         {/* <span className={`sidebar-title`}> */}
-                        <img width={20} height={20} src={guestIcon} alt="" />
-                          Continue as Guest
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/guestIcon.svg"
+                          }
+                          alt=""
+                        />
+                        Continue as Guest
                         {/* </span> */}
                       </NavLink>
                     )}
@@ -712,7 +751,14 @@ const MobileNavbar = ({
                       }
                       onClick={() => setOpenNavbar(false)}
                     >
-                      <img width={20} height={20} src={premiumIcon} alt="" />
+                      <img
+                        width={20}
+                        height={20}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/premiumIcon.svg"
+                        }
+                        alt=""
+                      />
 
                       <span className={`sidebar-title`}>Prime</span>
                     </NavLink>
@@ -726,28 +772,20 @@ const MobileNavbar = ({
                       }
                       onClick={() => setOpenNavbar(false)}
                     >
-                      <img width={20} height={20} src={joinBetaIcon} alt="" />
+                      <img
+                        width={20}
+                        height={20}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/joinBetaIcon.svg"
+                        }
+                        alt=""
+                      />
 
                       <span className={`sidebar-title mb-0`}>
                         Become Beta Tester
                       </span>
                     </NavLink>
-                    {/* <a
-                      href="https://store.epicgames.com/p/world-of-dypians-2e0694"
-                      target="_blank"
-                      rel="noreferrer"
-                      className={
-                        "d-flex px-2 align-items-center gap-2 sidebar-item"
-                      }
-                      onClick={() => setOpenNavbar(false)}
-                    >
-                      <span
-                        className={`sidebar-title mb-0 d-flex align-items-center gap-2`}
-                      >
-                        <img width={20} height={20} src={epicIcon} alt="" />
-                        Download
-                      </span>
-                    </a> */}
+
                     <NavLink
                       to="/contact-us"
                       end
@@ -759,7 +797,14 @@ const MobileNavbar = ({
                       onClick={() => setOpenNavbar(false)}
                     >
                       <div className="d-flex align-items-center gap-2">
-                        <img width={20} height={20} src={supportIcon} alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/supportIcon.svg"
+                          }
+                          alt=""
+                        />
                         <span className={`sidebar-title`}>Contact Us</span>
                       </div>
                     </NavLink>
@@ -875,7 +920,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">WOD</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div> */}
 
@@ -892,7 +937,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Game</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
 
@@ -909,7 +954,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Shop</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
           <div className="accordion" id="accordionExample2">
@@ -994,17 +1039,24 @@ const MobileNavbar = ({
                       <span className={`sidebar-title`}>Game Updates</span>
                     </NavLink>
                     <NavLink
-                    to={'https://t.me/WorldOfDypians_bot'}
-                    target="_blank"
-                    className={({ isActive }) =>
-                      isActive
-                    ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                      to={"https://t.me/WorldOfDypians_bot"}
+                      target="_blank"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
                           : "d-flex px-2 align-items-center gap-2 sidebar-item text-white"
-                    }
-                  >
-                    Telegram Mini App
-                    <img src={tgVerified} height={20} width={20} alt="" />
-                  </NavLink>
+                      }
+                    >
+                      Telegram Mini App
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/tgVerified.svg"
+                        }
+                        height={20}
+                        width={20}
+                        alt=""
+                      />
+                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -1144,7 +1196,7 @@ const MobileNavbar = ({
               onClick={() => setOpenNavbar(false)}
             >
               <h6 className="mobile-nav-link font-poppins mb-0">Map</h6>
-              <img src={mobileArrow} alt="arrow" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/mobileArrow.svg"} alt="arrow" />{" "}
             </NavLink>
           </div>
 

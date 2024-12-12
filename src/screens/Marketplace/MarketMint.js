@@ -1,87 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef,useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import { useState } from "react";
-import { useEffect } from "react";
-import TimepieceChecklistModal from "../Timepiece/TimepieceChecklistModal";
-import addActive from "../../assets/landAssets/addActive.svg";
-import addInactive from "../../assets/landAssets/addInactive.svg";
-import subtractActive from "../../assets/landAssets/subtractActive.svg";
-import subtractInactive from "../../assets/landAssets/subtractInactive.svg";
-import blackWallet from "../../assets/wallet-black.svg";
-import whitewallet from "../../assets/wallet-white.svg";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
-import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
-import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import marketMintBanner from "./assets/marketMintBanner.png";
-import confluxUpcoming from "./assets/confluxUpcoming.png";
-import EventSliderCard from "./components/EventSliderCard";
-import Slider from "react-slick";
-import nextArrow from "./assets/nextArrow1.svg";
-import confluxActive from "./assets/confluxActive.png";
-import coin98Active from "./assets/coin98Active.png";
-import bnbActive from "./assets/bnbActive.png";
-import taikoActive from "./assets/taikoActive.png";
-import matchainActive from "./assets/matchainActive.webp";
-
-import mantaActive from "./assets/mantaActive.png";
-import coingeckoActive from "./assets/coingeckoActive.png";
-import skaleActive from "./assets/upcomingSkaleMobile.webp";
-import immutableActive from "./assets/immutableActive.webp";
-import coreActive from "./assets/coreActive.webp";
-import victionActive from "./assets/victionActive.webp";
-import seiActive from "./assets/seiActive.webp";
-import multiversActive from "./assets/multiversActive.webp";
-import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
-import mantaLogo from "./assets/mantaLogo.png";
-import matchainLogo from "../../components/Header/assets/matchain.svg";
-
-import timepieceActive from "./assets/timepieceActive.png";
-import gateActive from "./assets/gateActive.png";
-import kucoinActive from "./assets/kucoinActive.png";
-import blockChainIcon from "./assets/blockChainIcon.svg";
-import confluxLogo from "./assets/confluxLogo.svg";
-import baseLogo from "./assets/baseLogo.svg";
-import skaleLogo from "./assets/skaleIcon.svg";
-import immutableLogo from "./assets/immutableLogo.svg";
-import coreLogo from "./assets/coreLogo.svg";
-import victionLogo from "./assets/victionLogo.svg";
-import seiLogo from "./assets/seiLogo.svg";
-import multiversLogo from "./assets/multiversLogo.svg";
-import taikoBg from "./assets/taikoBg.webp";
-import seiBg from "./assets/seiBg.webp";
-import coreBg from "./assets/coreBg.webp";
-import mantaBg from "./assets/mantaBg.webp";
-import baseBg from "./assets/baseBg.png";
-import matchainBg from "./assets/matchainBg.webp";
-
-import baseMobileBg from "./assets/baseMobileBg.png";
-
-import taikoMobileBg from "./assets/taikoActive.png";
-import victionBg from "./assets/victionBg.webp";
-import multiversBg from "./assets/multiversBg.webp";
-import immutableMobileBg from "./assets/immutableActive.webp";
-import immutableBg from "./assets/immutableBg.webp";
-
-import seiMobileBg from "./assets/seiActive.webp";
-import coreMobileBg from "./assets/coreActive.webp";
-import mantaMobileBg from "./assets/mantaMobileBg.png";
-
-import victionMobileBg from "./assets/victionActive.webp";
-import multiversMobileBg from "./assets/multiversActive.webp";
-
-import avaxLogo from "./assets/avaxLogo.svg";
-import bnbLogo from "./assets/bnbIcon.svg";
-import wodLogo from "./assets/wodIcon.png";
-import openSeaLogo from "./assets/openSeaLogo.png";
-import BetaEventCard from "./components/BetaEventCard";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import coin98Upcoming from "./assets/coin98Upcoming.png";
-
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Account/src/Utils.js/hooks/get-formatted-number";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
+import EventSliderCard from "./components/EventSliderCard";
+import TimepieceChecklistModal from "../Timepiece/TimepieceChecklistModal";
+import Slider from "react-slick";
+ 
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -131,7 +59,7 @@ const MarketMint = ({
   matMintAllowed,
   myMatNFTs,
   myMatNFTsCreated,
-  seiMintAllowed
+  seiMintAllowed,
 }) => {
   // const avaxData = {
   //   id: "avax",
@@ -347,7 +275,7 @@ const MarketMint = ({
 
     const victionnftContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
+      window.config.nft_viction_address.toLowerCase()
     );
 
     const victionresult = await victionnftContract.methods
@@ -543,10 +471,10 @@ const MarketMint = ({
     } else if (location.pathname.includes("taiko")) {
       setSelectedMint(taikoData);
       setMintTitle("taiko");
-    }  else if (location.pathname.includes("sei")) {
+    } else if (location.pathname.includes("sei")) {
       setSelectedMint(seiData);
       setMintTitle("sei");
-    } 
+    }
     // else if (location.pathname.includes("matchain")) {
     //   setSelectedMint(matData);
     //   setMintTitle("mat");
@@ -649,7 +577,7 @@ const MarketMint = ({
       eventId: "sei",
       id: "sei",
       desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
-      img: seiActive,
+      img: 'https://cdn.worldofdypians.com/wod/seiMintActive.webp',
       data: seiData,
       class: "mint-sei",
     },
@@ -695,7 +623,7 @@ const MarketMint = ({
     //   title: "Matchain Pass",
     //   eventId: "matchain",
     //   desc: "Gain entry to metaverse, and join exclusive Matchain event with special ticket.",
-    //   img: matchainActive,
+    //   img: "https://cdn.worldofdypians.com/wod/matchainMintActive.webp",
     //   data: matData,
     //   class: "mint-matchain",
     //   id: "mat",
@@ -721,7 +649,7 @@ const MarketMint = ({
       title: "CAWS Timepiece",
       eventId: "timepiece",
       desc: "Access the metaverse, experience enhanced interactions, and enjoy diverse benefits.",
-      img: timepieceActive,
+      img: 'https://cdn.worldofdypians.com/wod/timepieceMintActive.png',
       data: timepieceData,
       class: "mint-8",
       id: "timepiece",
@@ -974,7 +902,7 @@ const MarketMint = ({
             setactiveButton(true);
             setStatus("");
           }
-        }else if (selectedMint.id === "sei") {
+        } else if (selectedMint.id === "sei") {
           if (chainId !== 1329) {
             setactiveButton(false);
             setStatus("Switch to Sei to continue minting.");
@@ -1091,23 +1019,23 @@ const MarketMint = ({
                     <div className="pb-5 px-0 position-relative">
                       {activeSlide > 0 && (
                         <div className="prev-arrow-nft" onClick={firstPrev}>
-                          <img src={nextArrow} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
                         </div>
                       )}
                       {showFirstNext === activeSlide
                         ? null
                         : dummyCards.length > sliderCut && (
                             <div className="next-arrow-nft" onClick={firstNext}>
-                              <img src={nextArrow} alt="1" />
+                              <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="1" />
                             </div>
                           )}
                       {windowSize.width < 480 && (
                         <>
                           <div className="prev-arrow-nft" onClick={firstPrev}>
-                            <img src={nextArrow} alt="" />
+                            <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="" />
                           </div>
                           <div className="next-arrow-nft" onClick={firstNext}>
-                            <img src={nextArrow} alt="1" />
+                            <img src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'} alt="1" />
                           </div>
                         </>
                       )}
@@ -1182,7 +1110,9 @@ const MarketMint = ({
                               style={{ height: 312 }}
                             >
                               <img
-                                src={dummyBadge}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/dummyBadge.png"
+                                }
                                 className="genesis-badge"
                                 style={{ visibility: "hidden" }}
                                 alt="badge"
@@ -1192,7 +1122,10 @@ const MarketMint = ({
                               className="genesis-desc position-relative"
                               style={{ bottom: "5px" }}
                             >
-                              <h6 className="font-montserrat land-desc" style={{fontSize: 25}}>
+                              <h6
+                                className="font-montserrat land-desc"
+                                style={{ fontSize: 25 }}
+                              >
                                 {selectedMint?.cardTitle}
                               </h6>
                             </div>
@@ -1306,7 +1239,9 @@ const MarketMint = ({
                               {mintTitle === "manta" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
-                                    src={blockChainIcon}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/blockChainIcon.svg"
+                                    }
                                     width={40}
                                     height={40}
                                     alt=""
@@ -1319,7 +1254,7 @@ const MarketMint = ({
                               {/* {mintTitle === "mat" ? (
                                 <div className="d-flex align-items-center gap-2">
                                   <img
-                                    src={blockChainIcon}
+                                    src={'https://cdn.worldofdypians.com/wod/blockChainIcon.svg'}
                                     width={40}
                                     height={40}
                                     alt=""
@@ -1407,8 +1342,9 @@ const MarketMint = ({
                                     isConnected === true &&
                                     activeButton === true &&
                                     status === ""
-                                      ? subtractActive
-                                      : subtractInactive
+                                     
+                                       ? 'https://cdn.worldofdypians.com/wod/subtractActive.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/subtractInactive.svg'
                                   }
                                   alt="subtract"
                                   onClick={subtractNft}
@@ -1433,8 +1369,8 @@ const MarketMint = ({
                                     isConnected === true &&
                                     activeButton === true &&
                                     status === ""
-                                      ? addActive
-                                      : addInactive
+                                      ? 'https://cdn.worldofdypians.com/wod/addActive.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/addInactive.svg'
                                   }
                                   alt="add"
                                   onClick={addNft}
@@ -1473,7 +1409,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on Conflux Network
-                                <img src={confluxLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'} alt="" />
                               </span>
                             ) : mintTitle === "manta" ? (
                               <span
@@ -1481,7 +1417,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on Manta
-                                <img src={mantaLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/manta.png'} alt="" />
                               </span>
                             ) : mintTitle === "taiko" ? (
                               <span
@@ -1489,7 +1425,12 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on Taiko
-                                <img src={taikoLogo} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
+                                  alt=""
+                                />
                               </span>
                             ) : mintTitle === "avax" ? (
                               <span
@@ -1498,7 +1439,7 @@ const MarketMint = ({
                               >
                                 Available only on Avalanche Network
                                 <img
-                                  src={avaxLogo}
+                                  src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'}
                                   alt=""
                                   width={16}
                                   height={16}
@@ -1519,7 +1460,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on BNB Chain
-                                <img src={bnbLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                               </span>
                             ) : mintTitle === "opbnbchain" ? (
                               <span
@@ -1527,7 +1468,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on opBNB Chain
-                                <img src={bnbLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                               </span>
                             ) : mintTitle === "multiversx" ? (
                               <span
@@ -1535,7 +1476,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on MultiversX
-                                <img src={multiversLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/multiversx.svg'} alt="" />
                               </span>
                             ) : mintTitle === "coin98" ||
                               mintTitle === "coingecko" ||
@@ -1546,7 +1487,7 @@ const MarketMint = ({
                                 style={{ bottom: "0px" }}
                               >
                                 Available only on BNB Chain
-                                <img src={bnbLogo} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                               </span>
                             ) : null}
                             <hr className="mint-divider m-0" />
@@ -1613,8 +1554,8 @@ const MarketMint = ({
                                       <img
                                         src={
                                           mouseOver === true
-                                          ? blackWallet
-                                          : whitewallet
+                                            ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
                                         }
                                         alt=""
                                         style={{
@@ -1634,7 +1575,10 @@ const MarketMint = ({
                                         <div
                                           className="spinner-border "
                                           role="status"
-                                          style={{height: '1rem', width: '1rem'}}
+                                          style={{
+                                            height: "1rem",
+                                            width: "1rem",
+                                          }}
                                         ></div>
                                       </>
                                     ) : mintloading === "error" &&
@@ -1716,9 +1660,7 @@ const MarketMint = ({
                                   </span>
                                   <div className="d-flex align-items-center gap-2">
                                     <Countdown
-                                      date={
-                                         countToExpiresei
-                                      }
+                                      date={countToExpiresei}
                                       renderer={renderer2}
                                     />
                                   </div>
@@ -1747,10 +1689,10 @@ const MarketMint = ({
                                 style={{ width: 24, height: 24 }}
                                 src={
                                   mintTitle === "manta"
-                                    ? mantaLogo
+                                    ? 'https://cdn.worldofdypians.com/wod/manta.png'
                                     : mintTitle === "mat"
-                                    ? matchainLogo
-                                    : seiLogo
+                                    ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                    : 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
                                 }
                                 alt=""
                               />
@@ -1771,86 +1713,90 @@ const MarketMint = ({
                             <div className="d-flex w-100 justify-content-center">
                               {selectedMint.id === "sei" && (
                                 <button
-                                className={`py-2 ${
-                                  mintloading === "error"
-                                    ? "fail-button"
-                                    : (isConnected === true &&
-                                        chainId !== 1329) ||
-                                      (status !== "Connect your wallet." &&
-                                        status !== "") ||
-                                      totalseiNft > 0
-                                    ? "outline-btn-disabled"
-                                    : "stake-wod-btn"
-                                }  px-4 w-100`}
-                                onClick={() => {
-                                  isConnected === true && chainId === 1329
-                                    ? handleMint()
-                                   : isConnected === true && chainId !== 1329
-                                    ? handleSeiPool()
-                                    : showWalletConnect();
-                                }}
-                                disabled={
-                                  mintloading === "error" ||
-                                  mintloading === "success" ||
-                                  (isConnected === true && chainId !== 1329) ||
-                                  (status !== "Connect your wallet." &&
-                                    status !== "") ||
-                                  totalseiNft > 0
-                                    ? true
-                                    : false
-                                }
-                                onMouseEnter={() => {
-                                  setMouseOver(true);
-                                }}
-                                onMouseLeave={() => {
-                                  setMouseOver(false);
-                                }}
-                              >
-                                {isConnected === false && (
-                                  <img
-                                    src={
-                                      mouseOver === true
-                                      ? blackWallet
-                                      : whitewallet
-                                    }
-                                    alt=""
-                                    style={{
-                                      width: "23px",
-                                      height: "23px",
-                                    }}
-                                  />
-                                )}{" "}
-                                {mintloading === "initial" &&
-                                isConnected === true &&
-                                chainId === 1329  ? (
-                                  "Mint"
-                                ) : mintloading === "mint" &&
-                                  isConnected === true &&
-                                  chainId === 1329 ? (
-                                  <>
-                                    <div
-                                      className="spinner-border "
-                                      role="status"
-                                      style={{height: '1rem', width: '1rem'}}
-                                    ></div>
-                                  </>
-                                ) : mintloading === "error" &&
-                                  isConnected === true &&
-                                  chainId === 1329 ? (
-                                  "Failed"
-                                ) : mintloading === "success" &&
-                                  isConnected === true &&
-                                  activeButton ===
+                                  className={`py-2 ${
+                                    mintloading === "error"
+                                      ? "fail-button"
+                                      : (isConnected === true &&
+                                          chainId !== 1329) ||
+                                        (status !== "Connect your wallet." &&
+                                          status !== "") ||
+                                        totalseiNft > 0
+                                      ? "outline-btn-disabled"
+                                      : "stake-wod-btn"
+                                  }  px-4 w-100`}
+                                  onClick={() => {
+                                    isConnected === true && chainId === 1329
+                                      ? handleMint()
+                                      : isConnected === true && chainId !== 1329
+                                      ? handleSeiPool()
+                                      : showWalletConnect();
+                                  }}
+                                  disabled={
+                                    mintloading === "error" ||
+                                    mintloading === "success" ||
                                     (isConnected === true &&
-                                      chainId === 1329) ? (
-                                  "Success"
-                                ) : isConnected === true &&
-                                  chainId !== 1329 ? (
-                                  " Switch Chain"
-                                ) : (
-                                  "Connect wallet"
-                                )}
-                              </button>
+                                      chainId !== 1329) ||
+                                    (status !== "Connect your wallet." &&
+                                      status !== "") ||
+                                    totalseiNft > 0
+                                      ? true
+                                      : false
+                                  }
+                                  onMouseEnter={() => {
+                                    setMouseOver(true);
+                                  }}
+                                  onMouseLeave={() => {
+                                    setMouseOver(false);
+                                  }}
+                                >
+                                  {isConnected === false && (
+                                    <img
+                                      src={
+                                        mouseOver === true
+                                        ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
+                                      }
+                                      alt=""
+                                      style={{
+                                        width: "23px",
+                                        height: "23px",
+                                      }}
+                                    />
+                                  )}{" "}
+                                  {mintloading === "initial" &&
+                                  isConnected === true &&
+                                  chainId === 1329 ? (
+                                    "Mint"
+                                  ) : mintloading === "mint" &&
+                                    isConnected === true &&
+                                    chainId === 1329 ? (
+                                    <>
+                                      <div
+                                        className="spinner-border "
+                                        role="status"
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
+                                      ></div>
+                                    </>
+                                  ) : mintloading === "error" &&
+                                    isConnected === true &&
+                                    chainId === 1329 ? (
+                                    "Failed"
+                                  ) : mintloading === "success" &&
+                                    isConnected === true &&
+                                    activeButton ===
+                                      (isConnected === true &&
+                                        chainId === 1329) ? (
+                                    "Success"
+                                  ) : isConnected === true &&
+                                    chainId !== 1329 ? (
+                                    " Switch Chain"
+                                  ) : (
+                                    "Connect wallet"
+                                  )}
+                                </button>
                               )}
 
                               {selectedMint.id === "mat" && (
@@ -1893,8 +1839,8 @@ const MarketMint = ({
                                     <img
                                       src={
                                         mouseOver === true
-                                          ? blackWallet
-                                          : whitewallet
+                                    ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
                                       }
                                       alt=""
                                       style={{
@@ -1914,7 +1860,10 @@ const MarketMint = ({
                                       <div
                                         className="spinner-border "
                                         role="status"
-                                        style={{height: '1rem', width: '1rem'}}
+                                        style={{
+                                          height: "1rem",
+                                          width: "1rem",
+                                        }}
                                       ></div>
                                     </>
                                   ) : mintloading === "error" &&
@@ -1976,8 +1925,8 @@ const MarketMint = ({
                                     <img
                                       src={
                                         mouseOver === true
-                                        ? blackWallet
-                                        : whitewallet
+                                         ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                                            : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'
                                       }
                                       alt=""
                                       style={{
@@ -2058,7 +2007,7 @@ const MarketMint = ({
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div> */}
-                   <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
+                  <div className="upcoming-mint-wrapper upcoming-manta-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Manta Beta Pass</h6>
                       <p className="upcoming-mint-desc">
@@ -2067,17 +2016,17 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={mantaBg}
+                      src={'https://cdn.worldofdypians.com/wod/mantaMintBg.webp'}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={mantaMobileBg}
+                      src={'https://cdn.worldofdypians.com/wod/mantaMintMobileBg.png'}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-                  
+
                   <div className="upcoming-mint-wrapper upcoming-base-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
                       <h6 className="upcoming-mint-title">Base Beta Pass</h6>
@@ -2087,12 +2036,12 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={baseBg}
+                      src={'https://cdn.worldofdypians.com/wod/baseMintBg.png'}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={baseMobileBg}
+                      src={'https://cdn.worldofdypians.com/wod/baseMintMobileBg.png'}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
@@ -2108,18 +2057,16 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={matchainBg}
+                      src={'https://cdn.worldofdypians.com/wod/matchainMintBg.webp'}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={matchainActive}
+                      src={"https://cdn.worldofdypians.com/wod/matchainMintActive.webp"}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />
                   </div>
-
-                 
 
                   {/* <div className="upcoming-mint-wrapper upcoming-immutable-event d-flex flex-column flex-lg-row align-items-center justify-content-between px-0">
                     <div className="d-flex flex-column gap-2 ps-3 pe-3 pe-lg-0 pt-3 pt-lg-0 pb-3 pb-lg-0">
@@ -2173,12 +2120,12 @@ const MarketMint = ({
                       </p>
                     </div>
                     <img
-                      src={multiversBg}
+                      src={'https://cdn.worldofdypians.com/wod/multiversMintBg.webp'}
                       alt=""
                       className="upcoming-mint-img d-none d-lg-block"
                     />
                     <img
-                      src={multiversMobileBg}
+                      src={'https://cdn.worldofdypians.com/wod/multiversMintActive.webp'}
                       alt=""
                       className="upcoming-mint-img d-block d-lg-none d-md-none"
                     />

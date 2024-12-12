@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./_domainmodal.scss";
-import domainIcon from "./assets/domainIcon.svg";
-import popupXmark from "./assets/popupXmark.svg";
+import domainIcon from "./assets/domainIcon.svg"; 
 import searchIconDomain from "./assets/searchIconDomain.svg";
 import registerDomainIcon from "./assets/registerDomainIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
-import plusIcon from "./assets/plusIcon.svg";
-import minusIcon from "./assets/minusIcon.svg";
+
 import bnbIcon from "./assets/bnbIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -68,7 +66,7 @@ const DomainModal = ({
             <div className="d-flex align-items-center justify-content-between">
               <h6 className="popup-title mb-0">BNB Domain Name</h6>
               <img
-                src={popupXmark}
+                src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
                 alt=""
                 onClick={onClose}
                 style={{ cursor: "pointer" }}
@@ -291,7 +289,7 @@ const DomainModal = ({
                         }}
                       >
                         <img
-                          src={minusIcon}
+                          src={"https://cdn.worldofdypians.com/wod/minusIcon.svg"}
                           onClick={() =>
                             registrationYear == 1
                               ? null
@@ -304,7 +302,7 @@ const DomainModal = ({
                           {registrationYear}
                         </span>
                         <img
-                          src={plusIcon}
+                          src={"https://cdn.worldofdypians.com/wod/plusIcon.svg"}
                           onClick={() =>
                             setRegistrationYear(registrationYear + 1)
                           }
@@ -572,9 +570,9 @@ const DomainModal = ({
                 className="selected-domain-search-item p-2 d-flex align-items-center gap-4 gap-lg-5"
                 style={{ borderRadius: "8px" }}
               >
-                <img src={minusIcon} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/minusIcon.svg"} alt="" />
                 <span className="registration-year-amount mb-0">1</span>
-                <img src={plusIcon} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/plusIcon.svg"} alt="" />
               </div>
             </div>
             <div className="d-flex flex-column align-items-end gap-2">
