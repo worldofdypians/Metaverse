@@ -10,8 +10,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import axios from "axios";
-
-import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
+ 
 
 const Header = ({
   handleSignUp,
@@ -1029,7 +1028,7 @@ const Header = ({
                                   className="d-flex align-items-center gap-1 syncbtn px-2 py-1"
                                   onClick={onSyncClick}
                                 >
-                                  <img src={sync} alt="" /> Sync
+                                  <img src={'https://cdn.worldofdypians.com/wod/sync.svg'} alt="" /> Sync
                                 </button>
                               )}
                             </div>

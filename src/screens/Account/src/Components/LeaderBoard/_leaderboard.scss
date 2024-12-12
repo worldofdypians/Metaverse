@@ -25,7 +25,7 @@
   background-color: #242240;
   border-radius: 8px;
   padding: 10px;
-  background-image: url("./assets/grandPrizeBanner.webp");
+  // background-image: url("./assets/grandPrizeBanner.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -268,8 +268,7 @@
   // overflow-y: auto;
 }
 
-.medal-wrapper {
-  background: url("./assets/medalbg.svg");
+.medal-wrapper { 
   background-position: center -62px;
   background-repeat: no-repeat;
   background-size: cover;
