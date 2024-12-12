@@ -21,7 +21,6 @@ import puzzleMadnessTopBanner from "./assets/banners/puzzleMadnessTopBanner.webp
 import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
 import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
 import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
-import tooltipIcon from "../Challenges/assets/tooltipIcon.svg";
 import Countdown from "react-countdown";
 import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
 import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
@@ -3598,7 +3597,7 @@ const NewEvents = ({
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
                             {activeEvent.title === "Puzzle Madness" && (
                               <img
-                                src={tooltipIcon}
+                                src={"https://cdn.worldofdypians.com/wod/tooltip3d.svg"}
                                 className="new-event-banner-tooltip"
                                 alt=""
                                 onClick={() => {

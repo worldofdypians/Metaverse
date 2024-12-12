@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_landpopup.scss";
-import landPopup from "./landPopup.webp";
-import closePopup from "./closePopup.svg";
+
+
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
 
@@ -36,7 +36,7 @@ const LandPopup = () => {
       >
         <div className="d-flex p-3 align-items-center justify-content-end w-100">
           <img
-            src={closePopup}
+            src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
             onClick={() => setActive(false)}
             alt="close"
             style={{ cursor: "pointer" }}
@@ -56,7 +56,7 @@ const LandPopup = () => {
           Become an original World of Dypians land owner by minting a Genesis Land NFT and gain early access to rewards and benefits
           </span>
         </div>
-        <img src={landPopup} className="land-nft-image" alt="land nft" />
+        <img src={"https://cdn.worldofdypians.com/landPopup.webp"} className="land-nft-image" alt="land nft" />
         <span className="popup-content">
           Total Genesis land supply limited to 1,000 plots
         </span>
