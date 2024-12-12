@@ -9,7 +9,7 @@ const LandPlaceHolder = ({ onMintClick }) => {
     >
       <div className="landplaceholder-content">
         <img
-          src={require("../../assets/landAssets/landplaceholder.svg").default}
+          src={"https://cdn.worldofdypians.com/wod/landplaceholder.svg"}
           alt=""
           className="landplaceholder-content-img"
         />

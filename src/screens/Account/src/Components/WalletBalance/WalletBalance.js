@@ -22,7 +22,7 @@ import grayCalendar from "./assets/grayCalendar.svg";
 
 import arrowCircle from "./newAssets/arrowCircle.svg";
 w
-import multiplayer from "../../../../../assets/multiplayer.svg";
+
 
 const WalletBalance = ({
   dypBalance,
@@ -1586,7 +1586,7 @@ const WalletBalance = ({
                         target="_blank"
                       >
                         <img
-                          src={multiplayer}
+                          src={"https://cdn.worldofdypians.com/wod/multiplayer.svg"}
                           alt="icon"
                           style={{ width: 16, height: 16 }}
                         />

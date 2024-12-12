@@ -2,7 +2,7 @@ import Modal from "@mui/material/Modal";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import X from "../../assets/x_close.png";
+
 import "./_unstakeModal.scss";
 
 const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
@@ -39,7 +39,7 @@ const UnstakeAllModal = ({ open, onClose, onUnstake, onClaimAll }) => {
             Are you sure you want to unstake all of your NFTs?
             </h1>
             <img
-              src={X}
+              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
               alt=""
               className="close-x"
               onClick={() => {

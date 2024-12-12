@@ -310,7 +310,7 @@ const VideoWrapper = ({
             </Slider>
           </div>
         )}
-        {/* <img src={buttonBorder} alt="button-border" className="video-button-border" /> */}
+    
       </div>
       {modal === true ? (
         <OutsideClickHandler onOutsideClick={() => setModal(false)}>

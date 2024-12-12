@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordBNB from "../ForgotPassword/ForgotPasswordBNB";
 import { GENERATE_NONCE, VERIFY_WALLET } from "../Dashboard/Dashboard.schema";
 import axios from "axios";
-import mediumLogo from "../../../../../assets/mediumLogo.svg";
+
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -362,7 +362,7 @@ function AuthBNB({
                   rel="noreferrer"
                   className="d-flex gap-2 align-items-center medium-btn-bnb px-3 py-1"
                 >
-                  <img src={mediumLogo} alt="" /> Create Account Tutorial
+                  <img src={"https://cdn.worldofdypians.com/wod/mediumLogo.svg"} alt="" /> Create Account Tutorial
                 </a>
               </div>
               <ErrorAlert error={loginError} />

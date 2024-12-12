@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./_explorergrid.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 
-// import playIcon from "../../../assets/playIcon.svg";
+
 import axios from "axios";
 
 const ExplorerGrid = ({

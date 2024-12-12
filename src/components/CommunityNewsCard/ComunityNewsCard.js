@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import communityPlay from "../../assets/landAssets/communityPlay.svg";
+
 import useWindowSize from '../../hooks/useWindowSize'
 
 const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
@@ -52,7 +52,7 @@ const ComunityNewsCard = ({ image, link, content, date, video, id }) => {
           )}
           <img src={"https://cdn.worldofdypians.com/wod/twitterTag.svg"} alt="twitter" className="twitter-tag" />
           {/* <div className="play-button-wrapper d-flex align-items-center justify-content-center"> */}
-            <img src={communityPlay} className={`play-button ${!playButton && 'd-none'}`} alt="play button" />
+            <img src={"https://cdn.worldofdypians.com/wod/communityPlay.svg"} className={`play-button ${!playButton && 'd-none'}`} alt="play button" />
           {/* </div> */}
         </div>
 
