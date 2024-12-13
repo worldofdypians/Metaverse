@@ -259,7 +259,7 @@ if(address)
           <div className="d-flex justify-content-between gap-2 align-items-center"
             style={{ flexDirection: "row-reverse" }}>
                 <img
-              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+              src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
               alt=""
               className="close-x"
               onClick={() => {

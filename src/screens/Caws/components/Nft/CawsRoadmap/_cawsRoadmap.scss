@@ -1,0 +1,36 @@
+.caws-roadmap{
+    color: white;
+    h1{
+        color: white;
+        font-size: 42px;
+        line-height: 53px;
+    }
+    h2{
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 45px;
+    }
+    small{
+        font-weight: 200;
+    }
+    .bolder {
+        font-weight: 900;
+    }
+    p {
+        line-height: 160%;
+        &.note{
+            font-size: 12px;
+            line-height: 18px;
+        }
+    }
+    .background{
+        //background: linear-gradient(52.09deg, #E30613 14.21%, #FA4A33 104.46%);
+        //border-radius: 28px;
+        background: linear-gradient(52.09deg, #554FD8 14.21%, #7770E0 104.46%);
+        //box-shadow: 16px 32px 56px rgba(0, 0, 0, 0.12);
+        border-radius: 28px;
+    }
+    .image{
+        max-height: 500px;
+    }
+}
