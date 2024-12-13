@@ -2150,62 +2150,7 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                      <div
-                        className={`d-flex ${
-                          utcDayIndex === 5
-                            ? "flex-column-reverse"
-                            : "flex-column"
-                        } gap-2`}
-                      >
-                        <div className="d-flex flex-column">
-                          <NavLink
-                            to={
-                              eventinfos.find((item) => {
-                                return item.day === utcDayIndex;
-                              }) !== undefined
-                                ? eventinfos.find((item) => {
-                                    return item.day === utcDayIndex;
-                                  }).link
-                                : eventinfos[0].link
-                            }
-                          >
-                            <div
-                              className={`${
-                                eventId !== "treasure-hunt" &&
-                                eventId !== "maze-day" &&
-                                eventId !== "great-collection" &&
-                                eventId !== "explorer-hunt" &&
-                                eventId !== "critical-hit" &&
-                                ((challenge !== "maze-day" &&
-                                  eventId !== undefined) ||
-                                  (eventId === undefined &&
-                                    utcDayIndex !== 5)) &&
-                                eventId !== "puzzle-madness"
-                                  ? "active-challenge-item"
-                                  : "challenge-item"
-                              } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                              onClick={() => {
-                                setChallenge(
-                                  eventinfos.find((item) => {
-                                    return item.day === utcDayIndex;
-                                  }) !== undefined
-                                    ? eventinfos.find((item) => {
-                                        return item.day === utcDayIndex;
-                                      }).challange
-                                    : eventinfos[0].challange
-                                );
-                                setActiveEvent(
-                                  eventinfos.find((item) => {
-                                    return item.day === utcDayIndex;
-                                  }) ?? eventinfos[0]
-                                );
-                              }}
-                            >
-                              <h6 className="mb-0">Legendary Beast Siege</h6>
-                            </div>
-                          </NavLink>
-                          <div className="sidebar-separator2"></div>
-                        </div>
+                      {utcDayIndex === 5 && (
                         <div className="d-flex flex-column">
                           <NavLink to="/account/challenges/maze-day">
                             <div
@@ -2225,7 +2170,76 @@ const NewEvents = ({
                           </NavLink>
                           <div className="sidebar-separator2"></div>
                         </div>
+                      )}
+                      <div className="d-flex flex-column">
+                        <NavLink
+                          to={
+                            eventinfos.find((item) => {
+                              return item.day === utcDayIndex;
+                            }) !== undefined
+                              ? eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }).link
+                              : eventinfos[0].link
+                          }
+                        >
+                          <div
+                            className={`${
+                              eventId !== "treasure-hunt" &&
+                              eventId !== "maze-day" &&
+                              eventId !== "great-collection" &&
+                              eventId !== "explorer-hunt" &&
+                              eventId !== "critical-hit" &&
+                              ((challenge !== "maze-day" &&
+                                eventId !== undefined) ||
+                                (eventId === undefined && utcDayIndex !== 5)) &&
+                              eventId !== "puzzle-madness"
+                                ? "active-challenge-item"
+                                : "challenge-item"
+                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                            onClick={() => {
+                              setChallenge(
+                                eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }) !== undefined
+                                  ? eventinfos.find((item) => {
+                                      return item.day === utcDayIndex;
+                                    }).challange
+                                  : eventinfos[0].challange
+                              );
+                              setActiveEvent(
+                                eventinfos.find((item) => {
+                                  return item.day === utcDayIndex;
+                                }) ?? eventinfos[0]
+                              );
+                            }}
+                          >
+                            <h6 className="mb-0">Legendary Beast Siege</h6>
+                          </div>
+                        </NavLink>
+                        <div className="sidebar-separator2"></div>
                       </div>
+                      {utcDayIndex !== 5 && (
+                        <div className="d-flex flex-column">
+                          <NavLink to="/account/challenges/maze-day">
+                            <div
+                              className={`${
+                                challenge === "maze-day" ||
+                                selectedEvent === "maze-day"
+                                  ? "active-challenge-item"
+                                  : "challenge-item"
+                              } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                              onClick={() => {
+                                setChallenge("maze-day");
+                                setActiveEvent(mazeGardenInfo);
+                              }}
+                            >
+                              <h6 className="mb-0">BNB Chain Maze Day</h6>
+                            </div>
+                          </NavLink>
+                          <div className="sidebar-separator2"></div>
+                        </div>
+                      )}
                       <div className="d-flex flex-column">
                         <NavLink to="/account/challenges/treasure-hunt">
                           <div
