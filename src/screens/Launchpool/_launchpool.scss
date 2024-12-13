@@ -1,0 +1,34 @@
+.launchpool-mainhero-wrapper {
+  min-height: 65vh !important;
+  background-image: linear-gradient(0deg, #080b2a 0%, rgba(8, 11, 42, 0.3) 100%),
+    url("https://cdn.worldofdypians.com/wod/launchpoolHeroBg.webp") !important;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  @media only screen and (max-width: 991px) {
+    min-height: auto !important;
+  }
+
+  @media only screen and (max-width: 450px) {
+    background-image: linear-gradient(
+        180deg,
+        #080b2a 0%,
+        rgba(8, 11, 42, 0.01) 100%
+      ),
+      url("https://cdn.worldofdypians.com/wod/launchpoolHeroBg.webp") !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+}
+
+.launchpool-stats-wrapper {
+  background-image: url("https://cdn.worldofdypians.com/wod/launchpoolStatsBg.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  @media screen and (max-width: 786px) {
+    background-size: cover;
+  }
+}
