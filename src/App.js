@@ -85,6 +85,7 @@ import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
 import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
+import Launchpool from "./screens/Launchpool/Launchpool.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5115,6 +5116,19 @@ function App() {
                 socials={socials}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
+              />
+            }
+          />
+              <Route
+            exact
+            path="/launchpool"
+            element={
+              <Launchpool
+              wodHolders={wodHolders}
+              totalVolumeNew={totalVolumeNew}
+              totalSupply={totalSupply}
+              monthlyPlayers={monthlyPlayers}
+
               />
             }
           />
