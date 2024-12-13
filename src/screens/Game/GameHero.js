@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
-import MapPopup from "../../components/PackagePopups/MapPopup";
+
 import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
 import LandPopup from "../../components/PackagePopups/LandPopup";
 import CawsPopup from "../../components/PackagePopups/CawsPopup";
@@ -176,13 +176,7 @@ const GameHero = ({ showPopup, setShowPopup }) => {
           {/* )} */}
         </div>
       </div>
-      {showPopup === "map" && (
-        <MapPopup
-          onClosePopup={() => {
-            setShowPopup("");
-          }}
-        />
-      )}
+    
       {showPopup === "land" && (
         <LandPopup
           onClosePopup={() => {

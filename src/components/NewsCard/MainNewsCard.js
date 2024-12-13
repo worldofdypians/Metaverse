@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./mainNews.scss";
-import featuredShadow from './assets/featuredNewsShadow.png'
+
 import useWindowSize from "../../hooks/useWindowSize";
 
 const MainNewsCard = ({
@@ -37,7 +37,7 @@ const MainNewsCard = ({
           </h2>
           {" "}
           <img
-            src={featuredShadow}
+            src={"https://cdn.worldofdypians.com/wod/featuredNewsShadow.png"}
             alt=""
             className={`position-absolute featured-shadow w-100 ${
               bannerShadow && "featured-shadow-hover"
