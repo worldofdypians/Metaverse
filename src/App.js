@@ -84,6 +84,7 @@ import Map from "./screens/Map/Map.js";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
+import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5410,6 +5411,8 @@ function App() {
             }
           />
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
+          <Route exact path="/binanceweb3-campaign-rules" element={<BinanceCampaignRules />} />
+
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
