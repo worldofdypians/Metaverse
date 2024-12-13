@@ -80,8 +80,7 @@ const MyProfile = ({
   openSpecialRewards,
   userRankName,
   isConnected,
-  onConnectWallet,
-  onOpenRankPopup,
+  onConnectWallet, 
   onDomainClick,
   domainName,
   liveRewards,
@@ -824,11 +823,7 @@ const MyProfile = ({
                       userBaseStars={userBaseStars}
                       userTaikoStars={userTaikoStars}
                       userMatStars={userMatStars}
-                      userSeiStars={userSeiStars}
-                      onRankPopupClick={() => {
-                        onOpenRankPopup();
-                        setRankDropdown(false);
-                      }}
+                      userSeiStars={userSeiStars} 
                       globalMonthly={
                         userDataStar.position
                           ? userDataStar.position + 1
