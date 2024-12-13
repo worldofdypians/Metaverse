@@ -84,7 +84,7 @@ const LandHero = () => {
               {benefits.map((benefit, index) => (
                 <div className="d-flex align-items-start gap-2" key={index}>
                   <img
-                    src={require(`../../assets/landAssets/${benefit.icon}Icon.svg`)}
+                    src={`https://cdn.worldofdypians.com/wod/${benefit.icon}Icon.svg`}
                     alt=""
                   />
                   <div className="d-flex flex-column gap-2">
