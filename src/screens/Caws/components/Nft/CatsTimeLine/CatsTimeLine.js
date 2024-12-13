@@ -1,6 +1,5 @@
 import React from "react";
 import ProgressBar from "../../../elements/ProgressBar/ProgressBar";
-import RedCircle from "../../../assets/images/done-white.svg";
 import "./_catsTimeLine.scss";
 
 const CatsTimeLine = () => {
@@ -10,7 +9,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           10,000 CAWS are minted{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -24,7 +23,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           10 ETH Giveaway{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -38,7 +37,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           We pay 10% of minting fees to holders{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -52,7 +51,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           Introduction of CAWS staking pool to earn ETH rewards{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -67,7 +66,7 @@ const CatsTimeLine = () => {
           You can have a watch too! Take part in a giveaway for 5 Rolex watches
           worth $150k{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -91,7 +90,7 @@ const CatsTimeLine = () => {
           CAWS holders will be able to mint an additional standalone watch NFT
           for free{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -105,7 +104,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           CAWS Adventures 2D mobile/pc Game{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -119,7 +118,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           You can buy and sell on secondary market through OpenSea{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -133,7 +132,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           Listing on Rarity Tools{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -147,7 +146,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           Virtual reality in Metaverse begins for CAWS{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",
@@ -161,7 +160,7 @@ const CatsTimeLine = () => {
         <li className="d-flex align-items-center">
           Play to earn NFT concept becomes active for CAWS holders{" "}
           <img
-            src={RedCircle}
+            src={"https://cdn.worldofdypians.com/wod/done-white.svg"}
             alt=""
             style={{
               background: "white",

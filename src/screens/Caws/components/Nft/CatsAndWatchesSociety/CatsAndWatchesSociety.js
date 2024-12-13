@@ -1,6 +1,5 @@
 import React from "react";
 import TitleWithParagraph from "../../General/TitleWithParagraph";
-import arrowFilled from "../../../assets/General/ArrowIcons/arrow-filled2.png";
 import "./_catsAndWatchesSociety.scss";
 
 const CatsAndWatchesSociety = () => {
@@ -49,13 +48,13 @@ const CatsAndWatchesSociety = () => {
               </p>
               <p onClick={scrollToRoadMap} className="mb-4 cursor-pointer">
                 <mark>Our roadmap includes many other upcoming Benefits!</mark>
-                <img className="ml-2" src={arrowFilled} alt=''/>
+                <img className="ml-2" src={"https://cdn.worldofdypians.com/wod/arrow-filled2.png"} alt=''/>
               </p>
             </TitleWithParagraph>
           </div>
           <div className="col-12 col-md-12 col-lg-6">
             <img
-              src={require("../../../assets/Nft/caws-meta-dark.png")}
+              src={"https://cdn.worldofdypians.com/wod/caws-meta-dark.png"}
               className="main-hero-graphics graphics w-100"
               alt="phone-graphics"
             />

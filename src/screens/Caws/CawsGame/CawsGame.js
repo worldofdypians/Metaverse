@@ -1,10 +1,4 @@
 import React from "react";
-import Ship from "../assets/images/ship.svg";
-import wodLogo from '../assets/wodLogo.png'
-import MultipleCaws from "../assets/images/multi-caws.png";
-import Console from "../assets/images/game-console.svg";
-import CawsLogo from "../assets/images/caws-logo2.png";
-import MiniConsole from "../assets/images/console-small.svg";
 import ChevronArrowSvg from "../assets/General/ChevronArrowSvg/ChevronArrowSvg";
 import $alert from "../functions/$alert";
 import "./_cawsgame.scss";
@@ -42,7 +36,7 @@ const CawsGame = () => {
                 </p>
               </div>
               <div>
-                <img src={MultipleCaws} id="multi-caws2" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/multi-caws.png"} id="multi-caws2" alt="" />
               </div>
             </div>
             <div className="d-flex align-items-start align-items-lg-center mt-3 flex-column flex-lg-row gap-2">
@@ -53,7 +47,7 @@ const CawsGame = () => {
                 style={{ textDecoration: "none" }}
               >
                 <div className="buy-caws-btn">
-                  <img src={Ship} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/ship.svg"} alt="" />
                   <span>BUY A CAT ON OPENSEA</span>
                   <ChevronArrowSvg size="12" />
                 </div>
@@ -64,7 +58,7 @@ const CawsGame = () => {
                 style={{ textDecoration: "none" }}
               >
                 <div className="buy-caws-wod-btn">
-                  <img src={wodLogo} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/wodLogo.png"} alt="" />
                   <span>BUY A CAT ON WOD</span>
                   <ChevronArrowSvg size="12" />
                 </div>
@@ -84,8 +78,8 @@ const CawsGame = () => {
                 </p>
               </div>
               <div className="d-flex m-0" style={{ alignItems: "end" }}>
-                <img src={CawsLogo} alt="" id="cawsLogo2" />
-                <img src={Console} alt="" id="console2" />
+                <img src={"https://cdn.worldofdypians.com/wod/caws-logo2.png"} alt="" id="cawsLogo2" />
+                <img src={"https://cdn.worldofdypians.com/wod/game-console.svg"} alt="" id="console2" />
               </div>
             </div>
 
@@ -96,7 +90,7 @@ const CawsGame = () => {
               style={{ textDecoration: "none" }}
             >
               <div className="play-now-btn">
-                <img src={MiniConsole} alt="" /> <span>PLAY NOW</span>
+                <img src={"https://cdn.worldofdypians.com/wod/console-small.svg"} alt="" /> <span>PLAY NOW</span>
               </div>
             </a>
           </div>
