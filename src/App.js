@@ -57,7 +57,7 @@ import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-
+import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
@@ -6055,6 +6055,8 @@ function App() {
               />
             }
           />
+          <Route exact path="/caws" element={<Caws />} />
+
           <Route
             exact
             path="/account/challenges/:eventId"
