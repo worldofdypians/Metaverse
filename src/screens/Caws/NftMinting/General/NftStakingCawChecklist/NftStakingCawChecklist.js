@@ -3,7 +3,6 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { formattedNum } from "../../../functions/formatUSD";
 import getFormattedNumber from "../../../functions/get-formatted-number";
-import { ethers } from "ethers";
 
 const NftStakingCawChecklist = ({
   modalId,
@@ -13,9 +12,7 @@ const NftStakingCawChecklist = ({
   checklistItemID,
   onChange,
   countDownLeft,
-  isConnectedWallet,
-  connectedWallet,
-  binanceW3WProvider,
+  isConnectedWallet, connectedWallet
 }) => {
   const [checkbtn, setCheckBtn] = useState(false);
   const [Unstakebtn, setUnstakeBtn] = useState(false);
@@ -36,7 +33,7 @@ const NftStakingCawChecklist = ({
   };
 
   const calculateReward = async (currentId) => {
-    const address = connectedWallet;
+    const address =  connectedWallet
     let calculateRewards;
     let staking_contract = await window.getContractNFT("NFTSTAKING");
 
@@ -50,87 +47,45 @@ const NftStakingCawChecklist = ({
         // window.alertify.error(err?.message);
       });
 
-    let a = calculateRewards / 1e18;
+    let a =  calculateRewards/1e18;
     const ethprice = await convertEthToUsd();
     setethToUSD(Number(ethprice) * Number(a));
     setEthRewards(Number(a));
   };
 
   const handleClaim = async (itemId) => {
-    if (window.WALLET_TYPE !== "binance") {
-      let staking_contract = await window.getContractNFT("NFTSTAKING");
+    let staking_contract = await window.getContractNFT("NFTSTAKING");
 
-      await staking_contract.methods
-        .claimRewards([itemId])
-        .send()
-        .then(() => {
-          // setethToUSD(0);
-          setEthRewards(0);
-        })
-        .catch((err) => {
-          window.alertify.error(err?.message);
-        });
-    } else if (window.WALLET_TYPE === "binance") {
-      let staking_contract = new ethers.Contract(
-        window.config.nftstaking_address,
-        window.NFTSTAKING_AB,
-        binanceW3WProvider.getSigner()
-      );
-
-      const txResponse = await staking_contract
-        .claimRewards([itemId])
-        .send()
-        .catch((err) => {
-          window.alertify.error(err?.message);
-        });
-
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
+    await staking_contract.methods
+      .claimRewards([itemId])
+      .send()
+      .then(() => {
+        // setethToUSD(0);
         setEthRewards(0);
-      }
-    }
+      })
+      .catch((err) => {
+        window.alertify.error(err?.message);
+      });
   };
 
   const handleUnstake = async (itemId) => {
-    if (window.WALLET_TYPE !== "binance") {
-      let stake_contract = await window.getContractNFT("NFTSTAKING");
-      setloading(true);
+    let stake_contract = await window.getContractNFT("NFTSTAKING");
+    setloading(true);
 
-      await stake_contract.methods
-        .withdraw([itemId])
-        .send()
-        .then(() => {
-          setcheckPassiveBtn(false);
-          setloading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setloading(false);
-        });
-    } else if (window.WALLET_TYPE === "binance") {
-      let stake_contract = new ethers.Contract(
-        window.config.nftstaking_address,
-        window.NFTSTAKING_AB,
-        binanceW3WProvider.getSigner()
-      );
-      setloading(true);
-
-      const txResponse = await stake_contract
-        .withdraw([itemId])
-        .send()
-        .catch((err) => {
-          console.log(err);
-          setloading(false);
-        });
-      const txReceipt = await txResponse.wait();
-      if (txReceipt) {
+    await stake_contract.methods
+      .withdraw([itemId])
+      .send()
+      .then(() => {
         setcheckPassiveBtn(false);
         setloading(false);
-      }
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        setloading(false);
+      });
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     if (isConnectedWallet) {
       getStakesIds().then();
       calculateReward(checklistItemID).then();
@@ -151,7 +106,7 @@ const NftStakingCawChecklist = ({
   }
 
   const getStakesIds = async () => {
-    const address = connectedWallet;
+    const address = connectedWallet
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -200,15 +155,15 @@ const NftStakingCawChecklist = ({
               border: isStake
                 ? checked === true
                   ? Unstakebtn === true
-                    ? "2px solid #4ed5d2"
+                    ? "2px solid #E30613"
                     : "none"
                   : Unstakebtn === true
-                  ? "2px solid #4ed5d2"
+                  ? "2px solid #E30613"
                   : "none"
                 : checked === true && checkbtn === true
-                ? "2px solid #4ed5d2"
+                ? "2px solid #E30613"
                 : checked === false && checkbtn === true
-                ? "2px solid #4ed5d2"
+                ? "2px solid #E30613"
                 : "none",
             }}
             className="sub-container"

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-
-
 import ToolTip from "../Caws/elements/ToolTip";
-import wodLogo from "../Caws/assets/wodLogo.png";
 import Countdown from "react-countdown";
 import axios from "axios";
 import { formattedNum } from "../Caws/functions/formatUSD";
@@ -768,7 +764,7 @@ const LandStaking = ({
                     to={"/shop/land"}
                     className={`btn purple-btn2 px-4 d-flex gap-2 align-items-center`}
                   >
-                    <img src={wodLogo} width={25} height={25} alt="" />
+                    <img src={"https://cdn.worldofdypians.com/wod/wodLogo.png"} width={25} height={25} alt="" />
                     Buy on WOD
                   </NavLink>
                 </div>

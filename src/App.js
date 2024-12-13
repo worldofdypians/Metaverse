@@ -57,7 +57,7 @@ import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-
+import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
@@ -84,6 +84,7 @@ import Map from "./screens/Map/Map.js";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
+import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5410,6 +5411,8 @@ function App() {
             }
           />
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
+          <Route exact path="/binanceweb3-campaign-rules" element={<BinanceCampaignRules />} />
+
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
@@ -6055,6 +6058,8 @@ function App() {
               />
             }
           />
+          <Route exact path="/caws" element={<Caws />} />
+
           <Route
             exact
             path="/account/challenges/:eventId"
