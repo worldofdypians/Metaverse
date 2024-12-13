@@ -34,15 +34,9 @@ const GovernanceContent = ({ totalProposals, allProposals }) => {
                             <div className="d-flex align-items-center gap-4 flex-column flex-lg-row flex-md-row">
                               <div className="d-flex flex-column gap-2">
                                 <span className="active-proposals-features">
-                                  {item.subject}
+                                  WoD Proposal #{item._proposalId}
                                 </span>
                                 <div className="d-flex flex-row flex-wrap gap-2 align-items-center">
-                                  <div className="d-flex align-items-center gap-3">
-                                    <span className="gov-gray-text">By</span>
-                                    <span className="gov-white-text">
-                                      0x253...acb3
-                                    </span>
-                                  </div>
                                   <div className="d-flex align-items-center gap-2">
                                     <span className="gov-gray-text">Votes</span>
                                     <span className="gov-white-text">

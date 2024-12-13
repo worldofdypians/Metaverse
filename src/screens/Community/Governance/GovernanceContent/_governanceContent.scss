@@ -1,15 +1,20 @@
 .active-proposals-wrapper {
-  background: #14153F;
+  background: #14153f;
   border-bottom: 3px solid black;
 }
 
 .active-proposals-inner-wrapper {
   border-radius: 10px;
-  background: rgba(0, 183, 204, 0.20);
+  background: rgba(0, 183, 204, 0.2);
+  border: 2px solid transparent;
+}
+
+.active-proposals-inner-wrapper:hover {
+  border: 2px solid #7bd8b0;
 }
 
 .active-proposals-features {
-  color: #FFF;
+  color: #fff;
   font-size: 18px;
   font-style: normal;
   font-weight: 800;
@@ -17,17 +22,16 @@
 }
 
 .my-votes-amount {
-  color: #FFF;
-font-family: Montserrat;
-font-size: 18px;
-font-style: normal;
-font-weight: 800;
-line-height: normal;
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
 }
 
-
 .my-votes-desc {
-  color: #C0C9FF;
+  color: #c0c9ff;
   font-family: Montserrat;
   font-size: 13px;
   font-style: normal;
@@ -66,7 +70,7 @@ line-height: normal;
 }
 
 .past-proposals-wrapper {
-  background: #0E0F35;
+  background: #0e0f35;
   border-bottom: 3px solid black;
 }
 
@@ -132,7 +136,7 @@ line-height: normal;
 }
 
 .proposal-top-wrapper {
-  background: #0E0F35;
+  background: #0e0f35;
 }
 
 .single-proposal-top-title {
@@ -165,7 +169,6 @@ line-height: normal;
   @media screen and (max-width: 786px) {
     border-left: none;
   }
-
 }
 
 .proposal-result-wrapper {
@@ -195,30 +198,30 @@ line-height: normal;
 .prog1 {
   background: transparent;
   border-radius: 12px;
-  border: 1px solid #7BD8B0;
+  border: 1px solid #7bd8b0;
   height: 8px;
 
   .progress-bar {
     border-radius: 12px;
-    background: #7BD8B0;
+    background: #7bd8b0;
   }
 }
 
 .prog2 {
   background: transparent;
   border-radius: 12px;
-  border: 1px solid #00B7CC;
+  border: 1px solid #00b7cc;
   height: 8px;
 
   .progress-bar {
     border-radius: 12px;
-    background: #00B7CC;
+    background: #00b7cc;
   }
 }
 
 .orange-btn {
   border-radius: 10px;
-background: linear-gradient(90deg, #008EBF 0%, #00B7CC 100%);
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
   color: #fff;
   text-align: center;
   font-size: 16px;

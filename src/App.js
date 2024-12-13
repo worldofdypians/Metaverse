@@ -6357,6 +6357,7 @@ function App() {
                 handleConnection={() => {
                   setwalletModal(true);
                 }}
+                wodBalance={wodBalance}
                 refreshBalance={() => {
                   setcountBalance(countBalance + 1);
                 }}

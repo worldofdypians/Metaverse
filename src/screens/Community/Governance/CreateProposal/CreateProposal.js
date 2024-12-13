@@ -3,6 +3,8 @@ import "./_createproposal.scss";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import useWindowSize from "../../../../hooks/useWindowSize";
+import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
+import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
 
 const CreateProposal = ({
   open,
@@ -27,7 +29,7 @@ const CreateProposal = ({
     left: "50%",
     transform: "translate(-50%, -50%)",
     width:
-      windowSize.width > 1400 ? "auto" : windowSize.width > 786 ? "50%" : "95%",
+      windowSize.width ? windowSize.width > 1400 ? "auto" : windowSize.width > 786 ? "50%" : "95%" : "auto",
     boxShadow: 24,
     p: 4,
     overflow: "auto",
@@ -104,7 +106,12 @@ const CreateProposal = ({
                 >
                   {subject === "" ? "Select Subject" : subject}
                 </div>
-                <img src={launchpadIndicator} alt="" />
+                <img
+                  src={
+                    "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                  }
+                  alt=""
+                />
               </button>
               <ul className="dropdown-menu w-100">
                 <li
@@ -210,14 +217,14 @@ const CreateProposal = ({
                   <>Success</>
                 ) : (
                   <>
-                    Failed <img src={failMark} alt="" />
+                    Failed <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
                   </>
                 )}
               </button>
             )}
             {chainId !== 56 && (
               <button
-                className="fail-button px-3 py-2"
+                className="fail-button-gov px-3 py-2"
                 style={{ width: "fit-content" }}
                 onClick={() => {
                   switchNetwork("0x38", 56);

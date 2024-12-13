@@ -72,7 +72,6 @@ const Governance = ({
         })
     );
 
-    let proposals = allProposals;
     let newProposals = [];
     let newProposals2 = [];
 
@@ -108,11 +107,9 @@ const Governance = ({
       };
     });
 
-    // newProposals = newProposals.map(p => {
-    //     p.vault = getVaultByAddress(p._stakingPool)
-    //     return p
-    // })
-    newProposals2 = proposals.concat(newnewProposalsFinal);
+    newProposals2 = [...newnewProposalsFinal].sort(function (a, b) {
+      return a._proposalStartTime - b._proposalStartTime;
+    });
     setallProposals(newProposals2);
     settotalProposals(total_proposals);
   };
@@ -123,6 +120,7 @@ const Governance = ({
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
+
     setgovLoading(true);
 
     if (Number(wodBalance) < Number(minWodBalanceForProposal)) {
@@ -145,7 +143,7 @@ const Governance = ({
             setTimeout(() => {
               setgovStatus("initial");
               setCreateProposalPopup(false);
-            }, 5000);
+            }, 3000);
           })
           .catch((e) => {
             setgovLoading(false);
@@ -177,7 +175,7 @@ const Governance = ({
           setTimeout(() => {
             setgovStatus("initial");
             setCreateProposalPopup(false);
-          }, 5000);
+          }, 3000);
         }
       }
     }
