@@ -1,14 +1,7 @@
 import React, { useRef } from "react";
-import avaxMobileBg from "./assets/avaxMobileBg.png";
-import coin98MobileBg from "./assets/coin98MobileBg.png";
-import baseMobileBg from "./assets/baseMobileBg.png";
-import confluxMobileBg from "./assets/confluxMobileBg.png";
-import skaleTreasureHunt from "./assets/skaleTreasureHunt.png";
 import closePopup from "../LandPopup/closePopup.svg";
 import { Link, NavLink } from "react-router-dom";
 import whiteExplore from "../../screens/Account/src/Components/WalletBalance/assets/whiteExplore.svg";
-import viction from "./assets/victionPopupImage.webp";
-import Slider from "react-slick";
 const MintPopup = ({ active, onClose, data }) => {
   var settings = {
     dots: false,
