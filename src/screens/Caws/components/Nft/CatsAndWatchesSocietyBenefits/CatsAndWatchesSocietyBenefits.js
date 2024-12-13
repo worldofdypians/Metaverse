@@ -26,7 +26,7 @@ const CatsAndWatchesSocietyBenefits = () => {
                         </TitleWithParagraph>
                     </div>
                     <div className="col-md-4 mt-5 mt-md-0">
-                        <img src={require("../../../assets/Nft/cats-and-watches-society-benefits-new.png")}
+                        <img src={"https://cdn.worldofdypians.com/wod/cats-and-watches-society-benefits-new.png"}
                             className="graphics "
                             alt="phone-graphics" />
                     </div>
