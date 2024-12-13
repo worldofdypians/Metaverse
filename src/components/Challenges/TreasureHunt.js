@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./_challenges.scss";
-import pickaxe from "./assets/pickaxe.svg";
-import calendar from "./assets/calendar.svg";
-import totalEarningsIcon from "./assets/totalEarningsIcon.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const TreasureHunt = ({ events, eventDuration, onEventClick, page }) => {
@@ -104,22 +101,18 @@ useEffect(() => {
                 </div>
               )}
               <div className="d-none d-lg-flex align-items-center position-relative">
-                {item.eventStatus !== "Coming Soon" && (
-                  <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={pickaxe} alt="" />
-                      <span className="treasure-hunt-type">
-                        {item.eventType}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center gap-2">
-                      <img src={calendar} alt="" />
-                      <span className="treasure-hunt-type">
-                        {item.eventDate}
-                      </span>
-                    </div>
+              {item.eventStatus !== "Coming Soon" &&
+                <div className="d-none d-lg-flex flex-column gap-3 treasure-type-date">
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={"https://cdn.worldofdypians.com/wod/pickaxe.svg"} alt="" />
+                    <span className="treasure-hunt-type">{item.eventType}</span>
                   </div>
-                )}
+                  <div className="d-flex align-items-center gap-2">
+                    <img src={"https://cdn.worldofdypians.com/wod/calendar.svg"} alt="" />
+                    <span className="treasure-hunt-type">{item.eventDate}</span>
+                  </div>
+                </div>
+        }
               </div>
               <img
                 src={item.backgroundImage}

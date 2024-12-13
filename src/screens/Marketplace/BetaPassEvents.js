@@ -24,11 +24,11 @@ const BetaPassEvents = () => {
             Details <img src={greenArrow} alt="" />
           </span>
         </div>
-        <img
+        {/* <img
           src={require("./assets/treasurebg.png")}
           alt=""
           className="upcoming-mint-img d-flex"
-        />
+        /> */}
       </NavLink>
     </div>
   );

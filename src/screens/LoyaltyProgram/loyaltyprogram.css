@@ -19,7 +19,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-image: url("./assets/loyaltyBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/loyaltyBanner.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right;
@@ -202,25 +202,25 @@ gap: 12px;
 }
 
 .loyalty-benefit-item:nth-child(1){
-  background-image: url('./assets/blueBg.svg');
+  background-image: url('https://cdn.worldofdypians.com/wod/blueBg.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: left;
 }
 .loyalty-benefit-item:nth-child(2){
-  background-image: url('./assets/cyanBg.svg');
+  background-image: url('https://cdn.worldofdypians.com/wod/cyanBg.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: left;
 }
 .loyalty-benefit-item:nth-child(3){
-  background-image: url('./assets/purpleBg.svg');
+  background-image: url('https://cdn.worldofdypians.com/wod/purpleBg.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: left;
 }
 .loyalty-benefit-item:nth-child(4){
-  background-image: url('./assets/greenBg.svg');
+  background-image: url('https://cdn.worldofdypians.com/wod/greenBg.svg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: left;

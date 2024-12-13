@@ -1,7 +1,6 @@
 import React from "react";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import "./_leaderboard.scss";
-import playerAvatar from "../../Images/userProfile/userAvatar2.png";
+import "./_leaderboard.scss"; 
 
 const ComingSoon = ({ optionText, data, username, inactiveBoard }) => {
   const placeholderplayerData = [
@@ -108,7 +107,7 @@ const ComingSoon = ({ optionText, data, username, inactiveBoard }) => {
                   <td className="playerData col-2">#{Number(index) + 1}</td>
                   <td className="playerName col-5">
                     <div className="position-relative d-flex align-items-center">
-                      <img src={playerAvatar} alt="" className="playerAvatar" />{" "}
+                      <img src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'} alt="" className="playerAvatar" />{" "}
                       {item.displayName?.slice(0,13)}{item.displayName?.length > 13 && '...'}
                     </div>
                   </td>

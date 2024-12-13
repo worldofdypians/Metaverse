@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./_releasecontent.scss";
 import { TextField } from "@mui/material";
 import styled from "styled-components";
-import { shortAddress } from "../../Caws/functions/shortAddress";
+
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import ethIcon from "../assets/eth.svg";
-import bnbIcon from "../assets/bnb.svg";
-import wodIcon from "../../../screens/Wod/Bridge/assets/wodIcon.svg";
+
 import Countdown from "react-countdown";
 
 const StyledTextField = styled(TextField)({
@@ -150,13 +148,13 @@ const ReleaseContent = ({
             <div className="release-input-wrapper d-flex flex-column gap-2">
               <div className="release-input-upper-wrapper  d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center p-3 gap-2">
-                  <img src={wodIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/wodToken.png'} alt="" />
                   <h6 className="mb-0 release-wod-title">WOD</h6>
                 </div>
                 <div className="d-flex flex-column gap-1 p-3 release-network-wrapper col-6 col-lg-5">
                   <span className="release-network-span">Network</span>
                   <div className="d-flex align-items-center gap-2">
-                    <img src={bnbIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                     <h6 className="mb-0 release-network-title">BNB Chain</h6>
                   </div>
                 </div>

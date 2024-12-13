@@ -4,11 +4,10 @@ import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome
 import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
 import kucoin from "../../../../assets/wodAssets/buyWod/kuCoin.png";
-import pancake from "../../../../assets/wodAssets/buyWod/pancake.png"; 
+import pancake from "../../../../assets/wodAssets/buyWod/pancake.png";
 import mexc from "../../../../assets/wodAssets/buyWod/mexc.png";
 
 import gateio from "../../../../assets/wodAssets/buyWod/gateio.png";
-import newToken from "../../../../assets/wodAssets/newToken.svg";
 
 const MainHero = () => {
   const dypProducts = [
@@ -154,21 +153,25 @@ const MainHero = () => {
             <div className="col-12 col-lg-6 ps-lg-0">
               <div className="d-flex flex-column gap-2 align-items-start">
                 <h4 className="main-hero-title font-montserrat text-start">
-                WOD Token
+                  WOD Token
                 </h4>
                 <span className="market-banner-desc font-montserrat text-start">
-                WOD is a utility token that provides the foundation for the
+                  WOD is a utility token that provides the foundation for the
                   World of Dypians ecosystem within a decentralized platform
                   that focuses on scalability, security, and global adoption.
                 </span>
                 <div className="d-flex align-items-center gap-3">
                   <button className="stake-wod-btn px-4 py-2">Stake WOD</button>
-                  <button className="buy-wod-btn px-4 py-2">Buy WOD</button>
+                  <button className="buy-wod-btn px-4 py-2">Get WOD</button>
                 </div>
               </div>
             </div>
             <div className="col-12 col-lg-5 pe-0">
-              <img src={newToken} className="w-100" alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/newToken.svg"}
+                className="w-100"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -198,7 +201,7 @@ const MainHero = () => {
                   >
                     Buy{" "}
                     <mark className="font-montserrat main-hero-title explore-tag pe-2">
-                    WOD
+                      WOD
                     </mark>
                   </h4>
                   <div className="row w-100 mx-0 align-items-center justify-content-between">
@@ -230,11 +233,7 @@ const MainHero = () => {
                       <div className="w-100 buy-outertoken-wrapper rounded">
                         <div className="w-100 buy-token-wrapper d-flex justify-content-center p-3 rounded">
                           <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={mexc}
-                              alt=""
-                              className="buy-item-logo"
-                            />
+                            <img src={mexc} alt="" className="buy-item-logo" />
                           </div>
                         </div>
                       </div>

@@ -4,9 +4,7 @@ import { TextField } from "@mui/material";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import ethIcon from "../assets/eth.svg";
-import bnbIcon from "../assets/bnb.svg";
-import wodIcon from "../../../screens/Wod/Bridge/assets/wodIcon.svg";
+
 import Countdown from "react-countdown";
 
 const StyledTextField = styled(TextField)({
@@ -119,14 +117,14 @@ const WhitelistContent = ({
       } else if (selectedRound.id == "advisors") {
         if (today.getTime() > cliffTime) {
           settimerFinishedAdvisors(true);
-        } 
+        }
         // else if (Number(userClaimedTokens) === 0) {
         //   settimerFinishedAdvisors(true);
         // }
       }
     }
   }, [selectedRound, userClaimedTokens, cliffTime]);
- 
+
   return (
     <div
       className="whitelist-ecosystem-wrapper py-5 position-relative d-flex justify-content-center align-items-center mb-5"
@@ -174,13 +172,20 @@ const WhitelistContent = ({
             <div className="whitelist-input-wrapper d-flex flex-column gap-2">
               <div className="whitelist-input-upper-wrapper  d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center p-3 gap-2">
-                  <img src={wodIcon} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
+                    alt=""
+                    style={{ width: 32, height: 32 }}
+                  />
                   <h6 className="mb-0 whitelist-wod-title">WOD</h6>
                 </div>
                 <div className="d-flex flex-column gap-1 p-3 whitelist-network-wrapper col-6 col-lg-5">
                   <span className="whitelist-network-span">Network</span>
                   <div className="d-flex align-items-center gap-2">
-                    <img src={bnbIcon} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
+                      alt=""
+                    />
                     <h6 className="mb-0 whitelist-network-title">BNB Chain</h6>
                   </div>
                 </div>
@@ -201,25 +206,20 @@ const WhitelistContent = ({
               <div className="d-flex align-items-center gap-2 justify-content-between">
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    { getFormattedNumber(totalVestedTokens)
-                      }
+                    {getFormattedNumber(totalVestedTokens)}
                   </span>
                   <span className="whitelist-bottom-txt">Total WOD</span>
                 </div>
 
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    { getFormattedNumber(userClaimedTokens, 2)
-                      }
+                    {getFormattedNumber(userClaimedTokens, 2)}
                   </span>
                   <span className="whitelist-bottom-txt">WOD Withdrew</span>
                 </div>
                 <div className="d-flex flex-column">
                   <span className="whitelist-upper-txt">
-                    { getFormattedNumber(
-                          totalVestedTokens - userClaimedTokens
-                        )
-                      }
+                    {getFormattedNumber(totalVestedTokens - userClaimedTokens)}
                   </span>
                   <span className="whitelist-bottom-txt">WOD Remaining</span>
                 </div>
@@ -260,8 +260,9 @@ const WhitelistContent = ({
                           settimerFinishedKol(true);
                         }}
                       />
-                    ) :  
-                      selectedRound?.id === "advisors" && isConnected && totalVestedTokens>0 ? (
+                    ) : selectedRound?.id === "advisors" &&
+                      isConnected &&
+                      totalVestedTokens > 0 ? (
                       <Countdown
                         date={Number(cliffTime)}
                         renderer={renderer2}
@@ -294,11 +295,9 @@ const WhitelistContent = ({
                 Switch to BNB Chain
               </button>
             )}
-            {isConnected &&
-              (chainId === 56 ) &&
-              selectedRound?.id === "seed" && (
-                <button
-                  className={` w-100 py-2
+            {isConnected && chainId === 56 && selectedRound?.id === "seed" && (
+              <button
+                className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
@@ -312,39 +311,38 @@ const WhitelistContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={
-                  
-                    canClaim === false ||
-                    timerFinished === false ||
-                    Number(wodBalance) === 0
-                      ? true
-                      : false
-                  }
-                  onClick={handleClaim}
-                >
-                  {claimLoading ? (
-                    <div
-                      class="spinner-border spinner-border-sm text-light"
-                      role="status"
-                    ></div>
-                  ) : claimStatus === "failed" ? (
-                    <>Failed</>
-                  ) : claimStatus === "success" ? (
-                    <>Success</>
-                  ) : (
-                    <>Claim</>
-                  )}
-                </button>
-              )}
+                disabled={
+                  canClaim === false ||
+                  timerFinished === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    class="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
             {isConnected &&
-              (chainId === 56) &&
+              chainId === 56 &&
               selectedRound?.id === "private" && (
                 <button
                   className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
-                    Number(wodBalance) === 0)  ||
+                    Number(wodBalance) === 0) ||
                   canClaim === false ||
                   timerFinishedPrivate === false
                     ? "disabled-btn2"
@@ -354,7 +352,7 @@ const WhitelistContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={ 
+                  disabled={
                     canClaim === false ||
                     timerFinishedPrivate === false ||
                     Number(wodBalance) === 0
@@ -378,11 +376,9 @@ const WhitelistContent = ({
                 </button>
               )}
 
-            {isConnected &&
-              (chainId === 56) &&
-              selectedRound?.id === "kol" && (
-                <button
-                  className={` w-100 py-2
+            {isConnected && chainId === 56 && selectedRound?.id === "kol" && (
+              <button
+                className={` w-100 py-2
                 
                 ${
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
@@ -396,32 +392,32 @@ const WhitelistContent = ({
                     ? "success-button"
                     : "connectbtn"
                 }`}
-                  disabled={
-                    canClaim === false ||
-                    timerFinishedKol === false ||
-                    Number(wodBalance) === 0
-                      ? true
-                      : false
-                  }
-                  onClick={handleClaim}
-                >
-                  {claimLoading ? (
-                    <div
-                      class="spinner-border spinner-border-sm text-light"
-                      role="status"
-                    ></div>
-                  ) : claimStatus === "failed" ? (
-                    <>Failed</>
-                  ) : claimStatus === "success" ? (
-                    <>Success</>
-                  ) : (
-                    <>Claim</>
-                  )}
-                </button>
-              )}
+                disabled={
+                  canClaim === false ||
+                  timerFinishedKol === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    class="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
 
             {isConnected &&
-              (chainId === 56) &&
+              chainId === 56 &&
               selectedRound?.id === "advisors" && (
                 <button
                   className={` w-100 py-2

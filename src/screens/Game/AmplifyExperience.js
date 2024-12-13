@@ -1,6 +1,6 @@
 import React from 'react'
 import './_game.scss'
-import amplifyCheck from "../../assets/gameAssets/amplifyCheck.svg";
+
 import { NavLink } from 'react-router-dom';
 
 
@@ -100,13 +100,13 @@ const AmplifyExperience = () => {
                 >
                   <td className="game-table-text py-3 ps-3">{item.title}</td>
                   <td>
-                    {item.free ? <img src={amplifyCheck} alt="" /> : <></>}
+                    {item.free ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
                   </td>
                   <td>
-                    {item.betaPass ? <img src={amplifyCheck} alt="" /> : <></>}
+                    {item.betaPass ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
                   </td>
                   <td>
-                    {item.premium ? <img src={amplifyCheck} alt="" /> : <></>}
+                    {item.premium ? <img src={"https://cdn.worldofdypians.com/wod/amplifyCheck.svg"} alt="" /> : <></>}
                   </td>
                 </tr>
               ))}

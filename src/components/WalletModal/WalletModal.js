@@ -39,7 +39,7 @@ const WalletModal = ({
                       MetaMask
                     </span>
                     <img
-                      src={require("./wallets/metamask.svg").default}
+                      src={"https://cdn.worldofdypians.com/wod/metamaskConnect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -62,7 +62,7 @@ const WalletModal = ({
                       Binance SDK Wallet
                     </span>
                     <img
-                      src={require("./wallets/binanceWallet.png")}
+                      src={"https://cdn.worldofdypians.com/wod/binanceConnect.png"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -87,7 +87,7 @@ const WalletModal = ({
                       Immutable Passport
                     </span>
                     <img
-                      src={require("./wallets/immutableLogo.svg").default}
+                       src={"https://cdn.worldofdypians.com/wod/immutableConnect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -110,7 +110,7 @@ const WalletModal = ({
                       Gate wallet
                     </span>
                     <img
-                      src={require("./wallets/gate.jpg")}
+                       src={"https://cdn.worldofdypians.com/wod/gateConnect.jpg"}
                       className="wallet-item-icon"
                       alt="Icon"
                       style={{ borderRadius: "50%" }}
@@ -134,7 +134,7 @@ const WalletModal = ({
                       Coinbase
                     </span>
                     <img
-                      src={require("./wallets/coinbase.svg").default}
+                       src={"https://cdn.worldofdypians.com/wod/coinbaseConnect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -155,7 +155,7 @@ const WalletModal = ({
                   >
                     <span className="text-white wallet-item-name">Coin98</span>
                     <img
-                      src={require("./wallets/coin98.svg").default}
+                       src={"https://cdn.worldofdypians.com/wod/coin98Connect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -181,7 +181,7 @@ const WalletModal = ({
                       Trust Wallet
                     </span>
                     <img
-                      src={require("./wallets/trustwallet.svg").default}
+                       src={"https://cdn.worldofdypians.com/wod/trustwalletConnect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
@@ -202,7 +202,7 @@ const WalletModal = ({
                   >
                     <span className="text-white wallet-item-name">SafePal</span>
                     <img
-                      src={require("./wallets/safepal.svg").default}
+                       src={"https://cdn.worldofdypians.com/wod/safepalConnect.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />

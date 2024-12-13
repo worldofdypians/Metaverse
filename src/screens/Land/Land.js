@@ -12,7 +12,6 @@ import WalletModal from "../../components/WalletModal/WalletModal";
 import LandWhitelistModal from "../../components/LandWhitelistModal/LandWhitelistModal";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
-import DailyRewardsPopup from "../../components/TimepieceMint/DailyRewardsPopup";
 
 const Land = ({
   handleConnectWallet,
@@ -484,15 +483,7 @@ const Land = ({
 
   return (
     <div className="container-fluid mt-lg-5 pt-lg-5 d-flex px-0 align-items-center justify-content-center">
-         {/* <OutsideClickHandler
-        id="popup"
-          onOutsideClick={() => {setActivePopup(false); setCount(1)}}
-      >
-        <DailyRewardsPopup
-          active={activePopup}
-              onClose={() => {setActivePopup(false); setCount(1)}}
-        />
-      </OutsideClickHandler> */}
+
       {openStakeChecklist === true && (
         <LandStakingChecklistModal
           onClose={() => {

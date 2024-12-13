@@ -2,109 +2,58 @@ import L from "leaflet";
 import { Marker } from "react-leaflet";
 
 // Consolidated icon data
-import bnbIcon from "../assets/chainIcons/bnbIcon.svg";
-import coreIcon from "../assets/chainIcons/coreIcon.svg";
-import baseIcon from "../assets/chainIcons/baseIcon.svg";
-import skaleIcon from "../assets/chainIcons/skaleIcon.svg";
-import taikoIcon from "../assets/chainIcons/taikoIcon.svg";
-import victionIcon from "../assets/chainIcons/victionIcon.svg";
-import cmcIcon from "../assets/chainIcons/cmcIcon.svg";
-import coingeckoIcon from "../assets/chainIcons/coingeckoIcon.svg";
-import confluxIcon from "../assets/chainIcons/confluxIcon.svg";
-import babydogeIcon from "../assets/chainIcons/babydogeIcon.svg";
-import multiversx from "../assets/chainIcons/multiversx.svg";
-import avaxIcon from "../assets/chainIcons/avaxIcon.svg";
-import coin98Icon from "../assets/chainIcons/coin98Icon.svg";
-import gateIcon from "../assets/chainIcons/gateIcon.svg";
-import mexcIcon from "../assets/chainIcons/mexcIcon.svg";
-import ordifyIcon from "../assets/chainIcons/ordifyIcon.svg";
-import easy2stakeIcon from "../assets/chainIcons/easy2stakeIcon.svg";
-import kucoinIcon from "../assets/chainIcons/kucoinIcon.svg";
-import seiLogo from "../assets/chainIcons/seiLogo.svg";
-import immutable from "../assets/chainIcons/immutable.svg";
-import chainlinkIcon from "../assets/chainIcons/chainlinkIcon.svg";
-import mantaIcon from "../assets/chainIcons/mantaIcon.png";
-import midle from "../assets/chainIcons/midle.png";
-import dypIcon from "../assets/chainIcons/dypIcon.svg";
-import cookie3 from "../assets/chainIcons/cookie3.svg";
-import dogecoin from "../assets/chainIcons/dogecoin.svg";
-import bearIcon from "../assets/bearIcon.svg";
-import boarIcon from "../assets/boarIcon.svg";
-import deerIcon from "../assets/deerIcon.svg";
-import landIcon from "../assets/landIcon.png";
-import matchainIcon from "../assets/matchainIcon.svg";
-import questIcon from "../assets/sidebarIcons/questsIcon.svg";
-import craftingIcon from "../assets/sidebarIcons/craftIcon.svg";
-import teleportIcon from "../assets/sidebarIcons/teleportsIcon.svg";
-import dragonIcon from "../assets/dragonMarker.png";
-import scorpionIcon from "../assets/scorpionMarker.png";
-import coldFuryIcon from "../assets/coldFuryMarker.png";
-import furyBeastIcon from "../assets/furyBeastMarker.png";
-import eagleIcon from "../assets/eagleMarker.png";
-import cyclopsIcon from "../assets/cyclopsMarker.png";
-import criticalHitIcon from "../assets/criticalHitMarker.png";
 
-import treasureHuntIcon from "../assets/treasureHuntIcon.png";
-import puzzleMadnessIcon from "../assets/puzzleMadnessIcon.png";
-import mazeGardenIcon from "../assets/mazeMarker.png";
-import trainIcon from "../assets/trainIcon.svg";
-import magnifier from "../assets/magnifier.svg";
-import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
-import minerIcon from "../assets/sidebarIcons/minesIcon.svg";
-import markerPin from '../assets/markerPin.svg'
-import markerPinRed from '../assets/markerPinRed.svg'
 
 // Consolidated icon data array
 const iconData = [
-  { name: "bearMarker", url: bearIcon, size: 32, chain: false, },
-  { name: "boarMarker", url: boarIcon, size: 32, chain: false, },
-  { name: "deerMarker", url: deerIcon, size: 32, chain: false, },
-  { name: "bnbMarker", url: bnbIcon, size: 24, chain: true,  },
-  { name: "coreMarker", url: coreIcon, size: 24, chain: true,  },
-  { name: "mantaMarker", url: mantaIcon, size: 24, chain: true,  },
-  { name: "matchainMarker", url: matchainIcon, size: 24, chain: true,  },
-  { name: "dypMarker", url: dypIcon, size: 24, chain: true,  },
-  { name: "skaleMarker", url: skaleIcon, size: 24, chain: true,  },
-  { name: "taikoMarker", url: taikoIcon, size: 24, chain: true,  },
-  { name: "victionMarker", url: victionIcon, size: 24, chain: true,  },
-  { name: "landMarker", url: landIcon, size: 32, chain: false, },
-  { name: "dragonMarker", url: dragonIcon, size: 32, chain: false, },
-  { name: "coldFuryMarker", url: coldFuryIcon, size: 32, chain: false, },
-  { name: "furyBeastMarker", url: furyBeastIcon, size: 32, chain: false, },
-  { name: "eagleMarker", url: eagleIcon, size: 32, chain: false, },
-  { name: "cyclopsMarker", url: cyclopsIcon, size: 32, chain: false, },
-  { name: "mazeMarker", url: mazeGardenIcon, size: 32, chain: false, },
-  { name: "criticalHitMarker", url: criticalHitIcon, size: 32, chain: false, },
-  { name: "scorpionMarker", url: scorpionIcon, size: 32 , chain: false,},
-  { name: "questMarker", url: questIcon, size: 32, chain: false, },
-  { name: "teleportMarker", url: teleportIcon, size: 32, chain: false, },
-  { name: "craftingMarker", url: craftingIcon, size: 32, chain: false, },
-  { name: "findMarker", url: magnifier, size: 32, chain: false, },
-  { name: "mineMarker", url: minerIcon, size: 32, chain: false, },
-  { name: "mazeMarker", url: mazeGardenIcon, size: 32, chain: false, },
-  { name: "puzzleMarker", url: puzzleMadnessIcon, size: 32, chain: false, },
-  { name: "treasureMarker", url: treasureHuntIcon, size: 32, chain: false, },
-  { name: "trainMarker", url: trainIcon, size: 32, chain: false, },
-  { name: "leaderboardsMarker", url: leaderboardsIcon, size: 32, chain: false, },
-  { name: "confluxMarker", url: confluxIcon, size: 24, chain: true,  },
-  { name: "cmcMarker", url: cmcIcon, size: 24, chain: true,  },
-  { name: "coingeckoMarker", url: coingeckoIcon, size: 24, chain: true,  },
-  { name: "multiversxMarker", url: multiversx, size: 24, chain: true,  },
-  { name: "babydogeMarker", url: babydogeIcon, size: 24, chain: true,  },
-  { name: "avaxMarker", url: avaxIcon, size: 24, chain: true,  },
-  { name: "chainlinkMarker", url: chainlinkIcon, size: 24, chain: true,  },
-  { name: "coin98Marker", url: coin98Icon, size: 24, chain: true,  },
-  { name: "gateMarker", url: gateIcon, size: 24, chain: true,  },
-  { name: "mexcMarker", url: mexcIcon, size: 24, chain: true,  },
-  { name: "easy2stakeMarker", url: easy2stakeIcon, size: 24, chain: true,  },
-  { name: "kucoinMarker", url: kucoinIcon, size: 24, chain: true,  },
-  { name: "seiMarker", url: seiLogo, size: 24, chain: true,  },
-  { name: "immutableMarker", url: immutable, size: 24 , chain: true, },
-  { name: "baseMarker", url: baseIcon, size: 24, chain: true,  },
-  { name: "dogecoinMarker", url: dogecoin, size: 24, chain: true,  },
-  { name: "cookieMarker", url: cookie3, size: 24, chain: true,  },
-  { name: "midleMarker", url: midle, size: 24 , chain: true},
-  { name: "ordifyMarker", url: ordifyIcon, size: 24, chain: true,  },
+  { name: "bearMarker", url: "https://cdn.worldofdypians.com/wod/bearIcon.svg", size: 32, chain: false, },
+  { name: "boarMarker", url: "https://cdn.worldofdypians.com/wod/boarIcon.svg", size: 32, chain: false, },
+  { name: "deerMarker", url: "https://cdn.worldofdypians.com/wod/deerIcon.svg", size: 32, chain: false, },
+  { name: "bnbMarker", url: "https://cdn.worldofdypians.com/wod/bnbIcon.svg", size: 24, chain: true,  },
+  { name: "coreMarker", url: "https://cdn.worldofdypians.com/wod/core.svg", size: 24, chain: true,  },
+  { name: "mantaMarker", url: "https://cdn.worldofdypians.com/wod/manta.png", size: 24, chain: true,  },
+  { name: "matchainMarker", url: "https://cdn.worldofdypians.com/wod/matchainIcon.svg", size: 24, chain: true,  },
+  { name: "dypMarker", url: "https://cdn.worldofdypians.com/wod/dypius.svg", size: 24, chain: true,  },
+  { name: "skaleMarker", url: "https://cdn.worldofdypians.com/wod/skaleIcon.svg", size: 24, chain: true,  },
+  { name: "taikoMarker", url: "https://cdn.worldofdypians.com/wod/taiko.svg", size: 24, chain: true,  },
+  { name: "victionMarker", url: "https://cdn.worldofdypians.com/wod/viction.svg", size: 24, chain: true,  },
+  { name: "landMarker", url: "https://cdn.worldofdypians.com/wod/landIcon.svg", size: 32, chain: false, },
+  { name: "dragonMarker", url: "https://cdn.worldofdypians.com/wod/dragonMarker.png", size: 32, chain: false, },
+  { name: "coldFuryMarker", url: "https://cdn.worldofdypians.com/wod/coldFuryMarker.png", size: 32, chain: false, },
+  { name: "furyBeastMarker", url: "https://cdn.worldofdypians.com/wod/furyBeastMarker.png", size: 32, chain: false, },
+  { name: "eagleMarker", url: "https://cdn.worldofdypians.com/wod/eagleMarker.png", size: 32, chain: false, },
+  { name: "cyclopsMarker", url: "https://cdn.worldofdypians.com/wod/cyclopsMarker.png", size: 32, chain: false, },
+  { name: "mazeMarker", url: "https://cdn.worldofdypians.com/wod/mazeMarker.png", size: 32, chain: false, },
+  { name: "criticalHitMarker", url: "https://cdn.worldofdypians.com/wod/criticalHitMarker.png", size: 32, chain: false, },
+  { name: "scorpionMarker", url: "https://cdn.worldofdypians.com/wod/scorpionMarker.png", size: 32 , chain: false,},
+  { name: "questMarker", url: "https://cdn.worldofdypians.com/wod/questsIcon.svg", size: 32, chain: false, },
+  { name: "teleportMarker", url: "https://cdn.worldofdypians.com/wod/teleportsIcon.svg", size: 32, chain: false, },
+  { name: "craftingMarker", url: "https://cdn.worldofdypians.com/wod/craftIcon.svg", size: 32, chain: false, },
+  { name: "findMarker", url: "https://cdn.worldofdypians.com/wod/magnifier.svg", size: 32, chain: false, },
+  { name: "mineMarker", url: "https://cdn.worldofdypians.com/wod/minesIcon.svg", size: 32, chain: false, },
+  { name: "puzzleMarker", url: "https://cdn.worldofdypians.com/wod/puzzleMadnessIcon.png", size: 32, chain: false, },
+  { name: "treasureMarker", url: "https://cdn.worldofdypians.com/wod/treasureHuntIcon.png", size: 32, chain: false, },
+  { name: "trainMarker", url: "https://cdn.worldofdypians.com/wod/trainIcon.svg", size: 32, chain: false, },
+  { name: "leaderboardsMarker", url: "https://cdn.worldofdypians.com/wod/leaderboardsIcon.svg", size: 32, chain: false, },
+  { name: "confluxMarker", url: "https://cdn.worldofdypians.com/wod/confluxIcon.svg", size: 24, chain: true,  },
+  { name: "cmcMarker", url: "https://cdn.worldofdypians.com/wod/cmcIcon.svg", size: 24, chain: true,  },
+  { name: "coingeckoMarker", url: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg", size: 24, chain: true,  },
+  { name: "multiversxMarker", url: "https://cdn.worldofdypians.com/wod/multiversx.svg", size: 24, chain: true,  },
+  { name: "babydogeMarker", url: "https://cdn.worldofdypians.com/wod/babydogeIcon.svg", size: 24, chain: true,  },
+  { name: "avaxMarker", url: "https://cdn.worldofdypians.com/wod/avaxIcon.svg", size: 24, chain: true,  },
+  { name: "chainlinkMarker", url: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg", size: 24, chain: true,  },
+  { name: "coin98Marker", url: "https://cdn.worldofdypians.com/wod/coin98Icon.svg", size: 24, chain: true,  },
+  { name: "gateMarker", url: "https://cdn.worldofdypians.com/wod/gateIcon.svg", size: 24, chain: true,  },
+  { name: "mexcMarker", url: "https://cdn.worldofdypians.com/wod/mexcIcon.svg", size: 24, chain: true,  },
+  { name: "easy2stakeMarker", url: "https://cdn.worldofdypians.com/wod/easy2stakeIcon.svg", size: 24, chain: true,  },
+  { name: "kucoinMarker", url: "https://cdn.worldofdypians.com/wod/kucoinIcon.svg", size: 24, chain: true,  },
+  { name: "seiMarker", url: "https://cdn.worldofdypians.com/wod/seiLogo.svg", size: 24, chain: true,  },
+  { name: "immutableMarker", url: "https://cdn.worldofdypians.com/wod/immutable.svg", size: 24 , chain: true, },
+  { name: "baseMarker", url: "https://cdn.worldofdypians.com/wod/base.svg", size: 24, chain: true,  },
+  { name: "dogecoinMarker", url: "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg", size: 24, chain: true,  },
+  { name: "cookieMarker", url: "https://cdn.worldofdypians.com/wod/cookie3.svg", size: 24, chain: true,  },
+  { name: "midleMarker", url: "https://cdn.worldofdypians.com/wod/midle.svg", size: 24 , chain: true},
+  { name: "ordifyMarker", url: "https://cdn.worldofdypians.com/wod/ordify.svg", size: 24, chain: true,  },
 ];
 
 // Function to create markers dynamically
@@ -122,7 +71,7 @@ iconData.forEach(({ name, url, size, chain }) => {
   markers[name] = L.divIcon({
     className: `custom-chain-icon`,
     html: `<div>
-    <img class="marker-pin ${!chain && "d-none"}" src="${markerPin}" alt="marker-pin" />
+    <img class="marker-pin ${!chain && "d-none"}" src="${"https://cdn.worldofdypians.com/wod/markerPin.svg"}" alt="marker-pin" />
     <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size],
@@ -137,7 +86,7 @@ iconData.forEach(({ name, url, size, chain }) => {
   activeMarkers[name] = L.divIcon({
     className: `custom-chain-icon`,
     html: `<div>
-    <img class="marker-pin ${!chain && "d-none"}" src="${markerPinRed}" alt="marker-pin" />
+    <img class="marker-pin ${!chain && "d-none"}" src="${"https://cdn.worldofdypians.com/wod/markerPinRed.svg"}" alt="marker-pin" />
     <img src="${url}" style="width: ${size}px; height: ${size}px;" alt="${name} icon"/></div>`,
     iconSize: [size, size],
     iconAnchor: [size / 2, size],

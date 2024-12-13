@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./_unsubscribe.scss";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import avatar from '../../components/LeaderBoard/assets/userAvatar2.png'
+import { Link, useNavigate, useParams } from "react-router-dom"; 
 import axios from "axios";
 
 const Unsubscribe = () => {
@@ -40,7 +39,7 @@ const Unsubscribe = () => {
       <div className="container-lg  d-flex w-100 flex-column py-5" style={{minHeight: '68vh'}}>
       <div className="row w-100 flex-column pt-5 pt-lg-0 px-3 gap-5 px-lg-5 mx-0 justify-content-center align-items-center">
           <div className="d-flex justify-content-center align-items-center gap-2">
-              <img src={avatar} width={40} height={40} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'} width={40} height={40} alt="" />
           <h6 className="text-white mb-0" style={{width: 'fit-content', fontSize: '20px'}}>{email}</h6>
           </div>
         {success === false ?

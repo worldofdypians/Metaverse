@@ -19,30 +19,24 @@ import dailyBonusImg from "../Marketplace/MarketNFTs/assets/dailyBonus.webp";
 import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
-import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard";
-import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
-import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
-import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
+import NewBundleCard from "../Account/src/Components/BundleCard/NewBundleCard"; 
+import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";  
 
 import coin98 from "../Account/src/Components/WalletBalance/assets/coin98.svg";
 import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
-import base from "./assets/baseLogo.svg";
-import skaleLogo from "./assets/skaleLogo.svg";
+import base from "./assets/baseLogo.svg"; 
 import seiLogo from "./assets/seiLogo.svg";
 import multiversLogo from "./assets/multiversLogo.svg";
 
 import coreLogo from "./assets/coreLogo.svg";
 import mantaLogo from "./assets/mantaLogo2.png";
-import cookie3Logo from "./assets/cookie3Logo.svg";
-
-import taikoLogo from "./MarketNFTs/assets/taikoLogo.svg";
+ 
+ 
 import victionLogo from "./assets/victionLogo.svg";
 import immutableLogo from "./assets/immutableLogo.svg";
 
 import avaxLogo from "./assets/avaxLogo.svg";
 
-import betaMyEarnings from "./assets/betaMyEarnings.png";
 import DragonPopup from "../../components/PackagePopups/DragonPopup";
 import GoldenPassPopup from "../../components/PackagePopups/GoldenPassPopup";
 import PuzzleMadnessPopup from "../../components/PackagePopups/PuzzleMadnessPopup";
@@ -57,14 +51,11 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.webp";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
-
-import infoIcon from "./assets/infoIcon.svg";
+ 
 import liveDot from "./assets/liveDot.svg";
-import eventsArrow from "./assets/eventsArrow.svg";
-import whitePickaxe from "./assets/whitePickAxe.svg";
+import eventsArrow from "./assets/eventsArrow.svg"; 
 import magnifier from "./assets/magnifier.svg";
-
-import whiteCalendar from "./assets/whiteCalendar.svg";
+ 
 import BetaEventCard from "./components/BetaEventCard";
 import eventPopupImage from "../Account/src/Components/WalletBalance/assets/eventPopupImage.png";
 import dogePopupImage from "../Account/src/Components/WalletBalance/assets/dogePopupImage.png";
@@ -84,9 +75,7 @@ import multiversThumb from "../Account/src/Components/WalletBalance/assets/multi
 import immutableThumb from "../Account/src/Components/WalletBalance/assets/immutableThumb.png";
 import coreThumb from "../Account/src/Components/WalletBalance/assets/coreThumb.png";
 import mantaThumb from "../Account/src/Components/WalletBalance/assets/mantaThumb.png";
-import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp";
-import baseThumb from "../Account/src/Components/WalletBalance/assets/baseThumb.webp";
-
+import taikoThumb from "../Account/src/Components/WalletBalance/assets/taikoThumb.webp"; 
 import cookie3Thumb from "../Account/src/Components/WalletBalance/assets/cookie3Thumb.png";
 import baseLogo from "../Home/VideoWrapper/assets/baseLogo.svg";
 
@@ -98,7 +87,7 @@ import twitter from "./assets/greenTwitter.svg";
 import telegram from "./assets/greentg.svg";
 import website from "./assets/greenWebsite.svg";
 import discord from "./assets/greenDiscord.svg";
-import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
+// import upcomingDailyBonus from "./assets/upcomingDailyBonus.png";
 import upcomingDoge from "./assets/upcomingDoge.webp";
 import upcomingSkale from "./assets/upcomingSkale.webp";
 import upcomingCookie from "./assets/cookieBg.webp";
@@ -128,11 +117,7 @@ import taikoMobileBg from "./assets/taikoActive.png";
 import victionBg from "./assets/victionBg.webp";
 import multiversBg from "./assets/multiversBg.webp";
 import mantaBg from "./assets/mantaBg.webp";
-import mantaMobileBg from "./assets/mantaMobileBg.png";
-import immutableMobileBg from "./assets/immutableActive.webp";
 import seiMobileBg from "./assets/seiActive.webp";
-import coreMobileBg from "./assets/coreActive.webp";
-import victionMobileBg from "./assets/victionActive.webp";
 import multiversMobileBg from "./assets/multiversActive.webp";
 import bnbLogo from "./assets/bnbIcon.svg";
 import dailyBonus from "./assets/dailyBonus.webp";
@@ -415,7 +400,7 @@ const MarketEvents = ({
 
     {
       title: "Cookie3",
-      logo: cookie3Logo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -470,7 +455,7 @@ const MarketEvents = ({
        
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
@@ -660,7 +645,7 @@ const MarketEvents = ({
     // },
     {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
@@ -718,7 +703,7 @@ const MarketEvents = ({
     },
     {
       title: "CoinMarketCap",
-      logo: cmc,
+      logo: 'https://cdn.worldofdypians.com/wod/cmcIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -746,7 +731,7 @@ const MarketEvents = ({
     },
     {
       title: "Dogecoin",
-      logo: doge,
+      logo: 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$10,000 in DOGE Rewards",
       myEarnings: 0.0,
@@ -882,7 +867,7 @@ const MarketEvents = ({
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: 'https://cdn.worldofdypians.com/wod/confluxIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
@@ -989,7 +974,7 @@ const MarketEvents = ({
   };
   const betaPassPackageData = {
     title: "Beta Pass",
-    image: "betaPassDummy.png",
+    image: "newCriticalBg.webp",
     benefits: [
       "Exclusive access for Beta Pass owners",
       "Opportunity to win rewards",
@@ -1565,12 +1550,12 @@ const MarketEvents = ({
                             }`}
                             onClick={() => setSelectedPackage("treasure-hunt")}
                           >
-                            <img
+                            {/* <img
                               src={require("./assets/treasure.jpg")}
                               className="w-100"
                               style={{ borderRadius: "16px" }}
                               alt=""
-                            />
+                            /> */}
                             <span className="event-package-title">
                               Treasure Hunt
                             </span>
@@ -1709,11 +1694,11 @@ const MarketEvents = ({
                             </span>
                           </div>
 
-                          <img
+                          {/* <img
                             src={upcomingDailyBonus}
                             alt=""
                             className="upcoming-mint-img"
-                          />
+                          /> */}
                         </div>
                       </div>
                     ) : (
@@ -2038,7 +2023,7 @@ const MarketEvents = ({
                         : dummyEvent.linkState === "base" && dummyEvent.id === 'event4'
                         ? eventPopupImageBase
                         : dummyEvent.id === 'event24'
-                        ? baseThumb
+                        ? 'https://cdn.worldofdypians.com/wod/baseThumb.webp'
                         : dummyEvent.linkState === "doge"
                         ? dogePopupImage
                         : dummyEvent.linkState === "coinmarketcap"
@@ -3032,7 +3017,7 @@ const MarketEvents = ({
               </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-2">
-              <img src={infoIcon} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
               <span className="popup-event-desc">
                 The rewards will be distributed 2-3 days after the event ends.
               </span>

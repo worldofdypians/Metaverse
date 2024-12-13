@@ -8,8 +8,7 @@ import cawsTag from "./assets/cawsTag.svg";
 import wodTag from "./assets/wodTag.svg";
 import fullWod from "./assets/fullWod.png";
 import axios from "axios";
-import CawsWodNftChecklist from "./CawsWodNftChecklist";
-import ethIcon from "./assets/ethIcon.svg";
+import CawsWodNftChecklist from "./CawsWodNftChecklist"; 
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import { ethers } from "ethers";
@@ -433,7 +432,7 @@ const RewardsModal = ({
 
               <div className="d-flex gap-2 justify-content-between">
                 <div className="d-flex align-items-center gap-1">
-                  <img src={ethIcon} alt="" style={{ width: 30, height: 30 }} />
+                  <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" style={{ width: 30, height: 30 }} />
                   <span className="selected-nfts-amount2">
                     {getFormattedNumber(ETHrewards, 3)} ETH
                   </span>

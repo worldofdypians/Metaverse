@@ -3,11 +3,6 @@ import moment from "moment";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import "../top-pools.css";
 import "./_stakingWod.scss";
-import failMark from "../../assets/failMark.svg";
-import statsIcon from "../../assets/statsIcon.svg";
-
-import wodToken from "../../assets/tokens/wodToken.png";
-import moreinfo from "../../assets/more-info.svg";
 import Modal from "../../../../../components/General/Modal";
 import { Tooltip } from "@mui/material";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
@@ -205,6 +200,17 @@ const StakeWodDetails2 = ({
 
   const hidePopup = () => {
     setpopup(false);
+  };
+
+  const handleSecondTask = async (wallet) => {
+    const result2 = await axios
+      .get(`https://api.worldofdypians.com/api/dappbay/task2/${wallet}`)
+      .catch((e) => {
+        console.error(e);
+      });
+    if (result2 && result2.status === 200) {
+      console.log(result2);
+    }
   };
 
   const getPriceDYP = async () => {
@@ -488,6 +494,7 @@ const StakeWodDetails2 = ({
       await staking
         .stake(amount, referrer)
         .then(() => {
+          handleSecondTask(coinbase)
           setdepositLoading(false);
           setdepositStatus("success");
           refreshBalance();
@@ -1169,7 +1176,7 @@ const StakeWodDetails2 = ({
                     <>Success</>
                   ) : (
                     <>
-                      <img src={failMark} alt="" />
+                      <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
                       Failed
                     </>
                   )}
@@ -1213,7 +1220,7 @@ const StakeWodDetails2 = ({
                         </div>
                       }
                     >
-                      <img src={moreinfo} alt="" />
+                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
                     </Tooltip>
                   </h6>
                 </div>
@@ -1265,7 +1272,7 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
-                            <img src={failMark} alt="" />
+                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
                             Failed
                           </>
                         ) : claimStatus === "success" ? (
@@ -1297,7 +1304,7 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
-                            <img src={failMark} alt="" />
+                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
                             Failed
                           </>
                         ) : reInvestStatus === "success" ? (
@@ -1388,7 +1395,7 @@ const StakeWodDetails2 = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={statsIcon} alt="" /> Details
+                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
               </h6>
             </div>
           </div>
@@ -1594,7 +1601,7 @@ const StakeWodDetails2 = ({
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={failMark} alt="" />
+                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (
@@ -1967,7 +1974,7 @@ const StakeWodDetails2 = ({
     //                   <>Success</>
     //                 ) : (
     //                   <>
-    //                     <img src={failMark} alt="" />
+    //                     <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
     //                     Failed
     //                   </>
     //                 )}
@@ -2082,7 +2089,7 @@ const StakeWodDetails2 = ({
     //                     </div>
     //                   ) : claimStatus === "failed" ? (
     //                     <>
-    //                       <img src={failMark} alt="" />
+    //                       <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
     //                       Failed
     //                     </>
     //                   ) : claimStatus === "success" ? (
@@ -2115,7 +2122,7 @@ const StakeWodDetails2 = ({
     //                       </div>
     //                     ) : reInvestStatus === "failed" ? (
     //                       <>
-    //                         <img src={failMark} alt="" />
+    //                         <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
     //                         Failed
     //                       </>
     //                     ) : reInvestStatus === "success" ? (
@@ -2536,7 +2543,7 @@ const StakeWodDetails2 = ({
     //                     </div>
     //                   ) : withdrawStatus === "failed" ? (
     //                     <>
-    //                       <img src={failMark} alt="" />
+    //                       <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
     //                       Failed
     //                     </>
     //                   ) : withdrawStatus === "success" ? (

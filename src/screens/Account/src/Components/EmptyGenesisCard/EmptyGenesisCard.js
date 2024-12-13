@@ -8,7 +8,7 @@ const EmptyGenesisCard = () => {
     <div
       className={`genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative`}
     >
-      {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+
       <img
         src={genesisLand}
         className={`genesis-badge`}

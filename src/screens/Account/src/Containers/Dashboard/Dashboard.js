@@ -7,8 +7,8 @@ import { useAuth } from "../../Utils.js/Auth/AuthDetails";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import NewEvents from "../../../../../components/NewEvents/NewEvents";
 import Web3 from "web3";
-import { ERC20_ABI, iDYP_3500_ABI, WOD_ABI } from "../../web3/abis";
-import _, { chain } from "lodash";
+import { ERC20_ABI } from "../../web3/abis";
+import _ from "lodash";
 import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeaderboard";
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
@@ -17,43 +17,26 @@ import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import OutsideClickHandler from "react-outside-click-handler";
-import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
-import dappsIcon from "../../Images/premium/dappsIcon.svg";
-import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
-import greenCheck from "../../Images/premium/greenCheck.svg";
-import premiumIcon from "../../Images/premium/premiumIcon.webp";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 
-import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
-import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import ReCaptchaV2 from "react-google-recaptcha";
-
-import coreIcon from "../../../../../components/NewDailyBonus/assets/coreIcon.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
-import seiLogo from "../../../../../components/Header/assets/sei.svg";
-
-import vicitonIcon from "../../../../../components/NewDailyBonus/assets/victionIcon.svg";
-import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
+import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
+import {
+  GOLDEN_PASS_ABI,
+  golden_pass_address,
+} from "../../../../../components/NewEvents/abi"; 
+import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
+import { useParams } from "react-router-dom";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
 import MyRewardsPopupNew from "../../Components/WalletBalance/MyRewardsPopup2";
-import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
-import {
-  dyp700Address,
-  dyp700v1Address,
-  idyp3500Address,
-  dragonRuinsAddress,
-} from "../../web3";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 import Portfolio from "../../Components/WalletBalance/Portfolio";
 import Countdown from "react-countdown";
 import {
@@ -70,25 +53,6 @@ import {
   matStars,
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
-
-import dailyChestsBg from "../../Components/PremiumPopup/assets/dailyChestsBg.webp";
-import exclusiveBg from "../../Components/PremiumPopup/assets/exclusiveBg.webp";
-import extraDailyStarsBg from "../../Components/PremiumPopup/assets/extraDailyStarsBg.webp";
-import increasedRewardsBg from "../../Components/PremiumPopup/assets/increasedRewardsBg.webp";
-import prioritySupportBg from "../../Components/PremiumPopup/assets/prioritySupportBg.webp";
-import privateEventsBg from "../../Components/PremiumPopup/assets/privateEventsBg.webp";
-import treasureHuntBg from "../../Components/PremiumPopup/assets/treasureHuntBg.webp";
-
-import successMark from "../../Components/WalletBalance/newAssets/successMark.svg";
-import RankPopup from "../../../../../components/MyProfile/RankPopup";
-import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
-import { useParams } from "react-router-dom";
-import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassPopup";
-import {
-  GOLDEN_PASS_ABI,
-  golden_pass_address,
-} from "../../../../../components/NewEvents/abi";
-import { WbIncandescentTwoTone } from "@mui/icons-material";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -195,7 +159,7 @@ function Dashboard({
   easy2StakeEarnUsd,
   midleEarnUsd,
   coingeckoEarnUsd,
-  chainlinkEarnUsd
+  chainlinkEarnUsd,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -208,31 +172,31 @@ function Dashboard({
   const allBenefits = [
     {
       title: "Exclusive access to the game",
-      image: exclusiveBg,
+      image: "https://cdn.worldofdypians.com/wod/exclusiveBg.webp",
     },
     {
       title: "Unlock All Daily Bonus Chests",
-      image: dailyChestsBg,
+      image: "https://cdn.worldofdypians.com/wod/dailyChestsBg.webp",
     },
     {
       title: "Unlimited Treasure Hunts",
-      image: treasureHuntBg,
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntBg.webp",
     },
     {
       title: "Increased Rewards",
-      image: increasedRewardsBg,
+      image: "https://cdn.worldofdypians.com/wod/increasedRewardsBg.webp",
     },
     {
       title: "Earn Extra Daily Stars",
-      image: extraDailyStarsBg,
+      image: "https://cdn.worldofdypians.com/wod/extraDailyStarsBg.webp",
     },
     {
       title: "Access to Private Events",
-      image: privateEventsBg,
+      image: "https://cdn.worldofdypians.com/wod/privateEventsBg.webp",
     },
     {
       title: "Priority Support",
-      image: prioritySupportBg,
+      image: "https://cdn.worldofdypians.com/wod/prioritySupportBg.webp",
     },
   ];
 
@@ -593,8 +557,7 @@ function Dashboard({
   // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
-  const [balancePopup, setBalancePopup] = useState(false);
-  const [dailyBonusInfo, setdailyBonusInfo] = useState(false);
+  const [balancePopup, setBalancePopup] = useState(false); 
 
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
@@ -708,7 +671,6 @@ function Dashboard({
     id: 0,
   });
   const [userProgress, setUserProgress] = useState(0);
-  const [rankPopup, setRankPopup] = useState(false);
 
   const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
   const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
@@ -4430,6 +4392,17 @@ function Dashboard({
     }
   };
 
+  const fillPreviousRecordsGenesis = (itemData) => {
+    if (itemData.length === 0) {
+      setpreviousgenesisData(placeholderplayerData);
+    } else if (itemData.length <= 10) {
+      const testArray = itemData;
+      const placeholderArray = placeholderplayerData.slice(itemData.length, 10);
+      const finalData = [...testArray, ...placeholderArray];
+      setpreviousgenesisData(finalData);
+    }
+  };
+
   const fetchPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
@@ -4451,7 +4424,7 @@ function Dashboard({
   const fetchGenesisPreviousWinners = async (version) => {
     if (version != 0) {
       const data = {
-        StatisticName: "GenesisLandRewards",
+        StatisticName: "TheGreatCollection",
         StartPosition: 0,
         MaxResultsCount: 10,
         Version: version - 1,
@@ -4460,7 +4433,7 @@ function Dashboard({
         `${backendApi}/auth/GetLeaderboard?Version=-1`,
         data
       );
-      fillRecordsGenesis(result.data.data.leaderboard);
+      // fillPreviousRecordsGenesis(result.data.data.leaderboard);
 
       setpreviousgenesisData(result.data.data.leaderboard);
     }
@@ -4583,9 +4556,9 @@ function Dashboard({
 
   const fetchGenesisRecords = async () => {
     const data2 = {
-      StatisticName: "GenesisLandRewards",
+      StatisticName: "TheGreatCollection",
       StartPosition: 0,
-      MaxResultsCount: 10,
+      MaxResultsCount: 100,
     };
 
     const result2 = await axios
@@ -6157,7 +6130,7 @@ function Dashboard({
 
   const handleFirstTask = async (wallet) => {
     const result2 = await axios
-      .get(`https://api.worldofdypians.com/api/olympiad/task1/${wallet}`)
+      .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
       .catch((e) => {
         console.error(e);
       });
@@ -6201,9 +6174,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(account);
 
-          // if (isonlink) {
-          //   handleFirstTask(account);
-          // }
+          if (isonlink) {
+            handleFirstTask(account);
+          }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -6235,9 +6208,9 @@ function Dashboard({
           }, 1000);
           onSubscribeSuccess(binanceWallet);
 
-          // if (isonlink) {
-          //   handleFirstTask(binanceWallet);
-          // }
+          if (isonlink) {
+            handleFirstTask(binanceWallet);
+          }
         });
       } catch (error) {
         setsyncStatus("error");
@@ -10151,7 +10124,7 @@ function Dashboard({
     fetchDailyRecordsCore();
     // fetchWeeklyRecordsCore();
     // fetchMonthlyRecordsCore();
-    // fetchDailyRecordsViction();
+    fetchDailyRecordsViction();
     // fetchWeeklyRecordsViction();
     // fetchMonthlyRecordsViction();
     fetchDailyRecordsManta();
@@ -10462,7 +10435,9 @@ function Dashboard({
   useEffect(() => {
     if (
       (dailyBonusPopup === true && dailyrewardpopup) ||
-      leaderboard === true
+      leaderboard === true ||
+      globalLeaderboard === true ||
+      genesisLeaderboard === true
     ) {
       html.classList.add("hidescroll");
       // dailyrewardpopup.style.pointerEvents = "auto";
@@ -10470,7 +10445,13 @@ function Dashboard({
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [dailyBonusPopup, dailyrewardpopup, leaderboard]);
+  }, [
+    dailyBonusPopup,
+    dailyrewardpopup,
+    leaderboard,
+    globalLeaderboard,
+    genesisLeaderboard,
+  ]);
 
   const logoutItem = localStorage.getItem("logout");
 
@@ -10531,9 +10512,6 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
-
-  
-
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -10571,6 +10549,7 @@ function Dashboard({
         location.pathname.includes("/account/challenges") ? (
           <>
             <MyProfile
+              wodBalance={wodBalance}
               greatCollectionData={greatCollectionData}
               explorerHuntData={explorerHuntData}
               userDataStar={userDataStar}
@@ -10636,10 +10615,7 @@ function Dashboard({
               isConnected={isConnected}
               onConnectWallet={() => {
                 setshowWalletModal(true);
-              }}
-              onOpenRankPopup={() => {
-                setRankPopup(true);
-              }}
+              }} 
               domainName={domainName}
               onDomainClick={() => {
                 handleOpenDomains();
@@ -10665,7 +10641,8 @@ function Dashboard({
                 Number(mantaEarnUsd) +
                 Number(matEarnUsd) +
                 Number(bnbEarnUsd) +
-                Number(coreEarnUsd) + Number(chainlinkEarnUsd)
+                Number(coreEarnUsd) +
+                Number(chainlinkEarnUsd)
               }
               specialRewards={userSocialRewardsCached}
               syncStatus={syncStatus}
@@ -11002,7 +10979,7 @@ function Dashboard({
                       </div>
                     )} */}
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => {
                     setLeaderboard(false);
                     window.location.hash = "";
@@ -11076,21 +11053,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {(rankPopup || hashValue === "#my-rank") && (
-          <RankPopup
-            isPremium={isPremium}
-            onClose={() => {
-              setRankPopup(false);
-              window.location.hash = "";
-            }}
-            rankData={rankData}
-            onPremiumClick={() => {
-              setgetPremiumPopup(true);
-            }}
-            userRankName={userRankName}
-            userTotalScore={userTotalScore}
-          />
-        )}
+      
 
         {showEventPopup && (
           <EventsPopup
@@ -11136,16 +11099,17 @@ function Dashboard({
               id="leaderboard"
               style={{ width: "35%", pointerEvents: "auto" }}
             >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`market-banner-title mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  `}
-                  style={{ fontSize: "24px" }}
-                >
-                  Genesis Rewards
-                </h2>
-
+              <div
+                className="d-flex align-items-center justify-content-end position-absolute"
+                style={{
+                  position: "absolute",
+                  right: "22px",
+                  zIndex: 2,
+                  top: "22px",
+                }}
+              >
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => setGenesisLeaderboard(false)}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -11153,19 +11117,14 @@ function Dashboard({
               </div>
 
               <GenesisLeaderboard
-                username={data?.getPlayer?.displayName}
-                userId={data?.getPlayer?.playerId}
-                dypBalancebnb={dypBalancebnb}
-                address={data?.getPlayer?.wallet?.publicAddress}
-                availableTime={goldenPassRemainingTime}
+                data={genesisData}
+                previousdata={previousgenesisData}
+                playerdata={greatCollectionData}
+                username={username}
+                activePlayer={
+                  greatCollectionData[0]?.position < 100 ? true : false
+                }
                 email={email}
-                isPremium={isPremium}
-                allBnbData={allBnbData}
-                allSkaleData={allSkaleData}
-                dailyplayerData={dailyplayerData}
-                weeklyplayerData={weeklyplayerData}
-                monthlyplayerData={monthlyplayerData}
-                genesisData={genesisData}
               />
             </div>
           </OutsideClickHandler>
@@ -11192,7 +11151,7 @@ function Dashboard({
                 </h2>
 
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => setGlobalLeaderboard(false)}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -11273,7 +11232,7 @@ function Dashboard({
                   My Rewards
                 </h2>
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => setmyRewardsPopup(false)}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -11336,7 +11295,7 @@ function Dashboard({
                 </h2>
 
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => setPortfolio(false)}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -11405,16 +11364,7 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-
-        {dailyBonusInfo && (
-          <OutsideClickHandler onOutsideClick={() => setdailyBonusInfo(false)}>
-            <DailyBonusModal
-              data={dailyBonusData}
-              onClose={() => setdailyBonusInfo(false)}
-            />
-          </OutsideClickHandler>
-        )}
-
+ 
         {(getPremiumPopup ||
           adClicked === "premium" ||
           hashValue === "#prime") && (
@@ -11435,7 +11385,7 @@ function Dashboard({
                 <div className="d-flex justify-content-between align-items-center">
                   <h6 className="free-plan-title">Prime Subscription</h6>
                   <img
-                    src={xMark}
+                    src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                     onClick={() => {
                       setgetPremiumPopup(false);
                       setadClicked("");
@@ -11456,7 +11406,12 @@ function Dashboard({
                   <div className="premium-gold-popup mt-3 p-3 position-relative d-flex align-items-center justify-content-between">
                     <div className="premiumRedTag position-absolute">
                       <div className="position-relative d-flex flex-column">
-                        <img src={premiumRedTag} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/redPremiumTag.svg"
+                          }
+                          alt=""
+                        />
                         <div className="d-flex flex-column position-absolute discountwrap">
                           <span className="discount-price2 font-oxanium">
                             {discountPercentage > 0
@@ -11567,7 +11522,9 @@ function Dashboard({
                       )}
                     </div>
                     <img
-                      src={premiumIcon}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                      }
                       alt=""
                       className="already-preium-badge"
                     />
@@ -11582,10 +11539,7 @@ function Dashboard({
                       <div className="premium-chains-wrapper2">
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={
-                              require(`../../Images/premium/tokens/ethIcon.svg`)
-                                .default
-                            }
+                            src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                             style={{ width: 18, height: 18 }}
                             alt=""
                           />
@@ -11596,8 +11550,7 @@ function Dashboard({
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
-                              require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                .default
+                              "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                             }
                             style={{ width: 18, height: 18 }}
                             alt=""
@@ -11608,7 +11561,9 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={matchainLogo}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                            }
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11618,7 +11573,9 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={seiLogo}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                            }
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11627,7 +11584,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={require(`../../../../../components/Header/assets/manta.png`)}
+                            src={"https://cdn.worldofdypians.com/wod/manta.png"}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11635,10 +11592,7 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={
-                              require(`../../../../../components/Header/assets/taiko.svg`)
-                                .default
-                            }
+                            src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11648,8 +11602,7 @@ function Dashboard({
                         <div className="d-flex align-items-center gap-2">
                           <img
                             src={
-                              require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                .default
+                              "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                             }
                             style={{ width: 18, height: 18 }}
                             alt=""
@@ -11661,7 +11614,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={baseLogo}
+                            src={"https://cdn.worldofdypians.com/wod/base.svg"}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11670,7 +11623,9 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={conflux}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                            }
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11680,7 +11635,9 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={skaleIcon}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                            }
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11689,7 +11646,7 @@ function Dashboard({
 
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={coreIcon}
+                            src={"https://cdn.worldofdypians.com/wod/core.svg"}
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11697,7 +11654,9 @@ function Dashboard({
                         </div>
                         <div className="d-flex align-items-center gap-2">
                           <img
-                            src={vicitonIcon}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/viction.svg"
+                            }
                             alt=""
                             style={{ width: 18, height: 18 }}
                           />
@@ -11707,7 +11666,9 @@ function Dashboard({
                         </div>
                       </div>
                       <img
-                        src={premiumIcon}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                        }
                         alt=""
                         className="already-preium-badge"
                       />
@@ -11769,7 +11730,12 @@ function Dashboard({
                                     />
                                     {chainDropdown.name}
                                   </div>
-                                  <img src={launchpadIndicator} alt="" />
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                    }
+                                    alt=""
+                                  />
                                 </button>
                                 <ul className="dropdown-menu w-100">
                                   <li
@@ -11778,8 +11744,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                                          .default
+                                        "https://cdn.worldofdypians.com/wod/eth.svg"
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11792,8 +11757,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                                          .default
+                                        "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11807,7 +11771,9 @@ function Dashboard({
                                         onClick={handleMatPool}
                                       >
                                         <img
-                                          src={matchainLogo}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                          }
                                           style={{
                                             width: 18,
                                             height: 18,
@@ -11824,7 +11790,9 @@ function Dashboard({
                                         onClick={handleSeiPool}
                                       >
                                         <img
-                                          src={seiLogo}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                          }
                                           style={{
                                             width: 18,
                                             height: 18,
@@ -11841,8 +11809,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/mantaIcon.svg`)
-                                          .default
+                                        "https://cdn.worldofdypians.com/wod/manta.png"
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11857,8 +11824,7 @@ function Dashboard({
                                       >
                                         <img
                                           src={
-                                            require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                              .default
+                                            "https://cdn.worldofdypians.com/wod/taiko.svg"
                                           }
                                           style={{ width: 18, height: 18 }}
                                           alt=""
@@ -11873,8 +11839,7 @@ function Dashboard({
                                   >
                                     <img
                                       src={
-                                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                                          .default
+                                        "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                                       }
                                       style={{ width: 18, height: 18 }}
                                       alt=""
@@ -11886,7 +11851,9 @@ function Dashboard({
                                     onClick={handleBasePool}
                                   >
                                     <img
-                                      src={baseLogo}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/base.svg"
+                                      }
                                       alt=""
                                       style={{
                                         width: "18px",
@@ -11900,7 +11867,9 @@ function Dashboard({
                                     onClick={handleConfluxPool}
                                   >
                                     <img
-                                      src={conflux}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                      }
                                       alt=""
                                       style={{
                                         width: "18px",
@@ -11916,7 +11885,9 @@ function Dashboard({
                                         onClick={handleSkalePool}
                                       >
                                         <img
-                                          src={skaleIcon}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                          }
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -11933,7 +11904,9 @@ function Dashboard({
                                         onClick={handleCorePool}
                                       >
                                         <img
-                                          src={coreIcon}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/core.svg"
+                                          }
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -11950,7 +11923,9 @@ function Dashboard({
                                         onClick={handleVictionPool}
                                       >
                                         <img
-                                          src={vicitonIcon}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/viction.svg"
+                                          }
                                           alt=""
                                           style={{
                                             width: "18px",
@@ -12012,7 +11987,9 @@ function Dashboard({
                                             {/* {dropdownTitle} */}
                                           </div>
                                           <img
-                                            src={launchpadIndicator}
+                                            src={
+                                              "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                                            }
                                             alt=""
                                           />
                                         </button>
@@ -13018,7 +12995,7 @@ function Dashboard({
                   My Balance
                 </h2>
                 <img
-                  src={xMark}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => setBalancePopup(false)}
                   alt=""
                   style={{ cursor: "pointer" }}
@@ -13047,7 +13024,7 @@ function Dashboard({
                 <>
                   <div className="d-flex align-items-center justify-content-end w-100 mb-4">
                     <img
-                      src={xMark}
+                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
                       onClick={() => setSpecialRewardsPopup(false)}
                       alt=""
@@ -13065,7 +13042,10 @@ function Dashboard({
                     </h6>
                   </div>
                   <div className="d-flex w-100 justify-content-center mb-4">
-                    <img src={successMark} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/successMark.svg"}
+                      alt=""
+                    />
                   </div>
                   <div className="d-flex w-100 justify-content-center">
                     <p
@@ -13083,7 +13063,7 @@ function Dashboard({
                   <div className="d-flex align-items-center justify-content-between w-100 mb-4">
                     <h6 className="popup-title-2 mb-0">Special Rewards</h6>
                     <img
-                      src={xMark}
+                      src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                       style={{ cursor: "pointer" }}
                       onClick={() => setSpecialRewardsPopup(false)}
                       alt=""

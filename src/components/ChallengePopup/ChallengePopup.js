@@ -1,8 +1,8 @@
 import React from "react";
 import "./_challengepopup.scss";
-import closeChallenge from "./closeChallenge.svg";
+
 import { NavLink } from "react-router-dom";
-import opensea from "../../assets/opensea.svg";
+
 
 const ChallengePopup = ({ item, handleClose, screen }) => {
   return (
@@ -16,7 +16,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
             <div className="d-flex align-items-center justify-content-between w-100 p-3">
               <h6 className="mb-0 challenge-popup-title">{item.title}</h6>
               <img
-                src={closeChallenge}
+                src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                 alt="close"
                 style={{ cursor: "pointer" }}
                 width={20}
@@ -36,7 +36,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
                 onClick={handleClose}
               >
                 <img
-                  src={closeChallenge}
+                  src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                   alt="close"
                   style={{ cursor: "pointer" }}
                 />
@@ -110,7 +110,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
               target="_blank"
               className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
             >
-              <img src={opensea} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
               Buy on Opensea
             </NavLink>
           </div>

@@ -3,11 +3,6 @@ import "./_createproposal.scss";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import useWindowSize from "../../../../hooks/useWindowSize";
-import closeX from "../../../Wod/Earn/assets/closeX.svg";
-import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
-import { handleSwitchNetworkhook } from "../../../../hooks/hooks";
-import launchpadIndicator from "../../../Account/src/Images/premium/launchpadIndicator.svg";
-import failMark from "../../../Wod/Earn/assets/failMark.svg";
 
 const CreateProposal = ({
   open,
@@ -80,7 +75,7 @@ const CreateProposal = ({
           <div className="d-flex align-items-center gap-3 justify-content-between position-relative">
             <span className="create-proposal-title">CREATE PROPOSAL</span>{" "}
             <img
-              src={closeX}
+              src={"https://cdn.worldofdypians.com/wod/closeX.svg"}
               alt=""
               className="close-x position-relative cursor-pointer "
               onClick={() => {

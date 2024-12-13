@@ -1,8 +1,5 @@
 import React from "react";
-import avaxMobileBg from "./assets/avaxMobileBg.png";
-import coin98MobileBg from "./assets/coin98MobileBg.png";
-import baseMobileBg from "./assets/baseMobileBg.png";
-import confluxMobileBg from "./assets/confluxMobileBg.png";
+
 import closePopup from "../LandPopup/closePopup.svg";
 import rewardsChest from "./assets/rewardsChest.png";
 // import sword from "./assets/sword.png";

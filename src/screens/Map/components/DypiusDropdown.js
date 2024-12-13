@@ -1,19 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { dypiansTransport, leaderboards, quests } from "../mapdata/areas";
-import teleportsIcon from "../assets/sidebarIcons/teleportsIcon.svg";
-import questsIcon from "../assets/sidebarIcons/questsIcon.svg";
-import leaderboardsIcon from "../assets/sidebarIcons/leaderboardsIcon.svg";
-import areasIcon from "../assets/sidebarIcons/areasIcon.svg";
+
 
 const DypiusDropdown = ({
   options,
@@ -44,7 +36,7 @@ const DypiusDropdown = ({
             }))
           }
         >
-          <img src={leaderboardsIcon} width={20} height={20} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/leaderboardsIcon.svg"} width={20} height={20} alt="" />
           <span>Leaderboards</span>
         </div>
         <div
@@ -58,7 +50,7 @@ const DypiusDropdown = ({
             }))
           }
         >
-          <img src={teleportsIcon} width={20} height={20} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/teleportsIcon.svg"} width={20} height={20} alt="" />
           <span>Teleports</span>
         </div>
         <div
@@ -72,7 +64,7 @@ const DypiusDropdown = ({
           //   }))
           // }
         >
-          <img src={questsIcon} width={20} height={20} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/questsIcon.svg"} width={20} height={20} alt="" />
           <span>Quests</span>
         </div>
       </div>
@@ -90,7 +82,7 @@ const DypiusDropdown = ({
           }}
         >
           <div className="d-flex align-items-center gap-2">
-            <img src={areasIcon} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/areasIcon.svg"} alt="" />
             <span className="accordion-side-text">Areas</span>
           </div>
         </AccordionSummary>

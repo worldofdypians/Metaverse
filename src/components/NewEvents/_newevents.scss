@@ -77,6 +77,16 @@
   }
 }
 
+.beast-big-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media only screen and (max-width: 1399px) {
+  grid-template-columns: repeat(1, 1fr);
+    
+  }
+}
+
 .challenge-tab {
   transition: all 0.3s;
   border-radius: 6px;
@@ -232,7 +242,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/dragonRuinsHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/dragonRuinsHead.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
@@ -255,7 +265,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/coldBiteHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/coldBiteHead.png");
   background-size: 55%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -280,7 +290,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/furyBeastHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/furyBeastHead.png");
   background-size: 55%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -305,7 +315,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/wingStormHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/wingStormHead.png");
   background-size: 55%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -330,7 +340,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/scorpionKingHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/scorpionKingHead.png");
   background-size: 55%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -355,7 +365,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/gameAssets/challengeCards/stoneEyeHead.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/stoneEyeHead.png");
   background-size: 55%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -379,7 +389,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/banners/bnbMazeDayCard.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/bnbMazeDayCardNewEvents.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -400,7 +410,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/banners/puzzleMadnessCard.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/puzzleMadnessCardNewEvents.png");
   background-size: 65%;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -421,7 +431,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/banners/criticalHitCard.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/criticalHitCardNewEvents.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -442,7 +452,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/banners/explorerHuntCard.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/explorerHuntCardNewEvents.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -463,7 +473,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/banners/greatCollectionCard.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/greatCollectionCardNewEvents.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -587,53 +597,53 @@
 }
 
 .dragon-siege-info {
-  background-image: url("./assets/banners/dragonRuinsBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/dragonRuinsBannerNewEvents.webp");
   background-size: cover;
 }
 
 .bear-siege-info {
-  background-image: url("./assets/banners/coldBiteBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/coldBiteBannerNewEvents.webp");
   background-size: cover;
 }
 
 .beast-siege-info {
-  background-image: url("./assets/banners/furyBeastBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/furyBeastBannerNewEvents.webp");
   background-size: cover;
 }
 
 .eagle-siege-info {
-  background-image: url("./assets/banners/wingStormBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/wingStormBannerNewEvents.webp");
   background-size: cover;
 }
 
 .scorpion-siege-info {
-  background-image: url("./assets/banners/scorpionKingBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/scorpionKingBannerNewEvents.webp");
   background-size: cover;
 }
 
 .cyclops-siege-info {
-  background-image: url("./assets/banners/stoneEyeBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/stoneEyeBannerNewEvents.webp");
   background-size: cover;
 }
 
 .maze-garden-info {
-  background-image: url("./assets/banners/mazeGardenBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/mazeGardenBannerNewEvents.webp");
   background-size: cover;
 }
 .puzzle-madness-info {
-  background-image: url("./assets/banners/puzzleMadnessBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/puzzleMadnessBannerNewEvents.webp");
   background-size: cover;
 }
 .explorer-hunt-info {
-  background-image: url("./assets/banners/explorerHuntBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/explorerHuntBannerNewEvents.webp");
   background-size: cover;
 }
 .great-collection-info {
-  background-image: url("./assets/banners/greatCollectionBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/greatCollectionBannerNewEvents.webp");
   background-size: cover;
 }
 .critical-hit-info {
-  background-image: url("./assets/banners/criticalHitBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/criticalHitBannerNewEvents.webp");
   background-size: cover;
 }
 
@@ -695,4 +705,20 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+}
+
+.wod-balance-position{
+  position: absolute;
+  top: -40px;
+}
+
+.maze-day-balance-holder{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #081c00;
+  border-radius: 12px;
+  span{
+    color: #fff !important;
+  }
 }

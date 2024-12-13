@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import scrollToTop from '../assets/scrollToTop.svg'
 
 const ScrollTop = () => {
   const [showScroll, setShowScroll] = useState(false);
@@ -25,7 +24,7 @@ const ScrollTop = () => {
 
   return (
     <div className="container-lg">
-    <img src={scrollToTop} className={`scroll-to-top ${showScroll ? 'd-flex' : 'd-none'}`} onClick={scrollTop} alt="" />
+    <img src={"https://cdn.worldofdypians.com/wod/scrollToTop.svg"} className={`scroll-to-top ${showScroll ? 'd-flex' : 'd-none'}`} onClick={scrollTop} alt="" />
     </div>
   );
 };

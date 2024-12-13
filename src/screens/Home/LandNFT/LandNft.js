@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import landNftBanner from "../../../assets/landNftBanner.webp";
 import "./_landnft.scss";
 
 const LandNft = () => {
@@ -26,7 +25,7 @@ const LandNft = () => {
       </div>
       <div className="col-12 col-lg-6 d-flex justify-content-center">
         <img
-          src={landNftBanner}
+          src={"https://cdn.worldofdypians.com/wod/landNftBanner.webp"}
           alt="caws banner"
           className="land-nft-banner"
         />

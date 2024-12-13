@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import "./_tokenomics.scss";
-import chart from "../assets/dyp-chart2.svg";
-import copy from "../assets/copy.svg";
-import check from "../assets/check.svg";
+ 
 import Clipboard from "react-clipboard.js";
-import copyIcon from "../assets/copyIcon.svg";
-import tokenomicsChart from "../assets/tokenomicsChart.svg";
 import { shortAddress } from "../../Caws/functions/shortAddress";
-import useWindowSize from "../../../hooks/useWindowSize";
-import bnb from "../../../components/Header/assets/bnb.svg";
+import useWindowSize from "../../../hooks/useWindowSize"; 
 
 const Tokenomics = () => {
   const [tooltip, setTooltip] = useState(false);
@@ -190,7 +185,7 @@ const Tokenomics = () => {
             <div className="col-12 col-lg-6 mt-4 mt-lg-0">
               <div className="d-flex flex-column align-items-center align-items-lg-end gap-2">
                 <div className="d-flex align-items-center gap-2">
-                  <img src={bnb} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" />
                   <div className="d-flex flex-column">
                     <span className="wod-copy-span">WOD Contract Address</span>
                     <div className="d-flex align-items-center gap-2">
@@ -221,7 +216,7 @@ const Tokenomics = () => {
                             setTimeout(() => setTooltip(false), 2000);
                           }}
                         >
-                          <img src={tooltip ? check : copy} alt="" />{" "}
+                          <img src={tooltip ? 'https://cdn.worldofdypians.com/wod/check.svg' : 'https://cdn.worldofdypians.com/wod/copy.svg'} alt="" />{" "}
                         </span>
                       </Clipboard>
                     </div>
@@ -229,7 +224,7 @@ const Tokenomics = () => {
                 </div>
                 <div className="wod-chart-wrapper w-100 d-flex justify-content-center align-items-center ">
                   <img
-                    src={tokenomicsChart}
+                    src={'https://cdn.worldofdypians.com/wod/tokenomicsChart.svg'}
                     alt=""
                     className="tokenomics-chart"
                   />

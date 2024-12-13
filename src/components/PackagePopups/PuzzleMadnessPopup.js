@@ -1,9 +1,5 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
-import cawsPopupBanner from "../../screens/Marketplace/assets/cawsPopupBanner.png";
-import puzzleMap from "../../screens/Marketplace/assets/puzzleMap.webp";
-import popupLinear from "./assets/popupLinear.png";
-import puzzlePopup from "./assets/puzzlePopup.webp";
+import React from "react"; 
+
 
 const PuzzleMadnessPopup = ({ onClosePopup }) => {
   return (
@@ -23,14 +19,14 @@ const PuzzleMadnessPopup = ({ onClosePopup }) => {
             </mark>
           </h6>
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClosePopup}
             alt=""
           />
         </div>
         <div className="position-relative mb-3">
-          <img src={puzzlePopup} alt="" style={{ width: "100%" }} />
+          <img src={"https://cdn.worldofdypians.com/wod/puzzlePopup.webp"} alt="" style={{ width: "100%" }} />
         </div>
 
         <div className="package-popup-content p-1">

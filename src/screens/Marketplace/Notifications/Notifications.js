@@ -3,33 +3,8 @@ import "./_notifications.scss";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
-import allIcon from "./assets/allIcon.svg";
-import allIconActive from "./assets/allIconActive.svg";
-import cartIcon from "./assets/cartIcon.svg";
-import cartIconActive from "./assets/cartIconActive.svg";
-import eventIcon from "./assets/eventIcon.svg";
-import eventIconActive from "./assets/eventIconActive.svg";
-import markReadIcon from "./assets/markReadIcon.svg";
-import markReadIconActive from "./assets/markReadIconActive.svg";
-import newsIcon from "./assets/newsIcon.svg";
-import newsIconActive from "./assets/newsIconActive.svg";
-import offerIcon from "./assets/offerIcon.svg";
-import offerIconActive from "./assets/offerIconActive.svg";
-import transferIcon from "./assets/transferIcon.svg";
-import transferIconActive from "./assets/transferIconActive.svg";
-import updateIcon from "./assets/updateIcon.svg";
-import updateIconActive from "./assets/updateIconActive.svg";
-
-import welcomeIcon from "./assets/welcomeIcon.svg";
-import welcomeIconActive from "./assets/welcomeIconActive.svg";
-
-import deleteIcon from "./assets/deleteIcon.svg";
-import deleteIconActive from "./assets/deleteIconActive.svg";
-import orangeDeleteIcon from "./assets/orangeDeleteIcon.svg";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
-import notifBell from "./assets/notifbell.svg";
-import notificationDropdown from "./assets/notificationDropdown.svg";
+
 import Notification from "./Notification";
 
 const Notifications = ({
@@ -56,7 +31,8 @@ const Notifications = ({
       const response = await axios.get(
         `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}`, {
+        )}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -82,7 +58,8 @@ const Notifications = ({
             description:
               "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
             redirect_link: "",
-          }, {
+          },
+          {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
@@ -114,7 +91,8 @@ const Notifications = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
-        )}/${notificationId}`, {
+        )}/${notificationId}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -130,7 +108,8 @@ const Notifications = ({
       await axios.patch(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}`, {
+        )}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -147,7 +126,8 @@ const Notifications = ({
       await axios.delete(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}/${notificationId}`, {
+        )}/${notificationId}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -163,7 +143,8 @@ const Notifications = ({
       await axios.delete(
         `https://api.worldofdypians.com/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           coinbase
-        )}`, {
+        )}`,
+        {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
@@ -207,7 +188,8 @@ const Notifications = ({
           await axios.delete(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}`, {
+            )}/${notification._id}`,
+            {
               headers: { Authorization: `Bearer ${authToken}` },
             }
           );
@@ -224,7 +206,8 @@ const Notifications = ({
           await axios.delete(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}`, {
+            )}/${notification._id}`,
+            {
               headers: { Authorization: `Bearer ${authToken}` },
             }
           );
@@ -251,7 +234,8 @@ const Notifications = ({
           await axios.patch(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}, { read: true }`, {
+            )}/${notification._id}, { read: true }`,
+            {
               headers: { Authorization: `Bearer ${authToken}` },
             }
           );
@@ -268,7 +252,8 @@ const Notifications = ({
           await axios.patch(
             `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
               walletAddress
-            )}/${notification._id}, { read: true }`, {
+            )}/${notification._id}, { read: true }`,
+            {
               headers: { Authorization: `Bearer ${authToken}` },
             }
           );
@@ -330,7 +315,7 @@ const Notifications = ({
                   }}
                 >
                   <img
-                    src={activeBar === "all" ? allIconActive : allIcon}
+                    src={activeBar === "all" ? "https://cdn.worldofdypians.com/wod/allIconActive.svg" : "https://cdn.worldofdypians.com/wod/allIcon.svg"}
                     alt=""
                   />
                   <h6 className="notification-item-text mb-0">All</h6>
@@ -346,7 +331,9 @@ const Notifications = ({
                 >
                   <img
                     src={
-                      activeBar === "activities" ? updateIconActive : updateIcon
+                      activeBar === "activities"
+                        ? "https://cdn.worldofdypians.com/wod/updateIconActive.svg"
+                        : "https://cdn.worldofdypians.com/wod/updateIcon.svg"
                     }
                     alt=""
                   />
@@ -362,7 +349,11 @@ const Notifications = ({
                   }}
                 >
                   <img
-                    src={activeBar === "news" ? newsIconActive : newsIcon}
+                    src={
+                      activeBar === "news"
+                        ? "https://cdn.worldofdypians.com/wod/newsIconActive.svg"
+                        : "https://cdn.worldofdypians.com/wod/newsIcon.svg"
+                    }
                     alt=""
                   />
                   <h6 className="notification-item-text mb-0">News</h6>
@@ -379,7 +370,10 @@ const Notifications = ({
                       : markNotificationsAsReadByType(coinbase, "news");
                   }}
                 >
-                  <img src={markReadIcon} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/markReadIcon.svg"}
+                    alt=""
+                  />
                   <h6 className="notification-item-text mb-0">
                     Mark all as read
                   </h6>
@@ -394,7 +388,7 @@ const Notifications = ({
                       : deleteNotificationsByType(coinbase, "news");
                   }}
                 >
-                  <img src={deleteIcon} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/deleteIcon.svg"} alt="" />
                   <h6 className="notification-item-text mb-0">Clear all</h6>
                 </div>
               </div>
@@ -403,7 +397,7 @@ const Notifications = ({
               <div className="notifications-list px-xxl-3 px-lg-3 px-md-3 py-xxl-3 py-lg-3 py-md-3">
                 {nftOffers && nftOffers.length === 0 && (
                   <div className="d-flex flex-column gap-2 align-items-center m-auto">
-                    <img src={notifBell} alt="" />
+                    <img src={"https://cdn.worldofdypians.com/wod/notifBell.svg"} alt="" />
                     <h5 className="text-white align-center">
                       No recent notifications
                     </h5>

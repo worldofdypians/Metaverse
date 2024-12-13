@@ -1,6 +1,6 @@
 import React from "react";
-import landBg from "../../assets/landAssets/landBG.svg";
-import benefitIcon from "../../assets/landAssets/benefitIcon.svg";
+
+
 
 const LandHero = () => {
   const benefits = [
@@ -66,7 +66,7 @@ const LandHero = () => {
           </div>
           <div className="col-12 col-lg-6 pe-2 pe-lg-0 d-flex justify-content-center">
             <img
-              src={require(`../../assets/landAssets/wodMap.webp`)}
+              src={`https://cdn.worldofdypians.com/wod/wodMap.webp`}
               className="land-bg"
               alt="background"
             />
@@ -84,7 +84,7 @@ const LandHero = () => {
               {benefits.map((benefit, index) => (
                 <div className="d-flex align-items-start gap-2" key={index}>
                   <img
-                    src={require(`../../assets/landAssets/${benefit.icon}Icon.svg`)}
+                    src={`https://cdn.worldofdypians.com/wod/${benefit.icon}Icon.svg`}
                     alt=""
                   />
                   <div className="d-flex flex-column gap-2">

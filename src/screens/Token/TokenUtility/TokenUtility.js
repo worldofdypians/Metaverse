@@ -58,7 +58,7 @@ const TokenUtility = () => {
             {utilities.map((item, index) => (
               <div className="d-flex flex-column gap-3" key={index}>
                 <img
-                  src={require(`./utilityIcons/${item.icon}.svg`)}
+                  src={(`https://cdn.worldofdypians.com/wod/${item.icon}.svg`)}
                   width={60}
                   height={60}
                   alt=""

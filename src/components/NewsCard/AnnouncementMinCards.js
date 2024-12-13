@@ -1,5 +1,4 @@
 import React from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import useWindowSize from "../../hooks/useWindowSize";
 
 const AnnouncementMinCard = ({
@@ -34,7 +33,7 @@ const AnnouncementMinCard = ({
             }}
           ></span>
           <span className="mainNews-date">
-            <img src={calendarIcon} alt="calendar" />
+            <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />
             {date.toLocaleDateString("en-US", options)}
           </span>
         </div>

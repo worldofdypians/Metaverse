@@ -9,15 +9,9 @@ import {
   FormGroup,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import bearIcon from '../assets/bearIcon.svg';
-import boarIcon from '../assets/boarIcon.svg';
-import deerIcon from '../assets/deerIcon.svg';
-import craftIcon from '../assets/sidebarIcons/craftIcon.svg';
-import minesIcon from '../assets/sidebarIcons/minesIcon.svg';
-import animalsIcon from '../assets/sidebarIcons/animalsIcon.svg';
 
 
-const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) => {
+const IslandDropdown = ({ switches, setSwitches }) => {
 
   return (
     <div className="d-flex px-3 flex-column gap-2">
@@ -38,7 +32,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }))
       }
     >
-      <img src={craftIcon} alt="" />
+      <img src={"https://cdn.worldofdypians.com/wod/craftIcon.svg"} alt="" />
       <span>Crafting Table</span>
     </div>
     <div
@@ -52,7 +46,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }))
       }
     >
-      <img src={minesIcon} alt="" />
+      <img src={"https://cdn.worldofdypians.com/wod/minesIcon.svg"} alt="" />
       <span>Mines</span>
     </div>
 
@@ -70,7 +64,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }}
       >
        <div className="d-flex align-items-center gap-2">
-        <img src={animalsIcon} alt="" />
+        <img src={"https://cdn.worldofdypians.com/wod/animalsIcon.svg"} alt="" />
          <span className="accordion-side-text">Animals</span>
        </div>
       </AccordionSummary>
@@ -87,7 +81,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }))
       }
     >
-      <img src={bearIcon} width={24} height={24} alt="" />
+      <img src={"https://cdn.worldofdypians.com/wod/bearIcon.svg"} width={24} height={24} alt="" />
       <span>Bears</span>
     </div>
     <div
@@ -101,7 +95,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }))
       }
     >
-      <img src={deerIcon} width={24} height={24} alt="" />
+      <img src={"https://cdn.worldofdypians.com/wod/deerIcon.svg"} width={24} height={24} alt="" />
       <span>Deer</span>
     </div>
     <div
@@ -115,7 +109,7 @@ const IslandDropdown = ({ options, parent, onZoomIn, switches, setSwitches }) =>
         }))
       }
     >
-      <img src={boarIcon} width={24} height={24} alt="" />
+      <img src={"https://cdn.worldofdypians.com/wod/boarIcon.svg"} width={24} height={24} alt="" />
       <span>Boars</span>
     </div>
         </div>

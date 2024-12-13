@@ -1,0 +1,72 @@
+.cta-button-wrapper {
+    position: relative;
+    width: fit-content;
+    margin-top: 34px;
+    @include medium {
+        margin-top: 72px;
+    }
+
+    .cta-button {
+        display: flex;
+        width: fit-content;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none !important;
+        outline: none !important;
+        transition: 0.3s;
+        &:focus,
+        &:active,
+        &:active {
+            outline: none !important;
+            box-shadow: 3px 9px 30px #fc5036e3;
+        }
+        &.btn-primary-big {
+            font-weight: 800;
+            // background-color: $accent-orange-red;
+            background: linear-gradient(82.64deg, #e30613 6.71%, #fc4f36 99.38%);
+            color: $white;
+            cursor: pointer;
+            @include medium() {
+                padding: 16px 24px;
+            }
+        }
+
+        &:hover {
+            color: $white;
+            text-decoration: none;
+        }
+        .button-arrow {
+            margin-left: 10px;
+        }
+
+        &.btn-rounded {
+            border-radius: 100px;
+        }
+
+        &.btn-secondary {
+            background: $white;
+            color: $accent-red;
+            font-weight: 600;
+            &:hover,
+            &:focus,
+            &:active {
+                background: $white;
+                color: $accent-red;
+            }
+        }
+        &.btn-primary {
+            background: $accent-red;
+            &:hover,
+            &:focus,
+            &:active {
+                background: $accent-orange-red;
+            }
+            &.btn-bordered {
+                padding: 8px 20px;
+                border: 2px solid $white;
+            }
+        }
+    }
+}

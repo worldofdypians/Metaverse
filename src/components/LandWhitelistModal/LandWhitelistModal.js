@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import X from "../../assets/x_close.png";
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import successLogo from "../../assets/successLogo.svg";
-import waitlistLogo from "../../assets/waitlistLogo.svg";
-import failed from "../../assets/failed.svg";
-import alreadyjoinedLogo from "../../assets/alreadyjoinedLogo.svg";
 import "./_landwhitelistmodal.scss";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import discord from "../../assets/discord.svg";
-import telegram from "../../assets/telegram.svg";
-
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
-
-import purplecircle from "../../assets/landAssets/purplecircle.svg";
 import xmark from "../../assets/landAssets/xmark.svg";
-import checkcircle from "../../assets/landAssets/checkcircle.svg";
+
 
 const LandWhitelistModal = ({
   open,
@@ -49,23 +36,23 @@ const LandWhitelistModal = ({
   const options = [
     {
       name: "Metamask",
-      icon: "metamask.png",
+      icon: "metamaskWallet.png",
     },
     {
       name: "Coinbase",
-      icon: "coinbase.png",
+      icon: "coinbaseWallet.png",
     },
     {
       name: "Coin98",
-      icon: "coin98.png",
+      icon: "coin98Wallet.png",
     },
     {
       name: "SafePal",
-      icon: "safepal.png",
+      icon: "safepalWallet.png",
     },
     {
       name: "Trust Wallet",
-      icon: "trustwallet.png",
+      icon: "trustwalletWallet.png",
     },
   ];
 
@@ -174,7 +161,7 @@ const LandWhitelistModal = ({
                 <mark className="font-organetto register-tag"> whitelist</mark>
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x"
                 onClick={() => {
@@ -200,8 +187,8 @@ const LandWhitelistModal = ({
                       ? xmark
                       : (totalCAWCreated !== 0 || totalCAWStaked !== 0) &&
                         coinbase
-                      ? checkcircle
-                      : purplecircle
+                      ? "https://cdn.worldofdypians.com/wod/checkcircle.svg"
+                      : "https://cdn.worldofdypians.com/wod/purplecircle.svg"
                   }
                   alt=""
                   style={{ position: "relative", top: "3px" }}
@@ -233,8 +220,8 @@ const LandWhitelistModal = ({
                     balance < mintPrice && coinbase
                       ? xmark
                       : balance >= mintPrice && coinbase
-                      ? checkcircle
-                      : purplecircle
+                      ? "https://cdn.worldofdypians.com/wod/checkcircle.svg"
+                      : "https://cdn.worldofdypians.com/wod/purplecircle.svg"
                   }
                   alt=""
                   style={{ position: "relative", top: "3px" }}
@@ -272,7 +259,8 @@ const LandWhitelistModal = ({
                   }}
                 >
                   <img
-                    src={mouseOver === true ? blackwallet : whitewallet}
+                    src={mouseOver === true ? 'https://cdn.worldofdypians.com/wod/wallet-black.svg'
+                      : 'https://cdn.worldofdypians.com/wod/wallet-white.svg'}
                     alt=""
                   />
                   Connect Wallet
@@ -290,7 +278,7 @@ const LandWhitelistModal = ({
                           <div className="d-flex justify-content-between gap-2 align-items-center">
                             <p className="m-0 walletname">{item.name}</p>
                             <img
-                              src={require(`../../assets/walletIcons/${item.icon}`)}
+                                       src={`https://cdn.worldofdypians.com/wod/${item.icon}`}
                               className="option-wallet"
                               alt=""
                             />
@@ -369,7 +357,7 @@ const LandWhitelistModal = ({
                 <mark className="font-organetto register-tag">whitelist</mark>
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x position-absolute"
                 onClick={() => {
@@ -379,7 +367,7 @@ const LandWhitelistModal = ({
               />
             </div>
 
-            <img src={successLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/successLogo.svg"} alt="" />
             <p className="text-white m-0">
               Congratulations, you have successfully registered for the World of
               Dypians Genesis Land NFT whitelist. Please follow our official
@@ -405,7 +393,7 @@ const LandWhitelistModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -432,7 +420,7 @@ const LandWhitelistModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={telegram} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/telegram.svg"} alt="" />
                 Join Telegram channel
               </a>
             </div>
@@ -450,7 +438,7 @@ const LandWhitelistModal = ({
                 <mark className="font-organetto register-tag">whitelist</mark>
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x position-absolute"
                 onClick={() => {
@@ -459,7 +447,7 @@ const LandWhitelistModal = ({
                 style={{ right: "-25px", height: "50px" }}
               />
             </div>
-            <img src={alreadyjoinedLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/alreadyjoinedLogo.svg"} alt="" />
             <p className="text-white m-0">
               Your application for the World of Dypians Genesis Land NFT
               whitelist has already been received. Please check back soon.
@@ -484,7 +472,7 @@ const LandWhitelistModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -510,7 +498,7 @@ const LandWhitelistModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={telegram} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/telegram.svg"} alt="" />
                 Join Telegram channel
               </a>
             </div>
@@ -528,7 +516,7 @@ const LandWhitelistModal = ({
                 <mark className="font-organetto register-tag">whitelist</mark>
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x position-absolute"
                 onClick={() => {
@@ -537,7 +525,7 @@ const LandWhitelistModal = ({
                 style={{ right: "-25px", height: "50px" }}
               />
             </div>
-            <img src={waitlistLogo} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/waitlistLogo.svg"} alt="" />
             <p className="text-white m-0">
               Thank you for your application as a World of Dypius Beta Tester.
               Unfortunately, all current reservations are full and your
@@ -563,7 +551,7 @@ const LandWhitelistModal = ({
                 }}
                 onClick={handleConnect}
               >
-                <img src={discord} alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/discord.svg"} alt="" />
                 Join Discord server
               </a>
             </div>
@@ -580,7 +568,7 @@ const LandWhitelistModal = ({
                 <mark className="font-organetto register-tag">whitelist</mark>
               </h2>
               <img
-                src={X}
+                src={"https://cdn.worldofdypians.com/wod/x_close.png"}
                 alt=""
                 className="close-x position-absolute"
                 onClick={() => {
@@ -589,7 +577,7 @@ const LandWhitelistModal = ({
                 style={{ right: "-32px", height: "50px", bottom: "50px" }}
               />
             </div>
-            <img src={failed} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/failed.svg"} alt="" />
             <p className="text-white m-0">
               Unable to join the World of Dypians Genesis Land NFT whitelist.
               Please try again.

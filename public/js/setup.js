@@ -2146,7 +2146,7 @@ async function getContractVictionNFT(key) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address,
+      window.config.nft_viction_address.toLowerCase(),
       {
         from: await getCoinbase(),
       }
@@ -2186,7 +2186,7 @@ class VICTION_NFT {
       this[fn_name] = async function (...args) {
         let contract = new window.victionWeb3.eth.Contract(
           window.VICTION_NFT_ABI,
-          window.config.nft_viction_address,
+          window.config.nft_viction_address.toLowerCase(),
           {
             from: await getCoinbase(),
           }
@@ -3774,7 +3774,7 @@ async function getMyNFTs(address, type = "") {
   } else if (type === "viction") {
     contract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
+      window.config.nft_viction_address.toLowerCase()
     );
 
     const balance = await contract.methods.balanceOf(address).call();

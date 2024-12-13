@@ -1,8 +1,7 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
+import React from "react"; 
 import criticalPopupBanner from "../../screens/Marketplace/assets/criticalPopupBanner.png";
-import popupLinear from "./assets/popupLinear.png";
-import criticalPopup from "./assets/criticalPopup.webp";
+
+
 
 const CriticalHitPopup = ({ onClosePopup }) => {
   return (
@@ -22,14 +21,14 @@ const CriticalHitPopup = ({ onClosePopup }) => {
             </mark>
           </h6>
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClosePopup}
             alt=""
           />
         </div>
         <div className="position-relative mb-3">
-          <img src={criticalPopup} alt="" style={{ width: "100%" }} />
+          <img src={"https://cdn.worldofdypians.com/wod/criticalPopup.webp"} alt="" style={{ width: "100%" }} />
         </div>
 
         <div className="package-popup-content p-1">

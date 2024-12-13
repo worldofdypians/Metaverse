@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { NavLink } from "react-router-dom";
-import myRewardsIcon from "../assets/myRewardsIcon.svg";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import myStar from "../assets/myStar.svg";
-import dragonRuinsBanner from "../assets/chainImages/dragonRuinsBanner.png";
-import mazeGardenBanner from "../assets/chainImages/mazeGardenBanner.png";
-import scorpionKingBanner from "../assets/chainImages/scorpionKingBanner.png";
-import puzzleMadnessBanner from "../assets/chainImages/puzzleMadnessBanner.png";
-import bearIcon from "../assets/bearIcon.svg";
-import boarIcon from "../assets/boarIcon.svg";
-import deerIcon from "../assets/deerIcon.svg";
-import wolfIcon from "../assets/wolfIcon.svg";
-import scorpionIcon from "../assets/scorpionIcon.svg";
-import dragonIcon from "../assets/dragonIcon.svg";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -75,60 +63,7 @@ const renderer = ({ days, hours, minutes }) => {
 const MarkerDetails = ({ show, marker, onClose, type }) => {
   const [past, setPast] = useState(false);
 
-  const dragonRuinsTable = [
-    {
-      title: "Boar",
-      icon: boarIcon,
-      points: 35,
-    },
-    {
-      title: "Deer",
-      icon: deerIcon,
-      points: 50,
-    },
-    {
-      title: "Wolf",
-      icon: wolfIcon,
-      points: 65,
-    },
-    {
-      title: "Bear",
-      icon: bearIcon,
-      points: 80,
-    },
-    {
-      title: "Dragon",
-      icon: dragonIcon,
-      points: 4000,
-    },
-  ];
-  const scorpionKingTable = [
-    {
-      title: "Boar",
-      icon: boarIcon,
-      points: 35,
-    },
-    {
-      title: "Deer",
-      icon: deerIcon,
-      points: 50,
-    },
-    {
-      title: "Wolf",
-      icon: wolfIcon,
-      points: 65,
-    },
-    {
-      title: "Bear",
-      icon: bearIcon,
-      points: 80,
-    },
-    {
-      title: "Scorpion",
-      icon: scorpionIcon,
-      points: 10000,
-    },
-  ];
+
 
   useEffect(() => {
     return () => {
@@ -158,7 +93,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   style={{ borderRadius: "12px" }}
                 >
                   <img
-                    src={require(`../assets/chainImages/${marker.banner}`)}
+                    src={`https://cdn.worldofdypians.com/wod/${marker.banner}`}
                     alt={marker.title}
                     className="w-100"
                   />
@@ -306,7 +241,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   style={{ borderRadius: "12px" }}
                 >
                   <img
-                    src={require(`../assets/chainImages/${marker.image}`)}
+                    src={`https://cdn.worldofdypians.com/wod/${marker.image}`}
                     alt={marker.title}
                     className="w-75"
                   />
@@ -390,7 +325,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                   </div>
                   <div className="d-flex flex-column gap-2">
                     <div className="d-flex align-items-center gap-2">
-                      <img src={myRewardsIcon} alt="" />
+                      <img src={"https://cdn.worldofdypians.com/wod/myRewardsIcon.svg"} alt="" />
                       <h6 className="chain-marker-benefits-title mb-0">
                         My Rewards
                       </h6>
@@ -421,7 +356,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                       </div>
                     </div>
                     {/* <div className="map-stars-wrapper d-flex align-items-center justify-content-between w-100 p-2">
-                      <img src={myStar} alt="star" />
+                      <img src={"https://cdn.worldofdypians.com/wod/myStar.svg"} alt="star" />
                       <div className="d-flex flex-column align-items-end">
                         <span className="collected-stars-span">
                           Collected Stars
@@ -522,7 +457,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                         // style={{ cursor: "pointer" }}
                       >
                         <img
-                          src={require(`../assets/${item.image}`)}
+                          src={`https://cdn.worldofdypians.com/wod/${item.image}`}
                           style={{ borderRadius: "50%" }}
                           width={32}
                           height={32}
@@ -546,7 +481,7 @@ const MarkerDetails = ({ show, marker, onClose, type }) => {
                         key={index}
                       >
                         <img
-                          src={require(`../assets/${item.image}`)}
+                           src={`https://cdn.worldofdypians.com/wod/${item.image}`}
                           style={{ borderRadius: "50%" }}
                           width={32}
                           height={32}

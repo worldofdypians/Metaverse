@@ -12,7 +12,7 @@ import chainsIcon from "./assets/chainsIcon.svg";
 import globalFlag from "./assets/globalFlag2.svg";
 import globalIcon from "./assets/globalIcon2.png";
 import landFlag from "./assets/landFlag2.svg";
-import landIcon from "./assets/landIcon.svg";
+import landIcon from "./assets/landIcon.png";
 import Slider from "react-slick";
 import multiversAd from "./assets/multiversAd.png";
 import premiumAd from "./assets/premiumAd.png";
@@ -25,8 +25,7 @@ import victionAdMobile from "./assets/victionAdMobile.png";
 import goldenAd from "./assets/goldenAd.png";
 import goldenAdMobile from "./assets/goldenAdMobile.png";
 import dragonAd from "./assets/dragonAd.png";
-import dragonAdMobile from "./assets/dragonAdMobile.png";
-import nextArrow from "../../../../../../Marketplace/assets/nextArrow1.svg";
+import dragonAdMobile from "./assets/dragonAdMobile.png"; 
 import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 const renderer = ({ days, hours, minutes }) => {

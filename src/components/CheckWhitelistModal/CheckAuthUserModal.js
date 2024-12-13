@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import X from "../../assets/x_close.png";
-import whitewallet from "../../assets/wallet-white.svg";
-import blackwallet from "../../assets/wallet-black.svg";
+
 
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 
@@ -155,7 +153,7 @@ const CheckAuthUserModal = ({
               </h2>
             )}
             <img
-              src={X}
+              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
               alt=""
               className="close-x"
               onClick={() => {

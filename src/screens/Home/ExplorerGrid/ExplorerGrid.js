@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./_explorergrid.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import dappRadarFull from "./dappradarFull.svg";
-// import playIcon from "../../../assets/playIcon.svg";
+
+
 import axios from "axios";
 
 const ExplorerGrid = ({
@@ -65,7 +65,7 @@ const ExplorerGrid = ({
                 className="dappRadar-full"
                 target="_blank"
               >
-                <img src={dappRadarFull} className="w-100" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/dappradarFull.svg"} className="w-100" alt="" />
               </a>
               <h6 className="mb-0 new-stats-value">
                 {" "}

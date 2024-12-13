@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useWindowSize from "../../../../hooks/useWindowSize";
-import arrowFilled from "../assets/arrow-filled.svg";
+
 
 const TopPoolsListCard = ({
   isAccount,
@@ -60,7 +60,7 @@ const TopPoolsListCard = ({
                   tokenLogo.map((obj, index) => {
                     return (
                       <img
-                        src={require(`../assets/tokens/${obj}.png`)}
+                        src={`https://cdn.worldofdypians.com/wod/${obj}.png`}
                         alt=""
                         className="pool-coins"
                         style={{ width: windowSize && windowSize.width > 991 ? 40 : '', height: windowSize && windowSize.width > 991 ? 40 : '' }}
@@ -111,7 +111,7 @@ const TopPoolsListCard = ({
                 }}
               >
                 <img
-                  src={require(`../assets/tokens/ethIcon.svg`).default}
+                  src={`https://cdn.worldofdypians.com/wod/ethIcon.svg`}
                   alt=""
                   className="token-chain-logo"
                 />
@@ -126,7 +126,7 @@ const TopPoolsListCard = ({
               </td>
             ) : (
               <td className="earnother-td col-lg-1 justify-content-end">
-                <img src={arrowFilled} alt="" className="earn-filled-arrow" />
+                <img src={"https://cdn.worldofdypians.com/wod/arrow-filled.svg"} alt="" className="earn-filled-arrow" />
               </td>
             )}
           </tr>

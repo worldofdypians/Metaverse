@@ -1,33 +1,26 @@
 import React from "react";
-import BetaEventCardHome from "../Marketplace/components/BetaEventCardHome";
-import { NavLink } from "react-router-dom";
-import cawsGameBannerSmall from "../../assets/gameAssets/cawsGameBannerSmall.webp";
-import exploreGameBannerSmall from "../../assets/gameAssets/exploreGameBannerSmall.webp";
-import cawsAmplify from "../../assets/gameAssets/cawsAmplify.png";
-import landAmplify from "../../assets/gameAssets/landAmplify.png";
-import opensea from "../../assets/opensea.svg";
 
 const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
-  const dummyBetaPassData2 = [
-    {
-      link: "/account#leaderboard",
-      title: "LEADERBOARDS",
-      desc: "Compete for the top rank",
-      class: "tokenClass",
-    },
-    {
-      link: "/account#my-rank",
-      title: "MY RANK",
-      desc: "Elevate your player status",
-      class: "earnClass",
-    },
-    {
-      link: "/account#dailybonus",
-      title: "DAILY BONUS",
-      desc: "Daily rewards for active players",
-      class: "eventClass",
-    },
-  ];
+  // const dummyBetaPassData2 = [
+  //   {
+  //     link: "/account#leaderboard",
+  //     title: "LEADERBOARDS",
+  //     desc: "Compete for the top rank",
+  //     class: "tokenClass",
+  //   },
+  //   {
+  //     link: "/account#my-rank",
+  //     title: "MY RANK",
+  //     desc: "Elevate your player status",
+  //     class: "earnClass",
+  //   },
+  //   {
+  //     link: "/account#dailybonus",
+  //     title: "DAILY BONUS",
+  //     desc: "Daily rewards for active players",
+  //     class: "eventClass",
+  //   },
+  // ];
 
   return (
     <>
@@ -35,7 +28,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
         <div>
           <div className="container-fluid d-flex  p-0">
             <img
-              src={cawsGameBannerSmall}
+              src={"https://cdn.worldofdypians.com/wod/cawsGameBannerSmall.webp"}
               className="small-transaction-banner"
               alt=""
             />
@@ -43,7 +36,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
           <div className="new-game-stats-wrapper seventh-banner d-flex align-items-center justify-content-center ">
             <div className="d-flex align-items-center justify-content-center justify-content-md-end custom-container">
               <div className="d-flex flex-column-reverse flex-lg-row align-items-center justify-content-end gap-3 gap-lg-5 mb-3 mb-lg-0">
-                <img src={cawsAmplify} className="d-none d-lg-flex" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wodcawsAmplify.png"} className="d-none d-lg-flex" alt="" />
                 <div className="d-flex flex-column col-12 col-md-6 col-lg-5 gap-3 px-4 py-3 px-lg-3 align-items-center align-items-md-end">
                   <span className="amp-benefits-desc text-center text-md-end">
                     Cats and Watches Society
@@ -81,7 +74,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
         <div>
           <div className="container-fluid d-flex p-0">
             <img
-              src={exploreGameBannerSmall}
+              src={"https://cdn.worldofdypians.com/wod/exploreGameBannerSmall.webp"}
               className="small-transaction-banner"
               alt=""
             />
@@ -121,7 +114,7 @@ const AmplifySection = ({ setShowPopup, setVideoPopup, setVideoLink }) => {
                     </button>
                   </div>
                 </div>
-                <img src={landAmplify} className="d-none d-lg-flex" alt="" />
+                <img src={"https://cdn.worldofdypians.com/wod/landAmplify.png"} className="d-none d-lg-flex" alt="" />
               </div>
             </div>
           </div>
