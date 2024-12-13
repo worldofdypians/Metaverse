@@ -1,23 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_walletbalance.scss"; 
-
-import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import idyp from "../../Images/userProfile/idyp.svg";
 import axios from "axios";
 import viewAllArrow from "./assets/viewAllArrow.svg";
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
 
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
- 
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
-
 import OutsideClickHandler from "react-outside-click-handler";
-
 import useWindowSize from "../../../../../hooks/useWindowSize";
-
-import wodCoin from "./newAssets/wodCoin.svg";
+ 
 
 const Portfolio = ({
   dypBalance,
@@ -249,9 +242,7 @@ const Portfolio = ({
   };
 
   const sortNfts = (sortValue) => {
-    if (sortValue === "balance") {
-      setFilterTitle("Balance");
-    } else if (sortValue === "collected") {
+     if (sortValue === "collected") {
       setFilterTitle("Collected");
     } else if (sortValue === "favorites") {
       setFilterTitle("Favorites");
@@ -1574,17 +1565,7 @@ const Portfolio = ({
           <div className="col-12 px-0 position-relative mt-lg-0">
             <div className="nft-outer-wrapper2 nft-outer-wrapper22 p-4  d-flex flex-column gap-2 position-relative h-100">
               <div className="account-nft-sort-wrapper d-flex align-items-center gap-3 px-3 py-2 ms-0">
-                {/* <h6
-                  className={`account-nft-sort ${
-                    filterTitle === "Balance" && "nft-sort-selected"
-                  } `}
-                  onClick={() => {
-                    sortNfts("balance");
-                    setShowNfts(false);
-                  }}
-                >
-                  Balance
-                </h6> */}
+  
                 <h6
                   className={`account-nft-sort ${
                     filterTitle === "Collected" && "nft-sort-selected"
@@ -2213,232 +2194,9 @@ const Portfolio = ({
                 </div>
               )}
 
-              {filterTitle === "Balance" && loading === false && (
-                <div className="d-flex flex-column align-items-center gap-3 balancewrapper3">
-                  <div className="d-flex flex-column flex-lg-row w-100 gap-1  justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative  col-12 col-lg-3">
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/eth.svg"}
-                        alt=""
-                        className=""
-                      />
-                      <span className="eth-chain-text">Ethereum</span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(dypBalance, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        ${getFormattedNumber(dypBalance * dyptokenData, 2)}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={idyp}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalance, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        ${getFormattedNumber(idypBalance * idyptokenData, 2)}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={wodCoin}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalance, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        ${getFormattedNumber(idypBalance * idyptokenData, 2)}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="balanceseparator"></div>
-                  <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img
-                        src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
-                        alt=""
-                        className=""
-                      />
-                      <span className="bnb-chain-text">BNB Chain</span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(dypBalancebnb, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(dypBalancebnb * dyptokenDatabnb, 2)}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={idyp}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalancebnb, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          idypBalancebnb * idyptokenDatabnb,
-                          2
-                        )}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={wodCoin}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalancebnb, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          idypBalancebnb * idyptokenDatabnb,
-                          2
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="balanceseparator"></div>
-                  <div className="d-flex flex-column flex-lg-row w-100 gap-1 col-lg-12 justify-content-between">
-                    <div className="d-flex py-2 align-items-center gap-2 position-relative col-12 col-lg-3">
-                      <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" className="" />
-                      <span className="avax-chain-text">Avalanche</span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between dyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={"https://cdn.worldofdypians.com/wod/dypius.svg"}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(dypBalanceavax, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          dypBalanceavax * dyptokenDataAvax,
-                          2
-                        )}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={idyp}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalanceavax, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          idypBalanceavax * idyptokenDataAvax,
-                          2
-                        )}
-                      </span>
-                    </div>
-                    <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <img
-                          src={wodCoin}
-                          alt="dyp"
-                          className="dyp-icon"
-                          style={{ height: 16, width: 16 }}
-                        />
-                        <h6 className="wallet-amount mb-0">
-                          {getFormattedNumber(idypBalanceavax, 2)}
-                        </h6>
-                      </div>
-                      <span
-                        className="nft-price-usd"
-                        style={{ color: "#7DD9AF" }}
-                      >
-                        $
-                        {getFormattedNumber(
-                          idypBalanceavax * idyptokenDataAvax,
-                          2
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
+            
 
-              {filterTitle !== "Balance" &&
+              { 
                 loading === false &&
                 ((filterTitle === "Collected" && collectedItems.length > 0) ||
                   (filterTitle === "Listed" && listedItems.length > 0) ||

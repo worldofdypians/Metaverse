@@ -72,8 +72,7 @@ import eventsArrow from "./assets/eventsArrow.svg";
 import mageStarter from "./assets/mageStarter.png";
 import globe from "./newAssets/globe.png";
 import mageGoing from "./assets/mageGoing.png";
-import mageFinish from "./assets/mageFinish.png";
-import infoIcon from "../../../../Marketplace/assets/infoIcon.svg";
+import mageFinish from "./assets/mageFinish.png"; 
 import coingeckoPopupImage from "./assets/coingeckoPopupImage.png";
 import eventPopupImageBase from "./assets/eventPopupImageBase.png";
 import gatePopupImage from "./assets/gatePopupImage.png";
@@ -3275,7 +3274,7 @@ const NewWalletBalance = ({
               </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-2">
-              <img src={infoIcon} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
               <span className="popup-event-desc">
                 The rewards will be distributed 2-3 days after the event ends.
               </span>
