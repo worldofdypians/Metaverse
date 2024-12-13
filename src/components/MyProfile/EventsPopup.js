@@ -2,16 +2,7 @@ import React from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink } from "react-router-dom";
 import Countdown from "react-countdown";
-import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-
-import twitter from "../../screens/Account/src/Components/WalletBalance/assets/greenTwitter.svg";
-import telegram from "../../screens/Account/src/Components/WalletBalance/assets/greentg.svg";
-import website from "../../screens/Account/src/Components/WalletBalance/assets/greenWebsite.svg";
-import discord from "../../screens/Account/src/Components/WalletBalance/assets/greenDiscord.svg";
-import grayDollar from "../../screens/Account/src/Components/WalletBalance/assets/grayDollar.svg";
-import eventsArrow from "../../screens/Account/src/Components/WalletBalance/assets/eventsArrow.svg";
-
-import infoIcon from "../../screens/Marketplace/assets/infoIcon.svg";
+import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number"; 
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -198,7 +189,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 className="events-page-details d-flex align-items-center gap-2"
               >
                 Learn more
-                <img src={eventsArrow} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/eventsArrow.svg'} alt="" />
               </NavLink>
             )}
           {dummyEvent.popupInfo.status === "Live" &&
@@ -211,7 +202,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 className="events-page-details d-flex align-items-center gap-2"
               >
                 Learn more
-                <img src={eventsArrow} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/eventsArrow.svg'} alt="" />
               </a>
             )}
         </div>
@@ -863,7 +854,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             rel="noreferrer"
             className="d-flex gap-1 align-items-center greensocial"
           >
-            <img alt="" width={16} height={16} src={twitter} /> Twitter
+            <img alt="" width={16} height={16} src={'https://cdn.worldofdypians.com/wod/greenTwitter.svg'} /> Twitter
           </a>
 
           <a
@@ -922,8 +913,8 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 dummyEvent.popupInfo.id !== "event24" &&
                 dummyEvent.popupInfo.id !== "event7" &&
                 dummyEvent.popupInfo.id !== "event15"
-                  ? telegram
-                  : discord
+                  ? 'https://cdn.worldofdypians.com/wod/greentg.svg'
+                  : 'https://cdn.worldofdypians.com/wod/greenDiscord.svg'
               }
             />
             {dummyEvent.popupInfo.id !== "event4" &&
@@ -982,14 +973,14 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
             rel="noreferrer"
             className="d-flex gap-1 align-items-center greensocial"
           >
-            <img alt="" src={website} />
+            <img alt="" src={'https://cdn.worldofdypians.com/wod/greenWebsite.svg'} />
             Website
           </a>
         </div>
         <div className="summaryseparator mt-3"></div>
         <div className="popup-red-wrapper mt-3 p-3 d-flex flex-column flex-xxl-row flex-xl-row flex-lg-row flex-md-row align-items-xxl-center align-items-xl-center align-items-lg-center align-items-md-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
-            <img src={grayDollar} width={36} height={36} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/grayDollar.svg'} width={36} height={36} alt="" />
             <span className="event-my-earnings2 mb-0">My earnings</span>
           </div>
           <div className="d-flex align-items-center gap-3 gap-lg-5 justify-content-between mt-3 mt-lg-0">
@@ -1027,7 +1018,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
           </div>
         </div>
         <div className="d-flex align-items-center gap-2 mt-2">
-          <img src={infoIcon} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
           <span className="popup-event-desc">
             The rewards will be distributed 2-3 days after the event ends.
           </span>

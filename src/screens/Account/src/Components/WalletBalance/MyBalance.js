@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";   
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import idyp from "../../Images/userProfile/idyp.svg";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 
 const MyBalance = ({
@@ -101,7 +100,7 @@ const MyBalance = ({
         <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
             <img
-              src={idyp}
+              src={'https://cdn.worldofdypians.com/wod/idyp.svg'}
               alt="dyp"
               className="dyp-icon"
               style={{ height: 16, width: 16 }}
@@ -135,7 +134,7 @@ const MyBalance = ({
         <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
             <img
-              src={idyp}
+              src={'https://cdn.worldofdypians.com/wod/idyp.svg'}
               alt="dyp"
               className="dyp-icon"
               style={{ height: 16, width: 16 }}
@@ -169,7 +168,7 @@ const MyBalance = ({
         <div className="d-flex py-2 px-4 align-items-center justify-content-between idyp-wrapper position-relative col-12 col-lg-5">
           <div className="d-flex align-items-center gap-2">
             <img
-              src={idyp}
+              src={'https://cdn.worldofdypians.com/wod/idyp.svg'}
               alt="dyp"
               className="dyp-icon"
               style={{ height: 16, width: 16 }}

@@ -20,7 +20,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import DailyBonusModal from "../../../../Marketplace/DailyBonusModal";
+
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
 import NewDailyBonus from "../../../../../components/NewDailyBonus/NewDailyBonus";
@@ -31,8 +31,7 @@ import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassP
 import {
   GOLDEN_PASS_ABI,
   golden_pass_address,
-} from "../../../../../components/NewEvents/abi";
-import RankPopup from "../../../../../components/MyProfile/RankPopup";
+} from "../../../../../components/NewEvents/abi"; 
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
@@ -558,8 +557,7 @@ function Dashboard({
   // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
-  const [balancePopup, setBalancePopup] = useState(false);
-  const [dailyBonusInfo, setdailyBonusInfo] = useState(false);
+  const [balancePopup, setBalancePopup] = useState(false); 
 
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
@@ -673,7 +671,6 @@ function Dashboard({
     id: 0,
   });
   const [userProgress, setUserProgress] = useState(0);
-  const [rankPopup, setRankPopup] = useState(false);
 
   const [discountPercentageViction, setdiscountPercentageViction] = useState(0);
   const [nftPremium_tokenIdViction, setnftPremium_tokenIdViction] = useState(0);
@@ -10618,10 +10615,7 @@ function Dashboard({
               isConnected={isConnected}
               onConnectWallet={() => {
                 setshowWalletModal(true);
-              }}
-              onOpenRankPopup={() => {
-                setRankPopup(true);
-              }}
+              }} 
               domainName={domainName}
               onDomainClick={() => {
                 handleOpenDomains();
@@ -11059,21 +11053,7 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {(rankPopup || hashValue === "#my-rank") && (
-          <RankPopup
-            isPremium={isPremium}
-            onClose={() => {
-              setRankPopup(false);
-              window.location.hash = "";
-            }}
-            rankData={rankData}
-            onPremiumClick={() => {
-              setgetPremiumPopup(true);
-            }}
-            userRankName={userRankName}
-            userTotalScore={userTotalScore}
-          />
-        )}
+      
 
         {showEventPopup && (
           <EventsPopup
@@ -11384,16 +11364,7 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-
-        {dailyBonusInfo && (
-          <OutsideClickHandler onOutsideClick={() => setdailyBonusInfo(false)}>
-            <DailyBonusModal
-              data={dailyBonusData}
-              onClose={() => setdailyBonusInfo(false)}
-            />
-          </OutsideClickHandler>
-        )}
-
+ 
         {(getPremiumPopup ||
           adClicked === "premium" ||
           hashValue === "#prime") && (

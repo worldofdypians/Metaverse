@@ -51,8 +51,7 @@ import coin98Upcoming from "./assets/coin98Upcoming.png";
 import coingeckoUpcoming from "./assets/coingeckoUpcoming.png";
 import baseUpcoming from "./assets/baseUpcoming.webp";
 import avaxUpcoming from "./assets/avaxUpcoming.png";
-
-import infoIcon from "./assets/infoIcon.svg";
+ 
 import liveDot from "./assets/liveDot.svg";
 import eventsArrow from "./assets/eventsArrow.svg"; 
 import magnifier from "./assets/magnifier.svg";
@@ -3018,7 +3017,7 @@ const MarketEvents = ({
               </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-2">
-              <img src={infoIcon} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
               <span className="popup-event-desc">
                 The rewards will be distributed 2-3 days after the event ends.
               </span>

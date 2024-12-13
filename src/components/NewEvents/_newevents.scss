@@ -77,6 +77,16 @@
   }
 }
 
+.beast-big-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media only screen and (max-width: 1399px) {
+  grid-template-columns: repeat(1, 1fr);
+    
+  }
+}
+
 .challenge-tab {
   transition: all 0.3s;
   border-radius: 6px;

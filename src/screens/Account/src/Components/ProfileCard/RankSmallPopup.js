@@ -37,7 +37,6 @@ const RankSmallPopup = ({
   userTaikoStars,
   userMatStars,
   userRankName,
-  onRankPopupClick,
   primeStars,
   globalMonthly,
   globalWeekly,

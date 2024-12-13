@@ -1,6 +1,4 @@
-import React from "react";
-import grayDate from "./assets/grayDate.svg";
-import grayDollar from "./assets/grayDollar.svg";
+import React from "react";  
 import grayExplore from "./assets/grayExplore.svg";
 import grayFind from "./assets/grayFind.svg";   
  
@@ -85,7 +83,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
         {event.title === "Dypius" ? (
           <img src={'https://cdn.worldofdypians.com/wod/dypius.svg'} height={15} width={15} alt="" />
         ) : (
-          <img src={grayDollar} height={15} width={15} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/grayDollar.svg'} height={15} width={15} alt="" />
         )}
 
         <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
