@@ -10,7 +10,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { formattedNum } from "../../functions/formatUSD";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import ToolTip from "../../elements/ToolTip";
-
+import X from "../../../../assets/x_close.png";
 
 const NftStakeModal = ({
   nftItem,
@@ -259,7 +259,7 @@ if(address)
           <div className="d-flex justify-content-between gap-2 align-items-center"
             style={{ flexDirection: "row-reverse" }}>
                 <img
-              src={"https://cdn.worldofdypians.com/wod/x_close.png"}
+              src={X}
               alt=""
               className="close-x"
               onClick={() => {

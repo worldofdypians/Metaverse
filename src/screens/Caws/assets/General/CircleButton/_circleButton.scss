@@ -1,0 +1,15 @@
+.circle-button {
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none !important;
+    outline: none !important;
+    transition: 0.3s;
+}
+.circle-button-inactive {
+    background: linear-gradient(82.64deg, #e30613 6.71%, #fc4f36 99.38%);
+}
+.circle-button-active {
+    background: linear-gradient(82.64deg, #454545 6.71%, #6c6c6c 99.38%);
+}

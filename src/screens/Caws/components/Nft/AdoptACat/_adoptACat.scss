@@ -1,0 +1,47 @@
+.adopt-a-cat {
+    color: #fff;
+    h1 {
+        font-size: 42px;
+        line-height: 53px;
+    }
+    h2 {
+        font-size: 30px;
+        line-height: 38px;
+        font-weight: 700;
+        @include medium {
+            font-size: 36px;
+            line-height: 45px;
+        }
+    }
+    small {
+        font-weight: 200;
+    }
+    .bolder {
+        font-weight: 900;
+    }
+    p {
+        line-height: 160%;
+        &.note {
+            font-size: 12px;
+            line-height: 18px;
+        }
+    }
+    .background {
+        background: url("../../../assets/Nft/adopt-a-cat-background.png") no-repeat center center;
+        border-radius: 28px;
+        background-size: cover;
+        margin-bottom: 150px !important;
+        padding-bottom: 200px !important;
+        @include medium {
+            margin-bottom: 0px !important;
+            padding-bottom: 0px !important;
+        }
+    }
+    .image {
+        max-height: 500px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
