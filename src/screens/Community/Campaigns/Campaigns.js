@@ -8,6 +8,7 @@ import GameEvents from "../../Game/GameEvents";
 import opbnbCampaign from "../../Community/assets/opbnbCampaign.png";
 import bnbExpedition from "../../Community/assets/bnbExpedition.webp";
 import entryCampaign from "../../Community/assets/entryCampaign.webp";
+import winterChallenge from "../../Community/assets/winterChallenge2.webp";
 import dailyGameDelight from "../../Community/assets/dailyGameDelight.webp";
 import wodFestive from "../../Community/assets/wodfestive.webp";
 import dypiansDiscovery from "../../Community/assets/dypiansDiscovery.webp";
@@ -19,6 +20,14 @@ const Campaigns = () => {
   const [popupActive, setPopupActive] = useState(false);
 
   const dummyData = [
+    {
+      title: "Festive 4YA Celebration",
+      status: "Expired",
+      start_date: "August 26, 2024",
+      end_date: "September 08, 2024",
+      image: wodFestive,
+      link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration",
+    },
     {
       title: "Dypians Global Challenge",
       status: "Expired",
@@ -62,15 +71,17 @@ const Campaigns = () => {
   ];
 
   const dummyBanner = {
-    title: "Festive 4YA Celebration",
-    status: "Expired",
-    start_date: "August 26, 2024",
-    end_date: "September 08, 2024",
-    image: wodFestive,
-    desc: `Join the Festive 4YA Celebration campaign and immerse yourself in a series of exciting tasks to celebrate the BNB Chain 4 Year Anniversary. Show your dedication and skill by completing the following:
+    title: "Winter Wonderland Challenge",
+    status: "Live",
+    start_date: "Dec 9, 2024",
+    end_date: "Dec 23, 2024",
+    image: winterChallenge,
+    desc: `Step into the Winter Wonderland Challenge and join the World of Dypians in a festive holiday quest!
     <ul class="mt-2">
-    <li>Login or Create a Game Account: Get started by logging in or creating a new game account in the World of Dypians.</li>
-    <li>Open at Least 10 Daily Bonus Chests: Test your luck and consistency by opening at least 10 Daily Bonus Chests on BNB Chain or opBNB.</li>
+    <li>Login or Create a Game Account</li>
+    <li>Stake min 50 WOD tokens</li>
+    <li>Open at Least 10 Daily Bonus Chests</li>
+    <li>Link Wallet on World of Dypians Mini App</li>
     </ul>`,
     link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration",
   };
@@ -181,16 +192,16 @@ const Campaigns = () => {
                 dangerouslySetInnerHTML={{ __html: dummyBanner.desc }}
               ></p>
 
-            <div className="d-flex w-100 justify-content-center justify-content-lg-start">
-            <NavLink
-                to={dummyBanner.link}
-                target="_blank"
-                className="explore-btn px-4 py-2 mt-4"
-                style={{ width: "fit-content" }}
-              >
-                Explore
-              </NavLink>
-            </div>
+              <div className="d-flex w-100 justify-content-center justify-content-lg-start">
+                <NavLink
+                  to={dummyBanner.link}
+                  target="_blank"
+                  className="explore-btn px-4 py-2 mt-4"
+                  style={{ width: "fit-content" }}
+                >
+                  Explore
+                </NavLink>
+              </div>
             </div>
           </div>
         </div>
