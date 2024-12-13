@@ -1,7 +1,5 @@
 import React from "react";
-import closeX from "./assets/closeX.svg";
-import pointsLogo from "./assets/pointslogo.png";
-import rewardsLogo from "./assets/rewardslogo.png";
+ 
 import { useState } from "react";
 import ChestItem from "./ChestItem";
 import { useEffect } from "react";
@@ -627,7 +625,7 @@ const DailyBonusPopup = ({
         }`}
       >
         <img
-          src={closeX}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           alt=""
           className="closex position-absolute"
           onClick={onclose}
