@@ -1,5 +1,5 @@
 import React from "react"; 
-import puzzlePopup from "./assets/puzzlePopup.webp";
+
 
 const PuzzleMadnessPopup = ({ onClosePopup }) => {
   return (
@@ -26,7 +26,7 @@ const PuzzleMadnessPopup = ({ onClosePopup }) => {
           />
         </div>
         <div className="position-relative mb-3">
-          <img src={puzzlePopup} alt="" style={{ width: "100%" }} />
+          <img src={"https://cdn.worldofdypians.com/wod/puzzlePopup.webp"} alt="" style={{ width: "100%" }} />
         </div>
 
         <div className="package-popup-content p-1">
