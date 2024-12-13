@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import xMark from "../../screens/Account/src/Components/WalletBalance/assets/closeMark.svg";
+ 
 
 import topEth from "../../screens/Marketplace/assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/topDyp.svg";
@@ -506,7 +506,7 @@ const BuyNftPopup = ({
           {nft.type === "caws" ? "CAWS" : "Genesis Land"} #{nft.tokenId}
         </h6>
         <img
-          src={xMark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onClose}
           alt=""

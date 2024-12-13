@@ -1,6 +1,6 @@
 import React from "react";
 import "./_challengepopup.scss";
-import closeChallenge from "./closeChallenge.svg";
+
 import { NavLink } from "react-router-dom";
 
 
@@ -16,7 +16,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
             <div className="d-flex align-items-center justify-content-between w-100 p-3">
               <h6 className="mb-0 challenge-popup-title">{item.title}</h6>
               <img
-                src={closeChallenge}
+                src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                 alt="close"
                 style={{ cursor: "pointer" }}
                 width={20}
@@ -36,7 +36,7 @@ const ChallengePopup = ({ item, handleClose, screen }) => {
                 onClick={handleClose}
               >
                 <img
-                  src={closeChallenge}
+                  src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
                   alt="close"
                   style={{ cursor: "pointer" }}
                 />

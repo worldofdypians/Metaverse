@@ -1,9 +1,5 @@
 import React from "react";
-import plus from "./assets/plus.svg";
-import minus from "./assets/minus.svg";
 
-import supportInquiry from "./assets/build.jpg";
-import supportBusiness from "./assets/business.jpg";
 
 const FormContainer = ({
   onClick,
@@ -30,7 +26,7 @@ const FormContainer = ({
         >
           {image && (
             <img
-              src={image === "business" ? supportBusiness : supportInquiry}
+              src={image === "business" ? "https://cdn.worldofdypians.com/wod/business.jpg" : "https://cdn.worldofdypians.com/wod/build.jpg"}
               alt=""
               className={`${image} position-absolute phone-image `}
             />

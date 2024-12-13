@@ -38,8 +38,7 @@ import useWindowSize from "../../../../Utils.js/hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 import circleArrow from "./assets/circleArrow.svg";
 import dashboardStar from "./assets/dashboardStar.svg";
-import premiumBadge from "../../../../Components/LeaderBoard/assets/premiumBadge.png";
-import goldenBadge from "../../../../Components/LeaderBoard/assets/goldenPassBadge.png";
+import premiumBadge from "../../../../Components/LeaderBoard/assets/premiumBadge.png"; 
 import getFormattedNumber from "../../../../Utils.js/hooks/get-formatted-number";
 
 const renderer = ({ days, hours, minutes }) => {
@@ -374,7 +373,7 @@ const TopSection = ({
                 </div>
               </NavLink>{" "}
               <img
-                src={goldenBadge}
+                src={"https://cdn.worldofdypians.com/wod/goldenPassBadge.png"}
                 alt=""
                 className="dashboardimg"
                 style={{ width: 50, height: 44 }}
@@ -598,7 +597,7 @@ const TopSection = ({
                 </div>
               </NavLink>{" "}
               <img
-                src={goldenBadge}
+                src={"https://cdn.worldofdypians.com/wod/goldenPassBadge.png"}
                 alt=""
                 className="dashboardimg"
                 style={{ width: 50, height: 44 }}

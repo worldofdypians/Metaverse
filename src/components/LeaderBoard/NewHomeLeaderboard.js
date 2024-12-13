@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import price1 from "./assets/price1.svg";
-import price2 from "./assets/price2.svg";
-import price3 from "./assets/price3.svg";
-import { CircularProgress } from "@mui/material";
-import playerAvatar from "./assets/userAvatar2.png";
-import premiumAvatar from "./assets/premiumAvatar.png";
-import premiumStar from "./assets/premiumStar.png";
+
+import { CircularProgress } from "@mui/material"; 
 // import axios from "axios";
 // import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
@@ -31,12 +26,8 @@ import star from "./assets/star.svg";
 import premiumIcon from "./assets/premiumIcon.png";
 
 // import React, { useState, useEffect } from "react";
-// import price1 from "../../Images/userProfile/price1.svg";
-// import price2 from "../../Images/userProfile/price2.svg";
-// import price3 from "../../Images/userProfile/price3.svg";
-// import { CircularProgress } from "@mui/material";
-// import playerAvatar from "../../Images/userProfile/userAvatar2.png";
-// import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
+
+// import { CircularProgress } from "@mui/material";  
 // import premiumStar from "../../Images/userProfile/premiumStar.png";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
@@ -1050,7 +1041,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1063,7 +1054,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1123,7 +1114,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1136,7 +1127,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1265,7 +1256,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1278,7 +1269,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1333,7 +1324,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1346,7 +1337,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1478,7 +1469,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1491,7 +1482,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1555,7 +1546,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1568,7 +1559,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1677,7 +1668,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1690,7 +1681,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1745,7 +1736,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1758,7 +1749,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1869,7 +1860,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1882,7 +1873,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -1943,7 +1934,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1956,7 +1947,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -2063,7 +2054,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -2076,7 +2067,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -2138,7 +2129,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -2151,7 +2142,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -2258,7 +2249,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -2271,7 +2262,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}
@@ -2333,7 +2324,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             {item.displayName === username ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -2346,7 +2337,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
                             ) : (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />{" "}

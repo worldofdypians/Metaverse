@@ -3,7 +3,7 @@ import "./_nftbridge.scss";
 import useWindowSize from "../../hooks/useWindowSize";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
-import dropdownIcon from "./assets/dropdownIcon.svg";
+ 
 import NftPopup from "./NftPopup";
 import avax from "./assets/avax.svg"; 
 import eth from "./assets/eth.svg";
@@ -2133,7 +2133,7 @@ const NFTBridge = ({
                           {filterTitle}
                         </h6>
                       </div>
-                      <img src={dropdownIcon} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                     </button>
                     <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                       <li
@@ -2215,7 +2215,7 @@ const NFTBridge = ({
                           {destinationFilterTitle}
                         </h6>
                       </div>
-                      <img src={dropdownIcon} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                     </button>
                     <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                       {destinationFilterArray &&

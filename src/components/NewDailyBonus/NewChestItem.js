@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import premiumLock from "./assets/premiumLock.png";
+import React, { useState, useEffect } from "react"; 
 import errorSound from "./assets/error.mp3";
 import axios from "axios";
 import Web3 from "web3";
@@ -1756,12 +1755,12 @@ const NewChestItem = ({
           }`}
           src={
             chain !== "skale"
-              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/${
+              ? `https://cdn.worldofdypians.com/wod/${
                   open ? image + "open" : image
-                }.png`)
-              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/${
-                  open ? chestIndex + "open" : chestIndex
-                }.png`)
+                }.png` 
+              :  `https://cdn.worldofdypians.com/wod/${
+                  open ? chestIndex + "openskale" : chestIndex + "skale"
+                }.png`
           }
           alt=""
           style={{
@@ -1777,16 +1776,16 @@ const NewChestItem = ({
           }`}
           src={
             chain !== "skale"
-              ? require(`../../screens/Account/src/Components/WalletBalance/chestImages/premium/${
+              ?  `https://cdn.worldofdypians.com/wod/${
                   open
                     ? chestIndex % 2 === 1
                       ? dummypremiumChests + "OpenCoins"
                       : dummypremiumChests + "OpenGems"
                     : dummypremiumChests
-                }.png`)
-              : require(`../../screens/Account/src/Components/WalletBalance/chestImages/skale/premium/${
-                  open ? chestIndex - 10 + "open" : chestIndex - 10
-                }.png`)
+                }.png` 
+              :  `https://cdn.worldofdypians.com/wod/${
+                  open ? chestIndex - 10 + "openskalepremium" : chestIndex - 10+'skalepremium'
+                }.png` 
           }
           alt=""
           style={{
@@ -1800,7 +1799,7 @@ const NewChestItem = ({
       )}
       {rewardTypes === "premium" && !isPremium && (
         <img
-          src={premiumLock}
+          src={'https://cdn.worldofdypians.com/wod/premiumLock.png'}
           className={`premium-lock ${shake && "shake-lock"}`}
           alt=""
         />
