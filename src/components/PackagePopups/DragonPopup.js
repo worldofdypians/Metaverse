@@ -4,8 +4,8 @@ import deer from "../../screens/Marketplace/assets/deer.svg";
 import wolf from "../../screens/Marketplace/assets/wolf.svg";
 import bear from "../../screens/Marketplace/assets/bear.svg";
 import dragon from "../../screens/Marketplace/assets/dragon.svg"; 
-import popupLinear from "./assets/popupLinear.png";
-import dragonPopup from "./assets/dragonPopup.webp";
+
+
 
 const DragonPopup = ({ onClosePopup }) => {
   return (
@@ -32,7 +32,7 @@ const DragonPopup = ({ onClosePopup }) => {
           />
         </div>
         <div className="position-relative mb-3">
-          <img src={dragonPopup} alt="" style={{ width: "100%" }} />
+          <img src={"https://cdn.worldofdypians.com/wod/dragonPopup.webp"} alt="" style={{ width: "100%" }} />
         </div>
         <div className=" package-popup-title-wrapper d-flex align-items-center justify-content-between mb-2"></div>
         <div className="package-popup-content p-1">

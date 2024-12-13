@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import twitterIcon from "./assets/twitterIcon.svg";
-import emailIcon from "./assets/emailIcon.svg";
-import discordIcon from "./assets/discordIcon.svg";
-import sidebarArrow from "./assets/sidebarArrow.svg";
 import { useLocation } from "react-router-dom";
-import dypiansLogo from "./assets/dypiansLogo.png";
-import buildLogo from "./assets/buildIcon.svg";
-import supportIcon from "./assets/supportIcon.svg";
-
-import { useEffect } from "react";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import { useQuery } from "@apollo/client";
 import { GET_PLAYER } from "../../screens/Account/src/Containers/Dashboard/Dashboard.schema";
@@ -52,28 +43,7 @@ const MarketSidebar = () => {
         style={{ height: "90%" }}
       >
         <div className="d-flex flex-column  gap-2">
-          {/* <NavLink
-            to="/shop"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "homeIconActive" : "homeIcon";
-              return (
-                <>
-                  <img
-                    src={require(`./assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Home</span>
-                </>
-              );
-            }}
-          /> */}
+   
           {/* <div className="sidebar-separator my-2"></div> */}
           <div className="accordion" id="accordionExample">
             <div className="">
@@ -87,14 +57,14 @@ const MarketSidebar = () => {
                   <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={require(`./assets/collectionsIcon.svg`).default}
+                        src={`https://cdn.worldofdypians.com/wod/collectionsIcon.svg`}
                         style={{ width: "20px", height: "20px" }}
                         alt=""
                       />
                       <h6 className="sidebar-title mb-0">Collections</h6>
                     </div>
                     <img
-                      src={sidebarArrow}
+                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
@@ -193,37 +163,6 @@ const MarketSidebar = () => {
               </div>
             </div>
           </div>
-
-          {/* <NavLink
-            to="/shop/events/treasure-hunt"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : `d-flex p-2 align-items-center gap-2 sidebar-item ${
-                    location.pathname.includes("events")
-                      ? "sidebar-item-active"
-                      : null
-                  }`
-            }
-            children={({ isActive }) => {
-              const icon = isActive
-                ? "eventsIconActive"
-                : location.pathname.includes("events")
-                ? "eventsIconActive"
-                : "eventsIcon";
-              return (
-                <>
-                  <img
-                    src={require(`./assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Events</span>
-                </>
-              );
-            }}
-          /> */}
           <NavLink
             to="/account/challenges/treasure-hunt"
             end
@@ -237,7 +176,7 @@ const MarketSidebar = () => {
               return (
                 <>
                   <img
-                    src={require(`./assets/${icon}.svg`)}
+                    src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
@@ -259,7 +198,7 @@ const MarketSidebar = () => {
               return (
                 <>
                   <img
-                    src={require(`./assets/${icon}.svg`)}
+                    src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
@@ -281,7 +220,7 @@ const MarketSidebar = () => {
               return (
                 <>
                   <img
-                    src={require(`./assets/${icon}.svg`)}
+                    src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                     style={{ width: "20px", height: "20px" }}
                     alt=""
                   />
@@ -290,28 +229,7 @@ const MarketSidebar = () => {
               );
             }}
           />
-          {/* <NavLink
-            to="/shop/nft-bridge"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
-              return (
-                <>
-                  <img
-                    src={require(`./assets/${icon}.svg`)}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>NFT Bridge</span>
-                </>
-              );
-            }}
-          /> */}
+       
           {email && (
             //  &&
             //   data &&
@@ -333,7 +251,7 @@ const MarketSidebar = () => {
                 return (
                   <>
                     <img
-                      src={require(`./assets/${icon}.svg`)}
+                      src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                       // style={{ width: "20px", height: "20px" }}
                       alt=""
                     />
@@ -343,43 +261,6 @@ const MarketSidebar = () => {
               }}
             />
           )}
-
-          {/* <div className="sidebar-separator my-2"></div>
-          <a
-            href="https://docs.google.com/forms/d/1s565QWMoCvkKwAWzkXzVPdixN_fLFlnEstya_k7caqs/viewform?edit_requested=true"
-            target="_blank"
-            rel="noreferrer"
-            className={"d-flex p-2 align-items-center gap-2 sidebar-item"}
-          >
-            <img
-              src={buildLogo}
-              style={{ width: "20px", height: "20px" }}
-              alt=""
-            />
-            <span className={`sidebar-title`}>Partners</span>
-          </a>
-          <NavLink
-            to="/contact-us"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
-                : "d-flex p-2 align-items-center gap-2 sidebar-item"
-            }
-            children={({ isActive }) => {
-              const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
-              return (
-                <>
-                  <img
-                    src={supportIcon}
-                    style={{ width: "20px", height: "20px" }}
-                    alt=""
-                  />
-                  <span className={`sidebar-title`}>Support</span>
-                </>
-              );
-            }}
-          /> */}
         </div>
       </div>
     </div>

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./_mobilenav.scss";
 import { NavLink, useLocation } from "react-router-dom";
-import collectionsIcon from "../MarketSidebar/assets/collectionsIcon.svg";
-import collectionsIconActive from "../MarketSidebar/assets/collectionsIconActive.svg";
 import { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
@@ -46,7 +44,7 @@ const MobileNav = () => {
             return (
               <>
                 <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
                 />
               </>
@@ -68,8 +66,8 @@ const MobileNav = () => {
               location.pathname.includes("caws") ||
               location.pathname.includes("caws") ||
               location.pathname.includes("caws")
-                ? collectionsIconActive
-                : collectionsIcon
+                ? "https://cdn.worldofdypians.com/wod/collectionsIconActive.svg"
+                : "https://cdn.worldofdypians.com/wod/collectionsIcon.svg"
             }
             width={22}
             height={22}
@@ -87,7 +85,7 @@ const MobileNav = () => {
             return (
               <>
                 <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
                 />
               </>
@@ -105,7 +103,7 @@ const MobileNav = () => {
             return (
               <>
                 <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
                 />
               </>
@@ -123,31 +121,14 @@ const MobileNav = () => {
             return (
               <>
                 <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
                 />
               </>
             );
           }}
         />
-        {/* <NavLink
-          to="/shop/nft-bridge"
-          end
-          className={({ isActive }) =>
-            isActive ? "active-mobile-link" : "mobile-link"
-          }
-          children={({ isActive }) => {
-            const icon = isActive ? "bridgeIconActive" : "bridgeIcon";
-            return (
-              <>
-                <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
-                  alt=""
-                />
-              </>
-            );
-          }}
-        /> */}
+    
         {email && <NavLink
           to="/loyalty-program"
           end
@@ -159,7 +140,7 @@ const MobileNav = () => {
             return (
               <>
                 <img
-                  src={require(`../MarketSidebar/assets/${icon}.svg`)}
+                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
                 />
               </>

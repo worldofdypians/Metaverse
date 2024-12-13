@@ -3,14 +3,14 @@ import "./_mobilenavbar.scss";
 
 import { NavLink } from "react-router-dom";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import bellIcon from "./assets/bellIcon.svg";
+
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
 import OutsideClickHandler from "react-outside-click-handler";
-import sidebarArrow from "../MarketSidebar/assets/sidebarArrow.svg";
+
 
 const MobileNavbar = ({
   handleSignUp,
@@ -371,7 +371,7 @@ const MobileNavbar = ({
               <NavLink to="/notifications">
                 <div className="position-relative">
                   <img
-                    src={bellIcon}
+                    src={"https://cdn.worldofdypians.com/wod/bellIcon.svg"}
                     width={30}
                     style={{ cursor: "pointer" }}
                     height={30}
@@ -662,7 +662,7 @@ const MobileNavbar = ({
                       </h6>
                     </div>
                     <img
-                      src={sidebarArrow}
+                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
@@ -838,7 +838,7 @@ const MobileNavbar = ({
                       <h6 className="sidebar-title mb-0">WOD</h6>
                     </div>
                     <img
-                      src={sidebarArrow}
+                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
@@ -980,7 +980,7 @@ const MobileNavbar = ({
                       <h6 className="sidebar-title mb-0">Community</h6>
                     </div>
                     <img
-                      src={sidebarArrow}
+                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
@@ -1084,7 +1084,7 @@ const MobileNavbar = ({
                       <h6 className="sidebar-title mb-0">About</h6>
                     </div>
                     <img
-                      src={sidebarArrow}
+                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
