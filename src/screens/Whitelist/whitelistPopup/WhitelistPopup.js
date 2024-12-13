@@ -1,14 +1,10 @@
-import React, { useRef } from "react";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import closeX from "../earnOther/assets/closeX.svg";
-import migrationPopup from "./migrationPopup.webp";
+import React from "react";
+
 import basebg from "./baseBg.png";
 
-import loyaltyPopupBanner from "./loyaltyPopupBanner.png";
 import "./whitelist.css";
 import OutsideClickHandler from "react-outside-click-handler";
-import '../LandPopup/landpopup.css'
+import "../LandPopup/landpopup.css";
 import { NavLink } from "react-router-dom";
 
 const WhitelistPopup = ({ open, onClose }) => {
@@ -40,7 +36,7 @@ const WhitelistPopup = ({ open, onClose }) => {
                 style={{ height: 1 }}
               >
                 <img
-                  src={closeX}
+                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   alt=""
                   className="close-x position-relative cursor-pointer "
                   onClick={onClose}
@@ -58,27 +54,19 @@ const WhitelistPopup = ({ open, onClose }) => {
                 <div className="d-flex flex-column align-items-center justify-content-center">
                   <div className="d-flex align-items-center justify-content-center mb-2 popup-title-wrapper gap-2 p-2 px-4">
                     <h6 className="popup-title d-flex align-items-center gap-2 mb-0">
-                    Games on
+                      Games on
                     </h6>
-                <h6 className="popup-title metaverse mb-0">Base</h6>
-
+                    <h6 className="popup-title metaverse mb-0">Base</h6>
                   </div>
                   <span className="popup-span mb-0 w-100">
-                  Enjoy the ultimate gaming experience on Base.
+                    Enjoy the ultimate gaming experience on Base.
                   </span>
                 </div>
-                <img
-                  src={basebg}
-                  className="land-nft-image"
-                  alt="land nft"
-                />
+                <img src={basebg} className="land-nft-image" alt="land nft" />
                 {/* <span className="popup-content">
           Total Genesis land supply limited to 1,000 plots
         </span> */}
-                <NavLink
-                  to="/games"
-                  onClick={onClose}
-                >
+                <NavLink to="/games" onClick={onClose}>
                   <button className="btn filled-btn m-3">Play</button>
                 </NavLink>
               </div>
