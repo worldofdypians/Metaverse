@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import closeX from "./assets/closeX.svg";
+import Box from "@mui/material/Box"; 
 import errorImg from "./assets/error.svg";
 import successImg from "./assets/success.svg";
 import "./_filters.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../hooks/useWindowSize";
-import "../_marketplace.scss";
-import dropdownIcon from "./assets/dropdownIcon.svg";
+import "../_marketplace.scss"; 
 import whiteTag from "./assets/whiteTag.svg";
 import Web3 from "web3";
 import getListedNFTS from "../../../actions/Marketplace";
@@ -279,7 +277,7 @@ const MakeOffer = ({
           <div className="d-flex justify-content-between gap-1  position-relative">
             <h6 className="text-white summarytitle">Make an offer</h6>
             <img
-              src={closeX}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               alt=""
               className="close-x"
               onClick={() => {
@@ -435,7 +433,7 @@ const MakeOffer = ({
                     {filter1}
                   </h6>
                 </div>
-                <img src={dropdownIcon} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
               </button>
               <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                 <li

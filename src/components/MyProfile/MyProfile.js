@@ -495,7 +495,7 @@ const MyProfile = ({
                             >
                               <img
                                 src={
-                                  "https://cdn.worldofdypians.com/errordomainIcon.svg"
+                                  "https://cdn.worldofdypians.com/wod/errordomainIcon.svg"
                                 }
                                 width={30}
                                 height={30}
