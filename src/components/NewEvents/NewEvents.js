@@ -5,47 +5,6 @@ import { NavLink } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import ChallengePopup from "../ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
-import criticalHitBanner from "./assets/banners/criticalHitBanner.webp";
-import puzzleMadnessBanner from "./assets/banners/puzzleMadnessBanner.webp";
-import dragonRuinsBanner from "./assets/banners/dragonRuinsBanner.webp";
-import wingStormBanner from "./assets/banners/wingStormBanner.webp";
-import stoneEyeBanner from "./assets/banners/stoneEyeBanner.webp";
-import furyBeastBanner from "./assets/banners/furyBeastBanner.webp";
-import mazeGardenBanner from "./assets/banners/mazeGardenBanner.webp";
-import greatCollectionBanner from "./assets/banners/greatCollectionBanner.webp";
-import bnbMazeDayTopBanner from "./assets/banners/bnbMazeDayTopBanner.webp";
-import criticalHitTopBanner from "./assets/banners/criticalHitTopBanner.webp";
-import explorerHuntTopBanner from "./assets/banners/explorerHuntTopBanner.webp";
-import greatCollectionTopBanner from "./assets/banners/greatCollectionTopBanner.webp";
-import puzzleMadnessTopBanner from "./assets/banners/puzzleMadnessTopBanner.webp";
-import explorerHuntBanner from "./assets/banners/explorerHuntBanner.webp";
-import scorpionKingBanner from "./assets/banners/scorpionKingBanner.webp";
-import coldBiteBanner from "./assets/banners/coldBiteBanner.webp";
-import Countdown from "react-countdown";
-import coldBiteThumb from "./assets/banners/coldBiteThumb.webp";
-import scorpionKingThumb from "./assets/banners/scorpionKingThumb.webp";
-import furyBeastThumb from "./assets/banners/furyBeastThumb.webp";
-import stoneEyeThumb from "./assets/banners/stoneEyeThumb.webp";
-import wingStormThumb from "./assets/banners/wingStormThumb.webp";
-import dragonRuinsThumb from "./assets/banners/dragonRuinsThumb.webp";
-import coldBiteActiveThumb from "./assets/banners/coldBiteActiveThumb.webp";
-import scorpionKingActiveThumb from "./assets/banners/scorpionKingActiveThumb.webp";
-import furyBeastActiveThumb from "./assets/banners/furyBeastActiveThumb.webp";
-import stoneEyeActiveThumb from "./assets/banners/stoneEyeActiveThumb.webp";
-import wingStormActiveThumb from "./assets/banners/wingStormActiveThumb.webp";
-import dragonRuinsActiveThumb from "./assets/banners/dragonRuinsActiveThumb.webp";
-import coldBiteThumbMobile from "./assets/banners/coldBiteThumbMobile.webp";
-import scorpionKingThumbMobile from "./assets/banners/scorpionKingThumbMobile.webp";
-import furyBeastThumbMobile from "./assets/banners/furyBeastThumbMobile.webp";
-import stoneEyeThumbMobile from "./assets/banners/stoneEyeThumbMobile.webp";
-import wingStormThumbMobile from "./assets/banners/wingStormThumbMobile.webp";
-import dragonRuinsThumbMobile from "./assets/banners/dragonRuinsThumbMobile.webp";
-import coldBiteActiveThumbMobile from "./assets/banners/coldBiteActiveThumbMobile.webp";
-import scorpionKingActiveThumbMobile from "./assets/banners/scorpionKingActiveThumbMobile.webp";
-import furyBeastActiveThumbMobile from "./assets/banners/furyBeastActiveThumbMobile.webp";
-import stoneEyeActiveThumbMobile from "./assets/banners/stoneEyeActiveThumbMobile.webp";
-import wingStormActiveThumbMobile from "./assets/banners/wingStormActiveThumbMobile.webp";
-import dragonRuinsActiveThumbMobile from "./assets/banners/dragonRuinsActiveThumbMobile.webp";
 import Slider from "react-slick";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import {
@@ -58,9 +17,6 @@ import {
   wingStormAddress,
   wod_token_abi,
 } from "../../screens/Account/src/web3";
-import { WOD_ABI } from "../../screens/Account/src/web3/abis";
-import { token_abi } from "../../screens/Account/src/web3";
-import { wod_abi } from "../../screens/Account/src/web3";
 import { ethers } from "ethers";
 import {
   COLD_BITE_ABI,
@@ -79,13 +35,8 @@ import {
   wing_storm_address,
 } from "./abi";
 import Web3 from "web3";
-import {
-  CircularProgress,
-  ClickAwayListener,
-  styled,
-  Tooltip,
-  tooltipClasses,
-} from "@mui/material";
+import { styled, Tooltip, tooltipClasses } from "@mui/material";
+import Countdown from "react-countdown";
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -128,13 +79,13 @@ const NewEvents = ({
   explorerHuntData,
   setPuzzleMadnessTimer,
   onConnectWallet,
-  wodBalance
+  wodBalance,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
+  const [activeEvent, setActiveEvent] = useState({});
   const [eventDuration, seteventDuration] = useState("Live");
   const [showPopup, setshowPopup] = useState("");
-  const [activeEvent, setActiveEvent] = useState({});
   const [countdown, setcountdown] = useState();
   const [status, setStatus] = useState(
     "Please make sure you're on BNB Chain and using the wallet address associated to your game profile."
@@ -198,14 +149,10 @@ const NewEvents = ({
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
 
-
   function hasNoMoreThanTwoDecimalPlaces(num) {
     // Check if the number has up to 2 decimal places
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
   }
-
-
-  
 
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
@@ -705,7 +652,7 @@ const NewEvents = ({
 
   const checkApprovalBear = async () => {
     if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
-      await token_abi.methods
+      await wod_token_abi.methods
         .allowance(wallet, coldBiteAddress)
         .call()
         .then((data) => {
@@ -1215,7 +1162,6 @@ const NewEvents = ({
     }
   };
 
-  
   //SCORPION KING
 
   const getBundlePrizesScorpion = async () => {
@@ -1687,11 +1633,16 @@ const NewEvents = ({
       challange: "dragon-ruins",
       title: "Dragon Ruins",
       popupImage: "https://cdn.worldofdypians.com/wod/dragonRuinsPopup.webp",
-      image: dragonRuinsBanner,
-      thumbImage: dragonRuinsThumb,
-      thumbImageActive: dragonRuinsActiveThumb,
-      mobileThumbImage: dragonRuinsThumbMobile,
-      mobileThumbImageActive: dragonRuinsActiveThumbMobile,
+      image:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsBannerNewEvents.webp",
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsActiveThumbMobileNewEvents.webp",
       textImage: "https://cdn.worldofdypians.com/wod/dragonRuinsText.png",
       headImage: "https://cdn.worldofdypians.com/wod/dragonRuinsHead.png",
       wodAmount: dragonRuinsWodAmount,
@@ -1720,12 +1671,16 @@ const NewEvents = ({
     {
       challange: "cold-bite",
       id: "coldbite",
-      image: coldBiteBanner,
+      image: "https://cdn.worldofdypians.com/wod/coldBiteBannerNewEvents.webp",
       popupImage: "https://cdn.worldofdypians.com/wod/coldBitePopup.webp",
-      thumbImage: coldBiteThumb,
-      thumbImageActive: coldBiteActiveThumb,
-      mobileThumbImage: coldBiteThumbMobile,
-      mobileThumbImageActive: coldBiteActiveThumbMobile,
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/coldBiteThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/coldBiteActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/coldBiteThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/coldBiteActiveThumbMobileNewEvents.webp",
       textImage: "https://cdn.worldofdypians.com/wod/coldBiteText.png",
       headImage: "https://cdn.worldofdypians.com/wod/coldBiteHead.png",
       wodAmount: coldBiteWodAmount,
@@ -1757,12 +1712,16 @@ const NewEvents = ({
     {
       challange: "fury-beast",
       id: "furyBeast",
-      image: furyBeastBanner,
+      image: "https://cdn.worldofdypians.com/wod/furyBeastBannerNewEvents.webp",
       popupImage: "https://cdn.worldofdypians.com/wod/furyBeastPopup.webp",
-      thumbImage: furyBeastThumb,
-      thumbImageActive: furyBeastActiveThumb,
-      mobileThumbImage: furyBeastThumbMobile,
-      mobileThumbImageActive: furyBeastActiveThumbMobile,
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/furyBeastThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/furyBeastActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/furyBeastThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/furyBeastActiveThumbMobileNewEvents.webp",
       textImage: "https://cdn.worldofdypians.com/wod/furyBeastText.png",
       headImage: "https://cdn.worldofdypians.com/wod/furyBeastHead.png",
       wodAmount: furyBeastWodAmount,
@@ -1795,12 +1754,16 @@ const NewEvents = ({
     {
       challange: "wing-storm",
       id: "wingstorm",
-      image: wingStormBanner,
+      image: "https://cdn.worldofdypians.com/wod/wingStormBannerNewEvents.webp",
       popupImage: "https://cdn.worldofdypians.com/wod/wingStormPopup.webp",
-      thumbImage: wingStormThumb,
-      thumbImageActive: wingStormActiveThumb,
-      mobileThumbImage: wingStormThumbMobile,
-      mobileThumbImageActive: wingStormActiveThumbMobile,
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/wingStormThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/wingStormActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/wingStormThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/wingStormActiveThumbMobileNewEvents.webp",
       wodAmount: wingStormWodAmount,
       textImage: "https://cdn.worldofdypians.com/wod/wingStormText.png",
       headImage: "https://cdn.worldofdypians.com/wod/wingStormHead.png",
@@ -1834,11 +1797,16 @@ const NewEvents = ({
       challange: "scorpion-king",
       id: "scorpion",
       popupImage: "https://cdn.worldofdypians.com/wod/scorpionKingPopup.webp",
-      image: scorpionKingBanner,
-      thumbImage: scorpionKingThumb,
-      thumbImageActive: scorpionKingActiveThumb,
-      mobileThumbImage: scorpionKingThumbMobile,
-      mobileThumbImageActive: scorpionKingActiveThumbMobile,
+      image:
+        "https://cdn.worldofdypians.com/wod/scorpionKingBannerNewEvents.webp",
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/scorpionKingThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/scorpionKingActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/scorpionKingThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/scorpionKingActiveThumbMobileNewEvents.webp",
       wodAmount: scorpionKingWodAmount,
       textImage: "https://cdn.worldofdypians.com/wod/scorpionKingText.png",
       headImage: "https://cdn.worldofdypians.com/wod/scorpionKingHead.png",
@@ -1870,12 +1838,16 @@ const NewEvents = ({
     {
       challange: "stone-eye",
       id: "stoneEye",
-      image: stoneEyeBanner,
+      image: "https://cdn.worldofdypians.com/wod/stoneEyeBannerNewEvents.webp",
       popupImage: "https://cdn.worldofdypians.com/wod/stoneEyePopup.webp",
-      thumbImage: stoneEyeThumb,
-      thumbImageActive: stoneEyeActiveThumb,
-      mobileThumbImage: stoneEyeThumbMobile,
-      mobileThumbImageActive: stoneEyeActiveThumbMobile,
+      thumbImage:
+        "https://cdn.worldofdypians.com/wod/stoneEyeThumbNewEvents.webp",
+      thumbImageActive:
+        "https://cdn.worldofdypians.com/wod/stoneEyeActiveThumbNewEvents.webp",
+      mobileThumbImage:
+        "https://cdn.worldofdypians.com/wod/stoneEyeThumbMobileNewEvents.webp",
+      mobileThumbImageActive:
+        "https://cdn.worldofdypians.com/wod/stoneEyeActiveThumbMobileNewEvents.webp",
       wodAmount: stoneEyeWodAmount,
       textImage: "https://cdn.worldofdypians.com/wod/stoneEyeText.png",
       headImage: "https://cdn.worldofdypians.com/wod/stoneEyeHead.png",
@@ -1908,12 +1880,13 @@ const NewEvents = ({
   const mazeGardenInfo = {
     id: "maze",
     popupImage: "https://cdn.worldofdypians.com/wod/mazeGardenPopup.webp",
-    image: mazeGardenBanner,
+    image: "https://cdn.worldofdypians.com/wod/mazeGardenBannerNewEvents.webp",
     desc: "Navigate through the intricate Maze Garden. Solve its mysteries and uncover hidden paths to reach the treasures waiting within.",
     day: 5,
     dayText: "FRI",
     title: "BNB CHAIN Maze Day",
-    topBanner: bnbMazeDayTopBanner,
+    topBanner:
+      "https://cdn.worldofdypians.com/wod/bnbMazeDayTopBannerNewEvents.webp",
     class: "maze-garden-card",
     infoClass: "maze-garden-info",
     popupDesc:
@@ -1935,9 +1908,11 @@ const NewEvents = ({
 
   const greatCollectionInfo = {
     id: "greatCollection",
-    image: greatCollectionBanner,
+    image:
+      "https://cdn.worldofdypians.com/wod/greatCollectionBannerNewEvents.webp",
     popupImage: "https://cdn.worldofdypians.com/wod/greatCollectionPopup.webp",
-    topBanner: greatCollectionTopBanner,
+    topBanner:
+      "https://cdn.worldofdypians.com/wod/greatCollectionTopBannerNewEvents.webp",
     class: "great-collection-card",
     infoClass: "great-collection-info",
     desc: "Defend your world by taking on invading explorers who are here to gather information. Fight to protect the secrets of the land and earn rewards.",
@@ -1959,9 +1934,11 @@ const NewEvents = ({
 
   const explorerHuntInfo = {
     id: "explorer-hunt",
-    image: explorerHuntBanner,
+    image:
+      "https://cdn.worldofdypians.com/wod/explorerHuntBannerNewEvents.webp",
     popupImage: "https://cdn.worldofdypians.com/wod/explorerHuntPopup.webp",
-    topBanner: explorerHuntTopBanner,
+    topBanner:
+      "https://cdn.worldofdypians.com/wod/explorerHuntTopBannerNewEvents.webp",
     class: "explorer-hunt-card",
     infoClass: "explorer-hunt-info",
 
@@ -1985,9 +1962,10 @@ const NewEvents = ({
 
   const criticalHitInfos = {
     id: "critical",
-    image: criticalHitBanner,
+    image: "https://cdn.worldofdypians.com/wod/criticalHitBannerNewEvents.webp",
     popupImage: "https://cdn.worldofdypians.com/wod/criticalHitPopup.webp",
-    topBanner: criticalHitTopBanner,
+    topBanner:
+      "https://cdn.worldofdypians.com/wod/criticalHitTopBannerNewEvents.webp",
     class: "critical-hit-card",
     infoClass: "critical-hit-info",
 
@@ -2015,9 +1993,11 @@ const NewEvents = ({
   const puzzleMadnessInfo = {
     id: "puzzle",
     popupImage: "https://cdn.worldofdypians.com/wod/puzzleMadnessPopup.webp",
-    image: puzzleMadnessBanner,
+    image:
+      "https://cdn.worldofdypians.com/wod/puzzleMadnessBannerNewEvents.webp",
     usdPrice: 4.0,
-    topBanner: puzzleMadnessTopBanner,
+    topBanner:
+      "https://cdn.worldofdypians.com/wod/puzzleMadnessTopBannerNewEvents.webp",
     class: "puzzle-madness-card",
     infoClass: "puzzle-madness-info",
 
@@ -2039,7 +2019,6 @@ const NewEvents = ({
       "Rewards: Up to 160,000 points added to the BNB Chain leaderboard.",
     ],
   };
-
 
   useEffect(() => {
     const today = new Date();
@@ -2078,24 +2057,29 @@ const NewEvents = ({
   }, [selectedEvent]);
   useEffect(() => {
     if (eventId === undefined || eventId === "golden-pass") {
-      const filteredEvent =
-        eventinfos.find((item) => {
-          return item.day === utcDayIndex;
-        }) ?? eventinfos[0];
-      setActiveEvent(filteredEvent);
-      setActiveThumb(filteredEvent.id);
-      if (sliderRef.current) {
-        sliderRef?.current?.innerSlider?.slickGoTo(
-          eventinfos.findIndex(
-            (item) => item.challange === filteredEvent.challange
-          ) === 5
-            ? 3.5
-            : eventinfos.findIndex(
-                (item) => item.challange === filteredEvent.challange
-              ) - 0.5
-        );
+      if (utcDayIndex === 5 && eventId === undefined) {
+        setActiveEvent(mazeGardenInfo);
+        setChallenge("maze-day");
+      } else {
+        const filteredEvent =
+          eventinfos.find((item) => {
+            return item.day === utcDayIndex;
+          }) ?? eventinfos[0];
+        setActiveEvent(filteredEvent);
+        setActiveThumb(filteredEvent.id);
+        if (sliderRef.current) {
+          sliderRef?.current?.innerSlider?.slickGoTo(
+            eventinfos.findIndex(
+              (item) => item.challange === filteredEvent.challange
+            ) === 5
+              ? 3.5
+              : eventinfos.findIndex(
+                  (item) => item.challange === filteredEvent.challange
+                ) - 0.5
+          );
+        }
+        setChallenge(filteredEvent.challange);
       }
-      setChallenge(filteredEvent.challange);
     } else if (
       eventId &&
       eventId !== "" &&
@@ -2149,9 +2133,6 @@ const NewEvents = ({
     }
   }, [showPopup]);
 
-
-  
-
   return (
     <>
       <div
@@ -2169,6 +2150,27 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
+                      {utcDayIndex === 5 && (
+                        <div className="d-flex flex-column">
+                          <NavLink to="/account/challenges/maze-day">
+                            <div
+                              className={`${
+                                challenge === "maze-day" ||
+                                selectedEvent === "maze-day"
+                                  ? "active-challenge-item"
+                                  : "challenge-item"
+                              } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                              onClick={() => {
+                                setChallenge("maze-day");
+                                setActiveEvent(mazeGardenInfo);
+                              }}
+                            >
+                              <h6 className="mb-0">BNB Chain Maze Day</h6>
+                            </div>
+                          </NavLink>
+                          <div className="sidebar-separator2"></div>
+                        </div>
+                      )}
                       <div className="d-flex flex-column">
                         <NavLink
                           to={
@@ -2188,6 +2190,9 @@ const NewEvents = ({
                               eventId !== "great-collection" &&
                               eventId !== "explorer-hunt" &&
                               eventId !== "critical-hit" &&
+                              ((challenge !== "maze-day" &&
+                                eventId !== undefined) ||
+                                (eventId === undefined && utcDayIndex !== 5)) &&
                               eventId !== "puzzle-madness"
                                 ? "active-challenge-item"
                                 : "challenge-item"
@@ -2209,32 +2214,32 @@ const NewEvents = ({
                               );
                             }}
                           >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
                             <h6 className="mb-0">Legendary Beast Siege</h6>
                           </div>
                         </NavLink>
                         <div className="sidebar-separator2"></div>
                       </div>
-                      <div className="d-flex flex-column">
-                        <NavLink to="/account/challenges/maze-day">
-                          <div
-                            className={`${
-                              challenge === "maze-day" ||
-                              selectedEvent === "maze-day"
-                                ? "active-challenge-item"
-                                : "challenge-item"
-                            } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
-                            onClick={() => {
-                              setChallenge("maze-day");
-                              setActiveEvent(mazeGardenInfo);
-                            }}
-                          >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
-                            <h6 className="mb-0">BNB Chain Maze Day</h6>
-                          </div>
-                        </NavLink>
-                        <div className="sidebar-separator2"></div>
-                      </div>
+                      {utcDayIndex !== 5 && (
+                        <div className="d-flex flex-column">
+                          <NavLink to="/account/challenges/maze-day">
+                            <div
+                              className={`${
+                                challenge === "maze-day" ||
+                                selectedEvent === "maze-day"
+                                  ? "active-challenge-item"
+                                  : "challenge-item"
+                              } d-flex align-items-center gap-2 py-2 px-1 px-lg-3`}
+                              onClick={() => {
+                                setChallenge("maze-day");
+                                setActiveEvent(mazeGardenInfo);
+                              }}
+                            >
+                              <h6 className="mb-0">BNB Chain Maze Day</h6>
+                            </div>
+                          </NavLink>
+                          <div className="sidebar-separator2"></div>
+                        </div>
+                      )}
                       <div className="d-flex flex-column">
                         <NavLink to="/account/challenges/treasure-hunt">
                           <div
@@ -2248,29 +2253,12 @@ const NewEvents = ({
                               setChallenge("treasure-hunt");
                             }}
                           >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
                             <h6 className="mb-0">Treasure Hunt</h6>
                           </div>
                         </NavLink>
                         <div className="sidebar-separator2"></div>
                       </div>
 
-                      {/* <NavLink to="/account/challenges/golden-pass">
-                        <div
-                          className={`${
-                            challenge === "golden-pass" ||
-                            selectedEvent === "golden-pass"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("golden-pass");
-                            setActiveEvent(goldenPassInfo);
-                          }}
-                        >
-                          <h6 className="mb-0">Golden Pass</h6>
-                        </div>
-                      </NavLink> */}
                       <div className="d-flex flex-column">
                         <NavLink to="/account/challenges/puzzle-madness">
                           <div
@@ -2285,7 +2273,6 @@ const NewEvents = ({
                               setActiveEvent(puzzleMadnessInfo);
                             }}
                           >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
                             <h6 className="mb-0">Puzzle Madness</h6>
                           </div>
                         </NavLink>
@@ -2305,7 +2292,6 @@ const NewEvents = ({
                               setActiveEvent(explorerHuntInfo);
                             }}
                           >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
                             <h6 className="mb-0">Explorer Hunt</h6>
                           </div>
                         </NavLink>
@@ -2325,7 +2311,6 @@ const NewEvents = ({
                               setActiveEvent(greatCollectionInfo);
                             }}
                           >
-                            {/* <img src={treasureHuntIcon} alt="" /> */}
                             <h6 className="mb-0">The Great Collection</h6>
                           </div>
                         </NavLink>
@@ -2351,107 +2336,6 @@ const NewEvents = ({
                         </NavLink>
                         <div className="sidebar-separator2"></div>
                       </div>
-
-                      {/* <NavLink to="/account/challenges/dragon-ruins">
-                        <div
-                          className={`${
-                            challenge === "dragon-ruins" ||
-                            selectedEvent === "dragon-ruins"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("dragon-ruins");
-                          }}
-                        >
-                          <img src={dragonRuinsIcon} alt="" />
-                          <h6 className="mb-0">Dragon Ruins</h6>
-                        </div>
-                      </NavLink>
-                      <NavLink to="/account/challenges/golden-pass">
-                        <div
-                          className={`${
-                            challenge === "golden-pass" ||
-                            selectedEvent === "golden-pass"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("golden-pass");
-                          }}
-                        >
-                          <img src={goldenPassIcon} alt="" />
-                          <h6 className="mb-0">Golden Pass</h6>
-                        </div>
-                      </NavLink>
-                      <NavLink to="/account/challenges/scorpion-king">
-                        <div
-                          className={` ${
-                            challenge === "scorpion-king" ||
-                            selectedEvent === "scorpion-king"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("scorpion-king");
-                          }}
-                        >
-                          <img src={scorpionKingIcon} alt="" />
-                          <h6 className="mb-0">Scorpion King</h6>
-                        </div>
-                      </NavLink>
-                      <NavLink to="/account/challenges/puzzle-madness">
-                        <div
-                          className={` ${
-                            challenge === "puzzle-madness" ||
-                            selectedEvent === "puzzle-madness"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("puzzle-madness");
-                          }}
-                        >
-                          <img src={puzzleMadnessIcon} alt="" />
-                          <h6 className="mb-0">Puzzle Madness</h6>
-                        </div>
-                      </NavLink>
-                      <NavLink to="/account/challenges/critical-hit">
-                        <div
-                          className={` ${
-                            challenge === "critical-hit" ||
-                            selectedEvent === "critical-hit"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("critical-hit");
-                          }}
-                        >
-                          <img src={criticalHitIcon} alt="" />
-                          <h6 className="mb-0">Critical Hit</h6>
-                        </div>
-                      </NavLink>
-                      <NavLink to="/account/challenges/maze-day">
-                        <div
-                          className={` ${
-                            challenge === "maze-day" ||
-                            selectedEvent === "maze-day"
-                              ? "active-challenge-item"
-                              : "challenge-item"
-                          } d-flex align-items-center gap-2 py-2 px-1 px-lg-4`}
-                          onClick={() => {
-                            setChallenge("maze-day");
-                          }}
-                        >
-                          <img
-                            src={mazeGardenIcon}
-                            alt=""
-                            style={{ width: 32, height: 34 }}
-                          />
-                          <h6 className="mb-0">Maze Garden</h6>
-                        </div>
-                      </NavLink> */}
                     </div>
                   </div>
                   <div className="col-12 col-lg-10">
@@ -3595,9 +3479,37 @@ const NewEvents = ({
                       <div className="d-flex flex-column gap-3">
                         <div className="d-flex flex-column">
                           <div className="position-relative d-flex flex-column align-items-lg-center justify-content-center">
+                            {activeEvent.title === "BNB CHAIN Maze Day" && (
+                              <div
+                                className="d-flex align-item-start gap-2 position-absolute"
+                                style={{ top: "10px", right: "10px" }}
+                              >
+                                <div className="beast-date d-flex flex-column">
+                                  <div
+                                    className="beast-date-text-holder d-flex align-items-center justify-content-center"
+                                    style={{
+                                      background:
+                                        activeEvent.day === adjustedDay
+                                          ? "#e10000"
+                                          : "#08656a",
+                                    }}
+                                  >
+                                    {activeEvent.dayText}
+                                  </div>
+                                  <div className="beast-date-holder d-flex align-items-center justify-content-center">
+                                    {currentWeek[
+                                      activeEvent.day - 1
+                                    ]?.getDate()}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
                             {activeEvent.title === "Puzzle Madness" && (
                               <img
-                                src={"https://cdn.worldofdypians.com/wod/tooltip3d.svg"}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/tooltip3d.svg"
+                                }
                                 className="new-event-banner-tooltip"
                                 alt=""
                                 onClick={() => {
@@ -3618,28 +3530,44 @@ const NewEvents = ({
                                     className={`beast-siege-wrapper gap-4 gap-lg-0 ${
                                       activeEvent.class
                                     } ${
-                                      activeEvent.title === "BNB CHAIN Maze Day" &&
+                                      activeEvent.title ===
+                                        "BNB CHAIN Maze Day" &&
                                       adjustedDay !== 5
                                         ? "luminosity"
                                         : ""
                                     } p-3 d-flex flex-column justify-content-between w-100 position-relative`}
                                   >
-                                    {activeEvent.title === "BNB CHAIN Maze Day" &&
-                                    <div className="maze-day-balance-holder d-flex flex-column align-items-center gap-1 p-2">
-                                        <span className="beast-siege-event-price">My Balance:</span>
-                                        <span className="beast-siege-event-price">{getFormattedNumber(wodBalance, hasNoMoreThanTwoDecimalPlaces(Number(wodBalance)) ? 0 : 2 )} WOD</span>
-                                    </div>
-                                    }
+                                    {activeEvent.title ===
+                                      "BNB CHAIN Maze Day" && (
+                                      <div className="maze-day-balance-holder d-flex flex-column align-items-center gap-1 p-2">
+                                        <span className="beast-siege-event-price">
+                                          My Balance:
+                                        </span>
+                                        <span className="beast-siege-event-price">
+                                          {getFormattedNumber(
+                                            wodBalance,
+                                            hasNoMoreThanTwoDecimalPlaces(
+                                              Number(wodBalance)
+                                            )
+                                              ? 0
+                                              : 2
+                                          )}{" "}
+                                          WOD
+                                        </span>
+                                      </div>
+                                    )}
                                     <div className="d-flex flex-column gap-1">
                                       <h6 className="beast-siege-title mb-0">
                                         {activeEvent.title}
                                       </h6>
-                                      {activeEvent.title === "BNB CHAIN Maze Day" &&
+                                      {activeEvent.title ===
+                                        "BNB CHAIN Maze Day" &&
                                       adjustedDay !== 5 ? (
                                         <span className="beast-siege-sub">
                                           Available on Friday
                                         </span>
-                                      ) : activeEvent.title === "BNB CHAIN Maze Day" &&
+                                      ) : activeEvent.title ===
+                                          "BNB CHAIN Maze Day" &&
                                         adjustedDay === 5 ? (
                                         <span className="beast-siege-sub">
                                           Ready
@@ -3665,7 +3593,8 @@ const NewEvents = ({
                                         </span>
                                       )}
                                     </div>
-                                    {activeEvent.title === "BNB CHAIN Maze Day" ? (
+                                    {activeEvent.title ===
+                                    "BNB CHAIN Maze Day" ? (
                                       <>
                                         <div className="d-flex flex-column gap-1">
                                           <span className="beast-siege-wod-price">
@@ -3675,21 +3604,26 @@ const NewEvents = ({
                                             Event Requirement
                                           </span>
                                         </div>
-                                       {Number(wodBalance) <= 400 ? 
-                                      // <div className="position-relative mt-5 mt-lg-0">
+                                        {Number(wodBalance) <= 400 ? (
+                                          // <div className="position-relative mt-5 mt-lg-0">
                                           <NavLink
-                                       to={"/#buy-wod"}
-                                       className="beast-siege-btn maze-day-button"
-                                     >
-                                       Get WOD
-                                     </NavLink>
-                                      // </div>
-                                     :
-                                     <div style={{height: "38px"}} className="d-flex align-items-center">
-                                        <span className="beast-siege-event-price w-50 text-white">You are elligible for participation</span>
-
-                                     </div> 
-                                      }
+                                            to={"/#buy-wod"}
+                                            className="beast-siege-btn maze-day-button"
+                                          >
+                                            Get WOD
+                                          </NavLink>
+                                        ) : (
+                                          // </div>
+                                          <div
+                                            style={{ height: "38px" }}
+                                            className="d-flex align-items-center"
+                                          >
+                                            <span className="beast-siege-event-price w-50 text-white">
+                                              You are elligible for
+                                              participation
+                                            </span>
+                                          </div>
+                                        )}
                                       </>
                                     ) : activeEvent.title === "Critical Hit" ? (
                                       <>
@@ -3713,7 +3647,7 @@ const NewEvents = ({
                                         ) : (
                                           <div className="d-flex align-items-center gap-1">
                                             <NavLink
-                                            to={"/game#land"}
+                                              to={"/game#land"}
                                               className="beast-siege-event-price get-land-link"
                                               style={{
                                                 textDecoration: "underline",
