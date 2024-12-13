@@ -820,6 +820,7 @@ const MobileNavbar = ({
                 className={`${
                   (window.location.pathname.includes("/token") ||
                     window.location.pathname.includes("/staking") ||
+                    window.location.pathname.includes("/launchpool") ||
                     window.location.pathname.includes("/bridge")) &&
                   "mobile-nav-item-active"
                 }
@@ -881,6 +882,18 @@ const MobileNavbar = ({
                       onClick={() => setOpenNavbar(false)}
                     >
                       <span className={`sidebar-title`}>Staking</span>
+                    </NavLink>
+                    <NavLink
+                      to="/launchpool"
+                      end
+                      className={({ isActive }) =>
+                        isActive
+                          ? "d-flex px-2 align-items-center gap-2 sidebar-item sidebar-item-active nft-active"
+                          : "d-flex px-2 align-items-center gap-2 sidebar-item"
+                      }
+                      onClick={() => setOpenNavbar(false)}
+                    >
+                      <span className={`sidebar-title`}>Launchpool</span>
                     </NavLink>
                     <NavLink
                       to="/bridge"
