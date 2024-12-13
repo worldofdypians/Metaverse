@@ -35,8 +35,7 @@ import stars from "./assets/stars.svg";
 import singleStar from "./assets/star.svg";
 import expand from "./assets/expand.svg";
 import chart from "./assets/chart.svg";
-import users from "./assets/users.svg";
-import dropdownIcon from "./assets/dropdownIcon.svg";
+import users from "./assets/users.svg"; 
 import { ethers } from "ethers";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 

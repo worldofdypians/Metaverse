@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import closeX from "./assets/closeX.svg";
 import "./_filters.scss";
 import useWindowSize from "../../../hooks/useWindowSize";
 import "../_marketplace.scss";
@@ -45,7 +44,7 @@ const SyncModal = ({ open, onclose, onConfirm, onCancel, syncStatus }) => {
           <div className="d-flex justify-content-between gap-1  position-relative">
             <h6 className="text-white summarytitle">Synchronize Wallet</h6>
             <img
-              src={closeX}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               alt=""
               className="close-x"
               onClick={() => {

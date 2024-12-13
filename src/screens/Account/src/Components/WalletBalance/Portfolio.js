@@ -9,8 +9,7 @@ import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
 
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
-
-import dropdownIcon from "./assets/dropdownIcon.svg";
+ 
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 
@@ -2704,7 +2703,7 @@ const Portfolio = ({
                             {filter1 === "" ? "Collections" : filter1}
                           </h6>
                         </div>
-                        <img src={dropdownIcon} alt="" />
+                        <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                       </button>
                       <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
@@ -2790,7 +2789,7 @@ const Portfolio = ({
                             {filter2 === "" ? "Status" : filter2}
                           </h6>
                         </div>
-                        <img src={dropdownIcon} alt="" />
+                        <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                       </button>
                       <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                         <li
@@ -3856,7 +3855,7 @@ const Portfolio = ({
                   </h6>
                 </div>
                 <img
-                  src={require("./assets/closeMark.svg").default}
+                  src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
                   alt="x mark"
                   style={{ cursor: "pointer" }}
                   onClick={() => setReqModal(false)}
@@ -3946,7 +3945,7 @@ const Portfolio = ({
                   </h6>
                 </div>
                 <img
-                  src={require("./assets/closeMark.svg").default}
+                  src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
                   alt="x mark"
                   style={{ cursor: "pointer" }}
                   onClick={() => setmultiplayerModal(false)}
