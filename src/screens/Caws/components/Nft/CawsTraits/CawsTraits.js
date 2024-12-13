@@ -12,12 +12,12 @@ const CawsTraits = () => {
           <div className="col-md-5 d-flex align-items-center justify-content-center position-relative order-2 order-md-1 mt-5 mt-md-0">
             {/* <span className='blur-backgroud-top-left left-0' /> */}
             <img
-              src={require("../../../assets/Nft/caws_transparent.gif")}
+              src={"https://cdn.worldofdypians.com/wod/caws_transparent.gif"}
               className="graphics white-gif"
               alt="phone-graphics"
             />
             <img
-              src={require("../../../assets/Nft/caws_transparent.gif")}
+              src={"https://cdn.worldofdypians.com/wod/caws_transparent.gif"}
               className="graphics dark-gif"
               alt="phone-graphics"
             />
