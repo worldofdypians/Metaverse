@@ -34,7 +34,7 @@ const GovernanceInner = ({
 
   const today = new Date();
 
-  const { BigNumber, reward_token_wod } = window;
+  const { BigNumber, reward_token_wod, reward_token_wod_test } = window;
 
   const totalVotes =
     Number(currentProposal?._optionOneVotes) +
@@ -57,7 +57,7 @@ const GovernanceInner = ({
   );
 
   const handleSetMaxWithdraw = async (e) => {
-    const governanceSc = new window.bscWeb3.eth.Contract(
+    const governanceSc = new window.bscTestWeb3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
@@ -104,7 +104,7 @@ const GovernanceInner = ({
 
   const getProposal = async (_proposalId) => {
     if (_proposalId) {
-      const governanceSc = new window.bscWeb3.eth.Contract(
+      const governanceSc = new window.bscTestWeb3.eth.Contract(
         window.GOVERNANCE_ABI,
         window.config.governance_address
       );
@@ -125,7 +125,7 @@ const GovernanceInner = ({
   };
 
   const getuserInfo = async () => {
-    const governanceSc = new window.bscWeb3.eth.Contract(
+    const governanceSc = new window.bscTestWeb3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
@@ -148,7 +148,7 @@ const GovernanceInner = ({
 
     let amount = depositAmount;
     amount = new BigNumber(amount).times(1e18).toFixed(0);
-    reward_token_wod
+    reward_token_wod_test
       .approve(window.config.governance_address, amount)
       .then(() => {
         setdepositLoading(false);
@@ -169,7 +169,7 @@ const GovernanceInner = ({
     const result = await window
       .checkapproveStakePool(
         coinbase,
-        reward_token_wod._address,
+        reward_token_wod_test._address,
         window.config.governance_address
       )
       .then((data) => {
@@ -200,7 +200,7 @@ const GovernanceInner = ({
     amount = new BigNumber(amount).times(1e18).toFixed(0);
 
     const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
+    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
     console.log("gasPrice", gasPrice);
     const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
     const increasedGwei = parseInt(currentGwei) + 1.3;
@@ -251,7 +251,7 @@ const GovernanceInner = ({
     amount = new BigNumber(amount).times(1e18).toFixed(0);
 
     const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
+    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
     console.log("gasPrice", gasPrice);
     const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
     const increasedGwei = parseInt(currentGwei) + 1.3;
@@ -298,7 +298,7 @@ const GovernanceInner = ({
     );
 
     const web3 = new Web3(window.ethereum);
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
+    const gasPrice = await window.bscTestWeb3.eth.getGasPrice();
     console.log("gasPrice", gasPrice);
     const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
     const increasedGwei = parseInt(currentGwei) + 1.3;
@@ -457,7 +457,7 @@ const GovernanceInner = ({
                         </div>
                       </div>
                     </div>
-                    {isConnected && chainId === 56 ? (
+                    {isConnected && chainId === 97 ? (
                       <div className="d-flex flex-column w-100">
                         {currentProposal?.expired === false && (
                           <div className="sidebar-separator2 my-4"></div>
@@ -565,32 +565,32 @@ const GovernanceInner = ({
                                 (depositAmount === "" ||
                                   depositLoading === true) &&
                                 isConnected &&
-                                chainId === 56
+                                chainId === 97
                                   ? true
                                   : false
                               }
                               className={`btn w-100 ${
                                 depositAmount === "" &&
                                 isConnected &&
-                                chainId === 56 &&
+                                chainId === 97 &&
                                 "disabled-btn-gov"
                               }    ${
                                 depositStatus === "initial" &&
                                 depositAmount !== "" &&
                                 isConnected &&
-                                chainId === 56 &&
+                                chainId === 97 &&
                                 "action-btn"
                               }  ${
                                 ((depositStatus === "deposit" &&
                                   isConnected &&
-                                  chainId === 56) ||
+                                  chainId === 97) ||
                                   !isConnected) &&
                                 "action-btn"
                               } ${
                                 depositStatus === "success"
                                   ? "action-btn"
                                   : (depositStatus === "error" ||
-                                      chainId !== 56) &&
+                                      chainId !== 97) &&
                                     isConnected
                                   ? "fail-button-gov"
                                   : null
@@ -598,8 +598,8 @@ const GovernanceInner = ({
                               onClick={() => {
                                 !isConnected
                                   ? handleConnection()
-                                  : isConnected && chainId !== 56
-                                  ? switchNetwork("0x38", 56)
+                                  : isConnected && chainId !== 97
+                                  ? switchNetwork("0x61", 97)
                                   : depositStatus === "deposit"
                                   ? handleAddVote(proposalId, selectOption)
                                   : depositStatus === "initial" &&
@@ -610,7 +610,7 @@ const GovernanceInner = ({
                             >
                               {!isConnected ? (
                                 <>Connect Wallet</>
-                              ) : isConnected && chainId !== 56 ? (
+                              ) : isConnected && chainId !== 97 ? (
                                 <>Switch to BNB Chain</>
                               ) : depositLoading ? (
                                 <div
@@ -731,13 +731,13 @@ const GovernanceInner = ({
                           Connect Wallet
                         </button>
                       </div>
-                    ) : isConnected && chainId !== 56 ? (
+                    ) : isConnected && chainId !== 97 ? (
                       <div className="mt-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                         <button
                           className="fail-button-gov px-3 py-2 w-100"
                           // style={{ width: "fit-content" }}
                           onClick={() => {
-                            switchNetwork("0x38", 56);
+                            switchNetwork("0x61", 87);
                           }}
                         >
                           Switch to BNB Chain

@@ -41,7 +41,7 @@ const CreateProposal = ({
   };
 
   const [selectedCategory, setSelectedCategory] = useState("aor");
-  const [subject, setSubject] = useState("");
+  // const [subject, setSubject] = useState("");
   const [proposalDesc, setproposalDesc] = useState("");
 
   const switchNetwork = async (hexChainId, chain) => {
@@ -92,7 +92,7 @@ const CreateProposal = ({
             />
           </div>
 
-          <div className="d-flex flex-column gap-2">
+          {/* <div className="d-flex flex-column gap-2">
             <div className="dropdown position relative">
               <button
                 class={`btn w-100 launchpad-dropdown gap-2 d-flex justify-content-between align-items-center dropdown-toggle`}
@@ -164,7 +164,7 @@ const CreateProposal = ({
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
           <div className="d-flex flex-column gap-2">
             <span className="proposal-subject-text">Description</span>
             <textarea
@@ -184,10 +184,10 @@ const CreateProposal = ({
           </span>
 
           <div className="d-flex w-100 justify-content-center">
-            {isConnected && coinbase && chainId === 56 && (
+            {isConnected && coinbase && chainId === 97 && (
               <button
                 className={` ${
-                  proposalDesc === "" || subject === ""
+                  proposalDesc === ""  
                     ? "disabled-btn-gov"
                     : govStatus === "error"
                     ? "fail-button-gov"
@@ -195,10 +195,10 @@ const CreateProposal = ({
                 }  px-3 py-2`}
                 style={{ width: "fit-content" }}
                 onClick={() => {
-                  onSubmitProposal(subject, proposalDesc);
+                  onSubmitProposal(proposalDesc);
                 }}
                 disabled={
-                  proposalDesc === "" || subject === "" || govStatus === "error"
+                  proposalDesc === ""  || govStatus === "error"
                 }
               >
                 {govLoading ? (
@@ -222,12 +222,12 @@ const CreateProposal = ({
                 )}
               </button>
             )}
-            {chainId !== 56 && (
+            {chainId !== 97 && (
               <button
                 className="fail-button-gov px-3 py-2"
                 style={{ width: "fit-content" }}
                 onClick={() => {
-                  switchNetwork("0x38", 56);
+                  switchNetwork("0x61", 97);
                 }}
               >
                 Switch to BNB Chain

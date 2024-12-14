@@ -26,7 +26,7 @@ const Governance = ({
   const today = new Date();
 
   const getProposalInfo = async () => {
-    const governanceSc = new window.bscWeb3.eth.Contract(
+    const governanceSc = new window.bscTestWeb3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
@@ -44,7 +44,7 @@ const Governance = ({
 
   const getProposal = async (_proposalId) => {
     if (_proposalId) {
-      const governanceSc = new window.bscWeb3.eth.Contract(
+      const governanceSc = new window.bscTestWeb3.eth.Contract(
         window.GOVERNANCE_ABI,
         window.config.governance_address
       );
@@ -58,7 +58,7 @@ const Governance = ({
     }
   };
   const refreshProposals = async () => {
-    const governanceSc = new window.bscWeb3.eth.Contract(
+    const governanceSc = new window.bscTestWeb3.eth.Contract(
       window.GOVERNANCE_ABI,
       window.config.governance_address
     );
@@ -114,7 +114,7 @@ const Governance = ({
     settotalProposals(total_proposals);
   };
 
-  const handleSubmitProposal = async (subject, desc) => {
+  const handleSubmitProposal = async (desc) => {
     window.web3 = new Web3(window.ethereum);
     const governanceSc = new window.web3.eth.Contract(
       window.GOVERNANCE_ABI,

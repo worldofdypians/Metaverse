@@ -51,6 +51,19 @@ export const handleSwitchNetworkhook = async (chainID) => {
     blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
   };
 
+  const BNB_TEST = {
+    chainId: "0x61", // A 0x-prefixed hexadecimal string
+    rpcUrls: [window.config.bsc_testnet_endpoint],
+    chainName: "BNB Testnet",
+    nativeCurrency: {
+      name: "BNB Testnet",
+      symbol: "BNB", // 2-6 characters long
+      decimals: 18,
+    },
+
+    blockExplorerUrls: ["https://mainnet.opbnbscan.com"],
+  };
+
   const BASEPARAMS = {
     chainId: "0x2105", // A 0x-prefixed hexadecimal string
     chainName: "Base Mainnet",
@@ -185,12 +198,14 @@ export const handleSwitchNetworkhook = async (chainID) => {
       (chainID === "0x406" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2105" && switchError.code.toString().includes("32603")) ||
       (chainID === "0xcc" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0x45c" && switchError.code.toString().includes("32603"))||
-      (chainID === "0x28c58" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x61" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x45c" && switchError.code.toString().includes("32603")) ||
+      (chainID === "0x28c58" &&
+        switchError.code.toString().includes("32603")) ||
       (chainID === "0x58" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0x531" && switchError.code.toString().includes("32603"))||
+      (chainID === "0x531" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x343b" && switchError.code.toString().includes("32603")) ||
-      (chainID === "0xa9" && switchError.code.toString().includes("32603"))||
+      (chainID === "0xa9" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x2ba" && switchError.code.toString().includes("32603")) ||
       (chainID === "0x585eb4b1" &&
         switchError.code.toString().includes("32603")) ||
@@ -207,6 +222,8 @@ export const handleSwitchNetworkhook = async (chainID) => {
               ? [AVAXPARAMS]
               : chainID === "0x38"
               ? [BNBPARAMS]
+              : chainID === "0x61"
+              ? [BNB_TEST]
               : chainID === "0xcc"
               ? [OPBNBPARAMS]
               : chainID === "0x2105"
