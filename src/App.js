@@ -3411,9 +3411,9 @@ function App() {
 
   const getWodBalance = async (address) => {
     if (address) {
-      const tokenContract = new window.bscTestWeb3.eth.Contract(
+      const tokenContract = new window.bscWeb3.eth.Contract(
         window.TOKEN_ABI,
-        window.config.reward_token_wod_test_address
+        window.config.wod_token_address
       );
       const tokenBalance = await tokenContract.methods
         .balanceOf(address)

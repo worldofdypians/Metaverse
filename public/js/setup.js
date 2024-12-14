@@ -371,8 +371,8 @@ window.config = {
 
   //===========================================================================
   //GOVERNANCE
-  // governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
-  governance_address: "0xdb2E1287AAC9974AB28a66fABF9bCB34C5f37712",
+  governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
+  // governance_address: "0xdb2E1287AAC9974AB28a66fABF9bCB34C5f37712",
 
   vote_duration_in_seconds: 259200, // 3 days
 

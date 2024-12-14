@@ -184,7 +184,7 @@ const CreateProposal = ({
           </span>
 
           <div className="d-flex w-100 justify-content-center">
-            {isConnected && coinbase && chainId === 97 && (
+            {isConnected && coinbase && chainId === 56 && (
               <button
                 className={` ${
                   proposalDesc === ""  
@@ -222,12 +222,12 @@ const CreateProposal = ({
                 )}
               </button>
             )}
-            {chainId !== 97 && (
+            {chainId !== 56 && (
               <button
                 className="fail-button-gov px-3 py-2"
                 style={{ width: "fit-content" }}
                 onClick={() => {
-                  switchNetwork("0x61", 97);
+                  switchNetwork("0x38", 56);
                 }}
               >
                 Switch to BNB Chain
