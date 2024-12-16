@@ -5,12 +5,7 @@ import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";
  
 import NftPopup from "./NftPopup";
-import avax from "./assets/avax.svg"; 
-import eth from "./assets/eth.svg";
-import base from "./assets/base.svg";
-import ccipLogo from "./assets/ccipLogo.svg";
-import chainlinkLogo from "./assets/chainlinkLogo.svg";
-
+ 
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
 import { ethers } from "ethers";
@@ -2055,7 +2050,7 @@ const NFTBridge = ({
                 rel="noreferrer"
                 className="ccip-link d-flex align-items-center gap-1"
               >
-                <img src={ccipLogo} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/ccipLogo.svg'} alt="" />
               </a>
             </div>
             <div className="row mx-0 align-items-center justify-content-between m-0 gap-4 gap-lg-0">
@@ -2076,7 +2071,7 @@ const NFTBridge = ({
               <div className="col-12 col-lg-4">
                 <div className="d-flex flex-column justify-content-center align-items-center gap-2">
                   <img
-                    src={require("./assets/bridgenft.webp")}
+                    src={'https://cdn.worldofdypians.com/wod/bridgenft.webp'}
                     className="w-100 bridgenftImg"
                     alt=""
                   />
@@ -2120,12 +2115,12 @@ const NFTBridge = ({
                             <img
                               src={
                                 filterTitle === "Ethereum"
-                                  ? eth
+                                  ? 'https://cdn.worldofdypians.com/wod/eth.svg'
                                   : filterTitle === "BNB Chain"
                                   ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                   : filterTitle === "Avalanche"
-                                  ? avax
-                                  : base
+                                  ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
+                                  : 'https://cdn.worldofdypians.com/wod/base.svg'
                               }
                               alt=""
                             />
@@ -2144,7 +2139,7 @@ const NFTBridge = ({
                         }}
                       >
                         <span className="d-flex align-items-center gap-2">
-                          <img src={eth} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" />
                           Ethereum
                         </span>
                       </li>
@@ -2168,7 +2163,7 @@ const NFTBridge = ({
                         }}
                       >
                         <span className="d-flex align-items-center gap-2">
-                          <img src={avax} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" />
                           Avalanche
                         </span>
                       </li>
@@ -2180,7 +2175,7 @@ const NFTBridge = ({
                         }}
                       >
                         <span className="d-flex align-items-center gap-2">
-                          <img src={base} alt="" /> Base Network
+                          <img src={'https://cdn.worldofdypians.com/wod/base.svg'} alt="" /> Base Network
                         </span>
                       </li>
                     </ul>
@@ -2202,12 +2197,12 @@ const NFTBridge = ({
                             <img
                               src={
                                 destinationFilterTitle === "Ethereum"
-                                  ? eth
+                                  ? 'https://cdn.worldofdypians.com/wod/eth.svg'
                                   : destinationFilterTitle === "BNB Chain"
                                   ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                                   : destinationFilterTitle === "Avalanche"
-                                  ? avax
-                                  : base
+                                  ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
+                                  : 'https://cdn.worldofdypians.com/wod/base.svg'
                               }
                               alt=""
                             />
@@ -2232,7 +2227,7 @@ const NFTBridge = ({
                             >
                               <span className="d-flex align-items-center gap-2">
                                 <img
-                                  src={require(`./assets/${item.logo}.svg`)}
+                                  src={`https://cdn.worldofdypians.com/wod/${item.logo}.svg`}
                                   alt=""
                                 />{" "}
                                 {item.title}
@@ -2260,7 +2255,7 @@ const NFTBridge = ({
                       <img
                         src={
                           selectNftId === 0
-                            ? require("./assets/emptyCawsWod.png")
+                            ? 'https://cdn.worldofdypians.com/wod/emptycawswod.png'
                             : finalNftType === "land"
                             ? `https://mint.worldofdypians.com/thumbs/${selectNftId}.png`
                             : `https://mint.dyp.finance/thumbs/${selectNftId}.png`

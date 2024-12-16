@@ -80,7 +80,7 @@ const MyProfile = ({
   openSpecialRewards,
   userRankName,
   isConnected,
-  onConnectWallet, 
+  onConnectWallet,
   onDomainClick,
   domainName,
   liveRewards,
@@ -707,7 +707,6 @@ const MyProfile = ({
                         to={"/player"}
                       >
                         Create player
-                        
                       </NavLink>
                     ) : null}
                   </div>
@@ -823,7 +822,7 @@ const MyProfile = ({
                       userBaseStars={userBaseStars}
                       userTaikoStars={userTaikoStars}
                       userMatStars={userMatStars}
-                      userSeiStars={userSeiStars} 
+                      userSeiStars={userSeiStars}
                       globalMonthly={
                         userDataStar.position
                           ? userDataStar.position + 1
@@ -865,13 +864,7 @@ const MyProfile = ({
                       />
                     </div>
                   )}
-                  {isgoldenPassActive && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )}
+                 
                 </div>
                 <div className="daily-progress-item position-relative">
                   <img
@@ -885,13 +878,7 @@ const MyProfile = ({
                   <div className="daily-progress-value">
                     <span>{userActiveEvents}</span>
                   </div>
-                  {userActiveEvents > 0 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )}
+                 
                 </div> */}
                   <NavLink
                     to={"/account/prime"}
@@ -928,12 +915,6 @@ const MyProfile = ({
                       </span>
                     </div>
                     <span className="bundle-title-bottom">Prime</span>
-
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
                   </NavLink>
                   <div
                     className="daily-progress-item position-relative"
@@ -953,12 +934,6 @@ const MyProfile = ({
                       </span>
                     </div>
                     <span className="bundle-title-bottom">Daily Bonus</span>
-
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
                   </div>
                   <div
                     className="daily-progress-item position-relative"
@@ -980,12 +955,6 @@ const MyProfile = ({
                     <span className="bundle-title-bottom">
                       Daily Bonus Prime
                     </span>
-
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
                   </div>
                   <NavLink
                     to={dailyEvents[utcDayIndex].link}
@@ -1002,13 +971,7 @@ const MyProfile = ({
                         {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
                       </span>
                     </div>
-                    {/* {userDailyBundles?.dragonRuinsCount > 0 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )} */}
+
                     <span className="bundle-title-bottom">
                       {dailyEvents[utcDayIndex].title === "BNB Chain Maze Day"
                         ? "Maze Day"
@@ -1029,11 +992,7 @@ const MyProfile = ({
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
                     </div>
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
+
                     <span className="bundle-title-bottom">Critical Hit</span>
                   </NavLink>
 
@@ -1054,11 +1013,7 @@ const MyProfile = ({
                           : userActiveEvents + "/14"}
                       </span>
                     </div>
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
+
                     <span className="bundle-title-bottom">Treasure Hunt</span>
                   </NavLink>
 
@@ -1081,11 +1036,7 @@ const MyProfile = ({
                           : "Ready"}
                       </span>
                     </div>
-                    {/* <img
-                    src={emptyTag}
-                    alt=""
-                    className="daily-progress-status"
-                  /> */}
+
                     <span className="bundle-title-bottom">Explorer Hunt</span>
                   </NavLink>
 
@@ -1109,13 +1060,7 @@ const MyProfile = ({
                         {/* Ready */}
                       </span>
                     </div>
-                    {/* {userDailyBundles?.puzzleMadnessCount > 0 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )} */}
+
                     <span className="bundle-title-bottom">Puzzle Madness</span>
                   </NavLink>
 
@@ -1132,13 +1077,7 @@ const MyProfile = ({
                   <div className="daily-progress-value">
                     <span>{totalClaimedChests}</span>
                   </div>
-                  {totalClaimedChests === 140 && (
-                    <img
-                      src={doneTag}
-                      alt=""
-                      className="daily-progress-status"
-                    />
-                  )}
+                  
                 </div> */}
                 </div>
               </div>
@@ -1335,7 +1274,6 @@ const MyProfile = ({
                     alt=""
                   />
                   <div className="d-flex flex-column position-absolute extraRewardsGolden">
-                
                     {/* <h6
                       className="special-rewards-total-span"
                       style={{
@@ -1655,7 +1593,6 @@ const MyProfile = ({
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
-                    {/* <img src={defeatedRed} className="defeated-red" alt="" /> */}
                     <img
                       src={dailyEvents[utcDayIndex].bannerImg}
                       alt=""
@@ -1848,12 +1785,7 @@ const MyProfile = ({
                      <hr className="sidebar-separator my-2" />
                      <div className="d-flex align-items-center justify-content-between">
                        <Countdown renderer={renderer} date={item.eventDate} />
-                       <img
-                         src={greenArrow}
-                         width={14}
-                         height={14}
-                         alt=""
-                       />
+                     
                      </div>
                    </div>
                  </div>

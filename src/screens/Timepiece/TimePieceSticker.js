@@ -1,5 +1,4 @@
-import React from "react";
-import timepieceBanner1 from "./assets/timepieceBanner1.webp";
+import React from "react"; 
 
 
 const TimePieceSticker = () => {
@@ -33,7 +32,7 @@ const TimePieceSticker = () => {
         </div>
       </div>
       <div className="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end">
-        <img src={timepieceBanner1} alt="caws banner" className="caws-banner" />
+        <img src={'https://cdn.worldofdypians.com/wod/timepieceBanner1.webp'} alt="caws banner" className="caws-banner" />
       </div>
     </div>
   );

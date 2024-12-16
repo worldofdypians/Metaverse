@@ -289,8 +289,7 @@ const VideoWrapper = ({
           ></video>
         </div>
         {/* <div className="col-12 col-lg-4  d-flex align-items-center justify-content-center justify-content-lg-start"> */}
-        {/* <GlobalLeaderboard /> */}
-        {/* <NewHomeLeaderboard /> */}
+        {/* <GlobalLeaderboard /> */} 
         {/* </div> */}
         {/* </div> */}
         {windowSize.width > 992 && (

@@ -52,16 +52,7 @@ totalVolumeNew
 
   return (
     <>
-      {/* <OutsideClickHandler
-        id="popup"
-        onOutsideClick={() => setActivePopup(false)}
-      > */}
-        {/* <MintPopup
-          active={activePopup}
-          data={basePopupInfo}
-          onClose={() => setActivePopup(false)}
-        /> */}
-      {/* </OutsideClickHandler> */}
+
       <div className="container-fluid px-0 d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column home-main-wrapper">
           <VideoWrapper
@@ -75,7 +66,6 @@ totalVolumeNew
           {/* <WodPartners full={false} /> */}
           <GameStats totalSupply={totalSupply} monthlyPlayers={monthlyPlayers}/>
           <WodBuilders />
-          {/* <Utilities /> */}
           {/* <MarketSection
             coinbase={coinbase}
             ethTokenData={ethTokenData}

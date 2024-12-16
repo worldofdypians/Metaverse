@@ -1,14 +1,11 @@
 import React from "react";
-import "./_timepiecebenefits.scss";
-import timepieceBanner2 from "../../screens/Timepiece/assets/timepieceBanner2.png";
-import whitearrow from './assets/whitearrow.svg'
-import raritytools from './assets/raritytools.svg'
+import "./_timepiecebenefits.scss";  
 
 const TimePieceTraits = () => {
   return (
     <div className="row px-3 py-3 p-lg-5 mt-5 gap-4 gap-lg-0">
       <div className="col-12 col-lg-4 d-flex justify-content-center">
-        <img src={timepieceBanner2} alt="caws banner" className="caws-banner" />
+        <img src={'https://cdn.worldofdypians.com/wod/timepieceBanner2.png'} alt="caws banner" className="caws-banner" />
       </div>
       <div className="col-12 col-lg-8">
         <div className="d-flex flex-column gap-3">
@@ -40,9 +37,9 @@ const TimePieceTraits = () => {
               rel='noreferrer'
             >
               <button className="btn timepiece-btn px-5 d-flex align-items-center">
-                <img src={raritytools} alt='' className="mx-2"/>
+                <img src={'https://cdn.worldofdypians.com/wod/rarity.svg'} alt='' className="mx-2"/>
                 Rarity Tools
-              <img src={whitearrow} alt=''/>
+              <img src={'https://cdn.worldofdypians.com/wod/whitearrow.svg'} alt=''/>
               </button>
             </a>
           </div>

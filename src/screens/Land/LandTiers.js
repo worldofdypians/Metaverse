@@ -1,10 +1,5 @@
 import React from "react";
 
-
-
-
-
-
 const LandTiers = () => {
   const tiers = [
     {

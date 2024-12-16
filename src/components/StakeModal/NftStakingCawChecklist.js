@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Web3 from "web3";
-import PropTypes from "prop-types";
-import weth from "./assets/weth.svg";
+import PropTypes from "prop-types"; 
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 
 const NftStakingCawChecklist = ({
@@ -271,7 +270,7 @@ const NftStakingCawChecklist = ({
                         style={{ fontSize: 16 }}
                       >
                         <img
-                          src={weth}
+                          src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                           alt=""
                           style={{ height: 20, width: 20 }}
                         />{" "}

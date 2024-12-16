@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import xmark from "./assets/xmark.svg";
+import React, { useState, useEffect } from "react"; 
 import EmptyWodCard from "../../components/StakeModal/EmptyWodCard";
 import EmptyCawsCard from "../../components/StakeModal/EmptyCawsCard";
 import NftChecklist from "./NftChecklist";
@@ -70,7 +69,7 @@ const NftPopup = ({
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="stake-modal-title">Select NFT</h6>
         <img
-          src={xmark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onModalClose}
           alt=""

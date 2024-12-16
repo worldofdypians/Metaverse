@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./_stakemodal.scss";
-import xmark from "./assets/xmark.svg";
+import "./_stakemodal.scss"; 
 import { Checkbox } from "@mui/material";
-import EmptyWodCard from "./EmptyWodCard"; 
-import cawsTag from "./assets/cawsTag.svg";
-import wodTag from "./assets/wodTag.svg";
-import fullWod from "./assets/fullWod.png"; 
+import EmptyWodCard from "./EmptyWodCard";  
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD"; 
-import CawsPremiumChecklist from "./CawsPremiumChecklist";
 import { ethers } from "ethers";
 import LandPremiumChecklist from "./LandPremiumChecklist";
 
@@ -456,7 +451,7 @@ const LandPremiumStakeModal = ({
           {!isStake ? "Stakeable NFTs" : "Staked NFTs"}
         </h6>
         <img
-          src={xmark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onModalClose}
           alt=""
@@ -686,7 +681,7 @@ const LandPremiumStakeModal = ({
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex align-items-center gap-1">
-                  <img src={wodTag} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/wodTag.svg'} alt="" />
                   <span className="selected-nfts-amount">
                     {getApprovedLandPoolsNfts(selectNftIds).length} Genesis
                   </span>
@@ -855,7 +850,7 @@ const LandPremiumStakeModal = ({
                 </div>
                 <div className="d-flex gap-2 justify-content-between">
                   <div className="d-flex align-items-center gap-1">
-                    <img src={wodTag} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/wodTag.svg'} alt="" />
                     <span className="selected-nfts-amount">
                       {getApprovedLandPoolsNfts(selectNftIds).length} Genesis
                     </span>

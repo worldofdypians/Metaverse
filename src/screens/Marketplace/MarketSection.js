@@ -2,11 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MarketCards from "../../components/MarketCards/MarketCards";
 import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
-import {
-  getCawsNfts,
-  getWodNfts,
-  getTimepieceNfts,
-} from "../../actions/convertUsd";
+
 import useWindowSize from "../../hooks/useWindowSize";
 
 const MarketSection = ({

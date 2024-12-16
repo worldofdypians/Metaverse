@@ -11,7 +11,6 @@ import OutsideClickHandler from "react-outside-click-handler";
 import timepiecetraits from "../../../actions/timepiecetraits.json";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
 import FilterCard from "./FilterCard"; 
-import ComfirmationModal from "./ConfirmationModal"; 
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 
 const TimepieceNFT = ({

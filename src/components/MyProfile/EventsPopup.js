@@ -165,7 +165,7 @@ const EventsPopup = ({ onClose, dummyEvent, onClearAd }) => {
                 <div className="d-flex align-items-center gap-2">
                   <img
                     src={
-                      require("../../screens/Account/src/Components/WalletBalance/assets/greenCalendar.svg")
+                      "https://cdn.worldofdypians.com/wod/greenCalendar.svg"
                         .default
                     }
                     className="green-calendar"

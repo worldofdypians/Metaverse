@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_walletbalance.scss"; 
 import axios from "axios";
-import viewAllArrow from "./assets/viewAllArrow.svg";
+
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
 
@@ -10,8 +10,7 @@ import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
- 
-
+  
 const Portfolio = ({
   dypBalance,
   address,
@@ -2223,7 +2222,9 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={viewAllArrow}
+                          src={
+                            'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'
+                          }
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2242,7 +2243,7 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={viewAllArrow}
+                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2261,7 +2262,7 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={viewAllArrow}
+                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2280,7 +2281,7 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={viewAllArrow}
+                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />
@@ -2299,7 +2300,7 @@ const Portfolio = ({
                           {showNfts ? "View Less" : "View All"}
                         </span>
                         <img
-                          src={viewAllArrow}
+                          src={ 'https://cdn.worldofdypians.com/wod/viewAllArrow.svg'}
                           style={{ rotate: showNfts ? "0deg" : "180deg" }}
                           alt=""
                         />

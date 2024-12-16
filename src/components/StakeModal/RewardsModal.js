@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./_stakemodal.scss";
-import xmark from "./assets/xmark.svg";
+import "./_stakemodal.scss"; 
 import { Checkbox } from "@mui/material";
-import EmptyCawsWod from "./EmptyCawsWod"; 
-import cawsTag from "./assets/cawsTag.svg";
-import wodTag from "./assets/wodTag.svg";
-import fullWod from "./assets/fullWod.png";
+import EmptyCawsWod from "./EmptyCawsWod";   
 import axios from "axios";
 import CawsWodNftChecklist from "./CawsWodNftChecklist"; 
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
@@ -239,7 +235,7 @@ const RewardsModal = ({
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="stake-modal-title">Staked NFTs</h6>
         <img
-          src={xmark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onModalClose}
           alt=""
@@ -491,13 +487,13 @@ const RewardsModal = ({
               </div>
               <div className="d-flex gap-2 justify-content-between">
                 <div className="d-flex align-items-center gap-1">
-                  <img src={wodTag} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/wodTag.svg'} alt="" />
                   <span className="selected-nfts-amount">
                     {landStakes.length} WOD Land
                   </span>
                 </div>
                 <div className="d-flex align-items-center gap-1">
-                  <img src={cawsTag} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/cawsTag.svg'} alt="" />
                   <span className="selected-nfts-amount">
                     {cawsStakes.length} CAWS
                   </span>

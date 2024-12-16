@@ -3,8 +3,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-import "./_landwhitelistmodal.scss";
-import xmark from "../../assets/landAssets/xmark.svg";
+import "./_landwhitelistmodal.scss"; 
 
 
 const LandWhitelistModal = ({
@@ -184,7 +183,7 @@ const LandWhitelistModal = ({
                 <img
                   src={
                     totalCAWCreated === 0 && totalCAWStaked === 0 && coinbase
-                      ? xmark
+                      ? "https://cdn.worldofdypians.com/wod/xMark.svg"
                       : (totalCAWCreated !== 0 || totalCAWStaked !== 0) &&
                         coinbase
                       ? "https://cdn.worldofdypians.com/wod/checkcircle.svg"
@@ -218,7 +217,7 @@ const LandWhitelistModal = ({
                 <img
                   src={
                     balance < mintPrice && coinbase
-                      ? xmark
+                      ? "https://cdn.worldofdypians.com/wod/xMark.svg"
                       : balance >= mintPrice && coinbase
                       ? "https://cdn.worldofdypians.com/wod/checkcircle.svg"
                       : "https://cdn.worldofdypians.com/wod/purplecircle.svg"

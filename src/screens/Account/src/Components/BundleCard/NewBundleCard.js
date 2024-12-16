@@ -1837,7 +1837,7 @@ const NewBundleCard = ({
                 </div>
                 <span className="new-timer-description ">
                   Use in-game{" "}
-                  <img src={require("./assets/syncIcon.svg").default} alt="" />{" "}
+                  <img src={'https://cdn.worldofdypians.com/wod/syncIcon.svg'} alt="" />{" "}
                   sync button every time you purchase a bundle
                 </span>
               </div>
@@ -1882,7 +1882,7 @@ const NewBundleCard = ({
                   <span className="new-timer-description ">
                     Use in-game{" "}
                     <img
-                      src={require("./assets/syncIcon.svg").default}
+                      src={'https://cdn.worldofdypians.com/wod/syncIcon.svg'}
                       alt=""
                     />{" "}
                     sync button every time you purchase a bundle
@@ -1929,7 +1929,7 @@ const NewBundleCard = ({
                   <span className="new-timer-description ">
                     Use in-game{" "}
                     <img
-                      src={require("./assets/syncIcon.svg").default}
+                      src={'https://cdn.worldofdypians.com/wod/syncIcon.svg'}
                       alt=""
                     />{" "}
                     sync button every time you purchase a bundle
