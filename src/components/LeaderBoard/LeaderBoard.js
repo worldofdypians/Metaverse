@@ -10,7 +10,6 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import cawsBadge from "./assets/cawsBadge2.png";
 import genesisBadge from "./assets/genesisBadge2.png";
 // import OutsideClickHandler from "react-outside-click-handler";
-import tooltipIcon from "./assets/tooltip.svg";
 
 // import React, { useState, useEffect } from "react";
 
@@ -21,7 +20,7 @@ import Switch from "@mui/material/Switch";
 // import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-// import tooltipIcon from "./tooltipIcon.svg";
+
 import OutsideClickHandler from "react-outside-click-handler";
 // import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
@@ -747,7 +746,7 @@ const LeaderBoard = ({ username, userId, dypBalancebnb, address }) => {
         <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
           <div className="d-flex align-items-center gap-2 position-relative">
             <img
-              src={tooltipIcon}
+              src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
               alt=""
               className="tooltip-icon"
               style={{ cursor: "pointer", width: "20px", height: "20px" }}
