@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import useWindowSize from "../../../hooks/useWindowSize";
 import MobileNav from "../../../components/MobileNav/MobileNav"; 
 import { NavLink } from "react-router-dom";
-import { getWodNfts } from "../../../actions/convertUsd";
 import OutsideClickHandler from "react-outside-click-handler";
 
 import FilterCard from "./FilterCard"; 

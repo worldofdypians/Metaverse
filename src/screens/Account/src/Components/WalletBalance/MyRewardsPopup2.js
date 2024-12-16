@@ -1598,6 +1598,8 @@ const MyRewardsPopupNew = ({
                         "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
                       }
                       alt=""
+                      style={{ width: 16, height: 16 }}
+
                     />
                     CoinGecko
                   </span>
@@ -1746,7 +1748,7 @@ const MyRewardsPopupNew = ({
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
-                      src={require("../../../../Marketplace/assets/mantaLogo.png")}
+                      src={'https://cdn.worldofdypians.com/wod/manta.png'}
                       alt=""
                       style={{ width: 16, height: 16 }}
                     />

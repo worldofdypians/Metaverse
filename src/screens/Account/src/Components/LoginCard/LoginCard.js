@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Card from '@mui/material/Card';
-import { outlineBorder } from '../../Themes/Images';
+import Card from '@mui/material/Card'; 
 
 function LoginCard({ children, containerStyles, cardStyles }) {
     return (

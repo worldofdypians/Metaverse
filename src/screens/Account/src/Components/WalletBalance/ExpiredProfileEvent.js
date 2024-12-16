@@ -1,8 +1,5 @@
-import React from "react";  
-import grayExplore from "./assets/grayExplore.svg";
-import grayFind from "./assets/grayFind.svg";   
+import React from "react";    
  
-import grayArrow from "./assets/grayArrow.svg"; 
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number" ;
 
 const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
@@ -67,9 +64,9 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
           {event.title === "Dogecoin" || event.title === "CoinMarketCap" ? (
-            <img src={grayExplore} height={15} width={15} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/grayExplore.svg'} height={15} width={15} alt="" />
           ) : (
-            <img src={grayFind} height={15} width={15} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/grayFind.svg'} height={15} width={15} alt="" />
           )}
 
           <span className="mb-0 event-bottom-text" style={{ color: "#B8B8E0" }}>
@@ -96,7 +93,7 @@ const ExpiredProfileEvent = ({ onOpenEvent, data, event, userEarnedUsd }) => {
       </div>
         }
 
-        <img src={grayArrow} height={15} width={15} alt="" />
+        <img src={'https://cdn.worldofdypians.com/wod/grayArrow.svg'} height={15} width={15} alt="" />
       </div>
     </div>
   );

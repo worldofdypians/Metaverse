@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Close from "./close.svg";
+import PropTypes from "prop-types"; 
 
 const Modal = ({
   modalId,
@@ -36,7 +35,7 @@ const Modal = ({
             className="close-btn walletclose"
             style={{alignSelf: 'flex-end', padding: 10, cursor: 'pointer'}}
           >
-            <img src={Close} alt="" className="close-icon" />
+            <img src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'} alt="" className="close-icon" />
           </span>
           {children}
         </div>

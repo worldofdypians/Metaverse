@@ -10,17 +10,13 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import uploadIcon from "./assets/uploadIcon.svg";
-import uploadedIcon from "./assets/uploadedIcon.svg";
-import xMark from "./assets/xMark.svg";
+import { useState, useEffect } from "react"; 
 import ReCaptchaV2 from "react-google-recaptcha";
 import { useRef } from "react";
 import validateInfo from "./validateInfo";
 import { validateBusinessInfo } from "./validateBusinessInfo";
 import axios from "axios";
-import OutsideClickHandler from "react-outside-click-handler";
-import selectBtn from "./assets/selectBtn.svg";
+import OutsideClickHandler from "react-outside-click-handler"; 
 import FormContainer from "../../components/FormContainer/FormContainer";
 
 const StyledTextField = styled(TextField)({
@@ -484,7 +480,7 @@ const PartnerForm = () => {
                         sx={{ width: "100%" }}
                       />
                       <img
-                        src={selectBtn}
+                        src={'https://cdn.worldofdypians.com/wod/selectBtn.svg'}
                         alt=""
                         style={{
                           width: "40px",
@@ -539,12 +535,12 @@ const PartnerForm = () => {
                     <div className="d-flex align-items-center gap-2">
                       <div className="upload-btn-wrapper">
                         <button className="btn upload-btn d-flex align-items-center gap-2">
-                          <img src={uploadedIcon} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/uploadedIcon.svg'} alt="" />
                           File added
                         </button>
                       </div>
                       <img
-                        src={xMark}
+                        src={'https://cdn.worldofdypians.com/wod/xMark.svg'}
                         alt="x mark"
                         onClick={handleBusinessChangeBg}
                         style={{ cursor: "pointer" }}
@@ -565,7 +561,7 @@ const PartnerForm = () => {
                           onChange={(e) => onBusinessFileChange(e)}
                         />
                         Upload File
-                        <img src={uploadIcon} alt="" />
+                        <img src={'https://cdn.worldofdypians.com/wod/uploadIcon.svg'} alt="" />
                       </button>
                     </div>
                   )}
@@ -859,12 +855,12 @@ const PartnerForm = () => {
                     <div className="d-flex align-items-center gap-2">
                       <div className="upload-btn-wrapper">
                         <button className="btn upload-btn d-flex align-items-center gap-2">
-                          <img src={uploadedIcon} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/uploadedIcon.svg'} alt="" />
                           File added
                         </button>
                       </div>
                       <img
-                        src={xMark}
+                        src={'https://cdn.worldofdypians.com/wod/xMark.svg'}
                         alt="x mark"
                         onClick={handleChangeBg}
                         style={{ cursor: "pointer" }}
@@ -885,7 +881,7 @@ const PartnerForm = () => {
                           onChange={(e) => onFileChange(e)}
                         />
                         Upload File
-                        <img src={uploadIcon} alt="" />
+                        <img src={'https://cdn.worldofdypians.com/wod/uploadIcon.svg'} alt="" />
                       </button>
                     </div>
                   )}

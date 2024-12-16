@@ -59,7 +59,7 @@ import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
-import Community from "./screens/Community/Community.js";
+ 
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Governance from "./screens/Community/Governance/Governance.js";
@@ -5129,17 +5129,7 @@ function App() {
           />
 
           <Route exact path="/roadmap" element={<Roadmap />} />
-          <Route
-            exact
-            path="/community"
-            element={
-              <Community
-                socials={socials}
-                monthlyPlayers={monthlyPlayers}
-                percent={percent}
-              />
-            }
-          />
+         
               <Route
             exact
             path="/launchpool"

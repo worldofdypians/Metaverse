@@ -32,7 +32,6 @@ const Modal = ({
           className="modal-content p-0 position-relative"
           style={{ width: title ? width : "" }}
         >
-          {/* <img src={require("../../../Assets/General/times-icon.svg").default} alt="" aria-hidden="true" className="close" data-dismiss="modal" aria-label="Close" /> */}
           {(title === "stats" || title === "withdraw") && (
             <div className="d-flex align-items-center ps-4 pt-4 gap-2">
               <img src={title === "stats" ? "https://cdn.worldofdypians.com/wod/statsIconModal.svg" : title === "withdraw" ? "https://cdn.worldofdypians.com/wod/withdrawIcon.svg" : null} height={25} width={25} alt="" />

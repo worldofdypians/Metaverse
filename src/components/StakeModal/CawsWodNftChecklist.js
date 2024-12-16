@@ -3,7 +3,7 @@ import axios from "axios";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import PropTypes from "prop-types";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
-import weth from "./assets/weth.svg";
+
 import "./_stakemodal.scss";
 
 const CawsWodNftChecklist = ({
@@ -241,7 +241,7 @@ const CawsWodNftChecklist = ({
             <h6
               className="rewardtxtCawswod d-flex align-items-center gap-2 m-0"
             >
-              <img src={weth} alt="" style={{ height: 20, width: 20 }} />{" "}
+              <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" style={{ height: 20, width: 20 }} />{" "}
               {getFormattedNumber(EthRewards, 3)} ETH
             </h6>
             <span className="nft-price-usd">{formattedNum(ethToUSD, true)}</span>

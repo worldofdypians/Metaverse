@@ -2839,7 +2839,7 @@ const GetPremiumPopup = ({
             <span className="my-premium-balance">
               My Balance:{" "}
               {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-              {dropdownIcon.toUpperCase()}
+              {dropdownIcon?.toUpperCase()}
             </span>
           </div>
           <div
@@ -2861,7 +2861,7 @@ const GetPremiumPopup = ({
                       style={{ color: "#fff" }}
                     >
                       <img
-                        src={require(`../../Images/premium/tokens/${chainDropdown.symbol}Icon.svg`)}
+                        src={`https://cdn.worldofdypians.com/wod/${chainDropdown.symbol}IconPremium.svg`}
                         alt=""
                         style={{ width: 18, height: 18 }}
                       />
@@ -2882,6 +2882,7 @@ const GetPremiumPopup = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                         alt=""
+                        style={{ width: 18, height: 18 }}
                       />
                       Ethereum
                     </li>
@@ -2892,6 +2893,7 @@ const GetPremiumPopup = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                         alt=""
+                        style={{ width: 18, height: 18 }}
                       />
                       BNB Chain
                     </li>
@@ -2949,6 +2951,7 @@ const GetPremiumPopup = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                         alt=""
+                        style={{ width: 18, height: 18 }}
                       />
                       Avalanche
                     </li>
@@ -3004,6 +3007,7 @@ const GetPremiumPopup = ({
                       <img
                         src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                         alt=""
+                        style={{ width: 18, height: 18 }}
                       />
                       Avalanche
                     </li>
@@ -3115,7 +3119,7 @@ const GetPremiumPopup = ({
                         >
                           {dropdownIcon !== "" && (
                             <img
-                              src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
+                              src={`https://cdn.worldofdypians.com/wod/${dropdownIcon.toLowerCase()}IconPremium.svg`}
                               alt=""
                               style={{ width: 20, height: 20 }}
                             />
@@ -3255,56 +3259,56 @@ const GetPremiumPopup = ({
                             <img
                               src={
                                 chainId === 1
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 56
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbnb_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbnb_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 43114
-                                  ? require(`../../Images/premium/tokens/${window.config.subscription_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscription_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 1030
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncfx_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncfx_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 8453
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionbase_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionbase_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 1482601649
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionskale_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionskale_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 1116
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptioncore_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptioncore_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 88
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionviction_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionviction_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 169
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmanta_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmanta_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 167000
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptiontaiko_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptiontaiko_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 698
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionmat_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionmat_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                                   : chainId === 1329
-                                  ? require(`../../Images/premium/tokens/${window.config.subscriptionsei_tokens[
+                                  ? `https://cdn.worldofdypians.com/wod/${window.config.subscriptionsei_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
-                                  : require(`../../Images/premium/tokens/${window.config.subscriptioneth_tokens[
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
+                                  : `https://cdn.worldofdypians.com/wod/${window.config.subscriptioneth_tokens[
                                       t
-                                    ]?.symbol.toLowerCase()}Icon.svg`)
+                                    ]?.symbol.toLowerCase()}IconPremium.svg`
                               }
                               alt=""
                               style={{
@@ -3345,12 +3349,7 @@ const GetPremiumPopup = ({
                         ))}
                       </ul>
                     </div>
-                    {/* <img
-                    src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                    height={16}
-                    width={16}
-                    alt="usdt"
-                  /> */}
+                   
                     <span className="subscription-price-token mb-0 text-uppercase">
                       {formattedPrice.slice(0, 7)} {dropdownTitle}
                     </span>
@@ -3857,59 +3856,11 @@ const GetPremiumPopup = ({
                 </button>
               </div>
             )}
-            {/* {discountPercentage < 100 && discountPercentageViction < 100 && (
-            <div className="d-flex flex-column align-items-end gap-3">
-              <span className="my-premium-balance-text mb-0">
-                My balance:{" "}
-                {getFormattedNumber(tokenBalance / 10 ** tokenDecimals, 5)}{" "}
-                {dropdownIcon.toUpperCase()}
-              </span>
-              <div
-                className="premium-benefits-wrapper p-2 d-flex align-items-center gap-4"
-                style={{ height: "34px" }}
-              >
-                <span className="subscription-price-text mb-0">
-                  Subscription Price:
-                </span>
+             
 
-                
-              </div>
-            </div>
-          )} */}
-
-            {/* <div className="d-flex flex-column align-items-end justify-content-lg-end">
-              <span className="token-balance-placeholder">
-                Token Balance
-              </span>
-              <h6 className="account-token-amount">
-                {" "}
-                {getFormattedNumber(
-                  tokenBalance / 10 ** tokenDecimals,
-                  6
-                )}
-              </h6>
-            </div> */}
+            
           </div>
-          {/* <div
-            className="subscription-token-wrapper  p-2 d-flex align-items-center justify-content-between  mt-3"
-            style={{ width: "100%" }}
-          >
-            <span className="token-amount-placeholder">
-              Subscription price:
-            </span>
-            <div className="d-flex align-items-center gap-2">
-              <span className="usdt-text">
-                {formattedPrice.slice(0, 9)}
-              </span>
-
-              <img
-                src={require(`../../Images/premium/tokens/${dropdownIcon.toLowerCase()}Icon.svg`)}
-                height={24}
-                width={24}
-                alt="usdt"
-              />
-            </div>
-          </div> */}
+           
           {chainId === 1482601649 && (
             <div className="gotoNebula-wrapper p-3 mb-3">
               <div className="d-flex w-100 justify-content-between gap-2">

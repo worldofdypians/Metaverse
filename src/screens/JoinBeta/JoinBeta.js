@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./_joinbeta.scss";
-import joinBetaIcon from "./assets/joinBetaIcon.svg";
-import benefitsIcon from "./assets/benefitsIcon.svg";
-import checkIcon from "./assets/checkIcon.svg";
-import requirementsIcon from "./assets/requirementsIcon.svg";
-import tasksIcon from "./assets/tasksIcon.svg";
 import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
+ 
 
 const JoinBeta = ({ coinbase, handleRegister }) => {
   const requirements = [
@@ -104,7 +100,7 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
                 <div className="d-flex flex-column">
                   <span className="registered">Already registered</span>
                   <div className="d-flex align-items-center gap-1">
-                    <img src={joinBetaIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/joinBetaIconMain.svg'} alt="" />
                     <h6 className="registered-amount mb-0">
                       {getFormattedNumber(seats + betaSeats, 0)}
                     </h6>
@@ -124,14 +120,14 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
         <div className="row w-100 justify-content-between px-3 px-lg-5 mx-0">
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
-              <img src={requirementsIcon} alt="requirements" />
+              <img src={'https://cdn.worldofdypians.com/wod/requirementsIcon.svg'} alt="requirements" />
               <h6 className="market-banner-title mb-0">Requirements</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {requirements.map((item) => (
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={checkIcon}
+                    src={'https://cdn.worldofdypians.com/wod/checkIcon.svg'}
                     alt="check"
                     style={{ position: "relative", top: "2px" }}
                   />
@@ -142,14 +138,14 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           </div>
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
-              <img src={tasksIcon} alt="requirements" />
+              <img src={'https://cdn.worldofdypians.com/wod/tasksIcon.svg'} alt="requirements" />
               <h6 className="market-banner-title mb-0">Tasks</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {tasks.map((item) => (
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={checkIcon}
+                    src={'https://cdn.worldofdypians.com/wod/checkIcon.svg'}
                     alt="check"
                     style={{ position: "relative", top: "2px" }}
                   />
@@ -160,14 +156,14 @@ const JoinBeta = ({ coinbase, handleRegister }) => {
           </div>
           <div className="d-flex flex-column gap-2 info-grid-item">
             <div className="d-flex align-items-center gap-2">
-              <img src={benefitsIcon} alt="requirements" />
+              <img src={'https://cdn.worldofdypians.com/wod/benefitsIcon.svg'} alt="requirements" />
               <h6 className="market-banner-title mb-0">Benefits</h6>
             </div>
             <div className="d-flex flex-column gap-3 beta-info-wrapper p-3">
               {benefits.map((item) => (
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={checkIcon}
+                    src={'https://cdn.worldofdypians.com/wod/checkIcon.svg'}
                     alt="check"
                     style={{ position: "relative", top: "2px" }}
                   />

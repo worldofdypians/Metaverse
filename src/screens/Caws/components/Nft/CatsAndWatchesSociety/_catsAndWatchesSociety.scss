@@ -12,13 +12,13 @@
     position: absolute;
     left: 0;
     background-size: contain;
-    background: url("../../../assets/Nft/paw-meta-dark.png")
+    background: url("https://cdn.worldofdypians.com/wod/paw-meta-dark.png")
       repeat-x center;
       background-position: initial;
     @include large {
         margin-top: -35px;
         height: 180px;
-        background: url("../../../assets/Nft/paw-meta-dark.png") repeat-x center;
+        background: url("https://cdn.worldofdypians.com/wod/paw-meta-dark.png") repeat-x center;
         background-position: initial;
     }
   }
@@ -33,11 +33,11 @@
 }
 .dark .cats-and-watches-society {
   &::before {
-    background: url("../../../assets/Nft/paw-meta-dark.png")
+    background: url("https://cdn.worldofdypians.com/wod/paw-meta-dark.png")
       repeat-x center;
       background-position: initial;
     @include large {
-        background: url("../../../assets/Nft/paw-meta-dark.png") repeat-x center;
+        background: url("https://cdn.worldofdypians.com/wod/paw-meta-dark.png") repeat-x center;
         background-position: initial;
     }
   }

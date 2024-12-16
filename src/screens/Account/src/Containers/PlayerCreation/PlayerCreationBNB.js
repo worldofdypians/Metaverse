@@ -12,11 +12,7 @@ import {
   ErrorAlert,
 } from "../../Components";
 import classes from "./PlayerCreation.module.css";
-import { useNavigate } from "react-router-dom";
-import defaultAvatar from "../../Images/userProfile/default-avatar.png";
-import walletImg from "../../Images/userProfile/wallet.svg";
-import circleArrow from "../../Images/userProfile/arrow-circle.svg";
-import successLogo from '../../Images/userProfile/successLogo.svg';
+import { useNavigate } from "react-router-dom";   
 
 function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWallet }) {
   const { getUpdatedUser } = useAuth();
@@ -99,14 +95,14 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWa
                 >
                   <div className="d-flex gap-2 justify-content-between align-items-center">
                     <div className="d-flex gap-2 align-items-center">
-                      <img src={walletImg} alt="" />
+                      <img src={'https://cdn.worldofdypians.com/wod/walletIcon.svg'} alt="" />
                       <div className="d-flex flex-column">
                         <span className="secondTitle">Connect wallet</span>
 
                         <span className="firsttitle">Link your wallet</span>
                       </div>
                     </div>
-                    <img src={circleArrow} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/arrowRight.svg'} alt="" />
                   </div>
                 </div>
               </div>
@@ -156,7 +152,7 @@ function PlayerCreationBNB({ onLinkWallet, linkWallet, successLink, onShowLinkWa
           </div>
         )}
         {successLink === true && <div className="d-flex flex-column gap-3 align-items-center h-100 justify-content-center">
-          <img src={successLogo} alt='' />
+          <img src={'https://cdn.worldofdypians.com/wod/successLogo.svg'} alt='' />
           <h6 className={classes.successmsg}>Congratulations!</h6>
           <h6 className={classes.bottomGroup_graytxt}>You have successfully created your game account</h6>
           </div>}

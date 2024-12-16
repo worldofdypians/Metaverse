@@ -1,6 +1,4 @@
-import React from "react";
-import timepieceplaceholder2 from './assets/timepieceplaceholder2.png'
-
+import React from "react"; 
 const TimepiecePlaceHolder = ({ onMintClick }) => {
   return (
     <div
@@ -9,7 +7,7 @@ const TimepiecePlaceHolder = ({ onMintClick }) => {
     >
       <div className="landplaceholder-content">
         <img
-          src={timepieceplaceholder2}
+          src={'https://cdn.worldofdypians.com/wod/timepieceplaceholder2.png'}
           alt=""
           className="landplaceholder-content-img"
         />

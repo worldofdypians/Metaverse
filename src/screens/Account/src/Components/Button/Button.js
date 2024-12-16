@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Button.css";
-import arrow from "./arrow.svg";
+import "./Button.css"; 
 
 const Button = ({
   type,
@@ -26,7 +25,7 @@ const Button = ({
           style={textStyles}
         >
           {title}
-          {type === "primary2" && <img src={arrow} alt="" />}
+          {type === "primary2" && <img src={'https://cdn.worldofdypians.com/wod/arrow.svg'} alt="" />}
         </h1>
       )}
     </div>
