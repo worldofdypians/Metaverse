@@ -14,8 +14,7 @@ import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 import xMark from "../WalletBalance/newAssets/xMark.svg";
 import greenarrow from "./assets/greenarrow.svg";
 import star from "./assets/star.svg";
-import pointerArrow from "./assets/pointerArrow.svg";
-import tooltipIcon from "./assets/tooltipIcon.svg";
+import pointerArrow from "./assets/pointerArrow.svg"; 
 import triangle from "./assets/triangle.svg";
 import sync from "./assets/sync.svg";
 import starActive from "./assets/star-active.svg";
@@ -1561,7 +1560,7 @@ const ProfileCard = ({
                       {" "}
                       <img
                         style={{ cursor: "pointer" }}
-                        src={tooltipIcon}
+                        src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                         width={25}
                         height={25}
                         onClick={() => setRankTooltip(true)}
