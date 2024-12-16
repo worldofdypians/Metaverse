@@ -27,8 +27,7 @@ import {
 } from "../../web3/abis";
 
 import { CircularProgress } from "@mui/material";
-import Countdown from "react-countdown";
-import tooltipIcon from "./assets/tooltipIcon.svg";
+import Countdown from "react-countdown"; 
 import OutsideClickHandler from "react-outside-click-handler";
 import progress1 from "./assets/progress1.svg";
 import progress2 from "./assets/progress2.svg";

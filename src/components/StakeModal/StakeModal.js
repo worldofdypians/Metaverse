@@ -578,7 +578,7 @@ const StakeModal = ({
               }}
             >
               <img
-                src={greenInfo}
+                src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                 alt=""
                 className="tooltipicon"
                 onClick={() => {

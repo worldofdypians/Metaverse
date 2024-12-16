@@ -7,9 +7,7 @@ import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-import tooltipIcon from "./tooltipIcon.svg";
-import OutsideClickHandler from "react-outside-click-handler";
-import { dyp700_abi } from "../../web3";
+
 import Countdown from "react-countdown";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 
