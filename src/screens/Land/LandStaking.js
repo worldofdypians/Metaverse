@@ -693,7 +693,7 @@ const LandStaking = ({
               <div className="d-flex align-items-center justify-content-between p-3 mint-types">
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={require(`./mintAssets/ethereumIcon.svg`).default}
+                    src={`https://cdn.worldofdypians.com/wod/eth.svg`}
                     style={{ position: "relative", bottom: "3px" }}
                     alt=""
                   />
@@ -704,7 +704,7 @@ const LandStaking = ({
                 </div>
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={require(`./mintAssets/genesisType.svg`).default}
+                    src={`https://cdn.worldofdypians.com/wod/genesisType.svg`}
                     style={{ position: "relative", bottom: "3px" }}
                     alt=""
                   />
@@ -715,7 +715,7 @@ const LandStaking = ({
                 </div>
                 <div className="d-flex align-items-start gap-2">
                   <img
-                    src={require(`./mintAssets/dimensions.svg`).default}
+                    src={`https://cdn.worldofdypians.com/wod/dimensionsCaws.svg`}
                     style={{ position: "relative", bottom: "3px" }}
                     alt=""
                   />
@@ -732,7 +732,7 @@ const LandStaking = ({
                 {mintBenefits.map((item, index) => (
                   <div className="d-flex align-items-center gap-2" key={index}>
                     <img
-                      src={require(`./mintAssets/${item.icon}.svg`)}
+                      src={`https://cdn.worldofdypians.com/wod/${item.icon}Caws.svg`}
                       alt=""
                     />
                     <span className="mint-benefits-title">{item.title}</span>

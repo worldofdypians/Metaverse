@@ -8,7 +8,7 @@ const TimePieceSticker = () => {
       <div className="col-12 col-lg-6 d-flex align-items-center">
         <div className="d-flex flex-column gap-3">
           <div className="d-flex flex-column">
-            <h2 className="font-organetto caws-hero-title">Caws Timepiece</h2>
+            <h2 className="font-organetto caws-hero-title text-white">Caws Timepiece</h2>
             <h2
               className="font-organetto caws-hero-title"
               style={{ color: "#8C56FF" }}
@@ -16,7 +16,7 @@ const TimePieceSticker = () => {
               NFT Collection
             </h2>
           </div>
-          <p className="caws-hero-content">
+          <p className="caws-hero-content text-white">
             The CAWS Timepiece NFT collection is the second official NFT
             collection created and produced by Dypius. Holders of the original
             CAWS NFT will be able to mint a Timepiece NFT for FREE for each

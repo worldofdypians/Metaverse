@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
-import { Checkbox } from "@mui/material";
-import greenInfo from "./assets/greenInfo.svg";
+import { Checkbox } from "@mui/material"; 
 import cawsTag from "./assets/cawsTag.svg"; 
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
@@ -643,7 +642,7 @@ const CawsStakeModal = ({
           </div>
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
-          <img src={greenInfo} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
           <span className="info-span-text text-wrap">
             {isStake
               ? `Please select the NFTs to claim your rewards or withdraw them
@@ -664,7 +663,7 @@ const CawsStakeModal = ({
                   }}
                 >
                   <img
-                    src={greenInfo}
+                    src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                     alt=""
                     className="tooltipicon"
                     onClick={() => {

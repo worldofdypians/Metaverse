@@ -6,12 +6,7 @@ import { CircularProgress } from "@mui/material";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 // import "./_leaderboard.scss";
 // import ComingSoon from "./ComingSoon";
-import cawsBadge from "./assets/cawsBadge2.png";
-import genesisBadge from "./assets/genesisBadge2.png";
-// import OutsideClickHandler from "react-outside-click-handler";
-import tooltipIcon from "./assets/tooltip.svg";
-import skaleIcon from "./assets/skaleIcon.png";
-import skaleIconGray from "./assets/skaleIconGray.svg";
+
 // import bnbIcon from "./assets/bnbIcon.svg";
 // import coreIcon from "./assets/coreIcon.svg";
 import bnbActive from "./assets/bnbActive.svg";
@@ -34,7 +29,6 @@ import Switch from "@mui/material/Switch";
 // import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-// import tooltipIcon from "./tooltipIcon.svg";
 import OutsideClickHandler from "react-outside-click-handler";
 // import { dyp700_abi } from "../../web3";
 import Countdown from "react-countdown";
@@ -835,7 +829,7 @@ const NewHomeLeaderboard = ({ username, userId, dypBalancebnb, address }) => {
         <OutsideClickHandler onOutsideClick={() => setTooltip(false)}>
           <div className="d-flex align-items-center gap-2 position-relative">
             <img
-              src={tooltipIcon}
+              src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
               alt=""
               className="tooltip-icon"
               style={{ cursor: "pointer", width: "20px", height: "20px" }}
