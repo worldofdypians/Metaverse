@@ -222,7 +222,7 @@ const CreateProposal = ({
                 )}
               </button>
             )}
-            {chainId !== 56 && (
+            {chainId !== 56 && isConnected && (
               <button
                 className="fail-button-gov px-3 py-2"
                 style={{ width: "fit-content" }}
