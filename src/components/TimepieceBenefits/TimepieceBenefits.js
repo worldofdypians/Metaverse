@@ -5,25 +5,25 @@ const TimepieceBenefits = () => {
   const benefits = [
     {
       title: "Exclusive Access",
-      icon: "draft",
+      icon: "draftTimepiece",
       content:
         "Enjoy exclusive access to new and exciting events within the World of Dypians Metaverse platform that are only accessible to Timepiece NFT holders.",
     },
     {
       title: "Enhanced Interactions",
-      icon: "user",
+      icon: "userTimepiece",
       content:
         "Experience enhanced interactions in the World of Dypians Metaverse platform by unlocking unique and exclusive activities that are only available to Timepiece NFT holders. Connect with other Dypians in new and exciting ways, and take your Metaverse experience to the next level.",
     },
     {
       title: "Special Rewards",
-      icon: "star",
+      icon: "starTimepiece",
       content:
         "Get rewarded for your participation in the World of Dypians Metaverse platform as a Timepiece NFT holder. Receive special rewards that may include tokens, collectibles, or other digital assets.",
     },
     {
       title: "Expanded Functionality",
-      icon: "expand",
+      icon: "expandTimepiece",
       content:
         "Timepiece NFTs will provide expanded functionality within the World of Dypians Metaverse platform. As a holder, you will be able to perform new actions and interactions that were previously unavailable.",
     },
@@ -44,7 +44,7 @@ const TimepieceBenefits = () => {
               {benefits.map((benefit, index) => (
                 <div className="d-flex align-items-start flex-column gap-2" key={index}>
                   <img
-                    src={require(`./assets/${benefit.icon}.png`)}
+                    src={`https://cdn.worldofdypians.com/wod/${benefit.icon}.png`}
                     alt=""
                     style={{height: 56}}
                   />
@@ -59,7 +59,7 @@ const TimepieceBenefits = () => {
             </div>
             <div className="col-xxl-4 col-lg-4 col-12 d-flex justify-content-center">
             <img
-              src={require("./assets/scene2.gif")}
+              src={"https://cdn.worldofdypians.com/wod/scene2.gif"}
               className="timepiece-graphic timepiecewhite-gif"
               alt="phone-graphics"
             />

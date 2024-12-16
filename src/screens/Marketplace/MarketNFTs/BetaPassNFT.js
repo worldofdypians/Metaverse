@@ -3957,14 +3957,7 @@ const BetaPassNFT = ({
                       The Beta Pass NFTs are available on CoinGecko Candy
                       Program.
                     </h6>
-                    <div className="coingeckonft-wrapper p-3">
-                      <div className="d-flex flex-column justify-content-center align-items-center">
-                        <h1 className="coingecko-nft-number m-0">5,000</h1>
-                        <span className="coingecko-nft-desc">
-                          Beta Pass NFTs
-                        </span>
-                      </div>
-                    </div>
+                    
                     <hr className="mint-divider mt-2 mb-2" />
                     <div className={"linear-border mx-auto"}>
                       <button className={`btn filled-btn px-5 w-auto`}>

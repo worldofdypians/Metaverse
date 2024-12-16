@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./_stakemodal.scss";
-import xmark from "./assets/xmark.svg";
+import "./_stakemodal.scss"; 
 import { Checkbox } from "@mui/material";
 import EmptyWodCard from "./EmptyWodCard";
 import EmptyCawsCard from "./EmptyCawsCard";
@@ -263,7 +262,7 @@ const StakeModal = ({
       <div className="d-flex align-items-center justify-content-between">
         <h6 className="stake-modal-title">Stakeable NFTs</h6>
         <img
-          src={xmark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onModalClose}
           alt=""

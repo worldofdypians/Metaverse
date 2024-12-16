@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
- 
-
-import topEth from "../../screens/Marketplace/assets/topEth.svg";
-import topDyp from "../../screens/Marketplace/assets/topDyp.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import axios from "axios";
 import { ethers } from "ethers";
@@ -533,7 +529,7 @@ const BuyNftPopup = ({
 
         <div className="d-flex gap-2 align-items-center">
           <img
-            src={topEth}
+            src={'https://cdn.worldofdypians.com/wod/topEth.svg'}
             alt=""
             height={20}
             width={20}

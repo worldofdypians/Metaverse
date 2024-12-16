@@ -1,7 +1,4 @@
 import React from "react"; 
-import criticalPopupBanner from "../../screens/Marketplace/assets/criticalPopupBanner.png";
-
-
 
 const CriticalHitPopup = ({ onClosePopup }) => {
   return (

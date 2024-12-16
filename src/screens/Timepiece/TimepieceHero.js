@@ -1,5 +1,4 @@
-import React from "react";
-import timepieceBanner from "./assets/timePieceBanner.webp";
+import React from "react"; 
 
 const TimepieceHero = () => {
   return (

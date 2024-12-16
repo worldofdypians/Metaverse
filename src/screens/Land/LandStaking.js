@@ -337,18 +337,7 @@ const LandStaking = ({
                     </a>
                   </span>
                 ) : (
-                  <span className="errormsg">
-                    <img
-                      width={18}
-                      height={18}
-                      src={
-                        require("../../assets/landAssets/alert-triangle.svg")
-                          .default
-                      }
-                      alt=""
-                    />{" "}
-                    {status}
-                  </span>
+                 <></>
                 )}
               </div>
             </div>

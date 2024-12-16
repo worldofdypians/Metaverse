@@ -197,34 +197,6 @@
   }
 }
 
-.buy-premium-tag {
-  height: 65px;
-  width: 180px;
-  cursor: pointer;
-  background-color: rgba(0, 136, 135, 1);
-  background-image: url("../../screens/Account/src/Containers/Dashboard/assets/premiumStarsBg.svg");
-  background-size: 100% 100%;
-  border-radius: 12px;
-  animation: premium 4s infinite ease-in-out;
-  span {
-    color: #fff;
-    text-align: center;
-    font-family: "Oxanium" !important;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-  }
-  h6 {
-    color: #f3bf09;
-    text-align: center;
-    font-family: "Oxanium" !important;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-  }
-}
 
 .activate-premium-btn {
   border-radius: 12px;
@@ -238,38 +210,6 @@
   line-height: normal;
   position: absolute;
   bottom: -10px;
-}
-.buy-golden-tag {
-  height: 65px;
-  width: 180px;
-  cursor: pointer;
-  background-image: url("../../screens/Account/src/Containers/Dashboard/assets/goldenPassBg.png");
-  background-size: 100% 100%;
-  border-radius: 12px;
-  transition: all 0.25s;
-  animation: golden 4s ease-in-out infinite;
-
-  span {
-    color: #fff;
-    text-align: center;
-    font-family: "Oxanium" !important;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-  }
-  h6 {
-    color: #ffe8ff;
-    text-align: center;
-    font-family: "Oxanium" !important;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    @media screen and (max-width: 380px) {
-      font-size: 12px;
-    }
-  }
 }
 
 .activate-golden-btn {

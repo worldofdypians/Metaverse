@@ -33,7 +33,7 @@ const NftStaking = () => {
             </p>
             
                            
-            <NavLink className="start-staking-btn" to='/marketplace/stake' style={{textDecoration: 'none'}} >
+            <NavLink className="start-staking-btn" to='/staking' style={{textDecoration: 'none'}} >
               Start Earning
             </NavLink>
           </div>

@@ -2,42 +2,25 @@ import React, { useState, useEffect, useRef } from "react";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
-import "../_marketplace.scss";
-import topEth from "../assets/topEth.svg";
-import { useLocation } from "react-router-dom";
-import getListedNFTS from "../../../actions/Marketplace";
-import checkActive from "../assets/checked.svg";
-import checkPassive from "../assets/empty.svg";
+import "../_marketplace.scss"; 
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
 import Toast from "../../../components/Toast/Toast";
 import axios from "axios";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import eye from "../assets/eye.svg";
-import heart from "../assets/heart.svg";
-
-
+import { useLocation } from "react-router-dom";
+import getListedNFTS from "../../../actions/Marketplace";
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import { useQuery } from "@apollo/client";
 import { useAuth } from "../../Account/src/Utils.js/Auth/AuthDetails";
-import favActive from "./assets/favActive.svg";
-import favInactive from "./assets/favInactive.svg";
-import cart from "./assets/cart.svg";
-import link from "./assets/link.svg";
 import { useParams } from "react-router-dom";
 import { HashLoader } from "react-spinners";
-import whiteTag from "./assets/whiteTag.svg";
-import MakeOffer from "./MakeOffer";
-import inboxStar from "./assets/inboxStar.svg";
-import dollarCircle from "./assets/dollarCircle.svg";
-import stars from "./assets/stars.svg";
-import singleStar from "./assets/star.svg";
-import expand from "./assets/expand.svg";
-import chart from "./assets/chart.svg";
-import users from "./assets/users.svg"; 
 import { ethers } from "ethers";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
+import MakeOffer from "./MakeOffer";
+
+   
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -3244,10 +3227,10 @@ const SingleNft = ({
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={eye} alt="" /> {viewCount} views
+                    <img src={'https://cdn.worldofdypians.com/wod/eye.svg'} alt="" /> {viewCount} views
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={heart} alt="" /> {favCount} favorites
+                    <img src={'https://cdn.worldofdypians.com/wod/heart.svg'} alt="" /> {favCount} favorites
                   </span>
                 </div>
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
@@ -3302,7 +3285,7 @@ const SingleNft = ({
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
-                        src={isFavorite ? favActive : favInactive}
+                        src={isFavorite ? 'https://cdn.worldofdypians.com/wod/favActive.svg' : 'https://cdn.worldofdypians.com/wod/favInactive.svg'}
                         onClick={() => {
                           handleFavorite(nft);
                         }}
@@ -3339,7 +3322,7 @@ const SingleNft = ({
                           <div className="d-flex gap-2 align-items-center">
                             <img
                               src={
-                                topEth
+                                'https://cdn.worldofdypians.com/wod/topEth.svg'
                               }
                               alt=""
                               height={20}
@@ -3377,7 +3360,7 @@ const SingleNft = ({
                             <div className="d-flex gap-2 align-items-center">
                               <img
                                 src={
-                                topEth
+                                 'https://cdn.worldofdypians.com/wod/topEth.svg'
                                 }
                                 alt=""
                                 height={30}
@@ -3529,15 +3512,15 @@ const SingleNft = ({
                                   src={
                                     priceType === 0 &&
                                     nft.payment_priceType === 0
-                                      ? checkActive
-                                      : checkPassive
+                                      ? 'https://cdn.worldofdypians.com/wod/checked.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/empty.svg'
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
                                 />
                                 <span className="nft-price-eth">
                                   <img
-                                    src={topEth}
+                                    src={ 'https://cdn.worldofdypians.com/wod/topEth.svg'}
                                     alt=""
                                     height={20}
                                     width={20}
@@ -3562,8 +3545,8 @@ const SingleNft = ({
                                 <img
                                   src={
                                     nft.payment_priceType === 1
-                                      ? checkActive
-                                      : checkPassive
+                                  ? 'https://cdn.worldofdypians.com/wod/checked.svg'
+                                      : 'https://cdn.worldofdypians.com/wod/empty.svg'
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
@@ -3672,7 +3655,7 @@ const SingleNft = ({
                                    
                                       <h6 className="filter-nav-title mb-0">
                                         <img
-                                          src={checkActive}
+                                          src={'https://cdn.worldofdypians.com/wod/checked.svg'}
                                           alt=""
                                           style={{ top: "7px" }}
                                           className={
@@ -3682,7 +3665,7 @@ const SingleNft = ({
                                         <span className="nft-price-eth2">
                                           <img
                                             src={
-                                             topEth
+                                              'https://cdn.worldofdypians.com/wod/topEth.svg'
                                             }
                                             alt=""
                                             height={20}
@@ -3743,7 +3726,7 @@ const SingleNft = ({
                                   />
                                   <span className="nft-price-eth">
                                     <img
-                                      src={topEth}
+                                      src={ 'https://cdn.worldofdypians.com/wod/topEth.svg'}
                                       alt=""
                                       height={20}
                                       width={20}
@@ -3927,7 +3910,7 @@ const SingleNft = ({
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={whiteTag} alt="" />{" "}
+                              <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
                               {myOffers.length > 0
                                 ? "View your offer"
                                 : "Make offer"}
@@ -4146,7 +4129,7 @@ const SingleNft = ({
                               setshowMakeOffer(true);
                             }}
                           >
-                            <img src={whiteTag} alt="" />{" "}
+                            <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
                             {myOffers.length > 0
                               ? "View your offer"
                               : "Make offer"}
@@ -4511,19 +4494,19 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={inboxStar} alt="" /> Exclusive Access
+                          <img src={'https://cdn.worldofdypians.com/wod/inboxStar.svg'} alt="" /> Exclusive Access
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={stars} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/stars.svg'} alt="" />
                           Daily Rewards
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={dollarCircle} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/dollarCircle.svg'} alt="" />
                           Earn{" "}
                           {type === "conflux"
                             ? "CFX"
@@ -4553,7 +4536,7 @@ const SingleNft = ({
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={chart} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/chart.svg'} alt="" />
                           Global Points
                         </span>
                       </div>
@@ -4563,20 +4546,20 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={users} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/users.svg'} alt="" />
                           Community Engagement
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={singleStar} alt="" /> Enhanced Interactions
+                          <img src={'https://cdn.worldofdypians.com/wod/star.svg'} alt="" /> Enhanced Interactions
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={expand} alt="" />
+                          <img src={'https://cdn.worldofdypians.com/wod/expand.svg'} alt="" />
                           Expanded Functionality
                         </span>
                       </div>
@@ -4647,7 +4630,7 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.offer.buyer)}{" "}
-                                <img src={link} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
                               </a>
                             </td>
                             {isOwner && (
@@ -4709,7 +4692,7 @@ const SingleNft = ({
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
-                              <img src={cart} alt="" /> Sale
+                              <img src={'https://cdn.worldofdypians.com/wod/cart.svg'} alt="" /> Sale
                             </td>
                             <td className="saleprice">
                               {getFormattedNumber(
@@ -4727,7 +4710,7 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.buyer)}{" "}
-                                <img src={link} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
                               </a>
                             </td>
                             <td className="greendata">
@@ -4739,7 +4722,7 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.transactionHash)}{" "}
-                                <img src={link} alt="" />
+                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
                               </a>
                             </td>
                             <td className="greendata">

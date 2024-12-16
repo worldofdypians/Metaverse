@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./_timepiece.scss";
-import timepieceBanner from "./assets/timePieceBanner.webp";
 import TimepieceHero from "./TimepieceHero";
 import TimePieceSticker from "./TimePieceSticker";
 import TimePieceTraits from "../../components/TimepieceBenefits/TimepieceTraits";

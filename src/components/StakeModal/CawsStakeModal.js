@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./_stakemodal.scss";
-import xmark from "./assets/xmark.svg";
-import { Checkbox } from "@mui/material"; 
-import cawsTag from "./assets/cawsTag.svg"; 
+import "./_stakemodal.scss"; 
+import { Checkbox } from "@mui/material";  
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
@@ -454,7 +452,7 @@ const CawsStakeModal = ({
           {!isStake ? "Stakeable NFTs" : "Staked NFTs"}
         </h6>
         <img
-          src={xmark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onModalClose}
           alt=""
@@ -684,7 +682,7 @@ const CawsStakeModal = ({
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex align-items-center gap-1">
-                  <img src={cawsTag} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/cawsTag.svg'} alt="" />
                   <span className="selected-nfts-amount">
                     {getApprovedLandPoolsNfts(selectNftIds).length} CAWS
                   </span>
@@ -853,7 +851,7 @@ const CawsStakeModal = ({
                 </div>
                 <div className="d-flex gap-2 justify-content-between">
                   <div className="d-flex align-items-center gap-1">
-                    <img src={cawsTag} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/cawsTag.svg'} alt="" />
                     <span className="selected-nfts-amount">
                       {getApprovedLandPoolsNfts(selectNftIds).length} CAWS
                     </span>

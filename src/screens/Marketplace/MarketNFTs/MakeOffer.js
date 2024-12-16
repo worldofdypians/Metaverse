@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box"; 
-import errorImg from "./assets/error.svg";
-import successImg from "./assets/success.svg";
 import "./_filters.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
-import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../hooks/useWindowSize";
-import "../_marketplace.scss"; 
-import whiteTag from "./assets/whiteTag.svg";
+import "../_marketplace.scss";  
 import Web3 from "web3";
 import getListedNFTS from "../../../actions/Marketplace";
 import { ethers } from "ethers";
@@ -369,7 +365,7 @@ const MakeOffer = ({
             <div className="summaryred">
               <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                 <span className="itemchain">
-                  <img src={whiteTag} alt="" /> My offer
+                  <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" /> My offer
                 </span>
                 <div className="d-flex flex-row flex-lg-column flex-xxl-column gap-2 gap-lg-0 gap-xxl-0 align-items-end">
                   <span className="itemname" style={{ whiteSpace: "nowrap" }}>
@@ -485,7 +481,7 @@ const MakeOffer = ({
               }}
             >
               {status !== "fail " ||
-                (!isApprove && <img src={whiteTag} alt="" />)}
+                (!isApprove && <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />)}
               {status === "initial" ? (
                 isApprove ? (
                   "Make offer"

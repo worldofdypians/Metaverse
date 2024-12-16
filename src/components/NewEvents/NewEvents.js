@@ -4171,7 +4171,7 @@ const NewEvents = ({
                                     <p className="sync-desc mb-0">
                                       Use in-game
                                       <img
-                                        src={syncIcon}
+                                       src={'https://cdn.worldofdypians.com/wod/syncIcon.svg'}
                                         className="mx-1"
                                         width={20}
                                         height={20}
@@ -4210,21 +4210,9 @@ const NewEvents = ({
         </OutsideClickHandler>
       )}
 
-      {/*  {showPopup === "critical" && (
-        <CriticalHitPopup
-          onClosePopup={() => {
-            setshowPopup("");
-          }}
-        />
-      )}
+      {/*   
 
-      {showPopup === "dragon" && (
-        <DragonPopup
-          onClosePopup={() => {
-            setshowPopup("");
-          }}
-        />
-      )}
+     
 
       {showPopup === "golden" && (
         <GoldenPassPopup

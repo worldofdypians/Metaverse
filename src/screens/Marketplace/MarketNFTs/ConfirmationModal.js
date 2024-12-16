@@ -1,8 +1,7 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box"; 
-import errorImg from "./assets/error.svg";
-import successImg from "./assets/success.svg";
+ 
 import "./_filters.scss";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -264,7 +263,7 @@ const ConfirmationModal = ({
                 />
               </div>
               <div className="summarywrapper successwrapper">
-                <img src={successImg} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/successConfirmation.svg'} alt="" />
               </div>
               <div className="summaryseparator"></div>
               <span className="footertext" style={{ textAlign: "center" }}>
@@ -287,7 +286,7 @@ const ConfirmationModal = ({
                 />
               </div>
               <div className="summarywrapper errorwrapper">
-                <img src={errorImg} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/errorConfirmation.svg'} alt="" />
               </div>
               <div className="summaryseparator"></div>
               <span className="footertext" style={{ textAlign: "center" }}>

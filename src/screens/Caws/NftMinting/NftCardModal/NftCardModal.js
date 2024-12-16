@@ -85,7 +85,6 @@ const NftCardModal = ({
                 target="_blank"
                 className="view-link"
               >
-                {/* <img src={require("../../../../../assets/Nft/NftMintinglist/opensea-icon.png")} alt="" /> */}
                 <p>View on Opensea</p>
               </a>
             </div>

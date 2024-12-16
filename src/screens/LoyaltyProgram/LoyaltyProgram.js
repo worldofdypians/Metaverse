@@ -4,7 +4,6 @@ import axios from "axios";
 import { shortAddress } from "../Caws/functions/shortAddress";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import { loyaltyAddresses } from ".";
 import "./landpopup.css";
 import MobileNav from "../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../components/MarketSidebar/MarketSidebar";

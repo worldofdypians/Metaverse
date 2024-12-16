@@ -33,83 +33,8 @@
   text-align: center;
   letter-spacing: -0.018em;
 }
-
-.bundlewrapper {
-  background: #242240;
-  border-radius: 8px;
-  background-image: url("./dragonBg.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  @media screen and (max-width: 786px) {
-    background-image: none;
-  }
-}
-
-.bundlewrapper-idyp {
-  background: #242240;
-  border-radius: 8px;
-  background-image: url("./assets/trophy2.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  @media screen and (max-width: 786px) {
-    background-image: none;
-  }
-}
-.bundlewrapper-dyp {
-  background: #242240;
-  border-radius: 8px;
-  background-image: url("./assets/goldenPassStatueBg.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  @media screen and (max-width: 786px) {
-    background-image: none;
-  }
-}
-.bundlewrapper-critical {
-  background: #242240;
-  border-radius: 8px;
-  background-image: url("./assets/criticalHitBg.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  @media screen and (max-width: 786px) {
-    background-image: none;
-  }
-}
-
-.dragon-package {
-  background-image: url("./assets/dragonPackageIcon.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  img {
-    display: none;
-  }
-}
-
-.criticalhit-package {
-  background-image: url("./assets/criticalHitIcon.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  img {
-    display: none;
-  }
-}
-
-.dyp-package {
-  background-image: url("./assets/goldenPass.webp");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  img {
-    display: none;
-  }
-}
+ 
+ 
 
 .bundledesc {
   font-style: normal;
@@ -169,21 +94,7 @@
     right: 10px;
   }
 }
-.idypbundlewrapper {
-  background: linear-gradient(290.54deg, #4ed5d2 0%, #242240 86.92%);
-  border: 2px solid #4ed5d2 !important;
-  box-shadow: 0px 4px 12px rgba(119, 112, 224, 0.24);
-  border-radius: 6px;
-  right: 20px;
-  top: -35px;
-  padding: 10px;
-  width: 28%;
-
-  @media screen and (max-width: 786px) {
-    right: 10px;
-    width: 38%;
-  }
-}
+ 
 
 .bundleprice-desc {
   font-weight: 400;

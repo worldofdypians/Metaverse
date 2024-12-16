@@ -1,20 +1,4 @@
-import React from "react";
-import orangeArrow from "./assets/orangeArrow.svg";
-import orangeDate from "./assets/orangeDate.svg";
-import orangeExplore from "./assets/orangeExplore.svg";
-
-import purpleFind from "./assets/purpleFind.svg";
-import confluxProfileBanner from "./assets/confluxProfileBanner.png";
-import coingeckoProfileBanner from "./assets/coingeckoProfileBanner.png";
-import dypiusBanner2 from "./assets/smallDypiusBg.png";
-
-import gateProfileBanner from "./assets/gateProfileBanner.png";
-import baseProfileBanner from "./assets/baseProfileBanner.png";
-import dogeProfileBanner from "./assets/dogeProfileBanner.png";
-import cmcProfileBanner from "./assets/cmcProfileBanner.png";
-import skaleProfileBanner from "./assets/skaleProfileBanner.png";
-
- 
+import React from "react";   
 
 const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
   return (
@@ -51,54 +35,27 @@ const UpcomingProfileEvent = ({ onOpenEvent, data }) => {
           </div>
         </div>
         <img
-          src={
-            data.linkState == "conflux"
-              ? confluxProfileBanner
-              : data.linkState == "gate"
-              ? gateProfileBanner
-              : data.linkState == "base"
-              ? data.backgroundImage
-              : data.linkState == "doge"
-              ? dogeProfileBanner
-              : data.linkState == "coinmarketcap"
-              ? cmcProfileBanner
-              : data.linkState == "dypius2"
-              ? dypiusBanner2
-              : data.linkState == "skale"
-              ? skaleProfileBanner
-              : data.linkState == "viction"
-              ? data.backgroundImage
-              : data.linkState == "immutable"
-              ? data.backgroundImage
-              : data.linkState == "sei"
-              ? data.backgroundImage
-              : data.linkState == "core"
-              ? data.backgroundImage
-              : data.linkState == "taiko"
-              ? data.backgroundImage
-              : coingeckoProfileBanner
-          }
+          src={data.backgroundImage}
           style={{ height: "50px", width: "25%" }}
           alt=""
           className="profilebannerimg"
-
         />
       </div>
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
-          <img src={purpleFind} height={15} width={15} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/purpleFind.svg'} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text" style={{ color: "#EC8123" }}>
             Explore & Mine
           </span>
         </div>
 
         <div className="d-flex align-items-center gap-1">
-          <img src={orangeDate} height={15} width={15} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/orangeDate.svg'} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text" style={{ color: "#EC8123" }}>
             {data.date}
           </span>
         </div>
-        <img src={orangeArrow} height={15} width={15} alt="" />
+        <img src={'https://cdn.worldofdypians.com/wod/orangeArrow.svg'} height={15} width={15} alt="" />
       </div>
     </div>
   );
