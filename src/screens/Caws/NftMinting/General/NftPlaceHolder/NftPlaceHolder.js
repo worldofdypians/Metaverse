@@ -6,7 +6,7 @@ const NftPlaceHolder = ({onMintClick}) => {
     <div className="placeholder-wrapper nft-caw-card" style={{width: 195}}>
       <div className="placeholder-content">
         <img
-          src={require("../../../assets/Nft/cat_desktop.png")}
+          src={'https://cdn.worldofdypians.com/wod/cat_desktop.png'}
           alt=""
           className="placeholder-content-img"
         />

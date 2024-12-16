@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import PropTypes from "prop-types";
-import { formattedNum } from "../Caws/functions/formatUSD";
-import getFormattedNumber from "../Caws/functions/get-formatted-number";
 
 const TimepieceItem = ({
   modalId,

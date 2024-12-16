@@ -47,7 +47,7 @@ const FullScreenMainHero = ({ image, hasScroll }) => {
             {/*    alt="phone-graphics" />*/}
             <video
               preload="auto"
-              poster={require("../../../assets/Nft/nft-main-image2.jpg")}
+              poster={'https://cdn.worldofdypians.com/wod/nft-main-image2.jpg'}
               className="main-hero-graphics graphics elementor-video"
               src="https://d44ym67kindby.cloudfront.net/dypmeta2.mp4"
               autoPlay=""

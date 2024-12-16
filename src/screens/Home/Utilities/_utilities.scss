@@ -69,61 +69,8 @@
   transform: translateY(300px);
 }
 
-.mainnet-card {
-  background-image: url("./assets/mainnet.webp");
-  background-size: 100% 100%;
-  transition: all 0.35s;
-}
+ 
+ 
+ 
 
-.stats-card {
-  background-image: url("./assets/stats.webp");
-  background-size: 100% 100%;
-  transition: all 0.35s;
-}
-
-.integrations-card {
-  background-image: url("./assets/nftIntegrations.webp");
-  background-size: 100% 100%;
-  transition: all 0.35s;
-}
-
-.coins-card {
-  background: linear-gradient(to bottom left, #36f5ff, #cf4bf7, #15002d),
-    linear-gradient(to bottom right, #500097, #cf4bf7, #4c0094),
-    url("./assets/utilities.png");
-
-  background-size: cover;
-  background-blend-mode: color;
-  background-position: center;
-  transition: all 0.35s;
-}
-
-.events-card {
-  background-image: url("./assets/premiumEvents.webp");
-  background-size: 100% 100%;
-  transition: all 0.35s;
-}
-.partners-card {
-  background-image: url("./assets/partners.webp");
-  background-size: 100% 100%;
-  transition: all 0.35s;
-}
-
-.utility-card:hover {
-  background: linear-gradient(
-    126.67deg,
-    rgba(113, 51, 229, 0.2) 35.2%,
-    rgba(24, 22, 54, 0.2) 191.04%
-  );
-  filter: grayscale(0);
-
-  .utility-desc-div {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-
-  .utility-first {
-    transform: translateY(-300px);
-    opacity: 0;
-  }
-}
+ 

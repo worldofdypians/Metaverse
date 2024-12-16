@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Card from '@mui/material/Card';
-import { outlineBorder } from '../../Themes/Images';
+import Card from '@mui/material/Card'; 
 
 function LoginCardBNB({ children, containerStyles, cardStyles }) {
     return (
         <div
             style={{
-                backgroundImage: `url(${outlineBorder})`,
+                backgroundImage: `url(https://cdn.worldofdypians.com/wod/outlineBorder.png)`,
                 backgroundRepeat: 'no-repeat',
                 padding: '15px',
                 width: '100%',

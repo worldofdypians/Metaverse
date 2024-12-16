@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
-import calendar from "../assets/calendar.svg";
-import calendarYellow from "../assets/calendarYellow.svg";
-import dummyCampaignBanner from "../assets/dummyCampaignBanner.webp";
-import dummyCampaignItem from "../assets/dummyCampaignItem.webp";
-import GameEvents from "../../Game/GameEvents";
-import opbnbCampaign from "../../Community/assets/opbnbCampaign.png";
-import bnbExpedition from "../../Community/assets/bnbExpedition.webp";
-import entryCampaign from "../../Community/assets/entryCampaign.webp";
-import winterChallenge from "../../Community/assets/winterChallenge2.webp";
-import dailyGameDelight from "../../Community/assets/dailyGameDelight.webp";
-import wodFestive from "../../Community/assets/wodfestive.webp";
-import dypiansDiscovery from "../../Community/assets/dypiansDiscovery.webp";
 import { NavLink } from "react-router-dom";
-import NewChallenges from "../../Game/NewChallenges";
+import NewChallenges from "../../Game/NewChallenges"; 
+
+ 
+ 
 
 const Campaigns = () => {
   const [popupEvent, setPopupEvent] = useState(null);
@@ -25,7 +16,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "August 26, 2024",
       end_date: "September 08, 2024",
-      image: wodFestive,
+      image: 'https://cdn.worldofdypians.com/wod/wodfestive.webp',
       link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration",
     },
     {
@@ -33,7 +24,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "July 24, 2024",
       end_date: "August 14, 2024",
-      image: opbnbCampaign,
+      image: 'https://cdn.worldofdypians.com/wod/opbnbCampaign.png',
       link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11",
     },
     {
@@ -41,7 +32,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
-      image: bnbExpedition,
+      image: 'https://cdn.worldofdypians.com/wod/bnbExpedition.webp',
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
     },
     {
@@ -49,7 +40,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 1, 2024",
       end_date: "May 15, 2024",
-      image: entryCampaign,
+      image: 'https://cdn.worldofdypians.com/wod/entryCampaign.webp',
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
     },
     {
@@ -57,7 +48,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 15, 2024",
       end_date: "May 29, 2024",
-      image: dailyGameDelight,
+      image: 'https://cdn.worldofdypians.com/wod/dailyGameDelight.webp',
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
     },
     {
@@ -65,7 +56,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 29, 2024",
       end_date: "June 12, 2024",
-      image: dypiansDiscovery,
+      image: 'https://cdn.worldofdypians.com/wod/dypiansDiscovery.webp',
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
     },
   ];
@@ -75,7 +66,7 @@ const Campaigns = () => {
     status: "Live",
     start_date: "Dec 9, 2024",
     end_date: "Dec 23, 2024",
-    image: winterChallenge,
+    image: 'https://cdn.worldofdypians.com/wod/winterChallenge2.webp',
     desc: `Step into the Winter Wonderland Challenge and join the World of Dypians in a festive holiday quest!
     <ul class="mt-2">
     <li>Login or Create a Game Account</li>
@@ -182,7 +173,7 @@ const Campaigns = () => {
               </div>
               <hr className="campaign-banner-divider" />
               <div className="d-flex align-items-center gap-2">
-                <img src={calendarYellow} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/calendarYellow.svg'} alt="" />
                 <span className="campaign-banner-date">
                   {dummyBanner.start_date} - {dummyBanner.end_date}
                 </span>
@@ -241,7 +232,7 @@ const Campaigns = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center gap-2">
-                <img src={calendar} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/calendar.svg'} alt="" style={{width: 24, height: 24}}/>
                 <span className="campaign-item-date">
                   {item.start_date} - {item.end_date}
                 </span>

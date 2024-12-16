@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
- 
 import "./_leaderboard.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";

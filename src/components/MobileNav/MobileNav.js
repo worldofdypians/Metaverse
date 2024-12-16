@@ -147,9 +147,7 @@ const MobileNav = () => {
             );
           }}
         />}
-        {/* <div className="mobile-link" onClick={() => setOpenMint(!openMint)}>
-          <img src={require(`../MarketSidebar/assets/mintIcon.svg`).default} alt="" />
-        </div> */}
+    
       </div>
       {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
         <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>

@@ -11,8 +11,7 @@ import axios from "axios";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import StakeLandModal from "../../components/StakeModal/StakeLandModal";
 import moment from "moment";
-import { Skeleton } from "@mui/material";
-import greenArrow from "./assets/greenArrow.svg";
+import { Skeleton } from "@mui/material"; 
 
 import NewChallenges from "../Game/NewChallenges";
 
@@ -1324,7 +1323,7 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Mint now <img src={greenArrow} alt="" />{" "}
+                        Mint now <img src={'https://cdn.worldofdypians.com/wod/greenArrowMarket.svg'} alt="" />{" "}
                       </span>
                     </NavLink>
                   </div>
@@ -1372,7 +1371,7 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Mint now <img src={greenArrow} alt="" />{" "}
+                        Mint now <img src={'https://cdn.worldofdypians.com/wod/greenArrowMarket.svg'} alt="" />{" "}
                       </span>
                     </NavLink>
                   </div>
@@ -1402,7 +1401,7 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Stake now <img src={greenArrow} alt="" />{" "}
+                        Stake now <img src={'https://cdn.worldofdypians.com/wod/greenArrowMarket.svg'} alt="" />{" "}
                       </span>
                     </NavLink>
                   </div>
@@ -1430,7 +1429,7 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Stake now <img src={greenArrow} alt="" />{" "}
+                        Stake now <img src={'https://cdn.worldofdypians.com/wod/greenArrowMarket.svg'} alt="" />{" "}
                       </span>
                     </NavLink>
                   </div>
