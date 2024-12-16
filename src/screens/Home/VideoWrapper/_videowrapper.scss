@@ -135,7 +135,7 @@
   background-repeat: no-repeat;
   // min-height: 100vh;
   background-position: center;
-  background-image: url(../../../assets/wodAssets/mainHero.webp);
+  background-image: url(https://cdn.worldofdypians.com/wod/mainHero.webp);
   border-bottom: 3px solid black;
   @media only screen and (max-width: 991px) {
     min-height: auto;
@@ -195,8 +195,7 @@
   }
 }
 
-.leaderboard-bg {
-  background-image: url("../../../components/LeaderBoard/assets/leaderboardBg.png");
+.leaderboard-bg { 
   background-repeat: no-repeat;
   background-position: right;
   background-size: 60% 100%;

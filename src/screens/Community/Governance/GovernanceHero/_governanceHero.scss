@@ -1,14 +1,16 @@
 .govhero-wrapper {
   min-height: 100vh !important;
-  background-image: url("../../../../assets/wodAssets/govHeroBg.webp") !important;
+  background-image: url("https://cdn.worldofdypians.com/wod/govHeroBg.webp") !important;
 
   @media only screen and (max-width: 991px) {
-    background-image: url("../../../../assets/wodAssets/govHeroBgMobile.webp") !important;
+    background-image: url("https://cdn.worldofdypians.com/wod/govHeroBgMobile.webp") !important;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
 }
+
+
 
 
 .auto-button2 {

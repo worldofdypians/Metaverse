@@ -1,0 +1,27 @@
+.progress-div {
+  background-color: rgba(121, 121, 121, 0.7);
+  border-radius: 0.4rem;
+}
+
+
+
+.progress {
+    background: #fff;
+  
+    height: 4px;
+    transition: 2s ease;
+    border-radius: 0.4rem;
+    margin: 0;
+  }
+
+.progressComp {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-direction: column-reverse;
+}
+
+.percent-number {
+  font-size: 10px;
+}

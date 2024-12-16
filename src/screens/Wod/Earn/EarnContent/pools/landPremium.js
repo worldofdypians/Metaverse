@@ -3,12 +3,10 @@ import axios from "axios";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import "../top-pools.css";
 import "./_stakingWod.scss";
-import moreinfo from "../../assets/more-info.svg";
 import Modal from "../../../../../components/General/Modal";
-import statsIcon from "../../assets/statsIcon.svg";
+
 
 import { Tooltip } from "@mui/material";
-import weth from "../../assets/tokens/weth.svg";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
@@ -584,7 +582,7 @@ const LandDetailsPremium = ({
                         </div>
                       }
                     >
-                      <img src={moreinfo} alt="" />
+                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
                     </Tooltip>
                   </h6>
                 </div>
@@ -687,7 +685,7 @@ const LandDetailsPremium = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={statsIcon} alt="" /> Details
+                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
               </h6>
             </div>
           </div>

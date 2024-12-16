@@ -8,11 +8,12 @@ const TermsConditions = () => {
   }, []);
 
   return (
-    <div className="container-fluid mt-lg-5 pt-lg-5 px-0 d-flex align-items-center justify-content-center">
-      <div className="d-flex w-100 flex-column news-main-wrapper">
-        <div className="row w-100 px-3 px-lg-5 mx-0 news-container">
+    <div className="container-fluid mt-lg-5 pt-lg-5 news-main-wrapper px-0 d-flex align-items-center justify-content-center">
+      <div className="custom-container  my-lg-0 my-5 py-0 py-lg-5">
+      <div className="d-flex w-100 flex-column">
+        <div className="row w-100 mx-0 news-container">
           <div className="explorer-grid-title my-4">Terms of Service</div>
-          <div className="news-card terms-container p-4 d-flex flex-column gap-3 mb-5">
+          <div className="news-card terms-container p-4 d-flex flex-column gap-3">
             <p className="text-white m-0">Last Revised on October 01, 2024</p>
             <p className="text-white m-0">
               Welcome to the Terms of Service (these “Terms”) for the website
@@ -920,7 +921,7 @@ const TermsConditions = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div></div>
     </div>
   );
 };

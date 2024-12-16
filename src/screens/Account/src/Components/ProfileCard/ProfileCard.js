@@ -3,40 +3,22 @@ import React, { useEffect, useRef, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import "./_profilecard.scss";
 import defaultAvatar from "../../Images/userProfile/default-avatar.png";
-import defaultAvatarAlert from "../../Images/userProfile/default-avatar-alert.png";
 import defaultAvatarPremium from "../../Images/userProfile/defaultAvatarPremium.png";
-import defaultAvatarPremiumAlert from "../../Images/userProfile/defaultAvatarPremiumAlert.png";
 import x4 from "./assets/4x.svg";
-import x4rounded from "./assets/x4Rounded.svg";
-import genesisRankImg from "../WalletBalance/newAssets/genesisRank.svg";
-import globalRank from "../WalletBalance/newAssets/globalRank.svg";
+
 // import Countdown from "react-countdown";
-import dypMedal from "../../Images/userProfile/dyp-medal.svg";
+
 import { shortAddress } from "../../Utils.js/hooks/shortAddress";
 import Clipboard from "react-clipboard.js";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
-import copyIcon from "../WalletBalance/assets/copyIcon.svg";
-import walletIcon from "../WalletBalance/assets/walletIcon.svg";
 import xMark from "../WalletBalance/newAssets/xMark.svg";
 import greenarrow from "./assets/greenarrow.svg";
-import logouticon from "./assets/logout.svg";
-import leaderboardIcon from "./assets/leaderboardIcon.svg";
 import star from "./assets/star.svg";
-import pointerArrow from "./assets/pointerArrow.svg";
-import tooltipIcon from "./assets/tooltipIcon.svg";
-import player from "./assets/explorePlayer.png";
+import pointerArrow from "./assets/pointerArrow.svg"; 
 import triangle from "./assets/triangle.svg";
-import globe from "./assets/globe.png";
-import rankYellowArrow from "./assets/rankYellowArrow.svg";
-import rankBlueArrow from "./assets/rankBlueArrow.svg";
 import sync from "./assets/sync.svg";
-import walletImg from "../../Images/userProfile/wallet.svg";
-import circleArrow from "../../Images/userProfile/arrow-circle.svg";
-import blackWallet from "../../Images/userProfile/wallet-black.svg";
 import starActive from "./assets/star-active.svg";
 import starDefault from "./assets/star-default.svg";
-import arrowCircle from "./assets/arrowCircle.svg";
-import bustDummy from "./assets/bustDummy.png";
 import starterBust from "./assets/starterBust.png";
 import rookieBust from "./assets/rookieBust.png";
 import underdogBust from "./assets/underdogBust.png";
@@ -52,9 +34,7 @@ import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
 import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
 
 import starAlert from "./assets/star-alert.svg";
-import axios from "axios";
-import nextArrow from "../../../../Marketplace/assets/nextArrow1.svg";
-import Countdown from "react-countdown";
+import axios from "axios"; 
 import { dyp700Address, dyp700v1Address } from "../../web3";
 import { DYP_700_ABI, DYP_700V1_ABI } from "../../web3/abis";
 import becomePremium from "./assets/becomePremium.svg";
@@ -67,7 +47,7 @@ import styled from "styled-components";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import premiumOfferTag from "./assets/premiumOfferTag2.png";
 import premiumExclusive from "./assets/premiumExclusive2.svg";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -765,7 +745,7 @@ const ProfileCard = ({
                           <div className="premiumRedTag-profile position-absolute">
                             <div className="position-relative d-flex flex-column">
                               <img
-                                src={premiumRedTag}
+                                src={"https://cdn.worldofdypians.com/wod/redPremiumTag.svg"}
                                 alt=""
                                 className="premiumtag-img"
                               />
@@ -1580,7 +1560,7 @@ const ProfileCard = ({
                       {" "}
                       <img
                         style={{ cursor: "pointer" }}
-                        src={tooltipIcon}
+                        src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                         width={25}
                         height={25}
                         onClick={() => setRankTooltip(true)}

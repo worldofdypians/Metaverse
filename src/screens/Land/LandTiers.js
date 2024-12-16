@@ -1,10 +1,9 @@
 import React from "react";
-import dummyBadge from "../../assets/landAssets/dummyBadge.png";
-import genesisBg from "../../assets/landAssets/genesisBg.svg";
-import mintEthIcon from "../../assets/landAssets/mintEthIcon.svg";
-import landType from "../../assets/landAssets/landType.svg";
-import dimensions from "../../assets/landAssets/dimensions.svg";
-import tierCheck from "../../assets/landAssets/tierCheck.svg";
+
+
+
+
+
 
 const LandTiers = () => {
   const tiers = [
@@ -65,9 +64,9 @@ const LandTiers = () => {
             <div
               className={`genesis-wrapper d-flex justify-content-center align-items-center p-3 position-relative ${tier.title === "Genesis Land" && 'genesis-land'}`}           
             >
-              {/* <img src={genesisBg} alt="genesis" className="w-100" /> */}
+ 
               <img
-                src={require(`../../assets/landAssets/${tier.icon}`)}
+                src={`https://cdn.worldofdypians.com/wod/${tier.icon}`}
                 className={`genesis-badge ${tier.title === "Genesis Land" && 'd-none'}`}
                 alt="badge"
               />
@@ -83,7 +82,7 @@ const LandTiers = () => {
                     <div className="d-flex gap-3 align-items-start justify-content-between">
                       <div className="d-flex align-items-start gap-2">
                         <img
-                          src={mintEthIcon}
+                          src={"https://cdn.worldofdypians.com/wod/mintEthIcon.svg"}
                           alt="ethereum"
                           width={20}
                           height={20}
@@ -96,7 +95,7 @@ const LandTiers = () => {
                         </div>
                       </div>
                       <div className="d-flex align-items-start gap-2">
-                        <img src={landType} alt="type" idth={20} height={20} />
+                        <img src={"https://cdn.worldofdypians.com/wod/landType.svg"} alt="type" idth={20} height={20} />
                         <div className="d-flex flex-column">
                           <span className="spec-value">
                             {tier.content.type}
@@ -107,7 +106,7 @@ const LandTiers = () => {
                     </div>
                     <div className="d-flex align-items-start gap-2">
                       <img
-                        src={dimensions}
+                        src={"https://cdn.worldofdypians.com/wod/dimensions.svg"}
                         alt="ethereum"
                         width={20}
                         height={20}
@@ -128,7 +127,7 @@ const LandTiers = () => {
                       className=" d-flex align-items-center justify-content-start gap-2 mb-2"
                       key={index}
                     >
-                      <img src={tierCheck} alt="check" />
+                      <img src={"https://cdn.worldofdypians.com/wod/tierCheck.svg"} alt="check" />
                       <span className="tier-benefit">{item}</span>
                     </div>
                   ))}

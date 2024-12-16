@@ -62,7 +62,7 @@
 
 .pools-card-hover {
   /* border: 2px solid #00b7cc; */
-  background-image: url("../assets/toppools-bg.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/toppools-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -74,7 +74,7 @@
 
 .pools-card-staked {
   /* border: 2px solid #00b7cc; */
-  background-image: url("../assets/toppools-bg.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/toppools-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,7 +98,7 @@
 
 
 .pools-card-open {
-  background-image: url("../assets/toppools-bg.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/toppools-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

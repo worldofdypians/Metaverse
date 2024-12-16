@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
 import "./mainNews.scss";
-import featuredShadow from './assets/featuredNewsShadow.png'
+
 import useWindowSize from "../../hooks/useWindowSize";
 
 const MainNewsCard = ({
@@ -38,7 +37,7 @@ const MainNewsCard = ({
           </h2>
           {" "}
           <img
-            src={featuredShadow}
+            src={"https://cdn.worldofdypians.com/wod/featuredNewsShadow.png"}
             alt=""
             className={`position-absolute featured-shadow w-100 ${
               bannerShadow && "featured-shadow-hover"
@@ -64,7 +63,7 @@ const MainNewsCard = ({
           }}
         ></span>
         <span className="mainNews-date" style={{ alignSelf: "flex-end" }}>
-          <img src={calendarIcon} alt="calendar" />{" "}
+          <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />{" "}
           {date.toLocaleDateString("en-US", options)}
         </span>
       </div>

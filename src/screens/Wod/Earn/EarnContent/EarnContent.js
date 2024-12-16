@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../_earn.scss";
-import arrowUp from "../assets/arrowUp.svg";
-import arrowUpActive from "../assets/arrowUpActive.svg";
-import arrowDown from "../assets/arrowDown.svg";
-import arrowDownActive from "../assets/arrowDownActive.svg";
-import wodToken from "../assets/tokens/wodToken.png";
 import TopPoolsCard from "./TopPoolsCard";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
 import CawsDetails from "./pools/caws";
@@ -37,7 +32,7 @@ const EarnContent = ({
   tvl,
   wodBalance,
   userPools,
-  onSuccessfulStake
+  onSuccessfulStake,
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -212,7 +207,9 @@ const EarnContent = ({
                               style={{ color: "#4ed5d2" }}
                             >
                               <img
-                                src={wodToken}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/wodToken.png"
+                                }
                                 alt=""
                                 style={{ width: 20, height: 20 }}
                               />
@@ -321,12 +318,20 @@ const EarnContent = ({
                       APR
                       <div className="d-flex flex-column">
                         <img
-                          src={sorting === true ? arrowUpActive : arrowUp}
+                          src={
+                            sorting === true
+                              ? "https://cdn.worldofdypians.com/wod/arrowUpActive.svg"
+                              : "https://cdn.worldofdypians.com/wod/arrowUp.svg"
+                          }
                           alt=""
                           className=""
                         />
                         <img
-                          src={sorting === false ? arrowDownActive : arrowDown}
+                          src={
+                            sorting === false
+                              ? "https://cdn.worldofdypians.com/wod/arrowDownActive.svg"
+                              : "https://cdn.worldofdypians.com/wod/arrowDown.svg"
+                          }
                           alt=""
                           className="arrowBtns"
                           onClick={() => {
@@ -428,12 +433,19 @@ const EarnContent = ({
                               : false
                           }
                           isNewPool={item.new_pool === "Yes" ? true : false}
-                          isStaked={ (userPools && userPools.length > 0 && userPools.find((obj)=>{return obj
-                            .contract_address.toLowerCase() === item.id.toLowerCase()}) !==undefined)}
+                          isStaked={
+                            userPools &&
+                            userPools.length > 0 &&
+                            userPools.find((obj) => {
+                              return (
+                                obj.contract_address.toLowerCase() ===
+                                item.id.toLowerCase()
+                              );
+                            }) !== undefined
+                          }
                           isAccount={true}
                           expired={item.expired === "Yes" ? true : false}
-                          isHover={isHover === index }
-                          
+                          isHover={isHover === index}
                         />
                       </button>
                     </div>
@@ -674,7 +686,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}
@@ -705,7 +716,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}
@@ -736,7 +746,6 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
-
                             />
                           </div>
                         )}

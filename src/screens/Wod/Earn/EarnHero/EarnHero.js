@@ -1,14 +1,8 @@
 import React, { useRef, useState } from "react";
-// import Slider from "react-slick";
-// import { NavLink } from "react-router-dom";
-// import BetaEventCardHome from "../../../Marketplace/components/BetaEventCardHome";
-// import dropdownIcon from "../assets/dropdownIcon.svg";
+
 import "../../../Wod/Token/MainHero/_mainhero.scss";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
-// import listIcon from "../assets/listIcon.svg";
-// import tableIcon from "../assets/tableIcon.svg";
-// import tableIconActive from "../assets/tableIconActive.svg";
-// import listIconActive from "../assets/listIconActive.svg";
+
 
 const EarnHero = ({
   onSelectFilter,

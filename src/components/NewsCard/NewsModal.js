@@ -1,13 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import AnnouncementMinCard from "./AnnouncementMinCards";
 import "./mainNews.scss";
-import goBackArrow from "./assets/goBackArrow.svg";
-import goBackArrowBlack from "./assets/goBackArrowBlack.svg";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
-import newsReddit from "./assets/newsReddit.svg";
-import newsShare from "./assets/newsShare.svg";
-import newsTelegram from "./assets/newsTelegram.svg";
-import newsTwitter from "./assets/newsTwitter.svg";
 import { NavLink } from "react-router-dom";
 
 const NewsModal = ({
@@ -59,14 +52,14 @@ const NewsModal = ({
               onClick={onModalClose}
             >
               <img
-                src={arrow === false ? goBackArrowBlack : goBackArrow}
+                src={arrow === false ? "https://cdn.worldofdypians.com/wod/goBackArrowBlack.svg" : "https://cdn.worldofdypians.com/wod/goBackArrow.svg"}
                 height={24}
                 width={24}
                 alt="goback"
               />
             </button>
             <span className="mainNews-date">
-              <img src={calendarIcon} alt="calendar" />{" "}
+              <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />{" "}
               {date.toLocaleDateString("en-US", options)}
             </span>
           </div>
@@ -84,7 +77,7 @@ const NewsModal = ({
                 rel="noreferrer"
                 aria-label=""
               >
-                <img src={newsTwitter} alt="twitter share" />
+                <img src={"https://cdn.worldofdypians.com/wod/newsTwitter.svg"} alt="twitter share" />
               </a>
 
               <a
@@ -97,7 +90,7 @@ const NewsModal = ({
                 rel="noreferrer"
                 aria-label=""
               >
-                <img src={newsReddit} alt="reddit share" />
+                <img src={"https://cdn.worldofdypians.com/wod/newsReddit.svg"} alt="reddit share" />
               </a>
 
               <a
@@ -110,10 +103,10 @@ const NewsModal = ({
                 rel="noreferrer"
                 aria-label=""
               >
-                <img src={newsTelegram} alt="telegram share" />
+                <img src={"https://cdn.worldofdypians.com/wod/newsTelegram.svg"} alt="telegram share" />
               </a>
               <img
-                src={newsShare}
+                src={"https://cdn.worldofdypians.com/wod/newsShare.svg"}
                 alt="share news"
                 style={{ cursor: "pointer" }}
                 onClick={() => {

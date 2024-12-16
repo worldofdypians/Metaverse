@@ -1,5 +1,5 @@
 .game-hero-wrapper {
-  background-image: url(../../assets/gameAssets/gameBg.webp) !important;
+  background-image: url(https://cdn.worldofdypians.com/wod/gameBg.webp) !important;
   min-height: 100vh;
   @media screen and (max-width: 786px) {
     min-height: auto;
@@ -32,7 +32,7 @@
   background-size: 100%;
   aspect-ratio: 3.72/1;
   background-repeat: no-repeat;
-  background-image: url("../../assets/gameAssets/amplifyBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/amplifyBanner.webp");
   @media screen and (max-width: 1100px) {
     background-size: cover;
     background-position: right;
@@ -114,6 +114,82 @@
 
 .explore-btn:hover {
   background-position: 100% 0 !important;
+}
+
+.disabled-btn-gov {
+  color: #c0c9ff !important;
+  background: transparent;
+  border: 1px solid #c0c9ff !important;
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+  opacity: 1 !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+
+.connectbtn-gov {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+.connectbtn-gov:hover,
+.connectbtn-gov:focus {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00b7cc 100%, #008ebf 0%);
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+.btn-withdraw-gov {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #bd185d 0%, #ba18bd 100%);
+  border: none;
+  color: #eeedff !important;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+
+
+.fail-button-gov {
+  color: #ffffff !important;
+  background: linear-gradient(90.74deg, #f8845b 0%, #f0603a 100%) !important;
+  border: none !important;
+  border-radius: 12px;
+  opacity: 1 !important; 
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
 }
 .action-btn {
   border-radius: 12px;
@@ -323,7 +399,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/treasureHuntCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/treasureHuntCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -333,7 +409,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/dragonRuinsCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/dragonRuinsCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -343,7 +419,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/scorpionKingCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/scorpionKingCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -353,7 +429,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/puzzleMadnessCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/puzzleMadnessCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -363,7 +439,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/criticalHitCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/criticalHitCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -373,7 +449,7 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/mazeGardenCard.webp);
+  background: url('https://cdn.worldofdypians.com/wod/mazeGardenCard.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -383,14 +459,14 @@
   border: 1px solid #b8b8e0;
   backdrop-filter: blur(12.5px);
   min-height: 160px;
-  background: url(../../assets/gameAssets/dailyBonusCard.png);
+  background: url('https://cdn.worldofdypians.com/wod/dailyBonusCard.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .amplify-ways-wrapper {
-  background-image: url(../../assets/gameAssets/amplifyRewardsBg.svg);
+  background-image: url('https://cdn.worldofdypians.com/wod/amplifyRewardsBg.svg');
   background-size: 100%;
 }
 
@@ -451,7 +527,7 @@
 }
 
 .amplify-table-wrapper {
-  background-image: url(../../assets/gameAssets/amplifyTableBg.webp);
+  background-image: url('https://cdn.worldofdypians.com/wod/amplifyTableBg.webp');
   background-size: 100% 100%;
 }
 
@@ -479,13 +555,13 @@
 // }
 
 .amplify-game-banner {
-  background-image: url("../../assets/gameAssets/amplifyBanner.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/amplifyBanner.webp");
 }
 
 .leaderboards-game-wrapper {
   width: 49%;
   border-radius: 0 20px 20px 0;
-  background: url("../../assets/gameAssets/gameLeaderboardBg.webp");
+  background: url("https://cdn.worldofdypians.com/wod/gameLeaderboardBg.webp");
   background-size: 100%;
   background-repeat: no-repeat;
   border-bottom: 3px solid black;
@@ -503,7 +579,7 @@
 .golden-pass-game-wrapper {
   width: 49%;
   border-radius: 20px 0 0 20px;
-  background: url("../../assets/gameAssets/gameGoldenPassBg.webp");
+  background: url("https://cdn.worldofdypians.com/wod/gameGoldenPassBg.webp");
   background-size: 100% 100%;
   border-bottom: 3px solid black;
   background-repeat: no-repeat;
@@ -569,7 +645,7 @@ transition: all .25s;
 }
 
 .new-challenges-hero {
-  background-image: url("../../assets/gameAssets/newChallengesBg.webp");
+  background-image: url("https://cdn.worldofdypians.com/wod/newChallengesBg.webp");
   background-size: contain;
   @media screen and (max-width: 786px) {
     background-size: cover;

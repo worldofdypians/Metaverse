@@ -1,33 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { HashLoader } from "react-spinners";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import MobileNav from "../../../components/MobileNav/MobileNav";
-import useWindowSize from "../../../hooks/useWindowSize";
-import dropdownIcon from "../assets/dropdownIcon.svg";
-import searchIcon from "../assets/search.svg";
+import useWindowSize from "../../../hooks/useWindowSize"; 
 import { NavLink } from "react-router-dom";
-import "./_filters.scss";
-import filtersXmark from "./assets/filtersXmark.svg";
+import "./_filters.scss"; 
 import axios from "axios";
-import { Checkbox, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
-import traitIcon from "./assets/traitIcon.svg";
-import priceIconUp from "./assets/priceIconUp.svg";
-import priceIconDown from "./assets/priceIconDown.svg";
-import priceIconNeutral from "./assets/priceIconNeutral.svg";
-import filterIcon from "./assets/filterIcon.svg";
-import ethIcon from "./assets/ethIcon.svg";
-import dypIcon from "./assets/dypIcon.svg";
-import emptyCheck from "./assets/emptyCheck.svg";
-import fullCheck from "./assets/fullCheck.svg";
-import FilterCard from "./FilterCard";
-import traitXmark from "./assets/traitXmark.svg";
-import { searchNFTsByTraits } from "../../../actions/filterTraits";
-import timepiecemetadata from "../../../actions/timepiecemetadata.json";
-import ComfirmationModal from "./ConfirmationModal";
-import mintNowIcon from "./assets/mintNowIcon.svg";
 import timepiecetraits from "../../../actions/timepiecetraits.json";
+import timepiecemetadata from "../../../actions/timepiecemetadata.json";
+import FilterCard from "./FilterCard"; 
+import ComfirmationModal from "./ConfirmationModal"; 
+import { searchNFTsByTraits } from "../../../actions/filterTraits";
 
 const TimepieceNFT = ({
   isConnected,
@@ -859,7 +844,7 @@ const TimepieceNFT = ({
                       style={{ textDecoration: "none" }}
                     >
                       <button className="signinbtn2 px-3 py-2 d-flex align-items-center gap-2">
-                        <img src={mintNowIcon} alt="" />
+                        <img src={'https://cdn.worldofdypians.com/wod/mintNowIcon.svg'} alt="" />
                         Available minting
                       </button>
                     </NavLink>
@@ -868,7 +853,7 @@ const TimepieceNFT = ({
               </div>
               <div className="col-12 col-lg-4">
                 <img
-                  src={require("./assets/timepieceCollectionBanner.webp")}
+                  src={"https://cdn.worldofdypians.com/wod/timepieceCollectionBanner.webp"}
                   className="w-100"
                   alt=""
                 />
@@ -887,10 +872,10 @@ const TimepieceNFT = ({
                   aria-expanded="false"
                 >
                   <div className="d-flex align-items-center gap-2">
-                    <img src={filterIcon} alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/filterIcon.svg'} alt="" />
                     <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
-                  <img src={dropdownIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
                 </button>
                 <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                   <li
@@ -933,10 +918,10 @@ const TimepieceNFT = ({
                   <img
                     src={
                       priceCount === 0
-                        ? priceIconNeutral
-                        : priceCount % 2 == 0
-                        ? priceIconDown
-                        : priceIconUp
+                      ? 'https://cdn.worldofdypians.com/wod/priceIconNeutral.svg'
+                      : priceCount % 2 == 0
+                      ? 'https://cdn.worldofdypians.com/wod/priceIconDown.svg'
+                      : 'https://cdn.worldofdypians.com/wod/priceIconUp.svg'
                     }
                     alt=""
                   />
@@ -959,7 +944,7 @@ const TimepieceNFT = ({
                   onClick={() => setOpenTraits(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={traitIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/traitIcon.svg'} alt="" />
                   <h6 className="filter-nav-title mb-0">Traits</h6>
                 </div>
               </div>
@@ -977,7 +962,7 @@ const TimepieceNFT = ({
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
-                    src={traitXmark}
+                    src={'https://cdn.worldofdypians.com/wod/traitXmark.svg'}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       displayFilters.length === 1
@@ -1519,7 +1504,7 @@ const TimepieceNFT = ({
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h6 className="filters-title mb-0">Filters</h6>
             <img
-              src={filtersXmark}
+              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
               style={{ cursor: "pointer" }}
               onClick={() => setOpenTraits(false)}
               alt=""

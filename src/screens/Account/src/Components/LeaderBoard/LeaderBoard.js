@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
-import price1 from "../../Images/userProfile/price1.svg";
-import price2 from "../../Images/userProfile/price2.svg";
-import price3 from "../../Images/userProfile/price3.svg";
-import { CircularProgress } from "@mui/material";
-import playerAvatar from "../../Images/userProfile/userAvatar2.png";
-import premiumAvatar from "../../Images/userProfile/premiumAvatar.png";
+
+import { CircularProgress } from "@mui/material";  
 import premiumStar from "../../Images/userProfile/premiumStar.png";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import "./_leaderboard.scss";
 import ComingSoon from "./ComingSoon";
-import tooltipIcon from "./tooltipIcon.svg";
-import OutsideClickHandler from "react-outside-click-handler";
-import { dyp700_abi } from "../../web3";
+
 import Countdown from "react-countdown";
 import useWindowSize from "../../Utils.js/hooks/useWindowSize";
 
@@ -777,12 +771,7 @@ const LeaderBoard = ({
               )}
             </div>
 
-            {/*  <div className="grandPrices-wrapper">
-        <div className="d-flex flex-column gap-2">
-          <div className="d-flex align-items-end gap-2 justify-content-between">
-          </div>
-        </div> 
-      </div>*/}
+            
             <div className="d-flex align-items-center gap-1">
               <div className="optionsWrapper col-12">
                 <div
@@ -880,7 +869,7 @@ const LeaderBoard = ({
                               item.displayName === username ? (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={premiumAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />
@@ -889,7 +878,7 @@ const LeaderBoard = ({
                               ) : (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={playerAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />{" "}
@@ -968,7 +957,7 @@ const LeaderBoard = ({
                               item.displayName === username ? (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={premiumAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />
@@ -977,7 +966,7 @@ const LeaderBoard = ({
                               ) : (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={playerAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />{" "}
@@ -1048,7 +1037,7 @@ const LeaderBoard = ({
                               item.displayName === username ? (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={premiumAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />
@@ -1057,7 +1046,7 @@ const LeaderBoard = ({
                               ) : (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={playerAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />{" "}
@@ -1124,7 +1113,7 @@ const LeaderBoard = ({
                               item.displayName === username ? (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={premiumAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />
@@ -1133,7 +1122,7 @@ const LeaderBoard = ({
                               ) : (
                                 <div className="position-relative d-flex align-items-center">
                                   <img
-                                    src={playerAvatar}
+                                    src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                     alt=""
                                     className="playerAvatar"
                                   />{" "}
@@ -1223,7 +1212,7 @@ const LeaderBoard = ({
                             availableTime !== undefined ? (
                               <div className="position-relative d-flex align-items-center">
                                 <img
-                                  src={premiumAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />
@@ -1237,7 +1226,7 @@ const LeaderBoard = ({
                             ) : (
                               <>
                                 <img
-                                  src={playerAvatar}
+                                  src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
                                   alt=""
                                   className="playerAvatar"
                                 />

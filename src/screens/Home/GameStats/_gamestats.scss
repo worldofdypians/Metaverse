@@ -20,36 +20,36 @@
   }
   
   .first-banner {
-    background-image: url("./assets/transactionsBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/transactionsBanner.webp");
   }
   
 
 .second-banner{
-    background-image: url("./assets/darkLordSpaceBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/darkLordSpaceBanner.webp");
 
 }
 
 .third-banner{
-    background-image: url("./assets/lizardBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/lizardBanner.webp");
     
 
 }
 .fourth-banner{
-    background-image: url("./assets/cityBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/cityBanner.webp");
 
 }
 .fifth-banner{
-    background-image: url("./assets/groupBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/groupBanner.webp");
 }
 .sixth-banner{
-    background-image: url("./assets/secondCityBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/secondCityBanner.webp");
 }
 .seventh-banner{
-    background-image: url("../../../assets/gameAssets/cawsGameBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/cawsGameBanner.webp");
 }
 
 .eightth-banner{
-    background-image: url("../../../assets/gameAssets/exploreGameBanner.webp");
+    background-image: url("https://cdn.worldofdypians.com/wod/exploreGameBanner.webp");
 }
 
 
@@ -67,7 +67,7 @@
     display: grid;
     grid-template-columns: repeat(2,1fr);
     gap: 30px;
-    background: url('./assets/gameStatsLines.svg');
+    background: url('https://cdn.worldofdypians.com/wod/gameStatsLines.svg');
     background-size: 100% 100%;
     @media screen and (max-width: 786px) {
         gap: 10px;

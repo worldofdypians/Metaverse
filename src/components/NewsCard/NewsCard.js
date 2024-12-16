@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import calendarIcon from "../../assets/newsAssets/calendarIcon.svg";
+
 
 const NewsCard = ({
   newsId,
@@ -45,7 +45,7 @@ const NewsCard = ({
           <div className="d-flex flex-column gap-3 w-100">
           <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
-            <img src={calendarIcon} alt="calendar" />
+            <img src={"https://cdn.worldofdypians.com/wod/calendarIcon.svg"} alt="calendar" />
             <span className="news-date font-poppins">
               {date?.toLocaleDateString("en-US", options)}
             </span>

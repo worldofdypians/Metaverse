@@ -5,7 +5,7 @@ import getFormattedNumber from "../../screens/Caws/functions/get-formatted-numbe
 import _ from "lodash";
 import { useLocation } from "react-router-dom";
 import Toast from "../../components/Toast/Toast";
-import ethgrayLogo from "./assets/ethgrayLogo.svg";
+
 import { useNavigate } from "react-router-dom";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
@@ -679,7 +679,7 @@ const ItemCard = ({
             title={<span className="card-eth-chain-text">Chain: Ethereum</span>}
           >
             <img
-              src={ethgrayLogo}
+              src={"https://cdn.worldofdypians.com/wod/ethgrayLogo.svg"}
               alt=""
               className="ethgraylogo position-absolute"
             />

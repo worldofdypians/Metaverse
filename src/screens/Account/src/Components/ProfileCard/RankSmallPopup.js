@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
-import skaleActive from "../../Components/LeaderBoard/assets/skaleActive.svg";
-import bnbActive from "../../Components/LeaderBoard/assets/bnbActive.svg";
-import coreActive from "../../Components/LeaderBoard/assets/coreActive.svg";
-import victionActive from "../../Components/LeaderBoard/assets/victionActive.svg";
-import mantaActive from "../../Components/LeaderBoard/assets/mantaActive.png";
-import matActive from "../../../../../components/Header/assets/matchain.svg";
-import seiIcon from "../../../../../components/Header/assets/sei.svg";
-import tooltipIcon from "./assets/tooltipIconYellow.svg";
-import baseLogo from "../../Components/LeaderBoard/assets/baseActive.svg";
-import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import star from "./assets/star.svg";
-import OutsideClickHandler from "react-outside-click-handler";
-import taikoLogo from "../../Components/LeaderBoard/assets/taikoActive.svg";
-import x4 from "./assets/4x.svg";
-import arrowCircle from "./assets/arrowCircle.svg";
-import popupXmark from "../../../../Marketplace/assets/popupXmark.svg";
-import goldenPopup from "./assets/rankBanner.webp";
-import premiumBadge from "./assets/premiumBadge.png";
+import React from "react";
+import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number"; 
 import { NavLink } from "react-router-dom";
 import { styled, Tooltip, tooltipClasses } from "@mui/material";
+ 
+
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -52,7 +37,6 @@ const RankSmallPopup = ({
   userTaikoStars,
   userMatStars,
   userRankName,
-  onRankPopupClick,
   primeStars,
   globalMonthly,
   globalWeekly,
@@ -80,7 +64,7 @@ onPrimeClick
         <div className=" package-popup-title-wrapper d-flex align-items-center position-relative justify-content-between mb-2">
           <div className="package-popup-title mb-0">My Progress</div>{" "}
           <img
-            src={popupXmark}
+            src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
             className="popup-closer"
             onClick={onClose}
             alt=""
@@ -88,7 +72,7 @@ onPrimeClick
         </div>
         <div className="position-relative mb-3 d-flex align-items-center justify-content-center">
           <img
-            src={goldenPopup}
+            src={'https://cdn.worldofdypians.com/wod/rankBanner.webp'}
             alt=""
             style={{ width: "100%" }}
             className="d-none d-lg-flex"
@@ -125,7 +109,7 @@ onPrimeClick
             </div>
             <div className="rank-chain-status-grid w-100">
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={bnbActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -155,7 +139,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={matActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -187,7 +171,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={seiIcon} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -217,7 +201,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={mantaActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/manta.png'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -248,7 +232,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={baseLogo} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -279,7 +263,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={taikoLogo} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/taiko.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -310,7 +294,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={skaleActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -341,7 +325,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={coreActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/core.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -372,7 +356,7 @@ onPrimeClick
                 </div>
               </div>
               <div className="rank-chain-status-item p-3 d-flex flex-column align-items-center gap-2">
-                <img src={victionActive} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/viction.svg'} width={30} height={30} alt="" />
                 <div className="d-flex flex-column w-100">
                   <div className="d-flex align-items-center justify-content-between w-100">
                     <span className="rank-dropdown-text">Rank</span>
@@ -409,7 +393,7 @@ onPrimeClick
           <div className="rank-premium-status-wrapper p-2 mt-2">
             <div className="d-flex align-items-center gap-2 justify-content-between">
               <div className="d-flex align-items-center gap-2">
-                <img src={premiumBadge} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/premiumBadge.png'} alt="" />
                 <div className="d-flex flex-column">
                   <span className="rank-upgrade-status" style={{color: "#f3bf09"}}> {isPremium ? " Prime Enabled" : "Become Prime"}</span>
                   {/* <span className="rank-upgrade-status-bottom">
@@ -434,7 +418,7 @@ onPrimeClick
                     </span>
                   }
                 >
-                  <img src={tooltipIcon} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/tooltipIconYellow.svg'} alt="" />
                 </HtmlTooltip>
               </div>
             </div>

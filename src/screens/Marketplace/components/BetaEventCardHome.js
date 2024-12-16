@@ -1,10 +1,5 @@
 import React from "react";
-import liveDot from "../assets/liveDot.svg";
-import eventsArrow from "../assets/eventsArrow.svg";
-import whitePickaxe from "../assets/whitePickAxe.svg";
-import whiteCalendar from "../assets/whiteCalendar.svg";
-import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
-// import betaMyEarnings from '../assets/betaMyEarnings.png'
+
 
 const BetaEventCard = ({
   data,

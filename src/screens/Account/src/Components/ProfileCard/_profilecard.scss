@@ -1,6 +1,5 @@
 .user-cardBg {
   // background-color: transparent;
-  // background-image: url("../../Images/userProfile/user-cardBg.png");
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -303,15 +302,7 @@
   height: 68px;
 }
 
-.explorebanner {
-  padding: 20px;
-  border-radius: 20px;
-  background: url("./assets/explorebg.webp");
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-position: center;
-}
-
+ 
 .failbtn {
   border-radius: 20px;
   background: linear-gradient(90deg, #ffac45 0%, #ff6232 100%);
@@ -351,24 +342,7 @@
   }
 }
 
-.golden-pass-wrapper {
-  background-image: url("./assets/goldenPassBorder.png");
-  background-repeat: no-repeat;
-  background-size: 100% 90%;
-  padding: 0px;
-  position: absolute;
-  width: 130%;
-  height: 138%;
-  top: 0;
-  right: 0;
-  left: -14%;
-  bottom: 0;
-  margin: auto;
-
-  @media screen and (max-width: 786px) {
-    display: none;
-  }
-}
+ 
 
 .golden-pass-tag {
   position: absolute;
@@ -736,7 +710,6 @@
 }
 
 .rank-popup {
-  background-image: url("./assets/rankRewardsBg.png") !important;
   background-size: 100% 100% !important;
 }
 .rank-popup::before {
@@ -984,13 +957,13 @@
 }
 
 .total-stars-wrapper {
-  background-image: url("./assets/totalStarsBg.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/totalStarsBg.svg");
   border-radius: 12px;
   background-size: cover;
 }
 
 .total-stars-wrapper2 {
-  background-image: url("./assets/totalStarsBg.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/totalStarsBg.svg");
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -998,7 +971,7 @@
 }
 
 .golden-pass-wrapper2 {
-  background-image: url("./assets/goldenPassbg.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/goldenPassbg.svg");
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1020,7 +993,7 @@
 }
 
 .total-stars-premium-wrapper2 {
-  background-image: url("./assets/totalStarsPremium.svg");
+  background-image: url("https://cdn.worldofdypians.com/wod/totalStarsPremium.svg");
   border-radius: 12px;
   background-size: cover;
   background-repeat: no-repeat;

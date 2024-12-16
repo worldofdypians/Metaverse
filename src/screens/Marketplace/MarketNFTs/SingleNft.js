@@ -4,7 +4,6 @@ import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
 import "../_marketplace.scss";
 import topEth from "../assets/topEth.svg";
-import topDyp from "../assets/dypIcon.svg";
 import { useLocation } from "react-router-dom";
 import getListedNFTS from "../../../actions/Marketplace";
 import checkActive from "../assets/checked.svg";
@@ -17,22 +16,7 @@ import axios from "axios";
 import getFormattedNumber from "../../Caws/functions/get-formatted-number";
 import eye from "../assets/eye.svg";
 import heart from "../assets/heart.svg";
-import ethIcon from "../assets/ethIcon.svg";
-import bnbLogo from "../assets/bnbIcon.svg";
-import confluxLogo from "../assets/confluxLogo.svg";
-import mantaLogo from "../assets/mantaLogo.png";
-import taikoLogo from "./assets/taikoLogo.svg";
-import baseLogo from "../assets/baseLogo.svg";
-import avaxLogo from "../assets/avaxLogo.svg";
-import skaleLogo from "../assets/skaleIcon.svg";
-import coreLogo from "../assets/coreLogo.svg";
-import victionLogo from "../assets/victionLogo.svg";
-import matchainLogo from "../../../components/Header/assets/matchain.svg";
-import seiLogo from "../../../components/Header/assets/sei.svg";
 
-
-import multiversLogo from "../assets/multiversLogo.svg";
-import immutableLogo from "../assets/immutableLogo.svg";
 
 import { GET_PLAYER } from "../../Account/src/Containers/Dashboard/Dashboard.schema";
 import { useQuery } from "@apollo/client";
@@ -51,8 +35,7 @@ import stars from "./assets/stars.svg";
 import singleStar from "./assets/star.svg";
 import expand from "./assets/expand.svg";
 import chart from "./assets/chart.svg";
-import users from "./assets/users.svg";
-import dropdownIcon from "./assets/dropdownIcon.svg";
+import users from "./assets/users.svg"; 
 import { ethers } from "ethers";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 
@@ -3187,34 +3170,34 @@ const SingleNft = ({
                         type === "cawsbnb" ||
                         type === "landbnb" ||
                         type === "cookie3"
-                          ? bnbLogo
+                          ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
                           : type === "conflux"
-                          ? confluxLogo
+                          ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
                           : type === "manta"
-                          ? mantaLogo
+                          ? 'https://cdn.worldofdypians.com/wod/manta.png'
                           : type === "taiko"
-                          ? taikoLogo
+                          ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
-                          ? baseLogo
+                          ? 'https://cdn.worldofdypians.com/wod/base.svg'
                           : type === "cawsavax" || type === "landavax"
-                          ? avaxLogo
+                          ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
                           : type === "skale"
-                          ? skaleLogo
+                          ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
                           : type === "core"
-                          ? coreLogo
+                          ? 'https://cdn.worldofdypians.com/wod/core.svg'
                           : type === "viction"
-                          ? victionLogo
+                          ? 'https://cdn.worldofdypians.com/wod/viction.svg'
                           : type === "mat"
-                          ? matchainLogo
+                          ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
                           : type === "multivers"
-                          ? multiversLogo
+                          ? 'https://cdn.worldofdypians.com/wod/multiversx.svg'
                           : type === "immutable"
-                          ? immutableLogo
+                          ? 'https://cdn.worldofdypians.com/wod/immutable.svg'
                           : type === "sei"
-                          ? seiLogo
-                          : ethIcon
+                          ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
+                          : 'https://cdn.worldofdypians.com/wod/eth.svg'
                       }
                       alt=""
                       style={{ width: 20, height: 20 }}
@@ -3356,7 +3339,7 @@ const SingleNft = ({
                           <div className="d-flex gap-2 align-items-center">
                             <img
                               src={
-                                nft?.payment_priceType === 0 ? topEth : topDyp
+                                topEth
                               }
                               alt=""
                               height={20}
@@ -3686,7 +3669,7 @@ const SingleNft = ({
                                     }}
                                   >
                                     <div className="d-flex align-items-center gap-2">
-                                      {/* <img src={filterIcon} alt="" /> */}
+                                   
                                       <h6 className="filter-nav-title mb-0">
                                         <img
                                           src={checkActive}

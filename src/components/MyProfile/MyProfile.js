@@ -1,95 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./_myprofile.scss";
-import domainIcon from "./assets/domainIcon.svg";
-import errordomainIcon from "./assets/errordomainIcon.svg";
-import chainsFlag from "./assets/chainsFlag2.svg";
-import chainsIcon from "./assets/chainsIcon.svg";
-import globalFlag from "./assets/globalFlag2.svg";
-import globalIcon from "./assets/globalIcon2.png";
-import landFlag from "./assets/landFlag2.svg";
-import landIcon from "./assets/landIcon.png";
-import redArrow from "./assets/redArrow.svg";
-import cyanArrow from "./assets/cyanArrow.svg";
-import pinkArrow from "./assets/pinkArrow.svg";
-import mageStarter from "../../screens/Account/src/Components/WalletBalance/assets/mageStarter.png";
-import mageGoing from "../../screens/Account/src/Components/WalletBalance/assets/mageGoing.png";
-import mageFinish from "../../screens/Account/src/Components/WalletBalance/assets/mageFinish.png";
-import readyBorder from "../../screens/Account/src/Components/WalletBalance/newAssets/readyBorder2.svg";
-import sync from "../../screens/Account/src/Components/ProfileCard/assets/sync.svg";
-import goldenPassBadge from "./assets/goldenPassBadge.png";
-import defeatedRed from "./assets/defeated-red.png";
-import myRewardsMiner from "./assets/myRewardsMiner.png";
-import Countdown from "react-countdown";
-import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
-import dragonRuins from "./assets/dailyProgress/dragonRuins.png";
-import scorpionKing from "./assets/dailyProgress/scorpionKing.png";
-import coldBite from "./assets/dailyProgress/coldBite.png";
-import stoneEye from "./assets/dailyProgress/stoneEye.png";
-import furyBeast from "./assets/dailyProgress/furyBeast.png";
-import wingStorm from "./assets/dailyProgress/wingStorm.png";
-import criticalHit from "./assets/dailyProgress/criticalHit.png";
-import puzzleMadness from "./assets/dailyProgress/puzzleMadness.png";
-import bnbMazeDay from "./assets/dailyProgress/bnbMazeDay.png";
-import prime from "./assets/dailyProgress/prime.png";
-import puzzleMadnessBanner from "./assets/dailyProgress/puzzleMadness.webp";
-import wodDomainArrow from "./assets/wodDomainArrow.svg";
-import coldBiteBanner from "./assets/dailyProgress/coldBiteBanner.webp";
-import dragonRuinsBanner from "./assets/dailyProgress/dragonRuinsBanner.webp";
-import furyBeastBanner from "./assets/dailyProgress/furyBeastBanner.webp";
-import scorpionKingBanner from "./assets/dailyProgress/scorpionKingBanner.webp";
-import stoneEyeBanner from "./assets/dailyProgress/stoneEyeBanner.webp";
-import wingStormBanner from "./assets/dailyProgress/wingStormBanner.webp";
-import bnbMazeBanner from "./assets/dailyProgress/bnbMazeBanner.webp";
-import domainNameIcon from "./assets/domainNameIcon.png";
-import coldBiteArrow from "./assets/dailyProgress/arrows/coldBiteArrow.svg";
-import dragonRuinsArrow from "./assets/dailyProgress/arrows/dragonRuinsArrow.svg";
-import furyBeastArrow from "./assets/dailyProgress/arrows/furyBeastArrow.svg";
-import mazeDayArrow from "./assets/dailyProgress/arrows/mazeDayArrow.svg";
-import puzzleMadnessArrow from "./assets/dailyProgress/arrows/puzzleMadnessArrow.svg";
-import scorpionKingArrow from "./assets/dailyProgress/arrows/scorpionKingArrow.svg";
-import stoneEyeArrow from "./assets/dailyProgress/arrows/stoneEyeArrow.svg";
-import wingStormArrow from "./assets/dailyProgress/arrows/wingStormArrow.svg";
-
-import dailyBonusStd from "./assets/dailyProgress/dailyBonusStd.png";
-import dailyBonusPrime from "./assets/dailyProgress/dailyBonusPrime.png";
-import explorerHunt from "./assets/dailyProgress/explorerHunt.png";
-import treasureHunt from "./assets/dailyProgress/treasureHunt.png";
-import wodLogo from "../../assets/wodAssets/wodToken.svg";
-import whiteArrows from "./assets/whiteArrows.svg";
-// import premiumDummy from "./assets/premiumDummy.png";
-// import dummyDragon from "./assets/dummyDragon.png";
-// import dummyCaws from "./assets/dummyCaws.png";
-// import doneTag from "./assets/doneTag.svg";
-// import emptyTag from "./assets/emptyTag.svg";
-import portfolio from "./assets/portfolio.svg";
-import starterProfile from "./assets/starterProfile.png";
-// import rookieProfile from "./assets/rookieProfile.png";
-// import underdogProfile from "./assets/underdogProfile.png";
-// import championProfile from "./assets/championProfile.png";
-// import unstoppableProfile from "./assets/unstoppableProfile.png";
-
-import starterProfilePremium from "./assets/starterProfilePremium.png";
-// import rookieProfilePremium from "./assets/rookieProfilePremium.png";
-// import underdogProfilePremium from "./assets/underdogProfilePremium.png";
-// import championProfilePremium from "./assets/championProfilePremium.png";
-// import unstoppableProfilePremium from "./assets/unstoppableProfilePremium.png";
-import errorChain from "./assets/errorchain.svg";
-import Slider from "react-slick";
+import OutsideClickHandler from "react-outside-click-handler";
+import Clipboard from "react-clipboard.js";
+import { styled, Tooltip, tooltipClasses } from "@mui/material";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { NavLink } from "react-router-dom";
+import Countdown from "react-countdown";
+import RankSmallPopup from "../../screens/Account/src/Components/ProfileCard/RankSmallPopup";
 import useWindowSize from "../../hooks/useWindowSize";
-import premiumBadge from "../../screens/Account/src/Components/LeaderBoard/assets/premiumBadge.png";
-import OutsideClickHandler from "react-outside-click-handler";
-import Clipboard from "react-clipboard.js";
-import copy from "../../components/Header/assets/copy.svg";
-import check from "../../components/Header/assets/check.svg";
-import kucoin from "../../screens/Home/VideoWrapper/assets/buyWodAssets/kucoin.svg";
-import gate from "../../screens/Home/VideoWrapper/assets/buyWodAssets/gate.svg";
-import mexc from "../../screens/Home/VideoWrapper/assets/buyWodAssets/mexc.svg";
-import pancake from "../../screens/Home/VideoWrapper/assets/buyWodAssets/pancakeSwap.svg";
-import trustwallet from "../../screens/Home/VideoWrapper/assets/buyWodAssets/trustWallet.svg";
-import { styled, Tooltip, tooltipClasses } from "@mui/material";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -161,8 +80,7 @@ const MyProfile = ({
   openSpecialRewards,
   userRankName,
   isConnected,
-  onConnectWallet,
-  onOpenRankPopup,
+  onConnectWallet, 
   onDomainClick,
   domainName,
   liveRewards,
@@ -234,86 +152,92 @@ const MyProfile = ({
 
   const dailyEvents = [
     {
-      image: stoneEye, // Sunday
+      image: "https://cdn.worldofdypians.com/wod/stoneEyeProfile.png", // Sunday
       title: "Stone Eye",
-      bannerImg: stoneEyeBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/stoneEyeBannerProfile.webp",
       titleColor: "#F1EDFF",
       contentColor: "#C8F0FF",
       class: "stoneEyeBannerItem",
-      arrow: stoneEyeArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/stoneEyeArrow.svg",
       link: "/account/challenges/stone-eye",
       active: beastSiegeStatus.cyclops,
       infoTips: ["80,000 points", "Up to 600 stars."],
     },
     {
-      image: dragonRuins, // Monday
+      image: "https://cdn.worldofdypians.com/wod/dragonRuinsProfile.png", // Monday
       title: "Dragon Ruins",
-      bannerImg: dragonRuinsBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/dragonRuinsBannerProfile.webp",
       titleColor: "#FFEACD",
       contentColor: "#D3D5D7",
       class: "dragonRuinsBannerItem",
-      arrow: dragonRuinsArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/dragonRuinsArrow.svg",
       link: "/account/challenges/dragon-ruins",
       active: beastSiegeStatus.dragon,
       infoTips: ["16,000 points", "Up to 200 stars."],
     },
     {
-      image: coldBite, // Tuesday
+      image: "https://cdn.worldofdypians.com/wod/coldBiteProfile.png", // Tuesday
       title: "Cold Bite",
-      bannerImg: coldBiteBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/coldBiteBannerProfile.webp",
       titleColor: "#68AEFE",
       contentColor: "#FFFFFF",
       class: "coldBiteBannerItem",
-      arrow: coldBiteArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/coldBiteArrow.svg",
       link: "/account/challenges/cold-bite",
       active: beastSiegeStatus.bear,
       infoTips: ["30,000 points", "Up to 300 stars."],
     },
     {
-      image: furyBeast, // Wednesday
+      image: "https://cdn.worldofdypians.com/wod/furyBeastProfile.png", // Wednesday
       title: "Fury Beast",
-      bannerImg: furyBeastBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/furyBeastBannerProfile.webp",
       titleColor: "#BEE3A8",
       contentColor: "#BAD6C9",
       class: "furyBeastBannerItem",
-      arrow: furyBeastArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/furyBeastArrow.svg",
       link: "/account/challenges/fury-beast",
       active: beastSiegeStatus.beast,
       infoTips: ["60,000 points", "Up to 400 stars."],
     },
     {
-      image: wingStorm, // Thursday
+      image: "https://cdn.worldofdypians.com/wod/wingStormProfile.png", // Thursday
       title: "Wing Storm",
-      bannerImg: wingStormBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/wingStormBannerProfile.webp",
       titleColor: "#D6F4FF",
       contentColor: "#7ACCFF",
       class: "wingStormBannerItem",
-      arrow: wingStormArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/wingStormArrow.svg",
       link: "/account/challenges/wing-storm",
       active: beastSiegeStatus.eagle,
       infoTips: ["70,000 points", "Up to 500 stars."],
     },
     {
-      image: bnbMazeDay, // Friday
+      image: "https://cdn.worldofdypians.com/wod/bnbMazeDayProfile.png", // Friday
       title: "BNB Chain Maze Day",
-      bannerImg: bnbMazeBanner,
+      bannerImg: "https://cdn.worldofdypians.com/wod/bnbMazeBannerProfile.webp",
       titleColor: "#DDF8D7",
       contentColor: "#FFFFFF",
       class: "mazeDayBannerItem",
-      arrow: mazeDayArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/mazeDayArrow.svg",
       link: "/account/challenges/maze-day",
-      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $10"],
+      infoTips: ["Up to 200,000 points", "Up to 800 stars", "Up to $100"],
 
       imageClass: "mazeDayEventBanner",
     },
     {
-      image: scorpionKing, // Saturday
+      image: "https://cdn.worldofdypians.com/wod/scorpionKingProfile.png", // Saturday
       title: "Scorpion King",
-      bannerImg: scorpionKingBanner,
+      bannerImg:
+        "https://cdn.worldofdypians.com/wod/scorpionKingBannerProfile.webp",
       titleColor: "#FFD695",
       contentColor: "#EAB257",
       class: "scorpionKingBannerItem",
-      arrow: scorpionKingArrow,
+      arrow: "https://cdn.worldofdypians.com/wod/scorpionKingArrow.svg",
       link: "/account/challenges/maze-day",
       active: beastSiegeStatus.scorpion,
       infoTips: ["120,000 points", "Up to 1000 stars."],
@@ -418,24 +342,9 @@ const MyProfile = ({
                   <img
                     className="new-profile-img w-100"
                     src={
-                      isPremium ? starterProfilePremium : starterProfile
-                      // : userRankName.name === "rookie"
-                      // ? isPremium
-                      //   ? rookieProfilePremium
-                      //   : rookieProfile
-                      // : userRankName.name === "underdog"
-                      // ? isPremium
-                      //   ? underdogProfilePremium
-                      //   : underdogProfile
-                      // : userRankName.name === "champion"
-                      // ? isPremium
-                      //   ? championProfilePremium
-                      //   : championProfile
-                      // : userRankName.name === "unstoppable"
-                      // ? isPremium
-                      //   ? unstoppableProfilePremium
-                      //   : unstoppableProfile
-                      // : starterProfile
+                      isPremium
+                        ? "https://cdn.worldofdypians.com/wod/starterProfilePremium.png"
+                        : "https://cdn.worldofdypians.com/wod/starterProfile.png"
                     }
                     alt=""
                   />
@@ -522,7 +431,14 @@ const MyProfile = ({
                                   setTimeout(() => setTooltip(false), 2000);
                                 }}
                               >
-                                <img src={tooltip ? check : copy} alt="" />{" "}
+                                <img
+                                  src={
+                                    tooltip
+                                      ? "https://cdn.worldofdypians.com/wod/check.svg"
+                                      : "https://cdn.worldofdypians.com/wod/copy.svg"
+                                  }
+                                  alt=""
+                                />{" "}
                               </span>
                             </Clipboard>
                           </div>
@@ -533,7 +449,12 @@ const MyProfile = ({
                           coinbase &&
                           syncStatus !== "" &&
                           address.toLowerCase() !== coinbase.toLowerCase() && (
-                            <img src={errorChain} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/errorchain.svg"
+                              }
+                              alt=""
+                            />
                           )}
                         {!domainName &&
                           isConnected &&
@@ -548,7 +469,9 @@ const MyProfile = ({
                               target="_blank"
                             >
                               <img
-                                src={domainIcon}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/profiledomainIcon.svg"
+                                }
                                 width={30}
                                 height={30}
                                 alt=""
@@ -570,7 +493,9 @@ const MyProfile = ({
                               target="_blank"
                             >
                               <img
-                                src={errordomainIcon}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/errordomainIcon.svg"
+                                }
                                 width={30}
                                 height={30}
                                 alt=""
@@ -595,13 +520,22 @@ const MyProfile = ({
                         }}
                       >
                         <div className="d-flex align-items-center gap-2">
-                          <img src={wodLogo} width={20} height={20} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/wodToken.svg"
+                            }
+                            width={20}
+                            height={20}
+                            alt=""
+                          />
                           <h6 className="mb-0">
                             {getFormattedNumber(wodBalance, 2)}
                           </h6>
                         </div>
                         <img
-                          src={whiteArrows}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/whiteArrows.svg"
+                          }
                           alt=""
                           style={{ width: 20, height: 20 }}
                           className={showBuyTooltip ? "whitearrowUp" : ""}
@@ -634,7 +568,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={kucoin} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/kucoinBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       Kucoin
                                     </h6>
                                   </a>
@@ -648,7 +587,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={gate} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/gateBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       Gate.io
                                     </h6>
                                   </a>
@@ -663,7 +607,12 @@ const MyProfile = ({
                                     className="getwod-item"
                                   >
                                     <h6 className="bottomitems mb-0">
-                                      <img src={mexc} className="buywodimg" />
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/mexcBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
                                       MEXC Global
                                     </h6>
                                   </a>
@@ -679,7 +628,9 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={pancake}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/pancakeBuyWod.svg"
+                                        }
                                         className="buywodimg"
                                       />
                                       PancakeSwap
@@ -696,7 +647,9 @@ const MyProfile = ({
                                   >
                                     <h6 className="bottomitems mb-0">
                                       <img
-                                        src={trustwallet}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/trustwalletBuyWod.svg"
+                                        }
                                         className="buywodimg"
                                       />
                                       TrustWallet
@@ -725,7 +678,7 @@ const MyProfile = ({
                         onClick={onSyncClick}
                       >
                         <img
-                          src={sync}
+                          src={"https://cdn.worldofdypians.com/wod/sync.svg"}
                           alt=""
                           className={syncStatus === "loading" && "syncicon"}
                         />{" "}
@@ -754,7 +707,7 @@ const MyProfile = ({
                         to={"/player"}
                       >
                         Create player
-                        {/* <img src={greenarrow} alt="" /> */}
+                        
                       </NavLink>
                     ) : null}
                   </div>
@@ -774,7 +727,10 @@ const MyProfile = ({
                       <div className="d-flex">
                         <span className="user-data-item-right">
                           #
-                          {userDataStar.position
+                          {!userDataStar?.statValue ||
+                          userDataStar?.statValue === 0
+                            ? "---"
+                            : userDataStar.position
                             ? userDataStar.position + 1
                             : "---"}
                         </span>
@@ -815,7 +771,12 @@ const MyProfile = ({
                   className="wallet-address-wrapper2 p-2 w-100"
                 >
                   <div className="d-flex gap-2 align-items-center justify-content-start">
-                    <img src={portfolio} width={25} height={25} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/portfolio.svg"}
+                      width={25}
+                      height={25}
+                      alt=""
+                    />
                     <h6 className="user-data-item-left mb-0">My Portfolio</h6>
                   </div>
                 </div>
@@ -862,11 +823,7 @@ const MyProfile = ({
                       userBaseStars={userBaseStars}
                       userTaikoStars={userTaikoStars}
                       userMatStars={userMatStars}
-                      userSeiStars={userSeiStars}
-                      onRankPopupClick={() => {
-                        onOpenRankPopup();
-                        setRankDropdown(false);
-                      }}
+                      userSeiStars={userSeiStars} 
                       globalMonthly={
                         userDataStar.position
                           ? userDataStar.position + 1
@@ -949,7 +906,10 @@ const MyProfile = ({
                         </span>
                       }
                     >
-                      <img src={prime} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/prime.png"}
+                        alt=""
+                      />
                     </HtmlTooltip>
 
                     <div
@@ -979,7 +939,12 @@ const MyProfile = ({
                     className="daily-progress-item position-relative"
                     onClick={openDailyBonus}
                   >
-                    <img src={dailyBonusStd} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/dailyBonusStdProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {allClaimedChestsstd < 90
@@ -999,7 +964,12 @@ const MyProfile = ({
                     className="daily-progress-item position-relative"
                     onClick={openDailyBonus}
                   >
-                    <img src={dailyBonusPrime} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/dailyBonusPrimeProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {allClaimedChestsPremium < 90
@@ -1050,7 +1020,12 @@ const MyProfile = ({
                     to={"/account/challenges/critical-hit"}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={criticalHit} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/criticalHitProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>Ready</span>
                     </div>
@@ -1066,7 +1041,12 @@ const MyProfile = ({
                     to={"/account/challenges/treasure-hunt"}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={treasureHunt} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/treasureHuntProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {userActiveEvents === 14
@@ -1086,7 +1066,12 @@ const MyProfile = ({
                     to={"/account/challenges/explorer-hunt"}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={explorerHunt} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/explorerHuntProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {explorerHuntData[0]?.statValue
@@ -1108,7 +1093,12 @@ const MyProfile = ({
                     to={"/account/challenges/puzzle-madness"}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={puzzleMadness} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/puzzleMadnessProfile.png"
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {userDailyBundles?.puzzleMadnessCount
@@ -1173,10 +1163,10 @@ const MyProfile = ({
                     // src={finished ? mageFinish : mageGoing}
                     src={
                       chestPercentage >= 50 && chestPercentage < 100
-                        ? mageGoing
+                        ? "https://cdn.worldofdypians.com/wod/mageGoing.png"
                         : chestPercentage === 100
-                        ? mageFinish
-                        : mageStarter
+                        ? "https://cdn.worldofdypians.com/wod/mageFinish.png"
+                        : "https://cdn.worldofdypians.com/wod/mageStarter.png"
                     }
                     className={`${"daily-rewards-img"}`}
                     alt=""
@@ -1231,7 +1221,9 @@ const MyProfile = ({
                           {finished ? "Reset Time" : "Ready to Claim"}
                         </span>
                         <img
-                          src={readyBorder}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/readyBorder2.svg"
+                          }
                           alt=""
                           className={`${
                             finished ? "ready-border-2" : "ready-border"
@@ -1264,30 +1256,67 @@ const MyProfile = ({
                       className="new-flag-wrapper global-flag"
                       onClick={openGlobalLeaderboard}
                     >
-                      <img src={globalFlag} className="w-100" alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/globalFlag2.svg"
+                        }
+                        className="w-100"
+                        alt=""
+                      />
                       <div className="flag-content d-flex flex-column gap-2 align-items-center">
                         <span className="flag-title">Global</span>
-                        <img src={globalIcon} height={50} width={50} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/globalIcon2.png"
+                          }
+                          height={50}
+                          width={50}
+                          alt=""
+                        />
                       </div>
                     </div>
                     <div
                       className="new-flag-wrapper chains-flag"
                       onClick={openChainsLeaderboard}
                     >
-                      <img src={chainsFlag} className="w-100" alt="" />
+                      <img
+                        src={
+                          "https://cdn.worldofdypians.com/wod/chainsFlag2.svg"
+                        }
+                        className="w-100"
+                        alt=""
+                      />
                       <div className="flag-content d-flex flex-column gap-2 align-items-center">
                         <span className="flag-title">Chains</span>
-                        <img src={chainsIcon} height={50} width={50} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/chainsIcon.svg"
+                          }
+                          height={50}
+                          width={50}
+                          alt=""
+                        />
                       </div>
                     </div>
                     <div
                       className="new-flag-wrapper land-flag"
                       onClick={openGenesisLeaderboard}
                     >
-                      <img src={landFlag} className="w-100" alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/landFlag2.svg"}
+                        className="w-100"
+                        alt=""
+                      />
                       <div className="flag-content d-flex flex-column gap-2 align-items-center">
                         <span className="flag-title">Collection</span>
-                        <img src={landIcon} height={50} width={50} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/landFlagIcon.png"
+                          }
+                          height={50}
+                          width={50}
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
@@ -1298,13 +1327,15 @@ const MyProfile = ({
                   className="my-rewards-wrapper-new position-relative d-flex flex-column justify-content-between gap-2 p-3"
                   onClick={openMyRewards}
                 >
-                  <img src={myRewardsMiner} className="miner-img" alt="" />
+                  <img
+                    src={
+                      "https://cdn.worldofdypians.com/wod/myRewardsMiner.png"
+                    }
+                    className="miner-img"
+                    alt=""
+                  />
                   <div className="d-flex flex-column position-absolute extraRewardsGolden">
-                    {/* <img
-                      src={goldenPassBadge}
-                      alt=""
-                      style={{ width: 60, height: 60 }}
-                    /> */}
+                
                     {/* <h6
                       className="special-rewards-total-span"
                       style={{
@@ -1355,7 +1386,12 @@ const MyProfile = ({
                       Rewards
                     </span>
                   </div>
-                  <img src={cyanArrow} width={20} height={20} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/cyanArrow.svg"}
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
                 </div>
               </div>
               <div className="col-12 col-lg-3 mt-3">
@@ -1370,7 +1406,12 @@ const MyProfile = ({
                     </h6>
                     <span className="special-rewards-total-span">Rewards</span>
                   </div>
-                  <img src={redArrow} width={20} height={20} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/redArrow.svg"}
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
                 </div>
               </div>
               <div className="col-12 col-lg-3 mt-3">
@@ -1390,10 +1431,19 @@ const MyProfile = ({
                     <span className="wod-domain-name-span">
                       Claim Your Identity
                     </span>
-                    <img src={wodDomainArrow} width={20} height={20} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/wodDomainArrow.svg"
+                      }
+                      width={20}
+                      height={20}
+                      alt=""
+                    />
                   </div>
                   <img
-                    src={domainNameIcon}
+                    src={
+                      "https://cdn.worldofdypians.com/wod/domainNameIcon.png"
+                    }
                     className="wod-domain-icon"
                     alt=""
                   />
@@ -1405,7 +1455,9 @@ const MyProfile = ({
                     <div className="d-flex w-100 align-items-center gap-2 justify-content-between">
                       <div className="d-flex align-items-center gap-2">
                         <img
-                          src={premiumBadge}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                          }
                           alt=""
                           style={{ width: 44, height: 44 }}
                         />
@@ -1449,7 +1501,9 @@ const MyProfile = ({
                   <div className="d-flex align-items-center gap-2 justify-content-between w-100">
                     <div className="d-flex align-items-center gap-2">
                       <img
-                        src={goldenPassBadge}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/goldenPassBadge.png"
+                        }
                         alt=""
                         style={{ width: 44, height: 44 }}
                       />
@@ -1706,14 +1760,18 @@ const MyProfile = ({
                       </div>
                     </div>
                     <img
-                      src={puzzleMadnessArrow}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/puzzleMadnessArrow.svg"
+                      }
                       height={20}
                       width={20}
                       alt=""
                     />
                   </div>
                   <img
-                    src={puzzleMadnessBanner}
+                    src={
+                      "https://cdn.worldofdypians.com/wod/puzzleMadnessBannerProfile.webp"
+                    }
                     className="eventbannerimg puzzle-eventbannerimg"
                   />
                 </NavLink>

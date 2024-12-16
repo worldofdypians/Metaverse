@@ -1,13 +1,9 @@
 import React from "react";
 import liveDot from "../assets/liveDot.svg";
-import eventsArrow from "../assets/eventsArrow.svg";
-import whitePickaxe from "../assets/whitePickAxe.svg";
-import whiteCalendar from "../assets/whiteCalendar.svg";
+import eventsArrow from "../assets/eventsArrow.svg"; 
 import magnifier from "../assets/magnifier.svg";
-import premiumAvailable from "../assets/premiumAvailable.svg";
 
 import getFormattedNumber from "../../Account/src/Utils.js/hooks/get-formatted-number";
-// import betaMyEarnings from '../assets/betaMyEarnings.png'
 
 const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
   return (
@@ -114,32 +110,20 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
               </h6>
             </div>
 
-            // : (
-            //   <div className="mybetaearnings" style={{ backgroundImage: "none", width: "160px",
-            //   height: "80px",
-            //   top: 0,
-            //   position: "relative", }}>
-            //     <img
-            //       src={premiumAvailable}
-            //       alt=""
-            //       height={100}
-            //       className="premiumAvailable"
-            //     />
-            //   </div>
-            // )
+           
           }
         </div>
         <div className="d-flex flex-column d-flex d-lg-none gap-3">
           <div className="d-flex align-items-center gap-2">
             {data.eventType === "Explore & Mine" ? (
-              <img src={whitePickaxe} alt="" />
+              <img src={'https://cdn.worldofdypians.com/wod/whitePickAxe.svg'} alt="" />
             ) : (
               <img src={magnifier} alt="" className="test" />
             )}
             <span className="white-events-text mb-0">{data.eventType}</span>
           </div>
           <div className="d-flex align-items-center gap-2">
-            <img src={whiteCalendar} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/whiteCalendar.svg'} alt="" />
             <span className="white-events-text mb-0">{data.eventDate}</span>
           </div>
         </div>
@@ -147,7 +131,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
       <div className="d-flex flex-column d-none gap-3 pick-and-calendar">
         <div className="d-flex align-items-center gap-2">
           {data.eventType === "Explore & Mine" ? (
-            <img src={whitePickaxe} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/whitePickAxe.svg'} alt="" />
           ) : (
             <img src={magnifier} alt="" className="test" />
           )}
@@ -156,7 +140,7 @@ const BetaEventCard = ({ data, onOpenPopup, userEarnUsd, activeTab }) => {
           </span>
         </div>
         <div className="d-flex align-items-center gap-2">
-          <img src={whiteCalendar} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/whiteCalendar.svg'} alt="" />
           <span className="white-events-text mb-0" style={{ fontSize: "10px" }}>
             {data.eventDate}
           </span>

@@ -22,10 +22,8 @@ import Footer from "./components/Footer/Footer";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import News from "./screens/News/News";
 import RegisterModal from "./components/RegisterModal/RegisterModal";
-import CheckWhitelistModal from "./components/CheckWhitelistModal/CheckWhitelistModal";
 import PrivacyPolicy from "./screens/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./screens/TermsConditions/TermsConditions";
-import Explorer from "./screens/Explorer/Explorer";
 import Land from "./screens/Land/Land";
 import Roadmap from "./screens/Roadmap/Roadmap";
 import ScrollTop from "./components/ScrollTop";
@@ -50,26 +48,20 @@ import TimepieceNFT from "./screens/Marketplace/MarketNFTs/TimepieceNFT";
 import SingleNft from "./screens/Marketplace/MarketNFTs/SingleNft";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketMint from "./screens/Marketplace/MarketMint";
-import CheckAuthUserModal from "./components/CheckWhitelistModal/CheckAuthUserModal";
 import Notifications from "./screens/Marketplace/Notifications/Notifications";
 import BetaPassNFT from "./screens/Marketplace/MarketNFTs/BetaPassNFT";
-import { useEagerlyConnect } from "web3-connector";
 import SIDRegister from "@web3-name-sdk/register";
 import { createWeb3Name } from "@web3-name-sdk/core";
 import { ethers, providers } from "ethers";
-import { disconnect, connectWallet, ConnectionType } from "web3-connector";
 import { getWeb3Connector } from "@binance/w3w-web3-connector";
 import { useWeb3React } from "@web3-react/core";
 import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
-import ChestFlyout from "./components/LandFlyout/ChestFlyout";
-import NFTBridge from "./screens/NFTBridge/NftBridge.js";
+import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
 import Community from "./screens/Community/Community.js";
-import OurTeam from "./screens/OurTeam/OurTeam.js";
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
-import Buy from "./screens/Wod/Buy/Buy.js";
 import Governance from "./screens/Community/Governance/Governance.js";
 import GovernanceInner from "./screens/Community/Governance/GovernanceContent/GovernanceInner.js";
 import GameUpdates from "./screens/Community/GameUpdates/GameUpdates.js";
@@ -81,7 +73,6 @@ import {
 } from "./screens/Account/src/Containers/Dashboard/Dashboard.schema.js";
 import ResetPasswordTest from "./screens/ResetPassword/ResetPassword.js";
 import Redirect from "./screens/Home/Redirect";
-import WalletModal2 from "./components/WalletModal/WalletModal2";
 import Token from "./screens/Token/Token";
 import LoyaltyProgram from "./screens/LoyaltyProgram/LoyaltyProgram.js";
 import { monthlyStarPrizes } from "./screens/Account/src/Containers/Dashboard/stars.js";
@@ -90,60 +81,11 @@ import About from "./screens/About/About.js";
 import Game from "./screens/Game/Game.js";
 import Campaigns from "./screens/Community/Campaigns/Campaigns.js";
 import Map from "./screens/Map/Map.js";
-import coreLogo from "./screens/Account/src/Components/WalletBalance/assets/coreLogo.svg";
-import bnbLogo from "./screens/Account/src/Components/WalletBalance/assets/bnbIcon.svg";
-import matchainLogo from "./components/Header/assets/matchain.svg";
-import seiLogo from "./components/Header/assets/sei.svg";
-import midleLogo from "./screens/Map/assets/chainIcons/midle.png";
-import chainlinkIcon from "./screens/Map/assets/chainIcons/chainlinkIcon.svg";
-
-
-import taikoLogo from "./screens/Account/src/Components/WalletBalance/assets/taikoLogo.svg";
-import victionLogo from "./screens/Account/src/Components/WalletBalance/assets/victionLogo.svg";
-import baseLogo from "./screens/Account/src/Components/WalletBalance/assets/baseLogo.svg";
-import baseLogo2 from "./screens/Home/VideoWrapper/assets/baseLogo.svg";
-
-import dypius from "./screens/Account/src/Components/WalletBalance/assets/dypIcon.svg";
-import skaleLogo from "./screens/Account/src/Components/WalletBalance/assets/skaleLogo.svg";
-import coingecko from "./screens/Account/src/Components/WalletBalance/assets/coingecko.svg";
-import immutableLogo from "./screens/Account/src/Components/WalletBalance/assets/immutableLogo.svg";
-import easy2stakeLogo from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeLogo.svg";
-
-import mantaLogo from "./screens/Account/src/Components/WalletBalance/assets/mantaLogo2.png";
-import coreBg from "./screens/Account/src/Components/WalletBalance/assets/coreBg.webp";
-import victionBg from "./screens/Account/src/Components/WalletBalance/assets/victionBg.webp";
-import immutableBg from "./screens/Account/src/Components/WalletBalance/assets/immutableBg.webp";
-import easy2stakeBg from "./screens/Account/src/Components/WalletBalance/assets/easy2stakeBg.webp";
-import midleBg from "./screens/Marketplace/assets/midleBg.webp";
-
-import dypiusPremium from "./screens/Account/src/Components/WalletBalance/assets/dypiusPremium16.svg";
-import baseUpcoming from "./screens/Account/src/Components/WalletBalance/assets/baseUpcoming.webp";
-import upcomingDyp from "./screens/Account/src/Components/WalletBalance/assets/upcomingDyp.webp";
-import upcomingBase2 from "./screens/Marketplace/assets/upcomingBase2.webp";
-import upcomingBnb from "./screens/Marketplace/assets/upcomingBnb.png";
-import coingeckoUpcoming from "./screens/Marketplace/assets/coingeckoUpcoming.png";
-import upcomingCookie from "./screens/Marketplace/assets/cookieBg.webp";
-import upcomingMatchain from "./screens/Marketplace/assets/matchainBg.webp";
-import seiBg from "./screens/Marketplace/assets/seiBg.webp";
-import chainlinkBg from "./screens/Marketplace/assets/chainlinkBg.webp";
-
-
-import upcomingDoge from "./screens/Marketplace/assets/upcomingDoge.webp";
-import upcomingSkale from "./screens/Marketplace/assets/upcomingSkale.webp";
-import upcomingDyp2 from "./screens/Marketplace/assets/dypiusBgPic2.webp";
-import cmcUpcoming from "./screens/Marketplace/assets/upcomingCmc.webp";
-import taikoBg from "./screens/Marketplace/assets/taikoBg.webp";
-import mantaBg from "./screens/Marketplace/assets/mantaBg.webp";
-import cookie3Logo from "./screens/Marketplace/assets/cookie3Logo.svg";
-import cmc from "./screens/Marketplace/MarketNFTs/assets/cmc.svg";
-import doge from "./screens/Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import gate from "./screens/Account/src/Components/WalletBalance/assets/gate.svg";
-import gateUpcoming from "./screens/Account/src/Components/WalletBalance/assets/gateUpcoming.webp";
-import conflux from "./screens/Account/src/Components/WalletBalance/assets/conflux.svg";
-import confluxUpcoming from "./screens/Account/src/Components/WalletBalance/assets/confluxUpcoming.png";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
+import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
+import Launchpool from "./screens/Launchpool/Launchpool.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -436,6 +378,8 @@ function App() {
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
+  const [countBalance, setcountBalance] = useState(1);
+
   const [count, setCount] = useState(1);
 
   const [dypTokenData, setDypTokenData] = useState(0);
@@ -480,7 +424,6 @@ function App() {
   const { connector, account, chainId, active, isActive, isActivating, error } =
     useWeb3React();
 
-  useEagerlyConnect();
   const { activate, deactivate, library, provider } = useWeb3React();
 
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
@@ -1000,8 +943,8 @@ function App() {
             setdypiusPremiumEarnTokens(userEarnedusd / bnbPrice);
           }
           if (bnbEvent && bnbEvent[0]) {
-            if(bnbEvent[0].reward.earn.totalPoints > 0) {
-               userActiveEvents = userActiveEvents + 1;
+            if (bnbEvent[0].reward.earn.totalPoints > 0) {
+              userActiveEvents = userActiveEvents + 1;
             }
 
             const userEarnedusd =
@@ -1015,10 +958,9 @@ function App() {
           }
 
           if (immutableEvent && immutableEvent[0]) {
-            if(immutableEvent[0].reward.earn.totalPoints > 0) {
+            if (immutableEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
-          
+            }
 
             const userEarnedusd =
               immutableEvent[0].reward.earn.total /
@@ -1031,9 +973,9 @@ function App() {
           }
 
           if (easy2stakeEvent && easy2stakeEvent[0]) {
-            if(easy2stakeEvent[0].reward.earn.totalPoints > 0) {
+            if (easy2stakeEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
             const userEarnedusd =
               easy2stakeEvent[0].reward.earn.total /
               easy2stakeEvent[0].reward.earn.multiplier;
@@ -1045,9 +987,9 @@ function App() {
           }
 
           if (taikoEvent && taikoEvent[0]) {
-            if(taikoEvent[0].reward.earn.totalPoints > 0) {
+            if (taikoEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               taikoEvent[0].reward.earn.total /
@@ -1059,10 +1001,9 @@ function App() {
           }
 
           if (midleEvent && midleEvent[0]) {
-            if(midleEvent[0].reward.earn.totalPoints > 0) {
+            if (midleEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
-
+            }
 
             const userEarnedusd =
               midleEvent[0].reward.earn.total /
@@ -1073,10 +1014,9 @@ function App() {
             setMidleEarnToken(userEarnedusd / bnbPrice);
           }
           if (chainlinkEvent && chainlinkEvent[0]) {
-            if(chainlinkEvent[0].reward.earn.totalPoints > 0) {
+            if (chainlinkEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
-
+            }
 
             const userEarnedusd =
               chainlinkEvent[0].reward.earn.total /
@@ -1098,9 +1038,9 @@ function App() {
           }
 
           if (coreEvent && coreEvent[0]) {
-            if(coreEvent[0].reward.earn.totalPoints > 0) {
+            if (coreEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               coreEvent[0].reward.earn.total /
@@ -1112,9 +1052,9 @@ function App() {
           }
 
           if (seiEvent && seiEvent[0]) {
-            if(seiEvent[0].reward.earn.totalPoints > 0) {
+            if (seiEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               seiEvent[0].reward.earn.total /
@@ -1125,9 +1065,9 @@ function App() {
             setSeiEarnToken(userEarnedusd / seiPrice);
           }
           if (matEvent && matEvent[0]) {
-            if(matEvent[0].reward.earn.totalPoints > 0) {
+            if (matEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               matEvent[0].reward.earn.total /
@@ -1139,9 +1079,9 @@ function App() {
           }
 
           if (victionEvent && victionEvent[0]) {
-            if(victionEvent[0].reward.earn.totalPoints > 0) {
+            if (victionEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               victionEvent[0].reward.earn.total /
@@ -1153,9 +1093,9 @@ function App() {
           }
 
           if (mantaEvent && mantaEvent[0]) {
-            if(mantaEvent[0].reward.earn.totalPoints > 0) {
+            if (mantaEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const userEarnedusd =
               mantaEvent[0].reward.earn.total /
@@ -1185,9 +1125,9 @@ function App() {
           }
 
           if (coingeckoEvent && coingeckoEvent[0]) {
-            if(coingeckoEvent[0].reward.earn.totalPoints > 0) {
+            if (coingeckoEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const points = coingeckoEvent[0].reward.earn.totalPoints;
             setuserPoints(points);
@@ -1212,9 +1152,9 @@ function App() {
             }
           }
           if (skaleEvent && skaleEvent[0]) {
-            if(skaleEvent[0].reward.earn.totalPoints > 0) {
+            if (skaleEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const points = skaleEvent[0].reward.earn.totalPoints;
             setSkalePoints(points);
@@ -1271,9 +1211,9 @@ function App() {
           }
 
           if (baseEvent && baseEvent[0]) {
-            if(baseEvent[0].reward.earn.totalPoints > 0) {
+            if (baseEvent[0].reward.earn.totalPoints > 0) {
               userActiveEvents = userActiveEvents + 1;
-           }
+            }
 
             const basePoints = baseEvent[0].reward.earn.totalPoints;
             setBaseUserPoints(basePoints);
@@ -1408,7 +1348,7 @@ function App() {
 
     const victionContract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
+      window.config.nft_viction_address.toLowerCase()
     );
 
     const coreContract = new window.coreWeb3.eth.Contract(
@@ -1434,6 +1374,11 @@ function App() {
     const cookieContract = new window.bscWeb3.eth.Contract(
       window.COOKIE3_NFT_ABI,
       window.config.nft_cookie3_address
+    );
+
+    const matchainContract = new window.matWeb3.eth.Contract(
+      window.MAT_NFT_ABI,
+      window.config.nft_mat_address
     );
 
     const confluxresult = await confluxContract.methods
@@ -1536,7 +1481,16 @@ function App() {
         return 0;
       });
 
+    const matresult = await matchainContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
+
     setTotalSupply(
       parseInt(result) +
         parseInt(result_base) +
@@ -1553,6 +1507,7 @@ function App() {
         parseInt(mantaresult) +
         parseInt(taikoresult) +
         parseInt(cookieresult) +
+        parseInt(matresult) +
         20002
     );
   };
@@ -1941,14 +1896,6 @@ function App() {
           checkConnection();
         } else
           window.alertify.error("No web3 detected. Please install Metamask!");
-      } else {
-        await connectWallet(ConnectionType.INJECTED);
-        setCoinbase(account);
-        setIsConnected(isActive);
-        setwalletModal(false);
-        setShowForms2(true);
-        setSuccess(true);
-        setChainId(parseInt(window.gatewallet.chainId));
       }
 
       //
@@ -2236,7 +2183,7 @@ function App() {
       });
       getMyNFTS(coinbase, "sei").then((NFTS) => {
         setTotalseiNft(NFTS.length);
-        setMyseiNfts(NFTS);  
+        setMyseiNfts(NFTS);
       });
       //setmyBaseNFTs
     } else {
@@ -2650,13 +2597,12 @@ function App() {
     }
   };
 
-  
   const handleSeiNftMint = async () => {
     if (isConnected && coinbase) {
       try {
         //Check Whitelist
         let whitelist = 1;
-console.log('mint sei')
+        console.log("mint sei");
         if (parseInt(whitelist) === 1) {
           setmintloading("mint");
           setmintStatus("Minting in progress...");
@@ -2674,7 +2620,7 @@ console.log('mint sei')
               }, 5000);
               getMyNFTS(coinbase, "sei").then((NFTS) => {
                 setMyseiNfts(NFTS);
-                setTotalseiNft(NFTS.length)
+                setTotalseiNft(NFTS.length);
               });
             })
             .catch((e) => {
@@ -3080,7 +3026,6 @@ console.log('mint sei')
     }
 
     if (isAuthenticated) {
-      
       if (!playerId) {
         return (
           <React.Fragment>
@@ -3433,7 +3378,6 @@ console.log('mint sei')
       });
   };
 
-
   const fetchCorePrice = async () => {
     await axios
       .get(
@@ -3516,7 +3460,7 @@ console.log('mint sei')
     fetchTaikoPrice();
     fetchCookiePrice();
     fetchCorePrice();
-    fetchMatchainPrice()
+    fetchMatchainPrice();
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
@@ -3577,13 +3521,13 @@ console.log('mint sei')
     // },
     {
       title: "BNB Chain",
-      logo: bnbLogo,
+      logo: "https://cdn.worldofdypians.com/wod/bnbIcon.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 04, 2024",
-      backgroundImage: upcomingBnb,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBnb.png",
       userEarnUsd: bnbEarnUsd,
       userEarnCrypto: bnbEarnToken,
       userEarnPoints: bnbPoints,
@@ -3612,7 +3556,7 @@ console.log('mint sei')
     },
     {
       title: "Matchain",
-      logo: matchainLogo,
+      logo: "https://cdn.worldofdypians.com/wod/matchainIcon.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3625,7 +3569,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 04, 2024",
-      backgroundImage: upcomingMatchain,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/matchainMintBg.webp",
       userEarnUsd: matEarnUsd,
       userEarnCrypto: matEarnToken,
       userEarnPoints: matPoints,
@@ -3649,7 +3593,7 @@ console.log('mint sei')
     },
     {
       title: "Base",
-      logo: baseLogo2,
+      logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in ETH Rewards",
       location: [-0.06787060104021504, 0.08728981018066406],
@@ -3658,7 +3602,7 @@ console.log('mint sei')
       eventDate: "Oct 21, 2024",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
-      backgroundImage: upcomingBase2,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBase2.webp",
       image: "baseBanner.png",
       userEarnUsd: 0,
       userEarnCrypto: 0,
@@ -3683,7 +3627,7 @@ console.log('mint sei')
     },
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: "https://cdn.worldofdypians.com/wod/taiko.svg",
       eventStatus: "Live",
       rewardType: "TAIKO",
       rewardAmount: "$20,000",
@@ -3696,7 +3640,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: taikoBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/taikoBg.webp",
       userEarnUsd: taikoEarnUsd,
       userEarnCrypto: taikoEarnToken,
       userEarnPoints: taikoPoints,
@@ -3721,13 +3665,14 @@ console.log('mint sei')
     {
       title: "CoinGecko",
       image: "coingeckoBanner.png",
-      logo: coingecko,
+      logo: "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: coingeckoUpcoming,
+      backgroundImage:
+        "https://cdn.worldofdypians.com/wod/coingeckoUpcoming.png",
       userEarnUsd: userEarnUsd,
       userEarnCrypto: userEarnETH,
       userEarnPoints: userPoints,
@@ -3757,7 +3702,7 @@ console.log('mint sei')
     },
     {
       title: "Immutable",
-      logo: immutableLogo,
+      logo: "https://cdn.worldofdypians.com/wod/immutable.svg",
       eventStatus: "Live",
       rewardType: "IMX",
       rewardAmount: "$20,000",
@@ -3771,7 +3716,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Nov 29, 2024",
-      backgroundImage: immutableBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/immutableBg.webp",
       userEarnUsd: immutableEarnUsd,
       userEarnCrypto: immutableEarnToken,
       userEarnPoints: immutablePoints,
@@ -3797,13 +3742,13 @@ console.log('mint sei')
     },
     {
       title: "CORE",
-      logo: coreLogo,
+      logo: "https://cdn.worldofdypians.com/wod/core.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 04, 2024",
-      backgroundImage: coreBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/coreBg.webp",
       image: "coreBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
@@ -3829,11 +3774,11 @@ console.log('mint sei')
         learnMore: "",
         eventDate: "Dec 04, 2024",
       },
-    }, 
-    
+    },
+
     {
       title: "SEI",
-      logo: seiLogo,
+      logo: "https://cdn.worldofdypians.com/wod/seiLogo.svg",
       eventStatus: "Live",
       rewardType: "SEI",
       rewardAmount: "$20,000",
@@ -3846,7 +3791,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 05, 2024",
-      backgroundImage: seiBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/seiBg.webp",
       userEarnUsd: seiEarnUsd,
       userEarnCrypto: seiEarnToken,
       userEarnPoints: seiEarnPoints,
@@ -3871,7 +3816,7 @@ console.log('mint sei')
 
     {
       title: "Chainlink",
-      logo: chainlinkIcon,
+      logo: "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3884,7 +3829,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 06, 2024",
-      backgroundImage: chainlinkBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/chainlinkBg.webp",
       userEarnUsd: chainlinkEarnUsd,
       userEarnCrypto: chainlinkEarnToken,
       userEarnPoints: chainlinkEarnPoints,
@@ -3907,15 +3852,14 @@ console.log('mint sei')
       },
     },
 
-  
     {
       title: "Easy2Stake",
-      logo: easy2stakeLogo,
+      logo: "https://cdn.worldofdypians.com/wod/easy2stakeLogo.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
       location: [-0.05935191046684262, 0.03785133361816407],
-      image: "easy2stakeBanner.webp",
+      image: "easy2stakeBanner.png",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
 
@@ -3924,11 +3868,11 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Nov 29, 2024",
-      backgroundImage: easy2stakeBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/easy2stakeBg.webp",
       userEarnUsd: easy2StakeEarnUsd,
       userEarnCrypto: easy2StakeEarnToken,
       userEarnPoints: easy2StakePoints,
-      image: "easy2stakeBanner.webp",
+      image: "easy2stakeBanner.png",
 
       popupInfo: {
         title: "Easy2Stake",
@@ -3950,7 +3894,7 @@ console.log('mint sei')
     },
     {
       title: "Midle",
-      logo: midleLogo,
+      logo: "https://cdn.worldofdypians.com/wod/midle.svg",
       eventStatus: "Live",
       rewardType: "BNB",
       rewardAmount: "$20,000",
@@ -3963,7 +3907,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Nov 29, 2024",
-      backgroundImage: midleBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/midleBg.webp",
       userEarnUsd: midleEarnUsd,
       userEarnCrypto: midleEarnToken,
       userEarnPoints: midlePoints,
@@ -3987,14 +3931,9 @@ console.log('mint sei')
       },
     },
 
-
-
-
-
-   
     {
       title: "Cookie3",
-      logo: cookie3Logo,
+      logo: "https://cdn.worldofdypians.com/wod/cookie3.svg",
       eventStatus: "Expired",
       rewardType: "COOKIE",
       rewardAmount: "$20,000",
@@ -4008,7 +3947,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Aug 26, 2024",
-      backgroundImage: upcomingCookie,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/cookieBg.webp",
       userEarnUsd: cookieEarnUsd,
       userEarnCrypto: cookieEarnToken,
       userEarnPoints: cookiePoints,
@@ -4033,7 +3972,7 @@ console.log('mint sei')
 
     {
       title: "VICTION",
-      logo: victionLogo,
+      logo: "https://cdn.worldofdypians.com/wod/viction.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
@@ -4043,7 +3982,7 @@ console.log('mint sei')
       infoType: "Treasure Hunt",
 
       marker: markers.treasureMarker,
-      backgroundImage: victionBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/victionBg.webp",
       image: "victionBanner.png",
       userEarnUsd: victionEarnUsd,
       userEarnCrypto: victionEarnToken,
@@ -4066,9 +4005,9 @@ console.log('mint sei')
         eventDate: "Nov 29, 2024",
       },
     },
-     {
+    {
       title: "Manta",
-      logo: mantaLogo,
+      logo: "https://cdn.worldofdypians.com/wod/mantaLogoBig.png",
       eventStatus: "Live",
       rewardType: "MANTA",
       rewardAmount: "$20,000",
@@ -4082,7 +4021,7 @@ console.log('mint sei')
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 05, 2024",
-      backgroundImage: mantaBg,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/mantaMintBg.webp",
       userEarnUsd: mantaEarnUsd,
       userEarnCrypto: mantaEarnToken,
       userEarnPoints: mantaPoints,
@@ -4106,13 +4045,13 @@ console.log('mint sei')
     },
     {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: "https://cdn.worldofdypians.com/wod/skaleIcon.svg",
       eventStatus: "Live",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Mine",
       eventDate: "Dec 03, 2024",
-      backgroundImage: upcomingSkale,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingSkale.webp",
       userEarnUsd: skaleEarnUsd,
       userEarnCrypto: skaleEarnToken,
       userEarnPoints: skalePoints,
@@ -4142,13 +4081,13 @@ console.log('mint sei')
     },
     {
       title: "Dypius Premium",
-      logo: dypiusPremium,
+      logo: "https://cdn.worldofdypians.com/wod/dypiusPremium16.svg",
       eventStatus: "Expired",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/dypiusBgPic2.webp",
       activeTab: "dypiusv2",
       userEarnUsd: dypiusPremiumEarnUsd,
       userEarnCrypto: dypiusPremiumEarnTokens,
@@ -4175,7 +4114,7 @@ console.log('mint sei')
     },
     {
       title: "CMC",
-      logo: cmc,
+      logo: "https://cdn.worldofdypians.com/wod/cmcIcon.svg",
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -4184,7 +4123,7 @@ console.log('mint sei')
       userEarnUsd: cmcuserEarnUsd,
       userEarnCrypto: cmcuserEarnETH,
       userEarnPoints: cmcuserPoints,
-      backgroundImage: cmcUpcoming,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingCmc.webp",
       popupInfo: {
         title: "CoinMarketCap",
         chain: "BNB Chain",
@@ -4215,12 +4154,12 @@ console.log('mint sei')
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
-      logo: doge,
+      logo: "https://cdn.worldofdypians.com/wod/dogecoinIcon.svg",
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
       userEarnCrypto: dogeEarnBNB,
       userEarnPoints: dogeUserPoints,
-      backgroundImage: upcomingDoge,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingDoge.webp",
       minRewards: "1",
       maxRewards: "100",
       minPoints: "5,000",
@@ -4248,16 +4187,15 @@ console.log('mint sei')
       },
     },
 
-
     {
       title: "Dypius",
-      logo: dypius,
+      logo: "https://cdn.worldofdypians.com/wod/dypius.svg",
       eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Ended",
-      backgroundImage: upcomingDyp,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingDyp.webp",
       userEarnUsd: dypiusEarnUsd,
       userEarnCrypto: dypiusEarnTokens,
       userEarnPoints: 0,
@@ -4279,13 +4217,13 @@ console.log('mint sei')
     },
     {
       title: "Gate.io",
-      logo: gate,
+      logo: "https://cdn.worldofdypians.com/wod/gateTreasureHunt.svg",
       eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "Ended",
-      backgroundImage: gateUpcoming,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/gateUpcoming.webp",
       userEarnUsd: gateEarnUSD,
       userEarnCrypto: gateEarnBnb,
       userEarnPoints: gateUserPoints,
@@ -4310,13 +4248,13 @@ console.log('mint sei')
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: "https://cdn.worldofdypians.com/wod/confluxIcon.svg",
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
       eventType: "Explore & Mine",
       eventDate: "Ended",
-      backgroundImage: confluxUpcoming,
+      backgroundImage: "https://cdn.worldofdypians.com/wod/confluxUpcoming.png",
       userEarnUsd: confluxEarnUSD,
       userEarnCrypto: confluxEarnCFX,
       userEarnPoints: confluxUserPoints,
@@ -4755,7 +4693,6 @@ console.log('mint sei')
         window.WALLET_TYPE = "";
       }, 500);
     } else {
-      disconnect(connector);
       localStorage.setItem("logout", "true");
     }
   };
@@ -4945,7 +4882,7 @@ console.log('mint sei')
   useEffect(() => {
     fetchSkaleBalance();
     getWodBalance(coinbase);
-  }, [coinbase, isConnected, networkId]);
+  }, [coinbase, isConnected, networkId, countBalance]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -5203,12 +5140,25 @@ console.log('mint sei')
               />
             }
           />
+              <Route
+            exact
+            path="/launchpool"
+            element={
+              <Launchpool
+              wodHolders={wodHolders}
+              totalVolumeNew={totalVolumeNew}
+              totalSupply={totalSupply}
+              monthlyPlayers={monthlyPlayers}
+
+              />
+            }
+          />
           {/* <Route exact path="/team" element={<OurTeam />} /> */}
-          <Route
+          {/* <Route
             exact
             path="/explorer"
             element={<Explorer count={count2} setCount={setCount2} />}
-          />
+          /> */}
           {/* <Route exact path="/stake" element={<NftMinting />} /> */}
           <Route exact path="/contact-us" element={<PartnerForm />} />
           <Route exact path="/unsubscribe/:email" element={<Unsubscribe />} />
@@ -5353,7 +5303,6 @@ console.log('mint sei')
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -5426,7 +5375,6 @@ console.log('mint sei')
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -5498,6 +5446,8 @@ console.log('mint sei')
             }
           />
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
+          <Route exact path="/binanceweb3-campaign-rules" element={<BinanceCampaignRules />} />
+
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
@@ -6143,6 +6093,8 @@ console.log('mint sei')
               />
             }
           />
+          <Route exact path="/caws" element={<Caws />} />
+
           <Route
             exact
             path="/account/challenges/:eventId"
@@ -6163,7 +6115,6 @@ console.log('mint sei')
                 coreEarnUsd={coreEarnUsd}
                 matEarnUsd={matEarnUsd}
                 chainlinkEarnUsd={chainlinkEarnUsd}
-
                 victionEarnUsd={victionEarnUsd}
                 taikoEarnUsd={taikoEarnUsd}
                 cookieEarnUsd={cookieEarnUsd}
@@ -6299,7 +6250,6 @@ console.log('mint sei')
                 totalMatNfts={myMatNFTs.length}
                 matMintAllowed={1 - myMatNFTs.length}
                 seiMintAllowed={1 - myseiNfts.length}
-
                 myMatNFTs={myMatNFTs}
                 myMatNFTsCreated={myMatNFTs}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6421,6 +6371,10 @@ console.log('mint sei')
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+               
               />
             }
           />
@@ -6428,7 +6382,20 @@ console.log('mint sei')
           <Route
             exact
             path="/governance/proposal/:proposalId"
-            element={<GovernanceInner />}
+            element={
+              <GovernanceInner
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                wodBalance={wodBalance}
+                refreshBalance={() => {
+                  setcountBalance(countBalance + 1);
+                }}
+              />
+            }
           />
 
           <Route
@@ -6865,10 +6832,10 @@ console.log('mint sei')
               }
             /> */}
           <Route
-              exact
-              path="/shop/mint/sei"
-              element={
-                <MarketMint
+            exact
+            path="/shop/mint/sei"
+            element={
+              <MarketMint
                 coinbase={coinbase}
                 showWalletConnect={() => {
                   setwalletModal(true);
@@ -6876,7 +6843,6 @@ console.log('mint sei')
                 totalMatNfts={myMatNFTs.length}
                 matMintAllowed={1 - myMatNFTs.length}
                 seiMintAllowed={1 - myseiNfts.length}
-
                 myMatNFTs={myMatNFTs}
                 myMatNFTsCreated={myMatNFTs}
                 handleSwitchNetwork={handleSwitchNetwork}
@@ -6901,9 +6867,9 @@ console.log('mint sei')
                 handleBaseNftMint={handleBaseNftMint}
                 totalseiNft={totalseiNft}
                 myseiNfts={myseiNfts}
-                />
-              }
-            />
+              />
+            }
+          />
           <Route
             exact
             path="/map"
@@ -6915,14 +6881,6 @@ console.log('mint sei')
         <ScrollTop />
         <Footer />
       </div>
-
-      {/* {!location.pathname.includes("account") &&
-        !location.pathname.includes("auth") &&
-        !location.pathname.includes("explorer") &&
-        !location.pathname.includes("map") &&
-        !location.pathname.includes("bnbchain-alliance-program") && (
-          <ChestFlyout />
-        )} */}
       {domainPopup && (
         <DomainModal
           onClose={() => setDomainPopup(false)}

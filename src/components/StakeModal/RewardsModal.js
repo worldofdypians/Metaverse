@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
-import EmptyCawsWod from "./EmptyCawsWod";
-import greenInfo from "./assets/greenInfo.svg";
+import EmptyCawsWod from "./EmptyCawsWod"; 
 import cawsTag from "./assets/cawsTag.svg";
 import wodTag from "./assets/wodTag.svg";
 import fullWod from "./assets/fullWod.png";
 import axios from "axios";
-import CawsWodNftChecklist from "./CawsWodNftChecklist";
-import ethIcon from "./assets/ethIcon.svg";
+import CawsWodNftChecklist from "./CawsWodNftChecklist"; 
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import { ethers } from "ethers";
@@ -420,7 +418,7 @@ const RewardsModal = ({
           </div>
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
-          <img src={greenInfo} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
           <span className="info-span-text text-wrap">
             Please select the NFT pairs to claim your rewards or withdraw them
             from the staking pool.
@@ -433,7 +431,7 @@ const RewardsModal = ({
 
               <div className="d-flex gap-2 justify-content-between">
                 <div className="d-flex align-items-center gap-1">
-                  <img src={ethIcon} alt="" style={{ width: 30, height: 30 }} />
+                  <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" style={{ width: 30, height: 30 }} />
                   <span className="selected-nfts-amount2">
                     {getFormattedNumber(ETHrewards, 3)} ETH
                   </span>

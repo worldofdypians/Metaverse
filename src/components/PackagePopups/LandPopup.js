@@ -1,10 +1,4 @@
-import React from "react";
-import popupXmark from "../../screens/Marketplace/assets/popupXmark.svg";
-import landPopup from "./assets/landPopup.webp";
-import cityMap from "./assets/cityMap.webp";
-import islandMap from "./assets/islandMap.webp";
-import epicblack from "../../assets/epicblack.svg";
-import opensea from "../../assets/opensea.svg";
+import React from "react"; 
 import { NavLink } from "react-router-dom";
 
 const LandPopup = ({ onClosePopup }) => {
@@ -45,7 +39,7 @@ const LandPopup = ({ onClosePopup }) => {
       <div className="package-popup map-popup">
         <div className=" d-flex align-items-center justify-content-between w-100 m-0 p-3 mb-2 new-popup-title-wrapper">
           <h6 className="market-banner-title m-0">LAND NFT COLLECTION</h6>
-          <img src={popupXmark} onClick={onClosePopup} alt="" />
+          <img src={"https://cdn.worldofdypians.com/wod/xMark.svg"} height={29} width={39} onClick={onClosePopup} alt="" />
         </div>
 
         <div className="package-popup-content-land mx-1 p-4 pt-0 d-flex flex-column gap-2">
@@ -87,7 +81,7 @@ const LandPopup = ({ onClosePopup }) => {
                   }`}
                 >
                   <img
-                    src={require(`../../assets/landAssets/${tier.icon}`)}
+                    src={`https://cdn.worldofdypians.com/wod/${tier.icon}`}
                     className={`genesis-badge ${
                       tier.title === "Genesis Land" && "d-none"
                     }`}
@@ -118,7 +112,7 @@ const LandPopup = ({ onClosePopup }) => {
               target="_blank"
               className="explore-btn d-flex align-items-center gap-2 col-lg-4 py-2"
             >
-              <img src={opensea} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
               Buy on Opensea
             </NavLink>
           </div>

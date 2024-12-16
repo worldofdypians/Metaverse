@@ -3,8 +3,7 @@ import "./_bundle.scss";
 import dypius from "../../Images/userProfile/dypius.svg";
 import idyp from "../../Images/userProfile/idyp.svg";
 import filledCircle from "../../Images/userProfile/filled-circlecheck.svg";
-import bnbChain from "../../Images/userProfile/bnbChain.svg";
-import dragon from "../../Images/userProfile/dragon.png";
+import bnbChain from "../../Images/userProfile/bnbChain.svg"; 
 import {
   wod_abi,
   token_abi,
@@ -16,13 +15,12 @@ import {
   idyp3500Address,
 } from "../../web3";
 import { CircularProgress } from "@mui/material";
-import Countdown from "react-countdown";
-import tooltipIcon from "./assets/tooltipIcon.svg";
+import Countdown from "react-countdown"; 
 import OutsideClickHandler from "react-outside-click-handler";
 import progress1 from "./assets/progress1.svg";
 import progress2 from "./assets/progress2.svg";
 import axios from "axios";
-import opensea from "./assets/opensea.svg";
+
 import Slider from "rc-slider";
 
 const renderer = ({ hours, minutes, seconds }) => {
@@ -816,7 +814,7 @@ const BundleCard = ({
                   {" "}
                   <a href={packageData.link} target="_blank">
                     <img
-                      src={tooltipIcon}
+                      src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                       alt=""
                       className="tooltip-icon"
                       style={{
@@ -1348,7 +1346,7 @@ const BundleCard = ({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={opensea} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/opensea.svg"} alt="" />
                   Genesis Land
                 </a>
               </div>

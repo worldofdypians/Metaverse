@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import xMark from "../../screens/Account/src/Components/WalletBalance/assets/closeMark.svg";
-import ethIcon from "../../screens/Marketplace/assets/ethIcon.svg";
-import bnbLogo from "../../screens/Marketplace/assets/bnbLogo.svg";
-import confluxLogo from "../../screens/Marketplace/assets/confluxLogo.svg";
-import baseLogo from "../../screens/Marketplace/assets/baseLogo.svg";
-import avaxLogo from "../../screens/Marketplace/assets/avaxLogo.svg";
+ 
+
 import topEth from "../../screens/Marketplace/assets/topEth.svg";
 import topDyp from "../../screens/Marketplace/assets/topDyp.svg";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
@@ -510,7 +506,7 @@ const BuyNftPopup = ({
           {nft.type === "caws" ? "CAWS" : "Genesis Land"} #{nft.tokenId}
         </h6>
         <img
-          src={xMark}
+          src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
           style={{ cursor: "pointer" }}
           onClick={onClose}
           alt=""
@@ -529,7 +525,7 @@ const BuyNftPopup = ({
       />
 
       <span className="seller-addr d-flex gap-1 align-items-center">
-        <img src={ethIcon} alt="" style={{ width: 20, height: 20 }} /> Ethereum
+        <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" style={{ width: 20, height: 20 }} /> Ethereum
       </span>
 
       <div className="d-flex justify-content-between align-items-center">

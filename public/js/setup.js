@@ -367,11 +367,17 @@ window.config = {
 
 
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
+  reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
+
   USDC_address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
 
   //===========================================================================
   //GOVERNANCE
   governance_address: "0xfa65125398a0b0e2a48398a32fae33717bd64e92",
+  // governance_address: "0xdb2E1287AAC9974AB28a66fABF9bCB34C5f37712",
+
+  vote_duration_in_seconds: 259200, // 3 days
+
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
@@ -394,6 +400,8 @@ window.victionWeb3 = new Web3(window.config.viction_endpoint);
 window.seiWeb3 = new Web3(window.config.sei_endpoint);
 
 window.REWARD_TOKEN_WOD_ABI = window.TOKEN_ABI;
+window.REWARD_TOKEN_WOD_TEST_ABI = window.TOKEN_ABI;
+
 window.CONSTANT_STAKING_WOD_ABI = window.CONSTANT_STAKING_WOD_ABI;
 
 window.CONSTANT_STAKING_WOD1_ABI = window.CONSTANT_STAKING_WOD_ABI;
@@ -578,6 +586,8 @@ class CONSTANT_STAKING_WOD {
 }
 
 window.reward_token_wod = new TOKEN("REWARD_TOKEN_WOD");
+window.reward_token_wod_test = new TOKEN("REWARD_TOKEN_WOD_TEST");
+
 window.constant_staking_wod = new CONSTANT_STAKING_WOD("CONSTANT_STAKING_WOD");
 window.constant_staking_wod1 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD1"
@@ -2152,7 +2162,7 @@ async function getContractVictionNFT(key) {
     window.web3 = new Web3(window.ethereum);
     window.cached_contracts[key] = new window.web3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address,
+      window.config.nft_viction_address.toLowerCase(),
       {
         from: await getCoinbase(),
       }
@@ -2192,7 +2202,7 @@ class VICTION_NFT {
       this[fn_name] = async function (...args) {
         let contract = new window.victionWeb3.eth.Contract(
           window.VICTION_NFT_ABI,
-          window.config.nft_viction_address,
+          window.config.nft_viction_address.toLowerCase(),
           {
             from: await getCoinbase(),
           }
@@ -3780,7 +3790,7 @@ async function getMyNFTs(address, type = "") {
   } else if (type === "viction") {
     contract = new window.victionWeb3.eth.Contract(
       window.VICTION_NFT_ABI,
-      window.config.nft_viction_address
+      window.config.nft_viction_address.toLowerCase()
     );
 
     const balance = await contract.methods.balanceOf(address).call();
@@ -33986,6 +33996,8 @@ Object.keys(window.config)
     (k) =>
       k.startsWith("token_") ||
       k.startsWith("reward_token_wod") ||
+      k.startsWith("reward_token_wod_test") ||
+
       k.startsWith("constant_staking_wod") ||
       k.startsWith("constant_staking_wod1") ||
       k.startsWith("constant_staking_wod2") ||
@@ -33999,6 +34011,8 @@ Object.keys(window.config)
       : k.startsWith("token_")
       ? window.TOKEN_ABI
       : k.startsWith("reward_token_wod")
+      ? window.TOKEN_ABI
+      : k.startsWith("reward_token_wod_test")
       ? window.TOKEN_ABI
       : k.startsWith("constant_staking_wod")
       ? window.CONSTANT_STAKING_WOD_ABI

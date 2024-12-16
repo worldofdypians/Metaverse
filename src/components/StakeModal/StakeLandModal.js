@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
-import EmptyWodCard from "./EmptyWodCard";
-import greenInfo from "./assets/greenInfo.svg";
+import EmptyWodCard from "./EmptyWodCard"; 
 import cawsTag from "./assets/cawsTag.svg";
 import wodTag from "./assets/wodTag.svg";
-import fullWod from "./assets/fullWod.png";
-import ethIcon from "./assets/ethIcon.svg";
+import fullWod from "./assets/fullWod.png"; 
 import LandNftChecklist from "./LandNftChecklist";
 import OutsideClickHandler from "react-outside-click-handler";
 import axios from "axios";
@@ -617,7 +615,7 @@ const StakeLandModal = ({
           </div>
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
-          <img src={greenInfo} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
           <span className="info-span-text text-wrap">
             Please choose the NFTs that you wish to stake. Once you have made
             your selection, you will be required to approve the process before
@@ -635,7 +633,7 @@ const StakeLandModal = ({
                   }}
                 >
                   <img
-                    src={greenInfo}
+                    src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
                     alt=""
                     className="tooltipicon"
                     onClick={() => {
@@ -762,7 +760,7 @@ const StakeLandModal = ({
                 <div className="d-flex gap-2 justify-content-between">
                   <div className="d-flex align-items-center gap-1">
                     <img
-                      src={ethIcon}
+                      src={'https://cdn.worldofdypians.com/wod/eth.svg'}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />

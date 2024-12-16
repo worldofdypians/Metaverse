@@ -2,9 +2,10 @@
   height: 100vh !important;
   // background: black !important;
   width: 100vw;
-  background-image: url("./assets/stars.webp") !important;
+  background-image: url("https://cdn.worldofdypians.com/wod/stars.webp") !important;
   background-size: 100%;
 }
+
 
 .leaflet-popup-content-wrapper {
   background: linear-gradient(
@@ -789,7 +790,7 @@
 }
 
 .map-stars-wrapper {
-  background-image: url("./assets/myStarsBg.png");
+  background-image: url("https://cdn.worldofdypians.com/wod/myStarsBg.png");
   background-size: 100% 100%;
   border-radius: 12px;
 }

@@ -1,37 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./loyaltyprogram.css";
-import clock from "./assets/clock.svg";
-import coinsIcon from "./assets/coinsIcon.svg";
-import contractIcon from "./assets/contractIcon.svg";
-import dyp from "./assets/dyp.svg";
-import eth from "./assets/eth.svg";
-import fireIcon from "./assets/fireIcon.svg";
-import moneyIcon from "./assets/moneyIcon.svg";
-import starIcon from "./assets/starIcon.svg";
-import xMark from "./assets/xMark.svg";
-import successful from "./assets/successful.svg";
-import denied from "./assets/denied.svg";
-import metamask from "./assets/metamask.png";
-import checkIcon from "./assets/checkIcon.svg";
-import coin98 from "./assets/coin98.png";
-import trustwallet from "./assets/trustwallet.png";
-import coinbaseWallet from "./assets/coinbase.png";
-import bnbIcon from "./assets/bnbIcon.svg";
-import opbnbIcon from "./assets/bnbIcon.svg";
-import baseIcon from "./assets/baseIcon.svg";
-import coreIcon from "./assets/coreIcon.svg";
-import skaleIcon from "./assets/skaleIcon.svg";
-import taikoIcon from "./assets/taikoIcon.svg";
-import victionIcon from "./assets/victionIcon.svg";
-import mantaIcon from "./assets/mantaIcon.png";
-
-import safepal from "./assets/safepal.png";
 import axios from "axios";
 import { shortAddress } from "../Caws/functions/shortAddress";
 import Countdown from "react-countdown";
 import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import winnerBadge from "./assets/winnerBadge.webp";
-import appliedBadge from "./assets/appliedBadge.webp";
 import { loyaltyAddresses } from ".";
 import "./landpopup.css";
 import MobileNav from "../../components/MobileNav/MobileNav";
@@ -288,7 +260,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                     </p>
                   </div>
                   <div className="loyalty-banner-timer px-5 py-4 position-relative d-flex align-items-center justify-content-center">
-                    <img src={clock} alt="" className="loyalty-clock" />
+                    <img src={"https://cdn.worldofdypians.com/wod/clock.svg"} alt="" className="loyalty-clock" />
                     <div className="d-flex flex-column align-items-center ">
                      {!expired &&
                       <Countdown
@@ -343,7 +315,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                       <div className="d-flex p-3 flex-column align-items-center justify-content-center gap-2 reimbursement-wrapper">
                         <div className="d-flex align-items-center justify-content-between w-100">
                           <div className="d-flex align-items-center gap-2">
-                            <img src={dyp} alt="" />
+                            <img src={"https://cdn.worldofdypians.com/wod/dypius.svg"} alt="" />
                             <h6 className="mb-0 reimbursement-token">
                             {step === 5 && isConnected ? 0.1 : 0} DYP
                             </h6>
@@ -353,7 +325,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                         <div className="reimbursement-divider"></div>
                         <div className="d-flex align-items-center justify-content-between w-100">
                           <div className="d-flex align-items-center gap-2">
-                            <img src={eth} alt="" />
+                            <img src={"https://cdn.worldofdypians.com/wod/eth.svg"} alt="" />
                             <h6 className="mb-0 reimbursement-token">
                             {step === 5 && isConnected ? 0.000004 : 0} ETH
                             </h6>
@@ -365,7 +337,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                       </div>
                       {/* {isWinner && (
                         <img
-                          src={winnerBadge}
+                          src={"https://cdn.worldofdypians.com/wod/winnerBadge.webp"}
                           alt=""
                           className="appliedbadge"
                         />
@@ -377,7 +349,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                               {/* <h6 className="loyalty-joined m-0">
                                   You have already applied.
                                 </h6> */}
-                              <img src={appliedBadge} className="w-75" alt="" />
+                              <img src={"https://cdn.worldofdypians.com/wod/appliedBadge.webp"} className="w-75" alt="" />
                             </div>
                           </div>
                         </div>
@@ -392,7 +364,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                           Participants
                         </h6>
                         <div className="d-flex align-items-center gap-2">
-                          <img src={fireIcon} alt="" />
+                          <img src={"https://cdn.worldofdypians.com/wod/fireIcon.svg"} alt="" />
                           <span className="participants-desc">
                             <span style={{ color: "#FCE202" }}>
                               {getFormattedNumber(totalUsers, 0)}
@@ -415,7 +387,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                                     item === "manta" ? (
                                       <img
                                         key={index}
-                                        src={require(`./assets/${item}Icon.png`)}
+                                        src={`https://cdn.worldofdypians.com/wod/${item}Icon.png`}
                                         width={16}
                                         height={16}
                                         alt=""
@@ -424,7 +396,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                                     ) : (
                                       <img
                                         key={index}
-                                        src={require(`./assets/${item}Icon.svg`)}
+                                        src={`https://cdn.worldofdypians.com/wod/${item}Icon.svg`}
                                         width={16}
                                         height={16}
                                         alt=""
@@ -454,7 +426,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                   <div className="loyalty-benefits-grid w-100">
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={contractIcon} alt="" />
+                        <img src={"https://cdn.worldofdypians.com/wod/contractIcon.svg"} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
                       Rewards for consistent engagement and participation
@@ -462,7 +434,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={starIcon} alt="" />
+                        <img src={"https://cdn.worldofdypians.com/wod/starIcon.svg"} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
                       Gas fee rebates for interactions with the game products
@@ -470,7 +442,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={coinsIcon} alt="" />
+                        <img src={"https://cdn.worldofdypians.com/wod/coinsIcon.svg"} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
                       Exclusive incentives for World of Dypians loyal users
@@ -478,7 +450,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
                     </div>
                     <div className="loyalty-benefit-item p-3 d-flex flex-column gap-2">
                       <div className="benefit-icon-wrapper d-flex align-items-center justify-content-center">
-                        <img src={moneyIcon} alt="" />
+                        <img src={"https://cdn.worldofdypians.com/wod/moneyIcon.svg"} alt="" />
                       </div>
                       <p className="loyalty-benefits-desc mb-0">
                       Lower costs to explore and engage in the ecosystem
@@ -501,7 +473,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
         <div className="d-flex py-3 align-items-center justify-content-between w-100">
           <h6 className="loyalty-popup-title mb-0">Loyalty Program</h6>
           <img
-            src={xMark}
+            src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
             onClick={() => setPopup(false)}
             alt="close"
             style={{ cursor: "pointer" }}
@@ -526,35 +498,35 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Metamask</span>
-              <img src={metamask} width={30} height={30} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/metamask.png"} width={30} height={30} alt="" />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Coinbase</span>
-              <img src={coinbaseWallet} width={30} height={30} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/coinbase.png"} width={30} height={30} alt="" />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Coin98</span>
-              <img src={coin98} width={30} height={30} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/coin98.png"} width={30} height={30} alt="" />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">Trustwallet</span>
-              <img src={trustwallet} width={30} height={30} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/trustwallet.png"} width={30} height={30} alt="" />
             </div>
             <div
               className="connect-wallet-item p-3 w-100 d-flex align-items-center justify-content-between"
               onClick={handleConnection}
             >
               <span className="loyalty-wallet-title">SafePal</span>
-              <img src={safepal} width={30} height={30} alt="" />
+              <img src={"https://cdn.worldofdypians.com/wod/safepal.png"} width={30} height={30} alt="" />
             </div>
           </div>
         ) : step === 3 ? (
@@ -635,7 +607,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
           </>
         ) : step === 4 ? (
           <div className="d-flex flex-column w-100 align-items-center gap-3">
-            <img src={successful} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/successful.svg"} alt="" />
             <p
               className="loyalty-popup-desc"
               style={{ textAlign: "center", width: "75%" }}
@@ -648,7 +620,7 @@ const LoyaltyProgram = ({ coinbase, isConnected, handleConnection, email }) => {
           </div>
         ) : step === 6 ? (
           <div className="d-flex flex-column w-100 align-items-center gap-3">
-            <img src={denied} alt="" />
+            <img src={"https://cdn.worldofdypians.com/wod/denied.svg"} alt="" />
             <p
               className="loyalty-popup-desc"
               style={{ textAlign: "center", width: "75%" }}

@@ -1,33 +1,11 @@
 import React, { useState, useEffect } from "react";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
-import launchpadIndicator from "../../Images/premium/launchpadIndicator.svg";
-import dappsIcon from "../../Images/premium/dappsIcon.svg";
-import metaverseIcon from "../../Images/premium/metaverseIcon.svg";
-import greenCheck from "../../Images/premium/greenCheck.svg";
-import premiumIcon from "../../Images/premium/premiumIcon.webp";
 import Web3 from "web3";
-import skaleIcon from "../../../../../components/NewDailyBonus/assets/skaleIcon.svg";
-import baseLogo from "../../Components/WalletBalance/assets/baseLogo.svg";
-import matchainLogo from "../../../../../components/Header/assets/matchain.svg";
-import seiIcon from "../../../../../components/Header/assets/sei.svg";
-
-
-import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
-import xMark from "../../Components/WalletBalance/newAssets/xMark.svg";
-import conflux from "../../Components/WalletBalance/assets/conflux.svg";
-import coreIcon from "../../Components/WalletBalance/assets/coreLogo.svg";
-import vicitonIcon from "../../Components/WalletBalance/assets/victionLogo.svg";
-import { ethers } from "ethers";
 import axios from "axios";
-import premiumRedTag from "../../../../../assets/redPremiumTag.svg";
+import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
+import { ethers } from "ethers"; 
 import "./_getpremium.scss";
-import dailyChestsBg from "./assets/dailyChestsBg.webp";
-import exclusiveBg from "./assets/exclusiveBg.webp";
-import extraDailyStarsBg from "./assets/extraDailyStarsBg.webp";
-import increasedRewardsBg from "./assets/increasedRewardsBg.webp";
-import prioritySupportBg from "./assets/prioritySupportBg.webp";
-import privateEventsBg from "./assets/privateEventsBg.webp";
-import treasureHuntBg from "./assets/treasureHuntBg.webp";
+ 
 
 const GetPremiumPopup = ({
   coinbase,
@@ -109,35 +87,34 @@ const GetPremiumPopup = ({
   let wmataddress = "0xB6dc6C8b71e88642cEAD3be1025565A9eE74d1C6";
   let wseiAddress = "0xB75D0B03c06A926e488e2659DF1A861F860bD3d1";
 
-
   const allBenefits = [
     {
       title: "Exclusive access to the game",
-      image: exclusiveBg,
+      image: "https://cdn.worldofdypians.com/wod/exclusiveBg.webp",
     },
     {
       title: "Unlock All Daily Bonus Chests",
-      image: dailyChestsBg,
+      image: "https://cdn.worldofdypians.com/wod/dailyChestsBg.webp",
     },
     {
       title: "Unlimited Treasure Hunts",
-      image: treasureHuntBg,
+      image: "https://cdn.worldofdypians.com/wod/treasureHuntBg.webp",
     },
     {
       title: "Increased Rewards",
-      image: increasedRewardsBg,
+      image: "https://cdn.worldofdypians.com/wod/increasedRewardsBg.webp",
     },
     {
       title: "Earn Extra Daily Stars",
-      image: extraDailyStarsBg,
+      image: "https://cdn.worldofdypians.com/wod/extraDailyStarsBg.webp",
     },
     {
       title: "Access to Private Events",
-      image: privateEventsBg,
+      image: "https://cdn.worldofdypians.com/wod/privateEventsBg.webp",
     },
     {
       title: "Priority Support",
-      image: prioritySupportBg,
+      image: "https://cdn.worldofdypians.com/wod/prioritySupportBg.webp",
     },
   ];
 
@@ -729,7 +706,7 @@ const GetPremiumPopup = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-  
+
   const handleSeiPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet) {
@@ -839,7 +816,6 @@ const GetPremiumPopup = ({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-
 
     if (coinbase && window.WALLET_TYPE === "binance") {
       let token_Sc = new ethers.Contract(
@@ -2452,8 +2428,7 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wcoreAddress);
       handleCheckIfAlreadyApproved(wcoreAddress);
-    }
-    else if (chainId === 1329) {
+    } else if (chainId === 1329) {
       setChainDropdown(chainDropdowns[11]);
       setdropdownIcon("usdt");
       setdropdownTitle("usdt");
@@ -2462,8 +2437,7 @@ const GetPremiumPopup = ({
       );
       handleSubscriptionTokenChange(wseiAddress);
       handleCheckIfAlreadyApproved(wseiAddress);
-    }
-    else {
+    } else {
       setdropdownIcon("usdt");
       setdropdownTitle("USDT");
       setselectedSubscriptionToken(
@@ -2543,12 +2517,12 @@ const GetPremiumPopup = ({
         window.config.subscriptionskale_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    }  else if (chainId === 1329 && selectedSubscriptionToken !== "") {
+    } else if (chainId === 1329 && selectedSubscriptionToken !== "") {
       settokenDecimals(
         window.config.subscriptionsei_tokens[selectedSubscriptionToken]
           ?.decimals
       );
-    }else {
+    } else {
       settokenDecimals(
         window.config.subscriptioneth_tokens[selectedSubscriptionToken]
           ?.decimals
@@ -2567,7 +2541,11 @@ const GetPremiumPopup = ({
           <div className="position-relative is-premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between">
             <div className="d-flex flex-column w-100 justify-content-center gap-2 align-items-center bgwrapper p-3">
               <h6 className="mb-0 already-premium-title">PRIME ENABLED</h6>
-              <img src={premiumIcon} className="already-preium-badge" alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
+                className="already-preium-badge"
+                alt=""
+              />
             </div>
           </div>
           <div className="d-flex flex-column">
@@ -2578,14 +2556,14 @@ const GetPremiumPopup = ({
             <div className="row w-100 premium-benefits-wrapper p-3 align-items-center justify-content-center mx-0">
               {allBenefits.map((item, index) => {
                 return (
-                 <div key={index} className="col-12 col-lg-3 mb-3">
-                   <div  className="benefit-item">
-                    <div className="d-flex flex-column gap-3">
-                      <img src={item.image} alt="" className="benefitimg" />
-                      <span className="benefittitle p-3">{item.title}</span>
+                  <div key={index} className="col-12 col-lg-3 mb-3">
+                    <div className="benefit-item">
+                      <div className="d-flex flex-column gap-3">
+                        <img src={item.image} alt="" className="benefitimg" />
+                        <span className="benefittitle p-3">{item.title}</span>
+                      </div>
                     </div>
                   </div>
-                 </div>
                 );
               })}
             </div>
@@ -2605,7 +2583,7 @@ const GetPremiumPopup = ({
             <div className="premium-gold-bg mt-3 p-4 position-relative d-flex align-items-center justify-content-between">
               <div className="premiumRedTag position-absolute">
                 <div className="position-relative d-flex flex-column">
-                  <img src={premiumRedTag} alt="" />
+                  <img src={"https://cdn.worldofdypians.com/wod/redPremiumTag.svg"} alt="" />
                   <div className="d-flex flex-column position-absolute discountwrap">
                     <span className="discount-price2 font-oxanium">
                       {discountPercentage > 0
@@ -2711,7 +2689,11 @@ const GetPremiumPopup = ({
                   </h6>
                 )}
               </div>
-              <img src={premiumIcon} alt="" className="already-preium-badge" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
+                alt=""
+                className="already-preium-badge"
+              />
             </div>
           ) : (
             <div className="premium-gold-bg d-flex flex-column flex-lg-row gap-3 gap-lg-0 align-items-center justify-content-between p-3">
@@ -2723,10 +2705,7 @@ const GetPremiumPopup = ({
                 <div className="premium-chains-wrapper">
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={
-                        require(`../../Images/premium/tokens/ethIcon.svg`)
-                          .default
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                       style={{ width: 18, height: 18 }}
                       alt=""
                     />
@@ -2734,10 +2713,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={
-                        require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                          .default
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                       style={{ width: 18, height: 18 }}
                       alt=""
                     />
@@ -2745,26 +2721,26 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={matchainLogo}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                      }
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
                     <span className="subscription-chain mb-0">Matchain</span>
                   </div>
                   <div className="d-flex align-items-center gap-2">
-                          <img
-                            src={seiIcon}
-                            alt=""
-                            style={{ width: 18, height: 18 }}
-                          />
-                          <span className="subscription-chain mb-0">
-                            SEI
-                          </span>
-                        </div>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/seiLogo.svg"}
+                      alt=""
+                      style={{ width: 18, height: 18 }}
+                    />
+                    <span className="subscription-chain mb-0">SEI</span>
+                  </div>
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={require(`../../../../../components/Header/assets/manta.png`)}
+                      src={"https://cdn.worldofdypians.com/wod/manta.png"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2772,10 +2748,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={
-                        require(`../../../../../components/Header/assets/taiko.svg`)
-                          .default
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2784,10 +2757,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={
-                        require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                          .default
-                      }
+                      src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                       style={{ width: 18, height: 18 }}
                       alt=""
                     />
@@ -2796,7 +2766,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={baseLogo}
+                      src={"https://cdn.worldofdypians.com/wod/base.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2805,7 +2775,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={conflux}
+                      src={"https://cdn.worldofdypians.com/wod/confluxIcon.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2813,7 +2783,7 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={skaleIcon}
+                      src={"https://cdn.worldofdypians.com/wod/skaleIcon.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2822,7 +2792,7 @@ const GetPremiumPopup = ({
 
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={coreIcon}
+                      src={"https://cdn.worldofdypians.com/wod/core.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
@@ -2830,16 +2800,15 @@ const GetPremiumPopup = ({
                   </div>
                   <div className="d-flex align-items-center gap-2">
                     <img
-                      src={vicitonIcon}
+                      src={"https://cdn.worldofdypians.com/wod/viction.svg"}
                       alt=""
                       style={{ width: 18, height: 18 }}
                     />
                     <span className="subscription-chain mb-0">Viction</span>
                   </div>
-           
                 </div>
                 <img
-                  src={premiumIcon}
+                  src={"https://cdn.worldofdypians.com/wod/premiumIcon.webp"}
                   alt=""
                   className="already-preium-badge"
                 />
@@ -2873,7 +2842,10 @@ const GetPremiumPopup = ({
               {dropdownIcon.toUpperCase()}
             </span>
           </div>
-          <div className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0">
+          <div
+            className="premium-benefits-wrapper mt-3 d-flex p-3 align-items-lg-center align-items-lg-end justify-content-between flex-column flex-lg-row w-100 gap-4 gap-lg-0"
+            style={{ overflowX: "clip" }}
+          >
             <div className="d-flex flex-column flex-lg-row align-items-lg-end gap-lg-4">
               <div className="d-flex flex-column gap-lg-3">
                 <span className="token-amount-placeholder">Select chain</span>
@@ -2895,7 +2867,12 @@ const GetPremiumPopup = ({
                       />
                       {chainDropdown.name}
                     </div>
-                    <img src={launchpadIndicator} alt="" />
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                      }
+                      alt=""
+                    />
                   </button>
                   <ul class="dropdown-menu w-100">
                     <li
@@ -2903,10 +2880,7 @@ const GetPremiumPopup = ({
                       onClick={handleEthPool}
                     >
                       <img
-                        src={
-                          require(`../../Images/premium/tokens/ethIcon.svg`)
-                            .default
-                        }
+                        src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                         alt=""
                       />
                       Ethereum
@@ -2916,10 +2890,7 @@ const GetPremiumPopup = ({
                       onClick={handleBnbPool}
                     >
                       <img
-                        src={
-                          require(`../../Images/premium/tokens/wbnbIcon.svg`)
-                            .default
-                        }
+                        src={"https://cdn.worldofdypians.com/wod/bnbIcon.svg"}
                         alt=""
                       />
                       BNB Chain
@@ -2931,39 +2902,40 @@ const GetPremiumPopup = ({
                           onClick={handleMatPool}
                         >
                           <img
-                            src={matchainLogo}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                            }
                             style={{ width: 18, height: 18 }}
                             alt=""
                           />
                           Matchain
                         </li>
                       )}
- {window.WALLET_TYPE !== "binance" &&
-                                    !window.ethereum?.isBinance && (
-                                      <li
-                                        className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                        onClick={handleSeiPool}
-                                      >
-                                        <img
-                                          src={seiIcon}
-                                          style={{
-                                            width: 18,
-                                            height: 18,
-                                          }}
-                                          alt=""
-                                        />
-                                        SEI
-                                      </li>
-                                    )}
+                    {window.WALLET_TYPE !== "binance" &&
+                      !window.ethereum?.isBinance && (
+                        <li
+                          className="dropdown-item launchpad-item d-flex align-items-center gap-2"
+                          onClick={handleSeiPool}
+                        >
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                            }
+                            style={{
+                              width: 18,
+                              height: 18,
+                            }}
+                            alt=""
+                          />
+                          SEI
+                        </li>
+                      )}
                     <li
                       className="dropdown-item launchpad-item d-flex align-items-center gap-2"
                       onClick={handleMantaPool}
                     >
                       <img
-                        src={
-                          require(`../../Images/premium/tokens/mantaIcon.svg`)
-                            .default
-                        }
+                        src={"https://cdn.worldofdypians.com/wod/manta.png"}
                         style={{ width: 18, height: 18 }}
                         alt=""
                       />
@@ -2975,10 +2947,7 @@ const GetPremiumPopup = ({
                       onClick={handleAvaxPool}
                     >
                       <img
-                        src={
-                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                            .default
-                        }
+                        src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                         alt=""
                       />
                       Avalanche
@@ -2988,7 +2957,7 @@ const GetPremiumPopup = ({
                       onClick={handleBasePool}
                     >
                       <img
-                        src={baseLogo}
+                        src={"https://cdn.worldofdypians.com/wod/base.svg"}
                         alt=""
                         style={{
                           width: "18px",
@@ -3002,7 +2971,9 @@ const GetPremiumPopup = ({
                       onClick={handleConfluxPool}
                     >
                       <img
-                        src={conflux}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                        }
                         alt=""
                         style={{
                           width: "18px",
@@ -3019,10 +2990,7 @@ const GetPremiumPopup = ({
                           onClick={handleTaikoPool}
                         >
                           <img
-                            src={
-                              require(`../../Images/premium/tokens/taikoIcon.svg`)
-                                .default
-                            }
+                            src={"https://cdn.worldofdypians.com/wod/taiko.svg"}
                             style={{ width: 18, height: 18 }}
                             alt=""
                           />
@@ -3034,10 +3002,7 @@ const GetPremiumPopup = ({
                       onClick={handleAvaxPool}
                     >
                       <img
-                        src={
-                          require(`../../Images/premium/tokens/wavaxIcon.svg`)
-                            .default
-                        }
+                        src={"https://cdn.worldofdypians.com/wod/avaxIcon.svg"}
                         alt=""
                       />
                       Avalanche
@@ -3047,7 +3012,7 @@ const GetPremiumPopup = ({
                       onClick={handleBasePool}
                     >
                       <img
-                        src={baseLogo}
+                        src={"https://cdn.worldofdypians.com/wod/base.svg"}
                         alt=""
                         style={{
                           width: "18px",
@@ -3061,7 +3026,9 @@ const GetPremiumPopup = ({
                       onClick={handleConfluxPool}
                     >
                       <img
-                        src={conflux}
+                        src={
+                          "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                        }
                         alt=""
                         style={{
                           width: "18px",
@@ -3077,7 +3044,9 @@ const GetPremiumPopup = ({
                           onClick={handleSkalePool}
                         >
                           <img
-                            src={skaleIcon}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                            }
                             alt=""
                             style={{
                               width: "18px",
@@ -3095,7 +3064,7 @@ const GetPremiumPopup = ({
                           onClick={handleCorePool}
                         >
                           <img
-                            src={coreIcon}
+                            src={"https://cdn.worldofdypians.com/wod/core.svg"}
                             alt=""
                             style={{
                               width: "18px",
@@ -3112,7 +3081,9 @@ const GetPremiumPopup = ({
                           onClick={handleVictionPool}
                         >
                           <img
-                            src={vicitonIcon}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/viction.svg"
+                            }
                             alt=""
                             style={{
                               width: "18px",
@@ -3122,20 +3093,6 @@ const GetPremiumPopup = ({
                           Viction
                         </li>
                       )}
-                    {/*     <li
-                                      className="dropdown-item launchpad-item d-flex align-items-center gap-2"
-                                      onClick={handleSeiPool}
-                                    >
-                                      <img
-                                        src={seiIcon}
-                                        alt=""
-                                        style={{
-                                          width: "18px",
-                                          height: "18px",
-                                        }}
-                                      />
-                                      SEI
-                                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -3165,7 +3122,12 @@ const GetPremiumPopup = ({
                           )}
                           {/* {dropdownTitle} */}
                         </div>
-                        <img src={launchpadIndicator} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/launchpadIndicator.svg"
+                          }
+                          alt=""
+                        />
                       </button>
                       <ul class="dropdown-menu w-100">
                         {Object.keys(

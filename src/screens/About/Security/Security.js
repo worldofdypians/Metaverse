@@ -1,8 +1,5 @@
 import React from "react";
 import "./_security.scss";
-import github from "../assets/github.svg";
-import certik from "../assets/certik.svg";
-import certikBig from "../assets/certikBig.svg";
 
 const Security = () => {
   return (
@@ -34,7 +31,7 @@ const Security = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={github} alt="" /> Github
+                  <img src={'https://cdn.worldofdypians.com/wod/githubWhite.svg'} alt="" /> Github
                 </a>
                 <a
                   className="explore-btn px-4 py-2 d-flex algin-items-center gap-1"
@@ -42,7 +39,7 @@ const Security = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src={certik} alt="" />
+                  <img src={'https://cdn.worldofdypians.com/wod/certik.svg'} alt="" />
                   CertiK Score
                 </a>
               </div>
@@ -50,7 +47,7 @@ const Security = () => {
             <div className="circlewrapper d-none d-lg-flex align-items-center justify-content-center">
               <div className="d-flex flex-column px-5">
                 <span className="text-position fw-light">Audited by</span>
-                <img src={certikBig} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/certikBig.svg'} alt="" />
               </div>
             </div>
           </div>

@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./_community.scss";
-import testBanner from "./assets/testBanner.png";
+import { NavLink, useNavigate } from "react-router-dom";
+import getFormattedNumber from "../Caws/functions/get-formatted-number";
+import ActiveProfileEvent from "../Account/src/Components/WalletBalance/ActiveProfileEvent";
+import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";   
+import OutsideClickHandler from "react-outside-click-handler";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import styled from "styled-components";
+import { TextField, Tooltip, tooltipClasses } from "@mui/material";
+import axios from "axios";
+import validateEmail from "../../hooks/validateEmail";
+import Countdown from "react-countdown";
+
 import calendar from "./assets/calendar.svg";
 import entryCampaign from "./assets/entryCampaign.webp";
 import bnbExpedition from "./assets/bnbExpedition.webp";
 import dailyGameDelight from "./assets/dailyGameDelight.webp";
-import dypiansDiscovery from "./assets/dypiansDiscovery.webp";
-import { NavLink, useNavigate } from "react-router-dom";
-import getFormattedNumber from "../Caws/functions/get-formatted-number";
-import dypius from "../Account/src/Components/WalletBalance/assets/dypIcon.svg";
-import base from "../Account/src/Components/WalletBalance/assets/baseLogo.svg";
-import coingecko from "../Account/src/Components/WalletBalance/assets/coingecko.svg";
-import skaleLogo from "../Account/src/Components/WalletBalance/assets/skaleLogo.svg";
-import bnblogo from "../Account/src/Components/WalletBalance/assets/mantaLogo2.png";
-import immutableLogo from "../Account/src/Components/WalletBalance/assets/immutableLogo.svg";
-import cookieLogo from "../Marketplace/assets/cookie3Logo.svg";
-import taikoLogo from "../Account/src/Components/WalletBalance/assets/taikoLogo.svg";
+import dypiansDiscovery from "./assets/dypiansDiscovery.webp"; 
 import taikoBg from "../Account/src/Components/WalletBalance/assets/taikoBg.png";
-
-
-import gate from "../Account/src/Components/WalletBalance/assets/gate.svg";
-import conflux from "../Account/src/Components/WalletBalance/assets/conflux.svg";
-import upcomingDyp2 from "../Account/src/Components/WalletBalance/assets/dypiuspopup2.png";
-import cmc from "../Marketplace/MarketNFTs/assets/cmc.svg";
-import doge from "../Marketplace/MarketNFTs/assets/dogeLogo.svg";
-import ActiveProfileEvent from "../Account/src/Components/WalletBalance/ActiveProfileEvent";
-import ExpiredProfileEvent from "../Account/src/Components/WalletBalance/ExpiredProfileEvent";
 import discord from "./assets/discord.png";
 import youtube from "./assets/youtube.png";
 import twitter from "./assets/twitter.png";
@@ -34,22 +26,10 @@ import criticalHit from "../Marketplace/MarketNFTs/assets/criticalHit2.webp";
 import goldenPass from "../Marketplace/MarketNFTs/assets/goldenPass.webp";
 import puzzleMadness from "../Account/src/Components/BundleCard/assets/puzzleMadness2.webp";
 import dragonPackage from "../Account/src/Components/BundleCard/assets/dragonPackageIcon2.webp";
-import OutsideClickHandler from "react-outside-click-handler";
-import newsletterIcon from "../../assets/newsAssets/newsletterIcon.svg";
-import newsLetterImage from "../../assets/newsAssets/newsLetterImage.svg";
-import modalClose from "../../assets/newsAssets/modalClose.svg";
-import newsLetterModal from "../../assets/newsAssets/newsLetterModal.svg";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import styled from "styled-components";
-import { TextField, Tooltip, tooltipClasses } from "@mui/material";
-import axios from "axios";
-import validateEmail from "../../hooks/validateEmail";
-import Countdown from "react-countdown";
-import epicblack from "../../assets/epicblack.svg";
-import victionLogo from "../Home/VideoWrapper/assets/victionLogo.svg";
 import victionBg from "../Home/VideoWrapper/assets/victionBg.webp";
-import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import coreBg from "../Home/VideoWrapper/assets/coreBg.webp";
+
+import coreLogo from "../Home/VideoWrapper/assets/coreLogo.svg";
 import opbnbCampaign from './assets/opbnbCampaign.png'
 import wodFestive from './assets/wodfestive.webp'
 
@@ -149,7 +129,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
 
     {
       title: "Manta",
-      logo: bnblogo,
+      logo: 'https://cdn.worldofdypians.com/wod/manta.png',
       eventStatus: "Live",
       totalRewards: "$20,000 in MANTA Rewards",
       myEarnings: 0.0,
@@ -179,7 +159,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Immutable",
-      logo: immutableLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/immutable.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in IMX Rewards",
       myEarnings: 0.0,
@@ -210,7 +190,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
 
     {
       title: "Taiko",
-      logo: taikoLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in TAIKO Rewards",
       myEarnings: 0.0,
@@ -225,7 +205,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "taiko",
         rewards: "TAIKO",
         status: "Live",
-        logo: taikoLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/taiko.svg',
         date: "Aug 19, 2024",
         id: "event22",
         eventType: "Explore & Mine",
@@ -242,7 +222,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Cookie3",
-      logo: cookieLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
       eventStatus: "Live",
       totalRewards: "$20,000 in COOKIE Rewards",
       myEarnings: 0.0,
@@ -256,7 +236,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "cookie3",
         rewards: "COOKIE",
         status: "Live",
-        logo: cookieLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/cookie3.svg',
         date: "Aug 26, 2024",
         id: "event23",
         eventType: "Explore & Mine",
@@ -272,7 +252,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "CORE",
-      logo: coreLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/core.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in CORE Rewards",
       myEarnings: 0.0,
@@ -306,7 +286,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     }, 
        {
       title: "SKALE",
-      logo: skaleLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/skaleIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in SKL Rewards",
       myEarnings: 0.0,
@@ -336,7 +316,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "VICTION",
-      logo: victionLogo,
+      logo: 'https://cdn.worldofdypians.com/wod/viction.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in VIC Rewards",
       myEarnings: 0.0,
@@ -352,7 +332,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
         linkState: "viction",
         rewards: "VIC",
         status: "Expired",
-        logo: victionLogo,
+        logo: 'https://cdn.worldofdypians.com/wod/viction.svg',
         backgroundImage: victionBg,
         date: "Jul 01, 2024",
 
@@ -370,14 +350,14 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Dypius Premium",
-      logo: dypius,
+      logo: 'https://cdn.worldofdypians.com/wod/dypius.svg',
       eventStatus: "Expired",
       totalRewards: "$50,000 in BNB Rewards",
       myEarnings: 0.0,
       eventType: "Explore & Find",
       eventDate: "Feb 26, 2024",
       date: "Feb 26, 2024",
-      backgroundImage: upcomingDyp2,
+      backgroundImage: 'https://cdn.worldofdypians.com/wod/dypiuspopup2.png',
       eventDuration: dypius2LastDay,
       activeTab: "dypiusv2",
       popupInfo: {
@@ -402,7 +382,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "CMC",
-      logo: cmc,
+      logo: 'https://cdn.worldofdypians.com/wod/cmcIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$20,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -441,7 +421,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
       eventType: "Explore & Mine",
       date: "Dec 22, 2023",
       eventDate: "Dec 22, 2023",
-      logo: doge,
+      logo: 'https://cdn.worldofdypians.com/wod/dogecoinIcon.svg',
       totalRewards: "$10,000 in DOGE Rewards",
       eventDuration: dogeLastDay,
       minRewards: "1",
@@ -501,7 +481,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     // },
     {
       title: "CoinGecko",
-      logo: coingecko,
+      logo: 'https://cdn.worldofdypians.com/wod/coingeckoIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$10,000 in BNB Rewards",
       myEarnings: 0.0,
@@ -530,7 +510,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Dypius",
-      logo: dypius,
+      logo: 'https://cdn.worldofdypians.com/wod/dypius.svg',
       eventStatus: "Expired",
       totalRewards: "300,000 in DYPv2 Rewards",
       myEarnings: 0.0,
@@ -557,7 +537,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Gate.io",
-      logo: gate,
+      logo: 'https://cdn.worldofdypians.com/wod/gateTreasureHunt.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in BNB Rewards",
       myEarnings: 0,
@@ -587,7 +567,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
     },
     {
       title: "Conflux",
-      logo: conflux,
+      logo: 'https://cdn.worldofdypians.com/wod/confluxIcon.svg',
       eventStatus: "Expired",
       totalRewards: "$2,000 in CFX Rewards",
       myEarnings: 0,
@@ -998,7 +978,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                     >
                       <img
                         src={
-                          require("../../assets/footerIcons/epicgames.svg")
+                          require("https://cdn.worldofdypians.com/epicblack.svg")
                             .default
                         }
                         width={109}
@@ -1012,7 +992,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                         href="https://store.epicgames.com/p/world-of-dypians-2e0694"
                         target="_blank"
                       >
-                        <img src={epicblack} alt="icon" className="epicgame2" />
+                        <img src={"https://cdn.worldofdypians.com/wod/epicblack.svg"} alt="icon" className="epicgame2" />
                         Download
                       </a>
                     </div>
@@ -1160,7 +1140,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                 <div className="col-12 col-lg-6">
                   <div className="d-flex flex-column gap-3">
                     <img
-                      src={newsletterIcon}
+                      src={"https://cdn.worldofdypians.com/wod/newsletterIcon.svg"}
                       width={56}
                       height={56}
                       alt="newsletter icon"
@@ -1209,7 +1189,7 @@ const Community = ({socials, monthlyPlayers, percent}) => {
                   </div>
                 </div>
                 <div className="col-12 col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
-                  <img src={newsLetterImage} alt="newsletter" />
+                  <img src={"https://cdn.worldofdypians.com/wod/newsLetterImage.svg"} alt="newsletter" />
                 </div>
               </div>
             </div>
@@ -1221,13 +1201,13 @@ const Community = ({socials, monthlyPlayers, percent}) => {
           <div className="success-modal d-flex flex-column p-3 justify-content-center align-items-center gap-4">
             <div className="d-flex w-100 justify-content-end">
               <img
-                src={modalClose}
+                src={"https://cdn.worldofdypians.com/wod/modalClose.svg"}
                 alt="close modal"
                 onClick={() => setSuccess(false)}
                 style={{ cursor: "pointer" }}
               />
             </div>
-            <img src={newsLetterModal} alt="success" />
+            <img src={"https://cdn.worldofdypians.com/wod/newsLetterModal.svg"} alt="success" />
             <h6 className="newsletter-modal-title font-poppins">Thank you</h6>
             <span className="newsletter-modal-span font-poppins">
               You’ve subscribed to World of Dypians newsletter
