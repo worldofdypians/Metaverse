@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./_stakemodal.scss";
 import xmark from "./assets/xmark.svg";
 import { Checkbox } from "@mui/material";
-import EmptyCawsWod from "./EmptyCawsWod";
-import greenInfo from "./assets/greenInfo.svg";
+import EmptyCawsWod from "./EmptyCawsWod"; 
 import cawsTag from "./assets/cawsTag.svg";
 import wodTag from "./assets/wodTag.svg";
 import fullWod from "./assets/fullWod.png";
@@ -419,7 +418,7 @@ const RewardsModal = ({
           </div>
         </div>
         <div className="w-100 p-2 d-flex align-items-center gap-2 mt-3 info-span">
-          <img src={greenInfo} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/tooltip.svg'} alt="" />
           <span className="info-span-text text-wrap">
             Please select the NFT pairs to claim your rewards or withdraw them
             from the staking pool.

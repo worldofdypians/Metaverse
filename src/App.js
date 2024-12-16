@@ -84,6 +84,8 @@ import Map from "./screens/Map/Map.js";
 import { markers } from "./screens/Map/mapdata/markers.js";
 import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
+import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
+import Launchpool from "./screens/Launchpool/Launchpool.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -376,6 +378,8 @@ function App() {
   const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
+  const [countBalance, setcountBalance] = useState(1);
+
   const [count, setCount] = useState(1);
 
   const [dypTokenData, setDypTokenData] = useState(0);
@@ -4859,7 +4863,7 @@ function App() {
   useEffect(() => {
     fetchSkaleBalance();
     getWodBalance(coinbase);
-  }, [coinbase, isConnected, networkId]);
+  }, [coinbase, isConnected, networkId, countBalance]);
 
   useEffect(() => {
     fetchUserFavorites(coinbase);
@@ -5114,6 +5118,19 @@ function App() {
                 socials={socials}
                 monthlyPlayers={monthlyPlayers}
                 percent={percent}
+              />
+            }
+          />
+              <Route
+            exact
+            path="/launchpool"
+            element={
+              <Launchpool
+              wodHolders={wodHolders}
+              totalVolumeNew={totalVolumeNew}
+              totalSupply={totalSupply}
+              monthlyPlayers={monthlyPlayers}
+
               />
             }
           />
@@ -5410,6 +5427,8 @@ function App() {
             }
           />
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
+          <Route exact path="/binanceweb3-campaign-rules" element={<BinanceCampaignRules />} />
+
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             exact
@@ -6333,6 +6352,10 @@ function App() {
                 handleSwitchNetwork={handleSwitchNetwork}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+               
               />
             }
           />
@@ -6340,7 +6363,20 @@ function App() {
           <Route
             exact
             path="/governance/proposal/:proposalId"
-            element={<GovernanceInner />}
+            element={
+              <GovernanceInner
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                wodBalance={wodBalance}
+                refreshBalance={() => {
+                  setcountBalance(countBalance + 1);
+                }}
+              />
+            }
           />
 
           <Route

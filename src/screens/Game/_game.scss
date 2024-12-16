@@ -115,6 +115,82 @@
 .explore-btn:hover {
   background-position: 100% 0 !important;
 }
+
+.disabled-btn-gov {
+  color: #c0c9ff !important;
+  background: transparent;
+  border: 1px solid #c0c9ff !important;
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+  opacity: 1 !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+
+.connectbtn-gov {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #008ebf 0%, #00b7cc 100%);
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+.connectbtn-gov:hover,
+.connectbtn-gov:focus {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00b7cc 100%, #008ebf 0%);
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+.btn-withdraw-gov {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #bd185d 0%, #ba18bd 100%);
+  border: none;
+  color: #eeedff !important;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
+
+
+
+.fail-button-gov {
+  color: #ffffff !important;
+  background: linear-gradient(90.74deg, #f8845b 0%, #f0603a 100%) !important;
+  border: none !important;
+  border-radius: 12px;
+  opacity: 1 !important; 
+  font-style: normal;
+  font-weight: 500;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px; 
+  line-height: normal;
+}
 .action-btn {
   border-radius: 12px;
   background: linear-gradient(270deg, #00bf7c, #00cc4e, #00cc4e, #00bf7c);

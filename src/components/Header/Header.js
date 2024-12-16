@@ -490,6 +490,7 @@ const Header = ({
                 location.pathname === "/token-claim" ||
                 location.pathname === "/staking" ||
                 location.pathname === "/bridge" ||
+                location.pathname === "/launchpool" ||
                 location.pathname === "/buy"
                   ? "nav-anchor activenavlink"
                   : ""
@@ -530,6 +531,16 @@ const Header = ({
                     }
                   >
                     Staking
+                  </NavLink>
+                  <NavLink
+                    to={"/launchpool"}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "dropdown-nav nav-active p-2"
+                        : "dropdown-nav p-2"
+                    }
+                  >
+                    Launchpool
                   </NavLink>
                   <NavLink
                     to={"/bridge"}

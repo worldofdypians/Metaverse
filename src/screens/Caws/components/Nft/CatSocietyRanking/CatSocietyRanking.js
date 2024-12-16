@@ -30,19 +30,19 @@ const CatSocietyRanking = () => {
                     <div className='col-md-8'>
                         <div className='row justify-content-center justify-content-md-end'>
                             <div className='col-md-4 col-6 px-0 first-image-container'>
-                                <img src={require('../../../assets/Nft/cats-society-ranking-1.png')} alt="" className='first-image' />
+                                <img src={"https://cdn.worldofdypians.com/wod/cats-society-ranking-1.png"} alt="" className='first-image' />
                             </div>
                             <div className='col-md-4 col-6 px-0 second-image-container'>
-                                <img src={require('../../../assets/Nft/cats-society-ranking-2.png')} alt="" className='second-image' />
+                                <img src={"https://cdn.worldofdypians.com/wod/cats-society-ranking-2.png"} alt="" className='second-image' />
                             </div>
                             <div className='col-md-4 col-6 px-0 third-image-container'>
-                                <img src={require('../../../assets/Nft/cats-society-ranking-3.png')} alt="" className='third-image' />
+                                <img src={"https://cdn.worldofdypians.com/wod/cats-society-ranking-3.png"} alt="" className='third-image' />
                             </div>
                             <div className='col-md-4 col-6 px-0 fourth-image-container'>
-                                <img src={require('../../../assets/Nft/cats-society-ranking-4.png')} alt="" className='fourth-image' />
+                                <img src={"https://cdn.worldofdypians.com/wod/cats-society-ranking-4.png"} alt="" className='fourth-image' />
                             </div>
                             <div className='col-md-4 col-6 px-0 fifth-image-container'>
-                                <img src={require('../../../assets/Nft/cats-society-ranking-5.png')} alt="" className='fifth-image' />
+                                <img src={"https://cdn.worldofdypians.com/wod/cats-society-ranking-5.png"} alt="" className='fifth-image' />
                             </div>
                         </div>
                     </div>
