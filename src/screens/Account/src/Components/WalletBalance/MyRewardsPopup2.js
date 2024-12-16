@@ -1598,6 +1598,8 @@ const MyRewardsPopupNew = ({
                         "https://cdn.worldofdypians.com/wod/coingeckoIcon.svg"
                       }
                       alt=""
+                      style={{ width: 16, height: 16 }}
+
                     />
                     CoinGecko
                   </span>
