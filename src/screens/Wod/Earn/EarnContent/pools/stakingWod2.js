@@ -487,6 +487,11 @@ const StakeWodDetails2 = ({
   const handleStake = async (e) => {
     setdepositLoading(true);
     if (window.WALLET_TYPE !== "binance") {
+      if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
+        window.alertify.error("You must be connected to Binance Web3 Wallet!");
+        setdepositLoading(false);
+        return;
+      }
       if (other_info) {
         window.$.alert("This pool no longer accepts deposits!");
         setdepositLoading(false);
