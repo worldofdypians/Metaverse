@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./_mobilenavbar.scss";
-
 import { NavLink } from "react-router-dom";
 import { shortAddress } from "../../screens/Caws/functions/shortAddress";
-
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
-
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-
 import OutsideClickHandler from "react-outside-click-handler";
 
 

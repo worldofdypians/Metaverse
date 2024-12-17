@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./_bundle.scss";
-import dypius from "../../Images/userProfile/dypius.svg";
-import idyp from "../../Images/userProfile/idyp.svg";
 import "react-circular-progressbar/dist/styles.css";
-import newLandTooltip from "./assets/newLandTooltip.svg";
 import {
   wod_abi,
   token_abi,
@@ -17,7 +14,6 @@ import {
   dyp700v1Address,
   idyp3500Address,
 } from "../../web3";
-
 import {
   DYP_700V1_ABI,
   DYP_700_ABI,
@@ -25,23 +21,17 @@ import {
   WOD_ABI,
   iDYP_3500_ABI,
 } from "../../web3/abis";
-
+import Countdown from "react-countdown";
 import { CircularProgress } from "@mui/material";
-import Countdown from "react-countdown"; 
-import OutsideClickHandler from "react-outside-click-handler";
-import progress1 from "./assets/progress1.svg";
-import progress2 from "./assets/progress2.svg";
 import axios from "axios";
-
-import Slider from "rc-slider";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import useWindowSize from "../../../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
 import { convertToUSD } from "../../../../../actions/convertUsd";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
-import checkActive from "./assets/checked.svg";
-import checkPassive from "./assets/empty.svg";
 import { ethers } from "ethers";
+   
+ 
+ 
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -1258,17 +1248,17 @@ const NewBundleCard = ({
       );
     }
     if (chainId === 56 && coinbase?.toLowerCase() === wallet?.toLowerCase()) {
-      if(isAtlimit === false)
-    {  if (priceType === 0) {
-        setStatus700(
-          "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
-        );
-      } else if (priceType === 1 && isAtlimit === false) {
-        setStatus700("");
+      if (isAtlimit === false) {
+        if (priceType === 0) {
+          setStatus700(
+            "You are on the wrong chain. Switch back to Ethereum to purchase the bundle."
+          );
+        } else if (priceType === 1 && isAtlimit === false) {
+          setStatus700("");
+        }
+        setStatus("");
+        setStatus3500("");
       }
-      setStatus("");
-      setStatus3500("");
-    }
     }
 
     if (chainId !== 56 && coinbase?.toLowerCase() !== wallet?.toLowerCase()) {
@@ -1312,8 +1302,7 @@ const NewBundleCard = ({
 
   useEffect(() => {
     handleRefreshCountdown700();
-  }, [coinbase])
-   
+  }, [coinbase]);
 
   useEffect(() => {
     getTokenData();
@@ -1354,7 +1343,7 @@ const NewBundleCard = ({
                 }}
                 target="_blank"
               >
-                <img src={newLandTooltip} width={30} height={30} alt="" />
+                <img src={'https://cdn.worldofdypians.com/wod/newLandTooltip.svg'} width={30} height={30} alt="" />
               </div>
             </div>
             <div className="d-flex align-items-center gap-3">
@@ -1444,14 +1433,14 @@ const NewBundleCard = ({
                             >
                               <img
                                 src={
-                                  priceType === 0 ? checkActive : checkPassive
+                                  priceType === 0 ? 'https://cdn.worldofdypians.com/wod/checked.svg' : 'https://cdn.worldofdypians.com/wod/empty.svg'
                                 }
                                 alt=""
                                 className={"position-absolute checkicons"}
                               />
                               <span className="nft-price-eth">
                                 <img
-                                  src={dypius}
+                                  src={'https://cdn.worldofdypians.com/wod/dypius.svg'}
                                   alt=""
                                   width={20}
                                   height={20}
@@ -1473,14 +1462,14 @@ const NewBundleCard = ({
                             >
                               <img
                                 src={
-                                  priceType === 1 ? checkActive : checkPassive
+                                  priceType === 1 ? 'https://cdn.worldofdypians.com/wod/checked.svg' : 'https://cdn.worldofdypians.com/wod/empty.svg'
                                 }
                                 alt=""
                                 className={"position-absolute checkicons"}
                               />
                               <span className="nft-price-eth">
                                 <img
-                                  src={dypius}
+                                  src={'https://cdn.worldofdypians.com/wod/dypius.svg'}
                                   alt=""
                                   width={20}
                                   height={20}
@@ -1496,8 +1485,8 @@ const NewBundleCard = ({
                             <img
                               src={
                                 packageData.title === "Puzzle Madness"
-                                  ? idyp
-                                  : dypius
+                                  ? 'https://cdn.worldofdypians.com/wod/idyp.svg'
+                                  : 'https://cdn.worldofdypians.com/wod/dypius.svg'
                               }
                               width={30}
                               height={30}
@@ -1524,7 +1513,7 @@ const NewBundleCard = ({
                           <span className="new-bnb-chain d-flex align-items-center gap-1">
                             Available only on Ethereum{" "}
                             <img
-                              src={'https://cdn.worldofdypians.com/wod/eth.svg'}
+                              src={"https://cdn.worldofdypians.com/wod/eth.svg"}
                               alt=""
                             />
                           </span>
@@ -1762,7 +1751,7 @@ const NewBundleCard = ({
                   packageData.title === "Dragon Ruins" && (
                     <div className="progress-bar">
                       <img
-                        src={sliderValue === 1 ? progress1 : progress2}
+                        src={sliderValue === 1 ? 'https://cdn.worldofdypians.com/wod/progress1.svg' : 'https://cdn.worldofdypians.com/wod/progress2.svg'}
                         alt=""
                       />
                     </div>
@@ -1771,7 +1760,7 @@ const NewBundleCard = ({
                   packageData.title === "Puzzle Madness" && (
                     <div className="progress-bar">
                       <img
-                        src={sliderValue3500 === 1 ? progress1 : progress2}
+                        src={sliderValue3500 === 1 ? 'https://cdn.worldofdypians.com/wod/progress1.svg' : 'https://cdn.worldofdypians.com/wod/progress2.svg'}
                         alt=""
                       />
                     </div>
@@ -1780,7 +1769,7 @@ const NewBundleCard = ({
                   packageData.title === "Golden Pass" && (
                     <div className="progress-bar">
                       <img
-                        src={sliderValue700 === 1 ? progress1 : progress2}
+                        src={sliderValue700 === 1 ? 'https://cdn.worldofdypians.com/wod/progress1.svg' : 'https://cdn.worldofdypians.com/wod/progress2.svg'}
                         alt=""
                       />
                     </div>
@@ -1837,7 +1826,10 @@ const NewBundleCard = ({
                 </div>
                 <span className="new-timer-description ">
                   Use in-game{" "}
-                  <img src={require("./assets/syncIcon.svg").default} alt="" />{" "}
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/syncIcon.svg"}
+                    alt=""
+                  />{" "}
                   sync button every time you purchase a bundle
                 </span>
               </div>
@@ -1882,7 +1874,7 @@ const NewBundleCard = ({
                   <span className="new-timer-description ">
                     Use in-game{" "}
                     <img
-                      src={require("./assets/syncIcon.svg").default}
+                      src={"https://cdn.worldofdypians.com/wod/syncIcon.svg"}
                       alt=""
                     />{" "}
                     sync button every time you purchase a bundle
@@ -1929,7 +1921,7 @@ const NewBundleCard = ({
                   <span className="new-timer-description ">
                     Use in-game{" "}
                     <img
-                      src={require("./assets/syncIcon.svg").default}
+                      src={"https://cdn.worldofdypians.com/wod/syncIcon.svg"}
                       alt=""
                     />{" "}
                     sync button every time you purchase a bundle
@@ -1937,7 +1929,7 @@ const NewBundleCard = ({
                 </div>
                 {countdown700 !== 0 && countdown700 && (
                   <Countdown
-                    date={Number(countdown700)*1000}
+                    date={Number(countdown700) * 1000}
                     renderer={renderer700}
                     onComplete={() => {
                       setcountdown700();

@@ -1,8 +1,4 @@
-import React from "react";
-import boar from "../../screens/Marketplace/assets/boar.svg";
-import deer from "../../screens/Marketplace/assets/deer.svg";
-import wolf from "../../screens/Marketplace/assets/wolf.svg";
-import bear from "../../screens/Marketplace/assets/bear.svg";
+import React from "react";    
 import dragon from "../../screens/Marketplace/assets/dragon.svg"; 
 
 
@@ -122,7 +118,7 @@ const DragonPopup = ({ onClosePopup }) => {
                       fontWeight: "500",
                     }}
                   >
-                    <img src={boar} className="me-2" alt="" />
+                    <img src={"https://cdn.worldofdypians.com/wod/boar.svg"} className="me-2" alt="" />
                     Boar
                   </th>
                   <td
@@ -162,7 +158,7 @@ const DragonPopup = ({ onClosePopup }) => {
                       fontWeight: "500",
                     }}
                   >
-                    <img src={deer} className="me-2" alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/deer.svg'} className="me-2" alt="" />
                     Deer
                   </th>
                   <td
@@ -202,7 +198,7 @@ const DragonPopup = ({ onClosePopup }) => {
                       fontWeight: "500",
                     }}
                   >
-                    <img src={wolf} className="me-2" alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/wolf.svg'} className="me-2" alt="" />
                     Wolf
                   </th>
                   <td
@@ -242,7 +238,7 @@ const DragonPopup = ({ onClosePopup }) => {
                       fontWeight: "500",
                     }}
                   >
-                    <img src={bear} className="me-2" alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/bear.svg'} className="me-2" alt="" />
                     Bear
                   </th>
                   <td
@@ -282,7 +278,7 @@ const DragonPopup = ({ onClosePopup }) => {
                       fontWeight: "500",
                     }}
                   >
-                    <img src={dragon} className="me-2" alt="" />
+                    <img src={'https://cdn.worldofdypians.com/wod/dragon.svg'} className="me-2" alt="" />
                     Dragon
                   </th>
                   <td

@@ -60,25 +60,7 @@ html {
   align-items: center;
 }
 
-.premium-discount-bg {
-  background: url(https://cdn.worldofdypians.com/wod/premiumBgDesktop.webp);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border-radius: 12px;
-}
-
-@media only screen and (max-width: 600px) {
-  .premium-discount-bg {
-    background: url(https://cdn.worldofdypians.com/wod/premiumBgMobile.webp);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 12px;
-    height: 174px;
-  }
-}
-
+ 
 .lifetime-plan-text {
   color: #fff;
   font-size: 14px;

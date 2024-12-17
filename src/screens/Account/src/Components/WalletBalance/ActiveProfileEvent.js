@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import cyanArrow from "./assets/cyanArrow.svg";
-import cyanDate from "./assets/cyanDate.svg";
-import cyanDollar from "./assets/cyanDollar.svg";
-import cyanExplore from "./assets/cyanExplore.svg";
-import cyanFind from "./assets/cyanFind.svg";
-
 import Countdown from "react-countdown";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
+ 
+
 
 const renderer = ({ days, hours, minutes }) => {
   return (
@@ -87,7 +82,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd, data }) => {
       <div className="profile-event-bottom p-2 d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-1">
           <img
-            src={event.eventType === "Explore & Mine" ? cyanExplore : cyanFind}
+            src={event.eventType === "Explore & Mine" ? 'https://cdn.worldofdypians.com/wod/cyanExplore.svg' : 'https://cdn.worldofdypians.com/wod/cyanFind.svg'}
             height={15}
             width={15}
             alt=""
@@ -99,7 +94,7 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd, data }) => {
             {/* {event.title === "Dypius" && event.activeTab !== 'dypiusv2' ? (
           <img src={dypius} height={15} width={15} alt="" />
         ) : ( */}
-            <img src={cyanDollar} height={15} width={15} alt="" />
+            <img src={'https://cdn.worldofdypians.com/wod/cyanDollar.svg'} height={15} width={15} alt="" />
             {/* )} */}
             <span className="mb-0 event-bottom-text">
               {event.title === "Dypius" && event.activeTab !== "dypiusv2" ? (
@@ -111,10 +106,10 @@ const ActiveProfileEvent = ({ onOpenEvent, event, userEarnedUsd, data }) => {
           </div>
         )}
         <div className="d-flex align-items-center gap-1">
-          <img src={cyanDate} height={15} width={15} alt="" />
+          <img src={'https://cdn.worldofdypians.com/wod/cyanDate.svg'} height={15} width={15} alt="" />
           <span className="mb-0 event-bottom-text">{event.date}</span>
         </div>
-        <img src={cyanArrow} height={15} width={15} alt="" />
+        <img src={'https://cdn.worldofdypians.com/wod/cyanArrow.svg'} height={15} width={15} alt="" />
       </div>
     </div>
   );

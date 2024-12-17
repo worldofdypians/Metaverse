@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./_governanceContent.scss";
-import leftWhiteArrow from "../../assets/leftWhiteArrow.svg";
+import "./_governanceContent.scss"; 
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import getFormattedNumber from "../../../Caws/functions/get-formatted-number";
@@ -350,7 +349,7 @@ const GovernanceInner = ({
             to="/governance"
             className="d-flex align-items-center gap-2 gov-navlink"
           >
-            <img src={leftWhiteArrow} alt="" /> Governance
+            <img src={'https://cdn.worldofdypians.com/wod/whitearrow.svg'} alt="" style={{transform: 'rotate(180deg)'}}/> Governance
           </NavLink>
         </div>
         <div className="proposal-top-wrapper w-100 p-3">
