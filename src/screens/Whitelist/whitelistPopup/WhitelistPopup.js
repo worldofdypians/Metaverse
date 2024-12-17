@@ -1,6 +1,6 @@
 import React from "react";
 
-import basebg from "./baseBg.png";
+
 
 import "./whitelist.css";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -62,7 +62,7 @@ const WhitelistPopup = ({ open, onClose }) => {
                     Enjoy the ultimate gaming experience on Base.
                   </span>
                 </div>
-                <img src={basebg} className="land-nft-image" alt="land nft" />
+                <img src={"https://cdn.worldofdypians.com/wod/baseBg.png"} className="land-nft-image" alt="land nft" />
                 {/* <span className="popup-content">
           Total Genesis land supply limited to 1,000 plots
         </span> */}
