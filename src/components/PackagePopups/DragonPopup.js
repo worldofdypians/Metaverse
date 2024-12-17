@@ -1,5 +1,5 @@
 import React from "react";    
-import dragon from "../../screens/Marketplace/assets/dragon.svg"; 
+
 
 
 
