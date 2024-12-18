@@ -302,12 +302,12 @@ const MobileNavbar = ({
         window.WALLET_TYPE === "binance"
       ) {
         window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
+          "This network is not available on Binance Wallet"
         );
       }
     } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
       window.alertify.error(
-        "This network is not available on Binance Web3 Wallet"
+        "This network is not available on Binance Wallet"
       );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");

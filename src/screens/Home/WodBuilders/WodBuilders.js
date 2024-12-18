@@ -189,8 +189,8 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
-      name: "Binance Web3",
-      icon: "binanceWeb3",
+      name: "Binance Wallet",
+      icon: "binanceWallet",
       banner: "bnbChainBanner.png",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
