@@ -384,7 +384,7 @@ const MarketMint = ({
             });
         } else if (window.ethereum?.isBinance) {
           window.alertify.error(
-            "This network is not available on Binance Web3 Wallet"
+            "This network is not available on Binance Wallet"
           );
         }
       } else {
@@ -392,7 +392,7 @@ const MarketMint = ({
       }
     } else {
       window.alertify.error(
-        "This network is not available on Binance Web3 Wallet"
+        "This network is not available on Binance Wallet"
       );
     }
   };
@@ -410,7 +410,7 @@ const MarketMint = ({
             });
         } else if (window.ethereum?.isBinance) {
           window.alertify.error(
-            "This network is not available on Binance Web3 Wallet"
+            "This network is not available on Binance Wallet"
           );
         }
       } else {
@@ -418,7 +418,7 @@ const MarketMint = ({
       }
     } else {
       window.alertify.error(
-        "This network is not available on Binance Web3 Wallet"
+        "This network is not available on Binance Wallet"
       );
     }
   };
@@ -436,7 +436,7 @@ const MarketMint = ({
             });
         } else if (window.ethereum?.isBinance) {
           window.alertify.error(
-            "This network is not available on Binance Web3 Wallet"
+            "This network is not available on Binance Wallet"
           );
         }
       } else {
@@ -444,7 +444,7 @@ const MarketMint = ({
       }
     } else {
       window.alertify.error(
-        "This network is not available on Binance Web3 Wallet"
+        "This network is not available on Binance Wallet"
       );
     }
   };
