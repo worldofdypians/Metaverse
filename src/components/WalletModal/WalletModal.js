@@ -59,10 +59,10 @@ const WalletModal = ({
                     className="justify-content-between d-flex w-100 align-items-center"
                   >
                     <span className="text-white wallet-item-name">
-                      Binance SDK Wallet
+                      Binance Wallet
                     </span>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/binanceConnect.png"}
+                      src={"https://cdn.worldofdypians.com/wod/binanceWallet.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />
