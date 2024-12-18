@@ -310,6 +310,25 @@
     justify-content: center;
   }
 }
+.flag-title {
+  color: #f7f7fc;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10px; /* 125% */
+  text-transform: uppercase;
+}
+
+.flag-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+}
 
 .new-flag-wrapper {
   position: relative;

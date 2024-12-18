@@ -9617,12 +9617,12 @@ function Dashboard({
         window.WALLET_TYPE === "binance"
       ) {
         window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
+          "This network is not available on Binance Wallet"
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
       window.alertify.error(
-        "This network is not available on Binance Web3 Wallet"
+        "This network is not available on Binance Wallet"
       );
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
@@ -9671,7 +9671,7 @@ function Dashboard({
         window.WALLET_TYPE === "binance"
       ) {
         window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
+          "This network is not available on Binance Wallet"
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
@@ -9744,7 +9744,7 @@ function Dashboard({
         window.WALLET_TYPE === "binance"
       ) {
         window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
+          "This network is not available on Binance Wallet"
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
@@ -9788,7 +9788,7 @@ function Dashboard({
         window.WALLET_TYPE === "binance"
       ) {
         window.alertify.error(
-          "This network is not available on Binance Web3 Wallet"
+          "This network is not available on Binance Wallet"
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {

@@ -18,7 +18,7 @@ const BinanceCampaignRules = () => {
                 Welcome to the{" "}
                 <b>
                   World of Dypians $50,000 WOD Token Airdrop Campaign with
-                  Binance Web3 Wallet!
+                  Binance Wallet!
                 </b>{" "}
                 This is your chance to earn a share of $50,000 in WOD tokens by
                 completing simple tasks and demonstrating your commitment to the
@@ -225,7 +225,7 @@ const BinanceCampaignRules = () => {
                       corner of the page.
                     </li>
                     <li className="text-white">
-                      Select your Binance Web3 wallet and authorize the
+                      Select your Binance Wallet and authorize the
                       connection.
                     </li>
                   </ul>
