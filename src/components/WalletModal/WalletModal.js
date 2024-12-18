@@ -62,7 +62,7 @@ const WalletModal = ({
                       Binance Wallet
                     </span>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/binanceWallet.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/binanceWalletUpdated.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />

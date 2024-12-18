@@ -58,7 +58,7 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Binance Wallet",
-      icon: "binanceWallet.svg",
+      icon: "binanceWalletUpdated.svg",
     },
     {
       name: "Immutable",

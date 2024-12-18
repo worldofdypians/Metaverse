@@ -190,7 +190,7 @@ const NewBuilders = () => {
     // },
     {
       name: "Binance Wallet",
-      icon: "binanceWallet.svg",
+      icon: "binanceWalletUpdated.svg",
       banner: "bnbChainBanner.png",
       // link: "https://x.com/Web3WithBinance/status/1834512410041831902",
       backer: true,
