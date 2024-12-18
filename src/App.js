@@ -59,7 +59,7 @@ import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
- 
+
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Governance from "./screens/Community/Governance/Governance.js";
@@ -530,7 +530,9 @@ function App() {
   const [prevDataStar, setPrevDataStar] = useState([]);
   const [prevVersionStar, setPrevVersionStar] = useState(0);
   const [dataAmountStar, setDataAmountStar] = useState([]);
-
+  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
+    const [loadingRecentSales, setLoadingRecentSales] = useState(false);
+  
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
@@ -2809,7 +2811,7 @@ function App() {
   const getLatest20BoughtNFTS = async () => {
     let boughtItems = [];
     let finalboughtItems = [];
-
+    setLoadingRecentSales(true);
     const URL =
       "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
 
@@ -2855,6 +2857,8 @@ function App() {
         }
       });
     setLatest20BoughtNFTS(finalboughtItems);
+    setLoadingRecentSales(false)
+
   };
 
   const handleRefreshList = () => {
@@ -2924,6 +2928,7 @@ function App() {
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
     let finalboughtItems2 = [];
+    setLoadingRecentListings(true);
     const nft_contract = new window.infuraWeb3.eth.Contract(
       window.CAWS_ABI,
       window.config.nft_caws_address
@@ -2942,6 +2947,9 @@ function App() {
     if (finalboughtItems1 && finalboughtItems1.length > 0) {
       setListedNFTS(finalboughtItems1);
       setListedNFTSCount(finalboughtItems1.length);
+    } else {
+      setListedNFTS([]);
+      setListedNFTSCount([]);
     }
     if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
       await Promise.all(
@@ -2997,7 +3005,10 @@ function App() {
       );
 
       setLatest20RecentListedNFTS(finalboughtItems2);
-    }
+    setLoadingRecentListings(false)
+
+   
+  } else {setLatest20RecentListedNFTS([]); setLoadingRecentListings(false)}
   };
 
   Amplify.configure(awsExports);
@@ -5129,17 +5140,16 @@ function App() {
           />
 
           <Route exact path="/roadmap" element={<Roadmap />} />
-         
-              <Route
+
+          <Route
             exact
             path="/launchpool"
             element={
               <Launchpool
-              wodHolders={wodHolders}
-              totalVolumeNew={totalVolumeNew}
-              totalSupply={totalSupply}
-              monthlyPlayers={monthlyPlayers}
-
+                wodHolders={wodHolders}
+                totalVolumeNew={totalVolumeNew}
+                totalSupply={totalSupply}
+                monthlyPlayers={monthlyPlayers}
               />
             }
           />
@@ -5436,7 +5446,11 @@ function App() {
             }
           />
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
-          <Route exact path="/binanceweb3-campaign-rules" element={<BinanceCampaignRules />} />
+          <Route
+            exact
+            path="/binanceweb3-campaign-rules"
+            element={<BinanceCampaignRules />}
+          />
 
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
@@ -5456,6 +5470,9 @@ function App() {
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
                 latest20RecentListedNFTS={latest20RecentListedNFTS}
+                loadingRecentListings={loadingRecentListings}
+                loadingRecentSales={loadingRecentSales}
+
                 recentSales={latest20BoughtNFTS}
                 nftCount={nftCount}
                 binanceW3WProvider={library}
@@ -6364,7 +6381,6 @@ function App() {
                 handleConnection={() => {
                   setwalletModal(true);
                 }}
-               
               />
             }
           />

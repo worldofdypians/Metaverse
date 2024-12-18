@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import ItemCard from "../../../components/ItemCard/ItemCard";
 import MobileNav from "../../../components/MobileNav/MobileNav";
-import useWindowSize from "../../../hooks/useWindowSize"; 
+import useWindowSize from "../../../hooks/useWindowSize";
 import { NavLink } from "react-router-dom";
-import "./_filters.scss"; 
+import "./_filters.scss";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import timepiecetraits from "../../../actions/timepiecetraits.json";
 import timepiecemetadata from "../../../actions/timepiecemetadata.json";
-import FilterCard from "./FilterCard"; 
+import FilterCard from "./FilterCard";
 import { searchNFTsByTraits } from "../../../actions/filterTraits";
 
 const TimepieceNFT = ({
@@ -843,7 +843,12 @@ const TimepieceNFT = ({
                       style={{ textDecoration: "none" }}
                     >
                       <button className="signinbtn2 px-3 py-2 d-flex align-items-center gap-2">
-                        <img src={'https://cdn.worldofdypians.com/wod/mintNowIcon.svg'} alt="" />
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/mintNowIcon.svg"
+                          }
+                          alt=""
+                        />
                         Available minting
                       </button>
                     </NavLink>
@@ -852,7 +857,9 @@ const TimepieceNFT = ({
               </div>
               <div className="col-12 col-lg-4">
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/timepieceCollectionBanner.webp"}
+                  src={
+                    "https://cdn.worldofdypians.com/wod/timepieceCollectionBanner.webp"
+                  }
                   className="w-100"
                   alt=""
                 />
@@ -871,10 +878,16 @@ const TimepieceNFT = ({
                   aria-expanded="false"
                 >
                   <div className="d-flex align-items-center gap-2">
-                    <img src={'https://cdn.worldofdypians.com/wod/filterIcon.svg'} alt="" />
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/filterIcon.svg"}
+                      alt=""
+                    />
                     <h6 className="filter-nav-title mb-0">{filterTitle}</h6>
                   </div>
-                  <img src={'https://cdn.worldofdypians.com/wod/dropdownIcon.svg'} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/dropdownIcon.svg"}
+                    alt=""
+                  />
                 </button>
                 <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                   <li
@@ -917,10 +930,10 @@ const TimepieceNFT = ({
                   <img
                     src={
                       priceCount === 0
-                      ? 'https://cdn.worldofdypians.com/wod/priceIconNeutral.svg'
-                      : priceCount % 2 == 0
-                      ? 'https://cdn.worldofdypians.com/wod/priceIconDown.svg'
-                      : 'https://cdn.worldofdypians.com/wod/priceIconUp.svg'
+                        ? "https://cdn.worldofdypians.com/wod/priceIconNeutral.svg"
+                        : priceCount % 2 == 0
+                        ? "https://cdn.worldofdypians.com/wod/priceIconDown.svg"
+                        : "https://cdn.worldofdypians.com/wod/priceIconUp.svg"
                     }
                     alt=""
                   />
@@ -943,7 +956,10 @@ const TimepieceNFT = ({
                   onClick={() => setOpenTraits(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  <img src={'https://cdn.worldofdypians.com/wod/traitIcon.svg'} alt="" />
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/traitIcon.svg"}
+                    alt=""
+                  />
                   <h6 className="filter-nav-title mb-0">Traits</h6>
                 </div>
               </div>
@@ -961,7 +977,7 @@ const TimepieceNFT = ({
                     <span className="selected-trait-value">{item.value}</span>
                   </div>
                   <img
-                    src={'https://cdn.worldofdypians.com/wod/traitXmark.svg'}
+                    src={"https://cdn.worldofdypians.com/wod/traitXmark.svg"}
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       displayFilters.length === 1
@@ -1041,132 +1057,17 @@ const TimepieceNFT = ({
                         </button>
                       ) : count === 0 && loading && next < totalSupply ? (
                         <>
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
+                          {[...Array(20)].map((obj, indx) => {
+                            return (
+                              <Skeleton
+                                animation="wave"
+                                height={230}
+                                variant="rounded"
+                                sx={{ bgcolor: "black.700" }}
+                                key={indx}
+                              />
+                            );
+                          })}
                         </>
                       ) : (
                         <></>
@@ -1285,48 +1186,17 @@ const TimepieceNFT = ({
                         next2 < filterIds.length &&
                         filterIds.length > 0 ? (
                         <>
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
-                          <Skeleton
-                            animation="wave"
-                            width={"100%"}
-                            variant="rounded"
-                            height={230}
-                            sx={{ bgcolor: "black.700" }}
-                          />
+                          {[...Array(20)].map((obj, indx) => {
+                            return (
+                              <Skeleton
+                                animation="wave"
+                                height={230}
+                                variant="rounded"
+                                sx={{ bgcolor: "black.700" }}
+                                key={indx}
+                              />
+                            );
+                          })}
                         </>
                       ) : (
                         <></>
@@ -1336,132 +1206,17 @@ const TimepieceNFT = ({
                     timepieceNFTS2 &&
                     timepieceNFTS2.length === 0 ? (
                     <>
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
-                      <Skeleton
-                        animation="wave"
-                        width={"100%"}
-                        variant="rounded"
-                        height={230}
-                        sx={{ bgcolor: "black.700" }}
-                      />
+                      {[...Array(20)].map((obj, indx) => {
+                        return (
+                          <Skeleton
+                            animation="wave"
+                            height={230}
+                            variant="rounded"
+                            sx={{ bgcolor: "black.700" }}
+                            key={indx}
+                          />
+                        );
+                      })}
                     </>
                   ) : (
                     <></>
@@ -1503,7 +1258,7 @@ const TimepieceNFT = ({
           <div className="d-flex align-items-center justify-content-between mb-4">
             <h6 className="filters-title mb-0">Filters</h6>
             <img
-              src={'https://cdn.worldofdypians.com/wod/popupXmark.svg'}
+              src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
               style={{ cursor: "pointer" }}
               onClick={() => setOpenTraits(false)}
               alt=""
