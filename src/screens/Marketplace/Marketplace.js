@@ -39,6 +39,7 @@ const Marketplace = ({
   totalVolumeNew,
   loadingRecentListings,
   loadingRecentSales,
+  monthlyPlayers,
 }) => {
   const override = {
     display: "block",
@@ -941,6 +942,33 @@ const Marketplace = ({
                       {getFormattedNumber(wodHolders, 0)}
                     </h6>
                     <span className="stats-desc">WOD Holders</span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {getFormattedNumber(monthlyPlayers, 0)}
+                    </h6>
+                    <span className="stats-desc">
+                    Monthly on-chain Players
+                    </span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {/* {abbreviateNumber(totalvolume,4)}+ */}
+                      {getFormattedNumber(totalSupply, 0)}
+                    </h6>
+                    <span className="stats-desc">Total NFTs Sold</span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                    {getFormattedNumber(1165350, 0)}
+                    </h6>
+                    <span className="stats-desc">Total NFT Holders</span>
                   </div>
                 </div>
               </div>
