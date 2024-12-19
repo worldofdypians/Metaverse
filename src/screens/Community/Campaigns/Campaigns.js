@@ -74,7 +74,7 @@ const Campaigns = () => {
     <li>Open at Least 10 Daily Bonus Chests</li>
     <li>Link Wallet on World of Dypians Mini App</li>
     </ul>`,
-    link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration",
+    link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
   };
 
   const dummyItems = [
