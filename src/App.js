@@ -5453,7 +5453,7 @@ function App() {
                 latest20RecentListedNFTS={latest20RecentListedNFTS}
                 loadingRecentListings={loadingRecentListings}
                 loadingRecentSales={loadingRecentSales}
-
+                monthlyPlayers={monthlyPlayers}
                 recentSales={latest20BoughtNFTS}
                 nftCount={nftCount}
                 binanceW3WProvider={library}

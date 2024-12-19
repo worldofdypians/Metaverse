@@ -58,7 +58,7 @@ const ExplorerGrid = ({
     >
       <div className="custom-container">
         <div className="row">
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center position-relative gap-2">
               <a
                 href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"
@@ -74,7 +74,7 @@ const ExplorerGrid = ({
               <span className="new-stats-type">Monthly on-chain Players</span>
             </div>
           </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
                 {" "}
@@ -88,7 +88,7 @@ const ExplorerGrid = ({
               </span>
             </div>
           </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+          <div className="col-12 col-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
                 ${getFormattedNumber(totalVolumeNew, 0)}
@@ -96,12 +96,29 @@ const ExplorerGrid = ({
               <span className="new-stats-type">Total Volume (USD)</span>
             </div>
           </div>
-          <div className="col-12 col-lg-3 mb-3 mb-lg-0">
+          <div className="col-12 col-lg-4 mt-0 mt-lg-4 mb-3 mb-lg-0">
             <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
               <h6 className="mb-0 new-stats-value">
                 {getFormattedNumber(wodHolders, 0)}
               </h6>
               <span className="new-stats-type">WOD Holders</span>
+            </div>
+          </div>
+          <div className="col-12 col-lg-4 mt-0 mt-lg-4 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
+              <h6 className="mb-0 new-stats-value">
+                {getFormattedNumber(totalSupply, 0)}
+              </h6>
+              <span className="new-stats-type">Total NFTs Sold</span>
+            </div>
+          </div>
+          <div className="col-12 col-lg-4 mt-0 mt-lg-4 mb-3 mb-lg-0">
+            <div className="new-stats-wrapper px-4 py-5 d-flex flex-column align-items-center justify-content-center gap-2">
+              <h6 className="mb-0 new-stats-value">
+                {/* {getFormattedNumber(wodHolders, 0)} */}
+                ---
+              </h6>
+              <span className="new-stats-type">Total NFT Holders</span>
             </div>
           </div>
         </div>
