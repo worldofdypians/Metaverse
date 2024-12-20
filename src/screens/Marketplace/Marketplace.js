@@ -39,6 +39,7 @@ const Marketplace = ({
   totalVolumeNew,
   loadingRecentListings,
   loadingRecentSales,
+  monthlyPlayers,
 }) => {
   const override = {
     display: "block",
@@ -592,7 +593,7 @@ const Marketplace = ({
     },
     {
       title: "Enhanced Interactions",
-      icon: "user",
+      icon: "userMint",
     },
     {
       title: "Special Rewards",
@@ -941,6 +942,33 @@ const Marketplace = ({
                       {getFormattedNumber(wodHolders, 0)}
                     </h6>
                     <span className="stats-desc">WOD Holders</span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-1 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {getFormattedNumber(monthlyPlayers, 0)}
+                    </h6>
+                    <span className="stats-desc">
+                    Monthly on-chain Players
+                    </span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-2 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                      {/* {abbreviateNumber(totalvolume,4)}+ */}
+                      {getFormattedNumber(totalSupply, 0)}
+                    </h6>
+                    <span className="stats-desc">Total NFTs Sold</span>
+                  </div>
+                </div>
+                <div className="col-12 col-lg-4 mt-0 mt-lg-4">
+                  <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
+                    <h6 className="stats-value">
+                    {getFormattedNumber(1165350, 0)}
+                    </h6>
+                    <span className="stats-desc">Total NFT Holders</span>
                   </div>
                 </div>
               </div>
@@ -1506,7 +1534,7 @@ const Marketplace = ({
                   <span>Live</span>
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
-                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
+                  <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1525,7 +1553,7 @@ const Marketplace = ({
                             {benefits.map((item) => (
                               <div className="d-flex align-items-center gap-2">
                                 <img
-                                  src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
+                                  src={`https://cdn.worldofdypians.com/wod/${item.icon}.png`}
                                   alt=""
                                   style={{
                                     scale: item.icon === "expand" ? "0.8" : "1",
@@ -1546,11 +1574,11 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Mint now <img src={greenArrow} alt="" />{" "}
+                        Mint now <img src={"https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"} alt="" />{" "}
                       </span>
                     </NavLink>
-                  </div> */}
-                  <div className="d-flex flex-column gap-2 w-100 h-100">
+                  </div>
+                  {/* <div className="d-flex flex-column gap-2 w-100 h-100">
                     <NavLink
                       to={"/shop/mint/timepiece"}
                       className="w-100 m-0 d-flex flex-column gap-5 h-100"
@@ -1568,24 +1596,7 @@ const Marketplace = ({
                           </h6>
                         </div>
 
-                        {/* <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-                          <div className="mint-benefits-grid">
-                            {benefits.map((item) => (
-                              <div className="d-flex align-items-center gap-2">
-                                <img
-                                  src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
-                                  alt=""
-                                  style={{
-                                    scale: item.icon === "expand" ? "0.8" : "1",
-                                  }}
-                                />
-                                <span className="mint-benefits-title">
-                                  {item.title}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div> */}
+                      
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/timepiece">
@@ -1621,24 +1632,7 @@ const Marketplace = ({
                             Beta Pass
                           </h6>
                         </div>
-                        {/* <div className="d-flex flex-column gap-4 p-3 pt-xxl-0 pt-lg-0 col-12 col-md-9 col-lg-7  justify-content-between align-items-start position-relative">
-                          <div className="mint-benefits-grid">
-                            {benefits.map((item) => (
-                              <div className="d-flex align-items-center gap-2">
-                                <img
-                                  src={require(`../../components/TimepieceMint/assets/${item.icon}.png`)}
-                                  alt=""
-                                  style={{
-                                    scale: item.icon === "expand" ? "0.8" : "1",
-                                  }}
-                                />
-                                <span className="mint-benefits-title">
-                                  {item.title}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div> */}
+                       
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/sei">
@@ -1655,7 +1649,7 @@ const Marketplace = ({
                         />{" "}
                       </span>
                     </NavLink>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-100 mt-0 px-0 d-flex flex-column gap-3">
                   <div className="d-flex flex-column gap-2 w-100 flex-wrapper">

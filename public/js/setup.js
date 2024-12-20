@@ -153,6 +153,8 @@ window.config = {
   token_lock_address: "0xB569f25C8b4a2A6713bB4E99C01B572572BA8cDd",
   wod_token_testnet_address: "0x7FcDfeCeE90c6A428FE13fE48641D58807B74873",
   vesting_address: "0xD62FC589701C1FC54675124C42fe1D7fF4e0204C",
+  vesting_special_address: "0x89e17d1b7dd50dea02f082c88bd0a3e380f338b8",
+
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
   kol2_address: "0xc653D1AA94FD6A09056FC6de475305B4f5Fbe0C6",
