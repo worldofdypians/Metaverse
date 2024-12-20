@@ -64,7 +64,7 @@ const BetaPassNFT = ({
     },
     {
       title: "Enhanced Interactions",
-      icon: "user",
+      icon: "userMint",
     },
     {
       title: "Special Rewards",
