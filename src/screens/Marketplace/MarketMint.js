@@ -204,11 +204,12 @@ const MarketMint = ({
   const [opbnbNftsSold, setopBnbNftsSold] = useState(0);
   const [immutableNftsSold, setimmutableNftsSold] = useState(0);
   const [taikoNftsSold, setTaikoNftsSold] = useState(0);
+  const [seiNftsSold, setSeiNftsSold] = useState(0);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [showFirstNext, setShowFirstNext] = useState(0);
   const [selectedMint, setSelectedMint] = useState(timepieceData);
-  const [mintTitle, setMintTitle] = useState("sei");
+  const [mintTitle, setMintTitle] = useState("timepiece");
   const [sliderCut, setSliderCut] = useState();
   const [confluxLive, setConfluxLive] = useState(false);
   const slider = useRef(null);
@@ -347,6 +348,23 @@ const MarketMint = ({
       });
 
     setTaikoNftsSold(taikoresult);
+
+
+    const seiftContract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_sei_address
+    );
+
+    const seiresult = await seiftContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    setSeiNftsSold(seiresult);
+
   };
 
   const handleEthPool = async () => {
@@ -572,15 +590,15 @@ const MarketMint = ({
     //   class: "mint-viction",
     // },
 
-    {
-      title: "SEI Pass",
-      eventId: "sei",
-      id: "sei",
-      desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
-      img: 'https://cdn.worldofdypians.com/wod/seiMintActive.webp',
-      data: seiData,
-      class: "mint-sei",
-    },
+    // {
+    //   title: "SEI Pass",
+    //   eventId: "sei",
+    //   id: "sei",
+    //   desc: "Gain entry to metaverse, and join exclusive SEI event with special ticket.",
+    //   img: 'https://cdn.worldofdypians.com/wod/seiMintActive.webp',
+    //   data: seiData,
+    //   class: "mint-sei",
+    // },
     // {
     //   title: "BNB Chain Pass",
     //   eventId: "bnbchain",
@@ -2318,6 +2336,24 @@ const MarketMint = ({
                       </div>
                     </div>
                   </div>
+
+                  <div className="col-12 col-lg-6 mt-lg-5">
+                    <div className="past-sei-mint p-4">
+                      <div className="sold-out-tag px-3 py-1">
+                        <span className="sold-out-span">Sold Out</span>
+                      </div>
+                      <div className="d-flex flex-column justify-content-between past-content-wrapper ">
+                        <h6 className="past-mint-title">SEI Beta Pass</h6>
+                        <div className="d-flex flex-column align-items-center rotatewrapper">
+                          <h6 className="past-sei-mint-amount">
+                            {getFormattedNumber(seiNftsSold, 0)}
+                          </h6>
+                          <span className="past-sei-mint-desc">SOLD OUT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               )}
             </div>

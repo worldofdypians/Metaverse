@@ -1364,6 +1364,11 @@ function App() {
       window.config.nft_mat_address
     );
 
+    const seiContract = new window.seiWeb3.eth.Contract(
+      window.SEI_NFT_ABI,
+      window.config.nft_sei_address
+    );
+
     const confluxresult = await confluxContract.methods
       .totalSupply()
       .call()
@@ -1472,6 +1477,15 @@ function App() {
         return 0;
       });
 
+      const seiresult = await seiContract.methods
+      .totalSupply()
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
     setTotalSupply(
@@ -1490,7 +1504,8 @@ function App() {
         parseInt(mantaresult) +
         parseInt(taikoresult) +
         parseInt(cookieresult) +
-        parseInt(matresult) +
+        parseInt(matresult)  +
+        parseInt(seiresult)+
         20002
     );
   };
@@ -6817,7 +6832,7 @@ function App() {
                 myMantaNFTsCreated={myMantaNFTsCreated}
                 />
               }
-            /> */}
+            /> 
           <Route
             exact
             path="/shop/mint/sei"
@@ -6856,7 +6871,7 @@ function App() {
                 myseiNfts={myseiNfts}
               />
             }
-          />
+          />*/}
           <Route
             exact
             path="/map"
