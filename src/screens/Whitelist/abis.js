@@ -302,6 +302,200 @@ export const VESTING_ABI = [
   },
 ];
 
+export const VESTING_SPECIAL_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "_holders", type: "address[]" },
+      { internalType: "uint256[]", name: "_amountToClaim", type: "uint256[]" },
+    ],
+    name: "addVestingWallets",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "availableTGE",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_oldAddress", type: "address" },
+      { internalType: "address", name: "_newAddress", type: "address" },
+    ],
+    name: "changeAdvisorWallet",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "claim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "claimedTokens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cliff",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getNumberOfWallets",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_holder", type: "address" }],
+    name: "getPendingUnlocked",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "startIndex", type: "uint256" },
+      { internalType: "uint256", name: "endIndex", type: "uint256" },
+    ],
+    name: "getStakersList",
+    outputs: [
+      { internalType: "address[]", name: "Wallets", type: "address[]" },
+      { internalType: "uint256[]", name: "LastClaimedTime", type: "uint256[]" },
+      { internalType: "uint256[]", name: "VestedTokens", type: "uint256[]" },
+      { internalType: "uint256[]", name: "ClaimedTokens", type: "uint256[]" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTotalClaimedTokens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "lastClaimedTime",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "lockDuration",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "releaseProcent",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "startVesting",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "tokenAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalClaimedTokens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "unlockRate",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "vestedTokens",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
 export const PRIVATE_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -868,12 +1062,14 @@ export const blockedAccounts = [
   "0xfe859937319148791a67646e3c65fe89441b8e93",
   "0x5f75ef1101c25ed85c4ef12fe05dc95569709ec8",
   "0xb9be3ca291d13f9bef28031b9fd7d90fa9bc2366",
-]
-
+];
 
 export const specialWallets = [
-  '0xa85c4b2a2ef31724260bbd1445dc90ffd861f4c2',
-  '0xeddb00d08022f282a0179cb4c35697f50ef3b138',
-  '0x96d1c96dcddd6074ff7ddac2de08a74fea90afbb',
+  "0xa85c4b2a2ef31724260bbd1445dc90ffd861f4c2",
+  "0xeddb00d08022f282a0179cb4c35697f50ef3b138",
+  "0x96d1c96dcddd6074ff7ddac2de08a74fea90afbb",
+];
 
-]
+export const specialWalletsSeed = [
+  "0x7672673fb473f7a5d1bf3b8e4dfa692b61f740be",
+];

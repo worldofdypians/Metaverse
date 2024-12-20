@@ -3,15 +3,14 @@ import "./whitelist.css";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import Web3 from "web3";
 // import wallet from "../FARMINNG/assets/wallet.svg";
-import moment from "moment";
-import axios from "axios";
+
 import {
-  TOKEN_LOCK_ABI,
   VESTING_ABI,
+  VESTING_SPECIAL_ABI,
   KOL_ABI,
   PRIVATE_ABI,
   ADVISORS_ABI,
-  blockedAccounts, specialWallets
+  blockedAccounts, specialWallets, specialWalletsSeed
 } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -78,15 +77,25 @@ const Whitelist = ({
 
   const getInfo = async () => {
     let isSpecial = false;
+    let isSpecialSeed = false;
+
     if(coinbase) {
       if(specialWallets.includes(coinbase.toLowerCase())) {
         isSpecial = true
       }
       else isSpecial = false;
     }
+
+    if(coinbase) {
+      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true
+      }
+      else isSpecialSeed = false;
+    }
+
     const vestingSc = new window.bscWeb3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address
+      isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
     );
 
     const privateSc = new window.bscWeb3.eth.Contract(
@@ -464,6 +473,8 @@ const Whitelist = ({
 
   const getInfoTimer = async () => {
     let isSpecial = false;
+    let isSpecialSeed = false;
+
     if(coinbase) {
       if(specialWallets.includes(coinbase.toLowerCase())) {
         isSpecial = true
@@ -471,9 +482,17 @@ const Whitelist = ({
       else isSpecial = false;
     }
 
+    if(coinbase) {
+      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true
+      }
+      else isSpecialSeed = false;
+    }
+
+    
     const vestingSc = new window.bscWeb3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address
+      isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
     );
 
     const privateSc = new window.bscWeb3.eth.Contract(
@@ -564,12 +583,20 @@ const Whitelist = ({
 
   const handleClaim = async () => {
     console.log("seed");
+    let isSpecialSeed = false;
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
+
+    if(coinbase) {
+      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true
+      }
+      else isSpecialSeed = false;
+    }
+    
     const vestingSc = new web3.eth.Contract(
-      VESTING_ABI,
-      window.config.vesting_address,
-      { from: await window.getCoinbase() }
+      isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
+      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
     );
 
     const gasPrice = await window.bscWeb3.eth.getGasPrice();

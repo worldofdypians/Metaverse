@@ -111,7 +111,7 @@ const MobileNav = () => {
           }}
         />
         <NavLink
-          to="/shop/mint/sei"
+          to="/shop/mint/timepiece"
           end
           className={({ isActive }) =>
             isActive ? "active-mobile-link" : "mobile-link"
