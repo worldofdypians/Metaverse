@@ -1001,12 +1001,16 @@ const Marketplace = ({
                     </div>
                   )}
               <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-0 justify-content-between w-100 position-relative">
+             
                 <h6 className="nft-wrapper-title font-raleway mb-0">
                   Recent Listings
                 </h6>
+                 
                 <div className="d-flex align-items-center gap-4">
+                <NavLink className="stake-wod-btn" to='/list-my-nft' >List NFT</NavLink>
+
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "all" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1019,7 +1023,7 @@ const Marketplace = ({
                     All
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "caws" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1032,7 +1036,7 @@ const Marketplace = ({
                     CAWS
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "land" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1045,7 +1049,7 @@ const Marketplace = ({
                     Land
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "timepiece" && "filter-selected"
                     }`}
                     onClick={() => {

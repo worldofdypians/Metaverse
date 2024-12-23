@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
-import "../_marketplace.scss"; 
+import "../_marketplace.scss";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
@@ -19,8 +19,7 @@ import { HashLoader } from "react-spinners";
 import { ethers } from "ethers";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 import MakeOffer from "./MakeOffer";
-
-   
+import Pagination from "@mui/material/Pagination";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -69,7 +68,7 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const SingleNft = ({
+const ListNFT = ({
   coinbase,
   showWalletConnect,
   chainId,
@@ -86,6 +85,10 @@ const SingleNft = ({
   dyptokenData,
   ethTokenData,
   authToken,
+  screen,
+  myCawsCollected,
+  myLandCollected,
+  myTimepieceCollected,
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -129,6 +132,8 @@ const SingleNft = ({
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
   );
+  const [allListed, setAllListed] = useState([]);
+
   const [viewCount, setViewCount] = useState(0);
   const [favCount, setfavCount] = useState(0);
   const { email, logout } = useAuth();
@@ -144,8 +149,16 @@ const SingleNft = ({
   const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
   const [myOffers, setmyOffers] = useState([]);
-
-  const { nftId, nftAddress } = useParams();
+  const [nftId, setnftId] = useState(0);
+  const [nftAddress, setnftAddress] = useState("");
+  const [collectedItemsFiltered, setcollectedItemsFiltered] = useState([]);
+  const [collectedItems, setcollectedItems] = useState([]);
+  const [collectedPageSlice, setCollectedPageSlice] = useState(6);
+  const [collectedPage, setCollectedPage] = useState(1);
+  const [listedPage, setListedPage] = useState(1);
+  const [listedPageSlice, setListedPageSlice] = useState(6);
+  const [filter1, setFilter1] = useState("all");
+  const [filter2, setFilter2] = useState("all");
 
   const {
     data,
@@ -159,6 +172,92 @@ const SingleNft = ({
     display: "block",
     margin: "auto",
     borderColor: "#554fd8",
+  };
+
+  const handleSortCollection = (value1, value2) => {
+    if (value1 === "all" && value2 === "all") {
+      setcollectedItemsFiltered(collectedItems);
+    } else if (value1 === "land" && value2 === "all") {
+      let wodFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_land_address
+      );
+
+      const allcawsArray = [...wodFilter];
+      setcollectedItemsFiltered(allcawsArray);
+    } else if (value1 === "timepiece" && value2 === "all") {
+      let timepieceFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_timepiece_address
+      );
+      setcollectedItemsFiltered(timepieceFilter);
+    } else if (value1 === "caws" && value2 === "all") {
+      let cawsFilter = collectedItems.filter(
+        (item) => item.nftAddress === window.config.nft_caws_address
+      );
+
+      const allcawsArray = [...cawsFilter];
+
+      setcollectedItemsFiltered(allcawsArray);
+    } else if (value1 === "all" && value2 === "to list") {
+      let nftFilter = collectedItems.filter((item) => item.isListed === false);
+
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "all" && value2 === "listed") {
+      let nftFilter = collectedItems.filter((item) => item.isListed === true);
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "land" && value2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_land_address &&
+          item.isListed === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "land" && value2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_land_address &&
+          item.isListed === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "caws" && value2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address &&
+          item.isListed === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "caws" && value2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_caws_address &&
+          item.isListed === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "timepiece" && value2 === "to list") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_timepiece_address &&
+          item.isListed === false
+      );
+      setcollectedItemsFiltered(nftFilter);
+    } else if (value1 === "timepiece" && value2 === "listed") {
+      let nftFilter = collectedItems.filter(
+        (item) =>
+          item.nftAddress === window.config.nft_timepiece_address &&
+          item.isListed === true
+      );
+      setcollectedItemsFiltered(nftFilter);
+    }
+  };
+
+  const handleCollectedPage = (e, value) => {
+    setCollectedPage(value);
+    setCollectedPageSlice(value * 6);
+  };
+
+  const getAllnftsListed = async () => {
+    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
+
+    setAllListed(listedNFTS);
   };
 
   const switchNetwork = async (hexChainId, chain) => {
@@ -200,6 +299,99 @@ const SingleNft = ({
     // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
   };
 
+  const getCollected = async () => {
+    var finalTimepieceArray = [];
+    let finalLandArray = [];
+    let finalCawsArray = [];
+    let finalCollection = []; 
+
+    if (coinbase) {
+      if (myTimepieceCollected && myTimepieceCollected.length > 0) {
+        await Promise.all(
+          myTimepieceCollected.map(async (i) => {
+         
+            finalTimepieceArray.push({
+              nftAddress: window.config.nft_timepiece_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "timepiece",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_timepiece_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      if (myLandCollected && myLandCollected.length > 0) {
+        await Promise.all(
+          myLandCollected.map(async (i) => {
+            
+
+            finalLandArray.push({
+              nftAddress: window.config.nft_land_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "land",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_land_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      if (myCawsCollected && myCawsCollected.length > 0) {
+        await Promise.all(
+          myCawsCollected.map(async (i) => {
+            
+       
+            finalCawsArray.push({
+              nftAddress: window.config.nft_caws_address,
+              buyer: coinbase,
+              tokenId: i,
+              type: "caws",
+              chain: 1,
+              isStaked: false,
+              isListed: allListed.find(
+                (obj) =>
+                  obj.tokenId == i &&
+                  obj.nftAddress === window.config.nft_caws_address
+              )
+                ? true
+                : false,
+            });
+          })
+        );
+      }
+
+      finalCollection = [
+        ...finalCawsArray,
+        ...finalLandArray,
+        ...finalTimepieceArray,
+      ];
+
+      setcollectedItems(finalCollection);
+      setcollectedItemsFiltered(finalCollection);
+    
+    } else {
+      setcollectedItems([]);
+      setcollectedItemsFiltered([]);
+    }
+  };
+
   const getOffer = async () => {
     let finalArray = [];
     if (
@@ -218,8 +410,8 @@ const SingleNft = ({
       type !== "bnb" &&
       type !== "opbnb" &&
       type !== "multivers" &&
-      type !== "immutable"&&
-      type !== "mat"&&
+      type !== "immutable" &&
+      type !== "mat" &&
       type !== "sei"
     ) {
       // const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
@@ -313,7 +505,7 @@ const SingleNft = ({
           //     });
           //   }
           // } else
-           if (item.offer.payment.priceType === "0") {
+          if (item.offer.payment.priceType === "0") {
             const balance = await contract2.methods
               .balanceOf(item.offer.buyer)
               .call()
@@ -817,7 +1009,7 @@ const SingleNft = ({
       //   );
 
       //   return Number(allowance) >= Number(amount);
-      // } else 
+      // } else
       if (tokenType === "eth") {
         return true;
       }
@@ -981,9 +1173,8 @@ const SingleNft = ({
     //   priceType === 1 ? "dypv1" : priceType === 2 ? "dypv2" : "eth";
     // const pricetype2 = priceType === 1 || priceType === 2 ? 1 : 0;
 
-    const tokenType =
-     "eth";
-  const pricetype2 =  0;
+    const tokenType = "eth";
+    const pricetype2 = 0;
 
     if (isApproved) {
       console.log("selling");
@@ -1576,7 +1767,7 @@ const SingleNft = ({
         //     }, 3000);
         //   }
         // } else
-         if (nft.payment_priceType === 0) {
+        if (nft.payment_priceType === 0) {
           const txResponse = await marketplace
             .buyItem(
               nftAddress,
@@ -2057,7 +2248,7 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && priceType === 0) {
       setNftPrice(newprice);
-    } 
+    }
     // else if (Number(newprice) > 100000 && priceType === 1) {
     //   setNftPrice(100000);
     // } else if (Number(newprice) <= 100000 && priceType === 1) {
@@ -2075,7 +2266,7 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && nft.payment_priceType === 0) {
       setNftPrice(newprice);
-    } 
+    }
     // else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
     //   setNftPrice(100000);
     // } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
@@ -2478,7 +2669,7 @@ const SingleNft = ({
       //     setIsApprove(isApproved);
       //   });
       // } else
-       if (!IsListed) {
+      if (!IsListed) {
         isApprovedNFT(
           nftId,
           nftAddress === window.config.nft_caws_address
@@ -2552,6 +2743,32 @@ const SingleNft = ({
   }, []);
 
   useEffect(() => {
+    getAllnftsListed();
+  }, []);
+
+  useEffect(() => {
+    getCollected();
+  }, [
+    allListed,
+    coinbase,
+    myCawsCollected,
+    myLandCollected,
+    myTimepieceCollected,
+  ]);
+
+  const dataFetchedRef2 = useRef(false);
+
+
+  useEffect(()=>{
+      if(collectedItems && collectedItems.length > 0) {
+        if (dataFetchedRef2.current) return;
+        dataFetchedRef2.current = true; 
+        setnftId(collectedItems[0].tokenId)
+        setnftAddress(collectedItems[0].nftAddress)
+      }
+  },[collectedItems.length])
+
+  useEffect(() => {
     getViewCount(nftId, nftAddress);
   }, [nftId, nftAddress]);
 
@@ -2606,10 +2823,7 @@ const SingleNft = ({
       window.config.nft_cookie3_address.toLowerCase()
     ) {
       setType("mat");
-    }  else if (
-      nftAddress ===
-      window.config.nft_mat_address
-    ) {
+    } else if (nftAddress === window.config.nft_mat_address) {
       setType("mat");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
@@ -2631,10 +2845,7 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
     ) {
       setType("core");
-    } else if (
-      nftAddress ===
-      window.config.nft_viction_address
-    ) {
+    } else if (nftAddress === window.config.nft_viction_address) {
       setType("viction");
     } else if (
       nftAddress.toLowerCase() ===
@@ -2700,9 +2911,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
-        : nftAddress ===
-        window.config.nft_sei_address
-      ? "sei"
+        : nftAddress === window.config.nft_sei_address
+        ? "sei"
         : nftAddress === window.config.nft_conflux_address
         ? "conflux"
         : nftAddress.toLowerCase() ===
@@ -2714,8 +2924,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_cookie3_address.toLowerCase()
         ? "cookie3"
-        : nftAddress ===
-          window.config.nft_mat_address
+        : nftAddress === window.config.nft_mat_address
         ? "mat"
         : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
@@ -2732,8 +2941,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_core_address.toLowerCase()
         ? "core"
-        : nftAddress ===
-          window.config.nft_viction_address
+        : nftAddress === window.config.nft_viction_address
         ? "viction"
         : nftAddress.toLowerCase() ===
           window.config.nft_immutable_address.toLowerCase()
@@ -2779,7 +2987,9 @@ const SingleNft = ({
   useEffect(() => {
     if (favorites && favorites.length > 0) {
       const favobj = favorites.find(
-        (obj) => obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() && obj.tokenId === nftId
+        (obj) =>
+          obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() &&
+          obj.tokenId === nftId
       );
 
       if (favobj !== undefined) {
@@ -2800,6 +3010,8 @@ const SingleNft = ({
       setPurchaseColor("#FF6232");
     }
   }, [purchaseStatus, data]);
+
+  
 
   return (
     <div
@@ -3083,7 +3295,7 @@ const SingleNft = ({
                       nftAddress.toLowerCase() ===
                         window.config.nft_caws_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
-                        :   nftAddress.toLowerCase() ===
+                        : nftAddress.toLowerCase() ===
                             window.config.nft_land_address.toLowerCase() ||
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_bnb_address.toLowerCase() ||
@@ -3092,42 +3304,42 @@ const SingleNft = ({
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : type==='coingecko'
+                        : type === "coingecko"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-                        : type==='gate'
+                        : type === "gate"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : type==='conflux'
+                        : type === "conflux"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-                        : type==='manta'
+                        : type === "manta"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
-                        : type==='taiko'
+                        : type === "taiko"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
-                        : type==='cookie3'
+                        : type === "cookie3"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
-                        : type==='mat'
+                        : type === "mat"
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
-                        : type==='doge'
+                        : type === "doge"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-                        : type==='cmc'
+                        : type === "cmc"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-                        : type==='core'
+                        : type === "core"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : type==='viction'
+                        : type === "viction"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        : type==='multivers'
+                        : type === "multivers"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : type==='base'
+                        : type === "base"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
-                        : type==='skale'
+                        : type === "skale"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
-                        : type==='bnb'
+                        : type === "bnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
-                        : type==='opbnb'
+                        : type === "opbnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
-                        : type==='immutable'
+                        : type === "immutable"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
-                        : type==='sei'
-                      ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
+                        : type === "sei"
+                        ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -3153,34 +3365,34 @@ const SingleNft = ({
                         type === "cawsbnb" ||
                         type === "landbnb" ||
                         type === "cookie3"
-                          ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : type === "conflux"
-                          ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
                           : type === "manta"
-                          ? 'https://cdn.worldofdypians.com/wod/manta.png'
+                          ? "https://cdn.worldofdypians.com/wod/manta.png"
                           : type === "taiko"
-                          ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
+                          ? "https://cdn.worldofdypians.com/wod/taiko.svg"
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
-                          ? 'https://cdn.worldofdypians.com/wod/base.svg'
+                          ? "https://cdn.worldofdypians.com/wod/base.svg"
                           : type === "cawsavax" || type === "landavax"
-                          ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : type === "skale"
-                          ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : type === "core"
-                          ? 'https://cdn.worldofdypians.com/wod/core.svg'
+                          ? "https://cdn.worldofdypians.com/wod/core.svg"
                           : type === "viction"
-                          ? 'https://cdn.worldofdypians.com/wod/viction.svg'
+                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           : type === "mat"
-                          ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                           : type === "multivers"
-                          ? 'https://cdn.worldofdypians.com/wod/multiversx.svg'
+                          ? "https://cdn.worldofdypians.com/wod/multiversx.svg"
                           : type === "immutable"
-                          ? 'https://cdn.worldofdypians.com/wod/immutable.svg'
+                          ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                           : type === "sei"
-                          ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
-                          : 'https://cdn.worldofdypians.com/wod/eth.svg'
+                          ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : "https://cdn.worldofdypians.com/wod/eth.svg"
                       }
                       alt=""
                       style={{ width: 20, height: 20 }}
@@ -3227,81 +3439,94 @@ const SingleNft = ({
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={'https://cdn.worldofdypians.com/wod/eye.svg'} alt="" /> {viewCount} views
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/eye.svg"}
+                      alt=""
+                    />{" "}
+                    {viewCount} views
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={'https://cdn.worldofdypians.com/wod/heart.svg'} alt="" /> {favCount} favorites
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/heart.svg"}
+                      alt=""
+                    />{" "}
+                    {favCount} favorites
                   </span>
                 </div>
-                <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
-                  <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
-                    <h3 className="nft-title d-flex align-items-center justify-content-between">
-                      {type === "caws" ||
-                      type === "cawsavax" ||
-                      type === "cawsbase" ||
-                      type === "cawsbnb"
-                        ? "CAWS"
-                        : type === "land" ||
-                          type === "landavax" ||
-                          type === "landbnb" ||
-                          type === "landbase"
-                        ? "Genesis Land"
-                        : type === "coingecko"
-                        ? "CoinGecko Beta Pass"
-                        : type === "gate"
-                        ? "Gate Beta Pass"
-                        : type === "conflux"
-                        ? "Conflux Beta Pass"
-                        : type === "manta"
-                        ? "Manta Beta Pass"
-                        : type === "taiko"
-                        ? "Taiko Beta Pass"
-                        : type === "cookie3"
-                        ? "Cookie3 Beta Pass"
-                        : type === "mat"
-                        ? "Matchain Beta Pass"
-                        : type === "doge"
-                        ? "Dogecoin Beta Pass"
-                        : type === "bnb"
-                        ? "BNB Chain Beta Pass"
-                        : type === "skale"
-                        ? "SKALE Beta Pass"
-                        : type === "cmc"
-                        ? "CoinMarketCap Beta Pass"
-                        : type === "core"
-                        ? "CORE Beta Pass"
-                        : type === "viction"
-                        ? "Viction Beta Pass"
-                        : type === "multivers"
-                        ? "MultiversX Beta Pass"
-                        : type === "immutable"
-                        ? "Immutable Beta Pass"
-                        : type === "base"
-                        ? "Base Beta Pass"
-                        : type === "opbnb"
-                        ? "opBNB Chain Beta Pass"
-                        : type === "sei"
-                        ? "SEI Beta Pass"
-                        : "CAWS Timepiece"}{" "}
-                      {type === "immutable" ? "" : ` #${nftId}`}
-                      <img
-                        src={isFavorite ? 'https://cdn.worldofdypians.com/wod/favActive.svg' : 'https://cdn.worldofdypians.com/wod/favInactive.svg'}
-                        onClick={() => {
-                          handleFavorite(nft);
-                        }}
-                        alt=""
-                        style={{ cursor: "pointer" }}
-                      />
-                    </h3>
-                    {isOwner &&
-                      IsListed &&
-                      nft.price &&
-                      loadingNft === false && (
-                        <div className="d-flex gap-2 align-items-center">
-                          <span className="currentprice-txt">
-                            Current price
-                          </span>
-                          {/* <StyledTextField
+                <div className="d-flex flex-column gap-2">
+                  <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
+                    <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
+                      <h3 className="nft-title d-flex align-items-center justify-content-between">
+                        {type === "caws" ||
+                        type === "cawsavax" ||
+                        type === "cawsbase" ||
+                        type === "cawsbnb"
+                          ? "CAWS"
+                          : type === "land" ||
+                            type === "landavax" ||
+                            type === "landbnb" ||
+                            type === "landbase"
+                          ? "Genesis Land"
+                          : type === "coingecko"
+                          ? "CoinGecko Beta Pass"
+                          : type === "gate"
+                          ? "Gate Beta Pass"
+                          : type === "conflux"
+                          ? "Conflux Beta Pass"
+                          : type === "manta"
+                          ? "Manta Beta Pass"
+                          : type === "taiko"
+                          ? "Taiko Beta Pass"
+                          : type === "cookie3"
+                          ? "Cookie3 Beta Pass"
+                          : type === "mat"
+                          ? "Matchain Beta Pass"
+                          : type === "doge"
+                          ? "Dogecoin Beta Pass"
+                          : type === "bnb"
+                          ? "BNB Chain Beta Pass"
+                          : type === "skale"
+                          ? "SKALE Beta Pass"
+                          : type === "cmc"
+                          ? "CoinMarketCap Beta Pass"
+                          : type === "core"
+                          ? "CORE Beta Pass"
+                          : type === "viction"
+                          ? "Viction Beta Pass"
+                          : type === "multivers"
+                          ? "MultiversX Beta Pass"
+                          : type === "immutable"
+                          ? "Immutable Beta Pass"
+                          : type === "base"
+                          ? "Base Beta Pass"
+                          : type === "opbnb"
+                          ? "opBNB Chain Beta Pass"
+                          : type === "sei"
+                          ? "SEI Beta Pass"
+                          : "CAWS Timepiece"}{" "}
+                        {type === "immutable" ? "" : ` #${nftId}`}
+                        <img
+                          src={
+                            isFavorite
+                              ? "https://cdn.worldofdypians.com/wod/favActive.svg"
+                              : "https://cdn.worldofdypians.com/wod/favInactive.svg"
+                          }
+                          onClick={() => {
+                            handleFavorite(nft);
+                          }}
+                          alt=""
+                          style={{ cursor: "pointer" }}
+                        />
+                      </h3>
+                      {isOwner &&
+                        IsListed &&
+                        nft.price &&
+                        loadingNft === false && (
+                          <div className="d-flex gap-2 align-items-center">
+                            <span className="currentprice-txt">
+                              Current price
+                            </span>
+                            {/* <StyledTextField
                         error={nftPrice === "" ? true : false}
                         size="small"
                         id="price"
@@ -3319,120 +3544,111 @@ const SingleNft = ({
                           max: 10,
                         }}
                       /> */}
-                          <div className="d-flex gap-2 align-items-center">
-                            <img
-                              src={
-                                'https://cdn.worldofdypians.com/wod/topEth.svg'
-                              }
-                              alt=""
-                              height={20}
-                              width={20}
-                            />
-                            <span
-                              className="nft-price-eth"
-                              style={{ fontSize: 15, lineHeight: "20px" }}
-                            >
-                              {getFormattedNumber(
-                                nft?.price / 1e18,
-                                3
-                              )}{" "}
-                             ETH
-                            </span>
-                            <span className="nft-price-usd">
-                              $
-                              {getFormattedNumber(
-                                 ethTokenData * (nft?.price / 1e18),
-                                2
-                              )}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    {!isOwner &&
-                      IsListed &&
-                      nft.price &&
-                      loadingNft === false && (
-                        <div className="price-wrapper p-3">
-                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                            <span className="currentprice-txt">
-                              Current price
-                            </span>
                             <div className="d-flex gap-2 align-items-center">
                               <img
                                 src={
-                                 'https://cdn.worldofdypians.com/wod/topEth.svg'
+                                  "https://cdn.worldofdypians.com/wod/topEth.svg"
                                 }
                                 alt=""
-                                height={30}
-                                width={30}
+                                height={20}
+                                width={20}
                               />
-                              <span className="nft-price-eth">
-                                {getFormattedNumber(
-                                  nft?.price / 1e18,
-                                  3
-                                )}{" "}
-                                 ETH 
+                              <span
+                                className="nft-price-eth"
+                                style={{ fontSize: 15, lineHeight: "20px" }}
+                              >
+                                {getFormattedNumber(nft?.price / 1e18, 3)} ETH
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  ethTokenData * (nft?.price / 1e18)
-                                   ,
+                                  ethTokenData * (nft?.price / 1e18),
                                   2
                                 )}
                               </span>
                             </div>
                           </div>
-                        </div>
-                      )}
-                    {loadingNft === true && (
-                      <div className="price-wrapper p-3">
-                        <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                          <HashLoader
-                            color={"#554fd8"}
-                            loading={loadingNft}
-                            cssOverride={override}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    {!isOwner &&
-                      !IsListed &&
-                      (!nft.price || nft.price) &&
-                      type !== "cawsbnb" &&
-                      type !== "cawsavax" &&
-                      type !== "cawsbase" &&
-                      type !== "landavax" &&
-                      type !== "landbnb" &&
-                      type !== "landbase" &&
-                      type !== "coingecko" &&
-                      type !== "gate" &&
-                      type !== "conflux" &&
-                      type !== "manta" &&
-                      type !== "taiko" &&
-                      type !== "cookie3" &&
-                      type !== "base" &&
-                      type !== "doge" &&
-                      type !== "bnb" &&
-                      type !== "opbnb" &&
-                      type !== "cmc" &&
-                      type !== "core" &&
-                      type !== "viction" &&
-                      type !== "multivers" &&
-                      type !== "skale" &&
-                      type !== "immutable"  &&
-                      type !== "mat" &&
-                      type !== "sei" &&
-                      loadingNft === false && (
+                        )}
+                      {!isOwner &&
+                        IsListed &&
+                        nft.price &&
+                        loadingNft === false && (
+                          <div className="price-wrapper p-3">
+                            <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                              <span className="currentprice-txt">
+                                Current price
+                              </span>
+                              <div className="d-flex gap-2 align-items-center">
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/topEth.svg"
+                                  }
+                                  alt=""
+                                  height={30}
+                                  width={30}
+                                />
+                                <span className="nft-price-eth">
+                                  {getFormattedNumber(nft?.price / 1e18, 3)} ETH
+                                </span>
+                                <span className="nft-price-usd">
+                                  $
+                                  {getFormattedNumber(
+                                    ethTokenData * (nft?.price / 1e18),
+                                    2
+                                  )}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      {loadingNft === true && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                            <span className="currentprice-txt">
-                              This NFT is not listed
-                            </span>
-                            {/* <div className="d-flex gap-2 align-items-center">
+                            <HashLoader
+                              color={"#554fd8"}
+                              loading={loadingNft}
+                              cssOverride={override}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {!isOwner &&
+                        !IsListed &&
+                        (!nft.price || nft.price) &&
+                        type !== "cawsbnb" &&
+                        type !== "cawsavax" &&
+                        type !== "cawsbase" &&
+                        type !== "landavax" &&
+                        type !== "landbnb" &&
+                        type !== "landbase" &&
+                        type !== "coingecko" &&
+                        type !== "gate" &&
+                        type !== "conflux" &&
+                        type !== "manta" &&
+                        type !== "taiko" &&
+                        type !== "cookie3" &&
+                        type !== "base" &&
+                        type !== "doge" &&
+                        type !== "bnb" &&
+                        type !== "opbnb" &&
+                        type !== "cmc" &&
+                        type !== "core" &&
+                        type !== "viction" &&
+                        type !== "multivers" &&
+                        type !== "skale" &&
+                        type !== "immutable" &&
+                        type !== "mat" &&
+                        type !== "sei" &&
+                        loadingNft === false && (
+                          <div className="price-wrapper p-3">
+                            <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                              <span className="currentprice-txt">
+                                This NFT is not listed
+                              </span>
+                              {/* <div className="d-flex gap-2 align-items-center">
                           <img
                             src={nft.payment_priceType === 0 ? topEth : topDyp}
                             alt=""
@@ -3453,83 +3669,84 @@ const SingleNft = ({
                             )}
                           </span>
                         </div> */}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    {isOwner && IsListed && loadingNft === false && (
-                      <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
-                        <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
-                          <div className="d-flex w-100 justify-content-between flex-column gap-2">
-                            <span
-                              className="currentprice-txt"
-                              style={{ alignSelf: "baseline" }}
-                            >
-                              Listing price
-                            </span>
-                            <div className="d-flex gap-2 align-items-center">
-                              <input
-                                required
-                                className="single-nft-input"
-                                type="number"
-                                id="price"
-                                name="price"
-                                pattern="^[0-9]*[.,]?[0-9]*$"
-                                min={0}
-                                value={nftPrice}
-                                onChange={(e) => {
-                                  handlepricechange2(e.target.value);
-                                }}
-                              />
-                              <div className="d-flex flex-column gap-1">
-                                <span className="nft-price-eth gap-3 d-flex">
-                                 ETH
-                                </span>
-                                <span className="nft-price-usd">
-                                  $
-                                  {getFormattedNumber(
-                                     ethTokenData * (nft?.price / 1e18)
-                                      ,
-                                    2
-                                  )}
-                                </span>
+                        )}
+                      {isOwner && IsListed && loadingNft === false && (
+                        <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
+                          <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
+                            <div className="d-flex w-100 justify-content-between flex-column gap-2">
+                              <span
+                                className="currentprice-txt"
+                                style={{ alignSelf: "baseline" }}
+                              >
+                                Listing price
+                              </span>
+                              <div className="d-flex gap-2 align-items-center">
+                                <input
+                                  required
+                                  className="single-nft-input"
+                                  type="number"
+                                  id="price"
+                                  name="price"
+                                  pattern="^[0-9]*[.,]?[0-9]*$"
+                                  min={0}
+                                  value={nftPrice}
+                                  onChange={(e) => {
+                                    handlepricechange2(e.target.value);
+                                  }}
+                                />
+                                <div className="d-flex flex-column gap-1">
+                                  <span className="nft-price-eth gap-3 d-flex">
+                                    ETH
+                                  </span>
+                                  <span className="nft-price-usd">
+                                    $
+                                    {getFormattedNumber(
+                                      ethTokenData * (nft?.price / 1e18),
+                                      2
+                                    )}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
-                          <div className="d-flex w-100 justify-content-between flex-column gap-2">
-                            {/* <span className="currentprice-txt">
+                          <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
+                            <div className="d-flex w-100 justify-content-between flex-column gap-2">
+                              {/* <span className="currentprice-txt">
                               Choose currency
                             </span> */}
-                            <div className="d-flex flex-row justify-content-around w-100 gap-2">
-                              <div
-                                className={`d-flex gap-2 align-items-center position-relative `}
-                                onClick={() => {
-                                  setPriceType(0);
-                                }}
-                              >
-                                <img
-                                  src={
-                                    priceType === 0 &&
-                                    nft.payment_priceType === 0
-                                      ? 'https://cdn.worldofdypians.com/wod/checked.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/empty.svg'
-                                  }
-                                  alt=""
-                                  className={"position-absolute checkicons"}
-                                />
-                                <span className="nft-price-eth">
+                              <div className="d-flex flex-row justify-content-around w-100 gap-2">
+                                <div
+                                  className={`d-flex gap-2 align-items-center position-relative `}
+                                  onClick={() => {
+                                    setPriceType(0);
+                                  }}
+                                >
                                   <img
-                                    src={ 'https://cdn.worldofdypians.com/wod/topEth.svg'}
+                                    src={
+                                      priceType === 0 &&
+                                      nft.payment_priceType === 0
+                                        ? "https://cdn.worldofdypians.com/wod/checked.svg"
+                                        : "https://cdn.worldofdypians.com/wod/empty.svg"
+                                    }
                                     alt=""
-                                    height={20}
-                                    width={20}
+                                    className={"position-absolute checkicons"}
                                   />
-                                  ETH
-                                </span>
-                              </div>
+                                  <span className="nft-price-eth">
+                                    <img
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/topEth.svg"
+                                      }
+                                      alt=""
+                                      height={20}
+                                      width={20}
+                                    />
+                                    ETH
+                                  </span>
+                                </div>
 
-                              {/* <div
+                                {/* <div
                                 className={`d-flex gap-2 align-items-center position-relative ${
                                   nft.payment_priceType === 1
                                     ? "currencyWrapper"
@@ -3564,120 +3781,121 @@ const SingleNft = ({
                                     : "DYPv1"}
                                 </span>
                               </div> */}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {isOwner &&
-                      !IsListed &&
-                      loadingNft === false &&
-                      type !== "coingecko" &&
-                      type !== "gate" &&
-                      type !== "conflux" &&
-                      type !== "manta" &&
-                      type !== "taiko" &&
-                      type !== "cookie3" &&
-                      type !== "base" &&
-                      type !== "doge" &&
-                      type !== "bnb" &&
-                      type !== "opbnb" &&
-                      type !== "cmc" &&
-                      type !== "core" &&
-                      type !== "viction" &&
-                      type !== "multivers" &&
-                      type !== "cawsbnb" &&
-                      type !== "cawsavax" &&
-                      type !== "cawsbase" &&
-                      type !== "landavax" &&
-                      type !== "landbnb" &&
-                      type !== "landbase" &&
-                      type !== "skale" &&
-                      type !== "immutable" &&
-                      type !== "mat"&&
-                      type !== "sei" && (
-                        <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
-                          <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
-                            <div className="d-flex w-100 justify-content-between flex-column ">
-                              <span
-                                className="currentprice-txt"
-                                style={{ alignSelf: "baseline" }}
-                              >
-                                Listing price
-                              </span>
-                              <div className="d-flex gap-2 align-items-center">
-                                <input
-                                  required
-                                  className="single-nft-input"
-                                  type="number"
-                                  id="price"
-                                  name="price"
-                                  pattern="^[0-9]*[.,]?[0-9]*$"
-                                  min={0}
-                                  value={nftPrice}
-                                  onChange={(e) => {
-                                    handlepricechange(e.target.value);
-                                  }}
-                                />
-                                <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
-                                  <span className="nft-price-eth gap-3 d-flex">
-                                    ETH
-                                  </span>
-                                  <span className="nft-price-usd">
-                                    $
-                                    {getFormattedNumber( ethTokenData * nftPrice
-                                        ,
-                                      2
-                                    )}
-                                  </span>
-                                </div>
                               </div>
                             </div>
                           </div>
-                          <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
-                            <div className="d-flex w-100 justify-content-between flex-column gap-2">
-                              <span className="currentprice-txt">
-                                Choose currency
-                              </span>
-                              <div className="d-flex flex-row justify-content-start w-100 gap-2">
-                                <div className="dropdown filters-dropdown2">
-                                  <button
-                                    className="btn btn-secondary currencyWrapper nft-dropdown w-100
-                 d-flex align-items-center justify-content-between dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    onClick={() => {
-                                      setPriceType(0);
+                        </div>
+                      )}
+                      {isOwner &&
+                        !IsListed &&
+                        loadingNft === false &&
+                        type !== "coingecko" &&
+                        type !== "gate" &&
+                        type !== "conflux" &&
+                        type !== "manta" &&
+                        type !== "taiko" &&
+                        type !== "cookie3" &&
+                        type !== "base" &&
+                        type !== "doge" &&
+                        type !== "bnb" &&
+                        type !== "opbnb" &&
+                        type !== "cmc" &&
+                        type !== "core" &&
+                        type !== "viction" &&
+                        type !== "multivers" &&
+                        type !== "cawsbnb" &&
+                        type !== "cawsavax" &&
+                        type !== "cawsbase" &&
+                        type !== "landavax" &&
+                        type !== "landbnb" &&
+                        type !== "landbase" &&
+                        type !== "skale" &&
+                        type !== "immutable" &&
+                        type !== "mat" &&
+                        type !== "sei" && (
+                          <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
+                            <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
+                              <div className="d-flex w-100 justify-content-between flex-column ">
+                                <span
+                                  className="currentprice-txt"
+                                  style={{ alignSelf: "baseline" }}
+                                >
+                                  Listing price
+                                </span>
+                                <div className="d-flex gap-2 align-items-center">
+                                  <input
+                                    required
+                                    className="single-nft-input"
+                                    type="number"
+                                    id="price"
+                                    name="price"
+                                    pattern="^[0-9]*[.,]?[0-9]*$"
+                                    min={0}
+                                    value={nftPrice}
+                                    onChange={(e) => {
+                                      handlepricechange(e.target.value);
                                     }}
-                                  >
-                                    <div className="d-flex align-items-center gap-2">
-                                   
-                                      <h6 className="filter-nav-title mb-0">
-                                        <img
-                                          src={'https://cdn.worldofdypians.com/wod/checked.svg'}
-                                          alt=""
-                                          style={{ top: "7px" }}
-                                          className={
-                                            "position-absolute checkicons"
-                                          }
-                                        />
-                                        <span className="nft-price-eth2">
+                                  />
+                                  <div className="d-flex flex-column flex-xxl-row align-items-start align-items-lg-center gap-1 gap-xxl-3">
+                                    <span className="nft-price-eth gap-3 d-flex">
+                                      ETH
+                                    </span>
+                                    <span className="nft-price-usd">
+                                      $
+                                      {getFormattedNumber(
+                                        ethTokenData * nftPrice,
+                                        2
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="price-wrapper p-3 col-xxl-5 col-lg-5">
+                              <div className="d-flex w-100 justify-content-between flex-column gap-2">
+                                <span className="currentprice-txt">
+                                  Choose currency
+                                </span>
+                                <div className="d-flex flex-row justify-content-start w-100 gap-2">
+                                  <div className="dropdown filters-dropdown2">
+                                    <button
+                                      className="btn btn-secondary currencyWrapper nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                      onClick={() => {
+                                        setPriceType(0);
+                                      }}
+                                    >
+                                      <div className="d-flex align-items-center gap-2">
+                                        <h6 className="filter-nav-title mb-0">
                                           <img
                                             src={
-                                              'https://cdn.worldofdypians.com/wod/topEth.svg'
+                                              "https://cdn.worldofdypians.com/wod/checked.svg"
                                             }
                                             alt=""
-                                            height={20}
-                                            width={20}
+                                            style={{ top: "7px" }}
+                                            className={
+                                              "position-absolute checkicons"
+                                            }
                                           />
-                                          ETH
-                                        </span>
-                                      </h6>
-                                    </div>
-                                    {/* <img src={dropdownIcon} alt="" /> */}
-                                  </button>
-                                  {/* <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                                          <span className="nft-price-eth2">
+                                            <img
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/topEth.svg"
+                                              }
+                                              alt=""
+                                              height={20}
+                                              width={20}
+                                            />
+                                            ETH
+                                          </span>
+                                        </h6>
+                                      </div>
+                                      {/* <img src={dropdownIcon} alt="" /> */}
+                                    </button>
+                                    {/* <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
                                     <li
                                       className="nft-dropdown-item"
                                       onClick={() => {
@@ -3703,9 +3921,9 @@ const SingleNft = ({
                                       <span>DYPv2</span>
                                     </li>
                                   </ul> */}
-                                </div>
+                                  </div>
 
-                                {/* <div
+                                  {/* <div
                                   className={`d-flex gap-2 align-items-center position-relative ${
                                     priceType === 0
                                       ? "currencyWrapper"
@@ -3766,410 +3984,424 @@ const SingleNft = ({
                                     DYP
                                   </span>
                                 </div> */}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      )}
-                    {!IsListed &&
-                      !loadingNft &&
-                      (type === "coingecko" ||
-                        type === "gate" ||
-                        type === "conflux" ||
-                        type === "manta" ||
-                        type === "taiko" ||
-                        type === "cookie3" ||
-                        type === "base" ||
-                        type === "doge" ||
-                        type === "bnb" ||
-                        type === "opbnb" ||
-                        type === "skale" ||
-                        type === "cmc" ||
-                        type === "core" ||
-                        type === "viction" ||
-                        type === "multivers" ||
-                        type === "immutable" ||
-                        type === "cawsbnb" ||
-                        type === "cawsavax" ||
-                        type === "cawsbase" ||
-                        type === "landavax" ||
-                        type === "landbnb" ||
-                        type === "landbase"||
-                        type === "mat"||
-                        type === "sei") && (
-                        <div className="price-wrapper p-3">
-                          <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
-                            <span className="currentprice-txt">
-                              This NFT is not available for listing.
-                            </span>
+                        )}
+                      {!IsListed &&
+                        !loadingNft &&
+                        (type === "coingecko" ||
+                          type === "gate" ||
+                          type === "conflux" ||
+                          type === "manta" ||
+                          type === "taiko" ||
+                          type === "cookie3" ||
+                          type === "base" ||
+                          type === "doge" ||
+                          type === "bnb" ||
+                          type === "opbnb" ||
+                          type === "skale" ||
+                          type === "cmc" ||
+                          type === "core" ||
+                          type === "viction" ||
+                          type === "multivers" ||
+                          type === "immutable" ||
+                          type === "cawsbnb" ||
+                          type === "cawsavax" ||
+                          type === "cawsbase" ||
+                          type === "landavax" ||
+                          type === "landbnb" ||
+                          type === "landbase" ||
+                          type === "mat" ||
+                          type === "sei") && (
+                          <div className="price-wrapper p-3">
+                            <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
+                              <span className="currentprice-txt">
+                                This NFT is not available for listing.
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
-                      {type !== "immutable" && (
-                        <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
-                          <span className="owner-txt">Owner:</span>
-                          {
-                            <a
-                              href={
-                                type === "coingecko" ||
-                                type === "gate" ||
-                                type === "cmc" ||
-                                type === "doge" ||
-                                type === "bnb" ||
-                                type === "cawsbnb" ||
-                                type === "landbnb" ||
-                                type === "cookie3" ||
-                                type === "multivers"
-                                  ? `https://bscscan.com/address/${owner}`
-                                  : type === "conflux"
-                                  ? `https://evm.confluxscan.net/address/${owner}`
-                                  : type === "base" ||
-                                    type === "cawsbase" ||
-                                    type === "landbase"
-                                  ? `https://basescan.org/address/${owner}`
-                                  : type === "cawsavax" || type === "landavax"
-                                  ? `https://snowtrace.io/address/${owner}`
-                                  : type === "skale"
-                                  ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
-                                  : type === "viction"
-                                  ? `https://www.vicscan.xyz/address/${owner}`
-                                  : type === "core"
-                                  ? `https://scan.coredao.org/address/${owner}`
-                                  : type === "manta"
-                                  ? `https://pacific-explorer.manta.network/address/${owner}`
-                                  : type === "taiko"
-                                  ? `https://taikoscan.io/address/${owner}`
-                                  : type === "opbnb"
-                                  ? `https://opbnbscan.com/address/${owner}`
-                                  : type === "mat"
-                                  ? `https://matchscan.io/address/${owner}`
-                                  : type === "sei"
-                                  ? `https://seitrace.com/address/${owner}`
-                                  : `https://etherscan.io/address/${owner}`
-                              }
-                              target="_blank"
-                              style={{ textDecoration: "none" }}
-                              className="seller-addr"
-                              rel="noreferrer"
-                            >
-                              {shortAddress(owner)}
-                            </a>
-                          }
-                        </div>
-                      )}
-                      {!isOwner && IsListed && coinbase && isConnected && (
-                        <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
-                          <button
-                            disabled={
-                              buyloading === true || buyStatus === "failed"
-                                ? true
-                                : false
-                            }
-                            className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
-                              buyStatus === "success"
-                                ? "successbtn"
-                                : buyStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
-                                ? "errorbtn"
-                                : null
-                            } d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              chainId !== 1 && chainId !== 5
-                                ? switchNetwork("0x1", 1)
-                                : handleBuy(nft);
-                            }}
-                          >
-                            {buyloading && (chainId === 1 || chainId === 5) ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-light"
-                                role="status"
+                        )}
+                      <div className="d-flex flex-column flex-xxl-row flex-lg-row flex-md-row justify-content-between gap-2 align-items-center">
+                        {type !== "immutable" && (
+                          <div className="d-flex justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
+                            <span className="owner-txt">Owner:</span>
+                            {
+                              <a
+                                href={
+                                  type === "coingecko" ||
+                                  type === "gate" ||
+                                  type === "cmc" ||
+                                  type === "doge" ||
+                                  type === "bnb" ||
+                                  type === "cawsbnb" ||
+                                  type === "landbnb" ||
+                                  type === "cookie3" ||
+                                  type === "multivers"
+                                    ? `https://bscscan.com/address/${owner}`
+                                    : type === "conflux"
+                                    ? `https://evm.confluxscan.net/address/${owner}`
+                                    : type === "base" ||
+                                      type === "cawsbase" ||
+                                      type === "landbase"
+                                    ? `https://basescan.org/address/${owner}`
+                                    : type === "cawsavax" || type === "landavax"
+                                    ? `https://snowtrace.io/address/${owner}`
+                                    : type === "skale"
+                                    ? `https://green-giddy-denebola.explorer.mainnet.skalenodes.com/address/${owner}`
+                                    : type === "viction"
+                                    ? `https://www.vicscan.xyz/address/${owner}`
+                                    : type === "core"
+                                    ? `https://scan.coredao.org/address/${owner}`
+                                    : type === "manta"
+                                    ? `https://pacific-explorer.manta.network/address/${owner}`
+                                    : type === "taiko"
+                                    ? `https://taikoscan.io/address/${owner}`
+                                    : type === "opbnb"
+                                    ? `https://opbnbscan.com/address/${owner}`
+                                    : type === "mat"
+                                    ? `https://matchscan.io/address/${owner}`
+                                    : type === "sei"
+                                    ? `https://seitrace.com/address/${owner}`
+                                    : `https://etherscan.io/address/${owner}`
+                                }
+                                target="_blank"
+                                style={{ textDecoration: "none" }}
+                                className="seller-addr"
+                                rel="noreferrer"
                               >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : !buyloading &&
-                              chainId !== 1 &&
-                              chainId !== 5 ? (
-                              "Switch Network"
-                            ) : buyStatus === "buy" ? (
-                              "Buy"
-                            ) : buyStatus === "approve" || buyStatus === "" ? (
-                              "Approve buy"
-                            ) : buyStatus === "success" ? (
-                              "Success"
-                            ) : (
-                              "Failed"
+                                {shortAddress(owner)}
+                              </a>
+                            }
+                          </div>
+                        )}
+                        {!isOwner && IsListed && coinbase && isConnected && (
+                          <div className="d-flex flex-column flex-xxl-row flex-lg-row gap-3 align-items-center">
+                            <button
+                              disabled={
+                                buyloading === true || buyStatus === "failed"
+                                  ? true
+                                  : false
+                              }
+                              className={`btn  buyNftbtn px-4 d-flex justify-content-center ${
+                                buyStatus === "success"
+                                  ? "successbtn"
+                                  : buyStatus === "failed" ||
+                                    (chainId !== 5 && chainId !== 1)
+                                  ? "errorbtn"
+                                  : null
+                              } d-flex justify-content-center align-items-center gap-2`}
+                              onClick={() => {
+                                chainId !== 1 && chainId !== 5
+                                  ? switchNetwork("0x1", 1)
+                                  : handleBuy(nft);
+                              }}
+                            >
+                              {buyloading &&
+                              (chainId === 1 || chainId === 5) ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : !buyloading &&
+                                chainId !== 1 &&
+                                chainId !== 5 ? (
+                                "Switch Network"
+                              ) : buyStatus === "buy" ? (
+                                "Buy"
+                              ) : buyStatus === "approve" ||
+                                buyStatus === "" ? (
+                                "Approve buy"
+                              ) : buyStatus === "success" ? (
+                                "Success"
+                              ) : (
+                                "Failed"
+                              )}
+                            </button>
+                            {chainId === 1 && (
+                              <button
+                                className="btn mint-now-btn gap-2"
+                                onClick={() => {
+                                  setshowMakeOffer(true);
+                                }}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/whiteTag.svg"
+                                  }
+                                  alt=""
+                                />{" "}
+                                {myOffers.length > 0
+                                  ? "View your offer"
+                                  : "Make offer"}
+                              </button>
                             )}
-                          </button>
-                          {chainId === 1 && (
+                          </div>
+                        )}
+                        {isOwner && IsListed && coinbase && isConnected && (
+                          <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
+                            <button
+                              disabled={
+                                updateLoading === true ||
+                                updateStatus === "failed"
+                                  ? true
+                                  : false
+                              }
+                              className={`btn buyNftbtn col-lg-6 col-xxl-6 d-flex justify-content-center ${
+                                updateStatus === "success"
+                                  ? "successbtn"
+                                  : updateStatus === "failed" ||
+                                    (chainId !== 5 && chainId !== 1)
+                                  ? "errorbtn"
+                                  : null
+                              } d-flex justify-content-center align-items-center gap-2`}
+                              onClick={() => {
+                                chainId !== 1 && chainId !== 5
+                                  ? switchNetwork("0x1", 1)
+                                  : updateListing(
+                                      nft.tokenId,
+                                      nftPrice,
+                                      nft.payment_priceType,
+                                      type,
+                                      "eth"
+                                    );
+                              }}
+                            >
+                              {updateLoading &&
+                              (chainId === 1 || chainId === 5) ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : !updateLoading &&
+                                chainId !== 1 &&
+                                chainId !== 5 ? (
+                                "Switch Network"
+                              ) : updateStatus === "update" ||
+                                updateStatus === "" ? (
+                                "Update"
+                              ) : updateStatus === "success" ? (
+                                "Success"
+                              ) : (
+                                "Failed"
+                              )}
+                            </button>
+
+                            <button
+                              // disabled={
+                              //   cancelLoading === true || cancelStatus === "failed"
+                              //     ? true
+                              //     : false
+                              // }
+                              className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
+                              onClick={() => {
+                                chainId !== 1 && chainId !== 5
+                                  ? switchNetwork("0x1", 1)
+                                  : cancelNFT(
+                                      nft.nftAddress,
+                                      nft.tokenId,
+                                      nft.payment_priceType,
+                                      "eth"
+                                    );
+                              }}
+                            >
+                              {cancelLoading &&
+                              (chainId === 1 || chainId === 5) ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : !cancelLoading &&
+                                chainId !== 1 &&
+                                chainId !== 5 ? (
+                                "Switch Network"
+                              ) : cancelStatus === "cancel" ||
+                                cancelStatus === "" ? (
+                                "Unlist"
+                              ) : cancelStatus === "success" ? (
+                                "Success"
+                              ) : (
+                                "Failed"
+                              )}
+                            </button>
+                          </div>
+                        )}
+
+                        {isOwner &&
+                          !IsListed &&
+                          coinbase &&
+                          isConnected &&
+                          type !== "coingecko" &&
+                          type !== "gate" &&
+                          type !== "conflux" &&
+                          type !== "manta" &&
+                          type !== "taiko" &&
+                          type !== "cookie3" &&
+                          type !== "base" &&
+                          type !== "cmc" &&
+                          type !== "viction" &&
+                          type !== "multivers" &&
+                          type !== "core" &&
+                          type !== "doge" &&
+                          type !== "bnb" &&
+                          type !== "opbnb" &&
+                          type !== "skale" &&
+                          type !== "immutable" &&
+                          type !== "cawsbnb" &&
+                          type !== "cawsavax" &&
+                          type !== "cawsbase" &&
+                          type !== "landavax" &&
+                          type !== "landbnb" &&
+                          type !== "landbase" &&
+                          type !== "mat" &&
+                          type !== "sei" && (
+                            <button
+                              disabled={
+                                sellLoading === true || sellStatus === "failed"
+                                  ? true
+                                  : false
+                              }
+                              className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
+                                sellStatus === "success"
+                                  ? "successbtn"
+                                  : sellStatus === "failed" ||
+                                    (chainId !== 5 && chainId !== 1)
+                                  ? "errorbtn"
+                                  : null
+                              } d-flex justify-content-center align-items-center gap-2`}
+                              onClick={() => {
+                                chainId !== 1 && chainId !== 5
+                                  ? switchNetwork("0x1", 1)
+                                  : handleSell(
+                                      nft.tokenId,
+                                      nftPrice,
+                                      priceType,
+                                      type
+                                    );
+                              }}
+                            >
+                              {sellLoading &&
+                              (chainId === 1 || chainId === 5) ? (
+                                <div
+                                  className="spinner-border spinner-border-sm text-light"
+                                  role="status"
+                                >
+                                  <span className="visually-hidden">
+                                    Loading...
+                                  </span>
+                                </div>
+                              ) : !sellLoading &&
+                                chainId !== 1 &&
+                                chainId !== 5 ? (
+                                "Switch Network"
+                              ) : sellStatus === "sell" ? (
+                                "List NFT"
+                              ) : sellStatus === "success" ? (
+                                "Success"
+                              ) : sellStatus === "approve" ||
+                                sellStatus === "" ? (
+                                "Approve list"
+                              ) : (
+                                "Failed"
+                              )}
+                            </button>
+                          )}
+
+                        {!isOwner &&
+                          !IsListed &&
+                          coinbase &&
+                          isConnected &&
+                          chainId === 1 &&
+                          type !== "coingecko" &&
+                          type !== "gate" &&
+                          type !== "conflux" &&
+                          type !== "manta" &&
+                          type !== "taiko" &&
+                          type !== "cookie3" &&
+                          type !== "base" &&
+                          type !== "doge" &&
+                          type !== "bnb" &&
+                          type !== "opbnb" &&
+                          type !== "skale" &&
+                          type !== "cmc" &&
+                          type !== "core" &&
+                          type !== "viction" &&
+                          type !== "multivers" &&
+                          type !== "cawsbnb" &&
+                          type !== "cawsavax" &&
+                          type !== "cawsbase" &&
+                          type !== "landavax" &&
+                          type !== "landbnb" &&
+                          type !== "immutable" &&
+                          type !== "landbase" &&
+                          type !== "mat" &&
+                          type !== "sei" && (
                             <button
                               className="btn mint-now-btn gap-2"
                               onClick={() => {
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/whiteTag.svg"
+                                }
+                                alt=""
+                              />{" "}
                               {myOffers.length > 0
                                 ? "View your offer"
                                 : "Make offer"}
                             </button>
                           )}
-                        </div>
-                      )}
-                      {isOwner && IsListed && coinbase && isConnected && (
-                        <div className="d-flex gap-2 col-lg-5 col-xxl-5 align-items-center">
-                          <button
-                            disabled={
-                              updateLoading === true ||
-                              updateStatus === "failed"
-                                ? true
-                                : false
-                            }
-                            className={`btn buyNftbtn col-lg-6 col-xxl-6 d-flex justify-content-center ${
-                              updateStatus === "success"
-                                ? "successbtn"
-                                : updateStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
-                                ? "errorbtn"
-                                : null
-                            } d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              chainId !== 1 && chainId !== 5
-                                ? switchNetwork("0x1", 1)
-                                : updateListing(
-                                    nft.tokenId,
-                                    nftPrice,
-                                    nft.payment_priceType,
-                                    type,
-                                    "eth"
-                                  );
-                            }}
-                          >
-                            {updateLoading &&
-                            (chainId === 1 || chainId === 5) ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-light"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : !updateLoading &&
-                              chainId !== 1 &&
-                              chainId !== 5 ? (
-                              "Switch Network"
-                            ) : updateStatus === "update" ||
-                              updateStatus === "" ? (
-                              "Update"
-                            ) : updateStatus === "success" ? (
-                              "Success"
-                            ) : (
-                              "Failed"
-                            )}
-                          </button>
 
-                          <button
-                            // disabled={
-                            //   cancelLoading === true || cancelStatus === "failed"
-                            //     ? true
-                            //     : false
-                            // }
-                            className={`unlistbtn col-lg-6 col-xxl-6 d-flex justify-content-center d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              chainId !== 1 && chainId !== 5
-                                ? switchNetwork("0x1", 1)
-                                : cancelNFT(
-                                    nft.nftAddress,
-                                    nft.tokenId,
-                                    nft.payment_priceType,
-                                     "eth"
-                                  );
-                            }}
-                          >
-                            {cancelLoading &&
-                            (chainId === 1 || chainId === 5) ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-light"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : !cancelLoading &&
-                              chainId !== 1 &&
-                              chainId !== 5 ? (
-                              "Switch Network"
-                            ) : cancelStatus === "cancel" ||
-                              cancelStatus === "" ? (
-                              "Unlist"
-                            ) : cancelStatus === "success" ? (
-                              "Success"
-                            ) : (
-                              "Failed"
-                            )}
-                          </button>
-                        </div>
-                      )}
-
-                      {isOwner &&
-                        !IsListed &&
-                        coinbase &&
-                        isConnected &&
-                        type !== "coingecko" &&
-                        type !== "gate" &&
-                        type !== "conflux" &&
-                        type !== "manta" &&
-                        type !== "taiko" &&
-                        type !== "cookie3" &&
-                        type !== "base" &&
-                        type !== "cmc" &&
-                        type !== "viction" &&
-                        type !== "multivers" &&
-                        type !== "core" &&
-                        type !== "doge" &&
-                        type !== "bnb" &&
-                        type !== "opbnb" &&
-                        type !== "skale" &&
-                        type !== "immutable" &&
-                        type !== "cawsbnb" &&
-                        type !== "cawsavax" &&
-                        type !== "cawsbase" &&
-                        type !== "landavax" &&
-                        type !== "landbnb" &&
-                        type !== "landbase" &&
-                        type !== "mat"&&
-                        type !== "sei" && (
-                          <button
-                            disabled={
-                              sellLoading === true || sellStatus === "failed"
-                                ? true
-                                : false
-                            }
-                            className={`btn  buyNftbtn col-lg-3 col-xxl-3 d-flex justify-content-center ${
-                              sellStatus === "success"
-                                ? "successbtn"
-                                : sellStatus === "failed" ||
-                                  (chainId !== 5 && chainId !== 1)
-                                ? "errorbtn"
-                                : null
-                            } d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              chainId !== 1 && chainId !== 5
-                                ? switchNetwork("0x1", 1)
-                                : handleSell(
-                                    nft.tokenId,
-                                    nftPrice,
-                                    priceType,
-                                    type
-                                  );
-                            }}
-                          >
-                            {sellLoading && (chainId === 1 || chainId === 5) ? (
-                              <div
-                                className="spinner-border spinner-border-sm text-light"
-                                role="status"
-                              >
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            ) : !sellLoading &&
-                              chainId !== 1 &&
-                              chainId !== 5 ? (
-                              "Switch Network"
-                            ) : sellStatus === "sell" ? (
-                              "List NFT"
-                            ) : sellStatus === "success" ? (
-                              "Success"
-                            ) : sellStatus === "approve" ||
-                              sellStatus === "" ? (
-                              "Approve list"
-                            ) : (
-                              "Failed"
-                            )}
-                          </button>
-                        )}
-
-                      {!isOwner &&
-                        !IsListed &&
-                        coinbase &&
-                        isConnected &&
-                        chainId === 1 &&
-                        type !== "coingecko" &&
-                        type !== "gate" &&
-                        type !== "conflux" &&
-                        type !== "manta" &&
-                        type !== "taiko" &&
-                        type !== "cookie3" &&
-                        type !== "base" &&
-                        type !== "doge" &&
-                        type !== "bnb" &&
-                        type !== "opbnb" &&
-                        type !== "skale" &&
-                        type !== "cmc" &&
-                        type !== "core" &&
-                        type !== "viction" &&
-                        type !== "multivers" &&
-                        type !== "cawsbnb" &&
-                        type !== "cawsavax" &&
-                        type !== "cawsbase" &&
-                        type !== "landavax" &&
-                        type !== "landbnb" &&
-                        type !== "immutable" &&
-                        type !== "landbase" &&
-                        type !== "mat"&&
-                        type !== "sei"&& (
-                          <button
-                            className="btn mint-now-btn gap-2"
-                            onClick={() => {
-                              setshowMakeOffer(true);
-                            }}
-                          >
-                            <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
-                            {myOffers.length > 0
-                              ? "View your offer"
-                              : "Make offer"}
-                          </button>
-                        )}
-
-                      {!isConnected &&
-                        type !== "coingecko" &&
-                        type !== "gate" &&
-                        type !== "conflux" &&
-                        type !== "manta" &&
-                        type !== "taiko" &&
-                        type !== "cookie3" &&
-                        type !== "base" &&
-                        type !== "doge" &&
-                        type !== "bnb" &&
-                        type !== "opbnb" &&
-                        type !== "skale" &&
-                        type !== "cmc" &&
-                        type !== "core" &&
-                        type !== "viction" &&
-                        type !== "multivers" &&
-                        type !== "immutable" &&
-                        type !== "cawsbnb" &&
-                        type !== "cawsavax" &&
-                        type !== "cawsbase" &&
-                        type !== "landavax" &&
-                        type !== "landbnb" &&
-                        type !== "landbase" &&
-                        type !== "mat"&&
-                        type !== "sei"&& (
-                          <button
-                            className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
-                            onClick={() => {
-                              showWalletConnect();
-                            }}
-                          >
-                            Connect Wallet
-                          </button>
-                        )}
+                        {!isConnected &&
+                          type !== "coingecko" &&
+                          type !== "gate" &&
+                          type !== "conflux" &&
+                          type !== "manta" &&
+                          type !== "taiko" &&
+                          type !== "cookie3" &&
+                          type !== "base" &&
+                          type !== "doge" &&
+                          type !== "bnb" &&
+                          type !== "opbnb" &&
+                          type !== "skale" &&
+                          type !== "cmc" &&
+                          type !== "core" &&
+                          type !== "viction" &&
+                          type !== "multivers" &&
+                          type !== "immutable" &&
+                          type !== "cawsbnb" &&
+                          type !== "cawsavax" &&
+                          type !== "cawsbase" &&
+                          type !== "landavax" &&
+                          type !== "landbnb" &&
+                          type !== "landbase" &&
+                          type !== "mat" &&
+                          type !== "sei" && (
+                            <button
+                              className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
+                              onClick={() => {
+                                showWalletConnect();
+                              }}
+                            >
+                              Connect Wallet
+                            </button>
+                          )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -4191,6 +4423,262 @@ const SingleNft = ({
               </div>
             </div>
           </div>
+          {screen === "list" && (
+            <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2  single-item-info">
+              <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
+                <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row">
+                  <h3 className="nft-title d-flex align-items-center justify-content-between">
+                    View NFTs to list
+                  </h3>
+                  <div className="d-flex flex-column mb-3 flex-lg-row align-items-start align-items-lg-center gap-3 justify-content-between  position-relative">
+                    <span className="totalcollection">
+                      Total NFTs: {collectedItemsFiltered.length}
+                    </span>
+                    <div className="d-flex gap-3 align-items-center">
+                      <div className="dropdown" style={{ width: "150px" }}>
+                        <button
+                          className="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="filter-nav-title mb-0">
+                              {filter1 === "" ? "Collections" : filter1}
+                            </h6>
+                          </div>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/dropdownIcon.svg"
+                            }
+                            alt=""
+                          />
+                        </button>
+                        <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter1("all");
+                              handleSortCollection("all", filter2);
+                              setListedPage(1);
+                              setCollectedPage(1);
+                            }}
+                          >
+                            <span>All</span>
+                          </li>
+
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter1("land");
+                              handleSortCollection("land", filter2);
+                              setListedPage(1);
+                              setCollectedPage(1);
+                            }}
+                          >
+                            <span>Land</span>
+                          </li>
+
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter1("caws");
+                              handleSortCollection("caws", filter2);
+                              setListedPage(1);
+                              setCollectedPage(1);
+                            }}
+                          >
+                            <span>CAWS</span>
+                          </li>
+
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter1("timepiece");
+                              handleSortCollection("timepiece", filter2);
+                              setListedPage(1);
+                              setCollectedPage(1);
+                            }}
+                          >
+                            <span>Timepiece</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div className="dropdown" style={{ width: "150px" }}>
+                        <button
+                          className="btn btn-secondary nft-dropdown w-100
+                 d-flex align-items-center justify-content-between dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <div className="d-flex align-items-center gap-2">
+                            <h6 className="filter-nav-title mb-0">
+                              {filter2 === "" ? "Status" : filter2}
+                            </h6>
+                          </div>
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/dropdownIcon.svg"
+                            }
+                            alt=""
+                          />
+                        </button>
+                        <ul className="dropdown-menu nft-dropdown-menu  p-2 w-100">
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter2("all");
+                              handleSortCollection(filter1, "all");
+                              setListedPage(1);
+
+                              setCollectedPage(1);
+                            }}
+                          >
+                            <span>All</span>
+                          </li>
+
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter2("to list");
+                              handleSortCollection(filter1, "to list");
+                              setCollectedPage(1);
+                              setListedPage(1);
+                            }}
+                          >
+                            <span>To List</span>
+                          </li>
+
+                          <li
+                            className="nft-dropdown-item"
+                            onClick={() => {
+                              setFilter2("listed");
+                              handleSortCollection(filter1, "listed");
+                              setCollectedPage(1);
+                              setListedPage(1);
+                            }}
+                          >
+                            <span>Listed</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="row px-3 mt-3"
+                  style={{
+                    margin: collectedItemsFiltered.length === 0 ? "auto" : 0,
+                  }}
+                >
+                  {collectedItemsFiltered.length > 0 &&
+                    collectedItemsFiltered.filter((obj)=>{return obj.tokenId !==nftId})
+                      .slice(collectedPageSlice - 6, collectedPageSlice)
+                      .map((item, index) => (
+                        <div
+                          key={index}
+                          style={{
+                            textDecoration: "none",
+                            width: "fit-content",
+                          }}
+                          className="mb-3"
+                          onClick={() => {
+                            setnftId(item.tokenId);
+                            setnftAddress(item.nftAddress);
+                          }}
+                        >
+                          <div className="">
+                            <div className="account-nft-card list-nft-card w-100 d-flex align-items-center gap-3 position-relative">
+                              <img
+                                src={
+                                  item.type === "caws" ||
+                                  item.type === "cawsbnb" ||
+                                  item.type === "cawsavax" ||
+                                  item.type === "cawsbase"
+                                    ? `https://mint.dyp.finance/thumbs150/${item.tokenId}.png`
+                                    : item.type === "land" ||
+                                      item.type === "landbnb" ||
+                                      item.type === "landavax" ||
+                                      item.type === "landbase"
+                                    ? `https://mint.worldofdypians.com/thumbs150/${item.tokenId}.png`
+                                    : `https://timepiece.worldofdypians.com/thumbs150/${item.tokenId}.png`
+                                }
+                                alt=""
+                                className="account-card-img2"
+                              />
+                              <div className="d-flex flex-column align-items-center justify-content-center nft-to-list-item-title">
+                                <h6 className="account-nft-title">
+                                  {item.type === "caws" ||
+                                  item.type === "cawsbnb" ||
+                                  item.type === "cawsavax" ||
+                                  item.type === "cawsbase"
+                                    ? "CAWS"
+                                    : item.type === "land" ||
+                                      item.type === "landbnb" ||
+                                      item.type === "landavax" ||
+                                      item.type === "landbase"
+                                    ? "Genesis"
+                                    : "Timepiece"}
+
+                                  {item.type === "immutable"
+                                    ? ""
+                                    : `#${item.tokenId}`}
+                                </h6>
+                                {/* <span className="account-nft-type">
+                              {item.type === "caws"
+                                ? "CAWS"
+                                : item.type === "land"
+                                ? "Land"
+                                : "CAWS Timepiece"}
+                            </span> */}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  {collectedItems.length === 0 && coinbase && (
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
+                      You do not have any NFTs in your wallet
+                    </span>
+                  )}
+
+                  {collectedItems.length === 0 && !coinbase && (
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
+                      Connect your wallet to view your NFTs.
+                    </span>
+                  )}
+                   {collectedItemsFiltered.length === 0 && !coinbase && (filter1 !=='all' || filter2!=='all') && (
+                    <span
+                      className="seller-addr"
+                      style={{ textAlign: "center" }}
+                    >
+                      There are no NFTs with this filter.
+                    </span>
+                  )}
+                </div>
+                <div className="col-12 d-flex justify-content-center">
+                  <Pagination
+                    color="primary"
+                    count={Math.ceil(collectedItemsFiltered.length / 6)}
+                    page={collectedPage}
+                    onChange={(e, value) => {
+                      handleCollectedPage(e, value);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
           {type !== "coingecko" &&
             type !== "gate" &&
             type !== "conflux" &&
@@ -4494,19 +4982,33 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/inboxStar.svg'} alt="" /> Exclusive Access
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/inboxStar.svg"
+                            }
+                            alt=""
+                          />{" "}
+                          Exclusive Access
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/stars.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/stars.svg"}
+                            alt=""
+                          />
                           Daily Rewards
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/dollarCircle.svg'} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/dollarCircle.svg"
+                            }
+                            alt=""
+                          />
                           Earn{" "}
                           {type === "conflux"
                             ? "CFX"
@@ -4536,7 +5038,10 @@ const SingleNft = ({
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/chart.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/chart.svg"}
+                            alt=""
+                          />
                           Global Points
                         </span>
                       </div>
@@ -4546,20 +5051,32 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/users.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/users.svg"}
+                            alt=""
+                          />
                           Community Engagement
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/star.svg'} alt="" /> Enhanced Interactions
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/star.svg"}
+                            alt=""
+                          />{" "}
+                          Enhanced Interactions
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/expand.svg'} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/expand.svg"
+                            }
+                            alt=""
+                          />
                           Expanded Functionality
                         </span>
                       </div>
@@ -4630,7 +5147,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.offer.buyer)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             {isOwner && (
@@ -4692,7 +5214,13 @@ const SingleNft = ({
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
-                              <img src={'https://cdn.worldofdypians.com/wod/cart.svg'} alt="" /> Sale
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/cart.svg"
+                                }
+                                alt=""
+                              />{" "}
+                              Sale
                             </td>
                             <td className="saleprice">
                               {getFormattedNumber(
@@ -4710,7 +5238,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.buyer)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             <td className="greendata">
@@ -4722,7 +5255,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.transactionHash)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             <td className="greendata">
@@ -4769,4 +5307,4 @@ const SingleNft = ({
   );
 };
 
-export default SingleNft;
+export default ListNFT;
