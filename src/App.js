@@ -86,6 +86,7 @@ import Whitelist from "./screens/Whitelist/Whitelist.js";
 import Release from "./screens/Release/Release.js";
 import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 import Launchpool from "./screens/Launchpool/Launchpool.js";
+import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5082,6 +5083,37 @@ function App() {
             }
           />
 
+<Route
+            path="/list-my-nft"
+            element={
+              <ListNFT
+                coinbase={coinbase}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+                 
+                myCawsCollected={MyNFTSCaws} 
+                myLandCollected={MyNFTSLand}
+                myTimepieceCollected={MyNFTSTimepiece}
+                screen={'list'}
+                authToken={authToken}
+                isConnected={isConnected}
+                chainId={networkId}
+                handleSwitchChain={handleSwitchNetwork}
+                handleRefreshListing={handleRefreshList}
+                nftCount={nftCount}
+                favorites={favorites}
+                dyptokenData_old={dypTokenData_old}
+                dyptokenData={dypTokenData}
+                binanceW3WProvider={library}
+                binanceWallet={coinbase}
+                handleSwitchChainGateWallet={handleSwitchNetwork}
+                handleSwitchChainBinanceWallet={handleSwitchNetwork}
+                ethTokenData={ethTokenData}
+              />
+            }
+          />
+
           <Route
             exact
             path="/"
@@ -5492,6 +5524,7 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
+                hasNft={MyNFTSCaws.length > 0 || MyNFTSLand.length>0 || MyNFTSTimepiece.length>0}
               />
             }
           />
