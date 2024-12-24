@@ -307,6 +307,13 @@
   cursor: pointer;
 }
 
+.row-nft-wrapper{
+  overflow-x: auto;
+  flex-wrap: nowrap;
+grid-template-columns: repeat(6,1fr);
+  display: grid;
+}
+
 .list-nft-card {
   border: 2px solid transparent;
 }

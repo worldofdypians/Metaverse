@@ -153,10 +153,9 @@ const ListNFT = ({
   const [nftAddress, setnftAddress] = useState("");
   const [collectedItemsFiltered, setcollectedItemsFiltered] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
-  const [collectedPageSlice, setCollectedPageSlice] = useState(6);
+  const [collectedPageSlice, setCollectedPageSlice] = useState(12);
   const [collectedPage, setCollectedPage] = useState(1);
-  const [listedPage, setListedPage] = useState(1);
-  const [listedPageSlice, setListedPageSlice] = useState(6);
+  const [listedPage, setListedPage] = useState(1); 
   const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("all");
 
@@ -251,7 +250,7 @@ const ListNFT = ({
 
   const handleCollectedPage = (e, value) => {
     setCollectedPage(value);
-    setCollectedPageSlice(value * 6);
+    setCollectedPageSlice(value * 12);
   };
 
   const getAllnftsListed = async () => {
@@ -4427,8 +4426,8 @@ const ListNFT = ({
             <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2  single-item-info">
               <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
                 <div className="d-flex align-items-center gap-2 justify-content-between flex-column flex-lg-row">
-                  <h3 className="nft-title d-flex align-items-center justify-content-between">
-                    View NFTs to list
+                  <h3 className="nft-title ps-4 d-flex align-items-center justify-content-between">
+                    My NFTs
                   </h3>
                   <div className="d-flex flex-column mb-3 flex-lg-row align-items-start align-items-lg-center gap-3 justify-content-between  position-relative">
                     <span className="totalcollection">
@@ -4570,14 +4569,18 @@ const ListNFT = ({
                 </div>
 
                 <div
-                  className="row px-3 mt-3"
+                  className="gap-2 px-3 py-2 mt-3 row-nft-wrapper"
                   style={{
                     margin: collectedItemsFiltered.length === 0 ? "auto" : 0,
+                  }}
+                  onDrag={(e)=>{
+                    e?.preventDefault();
+                    e?.stopPropagation();
                   }}
                 >
                   {collectedItemsFiltered.length > 0 &&
                     collectedItemsFiltered.filter((obj)=>{return obj.tokenId !==nftId})
-                      .slice(collectedPageSlice - 6, collectedPageSlice)
+                      .slice(collectedPageSlice - 12, collectedPageSlice)
                       .map((item, index) => (
                         <div
                           key={index}
@@ -4669,7 +4672,7 @@ const ListNFT = ({
                 <div className="col-12 d-flex justify-content-center">
                   <Pagination
                     color="primary"
-                    count={Math.ceil(collectedItemsFiltered.length / 6)}
+                    count={Math.ceil(collectedItemsFiltered.length / 12)}
                     page={collectedPage}
                     onChange={(e, value) => {
                       handleCollectedPage(e, value);

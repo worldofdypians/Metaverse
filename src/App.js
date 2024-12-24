@@ -5505,6 +5505,7 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
+                hasNft={MyNFTSCaws.length > 0 || MyNFTSLand.length>0 || MyNFTSTimepiece.length>0}
               />
             }
           />
