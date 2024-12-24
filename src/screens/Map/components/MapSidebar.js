@@ -4,6 +4,7 @@ import DypiusDropdown from "./DypiusDropdown";
 import IslandDropdown from "./IslandDropdown";
 import useWindowSize from "../../../hooks/useWindowSize";
 
+
 const Sidebar = ({
   switches,
   setSwitches,
