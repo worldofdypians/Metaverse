@@ -258,16 +258,19 @@ const StakeWodDetails2 = ({
       //   .call();
       // _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
       // _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
-  let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
-          window.TOKEN_ABI,
-         reward_token_wod._address
-        );
+      let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        reward_token_wod._address
+      );
 
       let _bal;
       if (chainId === "56" && coinbase && isConnected) {
-      
-        _bal = await reward_token_wod_sc.methods.balanceOf(coinbase).call().catch((e)=>{console.error(e)});
-       
+        _bal = await reward_token_wod_sc.methods
+          .balanceOf(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
       }
       if (staking && coinbase !== undefined && coinbase !== null) {
         let _pDivs = staking.getTotalPendingDivs(coinbase);
@@ -276,7 +279,12 @@ const StakeWodDetails2 = ({
         let _stakingTime = staking.stakingTime(coinbase);
         let _dTokens = staking.depositedTokens(coinbase);
         let _lClaimTime = staking.lastClaimedTime(coinbase);
-        let _tvl = await reward_token_wod_sc.methods.balanceOf(staking._address).call().catch((e)=>{console.error(e)});
+        let _tvl = await reward_token_wod_sc.methods
+          .balanceOf(staking._address)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
         // console.log('tvl', _tvl)
         let _rFeeEarned = staking.totalReferralFeeEarned(coinbase);
         let tStakers = staking.getNumberOfHolders();
@@ -479,6 +487,11 @@ const StakeWodDetails2 = ({
   const handleStake = async (e) => {
     setdepositLoading(true);
     if (window.WALLET_TYPE !== "binance") {
+      if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
+        window.alertify.error("You must be connected to Binance Web3 Wallet!");
+        setdepositLoading(false);
+        return;
+      }
       if (other_info) {
         window.$.alert("This pool no longer accepts deposits!");
         setdepositLoading(false);
@@ -494,7 +507,7 @@ const StakeWodDetails2 = ({
       await staking
         .stake(amount, referrer)
         .then(() => {
-          handleSecondTask(coinbase)
+          handleSecondTask(coinbase);
           setdepositLoading(false);
           setdepositStatus("success");
           refreshBalance();
@@ -698,8 +711,13 @@ const StakeWodDetails2 = ({
 
   const getApproxReturn = (depositAmount) => {
     const expirationDate = new Date("2025-11-27T23:11:00.000+02:00");
+    const expirationDate2 = new Date("2025-12-11T23:11:00.000+02:00");
+
     const currentDate = new Date();
-    const timeDifference = expirationDate - currentDate;
+    const timeDifference =
+      staking._address === "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652"
+        ? expirationDate2 - currentDate
+        : expirationDate - currentDate;
     const millisecondsInADay = 1000 * 60 * 60 * 24;
     const daysUntilExpiration = Math.floor(timeDifference / millisecondsInADay);
 
