@@ -5,6 +5,8 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Checkbox } from "@mui/material";
+import FormControlLabel from "@mui/material";
 
 
 const DypiusDropdown = ({
@@ -87,6 +89,24 @@ const DypiusDropdown = ({
           </div>
         </AccordionSummary>
         <AccordionDetails sx={{ padding: 0, marginTop: "12px" }}>
+         <div className="dypians-areas-grid">
+         <div className={`section-switch-btn ${switches.chains && "section-switch-btn-active"} d-flex align-items-center mb-2`}  onClick={() =>
+            setSwitches((prev) => ({
+              ...prev,
+              chains: !switches.chains,
+            }))
+          }>
+            <Checkbox checked={switches.chains} 
+             sx={{
+              color: "#ff9800", // Default color
+              "&.Mui-checked": {
+                color: "#5690ff", // Checked color
+              },
+            }}
+            />
+            <span>Show All</span>
+          </div>
+         </div>
           <div className="dypians-areas-grid">
             {options.map((item, index) => (
               <div

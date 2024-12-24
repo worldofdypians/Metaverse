@@ -40,6 +40,7 @@ const Marketplace = ({
   loadingRecentListings,
   loadingRecentSales,
   monthlyPlayers,
+  hasNft,
 }) => {
   const override = {
     display: "block",
@@ -949,9 +950,7 @@ const Marketplace = ({
                     <h6 className="stats-value">
                       {getFormattedNumber(monthlyPlayers, 0)}
                     </h6>
-                    <span className="stats-desc">
-                    Monthly on-chain Players
-                    </span>
+                    <span className="stats-desc">Monthly on-chain Players</span>
                   </div>
                 </div>
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
@@ -966,7 +965,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                    {getFormattedNumber(1165350, 0)}
+                      {getFormattedNumber(1165350, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>
@@ -1004,9 +1003,16 @@ const Marketplace = ({
                 <h6 className="nft-wrapper-title font-raleway mb-0">
                   Recent Listings
                 </h6>
+
                 <div className="d-flex align-items-center gap-4">
+                  {isConnected && coinbase && hasNft === true && (
+                    <NavLink className="stake-wod-btn" to="/list-my-nft">
+                      List NFT
+                    </NavLink>
+                  )}
+
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "all" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1019,7 +1025,7 @@ const Marketplace = ({
                     All
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "caws" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1032,7 +1038,7 @@ const Marketplace = ({
                     CAWS
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "land" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1045,7 +1051,7 @@ const Marketplace = ({
                     Land
                   </h6>
                   <h6
-                    className={`filter-title ${
+                    className={`filter-title m-0 ${
                       recentListingsFilter === "timepiece" && "filter-selected"
                     }`}
                     onClick={() => {
@@ -1438,7 +1444,7 @@ const Marketplace = ({
                   /> */}
                   {windowSize.width > 1600 ? (
                     <>
-                       {[...Array(10)].map((obj, indx) => {
+                      {[...Array(10)].map((obj, indx) => {
                         return (
                           <Skeleton
                             animation="wave"
@@ -1453,7 +1459,7 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1500 ? (
                     <>
-                       {[...Array(5)].map((obj, indx) => {
+                      {[...Array(5)].map((obj, indx) => {
                         return (
                           <Skeleton
                             animation="wave"
@@ -1468,7 +1474,7 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 1024 ? (
                     <>
-                   {[...Array(4)].map((obj, indx) => {
+                      {[...Array(4)].map((obj, indx) => {
                         return (
                           <Skeleton
                             animation="wave"
@@ -1498,7 +1504,7 @@ const Marketplace = ({
                     </>
                   ) : windowSize.width > 480 ? (
                     <>
-                     {[...Array(2)].map((obj, indx) => {
+                      {[...Array(2)].map((obj, indx) => {
                         return (
                           <Skeleton
                             animation="wave"
@@ -1566,7 +1572,6 @@ const Marketplace = ({
                             ))}
                           </div>
                         </div>
-                         
                       </div>
                     </NavLink>
                     <NavLink to="/shop/mint/timepiece">
@@ -1574,7 +1579,13 @@ const Marketplace = ({
                         className="detailsgreen-txt d-flex align-items-center gap-2 justify-content-center m-auto"
                         style={{ width: "fit-content" }}
                       >
-                        Mint now <img src={"https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"} alt="" />{" "}
+                        Mint now{" "}
+                        <img
+                          src={
+                            "https://cdn.worldofdypians.com/wod/greenArrowMarket.svg"
+                          }
+                          alt=""
+                        />{" "}
                       </span>
                     </NavLink>
                   </div>

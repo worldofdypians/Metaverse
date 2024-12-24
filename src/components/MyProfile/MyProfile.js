@@ -238,7 +238,7 @@ const MyProfile = ({
       contentColor: "#EAB257",
       class: "scorpionKingBannerItem",
       arrow: "https://cdn.worldofdypians.com/wod/scorpionKingArrow.svg",
-      link: "/account/challenges/maze-day",
+      link: "/account/challenges/scorpion-king",
       active: beastSiegeStatus.scorpion,
       infoTips: ["120,000 points", "Up to 1000 stars."],
     },

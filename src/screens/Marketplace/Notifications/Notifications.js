@@ -293,7 +293,7 @@ const Notifications = ({
         {windowSize.width < 992 ? <MobileNav /> : <MarketSidebar />}
 
         <div
-          className="container-nft align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4"
+          className="container-nft2 align-items-start justify-content-start d-flex flex-column gap-2 px-3 px-lg-5 my-4"
           style={{ minHeight: "72vh", backgroundSize: "cover" }}
         >
           <div className="container-lg mx-0">
