@@ -5495,7 +5495,7 @@ function App() {
           <Route exact path="/terms-of-service" element={<TermsConditions />} />
           <Route
             exact
-            path="/binanceweb3-campaign-rules"
+            path="/binancewallet-campaign-rules"
             element={<BinanceCampaignRules />}
           />
 
