@@ -4,7 +4,7 @@ import "./_terms.scss";
 const BinanceCampaignRules = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Binanceweb3 Campaign Rules";
+    document.title = "Binance Wallet Campaign Rules";
   }, []);
 
   return (

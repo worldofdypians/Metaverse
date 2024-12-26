@@ -488,7 +488,7 @@ const StakeWodDetails2 = ({
     setdepositLoading(true);
     if (window.WALLET_TYPE !== "binance") {
       if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
-        window.alertify.error("You must be connected to Binance Web3 Wallet!");
+        window.alertify.error("You must be connected to Binance Wallet!");
         setdepositLoading(false);
         return;
       }
