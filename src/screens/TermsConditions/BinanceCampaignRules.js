@@ -43,6 +43,19 @@ const BinanceCampaignRules = () => {
                 <li className="text-white">
                   <b>Off-Chain Tasks</b>
                   <ul>
+                  <li className="text-white">
+                      <b>
+                        <a
+                          href="https://x.com/BinanceWallet"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-white text-decoration-underline"
+                        >
+                          Follow Binance Wallet on X
+                        </a>
+                      </b>
+                    </li>
+
                     <li className="text-white">
                       <b>
                         <a
