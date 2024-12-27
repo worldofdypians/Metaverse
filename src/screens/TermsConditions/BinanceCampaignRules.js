@@ -150,8 +150,10 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Anyone who completes both the off-chain and on-chain tasks
-                      during the campaign period is eligible to participate.
+                      Only MPC Binance Wallet users with verified accounts are
+                      eligible to participate in this campaign. Each user can
+                      only join once, ensuring fair participation and preventing
+                      duplicate entries.
                     </li>
                   </ul>
                 </li>
@@ -225,8 +227,7 @@ const BinanceCampaignRules = () => {
                       corner of the page.
                     </li>
                     <li className="text-white">
-                      Select your Binance Wallet and authorize the
-                      connection.
+                      Select your Binance Wallet and authorize the connection.
                     </li>
                   </ul>
                 </li>
