@@ -110,7 +110,7 @@ const Footer = () => {
     // },
     {
       icon: "youtubeFooter",
-      link: "https://www.youtube.com/@Dypius",
+      link: "https://www.youtube.com/@worldofdypians",
     },
     {
       icon: "mediumFooter",
