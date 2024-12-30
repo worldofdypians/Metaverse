@@ -365,6 +365,8 @@ window.config = {
   constant_staking_wod2_address: "0xD2332f55BF83e83C3E14352FB4039c6B534C4B7e",
   constant_staking_wod3_address: "0xB199DE216Ca2012a5A75614B276a38E3CeC9FA0C",
   constant_staking_wod4_address: "0x0675B497f52a0426874151c1e3267801fAA15C18",
+  constant_staking_wod5_address: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
+
 
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
@@ -408,6 +410,7 @@ window.CONSTANT_STAKING_WOD1_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD2_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD3_ABI = window.CONSTANT_STAKING_WOD_ABI;
 window.CONSTANT_STAKING_WOD4_ABI = window.CONSTANT_STAKING_WOD_ABI;
+window.CONSTANT_STAKING_WOD5_ABI = window.CONSTANT_STAKING_WOD_ABI;
 
 async function getMaxFee() {
   let maxPriorityFeePerGas = new BigNumber(10000000000).toFixed(0) * 1;
@@ -600,6 +603,11 @@ window.constant_staking_wod3 = new CONSTANT_STAKING_WOD(
 window.constant_staking_wod4 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD4"
 );
+
+window.constant_staking_wod5 = new CONSTANT_STAKING_WOD(
+  "CONSTANT_STAKING_WOD5"
+);
+
 
 /**
  *
@@ -33996,7 +34004,8 @@ Object.keys(window.config)
       k.startsWith("constant_staking_wod1") ||
       k.startsWith("constant_staking_wod2") ||
       k.startsWith("constant_staking_wod3") ||
-      k.startsWith("constant_staking_wod4")
+      k.startsWith("constant_staking_wod4") ||
+      k.startsWith("constant_staking_wod5")
   )
   .forEach((k) => {
     window[k.replace("_address", "_ABI").toUpperCase()] = k.startsWith("token_")
@@ -34016,6 +34025,8 @@ Object.keys(window.config)
       : k.startsWith("constant_staking_wod3")
       ? window.CONSTANT_STAKING_WOD_ABI
       : k.startsWith("constant_staking_wod4")
+      ? window.CONSTANT_STAKING_WOD_ABI
+      : k.startsWith("constant_staking_wod5")
       ? window.CONSTANT_STAKING_WOD_ABI
       : window.TOKEN_ABI;
   });

@@ -750,7 +750,7 @@ const Header = ({
                       />
                     </a>
                     <a
-                      href="https://www.youtube.com/@Dypius"
+                      href="https://www.youtube.com/@worldofdypians"
                       target="_blank"
                       rel="noreferrer"
                     >
