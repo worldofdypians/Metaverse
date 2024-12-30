@@ -45,12 +45,9 @@ const ResetPassword = () => {
   if (isResetSuccess) {
     return (
       <LoginWrapper
-        style={{
-          paddingTop: "3rem",
-          paddingBottom: "3rem",
-          marginTop: "3rem",
-          marginBottom: "3rem",
-        }}
+      style={{
+        margin:'6rem 0rem'
+      }}
       >
         <LoginCard>
           <div className={classes.container}>
@@ -71,12 +68,9 @@ const ResetPassword = () => {
 
   return (
     <LoginWrapper
-      style={{
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
-        marginTop: "3rem",
-        marginBottom: "3rem",
-      }}
+    style={{
+      margin:'6rem 0rem'
+    }}
     >
       <LoginCard>
         <div className={classes.container}>

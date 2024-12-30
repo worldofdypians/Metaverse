@@ -547,38 +547,39 @@ const Whitelist = ({
 
     const today = new Date();
 
-    if (lastClaimedTime && Number(lastClaimedTime * 1000) > today.getTime()) {
+    // if (lastClaimedTime && Number(lastClaimedTime * 1000) > today.getTime()) {
       setcliffTime(Number(lastClaimedTime * 1000));
-    } else {
-      setcliffTime(0);
-    }
+    // } else {
+    //   setcliffTime(0);
+    // }
 
-    if (
-      lastClaimedTimePrivate &&
-      Number(lastClaimedTimePrivate * 1000) > today.getTime()
-    ) {
+    // if (
+    //   lastClaimedTimePrivate &&
+    //   Number(lastClaimedTimePrivate * 1000) > today.getTime()
+    // ) {
       setcliffTimePrivate(Number(lastClaimedTimePrivate * 1000));
-    } else {
-      setcliffTimePrivate(0);
-    }
+    // } else {
+    //   setcliffTimePrivate(0);
+    // }
 
-    if (
-      lastClaimedTimeKol &&
-      Number(lastClaimedTimeKol * 1000) > today.getTime()
-    ) {
+    // if (
+    //   lastClaimedTimeKol &&
+    //   Number(lastClaimedTimeKol * 1000) > today.getTime()
+    // ) {
       setcliffTimeKol(Number(lastClaimedTimeKol * 1000));
-    } else {
-      setcliffTimeKol(0);
-    }
+    // } 
+    // else {
+    //   setcliffTimeKol(0);
+    // }
 
-    if (
-      lastClaimedTimeAdvisors &&
-      Number(lastClaimedTimeAdvisors * 1000) > today.getTime()
-    ) {
+    // if (
+    //   lastClaimedTimeAdvisors &&
+    //   Number(lastClaimedTimeAdvisors * 1000) > today.getTime()
+    // ) {
       setcliffTimeAdvisors(Number(lastClaimedTimeAdvisors * 1000));
-    } else {
-      setcliffTimeAdvisors(0);
-    }
+    // } else {
+    //   setcliffTimeAdvisors(0);
+    // }
   };
 
   const handleClaim = async () => {
@@ -870,6 +871,17 @@ const Whitelist = ({
               ? canClaimAdvisors
               : false
           }
+          onTimerFinished={(value)=>{
+            selectedRound?.id === "seed"
+            ? setcanClaim(value)
+            : selectedRound?.id === "private"
+            ? setcanClaimPrivate(value)
+            : selectedRound?.id === "kol"
+            ? setcanClaimKol(value)
+            : selectedRound?.id === "advisors"
+            ? setcanClaimAdvisors(value)
+            : setcanClaim(value)
+          }}
           selectedRound={selectedRound}
           cliffTime={
             selectedRound?.id === "seed"

@@ -4,7 +4,7 @@ import "./_terms.scss";
 const BinanceCampaignRules = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Binanceweb3 Campaign Rules";
+    document.title = "Binance Wallet Campaign Rules";
   }, []);
 
   return (
@@ -43,6 +43,19 @@ const BinanceCampaignRules = () => {
                 <li className="text-white">
                   <b>Off-Chain Tasks</b>
                   <ul>
+                  <li className="text-white">
+                      <b>
+                        <a
+                          href="https://x.com/BinanceWallet"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-white text-decoration-underline"
+                        >
+                          Follow Binance Wallet on X
+                        </a>
+                      </b>
+                    </li>
+
                     <li className="text-white">
                       <b>
                         <a
@@ -150,8 +163,10 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Anyone who completes both the off-chain and on-chain tasks
-                      during the campaign period is eligible to participate.
+                      Only MPC Binance Wallet users with verified accounts are
+                      eligible to participate in this campaign. Each user can
+                      only join once, ensuring fair participation and preventing
+                      duplicate entries.
                     </li>
                   </ul>
                 </li>
@@ -225,8 +240,7 @@ const BinanceCampaignRules = () => {
                       corner of the page.
                     </li>
                     <li className="text-white">
-                      Select your Binance Wallet and authorize the
-                      connection.
+                      Select your Binance Wallet and authorize the connection.
                     </li>
                   </ul>
                 </li>

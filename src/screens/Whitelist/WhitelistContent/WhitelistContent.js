@@ -62,12 +62,22 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const renderer2 = ({ days, hours, minutes }) => {
+const Completionist = () => (
+  <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+    00d:00h:00m
+  </h6>
+);
+
+const renderer2 = ({ days, hours, minutes, completed }) => {
+  if (completed) {
+    return <Completionist />;
+  } else {
   return (
     <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
       {days}D:{hours}H:{minutes}M
     </h6>
   );
+  }
 };
 
 const WhitelistContent = ({
@@ -86,6 +96,7 @@ const WhitelistContent = ({
   userClaimedTokens,
   totalVestedTokens,
   cliffTime,
+  onTimerFinished,
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
@@ -99,18 +110,21 @@ const WhitelistContent = ({
       if (selectedRound.id == "seed") {
         if (today.getTime() > cliffTime) {
           settimerFinished(true);
+          onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinished(true);
         }
       } else if (selectedRound.id == "private") {
         if (today.getTime() > cliffTime) {
           settimerFinishedPrivate(true);
+          onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedPrivate(true);
         }
       } else if (selectedRound.id == "kol") {
         if (today.getTime() > cliffTime) {
           settimerFinishedKol(true);
+          onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinishedKol(true);
         }
@@ -238,6 +252,7 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinished(true);
+                          onTimerFinished(true);
                         }}
                       />
                     ) : userClaimedTokens &&
@@ -248,6 +263,7 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedPrivate(true);
+                          onTimerFinished(true);
                         }}
                       />
                     ) : userClaimedTokens &&
@@ -258,6 +274,7 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedKol(true);
+                          onTimerFinished(true);
                         }}
                       />
                     ) : selectedRound?.id === "advisors" &&
@@ -268,6 +285,7 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinishedAdvisors(true);
+                          onTimerFinished(true);
                         }}
                       />
                     ) : (

@@ -18,13 +18,13 @@ const ForgotPassword = () => {
 
   const handleEmail = async () => {
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod/auth/SendRecoveryEmail",
         { email: email }
-      );
-      if (data.success) {
+      ).then(()=>{
         setEmailSentSucces(true);
-      }
+      })
+     
     } catch (error) {
       if (error?.response?.data?.code === 400) {
         setError("Make sure you put the correct email address!");
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
   return (
     <LoginWrapper
     style={{
-      margin:'auto'
+      margin:'6rem 0rem'
     }}
   >
       <LoginCard>
