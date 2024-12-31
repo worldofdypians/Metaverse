@@ -5169,6 +5169,23 @@ function App() {
             }
           />
 
+<Route
+            exact
+            path="/pool"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                type="pool"
+              />
+            }
+          />
+
           <Route
             exact
             path="/token-claim"

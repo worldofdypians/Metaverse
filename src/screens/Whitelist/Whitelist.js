@@ -10,7 +10,10 @@ import {
   KOL_ABI,
   PRIVATE_ABI,
   ADVISORS_ABI,
-  blockedAccounts, specialWallets, specialWalletsSeed
+  OTC_ABI,
+  blockedAccounts,
+  specialWallets,
+  specialWalletsSeed,
 } from "./abis";
 import Countdown from "react-countdown";
 import WhitelistHero from "./WhitelistHero/WhitelistHero";
@@ -31,18 +34,22 @@ const Whitelist = ({
   handleConnection,
   coinbase,
   handleSwitchNetwork,
+  type,
 }) => {
-  const [slice, setSlice] = useState(5);
-  const [loading, setLoading] = useState(false);
   const [cliffTime, setcliffTime] = useState(0);
   const [cliffTimePrivate, setcliffTimePrivate] = useState(0);
   const [cliffTimeKol, setcliffTimeKol] = useState(0);
   const [cliffTimeAdvisors, setcliffTimeAdvisors] = useState(0);
+  const [cliffTimeOtc, setcliffTimeOtc] = useState(0);
 
   const [releaseProcent, setreleaseProcent] = useState(0);
   const [pendingTokens, setpendingTokens] = useState(0);
   const [userClaimedTokens, setuserClaimedTokens] = useState(0);
   const [userVestedTokens, setuserVestedTokens] = useState(0);
+
+  const [pendingTokensOTC, setpendingTokensOTC] = useState(0);
+  const [userClaimedTokensOTC, setuserClaimedTokensOTC] = useState(0);
+  const [userVestedTokensOTC, setuserVestedTokensOTC] = useState(0);
 
   const [pendingTokensPrivate, setpendingTokensPrivate] = useState(0);
   const [userClaimedTokensPrivate, setuserClaimedTokensPrivate] = useState(0);
@@ -57,9 +64,14 @@ const Whitelist = ({
   const [userVestedTokensAdvisors, setuserVestedTokensAdvisors] = useState(0);
 
   const [startedVesting, setstartedVesting] = useState(false);
+
   const [canClaim, setcanClaim] = useState(false);
   const [claimLoading, setclaimLoading] = useState(false);
   const [claimStatus, setclaimStatus] = useState("initial");
+
+  const [canClaimOTC, setcanClaimOTC] = useState(false);
+  const [claimLoadingOTC, setclaimLoadingOTC] = useState(false);
+  const [claimStatusOTC, setclaimStatusOTC] = useState("initial");
 
   const [canClaimPrivate, setcanClaimPrivate] = useState(false);
   const [claimLoadingPrivate, setclaimLoadingPrivate] = useState(false);
@@ -79,23 +91,28 @@ const Whitelist = ({
     let isSpecial = false;
     let isSpecialSeed = false;
 
-    if(coinbase) {
-      if(specialWallets.includes(coinbase.toLowerCase())) {
-        isSpecial = true
-      }
-      else isSpecial = false;
+    if (coinbase) {
+      if (specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true;
+      } else isSpecial = false;
     }
 
-    if(coinbase) {
-      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
-        isSpecialSeed = true
-      }
-      else isSpecialSeed = false;
+    if (coinbase) {
+      if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true;
+      } else isSpecialSeed = false;
     }
 
     const vestingSc = new window.bscWeb3.eth.Contract(
       isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
-      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
+      isSpecialSeed
+        ? window.config.vesting_special_address
+        : window.config.vesting_address
+    );
+
+    const otcSc = new window.bscWeb3.eth.Contract(
+      OTC_ABI,
+      window.config.otc_address
     );
 
     const privateSc = new window.bscWeb3.eth.Contract(
@@ -105,7 +122,7 @@ const Whitelist = ({
 
     const kolSc = new window.bscWeb3.eth.Contract(
       KOL_ABI,
-      isSpecial ?  window.config.kol2_address : window.config.kol_address
+      isSpecial ? window.config.kol2_address : window.config.kol_address
     );
 
     const advisorsSc = new window.bscWeb3.eth.Contract(
@@ -155,6 +172,19 @@ const Whitelist = ({
     }
 
     setcanClaim(Number(availableTGE) === 1);
+
+    let availableTGE_OTC = 0;
+    if (coinbase) {
+      availableTGE_OTC = await otcSc.methods
+        .availableTGE(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    setcanClaimOTC(Number(availableTGE_OTC) === 1);
 
     let availableTGEPrivate = 0;
     if (coinbase) {
@@ -224,6 +254,23 @@ const Whitelist = ({
     ).toFixed(0);
     setcanClaim(tokensToClaimAmount_formatted > 0);
     setpendingTokens(tokensToClaimAmount_formatted);
+
+    let tokensToClaimAmountOTC = 0;
+    if (coinbase) {
+      tokensToClaimAmountOTC = await otcSc.methods
+        .getPendingUnlocked(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+    }
+
+    const tokensToClaimAmountOTC_formatted = new window.BigNumber(
+      tokensToClaimAmountOTC / 1e18
+    ).toFixed(0);
+    setcanClaimOTC(tokensToClaimAmountOTC_formatted > 0);
+    setpendingTokensOTC(tokensToClaimAmountOTC_formatted);
 
     let tokensToClaimAmountPrivate = 0;
     if (coinbase) {
@@ -315,6 +362,22 @@ const Whitelist = ({
       setuserClaimedTokens(totalClaimedTokensByUser_formatted);
     }
 
+    let totalClaimedTokensByUserOTC = 0;
+    if (coinbase) {
+      totalClaimedTokensByUserOTC = await otcSc.methods
+        .claimedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUserOTC_formatted = new window.BigNumber(
+        totalClaimedTokensByUserOTC / 1e18
+      ).toFixed(0);
+
+      setuserClaimedTokensOTC(totalClaimedTokensByUserOTC_formatted);
+    }
+
     let totalClaimedTokensByUserPrivate = 0;
     if (coinbase) {
       totalClaimedTokensByUserPrivate = await privateSc.methods
@@ -389,6 +452,22 @@ const Whitelist = ({
       ).toFixed(0);
 
       setuserVestedTokens(totalClaimedTokensByUser_formatted);
+    }
+
+    let totalVestedTokensPerUserOTC = 0;
+    if (coinbase) {
+      totalVestedTokensPerUserOTC = await otcSc.methods
+        .vestedTokens(coinbase)
+        .call()
+        .catch((e) => {
+          console.error(e);
+          return 0;
+        });
+      const totalClaimedTokensByUserOTC_formatted = new window.BigNumber(
+        totalVestedTokensPerUserOTC / 1e18
+      ).toFixed(0);
+
+      setuserVestedTokensOTC(totalClaimedTokensByUserOTC_formatted);
     }
 
     let totalVestedTokensPerUserPrivate = 0;
@@ -475,24 +554,28 @@ const Whitelist = ({
     let isSpecial = false;
     let isSpecialSeed = false;
 
-    if(coinbase) {
-      if(specialWallets.includes(coinbase.toLowerCase())) {
-        isSpecial = true
-      }
-      else isSpecial = false;
+    if (coinbase) {
+      if (specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true;
+      } else isSpecial = false;
     }
 
-    if(coinbase) {
-      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
-        isSpecialSeed = true
-      }
-      else isSpecialSeed = false;
+    if (coinbase) {
+      if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true;
+      } else isSpecialSeed = false;
     }
 
-    
     const vestingSc = new window.bscWeb3.eth.Contract(
       isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
-      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
+      isSpecialSeed
+        ? window.config.vesting_special_address
+        : window.config.vesting_address
+    );
+
+    const otcSc = new window.bscWeb3.eth.Contract(
+      OTC_ABI,
+      window.config.otc_address
     );
 
     const privateSc = new window.bscWeb3.eth.Contract(
@@ -514,6 +597,14 @@ const Whitelist = ({
     //  When cliff will pass (deployTime + cliff) it will be available to claim the vested tokens - 'releaseProcent';
 
     const lastClaimedTime = await vestingSc.methods
+      .lastClaimedTime(coinbase)
+      .call()
+      .catch((e) => {
+        console.error(e);
+        return 0;
+      });
+
+    const lastClaimedTimeOTC = await otcSc.methods
       .lastClaimedTime(coinbase)
       .call()
       .catch((e) => {
@@ -548,16 +639,22 @@ const Whitelist = ({
     const today = new Date();
 
     // if (lastClaimedTime && Number(lastClaimedTime * 1000) > today.getTime()) {
-      setcliffTime(Number(lastClaimedTime * 1000));
+    setcliffTime(Number(lastClaimedTime * 1000));
     // } else {
     //   setcliffTime(0);
+    // }
+
+    // if (lastClaimedTimeOTC && Number(lastClaimedTimeOTC * 1000) > today.getTime()) {
+    setcliffTimeOtc(Number(lastClaimedTimeOTC * 1000));
+    // } else {
+    //   setcliffTimeOtc(0);
     // }
 
     // if (
     //   lastClaimedTimePrivate &&
     //   Number(lastClaimedTimePrivate * 1000) > today.getTime()
     // ) {
-      setcliffTimePrivate(Number(lastClaimedTimePrivate * 1000));
+    setcliffTimePrivate(Number(lastClaimedTimePrivate * 1000));
     // } else {
     //   setcliffTimePrivate(0);
     // }
@@ -566,8 +663,8 @@ const Whitelist = ({
     //   lastClaimedTimeKol &&
     //   Number(lastClaimedTimeKol * 1000) > today.getTime()
     // ) {
-      setcliffTimeKol(Number(lastClaimedTimeKol * 1000));
-    // } 
+    setcliffTimeKol(Number(lastClaimedTimeKol * 1000));
+    // }
     // else {
     //   setcliffTimeKol(0);
     // }
@@ -576,7 +673,7 @@ const Whitelist = ({
     //   lastClaimedTimeAdvisors &&
     //   Number(lastClaimedTimeAdvisors * 1000) > today.getTime()
     // ) {
-      setcliffTimeAdvisors(Number(lastClaimedTimeAdvisors * 1000));
+    setcliffTimeAdvisors(Number(lastClaimedTimeAdvisors * 1000));
     // } else {
     //   setcliffTimeAdvisors(0);
     // }
@@ -588,16 +685,17 @@ const Whitelist = ({
     setclaimLoading(true);
     let web3 = new Web3(window.ethereum);
 
-    if(coinbase) {
-      if(specialWalletsSeed.includes(coinbase.toLowerCase())) {
-        isSpecialSeed = true
-      }
-      else isSpecialSeed = false;
+    if (coinbase) {
+      if (specialWalletsSeed.includes(coinbase.toLowerCase())) {
+        isSpecialSeed = true;
+      } else isSpecialSeed = false;
     }
-    
+
     const vestingSc = new web3.eth.Contract(
       isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
-      isSpecialSeed ? window.config.vesting_special_address : window.config.vesting_address
+      isSpecialSeed
+        ? window.config.vesting_special_address
+        : window.config.vesting_address
     );
 
     const gasPrice = await window.bscWeb3.eth.getGasPrice();
@@ -645,6 +743,58 @@ const Whitelist = ({
       });
   };
 
+  const handleClaimOTC = async () => {
+    console.log("otc");
+    setclaimLoadingOTC(true);
+    let web3 = new Web3(window.ethereum);
+
+    const otcSc = new web3.eth.Contract(OTC_ABI, window.config.otc_address);
+
+    const gasPrice = await window.bscWeb3.eth.getGasPrice();
+    console.log("gasPrice", gasPrice);
+    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+    // const increasedGwei = parseInt(currentGwei) + 2;
+    // console.log("increasedGwei", increasedGwei);
+
+    const transactionParameters = {
+      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+    };
+
+    await otcSc.methods
+      .claim()
+      .estimateGas({ from: await window.getCoinbase() })
+      .then((gas) => {
+        transactionParameters.gas = web3.utils.toHex(gas);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    await otcSc.methods
+      .claim()
+      .send({ from: await window.getCoinbase(), ...transactionParameters })
+      .then(() => {
+        setclaimStatusOTC("success");
+        setclaimLoadingOTC(false);
+
+        setTimeout(() => {
+          setclaimStatusOTC("initial");
+          getInfo();
+          getInfoTimer();
+        }, 5000);
+      })
+      .catch((e) => {
+        console.error(e);
+        window.alertify.error(e?.message);
+
+        setclaimStatusOTC("failed");
+        setclaimLoadingOTC(false);
+        setTimeout(() => {
+          setclaimStatusOTC("initial");
+        }, 5000);
+      });
+  };
+
   const handleClaimPrivate = async () => {
     console.log("private");
 
@@ -684,18 +834,21 @@ const Whitelist = ({
   const handleClaimKol = async () => {
     console.log("kol");
     let isSpecial = false;
-    if(coinbase) {
-      if(specialWallets.includes(coinbase.toLowerCase())) {
-        isSpecial = true
-      }
-      else isSpecial = false;
+    if (coinbase) {
+      if (specialWallets.includes(coinbase.toLowerCase())) {
+        isSpecial = true;
+      } else isSpecial = false;
     }
 
     setclaimLoadingKol(true);
     let web3 = new Web3(window.ethereum);
-    const kolSc = new web3.eth.Contract(KOL_ABI, isSpecial ? window.config.kol2_address : window.config.kol_address, {
-      from: await window.getCoinbase(),
-    });
+    const kolSc = new web3.eth.Contract(
+      KOL_ABI,
+      isSpecial ? window.config.kol2_address : window.config.kol_address,
+      {
+        from: await window.getCoinbase(),
+      }
+    );
 
     await kolSc.methods
       .claim()
@@ -787,6 +940,7 @@ const Whitelist = ({
           onSelectRound={(value) => {
             setselectedRound(value);
           }}
+          type={type}
         />
         <StakingBanner />
         <WhitelistContent
@@ -796,7 +950,9 @@ const Whitelist = ({
           onConnect={handleConnection}
           handleSwitchChain={handleEthPool}
           wodBalance={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? pendingTokensOTC
+              : selectedRound?.id === "seed"
               ? pendingTokens
               : selectedRound?.id === "private"
               ? pendingTokensPrivate
@@ -807,7 +963,9 @@ const Whitelist = ({
               : 0
           }
           userClaimedTokens={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? userClaimedTokensOTC
+              : selectedRound?.id === "seed"
               ? userClaimedTokens
               : selectedRound?.id === "private"
               ? userClaimedTokensPrivate
@@ -818,7 +976,9 @@ const Whitelist = ({
               : 0
           }
           totalVestedTokens={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? userVestedTokensOTC
+              : selectedRound?.id === "seed"
               ? userVestedTokens
               : selectedRound?.id === "private"
               ? userVestedTokensPrivate
@@ -829,7 +989,9 @@ const Whitelist = ({
               : 0
           }
           handleClaim={() => {
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? handleClaimOTC()
+              : selectedRound?.id === "seed"
               ? handleClaim()
               : selectedRound?.id === "private"
               ? handleClaimPrivate()
@@ -838,7 +1000,9 @@ const Whitelist = ({
               : handleClaimAdvisors();
           }}
           claimStatus={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? claimStatusOTC
+              : selectedRound?.id === "seed"
               ? claimStatus
               : selectedRound?.id === "private"
               ? claimStatusPrivate
@@ -849,7 +1013,9 @@ const Whitelist = ({
               : false
           }
           claimLoading={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? claimLoadingOTC
+              : selectedRound?.id === "seed"
               ? claimLoading
               : selectedRound?.id === "private"
               ? claimLoadingPrivate
@@ -861,7 +1027,9 @@ const Whitelist = ({
           }
           startedVesting={startedVesting}
           canClaim={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? canClaimOTC
+              : selectedRound?.id === "seed"
               ? canClaim
               : selectedRound?.id === "private"
               ? canClaimPrivate
@@ -871,20 +1039,24 @@ const Whitelist = ({
               ? canClaimAdvisors
               : false
           }
-          onTimerFinished={(value)=>{
-            selectedRound?.id === "seed"
-            ? setcanClaim(value)
-            : selectedRound?.id === "private"
-            ? setcanClaimPrivate(value)
-            : selectedRound?.id === "kol"
-            ? setcanClaimKol(value)
-            : selectedRound?.id === "advisors"
-            ? setcanClaimAdvisors(value)
-            : setcanClaim(value)
+          onTimerFinished={(value) => {
+            type === "pool"
+              ? setcanClaimOTC(value)
+              : selectedRound?.id === "seed"
+              ? setcanClaim(value)
+              : selectedRound?.id === "private"
+              ? setcanClaimPrivate(value)
+              : selectedRound?.id === "kol"
+              ? setcanClaimKol(value)
+              : selectedRound?.id === "advisors"
+              ? setcanClaimAdvisors(value)
+              : setcanClaim(value);
           }}
           selectedRound={selectedRound}
           cliffTime={
-            selectedRound?.id === "seed"
+            type === "pool"
+              ? cliffTimeOtc
+              : selectedRound?.id === "seed"
               ? cliffTime
               : selectedRound?.id === "private"
               ? cliffTimePrivate
@@ -894,6 +1066,7 @@ const Whitelist = ({
               ? cliffTimeAdvisors
               : 0
           }
+          type={type}
         />
       </div>
     </div>

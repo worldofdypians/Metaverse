@@ -22,6 +22,14 @@ border-bottom: none !important;
   // }
 }
 
+.otc-wrapper {
+  width: 25%;
+    margin: auto;
+    @media only screen and (max-width: 991px) {
+      width: 100% !important;
+    }
+}
+
 .whitelist-hero-wrapper{
   margin-top: 150px;
   margin-bottom: 50px;
