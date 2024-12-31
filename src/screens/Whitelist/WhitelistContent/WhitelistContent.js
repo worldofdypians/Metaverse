@@ -72,11 +72,11 @@ const renderer2 = ({ days, hours, minutes, completed }) => {
   if (completed) {
     return <Completionist />;
   } else {
-  return (
-    <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
-      {days}D:{hours}H:{minutes}M
-    </h6>
-  );
+    return (
+      <h6 className="rewardstxtwod mb-0" style={{ color: "#F3BF09" }}>
+        {days}D:{hours}H:{minutes}M
+      </h6>
+    );
   }
 };
 
@@ -97,8 +97,11 @@ const WhitelistContent = ({
   totalVestedTokens,
   cliffTime,
   onTimerFinished,
+  type,
 }) => {
   const [timerFinished, settimerFinished] = useState(false);
+  const [timerFinishedOTC, settimerFinishedOTC] = useState(false);
+
   const [timerFinishedPrivate, settimerFinishedPrivate] = useState(false);
   const [timerFinishedKol, settimerFinishedKol] = useState(false);
   const [timerFinishedAdvisors, settimerFinishedAdvisors] = useState(false);
@@ -113,6 +116,13 @@ const WhitelistContent = ({
           onTimerFinished(true);
         } else if (Number(userClaimedTokens) === 0) {
           settimerFinished(true);
+        }
+      } else if (selectedRound.id == "otc") {
+        if (today.getTime() > cliffTime) {
+          settimerFinishedOTC(true);
+          onTimerFinished(true);
+        } else if (Number(userClaimedTokens) === 0) {
+          settimerFinishedOTC(true);
         }
       } else if (selectedRound.id == "private") {
         if (today.getTime() > cliffTime) {
@@ -165,6 +175,7 @@ const WhitelistContent = ({
                 </div>
               </div>
             )}
+            {selectedRound?.cliff &&
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Cliff Period</span>
@@ -172,7 +183,7 @@ const WhitelistContent = ({
                   {selectedRound?.cliff}
                 </span>
               </div>
-            </div>
+            </div> }
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Vesting Period</span>
@@ -252,6 +263,17 @@ const WhitelistContent = ({
                         renderer={renderer2}
                         onComplete={() => {
                           settimerFinished(true);
+                          onTimerFinished(true);
+                        }}
+                      />
+                    ) : userClaimedTokens &&
+                      Number(userClaimedTokens) > 0 &&
+                      selectedRound?.id === "otc" ? (
+                      <Countdown
+                        date={Number(cliffTime)}
+                        renderer={renderer2}
+                        onComplete={() => {
+                          settimerFinishedOTC(true);
                           onTimerFinished(true);
                         }}
                       />
@@ -352,6 +374,47 @@ const WhitelistContent = ({
                 )}
               </button>
             )}
+
+            {isConnected && chainId === 56 && selectedRound?.id === "otc" && (
+              <button
+                className={` w-100 py-2
+                
+                ${
+                  ((claimStatus === "claimed" || claimStatus === "initial") &&
+                    Number(wodBalance) === 0) ||
+                  canClaim === false ||
+                  timerFinished === false
+                    ? "disabled-btn2"
+                    : claimStatus === "failed"
+                    ? "fail-button"
+                    : claimStatus === "success"
+                    ? "success-button"
+                    : "connectbtn"
+                }`}
+                disabled={
+                  canClaim === false ||
+                  timerFinished === false ||
+                  Number(wodBalance) === 0
+                    ? true
+                    : false
+                }
+                onClick={handleClaim}
+              >
+                {claimLoading ? (
+                  <div
+                    class="spinner-border spinner-border-sm text-light"
+                    role="status"
+                  ></div>
+                ) : claimStatus === "failed" ? (
+                  <>Failed</>
+                ) : claimStatus === "success" ? (
+                  <>Success</>
+                ) : (
+                  <>Claim</>
+                )}
+              </button>
+            )}
+
             {isConnected &&
               chainId === 56 &&
               selectedRound?.id === "private" && (

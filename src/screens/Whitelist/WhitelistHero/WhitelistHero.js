@@ -4,8 +4,10 @@ import Slider from "react-slick";
 import { NavLink } from "react-router-dom";
 import BetaEventCardHome from "../../Marketplace/components/BetaEventCardHome";
 
-const WhitelistHero = ({ onSelectRound }) => {
-  const [activeRound, setActiveRound] = useState("seed");
+const WhitelistHero = ({ onSelectRound, type }) => {
+  const [activeRound, setActiveRound] = useState(
+    type === "pool" ? "otc" : "seed"
+  );
 
   const betaSlider = useRef(null);
 
@@ -40,13 +42,26 @@ const WhitelistHero = ({ onSelectRound }) => {
     {
       id: "advisors",
       title: "Advisors",
-      class: activeRound === "advisors" ? "advisorsClassActive" : "advisorsClass",
+      class:
+        activeRound === "advisors" ? "advisorsClassActive" : "advisorsClass",
       // tokenPrice: "0.03825",
       cliff: "9 Month",
       cliffInTimestamp: "1756304809000",
       vesting: "30 Months",
     },
   ];
+  const otc_data = [
+    {
+      id: "otc",
+      title: "OTC Round",
+      class: activeRound === "otc" ? "seedClassActive" : "seedClass",
+      tokenPrice: "0.1",
+      // cliff: "6 Months",
+      cliffInTimestamp: "1751308469000",
+      vesting: "6 Months",
+    },
+  ];
+
 
   var settings = {
     dots: false,
@@ -54,7 +69,7 @@ const WhitelistHero = ({ onSelectRound }) => {
     dotsClass: "button__bar",
     infinite: false,
     speed: 300,
-    slidesToShow: 4,
+    slidesToShow: type === 'pool' ? 1 : 4,
     slidesToScroll: 1,
     autoplay: false,
     initialSlide: 0,
@@ -67,7 +82,7 @@ const WhitelistHero = ({ onSelectRound }) => {
       {
         breakpoint: 1600,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: type === 'pool' ? 1 : 4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -75,7 +90,7 @@ const WhitelistHero = ({ onSelectRound }) => {
       {
         breakpoint: 1500,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: type === 'pool' ? 1 :4,
           slidesToScroll: 1,
           initialSlide: 0,
         },
@@ -83,24 +98,23 @@ const WhitelistHero = ({ onSelectRound }) => {
       {
         breakpoint: 1400,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: type === 'pool' ? 1 :3,
           slidesToScroll: 1,
           initialSlide: 0,
-          infinite: true,
-          autoplay: true,
-          dots: true,
+          infinite:  type === 'pool' ? false : true,
+          autoplay:  type === 'pool' ? false : true,
+          dots:  type === 'pool' ? false : true,
         },
       },
       {
         breakpoint: 1050,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: type === 'pool' ? 1 :2,
           slidesToScroll: 1,
           initialSlide: 0,
-          infinite: true,
-          autoplay: true,
-          dots: true,
-
+          infinite:  type === 'pool' ? false : true,
+          autoplay:  type === 'pool' ? false : true,
+          dots:  type === 'pool' ? false : true,
         },
       },
       {
@@ -109,19 +123,17 @@ const WhitelistHero = ({ onSelectRound }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: false,
-          infinite: true,
-          autoplay: true,
-          dots: true,
-
+          infinite:  type === 'pool' ? false : true,
+          autoplay: type === 'pool' ? false : true,
+          dots:  type === 'pool' ? false : true,
         },
       },
     ],
   };
 
   useEffect(() => {
-    onSelectRound(dummyBetaPassData2[0]);
-  }, []);
+    onSelectRound( type === 'pool' ? otc_data[0] : dummyBetaPassData2[0]);
+  }, [type]);
 
   return (
     <div className="whitelist-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
@@ -140,9 +152,9 @@ const WhitelistHero = ({ onSelectRound }) => {
                 </span>
               </div>
             </div>
-            <div className="opacitywrapper-release col-lg-10 position-relative">
+            <div className={` ${type === 'pool' ? 'otc-wrapper' : 'col-lg-10'} opacitywrapper-release position-relative`}>
               <Slider {...settings} ref={betaSlider}>
-                {dummyBetaPassData2.map((item, index) => (
+                {(type === 'pool' ? otc_data : dummyBetaPassData2).map((item, index) => (
                   <div
                     key={index}
                     onClick={() => {

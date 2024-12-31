@@ -154,6 +154,7 @@ window.config = {
   wod_token_testnet_address: "0x7FcDfeCeE90c6A428FE13fE48641D58807B74873",
   vesting_address: "0xD62FC589701C1FC54675124C42fe1D7fF4e0204C",
   vesting_special_address: "0x89e17d1b7dd50dea02f082c88bd0a3e380f338b8",
+  otc_address: '0x9e366d29486b042b09bbabd3dd5e09271453275d',
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
