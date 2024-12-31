@@ -56,9 +56,9 @@ const WhitelistHero = ({ onSelectRound, type }) => {
       title: "OTC Round",
       class: activeRound === "otc" ? "seedClassActive" : "seedClass",
       tokenPrice: "0.0250",
-      cliff: "6 Months",
+      // cliff: "6 Months",
       cliffInTimestamp: "1751308469000",
-      vesting: "19 Months",
+      vesting: "6 Months",
     },
   ];
 

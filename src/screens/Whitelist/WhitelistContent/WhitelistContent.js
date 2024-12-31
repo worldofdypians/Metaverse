@@ -175,6 +175,7 @@ const WhitelistContent = ({
                 </div>
               </div>
             )}
+            {selectedRound?.cliff &&
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Cliff Period</span>
@@ -182,7 +183,7 @@ const WhitelistContent = ({
                   {selectedRound?.cliff}
                 </span>
               </div>
-            </div>
+            </div> }
             <div className="whitelist-input-wrapper p-3">
               <div className="d-flex flex-column">
                 <span className="whitelist-green-txt">Vesting Period</span>
