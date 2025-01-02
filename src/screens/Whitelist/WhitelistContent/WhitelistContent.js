@@ -383,7 +383,7 @@ const WhitelistContent = ({
                   ((claimStatus === "claimed" || claimStatus === "initial") &&
                     Number(wodBalance) === 0) ||
                   canClaim === false ||
-                  timerFinished === false
+                  timerFinishedOTC === false
                     ? "disabled-btn2"
                     : claimStatus === "failed"
                     ? "fail-button"
@@ -393,7 +393,7 @@ const WhitelistContent = ({
                 }`}
                 disabled={
                   canClaim === false ||
-                  timerFinished === false ||
+                  timerFinishedOTC === false ||
                   Number(wodBalance) === 0
                     ? true
                     : false
