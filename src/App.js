@@ -87,6 +87,7 @@ import Release from "./screens/Release/Release.js";
 import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
+import NFTBridge from './screens/NFTBridge/NftBridge'
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5248,10 +5249,10 @@ function App() {
               />
             }
           />
-          {/* 
+          
           <Route
             exact
-            path="/marketplace/nft-bridge"
+            path="/shop/nft-bridge"
             element={
               <NFTBridge
                 coinbase={coinbase}
@@ -5292,7 +5293,7 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          /> */}
+          />
 
           <Route
             exact
