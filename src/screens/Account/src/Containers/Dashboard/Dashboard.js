@@ -54,6 +54,7 @@ import {
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
+import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -529,6 +530,7 @@ function Dashboard({
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [bnbBonusPopup, setBnbBonusPopup] = useState(false)
+  const [matBonusPopup, setMatBonusPopup] = useState(false)
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
@@ -11034,6 +11036,117 @@ function Dashboard({
             selectedChainforPremium={selectedChainforPremium}
             onPremiumClickOther={() => {
               setBnbBonusPopup(false);
+              setgetPremiumPopup(true);
+            }}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
+          />
+          // </OutsideClickHandler>
+        )}
+        {(matBonusPopup || hashValue === "#matchain-miniapp-dailybonus") && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => {
+          //     setdailyBonusPopup(false);
+          //   }}
+          // >
+          <MatchainDailyBonus
+            isPremium={isPremium}
+            bnbImages={bnbImages}
+            skaleImages={skaleImages}
+            seiImages={seiImages}
+            victionImages={victionImages}
+            mantaImages={mantaImages}
+            baseImages={baseImages}
+            taikoImages={taikoImages}
+            matImages={matImages}
+            coreImages={coreImages}
+            chainId={chainId}
+            dypTokenData={dypTokenData}
+            ethTokenData={ethTokenData}
+            dyptokenData_old={dyptokenData_old}
+            handleSwitchChain={handleSwitchChain}
+            handleSwitchNetwork={handleSwitchNetwork}
+            listedNFTS={dailyBonuslistedNFTS}
+            onclose={() => {
+              setMatBonusPopup(false);
+              window.location.hash = "";
+            }}
+            binanceW3WProvider={binanceW3WProvider}
+            coinbase={coinbase}
+            claimedChests={claimedChests}
+            claimedPremiumChests={claimedPremiumChests}
+            claimedSkaleChests={claimedSkaleChests}
+            claimedSkalePremiumChests={claimedSkalePremiumChests}
+            claimedCoreChests={claimedCoreChests}
+            claimedCorePremiumChests={claimedCorePremiumChests}
+            claimedVictionChests={claimedVictionChests}
+            claimedVictionPremiumChests={claimedVictionPremiumChests}
+            claimedMantaChests={claimedMantaChests}
+            claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedBaseChests={claimedBaseChests}
+            claimedBasePremiumChests={claimedBasePremiumChests}
+            claimedTaikoChests={claimedTaikoChests}
+            claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+            claimedMatChests={claimedMatChests}
+            claimedMatPremiumChests={claimedMatPremiumChests}
+            claimedSeiChests={claimedSeiChests}
+            claimedSeiPremiumChests={claimedSeiPremiumChests}
+            email={email}
+            openedChests={openedChests}
+            openedSkaleChests={openedSkaleChests}
+            openedCoreChests={openedCoreChests}
+            openedVictionChests={openedVictionChests}
+            openedMantaChests={openedMantaChests}
+            openedBaseChests={openedBaseChests}
+            openedTaikoChests={openedTaikoChests}
+            openedMatChests={openedMatChests}
+            openedSeiChests={openedSeiChests}
+            address={userWallet}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
+            allTaikoChests={allTaikoChests}
+            allMatChests={allMatChests}
+            allSeiChests={allSeiChests}
+            onChestClaimed={() => {
+              setCount(count + 1);
+            }}
+            onSkaleChestClaimed={() => {
+              setskalecount(skalecount + 1);
+            }}
+            onCoreChestClaimed={() => {
+              setcorecount(corecount + 1);
+            }}
+            onVictionChestClaimed={() => {
+              setvicitoncount(vicitoncount + 1);
+            }}
+            onMantaChestClaimed={() => {
+              setmantacount(mantacount + 1);
+            }}
+            onBaseChestClaimed={() => {
+              setbasecount(basecount + 1);
+            }}
+            onTaikoChestClaimed={() => {
+              settaikocount(taikocount + 1);
+            }}
+            onMatChestClaimed={() => {
+              setmatcount(matcount + 1);
+            }}
+            onSeiChestClaimed={() => {
+              setseicount(seicount + 1);
+            }}
+            dummypremiumChests={dummypremiumChests}
+            onPremiumClick={() => {
+              setgetPremiumPopup(true);
+            }}
+            premiumTxHash={premiumTxHash}
+            selectedChainforPremium={selectedChainforPremium}
+            onPremiumClickOther={() => {
+              setMatBonusPopup(false);
               setgetPremiumPopup(true);
             }}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
