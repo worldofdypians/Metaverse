@@ -77,7 +77,7 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                    Swap at least $10 worth of USDC/WOD on Binance Wallet
+                    Swap a minimum of $10 USDC for $WOD on BNB Chain using the native swap feature in the Binance Wallet
                     </li>
                  
                   </ul>
@@ -87,7 +87,7 @@ const BinanceCampaignRules = () => {
                 <b>Prizes Breakdown:</b>
               </p>
               <p className="text-white m-0">
-                2 ,000 winners will be selected to share $50,000 in WOD tokens.
+                2,000 winners will be selected to share $50,000 in WOD tokens.
                 Each winner will receive $25 in WOD tokens, selected via a
                 raffle.
               </p>
