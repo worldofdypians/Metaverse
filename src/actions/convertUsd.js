@@ -6,14 +6,15 @@ let dyp_Price;
 let all_listed_nfts;
 
 const getEthPrice = async () => {
+   
   await fetch(
-    "https://pro-api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+    "https://api.worldofdypians.com/api/price/ethereum"
   )
     .then((response) => response.json())
     .then((data) => {
-      eth_Price = data["ethereum"].usd;
+      eth_Price = data.price;
       eth_Price = eth_Price.toFixed(2);
-      return dyp_Price;
+      return eth_Price;
     });
 };
 
