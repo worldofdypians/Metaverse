@@ -26,7 +26,15 @@ const BinanceCampaignRules = () => {
                 a newcomer, this campaign is designed to reward you for your
                 participation and engagement.
               </p>
-           
+              <p className="text-white m-0">
+                <b>Activity Period:</b>
+              </p>
+              <ul>
+                <li className="text-white">
+                  Start: xxxx-xx-xx (UTC)
+                </li>
+                <li className="text-white">End: xxxx-xx-xx (UTC)</li>
+              </ul>
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
               </p>
@@ -99,8 +107,7 @@ const BinanceCampaignRules = () => {
                   Participants must complete all mandatory tasks to qualify.
                 </li>
                 <li className="text-white">
-                  Rewards will be distributed within 10 business days
-                  post-campaign.
+                Rewards can be claimed in Binance Wallet after the campaign.
                 </li>
                 <li className="text-white">
                   Users with multiple entries or fraudulent behavior will be
@@ -135,7 +142,7 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Only MPC Binance Wallet users with verified accounts are
+                      Only Keyless MPC Binance Wallet users with verified accounts are
                       eligible to participate in this campaign. Each user can
                       only join once, ensuring fair participation and preventing
                       duplicate entries.
