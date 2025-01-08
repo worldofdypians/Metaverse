@@ -87,7 +87,7 @@ import Release from "./screens/Release/Release.js";
 import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
-import NFTBridge from './screens/NFTBridge/NftBridge'
+import NFTBridge from "./screens/NFTBridge/NftBridge";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -533,8 +533,8 @@ function App() {
   const [prevVersionStar, setPrevVersionStar] = useState(0);
   const [dataAmountStar, setDataAmountStar] = useState([]);
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
-    const [loadingRecentSales, setLoadingRecentSales] = useState(false);
-  
+  const [loadingRecentSales, setLoadingRecentSales] = useState(false);
+
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
@@ -712,7 +712,7 @@ function App() {
           console.error(e);
         });
 
-        const totaldesposited_wod5 = await tokenSc.methods
+      const totaldesposited_wod5 = await tokenSc.methods
         .balanceOf(window.constant_staking_wod5._address)
         .call()
         .catch((e) => {
@@ -725,11 +725,11 @@ function App() {
         .div(1e18)
         .toFixed(6);
 
-        const totaldesposited_wod5_formatted = new window.BigNumber(
-          totaldesposited_wod5
-        )
-          .div(1e18)
-          .toFixed(6);
+      const totaldesposited_wod5_formatted = new window.BigNumber(
+        totaldesposited_wod5
+      )
+        .div(1e18)
+        .toFixed(6);
 
       const poolcapArray = [
         {
@@ -1498,14 +1498,13 @@ function App() {
         return 0;
       });
 
-      const seiresult = await seiContract.methods
+    const seiresult = await seiContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
-
 
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
@@ -1525,8 +1524,8 @@ function App() {
         parseInt(mantaresult) +
         parseInt(taikoresult) +
         parseInt(cookieresult) +
-        parseInt(matresult)  +
-        parseInt(seiresult)+
+        parseInt(matresult) +
+        parseInt(seiresult) +
         20002
     );
   };
@@ -1688,15 +1687,10 @@ function App() {
 
   const fetchWodPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=world-of-dypians&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/world-of-dypians`)
       .then((res) => {
-        if (
-          res.data["world-of-dypians"] &&
-          res.data["world-of-dypians"] !== NaN
-        ) {
-          setWodPrice(res.data["world-of-dypians"].usd);
+        if (res.data) {
+          setWodPrice(res.data.price);
         }
       });
   };
@@ -1704,11 +1698,11 @@ function App() {
   const fetchDogeCoinPrice = async () => {
     await axios
       .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+        "https://api.worldofdypians.com/api/price/dogecoin"
       )
       .then((obj) => {
-        if (obj.data["dogecoin"] && obj.data["dogecoin"] !== NaN) {
-          setDogePrice(obj.data["dogecoin"].usd);
+        if (obj.data) {
+          setDogePrice(obj.data.price);
         }
       });
   };
@@ -2874,8 +2868,7 @@ function App() {
         }
       });
     setLatest20BoughtNFTS(finalboughtItems);
-    setLoadingRecentSales(false)
-
+    setLoadingRecentSales(false);
   };
 
   const handleRefreshList = () => {
@@ -3022,10 +3015,11 @@ function App() {
       );
 
       setLatest20RecentListedNFTS(finalboughtItems2);
-    setLoadingRecentListings(false)
-
-   
-  } else {setLatest20RecentListedNFTS([]); setLoadingRecentListings(false)}
+      setLoadingRecentListings(false);
+    } else {
+      setLatest20RecentListedNFTS([]);
+      setLoadingRecentListings(false);
+    }
   };
 
   Amplify.configure(awsExports);
@@ -3360,99 +3354,91 @@ function App() {
   const fetchEgldPrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/tomochain`
       )
       .then((obj) => {
-        setmultiversPrice(obj.data.tomochain.usd);
+        setmultiversPrice(obj.data.price);
       });
   };
 
   const fetchImmutablePrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/immutable`
       )
       .then((obj) => {
-        setImmutablePrice(obj.data["immutable-x"].usd);
+        setImmutablePrice(obj.data.price);
       });
   };
 
   const fetchSkalePrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/skale`
       )
       .then((obj) => {
-        setSkalePrice(obj.data.skale.usd);
+        setSkalePrice(obj.data.price);
       });
   };
   const fetchSeiPrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/sei-network`
       )
       .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd);
+        setSeiPrice(obj.data.price);
       });
   };
 
-  const fetchMatchainPrice = async () => {
-    await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
-      .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd);
-      });
-  };
+ 
 
   const fetchCorePrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/coredaoorg`
       )
       .then((obj) => {
-        setCorePrice(obj.data.core.usd);
+        setCorePrice(obj.data.price);
       });
   };
 
   const fetchMantaPrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/manta-network`
       )
       .then((obj) => {
-        setMantaPrice(obj.data["manta-network"].usd);
+        setMantaPrice(obj.data.price);
       });
   };
 
   const fetchTaikoPrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/taiko`
       )
       .then((obj) => {
-        setTaikoPrice(obj.data["taiko"].usd);
+        setTaikoPrice(obj.data.price);
       });
   };
 
   const fetchCookiePrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=cookie&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/cookie`
       )
       .then((obj) => {
-        setCookiePrice(obj.data.cookie.usd);
+        setCookiePrice(obj.data.price);
       });
   };
 
   const fetchVictionPrice = async () => {
     await axios
       .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
+        `https://api.worldofdypians.com/api/price/tomochain`
       )
       .then((obj) => {
-        setVictionPrice(obj.data.tomochain.usd);
+        setVictionPrice(obj.data.price);
       });
   };
 
@@ -3488,7 +3474,7 @@ function App() {
     fetchTaikoPrice();
     fetchCookiePrice();
     fetchCorePrice();
-    fetchMatchainPrice();
+    // fetchMatchainPrice();
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
@@ -5084,7 +5070,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="/list-my-nft"
             element={
               <ListNFT
@@ -5092,11 +5078,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                 
-                myCawsCollected={MyNFTSCaws} 
+                myCawsCollected={MyNFTSCaws}
                 myLandCollected={MyNFTSLand}
                 myTimepieceCollected={MyNFTSTimepiece}
-                screen={'list'}
+                screen={"list"}
                 authToken={authToken}
                 isConnected={isConnected}
                 chainId={networkId}
@@ -5170,7 +5155,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             exact
             path="/pool"
             element={
@@ -5249,7 +5234,7 @@ function App() {
               />
             }
           />
-          
+
           <Route
             exact
             path="/shop/nft-bridge"
@@ -5542,7 +5527,11 @@ function App() {
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
-                hasNft={MyNFTSCaws.length > 0 || MyNFTSLand.length>0 || MyNFTSTimepiece.length>0}
+                hasNft={
+                  MyNFTSCaws.length > 0 ||
+                  MyNFTSLand.length > 0 ||
+                  MyNFTSTimepiece.length > 0
+                }
               />
             }
           />

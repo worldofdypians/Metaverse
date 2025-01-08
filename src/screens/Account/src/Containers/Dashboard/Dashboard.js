@@ -9477,11 +9477,11 @@ function Dashboard({
   const fetchCFXPrice = async () => {
     await axios
       .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+        "https://api.worldofdypians.com/api/price/conflux-token"
       )
       .then((obj) => {
-        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
-          setCfxPrice(obj.data["conflux-token"].usd);
+        if (obj.data) {
+          setCfxPrice(obj.data.price);
         }
       });
   };
