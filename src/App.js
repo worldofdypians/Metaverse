@@ -88,6 +88,7 @@ import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
+import AIAgent from "./screens/AIAgent/AIAgent.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -5125,6 +5126,7 @@ function App() {
             }
           />
           <Route exact path="/tokenomics" element={<Token />} />
+          <Route exact path="/agent" element={<AIAgent />} />
           <Route
             exact
             path="/notifications"
