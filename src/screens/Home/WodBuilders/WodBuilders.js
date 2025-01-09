@@ -251,7 +251,12 @@ const WodBuilders = ({ page }) => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
+    {
+      name: "StealthEX",
+      icon: "stealthEx.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
 
     {
       name: "Balance",

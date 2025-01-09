@@ -655,6 +655,25 @@ const MyProfile = ({
                                       TrustWallet
                                     </h6>
                                   </a>
+                                  <a
+                                    href="https://stealthex.io/?amount=320.3353683438&from=wod&to=usdtbsc"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/stealthEx.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
+                                      StealthEX
+                                    </h6>
+                                  </a>
                                 </div>
                               </div>
                             </OutsideClickHandler>

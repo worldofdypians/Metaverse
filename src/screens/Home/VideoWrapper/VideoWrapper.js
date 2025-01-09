@@ -70,6 +70,11 @@ const VideoWrapper = ({
       logo: "trustWalletBuyWod.svg",
       link: "https://short.trustwallet.com/app-download",
     },
+    {
+      title: "StealthEX",
+      logo: "stealthEx.svg",
+      link: "https://stealthex.io/?amount=320.3353683438&from=wod&to=usdtbsc",
+    },
   ];
 
   const dummyBetaPassData2 = [
