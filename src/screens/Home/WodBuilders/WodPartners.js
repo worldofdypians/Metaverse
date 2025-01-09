@@ -156,7 +156,10 @@ const WodPartners = ({ full }) => {
       icon: "spaceId.svg",
     },
 
-
+    {
+      name: "StealthEX",
+      icon: "stealthEx.svg",
+    },
     {
       name: "Balance",
       icon: "balance.svg",

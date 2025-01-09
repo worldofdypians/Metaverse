@@ -244,7 +244,12 @@ const NewBuilders = () => {
       banner: "kucoinBanner.png",
       backer: false,
     },
-
+    {
+      name: "StealthEX",
+      icon: "stealthEx.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
     {
       name: "Balance",
       icon: "balance.svg",
