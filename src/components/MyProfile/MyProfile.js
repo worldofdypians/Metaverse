@@ -655,7 +655,7 @@ const MyProfile = ({
                                       TrustWallet
                                     </h6>
                                   </a>
-                                  <a
+                                  {/* <a
                                     href="https://stealthex.io/?amount=320.3353683438&from=wod&to=usdtbsc"
                                     target="_blank"
                                     rel="noreferrer"
@@ -673,7 +673,7 @@ const MyProfile = ({
                                       />
                                       StealthEX
                                     </h6>
-                                  </a>
+                                  </a> */}
                                 </div>
                               </div>
                             </OutsideClickHandler>
