@@ -351,6 +351,12 @@ const NewBuilders = () => {
       icon: "dar.svg",
       backer: false,
     },
+    {
+      name: "BlockusGG",
+      icon: "blockus.svg",
+      backer: false,
+
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
