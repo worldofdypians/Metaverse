@@ -169,7 +169,7 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
-      name: "Cookie3",
+      name: "Cookie DAO",
       icon: "cookie3",
       banner: "cookie3Banner.webp",
       link: "https://x.com/Cookie3_com/status/1824052238404255889",
@@ -246,7 +246,7 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
-      name: "SpaceID",
+      name: "Space ID",
       icon: "spaceId",
       banner: "kucoinBanner.png",
       backer: false,
