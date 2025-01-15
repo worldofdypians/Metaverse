@@ -244,6 +244,10 @@ const WodPartners = ({ full }) => {
       name: "DAR",
       icon: "dar.svg",
     },
+    {
+      name: "BlockusGG",
+      icon: "blockus.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
