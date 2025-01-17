@@ -913,7 +913,7 @@ const SingleNft = ({
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
+    `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
 
     const itemBoughtQuery = `
         {
@@ -1298,7 +1298,7 @@ const SingleNft = ({
     let finalboughtItems = [];
 
     const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
+    `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
 
     const itemBoughtQuery = `
         {
