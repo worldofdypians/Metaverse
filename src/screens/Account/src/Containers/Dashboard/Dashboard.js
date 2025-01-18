@@ -20,6 +20,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
@@ -534,8 +535,7 @@ function Dashboard({
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
-  const [listedNFTS, setListedNFTS] = useState([]);
+ 
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
@@ -7356,7 +7356,6 @@ function Dashboard({
 
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
-
     const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
     listedNFTS &&
       listedNFTS.length > 0 &&
@@ -7375,8 +7374,15 @@ function Dashboard({
           finalboughtItems1.push(nft);
         }
       });
-    setListedNFTS(finalboughtItems1);
+    return finalboughtItems1;
   };
+
+  const {   data: listedNFTS } = useReactQuery({
+    queryKey: ["seller"],
+    queryFn: getOtherNfts,
+    refetchInterval: 300000,
+    staleTime: 300000,
+  }); 
 
   const windowSize = useWindowSize();
 
@@ -7519,80 +7525,7 @@ function Dashboard({
     }
   };
 
-  const getMyOffers = async () => {
-    //setmyOffers
-
-    let allOffers = [];
-
-    const URL =
-    `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
-
-    const offersQuery = `
-    {
-      offerMades(first: 100) {
-        id
-        buyer
-        nftAddress
-        tokenId
-      }
-    }
-    `;
-
-    await axios
-      .post(URL, { query: offersQuery })
-      .then(async (result) => {
-        allOffers = await result.data.data.offerMades;
-        setallOffers(result.data.data.offerMades);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    if (allOffers.length > 0) {
-      let finalArray = [];
-      await Promise.all(
-        allOffers.map(async (nft) => {
-          const result = await window
-            .getAllOffers(nft.nftAddress, nft.tokenId)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            if (coinbase) {
-              result.map((item) => {
-                if (
-                  item.offer.buyer?.toLowerCase() === coinbase.toLowerCase()
-                ) {
-                  return finalArray.push({
-                    offer: item.offer,
-                    index: item.index,
-                    nftAddress: nft.nftAddress,
-                    tokenId: nft.tokenId,
-                    type:
-                      nft.nftAddress === window.config.nft_caws_address
-                        ? "caws"
-                        : nft.nftAddress === window.config.nft_timepiece_address
-                        ? "timepiece"
-                        : "land",
-                  });
-                }
-              });
-            }
-          }
-        })
-      );
-      let uniqueOffers = finalArray.filter(
-        (v, i, a) =>
-          a.findIndex(
-            (v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress
-          ) === i
-      );
-
-      setmyOffers(uniqueOffers);
-    }
-  };
-
+ 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
     if (
@@ -10418,7 +10351,7 @@ function Dashboard({
   }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
-    getOtherNfts();
+    
     getDypBalance(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
 

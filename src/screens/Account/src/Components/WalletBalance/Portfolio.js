@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 import Pagination from "@mui/material/Pagination";
@@ -96,8 +97,7 @@ const Portfolio = ({
   const [showNfts, setShowNfts] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
   const [loading, setLoading] = useState(false);
-  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
-  const [allListed, setAllListed] = useState([]);
+  const [loadingRecentListings, setLoadingRecentListings] = useState(false); 
 
   const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("all");
@@ -228,18 +228,28 @@ const Portfolio = ({
     borderColor: "#554fd8",
   };
 
-  const getAllnftsListed = async () => {
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "seller",
-      address ? address : coinbase,
-      ""
-    );
-
-    setAllListed(listedNFTS);
+  const fetchAllNFTs = async () => {
+    try {
+      const data =  await getListedNFTS(
+        0,
+        "",
+        "seller",
+        address ? address : coinbase,
+        "");
+      return data;
+    } catch (error) {
+      throw new Error("Failed to fetch listed NFTs");
+    }
   };
 
+  const {   data: allListed } = useReactQuery({
+    queryKey: ["seller"],
+    queryFn: fetchAllNFTs,
+    refetchInterval: 300000,
+    staleTime: 300000,
+    
+  }); 
+  
   const sortNfts = (sortValue) => {
      if (sortValue === "collected") {
       setFilterTitle("Collected");
@@ -1484,10 +1494,7 @@ const Portfolio = ({
   //     getCollected();
   //   }
   // }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
-
-  useEffect(() => {
-    getAllnftsListed();
-  }, [listedNFTS]);
+ 
 
   useEffect(() => {
     getTwonfts();
