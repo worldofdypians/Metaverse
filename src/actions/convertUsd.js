@@ -39,7 +39,7 @@ const getListedNftResult = async () => {
       return item.payment_priceType === 0;
     });
     return result2;
-  }
+  } else return []
 };
 
 getDypPrice();

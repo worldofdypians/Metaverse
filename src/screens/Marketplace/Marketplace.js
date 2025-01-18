@@ -51,8 +51,8 @@ const Marketplace = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
   const [recentListed, setRecentListed] = useState(latest20RecentListedNFTS);
-  const [recentSold, setRecentSold] = useState(recentSales);
-  const [topSold, setTopSold] = useState(recentSales);
+  const [recentSold, setRecentSold] = useState(recentSales ?? []);
+  const [topSold, setTopSold] = useState(recentSales ?? []);
   const [topSalesFilter, setTopSalesFilter] = useState("all");
   const [recentListingsFilter, setRecentListingsFilter] = useState("all");
   const [recentSalesFilter, setRecentSalesFilter] = useState("all");
@@ -552,7 +552,7 @@ const Marketplace = ({
   useEffect(() => {
     initialSales();
     setRecentListed(latest20RecentListedNFTS);
-    setRecentSalesFilter(recentSales);
+    setRecentSalesFilter('all');
 
     // if (recentSales && recentSales.length === 0) {
     //   setLoadingRecentSales(true);
@@ -607,6 +607,7 @@ const Marketplace = ({
   ];
 
   const initialSales = () => {
+    if(recentSales){
     let datedSales = recentSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
     });
@@ -615,7 +616,7 @@ const Marketplace = ({
       return item.date > week._d && item.date < today._d;
     });
 
-    setTopSold(filteredDateSales);
+    setTopSold(filteredDateSales);}
   };
 
   const filterTopSales = () => {
@@ -674,7 +675,7 @@ const Marketplace = ({
   useEffect(() => {
     filterTopSales();
   }, [topSalesFilter, topSalesDate]);
-
+  
   const filterRecentListings = (filter) => {
     // setLoadingRecentListings(true);
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
@@ -736,6 +737,7 @@ const Marketplace = ({
   const filterRecentSales = (filter) => {
     // setLoadingRecentSales(true);dummyDataSales
     if (recentSales && recentSales.length > 0) {
+      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = recentSales.filter(
@@ -761,6 +763,7 @@ const Marketplace = ({
         setRecentSold(recentSales);
       }
     } else {
+      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = dummyDataSales.filter(
@@ -811,7 +814,7 @@ const Marketplace = ({
 
   useEffect(() => {
     setRecentSalesFilter("all");
-    setRecentSold(recentSales);
+    setRecentSold(recentSales ?? []);
   }, [recentSales]);
 
   const cutLength = () => {
@@ -1272,7 +1275,7 @@ const Marketplace = ({
               )}
               {showSecondNext === activeSlide2
                 ? null
-                : recentSold.length > sliderCut && (
+                : recentSold?.length > sliderCut && (
                     // <img
                     //   src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'}
                     //   width={40}
