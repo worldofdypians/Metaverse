@@ -1980,7 +1980,7 @@ const SingleNft = ({
     const listedNFTS = currentNft;
     const nftOwner = await getNftOwner(type, tokenId);
 
-    if (listedNFTS.length > 0) {
+    if (listedNFTS && listedNFTS.length > 0) {
       if (listedNFTS[0].seller.toLowerCase() !== nftOwner.toLowerCase()) {
         setIsListed(false);
       } else if (
@@ -2743,7 +2743,7 @@ const SingleNft = ({
 
   useEffect(() => {
     checkisListedNFT(nftId, nftAddress);
-  }, [nftId, nftAddress, owner]);
+  }, [nftId, nftAddress, owner, currentNft]);
 
   useEffect(() => {
     getOffer();
