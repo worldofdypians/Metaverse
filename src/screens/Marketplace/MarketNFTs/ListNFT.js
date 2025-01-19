@@ -69,6 +69,75 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+const getAllnftsListed = async (wallet) => {
+  const listedNFTS = await getListedNFTS(0, "", "seller", wallet, "");
+  return listedNFTS
+};
+
+
+const useSharedData = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller"],
+    queryFn: getAllnftsListed(wallet),
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
+const fetchCurrentNft = async (nftId, nftAddress) => {
+  try {
+    const data =  await getListedNFTS(
+      0,
+      "",
+      "nftAddress_tokenId",
+      nftId, nftAddress);
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataCurrentNft = (nftId, nftAddress) => {
+  return useReactQuery({
+    queryKey: ["nftAddress_tokenId"],
+    queryFn: fetchCurrentNft(nftId, nftAddress),
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
+const getListedNtsAsc = async () => { 
+  const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+  let ethNftsAsc = ethNfts.sort((a, b) => {
+    return a.price - b.price;
+  }); 
+  return ethNftsAsc
+};
+
+const useSharedListedNtsAsc = () => {
+  return useReactQuery({
+    queryKey: ["payment_priceType", "ETH"],
+    queryFn: getListedNtsAsc,
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
+
+ 
+
+ 
+ 
+
 const ListNFT = ({
   coinbase,
   showWalletConnect,
@@ -252,38 +321,9 @@ const ListNFT = ({
     setCollectedPageSlice(value * 12);
   };
 
-  const getAllnftsListed = async () => {
-    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
-    return listedNFTS
-  };
-
-  const {   data: allListed } = useReactQuery({
-    queryKey: ["seller"],
-    queryFn: getAllnftsListed,
-    refetchInterval: 300000,
-    staleTime: 300000,
-  }); 
-
-  const fetchCurrentNft = async () => {
-    try {
-      const data =  await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        nftId, nftAddress);
-      return data;
-    } catch (error) {
-      throw new Error("Failed to fetch listed NFTs");
-    }
-  };
-
-  const {   data: currentNft } = useReactQuery({
-    queryKey: ["nftAddress_tokenId"],
-    queryFn: fetchCurrentNft,
-    refetchInterval: 300000,
-    staleTime: 300000,
-    
-  }); 
+ 
+  const { data: allListed } = useSharedData(coinbase); 
+  const {   data: currentNft } = useSharedDataCurrentNft(nftId, nftAddress); 
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
@@ -307,25 +347,8 @@ const ListNFT = ({
     }
   };
 
-  const getListedNtsAsc = async () => { 
-
-
-    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-
-    let ethNftsAsc = ethNfts.sort((a, b) => {
-      return a.price - b.price;
-    }); 
-    return ethNftsAsc
-    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
-  };
-
-  const {   data: lowestPriceNftListed } = useReactQuery({
-    queryKey: ["payment_priceType", "ETH"],
-    queryFn: getListedNtsAsc,
-    refetchInterval: 300000,
-    staleTime: 300000,
-    
-  }); 
+ 
+  const {   data: lowestPriceNftListed } = useSharedListedNtsAsc(); 
 
   const getCollected = async () => {
     var finalTimepieceArray = [];

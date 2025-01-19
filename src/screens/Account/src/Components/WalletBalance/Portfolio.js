@@ -12,6 +12,33 @@ import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
   
+
+const fetchAllNFTs = async (wallet) => {
+  try { 
+    const data =  await getListedNFTS(
+      0,
+      "",
+      "seller",
+     wallet,
+      "");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedData = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller"],
+    queryFn: fetchAllNFTs(wallet),
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+ 
+
 const Portfolio = ({
   dypBalance,
   address,
@@ -228,27 +255,7 @@ const Portfolio = ({
     borderColor: "#554fd8",
   };
 
-  const fetchAllNFTs = async () => {
-    try {
-      const data =  await getListedNFTS(
-        0,
-        "",
-        "seller",
-        address ? address : coinbase,
-        "");
-      return data;
-    } catch (error) {
-      throw new Error("Failed to fetch listed NFTs");
-    }
-  };
-
-  const {   data: allListed } = useReactQuery({
-    queryKey: ["seller"],
-    queryFn: fetchAllNFTs,
-    refetchInterval: 300000,
-    staleTime: 300000,
-    
-  }); 
+  const { data: allListed } = useSharedData(address ? address : coinbase); 
   
   const sortNfts = (sortValue) => {
      if (sortValue === "collected") {

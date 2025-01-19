@@ -104,6 +104,45 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+
+const getOtherNfts = async (wallet) => {
+  let finalboughtItems1 = [];
+  const listedNFTS = await getListedNFTS(0, "", "seller", wallet, "");
+  listedNFTS &&
+    listedNFTS.length > 0 &&
+    listedNFTS.map((nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      }
+    });
+  return finalboughtItems1;
+};
+
+
+const useSharedData = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller"],
+    queryFn: getOtherNfts(wallet),
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+ 
+
+ 
+
 function Dashboard({
   dailyBonuslistedNFTS,
   account,
@@ -7354,35 +7393,7 @@ function Dashboard({
     );
   };
 
-  const getOtherNfts = async () => {
-    let finalboughtItems1 = [];
-    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
-    listedNFTS &&
-      listedNFTS.length > 0 &&
-      listedNFTS.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        }
-      });
-    return finalboughtItems1;
-  };
-
-  const {   data: listedNFTS } = useReactQuery({
-    queryKey: ["seller"],
-    queryFn: getOtherNfts,
-    refetchInterval: 300000,
-    staleTime: 300000,
-  }); 
+  const {   data: listedNFTS } = useSharedData(coinbase); 
 
   const windowSize = useWindowSize();
 
