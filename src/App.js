@@ -129,6 +129,105 @@ const binanceConnector = new Connector({
   },
 });
 
+
+const fetchAllNFTs = async () => {
+  try {
+    const data = await getAllNfts();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+    
+  }
+};
+
+ 
+
+const useSharedData = () => {
+  return useReactQuery({
+    queryKey: ["nfts"],
+    queryFn: fetchAllNFTs,
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
+const fetchListedNFTs = async () => {
+  try {
+    const data = await getListedNFTS(0, "", "recentListedNFTS");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataListedNfts = () => {
+  return useReactQuery({
+    queryKey: ["recentListedNFTS"],
+    queryFn: fetchListedNFTs,
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+ 
+
+const fetchLatest20BoughtNFTs = async () => {
+  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+  const itemBoughtQuery = `
+    {
+      itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+        nftAddress
+        tokenId
+        payment_priceType
+        price
+        buyer
+        blockNumber
+        blockTimestamp
+      }
+    }
+  `;
+
+  try {
+    const result = await axios.post(URL, { query: itemBoughtQuery });
+    const boughtItems = result.data.data.itemBoughts || [];
+    const finalBoughtItems = boughtItems
+      .map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          return { ...nft, type: "caws", chain: 1 };
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          return { ...nft, type: "land", chain: 1 };
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          return { ...nft, type: "timepiece", chain: 1 };
+        }
+        return null;
+      })
+      .filter(Boolean); // Remove null values
+    return finalBoughtItems;
+  } catch (error) {
+    console.error("Error fetching latest NFTs:", error);
+    throw error;
+  }
+};
+
+const useSharedDataLatest20BoughtNFTs = () => {
+  return useReactQuery({
+    queryKey: ["latestBoughtNFTs"],
+    queryFn: fetchLatest20BoughtNFTs,
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
+
+
 function App() {
   const dataFetchedRef = useRef(false);
 
@@ -2758,95 +2857,17 @@ function App() {
     }
   }, [authToken, data, isConnected, coinbase]);
 
-  const fetchLatest20BoughtNFTs = async () => {
-    const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
-    const itemBoughtQuery = `
-      {
-        itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
-          nftAddress
-          tokenId
-          payment_priceType
-          price
-          buyer
-          blockNumber
-          blockTimestamp
-        }
-      }
-    `;
-
-    try {
-      const result = await axios.post(URL, { query: itemBoughtQuery });
-      const boughtItems = result.data.data.itemBoughts || [];
-      const finalBoughtItems = boughtItems
-        .map((nft) => {
-          if (nft.nftAddress === window.config.nft_caws_address) {
-            return { ...nft, type: "caws", chain: 1 };
-          } else if (nft.nftAddress === window.config.nft_land_address) {
-            return { ...nft, type: "land", chain: 1 };
-          } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-            return { ...nft, type: "timepiece", chain: 1 };
-          }
-          return null;
-        })
-        .filter(Boolean); // Remove null values
-      return finalBoughtItems;
-    } catch (error) {
-      console.error("Error fetching latest NFTs:", error);
-      throw error;
-    }
-  };
+ 
+  const { isPending: loadingRecentSales, data: latest20BoughtNFTS } = useSharedDataLatest20BoughtNFTs();
 
   const handleRefreshList = () => {
     setNftCount(nftCount + 1);
   };
 
-  const fetchListedNFTs = async () => {
-    try {
-      const data = await getListedNFTS(0, "", "recentListedNFTS");
-      return data;
-    } catch (error) {
-      throw new Error("Failed to fetch listed NFTs");
-    }
-  };
+ 
 
-  // const { data: recentListedNFTS2, isLoading, isError } = useReactQuery(
-  //   'recentListedNFTS',
-  //   fetchListedNFTs,
-  //   {
-  //     onSuccess: () => {
-  //       setCount44((prev) => prev + 1);
-  //     },
-  //     refetchOnWindowFocus: false,
-  //     retry: 3,
-  //   }
-  // );
-
-  const { isPending, data: recentListedNFTS2 } = useReactQuery({
-    queryKey: ["recentListedNFTS"],
-    queryFn: fetchListedNFTs,
-    refetchInterval: 300000,
-    staleTime: 300000,
-    onSuccess: () => { 
-      setCount44((prev) => prev + 1);
-    },
-  });
-
-  const fetchAllNFTs = async () => {
-    try {
-      const data = await getAllNfts();
-      return data;
-    } catch (error) {
-      throw new Error("Failed to fetch listed NFTs");
-      
-    }
-  };
-
-  const { data: allNfts } = useReactQuery({
-    queryKey: ["nfts"],
-    queryFn: fetchAllNFTs,
-    refetchInterval: 300000,
-    staleTime: 300000,
-  });
+  const {data: recentListedNFTS2 } = useSharedDataListedNfts();
+  const { data: allNfts } = useSharedData()
   
   const getOtherNfts = async () => {
     let finalboughtItems1 = []; 
@@ -4134,29 +4155,8 @@ function App() {
       },
     },
   ];
-  // const {
-  //   data: latest20BoughtNFTS,
-  //   isLoading : loadingRecentSales,
-  // } = useReactQuery(
-  //   "latestBoughtNFTs",
-  //   fetchLatest20BoughtNFTs,
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     refetchOnReconnect: true,
-  //     refetchInterval: 300000,
-  //     staleTime: 300000,
-  //   }
-  // );
+   
 
-  const { isPending: loadingRecentSales, data: latest20BoughtNFTS } =
-    useReactQuery({
-      queryKey: ["latestBoughtNFTs"],
-      queryFn: fetchLatest20BoughtNFTs,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      refetchInterval: 300000,
-      staleTime: 300000,
-    });
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;

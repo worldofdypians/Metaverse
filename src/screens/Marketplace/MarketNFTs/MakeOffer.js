@@ -10,6 +10,27 @@ import getListedNFTS from "../../../actions/Marketplace";
 import { ethers } from "ethers";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
 
+
+const getListedNtsAsc = async () => { 
+  const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+  let ethNftsAsc = ethNfts.sort((a, b) => {
+    return a.price - b.price;
+  }); 
+  return ethNftsAsc
+};
+
+const useSharedListedNtsAsc = () => {
+  return useReactQuery({
+    queryKey: ["payment_priceType", "ETH"],
+    queryFn: getListedNtsAsc,
+    staleTime: 5 * 60 * 1000,  
+    cacheTime: 6 * 60 * 1000,  
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: false, 
+  });
+};
+
+
 const MakeOffer = ({
   open,
   onclose,
@@ -47,25 +68,7 @@ const MakeOffer = ({
 
   const { BigNumber } = window;
 
-  const getListedNtsAsc = async () => { 
-
-
-    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-
-    let ethNftsAsc = ethNfts.sort((a, b) => {
-      return a.price - b.price;
-    }); 
-    return ethNftsAsc
-    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
-  };
-
-  const {   data: lowestPriceNftListed } = useReactQuery({
-    queryKey: ["payment_priceType", "ETH"],
-    queryFn: getListedNtsAsc,
-    refetchInterval: 300000,
-    staleTime: 300000,
-    
-  }); 
+  const {   data: lowestPriceNftListed } = useSharedListedNtsAsc(); 
 
 
   const getOffer = async () => {
