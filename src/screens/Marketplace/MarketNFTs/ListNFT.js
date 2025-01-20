@@ -78,7 +78,7 @@ const getAllnftsListed = async (wallet) => {
 const useSharedData = (wallet) => {
   return useReactQuery({
     queryKey: ["seller", wallet],
-    queryFn: getAllnftsListed(wallet),
+    queryFn:() => getAllnftsListed(wallet),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
@@ -104,7 +104,7 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftAddress_tokenId",nftId, nftAddress],
-    queryFn: fetchCurrentNft(nftId, nftAddress),
+    queryFn: () => fetchCurrentNft(nftId, nftAddress),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
