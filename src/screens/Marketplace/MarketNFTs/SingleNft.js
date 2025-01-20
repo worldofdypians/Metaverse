@@ -104,12 +104,14 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
-    queryKey: ["nftAddress_tokenId"],
-    queryFn: fetchCurrentNft(nftId, nftAddress),
+    queryKey: ["nftAddress_tokenId",nftId, nftAddress],
+    queryFn: () => fetchCurrentNft(nftId, nftAddress),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
+
   });
 };
 
@@ -230,8 +232,7 @@ const SingleNft = ({
   const {   data: lowestPriceNftListed } = useSharedListedNtsAsc(); 
 
   const { data: currentNft } = useSharedDataCurrentNft(nftId, nftAddress);
-
-
+  
 
   const getOffer = async () => {
     let finalArray = [];

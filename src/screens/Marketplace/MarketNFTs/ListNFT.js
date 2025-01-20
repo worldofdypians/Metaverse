@@ -77,12 +77,13 @@ const getAllnftsListed = async (wallet) => {
 
 const useSharedData = (wallet) => {
   return useReactQuery({
-    queryKey: ["seller"],
-    queryFn: getAllnftsListed(wallet),
+    queryKey: ["seller", wallet],
+    queryFn:() => getAllnftsListed(wallet),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    enabled: !!wallet,
   });
 };
 
@@ -102,12 +103,13 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
-    queryKey: ["nftAddress_tokenId"],
-    queryFn: fetchCurrentNft(nftId, nftAddress),
+    queryKey: ["nftAddress_tokenId",nftId, nftAddress],
+    queryFn: () => fetchCurrentNft(nftId, nftAddress),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
   });
 };
 
