@@ -23,8 +23,8 @@ const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType", "ETH"],
     queryFn: getListedNtsAsc,
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
