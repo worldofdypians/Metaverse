@@ -1,65 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
-import './_aiagent.scss'
-import model from './model.glb'
+import { Loader } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Leva } from "leva";
+import { Experience } from "./components/Experience";
+import { UI } from "./components/UI";
 
-// Viseme mapping example
-const visemeMap = {
-    "AH": 0.8,
-    "O": 0.5,
-    "E": 0.7,
-    // Add more visemes and intensities
-  };
-
-
-  function Avatar({ viseme }) {
-    const { scene } = useGLTF(model);
-    const mouthBlendShape = scene.children[0].morphTargetDictionary['MouthShape'];
-  
-    useEffect(() => {
-      if (mouthBlendShape) {
-        mouthBlendShape.weight = visemeMap[viseme] || 0; // Set weight based on viseme
-      }
-    }, [viseme]);
-  
-    return <primitive object={scene} scale={1.5} />;
-  }
-
-
-const AIAgent = () => {
-
-    const [viseme, setViseme] = useState('');
-
-    const speak = (text) => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.onboundary = (event) => {
-        const char = text[event.charIndex];
-        const detectedViseme = detectViseme(char); // Map char to a viseme
-        setViseme(detectedViseme);
-      };
-      window.speechSynthesis.speak(utterance);
-    };
-  
-    const detectViseme = (char) => {
-      // Map characters to visemes (simplified example)
-      if ('aeiou'.includes(char)) return 'AH';
-      if ('o'.includes(char)) return 'O';
-      if ('e'.includes(char)) return 'E';
-      return '';
-    };
-  
-
+function AiAgent() {
   return (
-    <div>
-      <Canvas>
-        <ambientLight intensity={0.5} />
-        <Avatar viseme={viseme} />
-        <OrbitControls />
+    <>
+      <Loader />
+      <Leva hidden />
+      <div className="container-fluid d-flex justify-content-center" style={{marginTop: "100px"}}>
+        <div className="custom-container">
+        <div className="row">
+          <div className="col-12 col-lg-4">
+
+      <Canvas shadows camera={{ position: [0, 0, 1], fov: 30 }} style={{height: "70vh", pointerEvents: "none"}}>
+        <Experience />
       </Canvas>
-      <button onClick={() => speak("Hello, I am your assistant!")}>Speak</button>
-    </div>
-  )
+          </div>
+        <div className="col-12 col-lg-8">
+      <UI />
+        </div>
+        </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default AIAgent
+export default AiAgent;

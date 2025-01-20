@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
- 
+
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
 import { ApolloProvider } from "@apollo/client";
 import client from "./screens/Account/src/apolloConfig";
@@ -12,6 +12,7 @@ import client from "./screens/Account/src/apolloConfig";
 import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
+import { ChatProvider } from "./screens/AIAgent/hooks/useChat";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -28,7 +29,9 @@ root.render(
       <Web3ReactProvider getLibrary={getLibrary}>
         <ApolloProvider client={client}>
           <AuthProvider>
-            <App />
+            <ChatProvider>
+              <App />
+            </ChatProvider>
           </AuthProvider>
         </ApolloProvider>
       </Web3ReactProvider>
