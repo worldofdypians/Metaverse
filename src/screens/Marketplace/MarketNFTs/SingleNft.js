@@ -82,9 +82,9 @@ const useSharedListedNtsAsc = () => {
     queryKey: ["payment_priceType", "ETH"],
     queryFn: getListedNtsAsc,
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
   });
 };
 
@@ -107,9 +107,9 @@ const useSharedDataCurrentNft = (nftId, nftAddress) => {
     queryKey: ["nftAddress_tokenId"],
     queryFn: fetchCurrentNft(nftId, nftAddress),
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
   });
 };
 

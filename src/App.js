@@ -147,9 +147,9 @@ const useSharedData = () => {
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false, 
   });
 };
 
@@ -168,9 +168,9 @@ const useSharedDataListedNfts = () => {
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
   });
 };
 
@@ -219,9 +219,9 @@ const useSharedDataLatest20BoughtNFTs = () => {
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
   });
 };
 
