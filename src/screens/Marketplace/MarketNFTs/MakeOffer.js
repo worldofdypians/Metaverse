@@ -24,9 +24,9 @@ const useSharedListedNtsAsc = () => {
     queryKey: ["payment_priceType", "ETH"],
     queryFn: getListedNtsAsc,
     staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000,  
-    refetchInterval: 5 * 60 * 1000,
-    refetchOnWindowFocus: false, 
+    cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
   });
 };
 
