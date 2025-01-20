@@ -131,12 +131,13 @@ const getOtherNfts = async (wallet) => {
 
 const useSharedData = (wallet) => {
   return useReactQuery({
-    queryKey: ["seller"],
+    queryKey: ["seller", wallet],
     queryFn: getOtherNfts(wallet),
     staleTime: 5 * 60 * 1000,  
     cacheTime: 6 * 60 * 1000, 
     refetchOnWindowFocus: false,
     refetchInterval: false,
+    enabled: !!wallet,
   });
 };
  
