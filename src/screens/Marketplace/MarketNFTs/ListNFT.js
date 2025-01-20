@@ -79,9 +79,9 @@ const useSharedData = (wallet) => {
   return useReactQuery({
     queryKey: ["seller", wallet],
     queryFn:() => getAllnftsListed(wallet),
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
-    refetchOnWindowFocus: false,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
     refetchInterval: false,
     enabled: !!wallet,
   });
@@ -105,9 +105,9 @@ const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
     queryKey: ["nftAddress_tokenId",nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
-    refetchOnWindowFocus: false,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
   });
@@ -126,9 +126,9 @@ const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType", "ETH"],
     queryFn: getListedNtsAsc,
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
-    refetchOnWindowFocus: false,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
     refetchInterval: false,
   });
 };
@@ -136,7 +136,68 @@ const useSharedListedNtsAsc = () => {
 
 
  
+const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
+  let boughtItems = [];
+  let finalboughtItems = [];
 
+  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+
+  const itemBoughtQuery = `
+      {
+          itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
+          nftAddress
+          tokenId
+          payment_priceType
+          price
+          buyer
+          blockNumber
+          blockTimestamp
+          transactionHash
+      }
+      }
+      `;
+
+  await axios
+    .post(URL, { query: itemBoughtQuery })
+    .then(async (result) => {
+      boughtItems = await result.data.data.itemBoughts;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  boughtItems &&
+    boughtItems.map((nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      }
+    });
+
+  // setsaleHistory(finalboughtItems);
+  return finalboughtItems;
+};
+
+const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
+  return useReactQuery({
+    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
+    queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
+  });
+};
  
  
 
@@ -198,8 +259,7 @@ const ListNFT = ({
   const [showToast, setShowToast] = useState(false);
   const [toastTitle, setToastTitle] = useState("");
 
-  const [metaData, setmetaData] = useState([]);
-  const [saleHistory, setsaleHistory] = useState([]);
+  const [metaData, setmetaData] = useState([]); 
 
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
@@ -1519,57 +1579,7 @@ const ListNFT = ({
     }
   };
 
-  const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-
-    const URL =
-    `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-            transactionHash
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-
-    setsaleHistory(finalboughtItems);
-    return finalboughtItems;
-  };
+  const { data: saleHistory } = useSharedDataLatest20BoughtNFTS();
 
   async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
     try {
@@ -2758,8 +2768,7 @@ const ListNFT = ({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     window.scrollTo(0, 0);
-    getFavoritesCount(nftId, nftAddress);
-    getLatest20BoughtNFTS(nftAddress, nftId);
+    getFavoritesCount(nftId, nftAddress); 
   }, []);
 
 

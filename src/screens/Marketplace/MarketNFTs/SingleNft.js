@@ -68,34 +68,34 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-
-const getListedNtsAsc = async () => { 
+const getListedNtsAsc = async () => {
   const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
   let ethNftsAsc = ethNfts.sort((a, b) => {
     return a.price - b.price;
-  }); 
-  return ethNftsAsc
+  });
+  return ethNftsAsc;
 };
 
 const useSharedListedNtsAsc = () => {
   return useReactQuery({
     queryKey: ["payment_priceType", "ETH"],
     queryFn: getListedNtsAsc,
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
   });
 };
 
-
 const fetchCurrentNft = async (nftId, nftAddress) => {
   try {
-    const data =  await getListedNFTS(
+    const data = await getListedNFTS(
       0,
       "",
       "nftAddress_tokenId",
-      nftId, nftAddress);
+      nftId,
+      nftAddress
+    );
     return data;
   } catch (error) {
     throw new Error("Failed to fetch listed NFTs");
@@ -104,17 +104,78 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
-    queryKey: ["nftAddress_tokenId",nftId, nftAddress],
+    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
-    staleTime: 5 * 60 * 1000,  
-    cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     enabled: !!nftId && !!nftAddress,
-
   });
 };
 
+const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
+  let boughtItems = [];
+  let finalboughtItems = [];
+
+  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+
+  const itemBoughtQuery = `
+      {
+          itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
+          nftAddress
+          tokenId
+          payment_priceType
+          price
+          buyer
+          blockNumber
+          blockTimestamp
+          transactionHash
+      }
+      }
+      `;
+
+  await axios
+    .post(URL, { query: itemBoughtQuery })
+    .then(async (result) => {
+      boughtItems = await result.data.data.itemBoughts;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  boughtItems &&
+    boughtItems.map((nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      }
+    });
+
+  // setsaleHistory(finalboughtItems);
+  return finalboughtItems;
+};
+
+const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
+  return useReactQuery({
+    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
+    queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
+  });
+};
 
 const SingleNft = ({
   coinbase,
@@ -171,7 +232,6 @@ const SingleNft = ({
   const [toastTitle, setToastTitle] = useState("");
 
   const [metaData, setmetaData] = useState([]);
-  const [saleHistory, setsaleHistory] = useState([]);
 
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
@@ -229,10 +289,9 @@ const SingleNft = ({
     }
   };
 
-  const {   data: lowestPriceNftListed } = useSharedListedNtsAsc(); 
+  const { data: lowestPriceNftListed } = useSharedListedNtsAsc();
 
   const { data: currentNft } = useSharedDataCurrentNft(nftId, nftAddress);
-  
 
   const getOffer = async () => {
     let finalArray = [];
@@ -871,20 +930,20 @@ const SingleNft = ({
   const handleRefreshList = async (type, tokenId) => {
     if (type === "timepiece") {
       let nft_address = window.config.nft_timepiece_address;
-      const listedNFT =currentNft;
+      const listedNFT = currentNft;
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
       }
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
-      const listedNFT =currentNft;
+      const listedNFT = currentNft;
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
       }
     } else {
       let nft_address = window.config.nft_caws_address;
-      const listedNFT =currentNft;
+      const listedNFT = currentNft;
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
@@ -1305,57 +1364,7 @@ const SingleNft = ({
       }
     }
   };
-
-  const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-
-    const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-            transactionHash
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-
-    setsaleHistory(finalboughtItems);
-    return finalboughtItems;
-  };
+  const { data: saleHistory } = useSharedDataLatest20BoughtNFTS();
 
   async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
     try {
@@ -1986,7 +1995,6 @@ const SingleNft = ({
     }
   }
 
-
   async function checkisListedNFT(tokenId, nftAddr) {
     setloadingNft(true);
     const listedNFTS = currentNft;
@@ -2083,7 +2091,8 @@ const SingleNft = ({
   };
 
   const handleMakeOffer = async (price, pricetype, tokenType) => {
-    setOfferStatus("loading");
+    if(price > 0)
+   { setOfferStatus("loading");
     const newPrice = new BigNumber(price * 1e18).toFixed();
     if (window.WALLET_TYPE !== "binance") {
       await window
@@ -2173,7 +2182,8 @@ const SingleNft = ({
           setOfferStatus("initial");
         }, 3000);
       }
-    }
+    }}
+    else window.alertify.error("Please enter a valid price");
   };
 
   const handleDeleteOffer = async (offerIndex) => {
@@ -2542,7 +2552,7 @@ const SingleNft = ({
     dataFetchedRef.current = true;
     window.scrollTo(0, 0);
     getFavoritesCount(nftId, nftAddress);
-    getLatest20BoughtNFTS(nftAddress, nftId);
+    // getLatest20BoughtNFTS(nftAddress, nftId);
   }, []);
 
   useEffect(() => {
@@ -4601,7 +4611,7 @@ const SingleNft = ({
             </div>
           )}
 
-          {offerData && offerData.length > 0 && (
+          {offerData && offerData.length > 0 && offerData.filter((items)=>{return items.offer.price > 0}).length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
                 <span className="nftactivity">NFT Offers Activity </span>
@@ -4614,7 +4624,7 @@ const SingleNft = ({
                       <th className="saleHeader">From</th>
                       {isOwner && <th className="saleHeader">Action</th>}
 
-                      {offerData.map((item, index) => {
+                      {offerData.filter((items)=>{return items.offer.price > 0}).map((item, index) => {
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
