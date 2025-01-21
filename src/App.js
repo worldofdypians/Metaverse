@@ -4819,7 +4819,9 @@ function App() {
   }, [coinbase, isConnected, networkId, countBalance]);
 
   useEffect(() => {
+    if(authToken && !isTokenExpired(authToken) && email) {
     fetchUserFavorites(coinbase);
+    }
     // refreshSubscription();
   }, [coinbase, data, authToken, isConnected, email]);
 
@@ -5310,6 +5312,7 @@ function App() {
                   setshowSync(false);
                 }}
                 coingeckoEarnUsd={userEarnUsd}
+                isTokenExpired={()=>{isTokenExpired(authToken)}}
               />
             }
           />
@@ -5319,6 +5322,7 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
+              isTokenExpired={()=>{isTokenExpired(authToken)}}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -6071,6 +6075,7 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
+              isTokenExpired={()=>{isTokenExpired(authToken)}}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}

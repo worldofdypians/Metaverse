@@ -203,6 +203,7 @@ function Dashboard({
   midleEarnUsd,
   coingeckoEarnUsd,
   chainlinkEarnUsd,
+  isTokenExpired
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -10368,10 +10369,10 @@ function Dashboard({
   }, [account, userWallet, isConnected]);
 
   useEffect(() => {
-    if (authToken && email && isConnected) {
+    if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
     }
-  }, [account, userWallet, isConnected, authToken, email]);
+  }, [account, userWallet, isConnected, authToken, email,isTokenExpired]);
 
   useEffect(() => {
     refetchPlayer();
