@@ -288,7 +288,7 @@ const getListedNtsAsc = async () => {
 
 const useSharedListedNtsAsc = () => {
   return useReactQuery({
-    queryKey: ["payment_priceType", "ETH"],
+    queryKey: ["payment_priceType"],
     queryFn: getListedNtsAsc,
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
