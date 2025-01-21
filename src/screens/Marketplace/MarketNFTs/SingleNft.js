@@ -2730,8 +2730,7 @@ const SingleNft = ({
     ) {
       setPurchaseColor("#FF6232");
     }
-  }, [purchaseStatus, data]);
-
+  }, [purchaseStatus, data]); 
   return (
     <div
       className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"

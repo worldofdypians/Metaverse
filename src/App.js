@@ -1833,11 +1833,14 @@ function App() {
   const getTokenData = async () => {
     await axios
       .get("https://api.worldofdypians.com/api/price/ethereum")
-      .then((data) => { 
-        setEthTokenData(data.price);
+      .then((obj) => { 
+        if (obj.data) { 
+        setEthTokenData(obj.data.price);
+        }
       });
        
-  };
+  }; 
+
   const getPriceDYP = async () => {
     const dypprice = await axios
       .get(
@@ -4929,16 +4932,35 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
-    fetchWodPrice();
-    fetchCawsNfts();
-    fetchLandNfts();
-    fetchTimepieceNfts();
+    fetchWodPrice(); 
+    
+    
     checkNetworkId();
   }, []);
 
   useEffect(() => {
     fetchEthStaking();
   }, [stakeCount]);
+
+  useEffect(() => {
+    if(allCawsNfts && allCawsNfts.length > 0) {
+    fetchCawsNfts();
+    }
+  }, [allCawsNfts]);
+
+  useEffect(() => {
+    if(allWodNfts && allWodNfts.length > 0) {
+      fetchLandNfts();
+    }
+  }, [allWodNfts]);
+
+  useEffect(() => {
+    if(allTimepieceNfts && allTimepieceNfts.length > 0) {
+      fetchTimepieceNfts();
+    }
+  }, [allTimepieceNfts]);
+
+
 
   return (
     <>
