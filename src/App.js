@@ -278,6 +278,44 @@ const useSharedDataTimepieceNfts = () => {
   });
 };
 
+const getListedNtsAsc = async () => {
+  const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
+  let ethNftsAsc = ethNfts.sort((a, b) => {
+    return a.price - b.price;
+  });
+  return ethNftsAsc;
+};
+
+const useSharedListedNtsAsc = () => {
+  return useReactQuery({
+    queryKey: ["payment_priceType", "ETH"],
+    queryFn: getListedNtsAsc,
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+  });
+};
+
+const getAllnftsListed = async (wallet) => {
+  if (wallet) {
+    const listedNFTS = await getListedNFTS(0, "", "seller", wallet, "");
+    return listedNFTS;
+  } else return [];
+};
+
+const useSharedDataListedByUser = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller", wallet],
+    queryFn: () => getAllnftsListed(wallet),
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+    enabled: !!wallet,
+  });
+};
+
 function App() {
   const dataFetchedRef = useRef(false);
 
@@ -475,7 +513,6 @@ function App() {
   const [totalMantaNft, setTotalMantaNft] = useState(0);
 
   const [totalseiNft, setTotalseiNft] = useState(0);
-  const [userWallet, setuserWallet] = useState("");
 
   const [baseMintAllowed, setbaseMintAllowed] = useState(1);
 
@@ -784,6 +821,7 @@ function App() {
   const [nftTvl, setnftTvl] = useState(0);
 
   const userId = data?.getPlayer?.playerId;
+  const userWallet = data?.getPlayer?.wallet?.publicAddress;
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
@@ -4236,6 +4274,16 @@ function App() {
   const { data: allCawsNfts } = useSharedDataCawsNfts();
   const { data: allWodNfts } = useSharedDataWodNfts();
   const { data: allTimepieceNfts } = useSharedDataTimepieceNfts();
+  const { data: lowestPriceNftListed } = useSharedListedNtsAsc();
+  const { data: allListedByUser } = useSharedDataListedByUser(
+    email
+      ? userWallet
+        ? userWallet.toLowerCase() === coinbase.toLowerCase()
+          ? coinbase
+          : userWallet
+        : coinbase
+      : coinbase
+  );
 
   const fetchCawsNfts = async () => {
     const cawsNft = allCawsNfts;
@@ -4819,8 +4867,8 @@ function App() {
   }, [coinbase, isConnected, networkId, countBalance]);
 
   useEffect(() => {
-    if(authToken && !isTokenExpired(authToken) && email) {
-    fetchUserFavorites(coinbase);
+    if (authToken && !isTokenExpired(authToken) && email) {
+      fetchUserFavorites(coinbase);
     }
     // refreshSubscription();
   }, [coinbase, data, authToken, isConnected, email]);
@@ -4977,6 +5025,7 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 ethTokenData={ethTokenData}
+                lowestPriceNftListed={lowestPriceNftListed}
               />
             }
           />
@@ -5007,6 +5056,8 @@ function App() {
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
                 ethTokenData={ethTokenData}
+                lowestPriceNftListed={lowestPriceNftListed}
+                allListed={allListedByUser}
               />
             }
           />
@@ -5312,7 +5363,10 @@ function App() {
                   setshowSync(false);
                 }}
                 coingeckoEarnUsd={userEarnUsd}
-                isTokenExpired={()=>{isTokenExpired(authToken)}}
+                isTokenExpired={() => {
+                  isTokenExpired(authToken);
+                }}
+                listedNFTS={allListedByUser}
               />
             }
           />
@@ -5322,7 +5376,9 @@ function App() {
             path="/account/prime"
             element={
               <Dashboard
-              isTokenExpired={()=>{isTokenExpired(authToken)}}
+                isTokenExpired={() => {
+                  isTokenExpired(authToken);
+                }}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -5386,6 +5442,7 @@ function App() {
                   setshowSync(false);
                 }}
                 coingeckoEarnUsd={userEarnUsd}
+                listedNFTS={allListedByUser}
               />
             }
           />
@@ -6075,7 +6132,9 @@ function App() {
             path="/account/challenges/:eventId"
             element={
               <Dashboard
-              isTokenExpired={()=>{isTokenExpired(authToken)}}
+                isTokenExpired={() => {
+                  isTokenExpired(authToken);
+                }}
                 wodBalance={wodBalance}
                 authToken={authToken}
                 wodPrice={wodPrice}
@@ -6139,6 +6198,7 @@ function App() {
                 onCloseSync={() => {
                   setshowSync(false);
                 }}
+                listedNFTS={allListedByUser}
               />
             }
           />
