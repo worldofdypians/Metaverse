@@ -100,7 +100,7 @@ const WodPartners = ({ full }) => {
     },
 
     {
-      name: "Cookie3",
+      name: "Cookie DAO",
       icon: "cookie3.svg",
     },
     {
@@ -152,11 +152,14 @@ const WodPartners = ({ full }) => {
       icon: "cyborg.svg",
     },
     {
-      name: "SpaceID",
+      name: "Space ID",
       icon: "spaceId.svg",
     },
 
-
+    {
+      name: "StealthEX",
+      icon: "stealthEx.svg",
+    },
     {
       name: "Balance",
       icon: "balance.svg",
@@ -240,6 +243,10 @@ const WodPartners = ({ full }) => {
     {
       name: "DAR",
       icon: "dar.svg",
+    },
+    {
+      name: "BlockusGG",
+      icon: "blockus.svg",
     },
   ];
 

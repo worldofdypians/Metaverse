@@ -31,11 +31,10 @@ const BinanceCampaignRules = () => {
               </p>
               <ul>
                 <li className="text-white">
-                  Start: 2025-01-06 09:00 :00 (UTC)
+                  Start: xxxx-xx-xx (UTC)
                 </li>
-                <li className="text-white">End: 2025-01-20 09:00 :00 (UTC)</li>
+                <li className="text-white">End: xxxx-xx-xx (UTC)</li>
               </ul>
-
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
               </p>
@@ -86,28 +85,9 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                      Stake a minimum of 50 WOD tokens in the staking pool
+                    Swap a minimum of $10 USDC for $WOD on BNB Chain using the native swap feature in the Binance Wallet
                     </li>
-                    <li
-                      className="text-white"
-                      style={{ listStyleType: "none" }}
-                    >
-                      URL:{" "}
-                      <a
-                        href="https://www.worldofdypians.com/staking"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-white text-decoration-underline"
-                      >
-                        https://www.worldofdypians.com/staking
-                      </a>
-                    </li>
-                    <li
-                      className="text-white"
-                      style={{ listStyleType: "none" }}
-                    >
-                      *Staking pool has a lock period of 7 days.
-                    </li>
+                 
                   </ul>
                 </li>
               </ol>
@@ -115,8 +95,8 @@ const BinanceCampaignRules = () => {
                 <b>Prizes Breakdown:</b>
               </p>
               <p className="text-white m-0">
-                1,000 winners will be selected to share $50,000 in WOD tokens.
-                Each winner will receive $50 in WOD tokens, selected via a
+                2,000 winners will be selected to share $50,000 in WOD tokens.
+                Each winner will receive $25 in WOD tokens, selected via a
                 raffle.
               </p>
               <p className="text-white m-0">
@@ -127,16 +107,15 @@ const BinanceCampaignRules = () => {
                   Participants must complete all mandatory tasks to qualify.
                 </li>
                 <li className="text-white">
-                  Rewards will be distributed within 10 business days
-                  post-campaign.
+                Rewards can be claimed in Binance Wallet after the campaign.
                 </li>
                 <li className="text-white">
                   Users with multiple entries or fraudulent behavior will be
                   disqualified.
                 </li>
-                <li className="text-white">
-                  WOD staking must remain locked for the entire 7-day period.
-                </li>
+                {/* <li className="text-white">
+                Swap at least $10 worth of USDC/WOD on Binance Wallet
+                </li> */}
               </ol>
 
               <p className="text-white m-0">
@@ -151,7 +130,7 @@ const BinanceCampaignRules = () => {
                       style={{ listStyleType: "none" }}
                     >
                       The prize pool consists of $50,000 worth of WOD tokens,
-                      shared among 1,000 winners, each receiving $50 worth of
+                      shared among 2,000 winners, each receiving $25 worth of
                       WOD tokens.
                     </li>
                   </ul>
@@ -163,7 +142,7 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Only MPC Binance Wallet users with verified accounts are
+                      Only Keyless MPC Binance Wallet users with verified accounts are
                       eligible to participate in this campaign. Each user can
                       only join once, ensuring fair participation and preventing
                       duplicate entries.
@@ -182,18 +161,18 @@ const BinanceCampaignRules = () => {
                     </li>
                   </ul>
                 </li>
-                <li className="text-white">
-                  <b>Do I need to hold WOD tokens before staking?</b>
+                {/* <li className="text-white">
+                  <b>Do I need to hold WOD tokens before swapping?</b>
                   <ul>
                     <li
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Yes, you must acquire at least 50 WOD tokens before
-                      participating in the staking process.
+                      Yes, you need at least $25 worth of WOD tokens before
+                      participating in the swapping process.
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li className="text-white">
                   <b>Is there a limit on the number of entries?</b>
                   <ul>
@@ -208,7 +187,7 @@ const BinanceCampaignRules = () => {
                 </li>
               </ol>
 
-              <p className="text-white m-0">
+              {/* <p className="text-white m-0">
                 <b>Tutorial: How to Stake WOD Tokens</b>
               </p>
               <p className="text-white m-0">
@@ -270,7 +249,7 @@ const BinanceCampaignRules = () => {
                     </li>
                   </ul>
                 </li>
-              </ol>
+              </ol> */}
               <p className="text-white m-0">
                 That’s it! You’re now part of the $50,000 WOD Token Airdrop.
                 Good luck!

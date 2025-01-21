@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { NavLink } from "react-router-dom";
 import getListedNFTS from "../../../../../actions/Marketplace";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 import Pagination from "@mui/material/Pagination";
@@ -11,6 +12,34 @@ import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
   
+
+const fetchAllNFTs = async (wallet) => {
+  try { 
+    const data =  await getListedNFTS(
+      0,
+      "",
+      "seller",
+     wallet,
+      "");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedData = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller", wallet],
+    queryFn: () => fetchAllNFTs(wallet),
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000,  
+    refetchOnWindowFocus: true, 
+    refetchInterval: false,
+    enabled: !!wallet,
+  });
+};
+ 
+
 const Portfolio = ({
   dypBalance,
   address,
@@ -96,8 +125,7 @@ const Portfolio = ({
   const [showNfts, setShowNfts] = useState(false);
   const [activeSlide, setActiveSlide] = useState();
   const [loading, setLoading] = useState(false);
-  const [loadingRecentListings, setLoadingRecentListings] = useState(false);
-  const [allListed, setAllListed] = useState([]);
+  const [loadingRecentListings, setLoadingRecentListings] = useState(false); 
 
   const [filter1, setFilter1] = useState("all");
   const [filter2, setFilter2] = useState("all");
@@ -228,18 +256,8 @@ const Portfolio = ({
     borderColor: "#554fd8",
   };
 
-  const getAllnftsListed = async () => {
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "seller",
-      address ? address : coinbase,
-      ""
-    );
-
-    setAllListed(listedNFTS);
-  };
-
+  const { data: allListed } = useSharedData(address ? address : coinbase); 
+  
   const sortNfts = (sortValue) => {
      if (sortValue === "collected") {
       setFilterTitle("Collected");
@@ -1484,10 +1502,7 @@ const Portfolio = ({
   //     getCollected();
   //   }
   // }, [myTimepieceCollected, myCawsCollected, myLandCollected, coinbase]);
-
-  useEffect(() => {
-    getAllnftsListed();
-  }, [listedNFTS]);
+ 
 
   useEffect(() => {
     getTwonfts();

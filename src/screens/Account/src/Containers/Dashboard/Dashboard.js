@@ -20,6 +20,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import getFormattedNumber from "../../Utils.js/hooks/get-formatted-number";
 import MyBalance from "../../Components/WalletBalance/MyBalance";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 import NewLeaderBoard from "../../Components/LeaderBoard/NewLeaderBoard";
 import GenesisLeaderboard from "../../Components/LeaderBoard/GenesisLeaderboard";
@@ -54,6 +55,7 @@ import {
 } from "./stars";
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
+import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -101,6 +103,46 @@ const StyledTextField = styled(TextField)({
     },
   },
 });
+
+
+const getOtherNfts = async (wallet) => {
+  let finalboughtItems1 = [];
+  const listedNFTS = await getListedNFTS(0, "", "seller", wallet, "");
+  listedNFTS &&
+    listedNFTS.length > 0 &&
+    listedNFTS.map((nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        finalboughtItems1.push(nft);
+      }
+    });
+  return finalboughtItems1;
+};
+
+
+const useSharedData = (wallet) => {
+  return useReactQuery({
+    queryKey: ["seller", wallet],
+    queryFn: () => getOtherNfts(wallet),
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+    enabled: !!wallet,
+  });
+};
+ 
+
+ 
 
 function Dashboard({
   dailyBonuslistedNFTS,
@@ -529,11 +571,11 @@ function Dashboard({
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [bnbBonusPopup, setBnbBonusPopup] = useState(false)
+  const [matBonusPopup, setMatBonusPopup] = useState(false)
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
-  const [listedNFTS, setListedNFTS] = useState([]);
+ 
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
@@ -7352,29 +7394,7 @@ function Dashboard({
     );
   };
 
-  const getOtherNfts = async () => {
-    let finalboughtItems1 = [];
-
-    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
-    listedNFTS &&
-      listedNFTS.length > 0 &&
-      listedNFTS.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        }
-      });
-    setListedNFTS(finalboughtItems1);
-  };
+  const {   data: listedNFTS } = useSharedData(coinbase); 
 
   const windowSize = useWindowSize();
 
@@ -7517,80 +7537,7 @@ function Dashboard({
     }
   };
 
-  const getMyOffers = async () => {
-    //setmyOffers
-
-    let allOffers = [];
-
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const offersQuery = `
-    {
-      offerMades(first: 100) {
-        id
-        buyer
-        nftAddress
-        tokenId
-      }
-    }
-    `;
-
-    await axios
-      .post(URL, { query: offersQuery })
-      .then(async (result) => {
-        allOffers = await result.data.data.offerMades;
-        setallOffers(result.data.data.offerMades);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    if (allOffers.length > 0) {
-      let finalArray = [];
-      await Promise.all(
-        allOffers.map(async (nft) => {
-          const result = await window
-            .getAllOffers(nft.nftAddress, nft.tokenId)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            if (coinbase) {
-              result.map((item) => {
-                if (
-                  item.offer.buyer?.toLowerCase() === coinbase.toLowerCase()
-                ) {
-                  return finalArray.push({
-                    offer: item.offer,
-                    index: item.index,
-                    nftAddress: nft.nftAddress,
-                    tokenId: nft.tokenId,
-                    type:
-                      nft.nftAddress === window.config.nft_caws_address
-                        ? "caws"
-                        : nft.nftAddress === window.config.nft_timepiece_address
-                        ? "timepiece"
-                        : "land",
-                  });
-                }
-              });
-            }
-          }
-        })
-      );
-      let uniqueOffers = finalArray.filter(
-        (v, i, a) =>
-          a.findIndex(
-            (v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress
-          ) === i
-      );
-
-      setmyOffers(uniqueOffers);
-    }
-  };
-
+ 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
     if (
@@ -9475,11 +9422,11 @@ function Dashboard({
   const fetchCFXPrice = async () => {
     await axios
       .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=conflux-token&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
+        "https://api.worldofdypians.com/api/price/conflux-token"
       )
       .then((obj) => {
-        if (obj.data["conflux-token"] && obj.data["conflux-token"] !== NaN) {
-          setCfxPrice(obj.data["conflux-token"].usd);
+        if (obj.data) {
+          setCfxPrice(obj.data.price);
         }
       });
   };
@@ -10416,7 +10363,7 @@ function Dashboard({
   }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
-    getOtherNfts();
+    
     getDypBalance(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
 
@@ -11034,6 +10981,117 @@ function Dashboard({
             selectedChainforPremium={selectedChainforPremium}
             onPremiumClickOther={() => {
               setBnbBonusPopup(false);
+              setgetPremiumPopup(true);
+            }}
+            handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
+            handleSwitchChainGateWallet={handleSwitchChainGateWallet}
+            binanceWallet={binanceWallet}
+          />
+          // </OutsideClickHandler>
+        )}
+        {(matBonusPopup || hashValue === "#matchain-miniapp-dailybonus") && (
+          // <OutsideClickHandler
+          //   onOutsideClick={() => {
+          //     setdailyBonusPopup(false);
+          //   }}
+          // >
+          <MatchainDailyBonus
+            isPremium={isPremium}
+            bnbImages={bnbImages}
+            skaleImages={skaleImages}
+            seiImages={seiImages}
+            victionImages={victionImages}
+            mantaImages={mantaImages}
+            baseImages={baseImages}
+            taikoImages={taikoImages}
+            matImages={matImages}
+            coreImages={coreImages}
+            chainId={chainId}
+            dypTokenData={dypTokenData}
+            ethTokenData={ethTokenData}
+            dyptokenData_old={dyptokenData_old}
+            handleSwitchChain={handleSwitchChain}
+            handleSwitchNetwork={handleSwitchNetwork}
+            listedNFTS={dailyBonuslistedNFTS}
+            onclose={() => {
+              setMatBonusPopup(false);
+              window.location.hash = "";
+            }}
+            binanceW3WProvider={binanceW3WProvider}
+            coinbase={coinbase}
+            claimedChests={claimedChests}
+            claimedPremiumChests={claimedPremiumChests}
+            claimedSkaleChests={claimedSkaleChests}
+            claimedSkalePremiumChests={claimedSkalePremiumChests}
+            claimedCoreChests={claimedCoreChests}
+            claimedCorePremiumChests={claimedCorePremiumChests}
+            claimedVictionChests={claimedVictionChests}
+            claimedVictionPremiumChests={claimedVictionPremiumChests}
+            claimedMantaChests={claimedMantaChests}
+            claimedMantaPremiumChests={claimedMantaPremiumChests}
+            claimedBaseChests={claimedBaseChests}
+            claimedBasePremiumChests={claimedBasePremiumChests}
+            claimedTaikoChests={claimedTaikoChests}
+            claimedTaikoPremiumChests={claimedTaikoPremiumChests}
+            claimedMatChests={claimedMatChests}
+            claimedMatPremiumChests={claimedMatPremiumChests}
+            claimedSeiChests={claimedSeiChests}
+            claimedSeiPremiumChests={claimedSeiPremiumChests}
+            email={email}
+            openedChests={openedChests}
+            openedSkaleChests={openedSkaleChests}
+            openedCoreChests={openedCoreChests}
+            openedVictionChests={openedVictionChests}
+            openedMantaChests={openedMantaChests}
+            openedBaseChests={openedBaseChests}
+            openedTaikoChests={openedTaikoChests}
+            openedMatChests={openedMatChests}
+            openedSeiChests={openedSeiChests}
+            address={userWallet}
+            allChests={allChests}
+            allSkaleChests={allSkaleChests}
+            allCoreChests={allCoreChests}
+            allVictionChests={allVictionChests}
+            allMantaChests={allMantaChests}
+            allBaseChests={allBaseChests}
+            allTaikoChests={allTaikoChests}
+            allMatChests={allMatChests}
+            allSeiChests={allSeiChests}
+            onChestClaimed={() => {
+              setCount(count + 1);
+            }}
+            onSkaleChestClaimed={() => {
+              setskalecount(skalecount + 1);
+            }}
+            onCoreChestClaimed={() => {
+              setcorecount(corecount + 1);
+            }}
+            onVictionChestClaimed={() => {
+              setvicitoncount(vicitoncount + 1);
+            }}
+            onMantaChestClaimed={() => {
+              setmantacount(mantacount + 1);
+            }}
+            onBaseChestClaimed={() => {
+              setbasecount(basecount + 1);
+            }}
+            onTaikoChestClaimed={() => {
+              settaikocount(taikocount + 1);
+            }}
+            onMatChestClaimed={() => {
+              setmatcount(matcount + 1);
+            }}
+            onSeiChestClaimed={() => {
+              setseicount(seicount + 1);
+            }}
+            dummypremiumChests={dummypremiumChests}
+            onPremiumClick={() => {
+              setgetPremiumPopup(true);
+            }}
+            premiumTxHash={premiumTxHash}
+            selectedChainforPremium={selectedChainforPremium}
+            onPremiumClickOther={() => {
+              setMatBonusPopup(false);
               setgetPremiumPopup(true);
             }}
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}

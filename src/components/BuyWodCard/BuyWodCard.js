@@ -15,14 +15,22 @@ const BuyWodCard = ({ item }) => {
       onMouseEnter={() => setSwitchArrow(true)}
       onMouseLeave={() => setSwitchArrow(false)}
     >
-    <div className="d-flex align-items-center gap-2">
+      <div className="d-flex align-items-center gap-2">
         <img
           src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
           alt=""
+          style={{ width: 32, height: 32 }}
         />
         <h6 className="mb-0 buy-wod-title">{item.title}</h6>
       </div>
-      <img src={switchArrow ? "https://cdn.worldofdypians.com/wod/blueArrowBuyWod.svg" : "https://cdn.worldofdypians.com/wod/whiteArrowBuyWod.svg"} alt="" />
+      <img
+        src={
+          switchArrow
+            ? "https://cdn.worldofdypians.com/wod/blueArrowBuyWod.svg"
+            : "https://cdn.worldofdypians.com/wod/whiteArrowBuyWod.svg"
+        }
+        alt=""
+      />
     </NavLink>
   );
 };

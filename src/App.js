@@ -59,7 +59,7 @@ import DomainModal from "./components/DomainModal/DomainModal.js";
 import Web3 from "web3";
 import Caws from "./screens/Caws/Caws.js";
 import AuthBNB from "./screens/Account/src/Containers/Auth/AuthBNB.js";
-
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 import Bridge from "./screens/Wod/Bridge/Bridge.js";
 import Earn from "./screens/Wod/Earn/Earn.js";
 import Governance from "./screens/Community/Governance/Governance.js";
@@ -87,6 +87,7 @@ import Release from "./screens/Release/Release.js";
 import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules.js";
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
+import NFTBridge from "./screens/NFTBridge/NftBridge";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -127,6 +128,105 @@ const binanceConnector = new Connector({
     43114: window.config.avax_endpoint,
   },
 });
+
+
+const fetchAllNFTs = async () => {
+  try {
+    const data = await getAllNfts();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+    
+  }
+};
+
+ 
+
+const useSharedData = () => {
+  return useReactQuery({
+    queryKey: ["nfts"],
+    queryFn: fetchAllNFTs,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
+    refetchInterval: false, 
+  });
+};
+
+
+const fetchListedNFTs = async () => {
+  try {
+    const data = await getListedNFTS(0, "", "recentListedNFTS");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataListedNfts = () => {
+  return useReactQuery({
+    queryKey: ["recentListedNFTS"],
+    queryFn: fetchListedNFTs,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+  });
+};
+
+ 
+
+const fetchLatest20BoughtNFTs = async () => {
+  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+  const itemBoughtQuery = `
+    {
+      itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
+        nftAddress
+        tokenId
+        payment_priceType
+        price
+        buyer
+        blockNumber
+        blockTimestamp
+      }
+    }
+  `;
+
+  try {
+    const result = await axios.post(URL, { query: itemBoughtQuery });
+    const boughtItems = result.data.data.itemBoughts || [];
+    const finalBoughtItems = boughtItems
+      .map((nft) => {
+        if (nft.nftAddress === window.config.nft_caws_address) {
+          return { ...nft, type: "caws", chain: 1 };
+        } else if (nft.nftAddress === window.config.nft_land_address) {
+          return { ...nft, type: "land", chain: 1 };
+        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+          return { ...nft, type: "timepiece", chain: 1 };
+        }
+        return null;
+      })
+      .filter(Boolean); // Remove null values
+    return finalBoughtItems;
+  } catch (error) {
+    console.error("Error fetching latest NFTs:", error);
+    throw error;
+  }
+};
+
+const useSharedDataLatest20BoughtNFTs = () => {
+  return useReactQuery({
+    queryKey: ["latestBoughtNFTs"],
+    queryFn: fetchLatest20BoughtNFTs,
+    // staleTime: 5 * 60 * 1000,  
+    // cacheTime: 6 * 60 * 1000, 
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+  });
+};
+
+
+
 
 function App() {
   const dataFetchedRef = useRef(false);
@@ -274,10 +374,7 @@ function App() {
   const authToken = localStorage.getItem("authToken");
 
   const [showWalletModal, setShowWalletModal] = useState(false);
-  const [showWalletModalDownload, setShowWalletModalDownload] = useState(false);
-  const [showWalletModalRegister, setShowWalletModalRegister] = useState(false);
-  const [showWalletModalRegister2, setShowWalletModalRegister2] =
-    useState(false);
+ 
 
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
@@ -300,7 +397,6 @@ function App() {
   const [mystakes, setMystakes] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [listedNFTS, setListedNFTS] = useState([]);
-  const [recentListedNFTS2, setrecentListedNFTS2] = useState([]);
   const [count44, setCount44] = useState(0);
   const [count55, setCount55] = useState(0);
   const [cawsListed, setcawsListed] = useState([]);
@@ -375,8 +471,6 @@ function App() {
   const [isBnb, setisBnb] = useState(false);
   const [isBnbSuccess, setisBnbSuccess] = useState(false);
   const [logoutCount, setLogoutCount] = useState(0);
-
-  const [latest20BoughtNFTS, setLatest20BoughtNFTS] = useState([]);
 
   const [nftCount, setNftCount] = useState(1);
   const [countBalance, setcountBalance] = useState(1);
@@ -532,8 +626,7 @@ function App() {
   const [prevVersionStar, setPrevVersionStar] = useState(0);
   const [dataAmountStar, setDataAmountStar] = useState([]);
   const [loadingRecentListings, setLoadingRecentListings] = useState(false);
-    const [loadingRecentSales, setLoadingRecentSales] = useState(false);
-  
+
   const [userPoints, setuserPoints] = useState(0);
   const [userEarnUsd, setuserEarnUsd] = useState(0);
   const [userEarnETH, setuserEarnETH] = useState(0);
@@ -711,7 +804,7 @@ function App() {
           console.error(e);
         });
 
-        const totaldesposited_wod5 = await tokenSc.methods
+      const totaldesposited_wod5 = await tokenSc.methods
         .balanceOf(window.constant_staking_wod5._address)
         .call()
         .catch((e) => {
@@ -724,11 +817,11 @@ function App() {
         .div(1e18)
         .toFixed(6);
 
-        const totaldesposited_wod5_formatted = new window.BigNumber(
-          totaldesposited_wod5
-        )
-          .div(1e18)
-          .toFixed(6);
+      const totaldesposited_wod5_formatted = new window.BigNumber(
+        totaldesposited_wod5
+      )
+        .div(1e18)
+        .toFixed(6);
 
       const poolcapArray = [
         {
@@ -1497,14 +1590,13 @@ function App() {
         return 0;
       });
 
-      const seiresult = await seiContract.methods
+    const seiresult = await seiContract.methods
       .totalSupply()
       .call()
       .catch((e) => {
         console.error(e);
         return 0;
       });
-
 
     //20002 = 10000 caws + 1000 genesis + 9002 coingecko
 
@@ -1524,8 +1616,8 @@ function App() {
         parseInt(mantaresult) +
         parseInt(taikoresult) +
         parseInt(cookieresult) +
-        parseInt(matresult)  +
-        parseInt(seiresult)+
+        parseInt(matresult) +
+        parseInt(seiresult) +
         20002
     );
   };
@@ -1687,27 +1779,20 @@ function App() {
 
   const fetchWodPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=world-of-dypians&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/world-of-dypians`)
       .then((res) => {
-        if (
-          res.data["world-of-dypians"] &&
-          res.data["world-of-dypians"] !== NaN
-        ) {
-          setWodPrice(res.data["world-of-dypians"].usd);
+        if (res.data) {
+          setWodPrice(res.data.price);
         }
       });
   };
 
   const fetchDogeCoinPrice = async () => {
     await axios
-      .get(
-        "https://pro-api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev"
-      )
+      .get("https://api.worldofdypians.com/api/price/dogecoin")
       .then((obj) => {
-        if (obj.data["dogecoin"] && obj.data["dogecoin"] !== NaN) {
-          setDogePrice(obj.data["dogecoin"].usd);
+        if (obj.data) {
+          setDogePrice(obj.data.price);
         }
       });
   };
@@ -2772,193 +2857,23 @@ function App() {
     }
   }, [authToken, data, isConnected, coinbase]);
 
-  const getBoughtNFTS = async () => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-
-    // console.log("finalboughtItems", finalboughtItems);
-
-    return finalboughtItems;
-  };
-
-  const getLatest20BoughtNFTS = async () => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-    setLoadingRecentSales(true);
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // console.log("boughtItems", boughtItems);
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-    setLatest20BoughtNFTS(finalboughtItems);
-    setLoadingRecentSales(false)
-
-  };
+ 
+  const { isPending: loadingRecentSales, data: latest20BoughtNFTS } = useSharedDataLatest20BoughtNFTs();
 
   const handleRefreshList = () => {
     setNftCount(nftCount + 1);
   };
-  const getTop20BoughtByPriceAndPriceTypeNFTS = async (type) => {
-    let boughtItems = [];
-    let finalboughtItems = [];
 
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
+ 
 
-    const itemBoughtQuery = `
-      {
-          itemBoughts(first: 20, orderBy: price, orderDirection: desc, where: {payment_priceType: ${type}}) {
-          nftAddress
-          tokenId
-          payment_priceType
-          price
-          buyer
-          blockNumber
-          blockTimestamp
-      }
-      }
-      `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-    // console.log("boughtItems2", finalboughtItems);
-
-    return finalboughtItems;
-  };
-
-  const getListedNfts2 = async () => {
-    getListedNFTS(0, "", "recentListedNFTS")
-      .then((data) => {
-        setrecentListedNFTS2(data);
-        setCount44(count44 + 1);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
+  const {data: recentListedNFTS2 } = useSharedDataListedNfts();
+  const { data: allNfts } = useSharedData()
+  
   const getOtherNfts = async () => {
-    let finalboughtItems1 = [];
-    let finalboughtItems2 = [];
+    let finalboughtItems1 = []; 
     setLoadingRecentListings(true);
-    const nft_contract = new window.infuraWeb3.eth.Contract(
-      window.CAWS_ABI,
-      window.config.nft_caws_address
-    );
-    const nft_contract_land = new window.infuraWeb3.eth.Contract(
-      window.WOD_ABI,
-      window.config.nft_land_address
-    );
-
-    const nft_contract_timepiece = new window.infuraWeb3.eth.Contract(
-      window.TIMEPIECE_ABI,
-      window.config.nft_timepiece_address
-    );
-    finalboughtItems1 = await getAllNfts();
+ 
+    finalboughtItems1 = allNfts;
 
     if (finalboughtItems1 && finalboughtItems1.length > 0) {
       setListedNFTS(finalboughtItems1);
@@ -2968,63 +2883,27 @@ function App() {
       setListedNFTSCount([]);
     }
     if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
-      await Promise.all(
+      const updatedItems = await Promise.all(
         recentListedNFTS2.map(async (nft) => {
-          if (nft.nftAddress === window.config.nft_caws_address) {
-            const nftowner = await nft_contract.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-              });
-            if (
-              nftowner &&
-              nftowner.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "caws";
-              nft.chain = 1;
-              finalboughtItems2.push(nft);
-            }
-          } else if (nft.nftAddress === window.config.nft_land_address) {
-            const nftowner_land = await nft_contract_land.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-              });
-            if (
-              nftowner_land &&
-              nftowner_land.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "land";
-              nft.chain = 1;
-              finalboughtItems2.push(nft);
-            }
-          } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-            const nftowner_timepiece = await nft_contract_timepiece.methods
-              .ownerOf(nft.tokenId)
-              .call()
-              .catch((e) => {
-                console.log(e);
-              });
-
-            if (
-              nftowner_timepiece &&
-              nftowner_timepiece.toLowerCase() === nft.seller.toLowerCase()
-            ) {
-              nft.type = "timepiece";
-              nft.chain = 1;
-              finalboughtItems2.push(nft);
-            }
-          }
+          return {
+            ...nft,
+            type:
+              nft.nftAddress === window.config.nft_timepiece_address
+                ? "timepiece"
+                : nft.nftAddress === window.config.nft_land_address
+                ? "land"
+                : "caws",
+            chain: 1,
+          };
         })
       );
-
-      setLatest20RecentListedNFTS(finalboughtItems2);
-    setLoadingRecentListings(false)
-
-   
-  } else {setLatest20RecentListedNFTS([]); setLoadingRecentListings(false)}
+    
+      setLatest20RecentListedNFTS(updatedItems);
+      setLoadingRecentListings(false);
+    } else {
+      setLatest20RecentListedNFTS([]);
+      setLoadingRecentListings(false);
+    }
   };
 
   Amplify.configure(awsExports);
@@ -3332,7 +3211,7 @@ function App() {
       userId !== null &&
       authToken !== undefined &&
       email &&
-      isConnected
+      isConnected 
     ) {
       try {
         const response = await fetch(
@@ -3358,100 +3237,72 @@ function App() {
 
   const fetchEgldPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
-        setmultiversPrice(obj.data.tomochain.usd);
+        setmultiversPrice(obj.data.price);
       });
   };
 
   const fetchImmutablePrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=immutable-x&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/immutable`)
       .then((obj) => {
-        setImmutablePrice(obj.data["immutable-x"].usd);
+        setImmutablePrice(obj.data.price);
       });
   };
 
   const fetchSkalePrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=skale&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/skale`)
       .then((obj) => {
-        setSkalePrice(obj.data.skale.usd);
+        setSkalePrice(obj.data.price);
       });
   };
   const fetchSeiPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/sei-network`)
       .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd);
-      });
-  };
-
-  const fetchMatchainPrice = async () => {
-    await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=sei-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
-      .then((obj) => {
-        setSeiPrice(obj.data["sei-network"].usd);
+        setSeiPrice(obj.data.price);
       });
   };
 
   const fetchCorePrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=core&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/coredaoorg`)
       .then((obj) => {
-        setCorePrice(obj.data.core.usd);
+        setCorePrice(obj.data.price);
       });
   };
 
   const fetchMantaPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=manta-network&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/manta-network`)
       .then((obj) => {
-        setMantaPrice(obj.data["manta-network"].usd);
+        setMantaPrice(obj.data.price);
       });
   };
 
   const fetchTaikoPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=taiko&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/taiko`)
       .then((obj) => {
-        setTaikoPrice(obj.data["taiko"].usd);
+        setTaikoPrice(obj.data.price);
       });
   };
 
   const fetchCookiePrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=cookie&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/cookie`)
       .then((obj) => {
-        setCookiePrice(obj.data.cookie.usd);
+        setCookiePrice(obj.data.price);
       });
   };
 
   const fetchVictionPrice = async () => {
     await axios
-      .get(
-        `https://pro-api.coingecko.com/api/v3/simple/price?ids=tomochain&vs_currencies=usd&x_cg_pro_api_key=CG-4cvtCNDCA4oLfmxagFJ84qev`
-      )
+      .get(`https://api.worldofdypians.com/api/price/tomochain`)
       .then((obj) => {
-        setVictionPrice(obj.data.tomochain.usd);
+        setVictionPrice(obj.data.price);
       });
   };
 
@@ -3487,7 +3338,7 @@ function App() {
     fetchTaikoPrice();
     fetchCookiePrice();
     fetchCorePrice();
-    fetchMatchainPrice();
+    // fetchMatchainPrice();
     fetchVictionPrice();
     fetchEgldPrice();
     fetchImmutablePrice();
@@ -4304,6 +4155,8 @@ function App() {
       },
     },
   ];
+   
+
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
@@ -4914,18 +4767,7 @@ function App() {
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
-  }, [coinbase, nftCount, authToken, isConnected, email]);
-
-  useEffect(() => {
-    getListedNfts2();
-    getLatest20BoughtNFTS();
-    // getTop20BoughtByPriceAndPriceTypeNFTS(0).then((NFTS) =>
-    //   settop20BoughtByPriceAndPriceTypeETHNFTS(NFTS)
-    // );
-    // getTop20BoughtByPriceAndPriceTypeNFTS(1).then((NFTS) =>
-    //   settop20BoughtByPriceAndPriceTypeDYPNFTS(NFTS)
-    // );
-  }, [nftCount]);
+  }, [coinbase,data, authToken, isConnected, email]);
 
   const checkData = async () => {
     // if (coinbase) {
@@ -4934,16 +4776,16 @@ function App() {
   };
 
   useEffect(() => {
-    if (count44 !== 0) {
-      getOtherNfts();
-    }
-  }, [count44, nftCount]);
+    if(recentListedNFTS2 && recentListedNFTS2.length>0)
+     { getOtherNfts();}
+      
+  }, [recentListedNFTS2]);
 
   useEffect(() => {
-    if (latest20BoughtNFTS.length > 0) {
+    if (latest20BoughtNFTS && latest20BoughtNFTS.length > 0) {
       getCawsSold();
     }
-  }, [latest20BoughtNFTS.length]);
+  }, [latest20BoughtNFTS]);
 
   useEffect(() => {
     if (coinbase) {
@@ -5083,7 +4925,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="/list-my-nft"
             element={
               <ListNFT
@@ -5091,11 +4933,10 @@ function App() {
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                 
-                myCawsCollected={MyNFTSCaws} 
+                myCawsCollected={MyNFTSCaws}
                 myLandCollected={MyNFTSLand}
                 myTimepieceCollected={MyNFTSTimepiece}
-                screen={'list'}
+                screen={"list"}
                 authToken={authToken}
                 isConnected={isConnected}
                 chainId={networkId}
@@ -5171,6 +5012,23 @@ function App() {
 
           <Route
             exact
+            path="/pool"
+            element={
+              <Whitelist
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                type="pool"
+              />
+            }
+          />
+
+          <Route
+            exact
             path="/token-claim"
             element={
               <Release
@@ -5231,10 +5089,10 @@ function App() {
               />
             }
           />
-          {/* 
+
           <Route
             exact
-            path="/marketplace/nft-bridge"
+            path="/shop/nft-bridge"
             element={
               <NFTBridge
                 coinbase={coinbase}
@@ -5275,7 +5133,7 @@ function App() {
                 binanceW3WProvider={library}
               />
             }
-          /> */}
+          />
 
           <Route
             exact
@@ -5520,11 +5378,15 @@ function App() {
                 loadingRecentListings={loadingRecentListings}
                 loadingRecentSales={loadingRecentSales}
                 monthlyPlayers={monthlyPlayers}
-                recentSales={latest20BoughtNFTS}
+                recentSales={latest20BoughtNFTS ?? []}
                 nftCount={nftCount}
                 binanceW3WProvider={library}
                 chainId={networkId}
-                hasNft={MyNFTSCaws.length > 0 || MyNFTSLand.length>0 || MyNFTSTimepiece.length>0}
+                hasNft={
+                  MyNFTSCaws.length > 0 ||
+                  MyNFTSLand.length > 0 ||
+                  MyNFTSTimepiece.length > 0
+                }
               />
             }
           />
