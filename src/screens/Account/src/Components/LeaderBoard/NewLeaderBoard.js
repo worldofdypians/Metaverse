@@ -1072,7 +1072,7 @@ const NewLeaderBoard = ({
                                                 }`}
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                  <img src={"https://cdn.worldofdypians.com/wod/leaderboardstar.svg"} alt="" />
+                                                  <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
                                                   <span
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
@@ -1182,7 +1182,7 @@ const NewLeaderBoard = ({
                                                 }`}
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                  <img src={"https://cdn.worldofdypians.com/wod/leaderboardstar.svg"} alt="" />
+                                                  <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
                                                   <span
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
@@ -1347,7 +1347,7 @@ const NewLeaderBoard = ({
                                           }`}
                                         >
                                           <div className="d-flex align-items-center justify-content-center ms-2 me-4 gap-1">
-                                            <img src={"https://cdn.worldofdypians.com/wod/leaderboardstar.svg"} alt="" />
+                                            <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
                                             <span
                                               className="leaderboard-text"
                                               style={{ color: "#fff" }}
@@ -1427,7 +1427,7 @@ const NewLeaderBoard = ({
                                                 whiteSpace: "nowrap",
                                               }}
                                             >
-                                              + <img src={"https://cdn.worldofdypians.com/wod/leaderboardstar.svg"} alt="" />
+                                              + <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
                                               {getFormattedNumber(
                                                 leaderboard.rewards[
                                                   leaderboard.player_data

@@ -8,27 +8,8 @@ import "../_marketplace.scss";
 import Web3 from "web3";
 import getListedNFTS from "../../../actions/Marketplace";
 import { ethers } from "ethers";
-import { useQuery as useReactQuery } from "@tanstack/react-query";
 
-
-const getListedNtsAsc = async () => { 
-  const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-  let ethNftsAsc = ethNfts.sort((a, b) => {
-    return a.price - b.price;
-  }); 
-  return ethNftsAsc
-};
-
-const useSharedListedNtsAsc = () => {
-  return useReactQuery({
-    queryKey: ["payment_priceType", "ETH"],
-    queryFn: getListedNtsAsc,
-    // staleTime: 5 * 60 * 1000,  
-    // cacheTime: 6 * 60 * 1000, 
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-  });
-};
+ 
 
 
 const MakeOffer = ({
@@ -52,6 +33,7 @@ const MakeOffer = ({
   deletestatus,
   updatestatus,
   binanceW3WProvider,
+  lowestPriceNftListed
 }) => {
   const windowSize = useWindowSize();
   const [filter1, setFilter1] = useState("weth");
@@ -68,7 +50,7 @@ const MakeOffer = ({
 
   const { BigNumber } = window;
 
-  const {   data: lowestPriceNftListed } = useSharedListedNtsAsc(); 
+ 
 
 
   const getOffer = async () => {
