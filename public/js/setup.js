@@ -40,7 +40,7 @@ window.config = {
   nft_cookie3_address: "0xC46EF880A2670a00392d3d3fDa9C65A81e8b505b",
   nft_mat_address: "0x8e4917c1ba9598fbbf66934cb17ac28c3b5849ab",
 
-  nft_dypius_premium_address: "0x13853eb78fc4a8f89d2ba994f5f952b4380c1964",
+  nft_dypius_premium_address: "0xA3e62c82410fF6697B68CABE90a8b1B6e3CEC8CD",
   nft_dypius_premium_viction_address:
     "0x3216574908Fe5B4fF523c3E6d2edFfb7bBc066E0",
   nft_dypius_premium_taiko_address:
@@ -92,7 +92,7 @@ window.config = {
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
 
   infura_endpoint:
-    "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e",
+    "https://mainnet.infura.io/v3/bd4210fca3ea4ad78421503a3a5fd00d",
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
   bsc_testnet_endpoint: "https://bsc-testnet-rpc.publicnode.com",
 

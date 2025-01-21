@@ -169,7 +169,7 @@ const NewBuilders = () => {
       backer: false,
     },
     {
-      name: "Cookie3",
+      name: "Cookie Dao",
       icon: "cookie3.svg",
       banner: "cookie3Banner.webp",
       link: "https://x.com/Cookie3_com/status/1824052238404255889",
@@ -239,7 +239,7 @@ const NewBuilders = () => {
       backer: false,
     },
     {
-      name: "SpaceID",
+      name: "Space ID",
       icon: "spaceId.svg",
       banner: "kucoinBanner.png",
       backer: false,
@@ -350,6 +350,12 @@ const NewBuilders = () => {
       name: "DAR",
       icon: "dar.svg",
       backer: false,
+    },
+    {
+      name: "BlockusGG",
+      icon: "blockus.svg",
+      backer: false,
+
     },
   ];
   return (

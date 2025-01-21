@@ -26,8 +26,6 @@ const Marketplace = ({
   recentSales,
   nftCount,
   ethTokenData,
-  dypTokenData,
-  dypTokenData_old,
   totalTx,
   totalvolume,
   count,
@@ -51,8 +49,8 @@ const Marketplace = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const [activeSlide2, setActiveSlide2] = useState(0);
   const [recentListed, setRecentListed] = useState(latest20RecentListedNFTS);
-  const [recentSold, setRecentSold] = useState(recentSales);
-  const [topSold, setTopSold] = useState(recentSales);
+  const [recentSold, setRecentSold] = useState(recentSales ?? []);
+  const [topSold, setTopSold] = useState(recentSales ?? []);
   const [topSalesFilter, setTopSalesFilter] = useState("all");
   const [recentListingsFilter, setRecentListingsFilter] = useState("all");
   const [recentSalesFilter, setRecentSalesFilter] = useState("all");
@@ -492,7 +490,7 @@ const Marketplace = ({
         console.error(e);
       });
     const result2 = await axios
-      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .get("https://api.worldofdypians.com/api/getWodVolume")
       .catch((e) => {
         console.error(e);
       });
@@ -503,8 +501,8 @@ const Marketplace = ({
     }
 
     if (result2.data && result2.data !== "NaN") {
-      setTotalVolume(result2.data);
-      localStorage.setItem("cachedVolume", result2.data);
+      setTotalVolume(result2.data.totalVolume);
+        localStorage.setItem("cachedVolume", result2.data.totalVolume);
     }
   };
 
@@ -552,7 +550,7 @@ const Marketplace = ({
   useEffect(() => {
     initialSales();
     setRecentListed(latest20RecentListedNFTS);
-    setRecentSalesFilter(recentSales);
+    setRecentSalesFilter('all');
 
     // if (recentSales && recentSales.length === 0) {
     //   setLoadingRecentSales(true);
@@ -607,6 +605,7 @@ const Marketplace = ({
   ];
 
   const initialSales = () => {
+    if(recentSales){
     let datedSales = recentSales.map((item) => {
       return { ...item, date: new Date(parseInt(item.blockTimestamp * 1000)) };
     });
@@ -615,7 +614,7 @@ const Marketplace = ({
       return item.date > week._d && item.date < today._d;
     });
 
-    setTopSold(filteredDateSales);
+    setTopSold(filteredDateSales);}
   };
 
   const filterTopSales = () => {
@@ -674,7 +673,7 @@ const Marketplace = ({
   useEffect(() => {
     filterTopSales();
   }, [topSalesFilter, topSalesDate]);
-
+  
   const filterRecentListings = (filter) => {
     // setLoadingRecentListings(true);
     if (latest20RecentListedNFTS && latest20RecentListedNFTS.length > 0) {
@@ -736,6 +735,7 @@ const Marketplace = ({
   const filterRecentSales = (filter) => {
     // setLoadingRecentSales(true);dummyDataSales
     if (recentSales && recentSales.length > 0) {
+      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = recentSales.filter(
@@ -761,6 +761,7 @@ const Marketplace = ({
         setRecentSold(recentSales);
       }
     } else {
+      
       if (filter === "caws") {
         setRecentSalesFilter("caws");
         let cawsFilter = dummyDataSales.filter(
@@ -811,7 +812,7 @@ const Marketplace = ({
 
   useEffect(() => {
     setRecentSalesFilter("all");
-    setRecentSold(recentSales);
+    setRecentSold(recentSales ?? []);
   }, [recentSales]);
 
   const cutLength = () => {
@@ -965,7 +966,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                      {getFormattedNumber(1165350, 0)}
+                      {getFormattedNumber(1272687, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>
@@ -1091,8 +1092,6 @@ const Marketplace = ({
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}
-                            dypTokenData={dypTokenData}
-                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1140,8 +1139,6 @@ const Marketplace = ({
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}
-                            dypTokenData={dypTokenData}
-                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1272,7 +1269,7 @@ const Marketplace = ({
               )}
               {showSecondNext === activeSlide2
                 ? null
-                : recentSold.length > sliderCut && (
+                : recentSold?.length > sliderCut && (
                     // <img
                     //   src={'https://cdn.worldofdypians.com/wod/nextArrow1.svg'}
                     //   width={40}
@@ -1376,8 +1373,6 @@ const Marketplace = ({
                           >
                             <ItemCard
                               ethTokenData={ethTokenData}
-                              dypTokenData={dypTokenData}
-                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}
@@ -1412,8 +1407,6 @@ const Marketplace = ({
                           >
                             <ItemCard
                               ethTokenData={ethTokenData}
-                              dypTokenData={dypTokenData}
-                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}

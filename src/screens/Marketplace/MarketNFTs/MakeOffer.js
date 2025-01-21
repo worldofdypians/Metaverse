@@ -9,6 +9,9 @@ import Web3 from "web3";
 import getListedNFTS from "../../../actions/Marketplace";
 import { ethers } from "ethers";
 
+ 
+
+
 const MakeOffer = ({
   open,
   onclose,
@@ -18,7 +21,6 @@ const MakeOffer = ({
   nft,
   ethTokenData,
   dypTokenData,
-  dyptokenData_old,
   handleMakeOffer,
   handleUpdateOffer,
   handleDeleteOffer,
@@ -30,6 +32,7 @@ const MakeOffer = ({
   deletestatus,
   updatestatus,
   binanceW3WProvider,
+  lowestPriceNftListed
 }) => {
   const windowSize = useWindowSize();
   const [filter1, setFilter1] = useState("weth");
@@ -41,28 +44,13 @@ const MakeOffer = ({
   const [dypBalance, setDypBalance] = useState(0);
   const [dypBalance_new, setDypBalance_new] = useState(0);
 
-  const [wethBalance, setWethBalance] = useState(0);
-  const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
+  const [wethBalance, setWethBalance] = useState(0); 
   const [bestOffer, setbestOffer] = useState([]);
 
   const { BigNumber } = window;
 
-  const getListedNtsAsc = async () => {
-    // const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
+ 
 
-    // let dypNftsAsc = dypNfts.sort((a, b) => {
-    //   return a.price - b.price;
-    // });
-
-    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-
-    let ethNftsAsc = ethNfts.sort((a, b) => {
-      return a.price - b.price;
-    });
-    setlowestPriceNftListed(ethNftsAsc[0].price);
-
-    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
-  };
 
   const getOffer = async () => {
     let finalArray = [];
@@ -247,8 +235,7 @@ const MakeOffer = ({
   useEffect(() => {
     if (coinbase) {
       getOffer();
-      // getDypBalance();
-      getListedNtsAsc();
+      // getDypBalance(); 
       isapprovedMakeOffer(price, 0, "weth");
     }
   }, [coinbase, nftCount]);

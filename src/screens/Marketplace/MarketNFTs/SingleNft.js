@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MobileNav from "../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../components/MarketSidebar/MarketSidebar";
 import useWindowSize from "../../../hooks/useWindowSize";
-import "../_marketplace.scss"; 
+import "../_marketplace.scss";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { shortAddress } from "../../Caws/functions/shortAddress";
@@ -19,55 +19,98 @@ import { HashLoader } from "react-spinners";
 import { ethers } from "ethers";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 import MakeOffer from "./MakeOffer";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 
-   
 
-const StyledTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#fff",
-    fontFamily: "Poppins",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#fff",
-    fontFamily: "Poppins",
-    zIndex: "2",
-  },
-  "& .MuiFormHelperText-root": {
-    fontFamily: "Poppins",
-  },
-  "& .MuiSelect-select": {
-    color: "#fff",
-    fontFamily: "Poppins",
-    zIndex: "1",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#AAA5EB",
-    fontFamily: "Poppins",
-    color: "#fff",
-    background: "#272450",
-    borderRadius: "8px",
-  },
-  "& .MuiOutlinedInput-input": {
-    zIndex: "1",
-    color: "#fff",
-    fontFamily: "Poppins",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Poppins",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Poppins",
-      color: "#fff",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-  },
-});
+const fetchCurrentNft = async (nftId, nftAddress) => {
+  try {
+    const data = await getListedNFTS(
+      0,
+      "",
+      "nftAddress_tokenId",
+      nftId,
+      nftAddress
+    );
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataCurrentNft = (nftId, nftAddress) => {
+  return useReactQuery({
+    queryKey: ["nftData", nftId, nftAddress],
+    queryFn: () => fetchCurrentNft(nftId, nftAddress),
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
+  });
+};
+
+const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
+  let boughtItems = [];
+  let finalboughtItems = [];
+
+  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+
+  const itemBoughtQuery = `
+      {
+          itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
+          nftAddress
+          tokenId
+          payment_priceType
+          price
+          buyer
+          blockNumber
+          blockTimestamp
+          transactionHash
+      }
+      }
+      `;
+
+  await axios
+    .post(URL, { query: itemBoughtQuery })
+    .then(async (result) => {
+      boughtItems = await result.data.data.itemBoughts;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  boughtItems &&
+    boughtItems.map((nft) => {
+      if (nft.nftAddress === window.config.nft_caws_address) {
+        nft.type = "caws";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_land_address) {
+        nft.type = "land";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      } else if (nft.nftAddress === window.config.nft_timepiece_address) {
+        nft.type = "timepiece";
+        nft.chain = 1;
+        finalboughtItems.push(nft);
+      }
+    });
+
+  // setsaleHistory(finalboughtItems);
+  return finalboughtItems;
+};
+
+const useSharedDataLatest20BoughtNFTS = (nftId, nftAddress) => {
+  return useReactQuery({
+    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
+    queryFn: () => getLatest20BoughtNFTS(nftId, nftAddress),
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+    enabled: !!nftId && !!nftAddress,
+  });
+};
 
 const SingleNft = ({
   coinbase,
@@ -78,7 +121,6 @@ const SingleNft = ({
   nftCount,
   handleRefreshListing,
   favorites,
-  dyptokenData_old,
   binanceW3WProvider,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
@@ -86,6 +128,7 @@ const SingleNft = ({
   dyptokenData,
   ethTokenData,
   authToken,
+  lowestPriceNftListed
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -124,7 +167,6 @@ const SingleNft = ({
   const [toastTitle, setToastTitle] = useState("");
 
   const [metaData, setmetaData] = useState([]);
-  const [saleHistory, setsaleHistory] = useState([]);
 
   const [isOwner, setisOwner] = useState(
     location.state?.isOwner ? location.state?.isOwner : false
@@ -141,7 +183,6 @@ const SingleNft = ({
   const [offerdeleteStatus, setOfferdeleteStatus] = useState("initial");
   const [offerupdateStatus, setOfferupdateStatus] = useState("initial");
   const [offeracceptStatus, setOfferacceptStatus] = useState("initial");
-  const [lowestPriceNftListed, setlowestPriceNftListed] = useState([]);
   const [lowestPriceNftListedDYP, setlowestPriceNftListedDYP] = useState([]);
   const [myOffers, setmyOffers] = useState([]);
 
@@ -182,23 +223,9 @@ const SingleNft = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
+ 
 
-  const getListedNtsAsc = async () => {
-    // const dypNfts = await getListedNFTS(0, "", "payment_priceType", "DYP", "");
-
-    // let dypNftsAsc = dypNfts.sort((a, b) => {
-    //   return a.price - b.price;
-    // });
-
-    const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-
-    let ethNftsAsc = ethNfts.sort((a, b) => {
-      return a.price - b.price;
-    });
-    setlowestPriceNftListed(ethNftsAsc[0].price);
-
-    // setlowestPriceNftListedDYP(dypNftsAsc[0].price);
-  };
+  const { data: currentNft } = useSharedDataCurrentNft(nftId, nftAddress);
 
   const getOffer = async () => {
     let finalArray = [];
@@ -218,8 +245,8 @@ const SingleNft = ({
       type !== "bnb" &&
       type !== "opbnb" &&
       type !== "multivers" &&
-      type !== "immutable"&&
-      type !== "mat"&&
+      type !== "immutable" &&
+      type !== "mat" &&
       type !== "sei"
     ) {
       // const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
@@ -313,7 +340,7 @@ const SingleNft = ({
           //     });
           //   }
           // } else
-           if (item.offer.payment.priceType === "0") {
+          if (item.offer.payment.priceType === "0") {
             const balance = await contract2.methods
               .balanceOf(item.offer.buyer)
               .call()
@@ -817,7 +844,7 @@ const SingleNft = ({
       //   );
 
       //   return Number(allowance) >= Number(amount);
-      // } else 
+      // } else
       if (tokenType === "eth") {
         return true;
       }
@@ -837,39 +864,20 @@ const SingleNft = ({
   const handleRefreshList = async (type, tokenId) => {
     if (type === "timepiece") {
       let nft_address = window.config.nft_timepiece_address;
-      const listedNFT = await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        tokenId,
-        nft_address
-      );
+      const listedNFT = currentNft;
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
       }
     } else if (type === "land") {
       let nft_address = window.config.nft_land_address;
-      const listedNFT = await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        tokenId,
-        nft_address
-      );
-
+      const listedNFT = currentNft;
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
       }
     } else {
       let nft_address = window.config.nft_caws_address;
-      const listedNFT = await getListedNFTS(
-        0,
-        "",
-        "nftAddress_tokenId",
-        tokenId,
-        nft_address
-      );
+      const listedNFT = currentNft;
 
       if (listedNFT && listedNFT.length > 0) {
         setNft(...listedNFT);
@@ -912,8 +920,7 @@ const SingleNft = ({
     let boughtItems = [];
     let finalboughtItems = [];
 
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
+    const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
 
     const itemBoughtQuery = `
         {
@@ -981,9 +988,8 @@ const SingleNft = ({
     //   priceType === 1 ? "dypv1" : priceType === 2 ? "dypv2" : "eth";
     // const pricetype2 = priceType === 1 || priceType === 2 ? 1 : 0;
 
-    const tokenType =
-     "eth";
-  const pricetype2 =  0;
+    const tokenType = "eth";
+    const pricetype2 = 0;
 
     if (isApproved) {
       console.log("selling");
@@ -1292,58 +1298,7 @@ const SingleNft = ({
       }
     }
   };
-
-  const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
-    let boughtItems = [];
-    let finalboughtItems = [];
-
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const itemBoughtQuery = `
-        {
-            itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc, where: { nftAddress_in: ["${nftAddress}"], tokenId: "${tokenId}"  }) {
-            nftAddress
-            tokenId
-            payment_priceType
-            price
-            buyer
-            blockNumber
-            blockTimestamp
-            transactionHash
-        }
-        }
-        `;
-
-    await axios
-      .post(URL, { query: itemBoughtQuery })
-      .then(async (result) => {
-        boughtItems = await result.data.data.itemBoughts;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    boughtItems &&
-      boughtItems.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems.push(nft);
-        }
-      });
-
-    setsaleHistory(finalboughtItems);
-    return finalboughtItems;
-  };
+  const { data: saleHistory } = useSharedDataLatest20BoughtNFTS();
 
   async function addNFTToUserFavorites(userId, tokenId, nftAddress) {
     try {
@@ -1576,7 +1531,7 @@ const SingleNft = ({
         //     }, 3000);
         //   }
         // } else
-         if (nft.payment_priceType === 0) {
+        if (nft.payment_priceType === 0) {
           const txResponse = await marketplace
             .buyItem(
               nftAddress,
@@ -1974,30 +1929,12 @@ const SingleNft = ({
     }
   }
 
-  async function isListedNFT(tokenId, addr) {
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "nftAddress_tokenId",
-      tokenId,
-      addr
-    );
-
-    return listedNFTS.length > 0;
-  }
-
   async function checkisListedNFT(tokenId, nftAddr) {
     setloadingNft(true);
-    const listedNFTS = await getListedNFTS(
-      0,
-      "",
-      "nftAddress_tokenId",
-      tokenId,
-      nftAddr
-    );
+    const listedNFTS = currentNft;
     const nftOwner = await getNftOwner(type, tokenId);
 
-    if (listedNFTS.length > 0) {
+    if (listedNFTS && listedNFTS.length > 0) {
       if (listedNFTS[0].seller.toLowerCase() !== nftOwner.toLowerCase()) {
         setIsListed(false);
       } else if (
@@ -2057,7 +1994,7 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && priceType === 0) {
       setNftPrice(newprice);
-    } 
+    }
     // else if (Number(newprice) > 100000 && priceType === 1) {
     //   setNftPrice(100000);
     // } else if (Number(newprice) <= 100000 && priceType === 1) {
@@ -2075,7 +2012,7 @@ const SingleNft = ({
       setNftPrice(100);
     } else if (Number(newprice) <= 100 && nft.payment_priceType === 0) {
       setNftPrice(newprice);
-    } 
+    }
     // else if (Number(newprice) > 100000 && nft.payment_priceType === 1) {
     //   setNftPrice(100000);
     // } else if (Number(newprice) <= 100000 && nft.payment_priceType === 1) {
@@ -2088,7 +2025,8 @@ const SingleNft = ({
   };
 
   const handleMakeOffer = async (price, pricetype, tokenType) => {
-    setOfferStatus("loading");
+    if(price > 0)
+   { setOfferStatus("loading");
     const newPrice = new BigNumber(price * 1e18).toFixed();
     if (window.WALLET_TYPE !== "binance") {
       await window
@@ -2178,7 +2116,8 @@ const SingleNft = ({
           setOfferStatus("initial");
         }, 3000);
       }
-    }
+    }}
+    else window.alertify.error("Please enter a valid price");
   };
 
   const handleDeleteOffer = async (offerIndex) => {
@@ -2478,7 +2417,7 @@ const SingleNft = ({
       //     setIsApprove(isApproved);
       //   });
       // } else
-       if (!IsListed) {
+      if (!IsListed) {
         isApprovedNFT(
           nftId,
           nftAddress === window.config.nft_caws_address
@@ -2547,8 +2486,7 @@ const SingleNft = ({
     dataFetchedRef.current = true;
     window.scrollTo(0, 0);
     getFavoritesCount(nftId, nftAddress);
-    getLatest20BoughtNFTS(nftAddress, nftId);
-    getListedNtsAsc();
+    // getLatest20BoughtNFTS(nftAddress, nftId);
   }, []);
 
   useEffect(() => {
@@ -2606,10 +2544,7 @@ const SingleNft = ({
       window.config.nft_cookie3_address.toLowerCase()
     ) {
       setType("mat");
-    }  else if (
-      nftAddress ===
-      window.config.nft_mat_address
-    ) {
+    } else if (nftAddress === window.config.nft_mat_address) {
       setType("mat");
     } else if (
       nftAddress.toLowerCase() === window.config.nft_doge_address.toLowerCase()
@@ -2631,10 +2566,7 @@ const SingleNft = ({
       nftAddress.toLowerCase() === window.config.nft_core_address.toLowerCase()
     ) {
       setType("core");
-    } else if (
-      nftAddress ===
-      window.config.nft_viction_address
-    ) {
+    } else if (nftAddress === window.config.nft_viction_address) {
       setType("viction");
     } else if (
       nftAddress.toLowerCase() ===
@@ -2700,9 +2632,8 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
-        : nftAddress ===
-        window.config.nft_sei_address
-      ? "sei"
+        : nftAddress === window.config.nft_sei_address
+        ? "sei"
         : nftAddress === window.config.nft_conflux_address
         ? "conflux"
         : nftAddress.toLowerCase() ===
@@ -2714,8 +2645,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_cookie3_address.toLowerCase()
         ? "cookie3"
-        : nftAddress ===
-          window.config.nft_mat_address
+        : nftAddress === window.config.nft_mat_address
         ? "mat"
         : nftAddress.toLowerCase() ===
           window.config.nft_doge_address.toLowerCase()
@@ -2732,8 +2662,7 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_core_address.toLowerCase()
         ? "core"
-        : nftAddress ===
-          window.config.nft_viction_address
+        : nftAddress === window.config.nft_viction_address
         ? "viction"
         : nftAddress.toLowerCase() ===
           window.config.nft_immutable_address.toLowerCase()
@@ -2770,7 +2699,7 @@ const SingleNft = ({
 
   useEffect(() => {
     checkisListedNFT(nftId, nftAddress);
-  }, [nftId, nftAddress, owner]);
+  }, [nftId, nftAddress, owner, currentNft]);
 
   useEffect(() => {
     getOffer();
@@ -2779,7 +2708,9 @@ const SingleNft = ({
   useEffect(() => {
     if (favorites && favorites.length > 0) {
       const favobj = favorites.find(
-        (obj) => obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() && obj.tokenId === nftId
+        (obj) =>
+          obj.nftAddress?.toLowerCase() === nftAddress.toLowerCase() &&
+          obj.tokenId === nftId
       );
 
       if (favobj !== undefined) {
@@ -2799,8 +2730,7 @@ const SingleNft = ({
     ) {
       setPurchaseColor("#FF6232");
     }
-  }, [purchaseStatus, data]);
-
+  }, [purchaseStatus, data]); 
   return (
     <div
       className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"
@@ -3083,7 +3013,7 @@ const SingleNft = ({
                       nftAddress.toLowerCase() ===
                         window.config.nft_caws_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/caws_400x400/${nftId}.png`
-                        :   nftAddress.toLowerCase() ===
+                        : nftAddress.toLowerCase() ===
                             window.config.nft_land_address.toLowerCase() ||
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_bnb_address.toLowerCase() ||
@@ -3092,42 +3022,42 @@ const SingleNft = ({
                           nftAddress.toLowerCase() ===
                             window.config.nft_land_base_address.toLowerCase()
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/genesis_400x400/${nftId}.png`
-                        : type==='coingecko'
+                        : type === "coingecko"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/400x400_cg_pass.png`
-                        : type==='gate'
+                        : type === "gate"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Gate400.png`
-                        : type==='conflux'
+                        : type === "conflux"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Conflux+nft+400px.png`
-                        : type==='manta'
+                        : type === "manta"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/manta+nft+400.png`
-                        : type==='taiko'
+                        : type === "taiko"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/taiko+nft+400.png`
-                        : type==='cookie3'
+                        : type === "cookie3"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/C3+400.png`
-                        : type==='mat'
+                        : type === "mat"
                         ? `https://cdn.worldofdypians.com/media/matchbp400x400.png`
-                        : type==='doge'
+                        : type === "doge"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/doge+nft+400x400.png`
-                        : type==='cmc'
+                        : type === "cmc"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CMC+Beta+Pass+NFT+400x400px.png`
-                        : type==='core'
+                        : type === "core"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/CORE+400.png`
-                        : type==='viction'
+                        : type === "viction"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/Viction+400.png`
-                        : type==='multivers'
+                        : type === "multivers"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/MultiversX+NFT+400.png`
-                        : type==='base'
+                        : type === "base"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/base+400px.png`
-                        : type==='skale'
+                        : type === "skale"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/SKALE+Beta+Pass+400x400.png`
-                        : type==='bnb'
+                        : type === "bnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/bnb+nft+400.png`
-                        : type==='opbnb'
+                        : type === "opbnb"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/opBNB+NFT+400.png`
-                        : type==='immutable'
+                        : type === "immutable"
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
-                        : type==='sei'
-                      ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
+                        : type === "sei"
+                        ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -3153,34 +3083,34 @@ const SingleNft = ({
                         type === "cawsbnb" ||
                         type === "landbnb" ||
                         type === "cookie3"
-                          ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : type === "conflux"
-                          ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
                           : type === "manta"
-                          ? 'https://cdn.worldofdypians.com/wod/manta.png'
+                          ? "https://cdn.worldofdypians.com/wod/manta.png"
                           : type === "taiko"
-                          ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
+                          ? "https://cdn.worldofdypians.com/wod/taiko.svg"
                           : type === "base" ||
                             type === "cawsbase" ||
                             type === "landbase"
-                          ? 'https://cdn.worldofdypians.com/wod/base.svg'
+                          ? "https://cdn.worldofdypians.com/wod/base.svg"
                           : type === "cawsavax" || type === "landavax"
-                          ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                           : type === "skale"
-                          ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                           : type === "core"
-                          ? 'https://cdn.worldofdypians.com/wod/core.svg'
+                          ? "https://cdn.worldofdypians.com/wod/core.svg"
                           : type === "viction"
-                          ? 'https://cdn.worldofdypians.com/wod/viction.svg'
+                          ? "https://cdn.worldofdypians.com/wod/viction.svg"
                           : type === "mat"
-                          ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
+                          ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                           : type === "multivers"
-                          ? 'https://cdn.worldofdypians.com/wod/multiversx.svg'
+                          ? "https://cdn.worldofdypians.com/wod/multiversx.svg"
                           : type === "immutable"
-                          ? 'https://cdn.worldofdypians.com/wod/immutable.svg'
+                          ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                           : type === "sei"
-                          ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
-                          : 'https://cdn.worldofdypians.com/wod/eth.svg'
+                          ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                          : "https://cdn.worldofdypians.com/wod/eth.svg"
                       }
                       alt=""
                       style={{ width: 20, height: 20 }}
@@ -3227,10 +3157,18 @@ const SingleNft = ({
                       : "Ethereum"}
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={'https://cdn.worldofdypians.com/wod/eye.svg'} alt="" /> {viewCount} views
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/eye.svg"}
+                      alt=""
+                    />{" "}
+                    {viewCount} views
                   </span>
                   <span className="seller-addr d-flex gap-1 align-items-center">
-                    <img src={'https://cdn.worldofdypians.com/wod/heart.svg'} alt="" /> {favCount} favorites
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/heart.svg"}
+                      alt=""
+                    />{" "}
+                    {favCount} favorites
                   </span>
                 </div>
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-3 p-lg-4 gap-2 my-4 single-item-info">
@@ -3285,7 +3223,11 @@ const SingleNft = ({
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
-                        src={isFavorite ? 'https://cdn.worldofdypians.com/wod/favActive.svg' : 'https://cdn.worldofdypians.com/wod/favInactive.svg'}
+                        src={
+                          isFavorite
+                            ? "https://cdn.worldofdypians.com/wod/favActive.svg"
+                            : "https://cdn.worldofdypians.com/wod/favInactive.svg"
+                        }
                         onClick={() => {
                           handleFavorite(nft);
                         }}
@@ -3322,7 +3264,7 @@ const SingleNft = ({
                           <div className="d-flex gap-2 align-items-center">
                             <img
                               src={
-                                'https://cdn.worldofdypians.com/wod/topEth.svg'
+                                "https://cdn.worldofdypians.com/wod/topEth.svg"
                               }
                               alt=""
                               height={20}
@@ -3332,16 +3274,12 @@ const SingleNft = ({
                               className="nft-price-eth"
                               style={{ fontSize: 15, lineHeight: "20px" }}
                             >
-                              {getFormattedNumber(
-                                nft?.price / 1e18,
-                                3
-                              )}{" "}
-                             ETH
+                              {getFormattedNumber(nft?.price / 1e18, 3)} ETH
                             </span>
                             <span className="nft-price-usd">
                               $
                               {getFormattedNumber(
-                                 ethTokenData * (nft?.price / 1e18),
+                                ethTokenData * (nft?.price / 1e18),
                                 2
                               )}
                             </span>
@@ -3360,24 +3298,19 @@ const SingleNft = ({
                             <div className="d-flex gap-2 align-items-center">
                               <img
                                 src={
-                                 'https://cdn.worldofdypians.com/wod/topEth.svg'
+                                  "https://cdn.worldofdypians.com/wod/topEth.svg"
                                 }
                                 alt=""
                                 height={30}
                                 width={30}
                               />
                               <span className="nft-price-eth">
-                                {getFormattedNumber(
-                                  nft?.price / 1e18,
-                                  3
-                                )}{" "}
-                                 ETH 
+                                {getFormattedNumber(nft?.price / 1e18, 3)} ETH
                               </span>
                               <span className="nft-price-usd">
                                 $
                                 {getFormattedNumber(
-                                  ethTokenData * (nft?.price / 1e18)
-                                   ,
+                                  ethTokenData * (nft?.price / 1e18),
                                   2
                                 )}
                               </span>
@@ -3423,7 +3356,7 @@ const SingleNft = ({
                       type !== "viction" &&
                       type !== "multivers" &&
                       type !== "skale" &&
-                      type !== "immutable"  &&
+                      type !== "immutable" &&
                       type !== "mat" &&
                       type !== "sei" &&
                       loadingNft === false && (
@@ -3482,13 +3415,12 @@ const SingleNft = ({
                               />
                               <div className="d-flex flex-column gap-1">
                                 <span className="nft-price-eth gap-3 d-flex">
-                                 ETH
+                                  ETH
                                 </span>
                                 <span className="nft-price-usd">
                                   $
                                   {getFormattedNumber(
-                                     ethTokenData * (nft?.price / 1e18)
-                                      ,
+                                    ethTokenData * (nft?.price / 1e18),
                                     2
                                   )}
                                 </span>
@@ -3512,15 +3444,17 @@ const SingleNft = ({
                                   src={
                                     priceType === 0 &&
                                     nft.payment_priceType === 0
-                                      ? 'https://cdn.worldofdypians.com/wod/checked.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/empty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/checked.svg"
+                                      : "https://cdn.worldofdypians.com/wod/empty.svg"
                                   }
                                   alt=""
                                   className={"position-absolute checkicons"}
                                 />
                                 <span className="nft-price-eth">
                                   <img
-                                    src={ 'https://cdn.worldofdypians.com/wod/topEth.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/topEth.svg"
+                                    }
                                     alt=""
                                     height={20}
                                     width={20}
@@ -3594,7 +3528,7 @@ const SingleNft = ({
                       type !== "landbase" &&
                       type !== "skale" &&
                       type !== "immutable" &&
-                      type !== "mat"&&
+                      type !== "mat" &&
                       type !== "sei" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
@@ -3625,8 +3559,8 @@ const SingleNft = ({
                                   </span>
                                   <span className="nft-price-usd">
                                     $
-                                    {getFormattedNumber( ethTokenData * nftPrice
-                                        ,
+                                    {getFormattedNumber(
+                                      ethTokenData * nftPrice,
                                       2
                                     )}
                                   </span>
@@ -3652,10 +3586,11 @@ const SingleNft = ({
                                     }}
                                   >
                                     <div className="d-flex align-items-center gap-2">
-                                   
                                       <h6 className="filter-nav-title mb-0">
                                         <img
-                                          src={'https://cdn.worldofdypians.com/wod/checked.svg'}
+                                          src={
+                                            "https://cdn.worldofdypians.com/wod/checked.svg"
+                                          }
                                           alt=""
                                           style={{ top: "7px" }}
                                           className={
@@ -3665,7 +3600,7 @@ const SingleNft = ({
                                         <span className="nft-price-eth2">
                                           <img
                                             src={
-                                              'https://cdn.worldofdypians.com/wod/topEth.svg'
+                                              "https://cdn.worldofdypians.com/wod/topEth.svg"
                                             }
                                             alt=""
                                             height={20}
@@ -3794,8 +3729,8 @@ const SingleNft = ({
                         type === "cawsbase" ||
                         type === "landavax" ||
                         type === "landbnb" ||
-                        type === "landbase"||
-                        type === "mat"||
+                        type === "landbase" ||
+                        type === "mat" ||
                         type === "sei") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3910,7 +3845,12 @@ const SingleNft = ({
                                 setshowMakeOffer(true);
                               }}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/whiteTag.svg"
+                                }
+                                alt=""
+                              />{" "}
                               {myOffers.length > 0
                                 ? "View your offer"
                                 : "Make offer"}
@@ -3985,7 +3925,7 @@ const SingleNft = ({
                                     nft.nftAddress,
                                     nft.tokenId,
                                     nft.payment_priceType,
-                                     "eth"
+                                    "eth"
                                   );
                             }}
                           >
@@ -4041,7 +3981,7 @@ const SingleNft = ({
                         type !== "landavax" &&
                         type !== "landbnb" &&
                         type !== "landbase" &&
-                        type !== "mat"&&
+                        type !== "mat" &&
                         type !== "sei" && (
                           <button
                             disabled={
@@ -4121,15 +4061,20 @@ const SingleNft = ({
                         type !== "landbnb" &&
                         type !== "immutable" &&
                         type !== "landbase" &&
-                        type !== "mat"&&
-                        type !== "sei"&& (
+                        type !== "mat" &&
+                        type !== "sei" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
                               setshowMakeOffer(true);
                             }}
                           >
-                            <img src={'https://cdn.worldofdypians.com/wod/whiteTag.svg'} alt="" />{" "}
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/whiteTag.svg"
+                              }
+                              alt=""
+                            />{" "}
                             {myOffers.length > 0
                               ? "View your offer"
                               : "Make offer"}
@@ -4159,8 +4104,8 @@ const SingleNft = ({
                         type !== "landavax" &&
                         type !== "landbnb" &&
                         type !== "landbase" &&
-                        type !== "mat"&&
-                        type !== "sei"&& (
+                        type !== "mat" &&
+                        type !== "sei" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -4494,19 +4439,33 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/inboxStar.svg'} alt="" /> Exclusive Access
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/inboxStar.svg"
+                            }
+                            alt=""
+                          />{" "}
+                          Exclusive Access
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/stars.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/stars.svg"}
+                            alt=""
+                          />
                           Daily Rewards
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/dollarCircle.svg'} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/dollarCircle.svg"
+                            }
+                            alt=""
+                          />
                           Earn{" "}
                           {type === "conflux"
                             ? "CFX"
@@ -4536,7 +4495,10 @@ const SingleNft = ({
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/chart.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/chart.svg"}
+                            alt=""
+                          />
                           Global Points
                         </span>
                       </div>
@@ -4546,20 +4508,32 @@ const SingleNft = ({
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/users.svg'} alt="" />
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/users.svg"}
+                            alt=""
+                          />
                           Community Engagement
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/star.svg'} alt="" /> Enhanced Interactions
+                          <img
+                            src={"https://cdn.worldofdypians.com/wod/star.svg"}
+                            alt=""
+                          />{" "}
+                          Enhanced Interactions
                         </span>
                       </div>
                       <div className="d-flex w-100 justify-content-between flex-row flex-xxl-column flex-lg-column gap-2 align-items-center">
                         <span className="traittitle d-flex align-items-center gap-2">
                           {" "}
-                          <img src={'https://cdn.worldofdypians.com/wod/expand.svg'} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/expand.svg"
+                            }
+                            alt=""
+                          />
                           Expanded Functionality
                         </span>
                       </div>
@@ -4570,7 +4544,7 @@ const SingleNft = ({
             </div>
           )}
 
-          {offerData && offerData.length > 0 && (
+          {offerData && offerData.length > 0 && offerData.filter((items)=>{return items.offer.price > 0}).length > 0 && (
             <div className="px-2 mt-5">
               <div className="d-flex flex-column gap-3">
                 <span className="nftactivity">NFT Offers Activity </span>
@@ -4583,7 +4557,7 @@ const SingleNft = ({
                       <th className="saleHeader">From</th>
                       {isOwner && <th className="saleHeader">Action</th>}
 
-                      {offerData.map((item, index) => {
+                      {offerData.filter((items)=>{return items.offer.price > 0}).map((item, index) => {
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
@@ -4630,7 +4604,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.offer.buyer)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             {isOwner && (
@@ -4692,7 +4671,13 @@ const SingleNft = ({
                         return (
                           <tr className="saleRow" key={index}>
                             <td className="saledata">
-                              <img src={'https://cdn.worldofdypians.com/wod/cart.svg'} alt="" /> Sale
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/cart.svg"
+                                }
+                                alt=""
+                              />{" "}
+                              Sale
                             </td>
                             <td className="saleprice">
                               {getFormattedNumber(
@@ -4710,7 +4695,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.buyer)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             <td className="greendata">
@@ -4722,7 +4712,12 @@ const SingleNft = ({
                                 rel="noreferrer"
                               >
                                 {shortAddress(item.transactionHash)}{" "}
-                                <img src={'https://cdn.worldofdypians.com/wod/link.svg'} alt="" />
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/link.svg"
+                                  }
+                                  alt=""
+                                />
                               </a>
                             </td>
                             <td className="greendata">
@@ -4753,7 +4748,6 @@ const SingleNft = ({
           nftId={nftId}
           ethTokenData={ethTokenData}
           dypTokenData={dyptokenData}
-          dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}
@@ -4763,6 +4757,7 @@ const SingleNft = ({
           coinbase={coinbase}
           nftCount={nftCount}
           binanceW3WProvider={binanceW3WProvider}
+          lowestPriceNftListed={lowestPriceNftListed}
         />
       )}
     </div>

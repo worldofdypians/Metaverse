@@ -4,15 +4,29 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
 import { ApolloProvider } from "@apollo/client";
 import client from "./screens/Account/src/apolloConfig";
-
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
 import { ChatProvider } from "./screens/AIAgent/hooks/useChat";
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30 * 60 * 1000,
+      cacheTime: 31 * 60 * 1000,
+    },
+  },
+});
+
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+});
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -28,11 +42,16 @@ root.render(
     <BrowserRouter>
       <Web3ReactProvider getLibrary={getLibrary}>
         <ApolloProvider client={client}>
-          <AuthProvider>
-            <ChatProvider>
-              <App />
-            </ChatProvider>
-          </AuthProvider>
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{ persister }}
+          >
+            <AuthProvider>
+              <ChatProvider>
+                <App />
+              </ChatProvider>
+            </AuthProvider>
+          </PersistQueryClientProvider>
         </ApolloProvider>
       </Web3ReactProvider>
     </BrowserRouter>

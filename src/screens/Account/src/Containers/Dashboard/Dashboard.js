@@ -13,7 +13,6 @@ import GlobalLeaderboard from "../../../../../components/LeaderBoard/GlobalLeade
 import WalletModal from "../../../../../components/WalletModal/WalletModal";
 import MobileNav from "../../../../../components/MobileNav/MobileNav";
 import MarketSidebar from "../../../../../components/MarketSidebar/MarketSidebar";
-import getListedNFTS from "../../../../../actions/Marketplace";
 import axios from "axios";
 import SyncModal from "../../../../Marketplace/MarketNFTs/SyncModal";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -103,6 +102,11 @@ const StyledTextField = styled(TextField)({
   },
 });
 
+
+
+
+ 
+
 function Dashboard({
   dailyBonuslistedNFTS,
   account,
@@ -122,7 +126,6 @@ function Dashboard({
   domainName,
   handleOpenDomains,
   dogePrice,
-  dyptokenData_old,
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
@@ -162,6 +165,8 @@ function Dashboard({
   midleEarnUsd,
   coingeckoEarnUsd,
   chainlinkEarnUsd,
+  isTokenExpired,
+  listedNFTS
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -524,9 +529,7 @@ function Dashboard({
   const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
-  const [playerRank, setPlayerRank] = useState({});
-  const [bnbPrice, setBnbPrice] = useState(0);
-  const [cfxPrice, setCfxPrice] = useState(0);
+  const [playerRank, setPlayerRank] = useState({});  
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [bnbBonusPopup, setBnbBonusPopup] = useState(false)
@@ -534,8 +537,7 @@ function Dashboard({
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
-
-  const [listedNFTS, setListedNFTS] = useState([]);
+ 
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
@@ -7353,30 +7355,7 @@ function Dashboard({
       setmySeiNfts(NFTS)
     );
   };
-
-  const getOtherNfts = async () => {
-    let finalboughtItems1 = [];
-
-    const listedNFTS = await getListedNFTS(0, "", "seller", coinbase, "");
-    listedNFTS &&
-      listedNFTS.length > 0 &&
-      listedNFTS.map((nft) => {
-        if (nft.nftAddress === window.config.nft_caws_address) {
-          nft.type = "caws";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_land_address) {
-          nft.type = "land";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        } else if (nft.nftAddress === window.config.nft_timepiece_address) {
-          nft.type = "timepiece";
-          nft.chain = 1;
-          finalboughtItems1.push(nft);
-        }
-      });
-    setListedNFTS(finalboughtItems1);
-  };
+ 
 
   const windowSize = useWindowSize();
 
@@ -7519,80 +7498,7 @@ function Dashboard({
     }
   };
 
-  const getMyOffers = async () => {
-    //setmyOffers
-
-    let allOffers = [];
-
-    const URL =
-      "https://api.studio.thegraph.com/query/46190/worldofdypians-marketplace/version/latest";
-
-    const offersQuery = `
-    {
-      offerMades(first: 100) {
-        id
-        buyer
-        nftAddress
-        tokenId
-      }
-    }
-    `;
-
-    await axios
-      .post(URL, { query: offersQuery })
-      .then(async (result) => {
-        allOffers = await result.data.data.offerMades;
-        setallOffers(result.data.data.offerMades);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    if (allOffers.length > 0) {
-      let finalArray = [];
-      await Promise.all(
-        allOffers.map(async (nft) => {
-          const result = await window
-            .getAllOffers(nft.nftAddress, nft.tokenId)
-            .catch((e) => {
-              console.error(e);
-            });
-
-          if (result && result.length > 0) {
-            if (coinbase) {
-              result.map((item) => {
-                if (
-                  item.offer.buyer?.toLowerCase() === coinbase.toLowerCase()
-                ) {
-                  return finalArray.push({
-                    offer: item.offer,
-                    index: item.index,
-                    nftAddress: nft.nftAddress,
-                    tokenId: nft.tokenId,
-                    type:
-                      nft.nftAddress === window.config.nft_caws_address
-                        ? "caws"
-                        : nft.nftAddress === window.config.nft_timepiece_address
-                        ? "timepiece"
-                        : "land",
-                  });
-                }
-              });
-            }
-          }
-        })
-      );
-      let uniqueOffers = finalArray.filter(
-        (v, i, a) =>
-          a.findIndex(
-            (v2) => v2.tokenId === v.tokenId && v2.nftAddress === v.nftAddress
-          ) === i
-      );
-
-      setmyOffers(uniqueOffers);
-    }
-  };
-
+ 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
     if (
@@ -9465,27 +9371,9 @@ function Dashboard({
     }
   };
 
-  const getTokenDatabnb = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
-      .then((data) => {
-        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
-        setBnbPrice(bnb);
-      });
-  };
+ 
 
-  const fetchCFXPrice = async () => {
-    await axios
-      .get(
-        "https://api.worldofdypians.com/api/price/conflux-token"
-      )
-      .then((obj) => {
-        if (obj.data) {
-          setCfxPrice(obj.data.price);
-        }
-      });
-  };
-
+  
   const handleEthPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
@@ -10117,9 +10005,7 @@ function Dashboard({
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
-    window.scrollTo(0, 0);
-    getTokenDatabnb();
-    fetchCFXPrice();
+    window.scrollTo(0, 0);  
     // if (username !== undefined && userId !== undefined) {
     fetchDailyRecords();
     // fetchWeeklyRecords();
@@ -10418,15 +10304,15 @@ function Dashboard({
   }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
-    getOtherNfts();
+    
     getDypBalance(userWallet ? userWallet : coinbase);
   }, [account, userWallet, isConnected]);
 
   useEffect(() => {
-    if (authToken && email && isConnected) {
+    if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
     }
-  }, [account, userWallet, isConnected, authToken, email]);
+  }, [account, userWallet, isConnected, authToken, email,isTokenExpired]);
 
   useEffect(() => {
     refetchPlayer();
@@ -10842,7 +10728,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}
@@ -10953,7 +10838,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}
@@ -11064,7 +10948,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}
@@ -11476,7 +11359,7 @@ function Dashboard({
                 ethTokenData={ethTokenData}
                 dypTokenData={dypTokenData}
                 onOpenNfts={onOpenNfts}
-                listedNFTS={listedNFTS}
+                allListed={listedNFTS}
                 address={data?.getPlayer?.wallet?.publicAddress}
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
