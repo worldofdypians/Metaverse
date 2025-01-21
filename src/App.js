@@ -1449,6 +1449,7 @@ function App() {
       .get(`https://api.worldofdypians.com/api/getwodvolume`)
       .then((res) => {
         setTotalVolumeNew(res.data.totalVolume);
+        localStorage.setItem("cachedVolume", res.data.totalVolume);
       })
       .catch((err) => {
         console.log(err);
@@ -4835,11 +4836,7 @@ function App() {
         console.error(e);
       });
 
-    const result2 = await axios
-      .get("https://api.worldofdypians.com/api/totalVolumes")
-      .catch((e) => {
-        console.error(e);
-      });
+   
 
     if (result && result.status === 200) {
       if (result.data && result.data != "NAN") {
@@ -4847,12 +4844,7 @@ function App() {
         localStorage.setItem("cachedTvl", result.data);
       }
     }
-    if (result2 && result2.status === 200) {
-      if (result2.data && result2.data !== "NaN") {
-        setTotalVolume(result2.data);
-        localStorage.setItem("cachedVolume", result2.data);
-      }
-    }
+    
   };
 
   useEffect(() => {
