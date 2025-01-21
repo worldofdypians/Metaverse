@@ -1,18 +1,47 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import introJson from '../assets/audio/intro_0.json'
+import introAudio from '../assets/audio/intro_0.wav'
 
 
 const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
+
+
+
+
+   const audioFileToBase64 = async (filePath) => {
+    const response = await fetch(filePath);
+    const arrayBuffer = await response.arrayBuffer();
+    const base64String = btoa(
+      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+    return base64String;
+  };
+
+
+   const readJsonTranscript = async (filePath) => {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error(`Failed to load JSON file at ${filePath}`);
+    }
+    const json = await response.json();
+    return json;
+  };
+
+
   const chat = async (message) => {
     setLoading(true);
     
     // Mocked response logic
     const mockResponses = [
-    //   {
-    //     text: "Hello Teki, How are you?",
-    //     audio: await audioFileToBase64("")
-    //   },
+      {
+        text: "Hello Teki, How are you?",
+        audio: audioFileToBase64(introAudio),
+        lipsync: readJsonTranscript(introJson),
+        facialExpression: "sad",
+        animation: "Crying",
+      },
     
   ]
   

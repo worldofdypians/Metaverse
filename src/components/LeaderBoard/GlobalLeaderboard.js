@@ -339,8 +339,9 @@ const GlobalLeaderboard = ({
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                              "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
+                            width={20} height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -461,8 +462,9 @@ const GlobalLeaderboard = ({
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                              "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
+                            width={20} height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -549,8 +551,9 @@ const GlobalLeaderboard = ({
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                              "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
+                            width={20} height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -675,8 +678,9 @@ const GlobalLeaderboard = ({
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <img
                             src={
-                              "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                              "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
+                            width={20} height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -756,8 +760,9 @@ const GlobalLeaderboard = ({
                   >
                     <img
                       src={
-                        "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                        "https://cdn.worldofdypians.com/wod/lbStar.png"
                       }
+                      width={20} height={20}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />
@@ -803,8 +808,9 @@ const GlobalLeaderboard = ({
                   >
                     <img
                       src={
-                        "https://cdn.worldofdypians.com/wod/leaderboardstar.svg"
+                        "https://cdn.worldofdypians.com/wod/lbStar.png"
                       }
+                      width={20} height={20}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />
