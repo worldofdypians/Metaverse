@@ -129,30 +129,25 @@ const binanceConnector = new Connector({
   },
 });
 
-
 const fetchAllNFTs = async () => {
   try {
     const data = await getAllNfts();
     return data;
   } catch (error) {
     throw new Error("Failed to fetch listed NFTs");
-    
   }
 };
-
- 
 
 const useSharedData = () => {
   return useReactQuery({
     queryKey: ["nfts"],
     queryFn: fetchAllNFTs,
-    // staleTime: 5 * 60 * 1000,  
-    // cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: true,
-    refetchInterval: false, 
+    refetchInterval: false,
   });
 };
-
 
 const fetchListedNFTs = async () => {
   try {
@@ -167,14 +162,12 @@ const useSharedDataListedNfts = () => {
   return useReactQuery({
     queryKey: ["recentListedNFTS"],
     queryFn: fetchListedNFTs,
-    // staleTime: 5 * 60 * 1000,  
-    // cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: true,
     refetchInterval: false,
   });
 };
-
- 
 
 const fetchLatest20BoughtNFTs = async () => {
   const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
@@ -218,15 +211,72 @@ const useSharedDataLatest20BoughtNFTs = () => {
   return useReactQuery({
     queryKey: ["latestBoughtNFTs"],
     queryFn: fetchLatest20BoughtNFTs,
-    // staleTime: 5 * 60 * 1000,  
-    // cacheTime: 6 * 60 * 1000, 
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
     refetchOnWindowFocus: true,
     refetchInterval: false,
   });
 };
 
+const fetchAllCawsNFTs = async () => {
+  try {
+    const data = await getCawsNfts();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
 
+const useSharedDataCawsNfts = () => {
+  return useReactQuery({
+    queryKey: ["cawsnfts"],
+    queryFn: fetchAllCawsNFTs,
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+  });
+};
 
+const fetchAllWodNFTs = async () => {
+  try {
+    const data = await getWodNfts();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataWodNfts = () => {
+  return useReactQuery({
+    queryKey: ["wodnfts"],
+    queryFn: fetchAllWodNFTs,
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+  });
+};
+
+const fetchAllTimepieceNFTs = async () => {
+  try {
+    const data = await getTimepieceNfts();
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch listed NFTs");
+  }
+};
+
+const useSharedDataTimepieceNfts = () => {
+  return useReactQuery({
+    queryKey: ["timepiecenfts"],
+    queryFn: fetchAllTimepieceNFTs,
+    // staleTime: 5 * 60 * 1000,
+    // cacheTime: 6 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    refetchInterval: false,
+  });
+};
 
 function App() {
   const dataFetchedRef = useRef(false);
@@ -374,7 +424,6 @@ function App() {
   const authToken = localStorage.getItem("authToken");
 
   const [showWalletModal, setShowWalletModal] = useState(false);
- 
 
   const [betaModal, setBetaModal] = useState(false);
   const [donwloadSelected, setdownloadSelected] = useState(false);
@@ -2857,22 +2906,20 @@ function App() {
     }
   }, [authToken, data, isConnected, coinbase]);
 
- 
-  const { isPending: loadingRecentSales, data: latest20BoughtNFTS } = useSharedDataLatest20BoughtNFTs();
+  const { isPending: loadingRecentSales, data: latest20BoughtNFTS } =
+    useSharedDataLatest20BoughtNFTs();
 
   const handleRefreshList = () => {
     setNftCount(nftCount + 1);
   };
 
- 
+  const { data: recentListedNFTS2 } = useSharedDataListedNfts();
+  const { data: allNfts } = useSharedData();
 
-  const {data: recentListedNFTS2 } = useSharedDataListedNfts();
-  const { data: allNfts } = useSharedData()
-  
   const getOtherNfts = async () => {
-    let finalboughtItems1 = []; 
+    let finalboughtItems1 = [];
     setLoadingRecentListings(true);
- 
+
     finalboughtItems1 = allNfts;
 
     if (finalboughtItems1 && finalboughtItems1.length > 0) {
@@ -2897,7 +2944,7 @@ function App() {
           };
         })
       );
-    
+
       setLatest20RecentListedNFTS(updatedItems);
       setLoadingRecentListings(false);
     } else {
@@ -3211,7 +3258,7 @@ function App() {
       userId !== null &&
       authToken !== undefined &&
       email &&
-      isConnected 
+      isConnected
     ) {
       try {
         const response = await fetch(
@@ -4155,8 +4202,6 @@ function App() {
       },
     },
   ];
-   
-
 
   const getCawsSold = async () => {
     const allSold = latest20BoughtNFTS;
@@ -4188,44 +4233,53 @@ function App() {
       setTimepieceBought(uniqueTimepiece);
     }
   };
+  const { data: allCawsNfts } = useSharedDataCawsNfts();
+  const { data: allWodNfts } = useSharedDataWodNfts();
+  const { data: allTimepieceNfts } = useSharedDataTimepieceNfts();
 
   const fetchCawsNfts = async () => {
-    const cawsNft = await getCawsNfts();
-    let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
-    let latestCaws = cawsNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
-      );
-    });
-    setcawsListed(latestCaws);
+    const cawsNft = allCawsNfts;
+    if (cawsNft && cawsNft.length > 0) {
+      let cawsNft_ETH = cawsNft.filter((item) => item.payment_priceType === 0);
+      let latestCaws = cawsNft_ETH.sort((a, b) => {
+        return (
+          new Date(Number(b.blockTimestamp) * 1000) -
+          new Date(Number(a.blockTimestamp) * 1000)
+        );
+      });
+      setcawsListed(latestCaws);
+    }
   };
 
   const fetchLandNfts = async () => {
-    const wodNft = await getWodNfts();
-    let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
-    let latestWod = wodNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
-      );
-    });
-    setwodListed(latestWod);
+    const wodNft = allWodNfts;
+    if (wodNft && wodNft.length > 0) {
+      let wodNft_ETH = wodNft.filter((item) => item.payment_priceType === 0);
+      let latestWod = wodNft_ETH.sort((a, b) => {
+        return (
+          new Date(Number(b.blockTimestamp) * 1000) -
+          new Date(Number(a.blockTimestamp) * 1000)
+        );
+      });
+      setwodListed(latestWod);
+    }
   };
 
   const fetchTimepieceNfts = async () => {
-    const timepieceNft = await getTimepieceNfts();
-    let timepieceNft_ETH = timepieceNft.filter(
-      (item) => item.payment_priceType === 0
-    );
-    let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
-      return (
-        new Date(Number(b.blockTimestamp) * 1000) -
-        new Date(Number(a.blockTimestamp) * 1000)
+    const timepieceNft = allTimepieceNfts;
+    if (timepieceNft && timepieceNft.length > 0) {
+      let timepieceNft_ETH = timepieceNft.filter(
+        (item) => item.payment_priceType === 0
       );
-    });
+      let latestTimepiece = timepieceNft_ETH.sort((a, b) => {
+        return (
+          new Date(Number(b.blockTimestamp) * 1000) -
+          new Date(Number(a.blockTimestamp) * 1000)
+        );
+      });
 
-    settimepieceListed(latestTimepiece);
+      settimepieceListed(latestTimepiece);
+    }
   };
 
   const refreshSubscription = async (addr) => {
@@ -4767,7 +4821,7 @@ function App() {
   useEffect(() => {
     fetchUserFavorites(coinbase);
     // refreshSubscription();
-  }, [coinbase,data, authToken, isConnected, email]);
+  }, [coinbase, data, authToken, isConnected, email]);
 
   const checkData = async () => {
     // if (coinbase) {
@@ -4776,9 +4830,9 @@ function App() {
   };
 
   useEffect(() => {
-    if(recentListedNFTS2 && recentListedNFTS2.length>0)
-     { getOtherNfts();}
-      
+    if (recentListedNFTS2 && recentListedNFTS2.length > 0) {
+      getOtherNfts();
+    }
   }, [recentListedNFTS2]);
 
   useEffect(() => {
