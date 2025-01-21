@@ -21,71 +21,6 @@ import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 import MakeOffer from "./MakeOffer";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
 
-const StyledTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#fff",
-    fontFamily: "Poppins",
-  },
-  "& .MuiInputLabel-root": {
-    color: "#fff",
-    fontFamily: "Poppins",
-    zIndex: "2",
-  },
-  "& .MuiFormHelperText-root": {
-    fontFamily: "Poppins",
-  },
-  "& .MuiSelect-select": {
-    color: "#fff",
-    fontFamily: "Poppins",
-    zIndex: "1",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#AAA5EB",
-    fontFamily: "Poppins",
-    color: "#fff",
-    background: "#272450",
-    borderRadius: "8px",
-  },
-  "& .MuiOutlinedInput-input": {
-    zIndex: "1",
-    color: "#fff",
-    fontFamily: "Poppins",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Poppins",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#AAA5EB",
-      fontFamily: "Poppins",
-      color: "#fff",
-      background: "#272450",
-      borderRadius: "8px",
-    },
-  },
-});
-
-const getListedNtsAsc = async () => {
-  const ethNfts = await getListedNFTS(0, "", "payment_priceType", "ETH", "");
-  let ethNftsAsc = ethNfts.sort((a, b) => {
-    return a.price - b.price;
-  });
-  return ethNftsAsc;
-};
-
-const useSharedListedNtsAsc = () => {
-  return useReactQuery({
-    queryKey: ["payment_priceType", "ETH"],
-    queryFn: getListedNtsAsc,
-    // staleTime: 5 * 60 * 1000,
-    // cacheTime: 6 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-  });
-};
 
 const fetchCurrentNft = async (nftId, nftAddress) => {
   try {
@@ -104,7 +39,7 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
-    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
+    queryKey: ["nftData", nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
@@ -186,7 +121,6 @@ const SingleNft = ({
   nftCount,
   handleRefreshListing,
   favorites,
-  dyptokenData_old,
   binanceW3WProvider,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
@@ -194,6 +128,7 @@ const SingleNft = ({
   dyptokenData,
   ethTokenData,
   authToken,
+  lowestPriceNftListed
 }) => {
   const windowSize = useWindowSize();
   const location = useLocation();
@@ -288,8 +223,7 @@ const SingleNft = ({
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
-
-  const { data: lowestPriceNftListed } = useSharedListedNtsAsc();
+ 
 
   const { data: currentNft } = useSharedDataCurrentNft(nftId, nftAddress);
 
@@ -2796,8 +2730,7 @@ const SingleNft = ({
     ) {
       setPurchaseColor("#FF6232");
     }
-  }, [purchaseStatus, data]);
-
+  }, [purchaseStatus, data]); 
   return (
     <div
       className="container-fluid d-flex mt-lg-5 pt-lg-5 justify-content-end p-0"
@@ -4815,7 +4748,6 @@ const SingleNft = ({
           nftId={nftId}
           ethTokenData={ethTokenData}
           dypTokenData={dyptokenData}
-          dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}
@@ -4825,6 +4757,7 @@ const SingleNft = ({
           coinbase={coinbase}
           nftCount={nftCount}
           binanceW3WProvider={binanceW3WProvider}
+          lowestPriceNftListed={lowestPriceNftListed}
         />
       )}
     </div>

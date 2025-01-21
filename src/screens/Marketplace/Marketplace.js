@@ -26,8 +26,6 @@ const Marketplace = ({
   recentSales,
   nftCount,
   ethTokenData,
-  dypTokenData,
-  dypTokenData_old,
   totalTx,
   totalvolume,
   count,
@@ -492,7 +490,7 @@ const Marketplace = ({
         console.error(e);
       });
     const result2 = await axios
-      .get("https://api.worldofdypians.com/api/totalVolumes")
+      .get("https://api.worldofdypians.com/api/getWodVolume")
       .catch((e) => {
         console.error(e);
       });
@@ -503,8 +501,8 @@ const Marketplace = ({
     }
 
     if (result2.data && result2.data !== "NaN") {
-      setTotalVolume(result2.data);
-      localStorage.setItem("cachedVolume", result2.data);
+      setTotalVolume(result2.data.totalVolume);
+        localStorage.setItem("cachedVolume", result2.data.totalVolume);
     }
   };
 
@@ -968,7 +966,7 @@ const Marketplace = ({
                 <div className="col-12 col-lg-4 mt-0 mt-lg-4">
                   <div className="stats-container-3 d-flex flex-column align-items-center justify-content-center gap-0">
                     <h6 className="stats-value">
-                      {getFormattedNumber(1165350, 0)}
+                      {getFormattedNumber(1272687, 0)}
                     </h6>
                     <span className="stats-desc">Total NFT Holders</span>
                   </div>
@@ -1094,8 +1092,6 @@ const Marketplace = ({
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}
-                            dypTokenData={dypTokenData}
-                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1143,8 +1139,6 @@ const Marketplace = ({
                         >
                           <ItemCard
                             ethTokenData={ethTokenData}
-                            dypTokenData={dypTokenData}
-                            dypTokenData_old={dypTokenData_old}
                             key={nft.id}
                             nft={nft}
                             isConnected={isConnected}
@@ -1379,8 +1373,6 @@ const Marketplace = ({
                           >
                             <ItemCard
                               ethTokenData={ethTokenData}
-                              dypTokenData={dypTokenData}
-                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}
@@ -1415,8 +1407,6 @@ const Marketplace = ({
                           >
                             <ItemCard
                               ethTokenData={ethTokenData}
-                              dypTokenData={dypTokenData}
-                              dypTokenData_old={dypTokenData_old}
                               key={nft.id}
                               nft={nft}
                               isConnected={isConnected}

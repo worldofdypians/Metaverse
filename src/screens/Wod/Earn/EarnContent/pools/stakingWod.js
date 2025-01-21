@@ -172,7 +172,6 @@ const StakeWodDetails = ({
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
 
-  const [tokendata, settokendata] = useState();
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
   const [availableQuota, setavailableQuota] = useState(0);
@@ -669,17 +668,7 @@ const StakeWodDetails = ({
     }
   };
 
-  const getUsdPerDyp = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_eth_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-        settokendata(propertyDyp[0][1].token_price_usd);
-        return propertyDyp[0][1].token_price_usd;
-      });
-  };
+ 
 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
@@ -717,7 +706,6 @@ const StakeWodDetails = ({
   }, [depositAmount, totalDeposited, poolCap]);
 
   useEffect(() => {
-    getUsdPerDyp();
     getAvailableQuota();
   }, [staking, poolCap]);
 

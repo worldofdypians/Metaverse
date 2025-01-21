@@ -3,41 +3,12 @@ import "./_walletbalance.scss";
 import axios from "axios";
 
 import { NavLink } from "react-router-dom";
-import getListedNFTS from "../../../../../actions/Marketplace";
-import { useQuery as useReactQuery } from "@tanstack/react-query";
 
 import CawsWodItem from "../../../../../components/ItemCard/CawsWodItem";
 import Pagination from "@mui/material/Pagination";
 import { Skeleton } from "@mui/material";
 import OutsideClickHandler from "react-outside-click-handler";
 import useWindowSize from "../../../../../hooks/useWindowSize";
-  
-
-const fetchAllNFTs = async (wallet) => {
-  try { 
-    const data =  await getListedNFTS(
-      0,
-      "",
-      "seller",
-     wallet,
-      "");
-    return data;
-  } catch (error) {
-    throw new Error("Failed to fetch listed NFTs");
-  }
-};
-
-const useSharedData = (wallet) => {
-  return useReactQuery({
-    queryKey: ["seller", wallet],
-    queryFn: () => fetchAllNFTs(wallet),
-    // staleTime: 5 * 60 * 1000,  
-    // cacheTime: 6 * 60 * 1000,  
-    refetchOnWindowFocus: true, 
-    refetchInterval: false,
-    enabled: !!wallet,
-  });
-};
  
 
 const Portfolio = ({
@@ -55,7 +26,7 @@ const Portfolio = ({
   idypBalanceavax,
   userId,
   username,
-  listedNFTS,
+  allListed,
   landStaked,
   myCawsWodStakes,
   myWodWodStakes,
@@ -110,15 +81,7 @@ const Portfolio = ({
 
   const [listedItemsFiltered, setlistedItemsFiltered] = useState([]);
   const [listedItems, setlistedItems] = useState([]);
-
-  const [bnbPrice, setBnbPrice] = useState(0);
-
-  const [dyptokenData, setDypTokenData] = useState([]);
-  const [idyptokenData, setIDypTokenData] = useState([]);
-  const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
-  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
-  const [idyptokenDataAvax, setIDypTokenDataAvax] = useState([]);
-  const [dyptokenDataAvax, setDypTokenDataAvax] = useState([]);
+ 
   const [filterTitle, setFilterTitle] = useState("Collected");
   const [nftItems, setNftItems] = useState([]);
   const [collectedItems, setcollectedItems] = useState([]);
@@ -256,7 +219,7 @@ const Portfolio = ({
     borderColor: "#554fd8",
   };
 
-  const { data: allListed } = useSharedData(address ? address : coinbase); 
+  
   
   const sortNfts = (sortValue) => {
      if (sortValue === "collected") {
@@ -1143,70 +1106,9 @@ const Portfolio = ({
       setGenesisRank(testArray[0].position);
     }
   };
-
-  const getPriceDYP = async () => {
-    const dypprice = await axios
-      .get(
-        "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-      )
-      .then((res) => {
-        return res.data.data.attributes.base_token_price_usd;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    setDypTokenData(dypprice);
-    setDypTokenDatabnb(dypprice);
-    setDypTokenDataAvax(dypprice);
-  };
-
-  const getTokenData = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_eth_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-
-        const propertyIDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-        setIDypTokenData(propertyIDyp[1][1].token_price_usd);
-      });
-  };
-
-  const getTokenDatabnb = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
-        setBnbPrice(bnb);
-
-        const propertyIDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
-      });
-  };
-
-  const getTokenDataavax = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_avax_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_avax_v2.token_data
-        );
-
-        const propertyIDyp = Object.entries(
-          data.data.the_graph_avax_v2.token_data
-        );
-        setIDypTokenDataAvax(propertyIDyp[1][1].token_price_usd);
-      });
-  };
+ 
+ 
+ 
 
   const getTwonfts = () => {
     const allnft = [...myCawsWodStakes, ...landStaked];
@@ -1477,10 +1379,6 @@ const Portfolio = ({
   useEffect(() => {
     fetchMonthlyRecordsAroundPlayer();
     fetchGenesisAroundPlayer();
-    getTokenData();
-    getPriceDYP();
-    getTokenDataavax();
-    getTokenDatabnb();
     getListed();
   }, []);
 

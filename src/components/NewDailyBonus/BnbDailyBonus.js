@@ -76,7 +76,6 @@ const BnbDailyBonus = ({
   onSkaleChestClaimed,
   listedNFTS,
   dypTokenData,
-  dyptokenData_old,
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -6702,7 +6701,6 @@ const BnbDailyBonus = ({
           nft={nft}
           onClose={() => setBuyNftPopup(false)}
           dypTokenData={dypTokenData}
-          dyptokenData_old={dyptokenData_old}
           ethTokenData={ethTokenData}
           handleSwitchChain={handleSwitchChain}
           chestIndex={isActiveIndex}

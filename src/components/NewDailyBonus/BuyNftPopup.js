@@ -6,8 +6,7 @@ import { ethers } from "ethers";
 const BuyNftPopup = ({
   nft,
   onClose,
-  dypTokenData,
-  dyptokenData_old,
+  dypTokenData, 
   ethTokenData,
   chainId,
   handleSwitchChain,

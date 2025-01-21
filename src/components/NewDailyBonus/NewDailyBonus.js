@@ -76,8 +76,7 @@ const NewDailyBonus = ({
   onChestClaimed,
   onSkaleChestClaimed,
   listedNFTS,
-  dypTokenData,
-  dyptokenData_old,
+  dypTokenData, 
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -7707,8 +7706,7 @@ const NewDailyBonus = ({
         <BuyNftPopup
           nft={nft}
           onClose={() => setBuyNftPopup(false)}
-          dypTokenData={dypTokenData}
-          dyptokenData_old={dyptokenData_old}
+          dypTokenData={dypTokenData} 
           ethTokenData={ethTokenData}
           handleSwitchChain={handleSwitchChain}
           chestIndex={isActiveIndex}
