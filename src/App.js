@@ -1458,7 +1458,7 @@ function App() {
   };
   const fetchTotalWodHolders = async () => {
     await axios
-      .get(`https://api.dyp.finance/api/getWodHolders`)
+      .get(`https://api.worldofdypians.com/api/getwodholders`)
       .then((res) => {
         setWodHolders(res.data.holders);
       })
