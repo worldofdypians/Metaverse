@@ -522,8 +522,7 @@ function App() {
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
-  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
-  const [dyptokenDatabnb_old, setDypTokenDatabnb_old] = useState([]);
+  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]); 
   const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
@@ -564,7 +563,6 @@ function App() {
   const [count, setCount] = useState(1);
 
   const [dypTokenData, setDypTokenData] = useState(0);
-  const [dypTokenData_old, setDypTokenData_old] = useState();
   const [ethTokenData, setEthTokenData] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [cawsBought, setCawsBought] = useState([]);
@@ -1458,7 +1456,7 @@ function App() {
   };
   const fetchTotalWodHolders = async () => {
     await axios
-      .get(`https://api.dyp.finance/api/getWodHolders`)
+      .get(`https://api.worldofdypians.com/api/getwodholders`)
       .then((res) => {
         setWodHolders(res.data.holders);
       })
@@ -1831,23 +1829,15 @@ function App() {
         });
     }
   };
-
+ 
   const getTokenData = async () => {
     await axios
-      .get("https://api.dyp.finance/api/the_graph_eth_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_eth_v2.token_data
-        );
-
-        setDypTokenData_old(propertyDyp[0][1].token_price_usd);
-
-        const propertyETH = data.data.the_graph_eth_v2.usd_per_eth;
-
-        setEthTokenData(propertyETH);
+      .get("https://api.worldofdypians.com/api/price/ethereum")
+      .then((data) => { 
+        setEthTokenData(data.price);
       });
+       
   };
-
   const getPriceDYP = async () => {
     const dypprice = await axios
       .get(
@@ -1886,22 +1876,23 @@ function App() {
 
   const getTokenDatabnb = async () => {
     await axios
-      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
-      .then((data) => {
-        const propertyDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
+    .get("https://api.worldofdypians.com/api/price/dogecoin")
+    .then((obj) => {
+      if (obj.data) {
+        setBnbUSDPrice(obj.data.price);
+        setBnbPrice(obj.data.price);
+      }
+    });
 
-        setDypTokenDatabnb_old(propertyDyp[0][1].token_price_usd);
-
-        setBnbUSDPrice(data.data.the_graph_bsc_v2.usd_per_eth);
-        const propertyIDyp = Object.entries(
-          data.data.the_graph_bsc_v2.token_data
-        );
-        setIDypTokenDatabnb(propertyIDyp[1][1].token_price_usd);
-      });
+    await axios
+    .get("https://api.worldofdypians.com/api/price/idefiyieldprotocol")
+    .then((obj) => {
+      if (obj.data) {
+        setIDypTokenDatabnb(obj.data.price);
+      }
+    });
   };
-
+ 
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -3358,7 +3349,17 @@ function App() {
         setCorePrice(obj.data.price);
       });
   };
-
+  const fetchCFXPrice = async () => {
+    await axios
+      .get(
+        "https://api.worldofdypians.com/api/price/conflux-token"
+      )
+      .then((obj) => {
+        if (obj.data) {
+          setCfxPrice(obj.data.price);
+        }
+      });
+  };
   const fetchMantaPrice = async () => {
     await axios
       .get(`https://api.worldofdypians.com/api/price/manta-network`)
@@ -3423,6 +3424,7 @@ function App() {
     fetchTaikoPrice();
     fetchCookiePrice();
     fetchCorePrice();
+    fetchCFXPrice();
     // fetchMatchainPrice();
     fetchVictionPrice();
     fetchEgldPrice();
@@ -5018,7 +5020,6 @@ function App() {
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
                 favorites={favorites}
-                dyptokenData_old={dypTokenData_old}
                 dyptokenData={dypTokenData}
                 binanceW3WProvider={library}
                 binanceWallet={coinbase}
@@ -5048,8 +5049,7 @@ function App() {
                 handleSwitchChain={handleSwitchNetwork}
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
-                favorites={favorites}
-                dyptokenData_old={dypTokenData_old}
+                favorites={favorites} 
                 dyptokenData={dypTokenData}
                 binanceW3WProvider={library}
                 binanceWallet={coinbase}
@@ -5073,8 +5073,7 @@ function App() {
                 totalVolumeNew={totalVolumeNew}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
+                dyptokenDatabnb={dyptokenDatabnb} 
                 idyptokenDatabnb={idyptokenDatabnb}
                 cawsListed={cawsListed}
                 wodListed={wodListed}
@@ -5325,7 +5324,6 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 account={coinbase}
                 binanceW3WProvider={library}
@@ -5404,7 +5402,6 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 account={coinbase}
                 binanceW3WProvider={library}
@@ -5483,8 +5480,6 @@ function App() {
                 wodHolders={wodHolders}
                 totalVolumeNew={totalVolumeNew}
                 ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 isConnected={isConnected}
                 handleConnect={handleShowWalletModal}
@@ -5511,8 +5506,6 @@ function App() {
             element={
               <CawsNFT
                 ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                dypTokenData_old={dypTokenData_old}
                 isConnected={isConnected}
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
@@ -5531,9 +5524,7 @@ function App() {
             path="/shop/land"
             element={
               <WoDNFT
-                ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                dypTokenData_old={dypTokenData_old}
+                ethTokenData={ethTokenData} 
                 isConnected={isConnected}
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
@@ -5553,8 +5544,6 @@ function App() {
             element={
               <TimepieceNFT
                 ethTokenData={ethTokenData}
-                dypTokenData={dypTokenData}
-                dypTokenData_old={dypTokenData_old}
                 isConnected={isConnected}
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
@@ -6160,7 +6149,6 @@ function App() {
                 dyptokenDatabnb={dyptokenDatabnb}
                 dypTokenData={dypTokenData}
                 handleSwitchChain={handleSwitchChain}
-                dypTokenData_old={dypTokenData_old}
                 coinbase={coinbase}
                 account={coinbase}
                 binanceW3WProvider={library}
@@ -6214,8 +6202,7 @@ function App() {
                 account={coinbase?.toLowerCase()}
                 chainId={networkId}
                 dyptokenDatabnb={dyptokenDatabnb}
-                idyptokenDatabnb={idyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
+                idyptokenDatabnb={idyptokenDatabnb} 
                 dyptokenData_old={dypTokenData_old}
                 handleAvailableTime={(value) => {
                   setavailTime(value);
@@ -6237,8 +6224,7 @@ function App() {
                 listedNFTS={listedNFTS}
                 account={coinbase?.toLowerCase()}
                 chainId={networkId}
-                dyptokenDatabnb={dyptokenDatabnb}
-                dyptokenDatabnb_old={dyptokenDatabnb_old}
+                dyptokenDatabnb={dyptokenDatabnb} 
                 idyptokenDatabnb={idyptokenDatabnb}
                 handleAvailableTime={(value) => {
                   setavailTime(value);

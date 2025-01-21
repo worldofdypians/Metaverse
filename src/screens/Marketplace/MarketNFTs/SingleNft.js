@@ -39,7 +39,7 @@ const fetchCurrentNft = async (nftId, nftAddress) => {
 
 const useSharedDataCurrentNft = (nftId, nftAddress) => {
   return useReactQuery({
-    queryKey: ["nftAddress_tokenId", nftId, nftAddress],
+    queryKey: ["nftData", nftId, nftAddress],
     queryFn: () => fetchCurrentNft(nftId, nftAddress),
     // staleTime: 5 * 60 * 1000,
     // cacheTime: 6 * 60 * 1000,
@@ -121,7 +121,6 @@ const SingleNft = ({
   nftCount,
   handleRefreshListing,
   favorites,
-  dyptokenData_old,
   binanceW3WProvider,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
@@ -4750,7 +4749,6 @@ const SingleNft = ({
           nftId={nftId}
           ethTokenData={ethTokenData}
           dypTokenData={dyptokenData}
-          dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}

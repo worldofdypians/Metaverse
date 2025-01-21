@@ -21,7 +21,6 @@ const MakeOffer = ({
   nft,
   ethTokenData,
   dypTokenData,
-  dyptokenData_old,
   handleMakeOffer,
   handleUpdateOffer,
   handleDeleteOffer,

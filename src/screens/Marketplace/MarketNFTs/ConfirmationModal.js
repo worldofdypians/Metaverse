@@ -16,8 +16,6 @@ const ConfirmationModal = ({
   state,
   nft,
   ethTokenData,
-  dypTokenData,
-  dypTokenData_old,
 }) => {
   const windowSize = useWindowSize();
 
@@ -125,12 +123,8 @@ const ConfirmationModal = ({
                       <span className="itemcollectionName">
                         $
                         {getFormattedNumber(
-                          nft.payment_priceType === 0
-                            ? ethTokenData * (nft.price / 1e18)
-                            : nft?.payment_tokenAddress ===
-                              window.config.dyp_token_address
-                            ? dypTokenData_old * (nft.price / 1e18)
-                            : dypTokenData * (nft.price / 1e18),
+                          ethTokenData * (nft.price / 1e18)
+                            ,
                           nft.payment_priceType === 0 ? 3 : 0
                         )}
                       </span>
@@ -222,12 +216,8 @@ const ConfirmationModal = ({
                       <span className="itemcollectionName">
                         $
                         {getFormattedNumber(
-                          nft.payment_priceType === 0
-                            ? ethTokenData * (nft.price / 1e18)
-                            : nft?.payment_tokenAddress ===
-                              window.config.dyp_token_address
-                            ? dypTokenData_old * (nft.price / 1e18)
-                            : dypTokenData * (nft.price / 1e18),
+                          ethTokenData * (nft.price / 1e18)
+                            ,
                           nft.payment_priceType === 0 ? 3 : 0
                         )}
                       </span>
