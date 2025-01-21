@@ -75,8 +75,7 @@ const MatchainDailyBonus = ({
   onChestClaimed,
   onSkaleChestClaimed,
   listedNFTS,
-  dypTokenData,
-  dyptokenData_old,
+  dypTokenData, 
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -6408,7 +6407,6 @@ const MatchainDailyBonus = ({
           nft={nft}
           onClose={() => setBuyNftPopup(false)}
           dypTokenData={dypTokenData}
-          dyptokenData_old={dyptokenData_old}
           ethTokenData={ethTokenData}
           handleSwitchChain={handleSwitchChain}
           chestIndex={isActiveIndex}

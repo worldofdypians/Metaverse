@@ -121,7 +121,6 @@ const SingleNft = ({
   nftCount,
   handleRefreshListing,
   favorites,
-  dyptokenData_old,
   binanceW3WProvider,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
@@ -4750,7 +4749,6 @@ const SingleNft = ({
           nftId={nftId}
           ethTokenData={ethTokenData}
           dypTokenData={dyptokenData}
-          dyptokenData_old={dyptokenData_old}
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}

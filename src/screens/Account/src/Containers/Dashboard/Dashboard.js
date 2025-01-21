@@ -126,7 +126,6 @@ function Dashboard({
   domainName,
   handleOpenDomains,
   dogePrice,
-  dyptokenData_old,
   handleSwitchChain,
   onSubscribeSuccess,
   isPremium,
@@ -530,9 +529,7 @@ function Dashboard({
   const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
-  const [playerRank, setPlayerRank] = useState({});
-  const [bnbPrice, setBnbPrice] = useState(0);
-  const [cfxPrice, setCfxPrice] = useState(0);
+  const [playerRank, setPlayerRank] = useState({});  
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
   const [bnbBonusPopup, setBnbBonusPopup] = useState(false)
@@ -9374,27 +9371,9 @@ function Dashboard({
     }
   };
 
-  const getTokenDatabnb = async () => {
-    await axios
-      .get("https://api.dyp.finance/api/the_graph_bsc_v2")
-      .then((data) => {
-        const bnb = data.data.the_graph_bsc_v2.usd_per_eth;
-        setBnbPrice(bnb);
-      });
-  };
+ 
 
-  const fetchCFXPrice = async () => {
-    await axios
-      .get(
-        "https://api.worldofdypians.com/api/price/conflux-token"
-      )
-      .then((obj) => {
-        if (obj.data) {
-          setCfxPrice(obj.data.price);
-        }
-      });
-  };
-
+  
   const handleEthPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
@@ -10026,9 +10005,7 @@ function Dashboard({
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
-    window.scrollTo(0, 0);
-    getTokenDatabnb();
-    fetchCFXPrice();
+    window.scrollTo(0, 0);  
     // if (username !== undefined && userId !== undefined) {
     fetchDailyRecords();
     // fetchWeeklyRecords();
@@ -10751,7 +10728,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}
@@ -10862,7 +10838,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}
@@ -10973,7 +10948,6 @@ function Dashboard({
             chainId={chainId}
             dypTokenData={dypTokenData}
             ethTokenData={ethTokenData}
-            dyptokenData_old={dyptokenData_old}
             handleSwitchChain={handleSwitchChain}
             handleSwitchNetwork={handleSwitchNetwork}
             listedNFTS={dailyBonuslistedNFTS}

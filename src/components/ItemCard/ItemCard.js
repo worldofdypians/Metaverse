@@ -33,8 +33,6 @@ const ItemCard = ({
   isWod,
   coinbase,
   ethTokenData,
-  dypTokenData,
-  dypTokenData_old,
   isFavorite,
   onFavorite,
   lastSold,
@@ -651,8 +649,6 @@ const ItemCard = ({
           isTimepiece={isTimepiece}
           state={purchasestate}
           ethTokenData={ethTokenData}
-          dypTokenData={dypTokenData}
-          dypTokenData_old={dypTokenData_old}
         />
       )}
       <div className="item-wrapper" style={{ maxWidth: "100%" }}>

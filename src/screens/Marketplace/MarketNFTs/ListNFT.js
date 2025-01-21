@@ -126,8 +126,7 @@ const ListNFT = ({
   handleSwitchChain,
   nftCount,
   handleRefreshListing,
-  favorites,
-  dyptokenData_old,
+  favorites, 
   binanceW3WProvider,
   handleSwitchChainGateWallet,
   handleSwitchChainBinanceWallet,
@@ -5240,8 +5239,7 @@ const ListNFT = ({
           nftAddr={nftAddress}
           nftId={nftId}
           ethTokenData={ethTokenData}
-          dypTokenData={dyptokenData}
-          dyptokenData_old={dyptokenData_old}
+          dypTokenData={dyptokenData} 
           handleMakeOffer={handleMakeOffer}
           handleDeleteOffer={handleDeleteOffer}
           handleUpdateOffer={handleUpdateOffer}
