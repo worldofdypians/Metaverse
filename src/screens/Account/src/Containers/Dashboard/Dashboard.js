@@ -640,8 +640,7 @@ function Dashboard({
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
-  const [userBnbScore, setUserBnbScore] = useState(0);
-  const [genesisRank, setGenesisRank] = useState("");
+  const [userBnbScore, setUserBnbScore] = useState(0); 
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
@@ -6631,8 +6630,7 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
-
-    setGenesisRank(testArray[0].position >= 10 ? 0 : genesisPrizes[testArray[0].position]);
+ 
     setGenesisRank2(testArray[0].statValue);
   };
 
@@ -10654,7 +10652,7 @@ function Dashboard({
               email={email}
               isConnected={isConnected}
               setBeastSiegeStatus={setBeastSiegeStatus}
-              genesisUsd={genesisRank}
+              genesisUsd={genesisRank2}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
