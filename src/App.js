@@ -522,7 +522,7 @@ function App() {
   const [activeUser, setactiveUser] = useState(false);
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
-  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]); 
+  const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
@@ -1830,17 +1830,16 @@ function App() {
         });
     }
   };
- 
+
   const getTokenData = async () => {
     await axios
       .get("https://api.worldofdypians.com/api/price/ethereum")
-      .then((obj) => { 
-        if (obj.data) { 
-        setEthTokenData(obj.data.price);
+      .then((obj) => {
+        if (obj.data) {
+          setEthTokenData(obj.data.price);
         }
       });
-       
-  }; 
+  };
 
   const getPriceDYP = async () => {
     const dypprice = await axios
@@ -1880,23 +1879,23 @@ function App() {
 
   const getTokenDatabnb = async () => {
     await axios
-    .get("https://api.worldofdypians.com/api/price/dogecoin")
-    .then((obj) => {
-      if (obj.data) {
-        setBnbUSDPrice(obj.data.price);
-        setBnbPrice(obj.data.price);
-      }
-    });
+      .get("https://api.worldofdypians.com/api/price/dogecoin")
+      .then((obj) => {
+        if (obj.data) {
+          setBnbUSDPrice(obj.data.price);
+          setBnbPrice(obj.data.price);
+        }
+      });
 
     await axios
-    .get("https://api.worldofdypians.com/api/price/idefiyieldprotocol")
-    .then((obj) => {
-      if (obj.data) {
-        setIDypTokenDatabnb(obj.data.price);
-      }
-    });
+      .get("https://api.worldofdypians.com/api/price/idefiyieldprotocol")
+      .then((obj) => {
+        if (obj.data) {
+          setIDypTokenDatabnb(obj.data.price);
+        }
+      });
   };
- 
+
   const handleSwitchChain = async () => {
     const { ethereum } = window;
     const ETHPARAMS = {
@@ -3355,9 +3354,7 @@ function App() {
   };
   const fetchCFXPrice = async () => {
     await axios
-      .get(
-        "https://api.worldofdypians.com/api/price/conflux-token"
-      )
+      .get("https://api.worldofdypians.com/api/price/conflux-token")
       .then((obj) => {
         if (obj.data) {
           setCfxPrice(obj.data.price);
@@ -4281,15 +4278,7 @@ function App() {
   const { data: allWodNfts } = useSharedDataWodNfts();
   const { data: allTimepieceNfts } = useSharedDataTimepieceNfts();
   const { data: lowestPriceNftListed } = useSharedListedNtsAsc();
-  const { data: allListedByUser } = useSharedDataListedByUser(
-    email
-      ? userWallet
-        ? userWallet.toLowerCase() === coinbase.toLowerCase()
-          ? coinbase
-          : userWallet
-        : coinbase
-      : coinbase
-  );
+  const { data: allListedByUser } = useSharedDataListedByUser(coinbase);
 
   const fetchCawsNfts = async () => {
     const cawsNft = allCawsNfts;
@@ -4836,15 +4825,12 @@ function App() {
         console.error(e);
       });
 
-   
-
     if (result && result.status === 200) {
       if (result.data && result.data != "NAN") {
         setTotalTx(result.data);
         localStorage.setItem("cachedTvl", result.data);
       }
     }
-    
   };
 
   useEffect(() => {
@@ -4924,9 +4910,8 @@ function App() {
     getTokenDatabnb();
     getPriceDYP();
     fetchDogeCoinPrice();
-    fetchWodPrice(); 
-    
-    
+    fetchWodPrice();
+
     checkNetworkId();
   }, []);
 
@@ -4935,24 +4920,22 @@ function App() {
   }, [stakeCount]);
 
   useEffect(() => {
-    if(allCawsNfts && allCawsNfts.length > 0) {
-    fetchCawsNfts();
+    if (allCawsNfts && allCawsNfts.length > 0) {
+      fetchCawsNfts();
     }
   }, [allCawsNfts]);
 
   useEffect(() => {
-    if(allWodNfts && allWodNfts.length > 0) {
+    if (allWodNfts && allWodNfts.length > 0) {
       fetchLandNfts();
     }
   }, [allWodNfts]);
 
   useEffect(() => {
-    if(allTimepieceNfts && allTimepieceNfts.length > 0) {
+    if (allTimepieceNfts && allTimepieceNfts.length > 0) {
       fetchTimepieceNfts();
     }
   }, [allTimepieceNfts]);
-
-
 
   return (
     <>
@@ -5063,7 +5046,7 @@ function App() {
                 handleSwitchChain={handleSwitchNetwork}
                 handleRefreshListing={handleRefreshList}
                 nftCount={nftCount}
-                favorites={favorites} 
+                favorites={favorites}
                 dyptokenData={dypTokenData}
                 binanceW3WProvider={library}
                 binanceWallet={coinbase}
@@ -5087,7 +5070,7 @@ function App() {
                 totalVolumeNew={totalVolumeNew}
                 coinbase={coinbase}
                 ethTokenData={ethTokenData}
-                dyptokenDatabnb={dyptokenDatabnb} 
+                dyptokenDatabnb={dyptokenDatabnb}
                 idyptokenDatabnb={idyptokenDatabnb}
                 cawsListed={cawsListed}
                 wodListed={wodListed}
@@ -5538,7 +5521,7 @@ function App() {
             path="/shop/land"
             element={
               <WoDNFT
-                ethTokenData={ethTokenData} 
+                ethTokenData={ethTokenData}
                 isConnected={isConnected}
                 handleConnect={handleShowWalletModal}
                 listedNFTS={listedNFTS}
