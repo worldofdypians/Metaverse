@@ -80,6 +80,7 @@ const NewEvents = ({
   setPuzzleMadnessTimer,
   onConnectWallet,
   wodBalance,
+  genesisUsd
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -3633,7 +3634,7 @@ const NewEvents = ({
                                         >
                                           <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
                                             <span className="beast-siege-wod-price">
-                                              $0
+                                              ${getFormattedNumber(genesisUsd ?? 0,0)}
                                             </span>
                                           </div>
                                           <span className="beast-siege-event-price">
