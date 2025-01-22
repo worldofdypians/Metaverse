@@ -11,6 +11,7 @@ import nameModel from '../assets/models/64f1a714fe61576b46f27ca2.glb'
 import model from '../assets/models/animations.glb'
 import * as THREE from "three";
 import { useChat } from "../hooks/useChat";
+import { set } from "lodash";
 
 const facialExpressions = {
   default: {},
@@ -134,8 +135,9 @@ export function Avatar(props) {
   const group = useRef();
   const { actions, mixer } = useAnimations(animations, group);
   const [animation, setAnimation] = useState(
-    animations.find((a) => a.name === "Idle") ? "Idle" : animations[0].name // Check if Idle animation exists otherwise use first animation
+    animations.find((a) => a.name === "Idle") ? "Idle" : animations[0].name
   );
+
   useEffect(() => {
     actions[animation]?.reset()
       .fadeIn(mixer.stats.actions.inUse === 0 ? 0 : 0.5)
@@ -177,50 +179,50 @@ export function Avatar(props) {
   const [audio, setAudio] = useState();
 
   useFrame(() => {
-    !setupMode &&
+    // Reset morph targets for all facial expressions except blink/wink
+    if (!setupMode) {
       Object.keys(nodes.EyeLeft.morphTargetDictionary).forEach((key) => {
-        const mapping = facialExpressions[facialExpression];
-        if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") {
-          return; // eyes wink/blink are handled separately
-        }
-        if (mapping && mapping[key]) {
-          lerpMorphTarget(key, mapping[key], 0.1);
-        } else {
-          lerpMorphTarget(key, 0, 0.1);
-        }
+        if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") return;
+  
+        const targetValue = facialExpressions[facialExpression]?.[key] || 0;
+        lerpMorphTarget(key, targetValue, 0.1);
       });
-
+    }
+  
+    // Handle blinking and winking
     lerpMorphTarget("eyeBlinkLeft", blink || winkLeft ? 1 : 0, 0.5);
     lerpMorphTarget("eyeBlinkRight", blink || winkRight ? 1 : 0, 0.5);
-
-    // LIPSYNC
-    if (setupMode) {
-      return;
-    }
-
+  
+    // Lip-sync logic
+    if (setupMode) return;
+  
     const appliedMorphTargets = [];
     if (message && lipsync) {
       const currentAudioTime = audio.currentTime;
-      for (let i = 0; i < lipsync.mouthCues.length; i++) {
-        const mouthCue = lipsync.mouthCues[i];
+  
+      // Apply the correct mouth shape based on the current audio time
+      lipsync.mouthCues.forEach((mouthCue) => {
         if (
           currentAudioTime >= mouthCue.start &&
           currentAudioTime <= mouthCue.end
         ) {
-          appliedMorphTargets.push(corresponding[mouthCue.value]);
-          lerpMorphTarget(corresponding[mouthCue.value], 1, 0.2);
-          break;
+          const morphTarget = corresponding[mouthCue.value];
+          if (morphTarget) {
+            appliedMorphTargets.push(morphTarget);
+            lerpMorphTarget(morphTarget, 1, 0.2);
+          }
         }
-      }
+      });
     }
-
-    Object.values(corresponding).forEach((value) => {
-      if (appliedMorphTargets.includes(value)) {
-        return;
+  
+    // Reset unused lip-sync morph targets
+    Object.values(corresponding).forEach((target) => {
+      if (!appliedMorphTargets.includes(target)) {
+        lerpMorphTarget(target, 0, 0.1);
       }
-      lerpMorphTarget(value, 0, 0.1);
     });
   });
+  
 
   useControls("FacialExpressions", {
     chat: button(() => chat()),
@@ -241,52 +243,7 @@ export function Avatar(props) {
       options: Object.keys(facialExpressions),
       onChange: (value) => setFacialExpression(value),
     },
-    enableSetupMode: button(() => {
-      setupMode = true;
-    }),
-    disableSetupMode: button(() => {
-      setupMode = false;
-    }),
-    logMorphTargetValues: button(() => {
-      const emotionValues = {};
-      Object.keys(nodes.EyeLeft.morphTargetDictionary).forEach((key) => {
-        if (key === "eyeBlinkLeft" || key === "eyeBlinkRight") {
-          return; // eyes wink/blink are handled separately
-        }
-        const value =
-          nodes.EyeLeft.morphTargetInfluences[
-            nodes.EyeLeft.morphTargetDictionary[key]
-          ];
-        if (value > 0.01) {
-          emotionValues[key] = value;
-        }
-      });
-      console.log(JSON.stringify(emotionValues, null, 2));
-    }),
   });
-
-  const [, set] = useControls("MorphTarget", () =>
-    Object.assign(
-      {},
-      ...Object.keys(nodes.EyeLeft.morphTargetDictionary).map((key) => {
-        return {
-          [key]: {
-            label: key,
-            value: 0,
-            min: nodes.EyeLeft.morphTargetInfluences[
-              nodes.EyeLeft.morphTargetDictionary[key]
-            ],
-            max: 1,
-            onChange: (val) => {
-              if (setupMode) {
-                lerpMorphTarget(key, val, 1);
-              }
-            },
-          },
-        };
-      })
-    )
-  );
 
   useEffect(() => {
     let blinkTimeout;
@@ -305,72 +262,11 @@ export function Avatar(props) {
 
   return (
     <group {...props} dispose={null} ref={group}>
-      <primitive object={nodes.Hips} />
-      <skinnedMesh
-        name="Wolf3D_Body"
-        geometry={nodes.Wolf3D_Body.geometry}
-        material={materials.Wolf3D_Body}
-        skeleton={nodes.Wolf3D_Body.skeleton}
-      />
-      <skinnedMesh
-        name="Wolf3D_Outfit_Bottom"
-        geometry={nodes.Wolf3D_Outfit_Bottom.geometry}
-        material={materials.Wolf3D_Outfit_Bottom}
-        skeleton={nodes.Wolf3D_Outfit_Bottom.skeleton}
-      />
-      <skinnedMesh
-        name="Wolf3D_Outfit_Footwear"
-        geometry={nodes.Wolf3D_Outfit_Footwear.geometry}
-        material={materials.Wolf3D_Outfit_Footwear}
-        skeleton={nodes.Wolf3D_Outfit_Footwear.skeleton}
-      />
-      <skinnedMesh
-        name="Wolf3D_Outfit_Top"
-        geometry={nodes.Wolf3D_Outfit_Top.geometry}
-        material={materials.Wolf3D_Outfit_Top}
-        skeleton={nodes.Wolf3D_Outfit_Top.skeleton}
-      />
-      <skinnedMesh
-        name="Wolf3D_Hair"
-        geometry={nodes.Wolf3D_Hair.geometry}
-        material={materials.Wolf3D_Hair}
-        skeleton={nodes.Wolf3D_Hair.skeleton}
-      />
-      <skinnedMesh
-        name="EyeLeft"
-        geometry={nodes.EyeLeft.geometry}
-        material={materials.Wolf3D_Eye}
-        skeleton={nodes.EyeLeft.skeleton}
-        morphTargetDictionary={nodes.EyeLeft.morphTargetDictionary}
-        morphTargetInfluences={nodes.EyeLeft.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="EyeRight"
-        geometry={nodes.EyeRight.geometry}
-        material={materials.Wolf3D_Eye}
-        skeleton={nodes.EyeRight.skeleton}
-        morphTargetDictionary={nodes.EyeRight.morphTargetDictionary}
-        morphTargetInfluences={nodes.EyeRight.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Wolf3D_Head"
-        geometry={nodes.Wolf3D_Head.geometry}
-        material={materials.Wolf3D_Skin}
-        skeleton={nodes.Wolf3D_Head.skeleton}
-        morphTargetDictionary={nodes.Wolf3D_Head.morphTargetDictionary}
-        morphTargetInfluences={nodes.Wolf3D_Head.morphTargetInfluences}
-      />
-      <skinnedMesh
-        name="Wolf3D_Teeth"
-        geometry={nodes.Wolf3D_Teeth.geometry}
-        material={materials.Wolf3D_Teeth}
-        skeleton={nodes.Wolf3D_Teeth.skeleton}
-        morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
-        morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
-      />
+      <primitive object={scene} />
     </group>
   );
 }
+
 
 useGLTF.preload(nameModel);
 useGLTF.preload(model);

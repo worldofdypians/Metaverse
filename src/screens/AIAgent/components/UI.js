@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { useChat } from "../hooks/useChat";
 import "../_aiagent.scss";
 import { TypeAnimation } from "react-type-animation";
+import axios from "axios";
 
-export const UI = ({ hidden, ...props }) => {
+export const UI = ({  onPlay }) => {
   const input = useRef();
-  const { chat, loading, cameraZoomed, setCameraZoomed, message } = useChat();
+  // const { chat, loading, cameraZoomed, setCameraZoomed, message } = useChat();
   const [messages, setMessages] = useState([
     {
       text: "Hello, I am the World of Dypians AI Agent. How may I assist you today?",
@@ -17,37 +18,6 @@ export const UI = ({ hidden, ...props }) => {
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [textMessage, setTextMessage] = useState("");
 
-  const sendMessage = async () => {
-    const text = input.current.value;
-    if (!loading && !message) {
-      await chat("Hello there");
-      input.current.value = "";
-    }
-  };
-
-  const handleClick = (val) => {
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        text: val,
-        position: "end",
-        type: "user-message",
-      },
-    ]);
-    setLoadingMessage(true);
-    setTimeout(() => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          text: "I can help you with that, It will only take a moment please",
-          position: "start",
-          type: "system-message",
-        },
-      ]);
-      setLoadingMessage(false);
-    }, 1500);
-    setTextMessage("");
-  };
 
   const speechBoxRef = useRef(null);
 
@@ -58,13 +28,69 @@ export const UI = ({ hidden, ...props }) => {
     }
   };
 
+  const sendMessage = async (val) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        text: val,
+        position: "end",
+        type: "user-message",
+      },
+    ]);
+    console.log(val, "val");
+    
+    setLoadingMessage(true)
+      await axios.post(`https://api.worldofdypians.com/chat`, {userId: "aldialinj0@gmail.com", message: val}).then((res) => {
+        setLoadingMessage(false);
+        console.log(res.data, "chat data");
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            text: res.data.messages[0].text,
+            position: "start",
+            type: "system-message",
+          },
+        ]);
+        onPlay(res.data.messages[0].audio, res.data.messages[0].lipsync)
+        scrollToBottom();
+      }).catch((err) => {
+        console.log(err);
+        
+      })
+  };
+
+  const handleClick = (val) => {
+    // setMessages((prevMessages) => [
+    //   ...prevMessages,
+    //   {
+    //     text: val,
+    //     position: "end",
+    //     type: "user-message",
+    //   },
+    // ]);
+    // setLoadingMessage(true);
+    // setTimeout(() => {
+    //   setMessages((prevMessages) => [
+    //     ...prevMessages,
+    //     {
+    //       text: "I can help you with that, It will only take a moment please",
+    //       position: "start",
+    //       type: "system-message",
+    //     },
+    //   ]);
+    //   setLoadingMessage(false);
+    //   onPlay()
+    // }, 1500);
+    // setTextMessage("");
+  };
+
+  
+
   useEffect(() => {
     scrollToBottom(); // Scroll to the bottom when messages update
   }, [messages, loadingMessage]);
 
-  if (hidden) {
-    return null;
-  }
+ 
 
   return (
     <>
@@ -177,7 +203,7 @@ export const UI = ({ hidden, ...props }) => {
                   <TypeAnimation
                     sequence={[item.text]}
                     wrapper="p"
-                    speed={100}
+                    speed={50}
                     className="message-text mb-0"
                     repeat={0}
                     cursor={false}
@@ -205,15 +231,14 @@ export const UI = ({ hidden, ...props }) => {
             value={textMessage}
             onChange={(e) => {
               setTextMessage(e.target.value);
-              console.log(e.target.value, "val");
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleClick(textMessage);
+              if (e.key === "Enter") {handleClick(textMessage); sendMessage(textMessage)};
             }}
           />
           <button
             className="agent-button explore-btn"
-            onClick={() => handleClick(textMessage)}
+            onClick={() => {handleClick(textMessage); sendMessage(textMessage)}}
           >
             Enter
           </button>

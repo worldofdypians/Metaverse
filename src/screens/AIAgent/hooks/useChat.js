@@ -29,30 +29,30 @@ export const ChatProvider = ({ children }) => {
     return json;
   };
 
+  const mockResponses = [
+    {
+      text: "Hello Teki, How are you?",
+      audio: audioFileToBase64(introAudio),
+      lipsync: readJsonTranscript(introJson),
+      facialExpression: "sad",
+      animation: "Crying",
+    },
+  
+]
 
   const chat = async (message) => {
     setLoading(true);
     
     // Mocked response logic
-    const mockResponses = [
-      {
-        text: "Hello Teki, How are you?",
-        audio: audioFileToBase64(introAudio),
-        lipsync: readJsonTranscript(introJson),
-        facialExpression: "sad",
-        animation: "Crying",
-      },
-    
-  ]
   
     // Simulate a delay (optional, to mimic API behavior)
     await new Promise((resolve) => setTimeout(resolve, 500));
   
     // Select the response based on the input message
-    const resp = mockResponses[message.toLowerCase()] || mockResponses.default;
+    const resp = mockResponses;
   
     // Update messages
-    setMessages((messages) => [...messages, ...resp]);
+    setMessages(mockResponses);
     setLoading(false);
   };
   const [messages, setMessages] = useState([]);
@@ -60,7 +60,7 @@ export const ChatProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [cameraZoomed, setCameraZoomed] = useState(true);
   const onMessagePlayed = () => {
-    setMessages((messages) => messages.slice(1));
+    setMessages(mockResponses);
   };
 
   useEffect(() => {
