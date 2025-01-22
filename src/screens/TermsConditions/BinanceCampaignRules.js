@@ -31,9 +31,9 @@ const BinanceCampaignRules = () => {
               </p>
               <ul>
                 <li className="text-white">
-                  Start: xxxx-xx-xx (UTC)
+                  Start: 2025-01-23 11:00 (UTC)
                 </li>
-                <li className="text-white">End: xxxx-xx-xx (UTC)</li>
+                <li className="text-white">End: 2025-02-06 11:00 (UTC)</li>
               </ul>
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
