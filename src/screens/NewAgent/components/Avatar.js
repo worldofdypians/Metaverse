@@ -40,7 +40,7 @@ function base64ToBlob(base64, contentType = "audio/mpeg") {
   return new Blob(byteArrays, { type: contentType });
 }
 
-export function Avatar({ position, scale, playAudio, setPlayAudio, count, audioFile }) {
+export function Avatar({ position, scale, playAudio, count, audioFile, jsonDoc }) {
   //   const {
   //     playAudio,
   //     script,
@@ -81,7 +81,7 @@ export function Avatar({ position, scale, playAudio, setPlayAudio, count, audioF
   const morphTargetSmoothing = 0.5;
 
   const audio = useMemo(
-    () => new Audio(`/audios/${script.value}.mp3`),
+    () => new Audio("data:audio/mp3;base64," + audioFile),
     [count]
   );
   const jsonFile = useLoader(THREE.FileLoader, `audios/${script.value}.json`);
@@ -126,53 +126,55 @@ export function Avatar({ position, scale, playAudio, setPlayAudio, count, audioF
       }
     });
 
-    for (let i = 0; i < lipsync.mouthCues.length; i++) {
-      const mouthCue = lipsync.mouthCues[i];
-      if (
-        currentAudioTime >= mouthCue.start &&
-        currentAudioTime <= mouthCue.end
-      ) {
-        if (!smoothMorphTarget) {
-          nodes.Wolf3D_Head.morphTargetInfluences[
-            nodes.Wolf3D_Head.morphTargetDictionary[
-              corresponding[mouthCue.value]
-            ]
-          ] = 1;
-          nodes.Wolf3D_Teeth.morphTargetInfluences[
-            nodes.Wolf3D_Teeth.morphTargetDictionary[
-              corresponding[mouthCue.value]
-            ]
-          ] = 1;
-        } else {
-          nodes.Wolf3D_Head.morphTargetInfluences[
-            nodes.Wolf3D_Head.morphTargetDictionary[
-              corresponding[mouthCue.value]
-            ]
-          ] = THREE.MathUtils.lerp(
+    if(jsonDoc){
+      for (let i = 0; i < lipsync.mouthCues.length; i++) {
+        const mouthCue = lipsync.mouthCues[i];
+        if (
+          currentAudioTime >= mouthCue.start &&
+          currentAudioTime <= mouthCue.end
+        ) {
+          if (!smoothMorphTarget) {
             nodes.Wolf3D_Head.morphTargetInfluences[
               nodes.Wolf3D_Head.morphTargetDictionary[
                 corresponding[mouthCue.value]
               ]
-            ],
-            1,
-            morphTargetSmoothing
-          );
-          nodes.Wolf3D_Teeth.morphTargetInfluences[
-            nodes.Wolf3D_Teeth.morphTargetDictionary[
-              corresponding[mouthCue.value]
-            ]
-          ] = THREE.MathUtils.lerp(
+            ] = 1;
             nodes.Wolf3D_Teeth.morphTargetInfluences[
               nodes.Wolf3D_Teeth.morphTargetDictionary[
                 corresponding[mouthCue.value]
               ]
-            ],
-            1,
-            morphTargetSmoothing
-          );
+            ] = 1;
+          } else {
+            nodes.Wolf3D_Head.morphTargetInfluences[
+              nodes.Wolf3D_Head.morphTargetDictionary[
+                corresponding[mouthCue.value]
+              ]
+            ] = THREE.MathUtils.lerp(
+              nodes.Wolf3D_Head.morphTargetInfluences[
+                nodes.Wolf3D_Head.morphTargetDictionary[
+                  corresponding[mouthCue.value]
+                ]
+              ],
+              1,
+              morphTargetSmoothing
+            );
+            nodes.Wolf3D_Teeth.morphTargetInfluences[
+              nodes.Wolf3D_Teeth.morphTargetDictionary[
+                corresponding[mouthCue.value]
+              ]
+            ] = THREE.MathUtils.lerp(
+              nodes.Wolf3D_Teeth.morphTargetInfluences[
+                nodes.Wolf3D_Teeth.morphTargetDictionary[
+                  corresponding[mouthCue.value]
+                ]
+              ],
+              1,
+              morphTargetSmoothing
+            );
+          }
+  
+          break;
         }
-
-        break;
       }
     }
   });

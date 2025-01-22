@@ -37,8 +37,7 @@ export const UI = ({  onPlay }) => {
         type: "user-message",
       },
     ]);
-    console.log(val, "val");
-    
+      setTextMessage("")    
     setLoadingMessage(true)
       await axios.post(`https://api.worldofdypians.com/chat`, {userId: "aldialinj0@gmail.com", message: val}).then((res) => {
         setLoadingMessage(false);
