@@ -640,8 +640,7 @@ function Dashboard({
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
-  const [userBnbScore, setUserBnbScore] = useState(0);
-  const [genesisRank, setGenesisRank] = useState("");
+  const [userBnbScore, setUserBnbScore] = useState(0); 
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
@@ -6620,7 +6619,7 @@ function Dashboard({
   const fetchGenesisAroundPlayer = async (userId, userName) => {
     const data = {
       StatisticName: "GenesisLandRewards",
-      MaxResultsCount: 6,
+      MaxResultsCount: 1,
       PlayerId: userId,
     };
     const result = await axios.post(
@@ -6631,8 +6630,7 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
-
-    setGenesisRank(testArray[0].position);
+ 
     setGenesisRank2(testArray[0].statValue);
   };
 
@@ -10402,6 +10400,12 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
+  useEffect(()=>{
+    if(userId && email && username) {
+      fetchGenesisAroundPlayer(userId,username);
+    }
+  },[userId,username, email])
+
   return (
     <div
       className="container-fluid d-flex justify-content-end p-0 mt-lg-5 pt-lg-5 "
@@ -10648,6 +10652,7 @@ function Dashboard({
               email={email}
               isConnected={isConnected}
               setBeastSiegeStatus={setBeastSiegeStatus}
+              genesisUsd={genesisRank2}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (

@@ -30,10 +30,8 @@ const BinanceCampaignRules = () => {
                 <b>Activity Period:</b>
               </p>
               <ul>
-                <li className="text-white">
-                  Start: xxxx-xx-xx (UTC)
-                </li>
-                <li className="text-white">End: xxxx-xx-xx (UTC)</li>
+                <li className="text-white">Start: 2025-01-23 12:00 (UTC)</li>
+                <li className="text-white">End: 2025-02-06 11:00 (UTC)</li>
               </ul>
               <p className="text-white m-0">
                 <b>Mission Details and Prizes:</b>
@@ -42,7 +40,7 @@ const BinanceCampaignRules = () => {
                 <li className="text-white">
                   <b>Off-Chain Tasks</b>
                   <ul>
-                  <li className="text-white">
+                    <li className="text-white">
                       <b>
                         <a
                           href="https://x.com/BinanceWallet"
@@ -85,9 +83,9 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                    Swap a minimum of $10 USDC for $WOD on BNB Chain using the native swap feature in the Binance Wallet
+                      Swap a minimum of $10 USDC for $WOD on BNB Chain using the
+                      native swap feature in the Binance Wallet
                     </li>
-                 
                   </ul>
                 </li>
               </ol>
@@ -100,6 +98,12 @@ const BinanceCampaignRules = () => {
                 raffle.
               </p>
               <p className="text-white m-0">
+                <u>
+                  The value of the rewards for WOD tokens was calculated on
+                  2025-01-23.
+                </u>
+              </p>
+              <p className="text-white m-0">
                 <b>Terms and Conditions (T&C):</b>
               </p>
               <ol>
@@ -107,7 +111,7 @@ const BinanceCampaignRules = () => {
                   Participants must complete all mandatory tasks to qualify.
                 </li>
                 <li className="text-white">
-                Rewards can be claimed in Binance Wallet after the campaign.
+                  Rewards can be claimed in Binance Wallet after the campaign.
                 </li>
                 <li className="text-white">
                   Users with multiple entries or fraudulent behavior will be
@@ -142,10 +146,10 @@ const BinanceCampaignRules = () => {
                       className="text-white"
                       style={{ listStyleType: "none" }}
                     >
-                      Only Keyless MPC Binance Wallet users with verified accounts are
-                      eligible to participate in this campaign. Each user can
-                      only join once, ensuring fair participation and preventing
-                      duplicate entries.
+                      Only Keyless MPC Binance Wallet users with verified
+                      accounts are eligible to participate in this campaign.
+                      Each user can only join once, ensuring fair participation
+                      and preventing duplicate entries.
                     </li>
                   </ul>
                 </li>
