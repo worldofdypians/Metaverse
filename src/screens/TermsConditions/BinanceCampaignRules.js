@@ -83,7 +83,7 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                    Swap a minimum of $10 worth of WOD on BNB Chain using the native swap feature in the Binance Wallet
+                    Swap a minimum of $10 in WOD on BNB Chain using the native swap feature in the Binance Wallet
                     </li>
                     <li className="text-white">
                     The swap must be done in one single transaction
