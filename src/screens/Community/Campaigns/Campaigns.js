@@ -69,8 +69,8 @@ const Campaigns = () => {
   const dummyBanner = {
     title: "World of Dypians x Binance Wallet",
     status: "Live",
-    start_date: "Jan 22, 2025",
-    end_date: "Feb 05, 2025",
+    start_date: "Jan 23, 2025",
+    end_date: "Feb 06, 2025",
     image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
     desc: `Win $50,000 in WOD Token Rewards with World of Dypians. <br/>
 
