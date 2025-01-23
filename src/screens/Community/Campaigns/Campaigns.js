@@ -76,7 +76,7 @@ const Campaigns = () => {
 
 Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on BNB Chain as outlined in the campaign rules. 2,000 winners will share $50,000 worth of WOD tokens, each receiving $25 in a raffle-based selection.
    `,
-    link: "",
+    link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
   };
 
   const dummyItems = [
