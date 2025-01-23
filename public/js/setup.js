@@ -92,7 +92,7 @@ window.config = {
   token_dypius_new_address: "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3", //new dypius token on eth
 
   infura_endpoint:
-    "https://mainnet.infura.io/v3/bd4210fca3ea4ad78421503a3a5fd00d",
+    "https://mainnet.infura.io/v3/04ee2486b5344943b461abeb58fbffaf",
   bsc_endpoint: "https://bsc-dataseed.bnbchain.org",
   bsc_testnet_endpoint: "https://bsc-testnet-rpc.publicnode.com",
 
