@@ -95,9 +95,10 @@ const BinanceCampaignRules = () => {
                 <b>Prizes Breakdown:</b>
               </p>
               <p className="text-white m-0">
-                2,000 winners will be selected to share $50,000 in WOD tokens.
-                Each winner will receive $25 in WOD tokens, selected via a
-                raffle.
+              2,000 winners will be selected to share $50,000 in WOD tokens. Each winner will receive $25 in WOD tokens, selected via a raffle.
+              </p>
+              <p className="text-white m-0">
+            <u>The value fo the rewards for WOD tokens were calculated on xxJan 2025</u>
               </p>
               <p className="text-white m-0">
                 <b>Terms and Conditions (T&C):</b>
