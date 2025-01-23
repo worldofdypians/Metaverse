@@ -30,7 +30,7 @@ const BinanceCampaignRules = () => {
                 <b>Activity Period:</b>
               </p>
               <ul>
-                <li className="text-white">Start: 2025-01-23 11:00 (UTC)</li>
+                <li className="text-white">Start: 2025-01-23 12:00 (UTC)</li>
                 <li className="text-white">End: 2025-02-06 11:00 (UTC)</li>
               </ul>
               <p className="text-white m-0">
