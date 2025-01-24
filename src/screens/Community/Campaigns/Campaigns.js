@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./_campaigns.scss";
 import { NavLink } from "react-router-dom";
-import NewChallenges from "../../Game/NewChallenges"; 
-
- 
- 
+import NewChallenges from "../../Game/NewChallenges";
 
 const Campaigns = () => {
   const [popupEvent, setPopupEvent] = useState(null);
@@ -12,11 +9,19 @@ const Campaigns = () => {
 
   const dummyData = [
     {
+      title: "Winter Wonderland Challenge",
+      status: "Expired",
+      start_date: "December 09, 2024",
+      end_date: "December 23, 2024",
+      image: "https://cdn.worldofdypians.com/wod/winterChallenge2.webp",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
       title: "Festive 4YA Celebration",
       status: "Expired",
       start_date: "August 26, 2024",
       end_date: "September 08, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/wodfestive.webp',
+      image: "https://cdn.worldofdypians.com/wod/wodfestive.webp",
       link: "https://dappbay.bnbchain.org/campaign/join-bnb-chain-4-year-ecosystem-celebration-with-$300K-in-rewards/2-festive-4ya-celebration",
     },
     {
@@ -24,7 +29,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "July 24, 2024",
       end_date: "August 14, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/opbnbCampaign.png',
+      image: "https://cdn.worldofdypians.com/wod/opbnbCampaign.png",
       link: "https://dappbay.bnbchain.org/campaign/train-like-a-champion-with-bnb-chain-and-share-$250K/11",
     },
     {
@@ -32,7 +37,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "June 12, 2024",
       end_date: "June 28, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/bnbExpedition.webp',
+      image: "https://cdn.worldofdypians.com/wod/bnbExpedition.webp",
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/105-bnb-chain-game-expedition",
     },
     {
@@ -40,7 +45,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 1, 2024",
       end_date: "May 15, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/entryCampaign.webp',
+      image: "https://cdn.worldofdypians.com/wod/entryCampaign.webp",
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/102-world-of-dypians-entry-campaign",
     },
     {
@@ -48,7 +53,7 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 15, 2024",
       end_date: "May 29, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/dailyGameDelight.webp',
+      image: "https://cdn.worldofdypians.com/wod/dailyGameDelight.webp",
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/103-daily-game-delight",
     },
     {
@@ -56,25 +61,22 @@ const Campaigns = () => {
       status: "Expired",
       start_date: "May 29, 2024",
       end_date: "June 12, 2024",
-      image: 'https://cdn.worldofdypians.com/wod/dypiansDiscovery.webp',
+      image: "https://cdn.worldofdypians.com/wod/dypiansDiscovery.webp",
       link: "https://dappbay.bnbchain.org/campaign/bnb-chain-airdrop-alliance-program/104-dypians-discovery-quest",
     },
   ];
 
   const dummyBanner = {
-    title: "Winter Wonderland Challenge",
+    title: "World of Dypians x Binance Wallet",
     status: "Live",
-    start_date: "Dec 9, 2024",
-    end_date: "Dec 23, 2024",
-    image: 'https://cdn.worldofdypians.com/wod/winterChallenge2.webp',
-    desc: `Step into the Winter Wonderland Challenge and join the World of Dypians in a festive holiday quest!
-    <ul class="mt-2">
-    <li>Login or Create a Game Account</li>
-    <li>Stake min 50 WOD tokens</li>
-    <li>Open at Least 10 Daily Bonus Chests</li>
-    <li>Link Wallet on World of Dypians Mini App</li>
-    </ul>`,
-    link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    start_date: "Jan 23, 2025",
+    end_date: "Feb 06, 2025",
+    image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
+    desc: `Win $50,000 in WOD Token Rewards with World of Dypians. <br/>
+
+Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on BNB Chain as outlined in the campaign rules. 2,000 winners will share $50,000 worth of WOD tokens, each receiving $25 in a raffle-based selection.
+   `,
+    link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
   };
 
   const dummyItems = [
@@ -173,7 +175,10 @@ const Campaigns = () => {
               </div>
               <hr className="campaign-banner-divider" />
               <div className="d-flex align-items-center gap-2">
-                <img src={'https://cdn.worldofdypians.com/wod/calendarYellow.svg'} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/calendarYellow.svg"}
+                  alt=""
+                />
                 <span className="campaign-banner-date">
                   {dummyBanner.start_date} - {dummyBanner.end_date}
                 </span>
@@ -232,7 +237,11 @@ const Campaigns = () => {
                 </div>
               </div>
               <div className="d-flex align-items-center gap-2">
-                <img src={'https://cdn.worldofdypians.com/wod/calendar.svg'} alt="" style={{width: 24, height: 24}}/>
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/calendar.svg"}
+                  alt=""
+                  style={{ width: 24, height: 24 }}
+                />
                 <span className="campaign-item-date">
                   {item.start_date} - {item.end_date}
                 </span>
