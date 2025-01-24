@@ -248,6 +248,10 @@ const WodPartners = ({ full }) => {
       name: "BlockusGG",
       icon: "blockus.svg",
     },
+    {
+      name: "Xterio",
+      icon: "xterio.svg", 
+    },
   ];
 
   const [slice, setSlice] = useState(14);

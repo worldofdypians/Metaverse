@@ -355,7 +355,11 @@ const NewBuilders = () => {
       name: "BlockusGG",
       icon: "blockus.svg",
       backer: false,
-
+    },
+    {
+      name: "Xterio",
+      icon: "xterio.svg",
+      backer: false,
     },
   ];
   return (
