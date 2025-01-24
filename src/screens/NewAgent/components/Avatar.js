@@ -127,8 +127,8 @@ export function Avatar({ position, scale, playAudio, count, audioFile, jsonDoc }
     });
 
     if(jsonDoc){
-      for (let i = 0; i < lipsync.mouthCues.length; i++) {
-        const mouthCue = lipsync.mouthCues[i];
+      for (let i = 0; i < jsonDoc.mouthCues.length; i++) {
+        const mouthCue = jsonDoc.mouthCues[i];
         if (
           currentAudioTime >= mouthCue.start &&
           currentAudioTime <= mouthCue.end
@@ -189,15 +189,17 @@ export function Avatar({ position, scale, playAudio, count, audioFile, jsonDoc }
     if (playAudio) {
       audio.play();
       if (script === "welcome") {
-        setAnimation("Greeting");
+        // setAnimation("Greeting");
       } else {
-        setAnimation("Angry");
+        // setAnimation("Angry");
       }
     } else {
-      setAnimation("Idle");
+      // setAnimation("Idle");
       audio.pause();
     }
 
+    console.log(jsonDoc, "jsonDoc");
+    
     
   }, [playAudio, count]);
 
