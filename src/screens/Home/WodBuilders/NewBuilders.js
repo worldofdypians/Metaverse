@@ -347,15 +347,19 @@ const NewBuilders = () => {
       backer: false,
     },
     {
-      name: "DAR",
-      icon: "dar.svg",
+      name: "DAR Open Network",
+      icon: "daron.svg",
       backer: false,
     },
     {
       name: "BlockusGG",
       icon: "blockus.svg",
       backer: false,
-
+    },
+    {
+      name: "Xterio",
+      icon: "xterio.svg",
+      backer: false,
     },
   ];
   return (

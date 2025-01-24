@@ -241,12 +241,16 @@ const WodPartners = ({ full }) => {
       icon: "nfaIcon.svg",
     },
     {
-      name: "DAR",
-      icon: "dar.svg",
+      name: "DAR Open Network",
+      icon: "daron.svg",
     },
     {
       name: "BlockusGG",
       icon: "blockus.svg",
+    },
+    {
+      name: "Xterio",
+      icon: "xterio.svg", 
     },
   ];
 

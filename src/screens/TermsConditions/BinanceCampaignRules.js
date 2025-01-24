@@ -68,7 +68,7 @@ const BinanceCampaignRules = () => {
                     <li className="text-white">
                       <b>
                         <a
-                          href="https://x.com/worldofdypians/status/1861727880608149537"
+                          href="https://x.com/worldofdypians/status/1882410555673379234"
                           target="_blank"
                           rel="noreferrer"
                           className="text-white text-decoration-underline"
@@ -83,8 +83,13 @@ const BinanceCampaignRules = () => {
                   <b>On-Chain Tasks</b>
                   <ul>
                     <li className="text-white">
-                      Swap a minimum of $10 USDC for $WOD on BNB Chain using the
-                      native swap feature in the Binance Wallet
+                    Swap a minimum of $10 in WOD on BNB Chain using the native swap feature in the Binance Wallet
+                    </li>
+                    <li className="text-white">
+                    The swap must be done in one single transaction
+                    </li>
+                    <li className="text-white">
+                    WOD Contract: 0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8
                     </li>
                   </ul>
                 </li>
