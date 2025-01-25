@@ -347,8 +347,8 @@ const NewBuilders = () => {
       backer: false,
     },
     {
-      name: "DAR",
-      icon: "dar.svg",
+      name: "DAR Open Network",
+      icon: "daron.svg",
       backer: false,
     },
     {
