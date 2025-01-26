@@ -4,7 +4,7 @@ import "../_aiagent.scss";
 import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
 
-export const UI = ({  onPlay }) => {
+export const UI = ({ onPlay, toggle }) => {
   const input = useRef();
   // const { chat, loading, cameraZoomed, setCameraZoomed, message } = useChat();
   const [messages, setMessages] = useState([
@@ -17,7 +17,13 @@ export const UI = ({  onPlay }) => {
 
   const [loadingMessage, setLoadingMessage] = useState(false);
   const [textMessage, setTextMessage] = useState("");
+  const [defaultToggle, setDefaultToggle] = useState(true);
 
+  const defaultMessages = [
+    "What is World of Dypians?",
+    "How many projects are building on World of Dypians?",
+    "What is the best way to advance the leaderboards?",
+  ];
 
   const speechBoxRef = useRef(null);
 
@@ -37,9 +43,14 @@ export const UI = ({  onPlay }) => {
         type: "user-message",
       },
     ]);
-      setTextMessage("")    
-    setLoadingMessage(true)
-      await axios.post(`https://api.worldofdypians.com/chat`, {userId: "aldialinj0@gmail.com", message: val}).then((res) => {
+    setTextMessage("");
+    setLoadingMessage(true);
+    await axios
+      .post(`https://api.worldofdypians.com/chat`, {
+        userId: "aldialinj0@gmail.com",
+        message: val,
+      })
+      .then((res) => {
         setLoadingMessage(false);
         console.log(res.data, "chat data");
         setMessages((prevMessages) => [
@@ -50,12 +61,14 @@ export const UI = ({  onPlay }) => {
             type: "system-message",
           },
         ]);
-        onPlay(res.data.messages[0].audio, res.data.messages[0].lipsync)
+        if (toggle) {
+          onPlay(res.data.messages[0].audio, res.data.messages[0].lipsync);
+        }
         scrollToBottom();
-      }).catch((err) => {
-        console.log(err);
-        
       })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleClick = (val) => {
@@ -83,13 +96,9 @@ export const UI = ({  onPlay }) => {
     // setTextMessage("");
   };
 
-  
-
   useEffect(() => {
     scrollToBottom(); // Scroll to the bottom when messages update
   }, [messages, loadingMessage]);
-
- 
 
   return (
     <>
@@ -188,7 +197,7 @@ export const UI = ({  onPlay }) => {
         style={{ minHeight: "70vh" }}
       >
         <div
-          className="speech-box d-flex flex-column gap-2 p-3"
+          className="speech-box d-flex flex-column gap-2 p-3 position-relative"
           ref={speechBoxRef}
         >
           {messages.map((item, index) => (
@@ -221,6 +230,22 @@ export const UI = ({  onPlay }) => {
               <span className="visually-hidden">Loading...</span>
             </div>
           )}
+          {defaultToggle && (
+            <div className="default-messages-holder mx-3 mb-3 p-3 d-flex align-items-center gap-5">
+              {defaultMessages.map((item, index) => (
+                <div
+                  className="default-message-wrapper"
+                  key={index}
+                  onClick={() => {
+                    sendMessage(item);
+                    setDefaultToggle(false);
+                  }}
+                >
+                  <h6 className="default-message mb-0">{item}</h6>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="d-flex align-items-center gap-3 mb-3">
           <input
@@ -232,12 +257,18 @@ export const UI = ({  onPlay }) => {
               setTextMessage(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {handleClick(textMessage); sendMessage(textMessage)};
+              if (e.key === "Enter") {
+                handleClick(textMessage);
+                sendMessage(textMessage);
+              }
             }}
           />
           <button
             className="agent-button explore-btn"
-            onClick={() => {handleClick(textMessage); sendMessage(textMessage)}}
+            onClick={() => {
+              handleClick(textMessage);
+              sendMessage(textMessage);
+            }}
           >
             Enter
           </button>

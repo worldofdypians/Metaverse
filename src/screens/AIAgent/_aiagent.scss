@@ -6,6 +6,12 @@
     overflow-y: scroll;
 }
 
+.canvas-wrapper{
+    border: 2px solid #525469;
+    border-radius: 12px;
+    width: 100%;
+}
+
 .agent-input{
     border: 2px solid #525469;
     border-radius: 12px;
@@ -36,4 +42,31 @@
 
 .message-text{
     color: #fff;
+}
+
+.default-messages-holder{
+
+
+position: absolute;
+bottom: 0;
+border: 1px solid #525469;
+border-radius: 12px;
+width: 94%;
+
+}
+
+.default-message-wrapper{
+    opacity: 0.5;
+    transition: all .25s;
+    cursor: pointer;
+}
+
+.default-message-wrapper:hover{
+    opacity: 1;
+}
+
+.default-message{
+    color: #fff;
+    font-size: 12px;
+    font-weight: normal;
 }
