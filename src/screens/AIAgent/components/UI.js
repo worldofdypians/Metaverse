@@ -231,7 +231,7 @@ export const UI = ({ onPlay, toggle }) => {
             </div>
           )}
           {defaultToggle && (
-            <div className="default-messages-holder mx-3 mb-3 p-3 d-flex align-items-center gap-5">
+            <div className="default-messages-holder  mb-3 p-3 d-flex gap-4">
               {defaultMessages.map((item, index) => (
                 <div
                   className="default-message-wrapper"
@@ -264,7 +264,7 @@ export const UI = ({ onPlay, toggle }) => {
             }}
           />
           <button
-            className="agent-button explore-btn"
+            className="agent-button explore-btn d-flex align-items-center justify-content-center"
             onClick={() => {
               handleClick(textMessage);
               sendMessage(textMessage);

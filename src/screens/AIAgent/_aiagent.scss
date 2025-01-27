@@ -1,72 +1,75 @@
-.speech-box{
-    height: 63.5vh;
-    border: 2px solid #525469;
-    border-radius: 12px;
-    width: 100%;
-    overflow-y: scroll;
+.speech-box {
+  height: 64vh;
+  border: 2px solid #525469;
+  border-radius: 12px;
+  width: 100%;
+  overflow-y: scroll;
 }
 
-.canvas-wrapper{
-    border: 2px solid #525469;
-    border-radius: 12px;
-    width: 100%;
+.canvas-wrapper {
+  border: 2px solid #525469;
+  border-radius: 12px;
+  width: 100%;
+  background: linear-gradient(135deg, #4b006e, #000000);
 }
 
-.agent-input{
-    border: 2px solid #525469;
-    border-radius: 12px;
-    width: 80%;
-    background: #080b2a;
-    padding-left: 10px;
-    height: 47px;
+.agent-input {
+  border: 2px solid #525469;
+  border-radius: 12px;
+  width: 80%;
+  background: #080b2a;
+  padding-left: 10px;
+  height: 47px;
 }
 
-.agent-button{
-    width: 18%;
+.agent-button {
+  width: 18%;
 }
 
-.message-item{
-    border-radius: 12px;
-    width: fit-content;
-    max-width: 50%;
+.message-item {
+  border-radius: 12px;
+  width: fit-content;
+  max-width: 50%;
+  @media screen and (max-width: 786px) {
+    max-width: 100%;
+  }
 }
 
-.system-message{
-    background: #03536e;
-   
+.system-message {
+  background: #03536e;
 }
 
-.user-message{
-    background: #3e036e;
+.user-message {
+  background: #3e036e;
 }
 
-.message-text{
-    color: #fff;
+.message-text {
+  color: #fff;
 }
 
-.default-messages-holder{
-
-
-position: absolute;
-bottom: 0;
-border: 1px solid #525469;
-border-radius: 12px;
-width: 94%;
-
+.default-messages-holder {
+  position: absolute;
+  bottom: 0;
+  border: 1px solid #525469;
+  border-radius: 12px;
+  width: 97%;
+  @media screen and (max-width: 786px) {
+    width: 90%;
+  }
 }
 
-.default-message-wrapper{
-    opacity: 0.5;
-    transition: all .25s;
-    cursor: pointer;
+.default-message-wrapper {
+  opacity: 0.5;
+  transition: all 0.25s;
+  cursor: pointer;
 }
 
-.default-message-wrapper:hover{
-    opacity: 1;
+.default-message-wrapper:hover {
+  opacity: 1;
 }
 
-.default-message{
-    color: #fff;
-    font-size: 12px;
-    font-weight: normal;
+.default-message {
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
 }

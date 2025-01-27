@@ -126,57 +126,57 @@ export function Avatar({ position, scale, playAudio, count, audioFile, jsonDoc }
       }
     });
 
-    if(jsonDoc){
-      for (let i = 0; i < jsonDoc.mouthCues.length; i++) {
-        const mouthCue = jsonDoc.mouthCues[i];
-        if (
-          currentAudioTime >= mouthCue.start &&
-          currentAudioTime <= mouthCue.end
-        ) {
-          if (!smoothMorphTarget) {
-            nodes.Wolf3D_Head.morphTargetInfluences[
-              nodes.Wolf3D_Head.morphTargetDictionary[
-                corresponding[mouthCue.value]
-              ]
-            ] = 1;
-            nodes.Wolf3D_Teeth.morphTargetInfluences[
-              nodes.Wolf3D_Teeth.morphTargetDictionary[
-                corresponding[mouthCue.value]
-              ]
-            ] = 1;
-          } else {
-            nodes.Wolf3D_Head.morphTargetInfluences[
-              nodes.Wolf3D_Head.morphTargetDictionary[
-                corresponding[mouthCue.value]
-              ]
-            ] = THREE.MathUtils.lerp(
-              nodes.Wolf3D_Head.morphTargetInfluences[
-                nodes.Wolf3D_Head.morphTargetDictionary[
-                  corresponding[mouthCue.value]
-                ]
-              ],
-              1,
-              morphTargetSmoothing
-            );
-            nodes.Wolf3D_Teeth.morphTargetInfluences[
-              nodes.Wolf3D_Teeth.morphTargetDictionary[
-                corresponding[mouthCue.value]
-              ]
-            ] = THREE.MathUtils.lerp(
-              nodes.Wolf3D_Teeth.morphTargetInfluences[
-                nodes.Wolf3D_Teeth.morphTargetDictionary[
-                  corresponding[mouthCue.value]
-                ]
-              ],
-              1,
-              morphTargetSmoothing
-            );
-          }
+    // if(jsonDoc){
+    //   for (let i = 0; i < jsonDoc.mouthCues.length; i++) {
+    //     const mouthCue = jsonDoc.mouthCues[i];
+    //     if (
+    //       currentAudioTime >= mouthCue.start &&
+    //       currentAudioTime <= mouthCue.end
+    //     ) {
+    //       if (!smoothMorphTarget) {
+    //         nodes.Wolf3D_Head.morphTargetInfluences[
+    //           nodes.Wolf3D_Head.morphTargetDictionary[
+    //             corresponding[mouthCue.value]
+    //           ]
+    //         ] = 1;
+    //         nodes.Wolf3D_Teeth.morphTargetInfluences[
+    //           nodes.Wolf3D_Teeth.morphTargetDictionary[
+    //             corresponding[mouthCue.value]
+    //           ]
+    //         ] = 1;
+    //       } else {
+    //         nodes.Wolf3D_Head.morphTargetInfluences[
+    //           nodes.Wolf3D_Head.morphTargetDictionary[
+    //             corresponding[mouthCue.value]
+    //           ]
+    //         ] = THREE.MathUtils.lerp(
+    //           nodes.Wolf3D_Head.morphTargetInfluences[
+    //             nodes.Wolf3D_Head.morphTargetDictionary[
+    //               corresponding[mouthCue.value]
+    //             ]
+    //           ],
+    //           1,
+    //           morphTargetSmoothing
+    //         );
+    //         nodes.Wolf3D_Teeth.morphTargetInfluences[
+    //           nodes.Wolf3D_Teeth.morphTargetDictionary[
+    //             corresponding[mouthCue.value]
+    //           ]
+    //         ] = THREE.MathUtils.lerp(
+    //           nodes.Wolf3D_Teeth.morphTargetInfluences[
+    //             nodes.Wolf3D_Teeth.morphTargetDictionary[
+    //               corresponding[mouthCue.value]
+    //             ]
+    //           ],
+    //           1,
+    //           morphTargetSmoothing
+    //         );
+    //       }
   
-          break;
-        }
-      }
-    }
+    //       break;
+    //     }
+    //   }
+    // }
   });
 
   useEffect(() => {
