@@ -13,6 +13,7 @@ import getFormattedNumber from "../Caws/functions/get-formatted-number";
 import "../Caws/NftMinting/NftStakeChecklistModal/_nftStakeChecklistModal.scss";
 
 import useWindowSize from '../../hooks/useWindowSize'
+import Web3 from "web3";
 
 
 const LandStakingChecklistModal = ({
@@ -95,7 +96,9 @@ const LandStakingChecklistModal = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
-    if (address) {
+             let web3 = new Web3(window.ethereum);
+    
+    if (address && web3.utils.isAddress(address)) {
      
         const result = await window.landnft
           .checkapproveStake(address, stake25)

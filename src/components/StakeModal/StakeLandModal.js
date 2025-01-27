@@ -8,6 +8,7 @@ import axios from "axios";
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import { ethers } from "ethers";
+import Web3 from "web3";
 
 const StakeLandModal = ({
   onModalClose,
@@ -70,7 +71,8 @@ const StakeLandModal = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
-    if (address) {
+          let web3 = new Web3(window.ethereum);
+        if (address && web3.utils.isAddress(address)) {
       const result = await window.landnft
         .checkapproveStake(address, stake25)
         .then((data) => {

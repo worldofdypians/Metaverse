@@ -30,7 +30,7 @@ import GoldenPassPopup from "../../../../../components/PackagePopups/GoldenPassP
 import {
   GOLDEN_PASS_ABI,
   golden_pass_address,
-} from "../../../../../components/NewEvents/abi"; 
+} from "../../../../../components/NewEvents/abi";
 import EventsPopup from "../../../../../components/MyProfile/EventsPopup";
 import { useParams } from "react-router-dom";
 import MyProfile from "../../../../../components/MyProfile/MyProfile";
@@ -102,11 +102,6 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-
-
-
- 
-
 function Dashboard({
   dailyBonuslistedNFTS,
   account,
@@ -166,7 +161,7 @@ function Dashboard({
   coingeckoEarnUsd,
   chainlinkEarnUsd,
   isTokenExpired,
-  listedNFTS
+  listedNFTS,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -529,15 +524,14 @@ function Dashboard({
   const [myMatNfts, setmyMatNfts] = useState([]);
 
   const [latestVersion, setLatestVersion] = useState(0);
-  const [playerRank, setPlayerRank] = useState({});  
+  const [playerRank, setPlayerRank] = useState({});
   const [specialRewardsPopup, setSpecialRewardsPopup] = useState(false);
   const [dailyBonusPopup, setdailyBonusPopup] = useState(false);
-  const [bnbBonusPopup, setBnbBonusPopup] = useState(false)
-  const [matBonusPopup, setMatBonusPopup] = useState(false)
+  const [bnbBonusPopup, setBnbBonusPopup] = useState(false);
+  const [matBonusPopup, setMatBonusPopup] = useState(false);
   const [MyNFTSCawsOld, setMyNFTSCawsOld] = useState([]);
   const [myCawsWodStakesAll, setMyCawsWodStakes] = useState([]);
   const [myWodWodStakesAll, setmyWodWodStakesAll] = useState([]);
- 
 
   const [openedChests, setOpenedChests] = useState([]);
   const [openedSkaleChests, setOpenedSkaleChests] = useState([]);
@@ -563,7 +557,7 @@ function Dashboard({
   // const [isPremium, setIsPremium] = useState(false);
   const [myRewardsPopup, setmyRewardsPopup] = useState(false);
   const [getPremiumPopup, setgetPremiumPopup] = useState(false);
-  const [balancePopup, setBalancePopup] = useState(false); 
+  const [balancePopup, setBalancePopup] = useState(false);
 
   const [dropdownIcon, setdropdownIcon] = useState("");
   const [dropdownTitle, setdropdownTitle] = useState("");
@@ -640,7 +634,7 @@ function Dashboard({
   const [rankData, setRankData] = useState({});
   const [userRank, setUserRank] = useState("");
   const [userRank2, setUserRank2] = useState("");
-  const [userBnbScore, setUserBnbScore] = useState(0); 
+  const [userBnbScore, setUserBnbScore] = useState(0);
   const [genesisRank2, setGenesisRank2] = useState("");
   const [premiumTxHash, setPremiumTxHash] = useState("");
   const [selectedChainforPremium, setselectedChainforPremium] = useState("");
@@ -5686,31 +5680,38 @@ function Dashboard({
   };
 
   const handleRefreshCountdown700 = async () => {
-    const goldenPassContract = new window.bscWeb3.eth.Contract(
-      GOLDEN_PASS_ABI,
-      golden_pass_address
-    );
+    let web3 = new Web3(window.ethereum);
 
-    const purchaseTimestamp = await goldenPassContract.methods
-      .getTimeOfExpireBuff(coinbase)
-      .call();
-    const today = new Date();
+    if (coinbase && web3.utils.isAddress(coinbase)) {
+      const goldenPassContract = new window.bscWeb3.eth.Contract(
+        GOLDEN_PASS_ABI,
+        golden_pass_address
+      );
 
-    if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
-      handleSetAvailableTime(purchaseTimestamp);
+      const purchaseTimestamp = await goldenPassContract.methods
+        .getTimeOfExpireBuff(coinbase)
+        .call();
+      const today = new Date();
+
+      if (today.getTime() <= Number(purchaseTimestamp) * 1000) {
+        handleSetAvailableTime(purchaseTimestamp);
+      }
     }
   };
 
   const countUserDailyBundles = async (address) => {
-    const result = await axios
-      .get(
-        `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`
-      )
-      .catch((e) => {
-        console.error(e);
-      });
-    if (result && result.status === 200) {
-      setuserDailyBundles(result.data);
+    let web3 = new Web3(window.ethereum);
+    if (address && web3.utils.isAddress(address)) {
+      const result = await axios
+        .get(
+          `https://api.worldofdypians.com/api/userBundlesCount?walletAddress=${address}`
+        )
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result && result.status === 200) {
+        setuserDailyBundles(result.data);
+      }
     }
   };
 
@@ -5903,7 +5904,8 @@ function Dashboard({
       window.LANDSTAKING_ABI,
       window.config.landnftstake_address
     );
-
+  let web3 = new Web3(window.ethereum); 
+ if (address && web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -5914,6 +5916,7 @@ function Dashboard({
       });
 
     return myStakes;
+  } else return [];
   };
 
   const getmyWodStakes = async () => {
@@ -5937,7 +5940,8 @@ function Dashboard({
       window.WOD_CAWS_ABI,
       window.config.wod_caws_address
     );
-
+    let web3 = new Web3(window.ethereum); 
+    if (address && web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -5948,6 +5952,7 @@ function Dashboard({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const getWodStakesIdsCawsWod = async () => {
@@ -5958,7 +5963,8 @@ function Dashboard({
       window.WOD_CAWS_ABI,
       window.config.wod_caws_address
     );
-
+    let web3 = new Web3(window.ethereum); 
+    if (address && web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOfWoD(address)
       .call()
@@ -5969,6 +5975,7 @@ function Dashboard({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const getCawsStakesIds = async (address) => {
@@ -5978,6 +5985,8 @@ function Dashboard({
     );
 
     let stakenft = [];
+    let web3 = new Web3(window.ethereum); 
+    if (address && web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -5988,6 +5997,7 @@ function Dashboard({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const getLandPremiumStakesIds = async (address) => {
@@ -5997,6 +6007,8 @@ function Dashboard({
     );
 
     let stakenft = [];
+    let web3 = new Web3(window.ethereum); 
+    if (address && web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -6007,6 +6019,7 @@ function Dashboard({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const calculateAllRewardsCawsPremium = async (address) => {
@@ -6395,7 +6408,8 @@ function Dashboard({
       window.config.nft_dypius_premium_mat_address
     );
 
-    if (wallet) {
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
       const result = await nftContract.methods
         .balanceOf(wallet)
         .call()
@@ -6630,7 +6644,7 @@ function Dashboard({
     var testArray = result.data.data.leaderboard.filter(
       (item) => item.displayName === userName
     );
- 
+
     setGenesisRank2(testArray[0].statValue);
   };
 
@@ -7228,13 +7242,24 @@ function Dashboard({
 
   const handleSync = async () => {
     setsyncStatus("loading");
+    let web3 = new Web3(window.ethereum);
 
     try {
-      await generateNonce({
-        variables: {
-          publicAddress: account,
-        },
-      });
+      if (account !== undefined && web3.utils.isAddress(account)) {
+        await generateNonce({
+          variables: {
+            publicAddress: account,
+          },
+        });
+      } else {
+        window.alertify.error("Please switch to an EVM wallet.");
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          setshowSyncModal(false);
+          onCloseSync();
+        }, 3000);
+      }
     } catch (error) {
       setsyncStatus("error");
       setTimeout(() => {
@@ -7247,7 +7272,8 @@ function Dashboard({
   };
 
   const getMyNFTS = async (coinbase, type) => {
-    if (coinbase !== undefined) {
+    let web3 = new Web3(window.ethereum);
+    if (coinbase !== undefined && web3.utils.isAddress(coinbase)) {
       return await window.getMyNFTs(coinbase, type);
     } else {
       return [];
@@ -7353,7 +7379,6 @@ function Dashboard({
       setmySeiNfts(NFTS)
     );
   };
- 
 
   const windowSize = useWindowSize();
 
@@ -7473,30 +7498,32 @@ function Dashboard({
   }
 
   const getUserRewardData = async (addr) => {
-    const result = await axios
-      .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
-        headers: { Authorization: `Bearer ${authToken}` },
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    let web3 = new Web3(window.ethereum);
+    if (addr && web3.utils.isAddress(addr)) {
+      const result = await axios
+        .get(`https://api.worldofdypians.com/api/specialreward/${addr}`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        })
+        .catch((e) => {
+          console.error(e);
+        });
 
-    if (result && result.status === 200) {
-      if (result.data && result.data.rewards && result.data.rewards === 0) {
-        setuserSocialRewards(0);
-        localStorage.setItem("cacheduserSocialRewards", 0);
-      } else if (result.data && !result.data.rewards) {
-        let amount = 0;
-        for (let i = 0; i < result.data.length; i++) {
-          amount += result.data[i].amount;
+      if (result && result.status === 200) {
+        if (result.data && result.data.rewards && result.data.rewards === 0) {
+          setuserSocialRewards(0);
+          localStorage.setItem("cacheduserSocialRewards", 0);
+        } else if (result.data && !result.data.rewards) {
+          let amount = 0;
+          for (let i = 0; i < result.data.length; i++) {
+            amount += result.data[i].amount;
+          }
+          localStorage.setItem("cacheduserSocialRewards", amount);
+          setuserSocialRewards(amount);
         }
-        localStorage.setItem("cacheduserSocialRewards", amount);
-        setuserSocialRewards(amount);
       }
     }
   };
 
- 
   const handleSubscriptionTokenChange = async (tokenAddress) => {
     const token = tokenAddress;
     if (
@@ -7588,7 +7615,14 @@ function Dashboard({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-    if (coinbase && window.WALLET_TYPE === "binance") {
+
+    let web3 = new Web3(window.ethereum);
+
+    if (
+      coinbase &&
+      window.WALLET_TYPE === "binance" &&
+      web3.utils.isAddress(coinbase)
+    ) {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,
@@ -7598,7 +7632,11 @@ function Dashboard({
       setTokenBalance(tokenBalance2);
     }
 
-    if (coinbase && window.WALLET_TYPE !== "binance") {
+    if (
+      coinbase &&
+      window.WALLET_TYPE !== "binance" &&
+      web3.utils.isAddress(coinbase)
+    ) {
       let token_Sc = new window.web3.eth.Contract(window.ERC20_ABI, token);
       let tokenBalance2 = await token_Sc.methods
         .balanceOf(coinbase)
@@ -8201,7 +8239,9 @@ function Dashboard({
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
 
-    if (coinbase) {
+    let web3 = new Web3(window.ethereum);
+
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       if (chainId === 1) {
         const result = await subscribeTokencontract.methods
           .allowance(coinbase, ethsubscribeAddress)
@@ -9369,9 +9409,6 @@ function Dashboard({
     }
   };
 
- 
-
-  
   const handleEthPool = async () => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
@@ -9511,9 +9548,7 @@ function Dashboard({
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -10003,7 +10038,7 @@ function Dashboard({
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
     fetchReleases();
-    window.scrollTo(0, 0);  
+    window.scrollTo(0, 0);
     // if (username !== undefined && userId !== undefined) {
     fetchDailyRecords();
     // fetchWeeklyRecords();
@@ -10287,10 +10322,10 @@ function Dashboard({
   ]);
 
   useEffect(() => {
-    if (userWallet && email) {
+    if (userWallet && email && authToken && isConnected && !isTokenExpired) {
       getUserRewardData(userWallet);
     }
-  }, [userWallet, email]);
+  }, [userWallet, email, authToken, isConnected, isTokenExpired]);
 
   useEffect(() => {
     if ((coinbase && isConnected) || userWallet !== undefined) {
@@ -10302,15 +10337,10 @@ function Dashboard({
   }, [userWallet, isConnected, coinbase]);
 
   useEffect(() => {
-    
-    getDypBalance(userWallet ? userWallet : coinbase);
-  }, [account, userWallet, isConnected]);
-
-  useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
       fetchUserFavorites(userWallet ? userWallet : coinbase);
     }
-  }, [account, userWallet, isConnected, authToken, email,isTokenExpired]);
+  }, [account, userWallet, isConnected, authToken, email, isTokenExpired]);
 
   useEffect(() => {
     refetchPlayer();
@@ -10400,11 +10430,11 @@ function Dashboard({
     openedTaikoChests,
   ]);
 
-  useEffect(()=>{
-    if(userId && email && username) {
-      fetchGenesisAroundPlayer(userId,username);
+  useEffect(() => {
+    if (userId && email && username) {
+      fetchGenesisAroundPlayer(userId, username);
     }
-  },[userId,username, email])
+  }, [userId, username, email]);
 
   return (
     <div
@@ -10509,7 +10539,7 @@ function Dashboard({
               isConnected={isConnected}
               onConnectWallet={() => {
                 setshowWalletModal(true);
-              }} 
+              }}
               domainName={domainName}
               onDomainClick={() => {
                 handleOpenDomains();
@@ -11062,7 +11092,7 @@ function Dashboard({
                 >
                   WOD Leaderboard
                 </h2>
-                
+
                 <img
                   src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
                   onClick={() => {
@@ -11073,7 +11103,7 @@ function Dashboard({
                   style={{ cursor: "pointer" }}
                 />
               </div>
-             
+
               <NewLeaderBoard
                 username={username}
                 userId={userId}
@@ -11109,8 +11139,6 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
-
-      
 
         {showEventPopup && (
           <EventsPopup
@@ -11421,7 +11449,7 @@ function Dashboard({
             </div>
           </OutsideClickHandler>
         )}
- 
+
         {(getPremiumPopup ||
           adClicked === "premium" ||
           hashValue === "#prime") && (
@@ -12102,8 +12130,8 @@ function Dashboard({
                                                     chainId === 1
                                                       ? window.config
                                                           .subscriptioneth_tokens[
-                                                            t
-                                                          ]?.symbol
+                                                          t
+                                                        ]?.symbol
                                                       : chainId === 56
                                                       ? window.config
                                                           .subscriptionbnb_tokens[
@@ -12352,7 +12380,7 @@ function Dashboard({
                                           ))}
                                         </ul>
                                       </div>
-                                    
+
                                       <span className="subscription-price-token mb-0">
                                         {formattedPrice.slice(0, 7)}
                                       </span>

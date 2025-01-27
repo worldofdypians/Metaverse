@@ -12,6 +12,7 @@ import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
+import Web3 from "web3";
 
 
 const LandDetails = ({
@@ -57,7 +58,9 @@ const LandDetails = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
-    if (address) {
+let web3 = new Web3(window.ethereum);
+
+    if (address !== null && web3.utils.isAddress(address)) {
       const result = await window.landnft
         .checkapproveStake(address, stake25)
         .then((data) => {
@@ -76,18 +79,24 @@ const LandDetails = ({
   };
 
   const myNft = async () => {
+     let web3 = new Web3(window.ethereum);
+                 
+                if (coinbase !== null && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftLandListContract(coinbase);
     let nfts = myNft.map((nft) => window.getLandNft(nft));
     nfts = await Promise.all(nfts);
 
     nfts.reverse();
     setMyNFTs(nfts);
+                }
   };
 
   const getStakesIds = async () => {
     const address = coinbase;
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -98,6 +107,7 @@ const LandDetails = ({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const myStakes = async () => {

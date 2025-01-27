@@ -29,6 +29,7 @@ import { NavLink } from "react-router-dom";
 import { convertToUSD } from "../../../../../actions/convertUsd";
 import getFormattedNumber from "../../../../Caws/functions/get-formatted-number";
 import { ethers } from "ethers";
+import Web3 from "web3";
    
  
  
@@ -242,10 +243,13 @@ const NewBundleCard = ({
   };
 
   const checkApproval = async () => {
+         let web3 = new Web3(window.ethereum);
+    
     if (
       coinbase?.toLowerCase() === wallet?.toLowerCase() &&
       chainId === 56 &&
       window.WALLET_TYPE !== "binance"
+      && web3.utils.isAddress(wallet)
     ) {
       await token_abi.methods
         .allowance(coinbase, wodAddress)
@@ -265,7 +269,7 @@ const NewBundleCard = ({
     } else if (
       coinbase?.toLowerCase() === wallet?.toLowerCase() &&
       chainId === 56 &&
-      window.WALLET_TYPE === "binance"
+      window.WALLET_TYPE === "binance" && web3.utils.isAddress(wallet)
     ) {
       const token_address = "0x1a3264F2e7b1CFC6220ec9348d33cCF02Af7aaa4";
 

@@ -8,6 +8,7 @@ import { formattedNum } from "../../screens/Caws/functions/formatUSD";
 import EmptyCawsCard from "./EmptyCawsCard";
 import CawsPremiumChecklist from "./CawsPremiumChecklist";
 import { ethers } from "ethers";
+import Web3 from "web3";
 
 const CawsStakeModal = ({
   onModalClose,
@@ -72,7 +73,8 @@ const CawsStakeModal = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.nft_caws_premiumstake_address;
-    if (address) {
+      let web3 = new Web3(window.ethereum);
+    if (address && web3.utils.isAddress(address)) {
       const result = await window.nft
         .checkapproveStake(address, stake25)
         .then((data) => {

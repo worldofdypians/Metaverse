@@ -176,10 +176,10 @@ const CawsPremiumChecklist = ({
     let staking_contract = await new window.infuraWeb3.eth.Contract(
       window.CAWSPREMIUM_ABI,
       window.config.nft_caws_premiumstake_address
-    );
-
-    let stakenft = [];
-    if (address !== null) {
+    ); 
+       let stakenft = [];
+       let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
       let myStakes = await staking_contract.methods
         .depositsOf(address)
         .call()

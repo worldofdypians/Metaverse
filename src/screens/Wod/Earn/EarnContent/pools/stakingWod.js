@@ -4,7 +4,6 @@ import getFormattedNumber from "../../../../Caws/functions/get-formatted-number"
 import "../top-pools.css";
 import "./_stakingWod.scss";
 
-
 import Modal from "../../../../../components/General/Modal";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
@@ -13,8 +12,7 @@ import Countdown from "react-countdown";
 import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
-
-
+import Web3 from "web3";
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -171,7 +169,6 @@ const StakeWodDetails = ({
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
-
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
   const [availableQuota, setavailableQuota] = useState(0);
@@ -643,32 +640,36 @@ const StakeWodDetails = ({
   tvl_usd = getFormattedNumber(tvl_usd, 2);
 
   const checkApproval = async (amount) => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    let web3 = new Web3(window.ethereum);
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+    if (coinbase !== null && web3.utils.isAddress(coinbase)) {
+      const result = await window
+        .checkapproveStakePool(
+          coinbase,
+          reward_token_wod._address,
+          staking._address
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
 
-    setapprovedAmount(result_formatted2);
-    if (
-      Number(result_formatted) >= Number(amount) &&
-      Number(result_formatted) !== 0
-    ) {
-      setdepositStatus("deposit");
+      let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+      let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+
+      setapprovedAmount(result_formatted2);
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
     } else {
       setdepositStatus("initial");
     }
   };
-
- 
 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
@@ -988,10 +989,9 @@ const StakeWodDetails = ({
                     </>
                   )}
                 </button> */}
-                 <button
+                <button
                   disabled
                   className={`btn w-100  disabled-btn d-flex justify-content-center align-items-center gap-2`}
-              
                 >
                   Coming Soon
                 </button>
@@ -1176,31 +1176,38 @@ const StakeWodDetails = ({
                 </div>
               </div>
              )} */}
-           <HtmlTooltip
-           placement="top"
-           title={<span className="card-eth-chain-text">Coming Soon</span>}
-           >
-           <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ depositedTokens > 0 ?  'justify-content-center' : 'justify-content-start'} `}
-              style={{
-                cursor: "pointer",
-                width: depositedTokens > 0 ? 'auto' : 'fit-content'
-              }}
-              // onClick={() => {
-              //   showPopup();
-              // }}
+            <HtmlTooltip
+              placement="top"
+              title={<span className="card-eth-chain-text">Coming Soon</span>}
             >
-              <h6
-                className="m-0 mybalance-text d-flex align-items-center gap-1"
-                style={{ color: "#4ed5d2" }}
+              <div
+                className={`info-pool-wrapper2 p-1 d-flex ${
+                  depositedTokens > 0
+                    ? "justify-content-center"
+                    : "justify-content-start"
+                } `}
+                style={{
+                  cursor: "pointer",
+                  width: depositedTokens > 0 ? "auto" : "fit-content",
+                }}
+                // onClick={() => {
+                //   showPopup();
+                // }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
-              </h6>
-            </div>
-           </HtmlTooltip>
+                <h6
+                  className="m-0 mybalance-text d-flex align-items-center gap-1"
+                  style={{ color: "#4ed5d2" }}
+                >
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                    alt=""
+                  />{" "}
+                  Details
+                </h6>
+              </div>
+            </HtmlTooltip>
           </div>
         </div>
-      
       </div>
 
       {popup && (
@@ -1402,7 +1409,12 @@ const StakeWodDetails = ({
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/failMark.svg"
+                            }
+                            alt=""
+                          />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (

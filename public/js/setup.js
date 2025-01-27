@@ -626,9 +626,9 @@ async function getContractNFT(key) {
       key === "NFTSTAKING" || key === "NFTSTAKING50"
         ? "0xEe425BbbEC5e9Bf4a59a1c19eFff522AD8b7A47A"
         : address,
-      {
-        from: await getCoinbase(),
-      }
+      // {
+      //   from: await getCoinbase(),
+      // }
     );
   }
 
@@ -762,9 +762,9 @@ async function getContractCawsPremiumNFT(key) {
   window.cached_contracts[key] = new window.web3.eth.Contract(
     window.CAWSPREMIUM_ABI,
     address,
-    {
-      from: await getCoinbase(),
-    }
+    // {
+    //   from: await getCoinbase(),
+    // }
   );
 
   return window.cached_contracts[key];
@@ -834,9 +834,9 @@ async function getContractLandPremiumNFT(key) {
   window.cached_contracts[key] = new window.web3.eth.Contract(
     window.LANDPREMIUM_ABI,
     address,
-    {
-      from: await getCoinbase(),
-    }
+    // {
+    //   from: await getCoinbase(),
+    // }
   );
 
   return window.cached_contracts[key];
@@ -914,9 +914,9 @@ async function getContractLandNFT(key) {
         : key === "LANDNFTSTAKING"
         ? window.config.landnftstake_address
         : address,
-      {
-        from: await getCoinbase(),
-      }
+      // {
+      //   from: await getCoinbase(),
+      // }
     );
   }
 
@@ -33477,7 +33477,7 @@ async function connectWallet() {
       window.oneTimeConnectionEvents.forEach((fn) => fn());
     }
   }
-  if (window.ethereum && !window.gatewallet) {
+  if (window.ethereum && !window.gatewallet && !window.phantom?.solana) {
     window.web3 = new Web3(window.ethereum);
     try {
       await window.ethereum?.enable();
@@ -33485,8 +33485,11 @@ async function connectWallet() {
       if (window.ethereum.isCoin98) {
         window.WALLET_TYPE = "coin98";
       }
-      if (window.ethereum.isMetaMask) {
+      if (window.ethereum.isMetaMask && !window.phantom?.solana) {
         window.WALLET_TYPE = "metamask";
+      }
+      if(window.phantom?.solana?.isPhantom) {
+        window.WALLET_TYPE = "phantom";
       }
       let coinbase_address = await window.ethereum?.request({
         method: "eth_accounts",
@@ -33498,6 +33501,18 @@ async function connectWallet() {
     } catch (e) {
       console.error(e);
       throw new Error("User denied wallet connection!");
+    }
+  } else if(window.phantom?.solana) {
+    if ('phantom' in window) {
+      const anyWindow= window;
+      const provider = anyWindow.phantom?.solana;
+      const resp = await provider.connect({ onlyIfTrusted: true }); 
+      window.coinbase_address = resp.publicKey.toString();
+      onConnect();
+      window.WALLET_TYPE = "phantom";
+      if (provider?.isPhantom) {
+        return provider;
+      }
     }
   } else if (window.gatewallet) {
     try {
@@ -33530,7 +33545,8 @@ window.cached_contracts = Object.create(null);
 async function getCoinbase() {
   if (
     window.ethereum &&
-    window.WALLET_TYPE !== "binance" &&
+    window.WALLET_TYPE !== "binance"&&
+    window.WALLET_TYPE !== "phantom" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {
@@ -33561,6 +33577,17 @@ async function getCoinbase() {
     }
   } else if (window.WALLET_TYPE === "binance") {
     return window.coinbase_address;
+  }else if (window.WALLET_TYPE === "phantom") {
+    const anyWindow= window;
+      const provider = anyWindow.phantom?.solana;
+      const resp = await provider.connect({ onlyIfTrusted: true }); 
+      window.coinbase_address = resp.publicKey.toString();
+      window.isConnectedOneTime = true;
+      window.oneTimeConnectionEvents.forEach((fn) => fn());
+      window.WALLET_TYPE = "phantom";
+      if (provider?.isPhantom) {
+       return resp.publicKey.toString()
+      }
   }
 }
 

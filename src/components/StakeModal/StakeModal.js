@@ -10,6 +10,7 @@ import fullWod from "./assets/fullWod.png";
 import NftStakingCawChecklist from "./NftStakingCawChecklist";
 import LandNftChecklist from "./LandNftChecklist";
 import OutsideClickHandler from "react-outside-click-handler";
+import Web3 from "web3";
 
 const StakeModal = ({
   onModalClose,
@@ -53,9 +54,10 @@ const StakeModal = ({
 
   const checkApproval = async () => {
     const address = coinbase;
-
     const stakeApr50 = await window.config.wod_caws_address;
-    if (address !== null && address !== undefined) {
+     let web3 = new Web3(window.ethereum);
+   
+    if (address !== null && address !== undefined && web3.utils.isAddress(address)) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {

@@ -9,6 +9,7 @@ const WalletModal = ({
   handleConnection,
   handleConnectionPassport,
   handleConnectBinance,
+  handleConnectionPhantom
 }) => {
   return (
     <Modal visible={show} onModalClose={handleClose} maxWidth={500}>
@@ -46,6 +47,26 @@ const WalletModal = ({
                   </div>
                 </button>
               )}
+
+<button
+                  onClick={handleConnectionPhantom}
+                  id="connect-METAMASK"
+                  className="walletbutton"
+                >
+                  <div
+                    color="#E8831D"
+                    className="justify-content-between d-flex w-100 align-items-center"
+                  >
+                    <span className="text-white wallet-item-name">
+                    Phantom
+                    </span>
+                    <img
+                      src={"https://cdn.worldofdypians.com/wod/metamaskConnect.svg"}
+                      className="wallet-item-icon"
+                      alt="Icon"
+                    />
+                  </div>
+                </button>
               {(!isMobile ||
                 (isMobile && window.ethereum?.isBinance === true) ||
                 !window.ethereum) && (

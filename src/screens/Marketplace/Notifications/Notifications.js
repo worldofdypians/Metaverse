@@ -6,6 +6,7 @@ import useWindowSize from "../../../hooks/useWindowSize";
 import axios from "axios";
 
 import Notification from "./Notification";
+import Web3 from "web3";
 
 const Notifications = ({
   coinbase,
@@ -28,6 +29,8 @@ const Notifications = ({
     redirect_link
   ) {
     try {
+        let web3 = new Web3(window.ethereum); 
+              if (walletAddress && web3.utils.isAddress(walletAddress)) {
       const response = await axios.get(
         `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
           walletAddress
@@ -81,6 +84,7 @@ const Notifications = ({
         setNftOffers(lso);
         setNftOffersAll(lso);
       }
+    }
     } catch (error) {
       console.error("Error adding new user:", error.message);
     }

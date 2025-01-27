@@ -116,7 +116,8 @@ const LandNftChecklist = ({
     const address = coinbase;
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
-    if (address !== null) {
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
       let myStakes = await staking_contract.methods
         .depositsOf(address)
         .call()

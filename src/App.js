@@ -298,7 +298,9 @@ const useSharedListedNtsAsc = () => {
 };
 
 const getAllnftsListed = async (wallet) => {
-  if (wallet) {
+  let web3 = new Web3(window.ethereum);
+
+  if (wallet && web3.utils.isAddress(wallet)) {
     const listedNFTS = await getListedNFTS(0, "", "seller", wallet, "");
     return listedNFTS;
   } else return [];
@@ -995,15 +997,19 @@ function App() {
   };
 
   const fetchUserPools = async (addr) => {
-    const userpools_result = await axios
-      .get(`https://api.dyp.finance/api/user_pools_wod/${addr}`)
-      .catch((err) => {
-        console.log(err);
-      });
+    let web3 = new Web3(window.ethereum);
 
-    if (userpools_result && userpools_result.status === 200) {
-      const allpools = userpools_result.data.PoolsUserIn;
-      setUserPools(allpools);
+    if (addr && web3.utils.isAddress(addr)) {
+      const userpools_result = await axios
+        .get(`https://api.dyp.finance/api/user_pools_wod/${addr}`)
+        .catch((err) => {
+          console.log(err);
+        });
+
+      if (userpools_result && userpools_result.status === 200) {
+        const allpools = userpools_result.data.PoolsUserIn;
+        setUserPools(allpools);
+      }
     }
   };
 
@@ -2300,35 +2306,41 @@ function App() {
   };
 
   const myLandNftsBase = async () => {
-    let myNft = await window.myNftLandListContractCCIPBase(
-      coinbase,
-      window.config.nft_land_base_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
+      let myNft = await window.myNftLandListContractCCIPBase(
+        coinbase,
+        window.config.nft_land_base_address
+      );
 
-    if (myNft && myNft.length > 0) {
-      let nfts = myNft.map((nft) => window.getLandNft(nft));
-      nfts = await Promise.all(nfts);
+      if (myNft && myNft.length > 0) {
+        let nfts = myNft.map((nft) => window.getLandNft(nft));
+        nfts = await Promise.all(nfts);
 
-      nfts.reverse();
+        nfts.reverse();
 
-      setMyLandNFTsBase(nfts);
-    } else setMyLandNFTsBase([]);
+        setMyLandNFTsBase(nfts);
+      } else setMyLandNFTsBase([]);
+    }
   };
 
   const myNftsBase = async () => {
-    let myNft = await window.myNftListContractCCIPBase(
-      coinbase,
-      window.config.nft_caws_base_address
-    );
-    if (myNft && myNft.length > 0) {
-      let nfts = myNft.map((nft) => window.getNft(nft));
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
+      let myNft = await window.myNftListContractCCIPBase(
+        coinbase,
+        window.config.nft_caws_base_address
+      );
+      if (myNft && myNft.length > 0) {
+        let nfts = myNft.map((nft) => window.getNft(nft));
 
-      nfts = await Promise.all(nfts);
+        nfts = await Promise.all(nfts);
 
-      nfts.reverse();
+        nfts.reverse();
 
-      setMyNFTSCawsBase(nfts);
-    } else setMyNFTSCawsBase([]);
+        setMyNFTSCawsBase(nfts);
+      } else setMyNFTSCawsBase([]);
+    }
   };
 
   const getMyNFTS = async (coinbase, type) => {
@@ -2336,7 +2348,9 @@ function App() {
   };
 
   const fetchAllMyNfts = async () => {
-    if (coinbase) {
+    let web3 = new Web3(window.ethereum);
+
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       getMyNFTS(coinbase, "caws").then((NFTS) => {
         setMyNFTSCaws(NFTS);
         setMyNFTSCaws2(NFTS);
@@ -2395,18 +2409,25 @@ function App() {
 
   const getStakesIdsCawsWod = async () => {
     const address = coinbase;
-    let stakenft_cawsWod = [];
-    const allCawsStakes = await window.wod_caws
-      .depositsOf(address)
-      .then((result) => {
-        if (result.length > 0) {
-          for (let i = 0; i < result.length; i++)
-            stakenft_cawsWod.push(parseInt(result[i]));
-          return stakenft_cawsWod;
-        }
-      });
+    let web3 = new Web3(window.ethereum);
+    if (
+      address !== null &&
+      address !== undefined &&
+      web3.utils.isAddress(address)
+    ) {
+      let stakenft_cawsWod = [];
+      const allCawsStakes = await window.wod_caws
+        .depositsOf(address)
+        .then((result) => {
+          if (result.length > 0) {
+            for (let i = 0; i < result.length; i++)
+              stakenft_cawsWod.push(parseInt(result[i]));
+            return stakenft_cawsWod;
+          }
+        });
 
-    return allCawsStakes;
+      return allCawsStakes;
+    } else return [];
   };
 
   const getmyCawsWodStakes = async () => {
@@ -2422,7 +2443,13 @@ function App() {
 
   const getStakesIds = async () => {
     const address = coinbase;
-    if (address !== null && address !== undefined) {
+    let web3 = new Web3(window.ethereum);
+
+    if (
+      address !== null &&
+      address !== undefined &&
+      web3.utils.isAddress(address)
+    ) {
       const infura_web3 = window.infuraWeb3;
       let staking_contract = new infura_web3.eth.Contract(
         window.NFTSTAKING_ABI,
@@ -2444,7 +2471,12 @@ function App() {
 
   const getLandStakesIds = async () => {
     const address = coinbase;
-    if (address !== null && coinbase !== undefined) {
+    let web3 = new Web3(window.ethereum);
+    if (
+      address !== null &&
+      address !== undefined &&
+      web3.utils.isAddress(address)
+    ) {
       const infura_web3 = window.infuraWeb3;
       let staking_contract = new infura_web3.eth.Contract(
         window.LANDSTAKING_ABI,
@@ -2535,28 +2567,35 @@ function App() {
   };
 
   const getTimepieceNftMinted = async () => {
-    const result = await window.caws_timepiece.calculateTimepieceBalance(
-      coinbase
-    );
-    setTotalTimepieceCreated(result);
-    let metadataArray = [];
-    if (result && result > 0) {
-      for (let index = 0; index < result; index++) {
-        const tokenId =
-          +(await window.caws_timepiece.getCawsTimepieceTokenByIndex(
-            coinbase,
-            index
-          ));
+    let web3 = new Web3(window.ethereum);
+    if (
+      coinbase !== null &&
+      coinbase !== undefined &&
+      web3.utils.isAddress(coinbase)
+    ) {
+      const result = await window.caws_timepiece.calculateTimepieceBalance(
+        coinbase
+      );
+      setTotalTimepieceCreated(result);
+      let metadataArray = [];
+      if (result && result > 0) {
+        for (let index = 0; index < result; index++) {
+          const tokenId =
+            +(await window.caws_timepiece.getCawsTimepieceTokenByIndex(
+              coinbase,
+              index
+            ));
 
-        metadataArray.push({
-          name: `CAWS Timepiece #${tokenId}`,
-          image: `https://timepiece.worldofdypians.com/thumbs150/${tokenId}.png`,
-        });
+          metadataArray.push({
+            name: `CAWS Timepiece #${tokenId}`,
+            image: `https://timepiece.worldofdypians.com/thumbs150/${tokenId}.png`,
+          });
+        }
+        settimepieceMetadata(metadataArray);
+      } else {
+        settimepieceMetadata(metadataArray);
+        setTotalTimepieceCreated(0);
       }
-      settimepieceMetadata(metadataArray);
-    } else {
-      settimepieceMetadata(metadataArray);
-      setTotalTimepieceCreated(0);
     }
   };
 
@@ -2945,6 +2984,40 @@ function App() {
     setNftCount(nftCount + 1);
   };
 
+  const handleDisconnect = async () => {
+    if (!window.gatewallet && window.WALLET_TYPE !== "phantom") {
+      localStorage.removeItem("connect-session");
+      setTimeout(() => {
+        checkBinanceData();
+        window.disconnectWallet();
+        deactivate();
+        localStorage.setItem("logout", "true");
+        setSuccess(false);
+        setCoinbase();
+        setIsConnected(false);
+        setIsPremium(false);
+        window.WALLET_TYPE = "";
+      }, 500);
+    } else if (window.WALLET_TYPE === "phantom") {
+      const anyWindow = window;
+      const provider = anyWindow.phantom?.solana;
+      await provider
+        .disconnect()
+        .then(() => {
+          window.WALLET_TYPE = "";
+          localStorage.setItem("logout", "true");
+          setCoinbase();
+          setIsConnected(false);
+          setIsPremium(false);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      localStorage.setItem("logout", "true");
+    }
+  };
+
   const { data: recentListedNFTS2 } = useSharedDataListedNfts();
   const { data: allNfts } = useSharedData();
 
@@ -3029,7 +3102,7 @@ function App() {
     return <UnAuthenticatedContent />;
   };
 
-  const { ethereum } = window;
+  const { ethereum, solana } = window;
   const { email } = useAuth();
 
   const handleAddUserToNewsLetter = async (token) => {
@@ -3126,7 +3199,24 @@ function App() {
       }
     }
   };
-
+  const handlePhantomEagerlyConnect = async () => {
+    window.WALLET_TYPE = "phantom";
+    const anyWindow = window;
+    const provider = anyWindow.phantom?.solana;
+    if (provider) {
+      await provider
+        .connect({ onlyIfTrusted: true })
+        .then((data) => {
+          if (data.publicKey) {
+            setCoinbase(data.publicKey.toString());
+          }
+        })
+        .catch((e) => {
+          console.error("errorrrr", e);
+        });
+      setIsConnected(provider.isConnected);
+    }
+  };
   const onSuccessLogin = async () => {
     if (
       isConnected &&
@@ -3146,7 +3236,8 @@ function App() {
   ethereum?.on("chainChanged", handleRefreshList);
   ethereum?.on("accountsChanged", handleRefreshList);
   ethereum?.on("accountsChanged", checkConnection2);
-  // ethereum?.on("accountsChanged", fetchAllMyNfts);
+  solana?.on("accountsChanged", handlePhantomEagerlyConnect);
+  solana?.on("disconnect", handleDisconnect);
 
   useEffect(() => {
     if (dataNonce?.generateWalletNonce) {
@@ -3172,6 +3263,7 @@ function App() {
       (window.ethereum.isMetaMask === true ||
         window.ethereum.isTrust === true) &&
       !window.gatewallet &&
+      !window.phantom?.solana &&
       window.WALLET_TYPE !== "binance"
     ) {
       window.WALLET_TYPE = "metamask";
@@ -3185,6 +3277,8 @@ function App() {
         setCoinbase();
         localStorage.setItem("logout", "true");
       }
+    } else if (window.phantom?.solana && logout === "false") {
+      handlePhantomEagerlyConnect();
     } else if (
       (logout === "false" ||
         window.coinbase_address ===
@@ -3196,7 +3290,8 @@ function App() {
     } else if (
       window.gatewallet &&
       isActive &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "phantom"
     ) {
       setIsConnected(isActive);
       if (account) {
@@ -3394,7 +3489,9 @@ function App() {
   };
 
   const getWodBalance = async (address) => {
-    if (address) {
+    let web3 = new Web3(window.ethereum);
+
+    if (address && web3.utils.isAddress(address)) {
       const tokenContract = new window.bscWeb3.eth.Contract(
         window.TOKEN_ABI,
         window.config.wod_token_address
@@ -4370,8 +4467,8 @@ function App() {
       window.DAILY_BONUS_MAT_ABI,
       window.config.daily_bonus_mat_address
     );
-
-    if (addr) {
+    let web3 = new Web3(window.ethereum);
+    if (addr && web3.utils.isAddress(addr)) {
       const isPremium_bnb = await daily_bonus_contract_bnb.methods
         .isPremiumUser(addr)
         .call()
@@ -4654,26 +4751,6 @@ function App() {
     }
   };
 
-  const handleDisconnect = async () => {
-    if (!window.gatewallet) {
-      localStorage.removeItem("connect-session");
-
-      setTimeout(() => {
-        checkBinanceData();
-        window.disconnectWallet();
-        deactivate();
-        localStorage.setItem("logout", "true");
-        setSuccess(false);
-        setCoinbase();
-        setIsConnected(false);
-        setIsPremium(false);
-        window.WALLET_TYPE = "";
-      }, 500);
-    } else {
-      localStorage.setItem("logout", "true");
-    }
-  };
-
   const API_BASE_URL = "https://api.worldofdypians.com";
 
   async function addNewUserIfNotExists(
@@ -4683,55 +4760,58 @@ function App() {
     redirect_link
   ) {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
-          walletAddress
-        )}`,
-        {
-          headers: { Authorization: `Bearer ${authToken}` },
-        }
-      );
-
-      if (response.data.length === 0) {
-        const newUserResponse = await axios.post(
+      let web3 = new Web3(window.ethereum);
+      if (walletAddress && web3.utils.isAddress(walletAddress)) {
+        const response = await axios.get(
           `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
             walletAddress
           )}`,
-          {
-            tokenId: "",
-            nftAddress: "",
-            timestamp: Date.now(),
-            read: false,
-            offer: "no",
-            offerAccepted: "no",
-            buy: "no",
-            event: "no",
-            news: "no",
-            welcome: "yes",
-            update: "no",
-            title: "Welcome",
-            description:
-              "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
-            redirect_link: "",
-          },
           {
             headers: { Authorization: `Bearer ${authToken}` },
           }
         );
 
-        console.log("New user added:", newUserResponse.data);
-        let lso = newUserResponse.sort((a, b) => {
-          return new Date(b.timestamp) - new Date(a.timestamp);
-        });
-        setmyNftsOffer(lso);
-      } else {
-        console.log("User already exists:", response.data);
+        if (response.data.length === 0) {
+          const newUserResponse = await axios.post(
+            `${API_BASE_URL}/notifications/${window.infuraWeb3.utils.toChecksumAddress(
+              walletAddress
+            )}`,
+            {
+              tokenId: "",
+              nftAddress: "",
+              timestamp: Date.now(),
+              read: false,
+              offer: "no",
+              offerAccepted: "no",
+              buy: "no",
+              event: "no",
+              news: "no",
+              welcome: "yes",
+              update: "no",
+              title: "Welcome",
+              description:
+                "Welcome to the immersive World of Dypians! Take a moment to step into our NFT Shop, where a mesmerizing collection of digital art await your exploration. Happy browsing!",
+              redirect_link: "",
+            },
+            {
+              headers: { Authorization: `Bearer ${authToken}` },
+            }
+          );
 
-        const notifications = response.data[0]?.notifications || [];
-        let lso = notifications.sort((a, b) => {
-          return new Date(b.timestamp) - new Date(a.timestamp);
-        });
-        setmyNftsOffer(lso);
+          console.log("New user added:", newUserResponse.data);
+          let lso = newUserResponse.sort((a, b) => {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+          });
+          setmyNftsOffer(lso);
+        } else {
+          console.log("User already exists:", response.data);
+
+          const notifications = response.data[0]?.notifications || [];
+          let lso = notifications.sort((a, b) => {
+            return new Date(b.timestamp) - new Date(a.timestamp);
+          });
+          setmyNftsOffer(lso);
+        }
       }
     } catch (error) {
       console.error("Error adding new user:", error.message);
@@ -6951,6 +7031,7 @@ function App() {
           }}
           handleConnectionPassport={handleConnectPassport}
           handleConnectBinance={handleConnectBinance}
+          handleConnectionPhantom={handleConnectWallet}
         />
       )}
 

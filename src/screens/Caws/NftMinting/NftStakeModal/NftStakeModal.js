@@ -58,11 +58,12 @@ const NftStakeModal = ({
     const address = await window.web3.eth?.getAccounts().then((data) => {
       return data[0];
     });
+         let web3 = new Web3(window.ethereum);
 
     if (address) {
       setConnectedWallet(true);
     } else setConnectedWallet(false);
-if(address)
+if(address && web3.utils.isAddress(address))
    { const stakeApr50 = await window.config.nftstaking_address50;
     if (apr == 50) {
       const result = await window.nft

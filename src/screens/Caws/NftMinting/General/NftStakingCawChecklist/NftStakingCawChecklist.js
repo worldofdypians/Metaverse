@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { formattedNum } from "../../../functions/formatUSD";
 import getFormattedNumber from "../../../functions/get-formatted-number";
+import Web3 from "web3";
 
 const NftStakingCawChecklist = ({
   modalId,
@@ -109,6 +110,8 @@ const NftStakingCawChecklist = ({
     const address = connectedWallet
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -118,6 +121,7 @@ const NftStakingCawChecklist = ({
         return stakenft;
       });
     return myStakes;
+    }
   };
 
   const handleCawClick = () => {

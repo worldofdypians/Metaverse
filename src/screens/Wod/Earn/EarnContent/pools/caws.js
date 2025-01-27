@@ -61,8 +61,9 @@ const CawsDetails = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stakeApr50 = await window.config.nftstaking_address50;
+    let web3 = new Web3(window.ethereum);
 
-    if (address !== null) {
+    if (address !== null && web3.utils.isAddress(address)) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -81,6 +82,9 @@ const CawsDetails = ({
   };
 
   const myNft = async () => {
+      let web3 = new Web3(window.ethereum);
+             
+            if (coinbase !== null && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftListContract(coinbase);
 
     let nfts = myNft.map((nft) => window.getNft(nft));
@@ -90,12 +94,15 @@ const CawsDetails = ({
     nfts.reverse();
 
     setMyNFTs(nfts);
+            }
   };
 
   const getStakesIds = async () => {
     const address = coinbase;
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -106,6 +113,7 @@ const CawsDetails = ({
       });
 
     return myStakes;
+    } else return [];
   };
 
   const myStakes = async () => {
@@ -328,7 +336,7 @@ const CawsDetails = ({
       myStakes().then();
       checkApproval().then();
       handleClaimAll();
-      calculateCountdown().then();
+      // calculateCountdown().then();
     }
   }, [isConnected, chainId]);
 

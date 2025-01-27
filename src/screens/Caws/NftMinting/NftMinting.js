@@ -11,6 +11,7 @@ import NftStakeModal from "./NftStakeModal/NftStakeModal";
 import NewMintForm from "./NewMintForm/NewMintForm";
 
 import NftMintingHero from "./NftMintingHero/NftMintingHero";
+import Web3 from "web3";
 
 const NftMinting = () => {
   const [connectedWallet, setConnectedWallet] = useState(false);
@@ -248,6 +249,8 @@ const NftMinting = () => {
 
   const getStakesIds = async () => {
     const address = connectedWallet
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
     let staking_contract = await window.getContractNFT("NFTSTAKING");
     let stakenft = [];
     let myStakes = await staking_contract.methods
@@ -260,6 +263,7 @@ const NftMinting = () => {
       });
 
     return myStakes;
+    }
   };
 
   const myStakes = async () => {

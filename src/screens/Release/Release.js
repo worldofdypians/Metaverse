@@ -52,7 +52,7 @@ const Release = ({
       IDO_ABI,
       window.config.ido_address
     );
-
+    let web3 = new Web3(window.ethereum); 
     //lockDuration -> Vesting period, this will start and release tokens, once 'cliff' has passed;
     // const lockDuration = await vestingSc.methods
     //   .lockDuration()
@@ -64,7 +64,7 @@ const Release = ({
 
     //availableTGE -> If 1, he has to claim 'releaseProcent' at TGE (end of 'cliff'), if 0, he has already claimed 'releaseProcent';
     let availableTGE = 0;
-    if (coinbase) {
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       availableTGE = await vestingSc.methods
         .availableTGE(coinbase)
         .call()
@@ -78,7 +78,7 @@ const Release = ({
 
     //getPendingUnlocked(address _holder) -> It will give you the pending tokens that are available to Claim;
     let tokensToClaimAmount = 0;
-    if (coinbase) {
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       tokensToClaimAmount = await vestingSc.methods
         .getPendingUnlocked(coinbase)
         .call()
@@ -106,7 +106,7 @@ const Release = ({
 
     //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
     let totalClaimedTokensByUser = 0;
-    if (coinbase) {
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       totalClaimedTokensByUser = await vestingSc.methods
         .claimedTokens(coinbase)
         .call()
@@ -123,7 +123,7 @@ const Release = ({
 
     //claimedTokens(address) -> Return total WOD tokens Claimed in general by single user;
     let totalVestedTokensPerUser = 0;
-    if (coinbase) {
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       totalVestedTokensPerUser = await vestingSc.methods
         .vestedTokens(coinbase)
         .call()
@@ -160,6 +160,8 @@ const Release = ({
   };
 
   const getInfoTimer = async () => {
+    let web3 = new Web3(window.ethereum); 
+    if (coinbase && web3.utils.isAddress(coinbase)) {
     const vestingSc = new window.bscWeb3.eth.Contract(
       IDO_ABI,
       window.config.ido_address
@@ -183,6 +185,9 @@ const Release = ({
     } else {
       setcliffTime(0);
     }
+  }else {
+    setcliffTime(0);
+  }
   };
 
   const handleClaim = async () => {

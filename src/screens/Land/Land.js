@@ -12,6 +12,7 @@ import WalletModal from "../../components/WalletModal/WalletModal";
 import LandWhitelistModal from "../../components/LandWhitelistModal/LandWhitelistModal";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
+import Web3 from "web3";
 
 const Land = ({
   handleConnectWallet,
@@ -77,6 +78,9 @@ const Land = ({
   };
 
   const myCAWNft = async () => {
+     let web3 = new Web3(window.ethereum);
+         
+        if (coinbase !== null && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftListContract(coinbase);
     let nfts = myNft.map((nft) => window.getNft(nft));
     nfts = await Promise.all(nfts);
@@ -84,6 +88,7 @@ const Land = ({
 
     nfts.reverse();
     setMyCAWNFTs(nfts);
+        }
   };
 
   const updateLandNft = async () => {
@@ -105,6 +110,8 @@ const Land = ({
     const address = coinbase;
     let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
     let stakenft = [];
+    let web3 = new Web3(window.ethereum);
+    if (address !== null&& web3.utils.isAddress(address)) {
     let myStakes = await staking_contract.methods
       .depositsOf(address)
       .call()
@@ -115,6 +122,7 @@ const Land = ({
       });
 
     return myStakes;
+    }
   };
 
   const getStakesCAWIds = async () => {

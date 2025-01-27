@@ -226,7 +226,8 @@ const GetPremiumPopup = ({
       window.config.nft_dypius_premium_mat_address
     );
 
-    if (wallet) {
+    let web3 = new Web3(window.ethereum); 
+    if (wallet && web3.utils.isAddress(wallet)) {
       const result = await nftContract.methods
         .balanceOf(wallet)
         .call()
@@ -816,8 +817,8 @@ const GetPremiumPopup = ({
       tokenprice / 10 ** tokenDecimals,
       tokenDecimals
     );
-
-    if (coinbase && window.WALLET_TYPE === "binance") {
+    let web3 = new Web3(window.ethereum); 
+    if (coinbase && window.WALLET_TYPE === "binance" && web3.utils.isAddress(coinbase)) {
       let token_Sc = new ethers.Contract(
         token,
         window.ERC20_ABI,
@@ -826,7 +827,7 @@ const GetPremiumPopup = ({
       let tokenBalance2 = await token_Sc.balanceOf(coinbase);
       setTokenBalance(tokenBalance2);
     }
-    if (coinbase && window.WALLET_TYPE !== "binance") {
+    if (coinbase && window.WALLET_TYPE !== "binance"&& web3.utils.isAddress(coinbase)) {
       let token_Sc = new window.web3.eth.Contract(window.ERC20_ABI, token);
       let tokenBalance2 = await token_Sc.methods
         .balanceOf(coinbase)
@@ -1419,8 +1420,9 @@ const GetPremiumPopup = ({
         : await window.getEstimatedTokenSubscriptionAmountETH(token);
 
     tokenprice = new BigNumber(tokenprice).toFixed(0);
-
-    if (coinbase) {
+  let web3 = new Web3(window.ethereum); 
+           
+    if (coinbase && web3.utils.isAddress(coinbase)) {
       if (chainId === 1) {
         const result = await subscribeTokencontract.methods
           .allowance(coinbase, ethsubscribeAddress)

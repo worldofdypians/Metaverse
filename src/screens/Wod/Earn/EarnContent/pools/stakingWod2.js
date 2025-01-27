@@ -12,6 +12,7 @@ import Countdown from "react-countdown";
 import { ClickAwayListener } from "@material-ui/core";
 import { abbreviateNumber } from "js-abbreviation-number";
 import { ethers } from "ethers";
+import Web3 from "web3";
 
 const renderer = ({ days, hours, minutes, seconds }) => {
   return (
@@ -158,7 +159,6 @@ const StakeWodDetails2 = ({
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
- 
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
   const [availableQuota, setavailableQuota] = useState(0);
@@ -486,7 +486,10 @@ const StakeWodDetails2 = ({
   const handleStake = async (e) => {
     setdepositLoading(true);
     if (window.WALLET_TYPE !== "binance") {
-      if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
+      if (
+        staking._address.toLowerCase() ===
+        window.config.constant_staking_wod5_address.toLowerCase()
+      ) {
         window.alertify.error("You must be connected to Binance Wallet!");
         setdepositLoading(false);
         return;
@@ -849,31 +852,36 @@ const StakeWodDetails2 = ({
   tvl_usd = getFormattedNumber(tvl_usd, 2);
 
   const checkApproval = async (amount) => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    let web3 = new Web3(window.ethereum);
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+    if (coinbase !== null && web3.utils.isAddress(coinbase)) {
+      const result = await window
+        .checkapproveStakePool(
+          coinbase,
+          reward_token_wod._address,
+          staking._address
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
 
-    if (
-      Number(result_formatted) >= Number(amount) &&
-      Number(result_formatted) !== 0
-    ) {
-      setdepositStatus("deposit");
+      let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+      let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
     } else {
       setdepositStatus("initial");
     }
   };
 
- 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
       const stakingSc = new window.bscWeb3.eth.Contract(
@@ -909,7 +917,7 @@ const StakeWodDetails2 = ({
     }
   }, [depositAmount, totalDeposited, poolCap]);
 
-  useEffect(() => { 
+  useEffect(() => {
     getAvailableQuota();
   }, [staking, poolCap]);
 
@@ -1181,7 +1189,10 @@ const StakeWodDetails2 = ({
                     <>Success</>
                   ) : (
                     <>
-                      <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                        alt=""
+                      />
                       Failed
                     </>
                   )}
@@ -1225,7 +1236,10 @@ const StakeWodDetails2 = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -1277,7 +1291,12 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : claimStatus === "success" ? (
@@ -1309,7 +1328,12 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : reInvestStatus === "success" ? (
@@ -1400,7 +1424,11 @@ const StakeWodDetails2 = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>
@@ -1606,7 +1634,12 @@ const StakeWodDetails2 = ({
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/failMark.svg"
+                            }
+                            alt=""
+                          />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (

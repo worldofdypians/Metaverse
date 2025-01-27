@@ -5,13 +5,13 @@ import "../top-pools.css";
 import "./_stakingWod.scss";
 import Modal from "../../../../../components/General/Modal";
 
-
 import { Tooltip } from "@mui/material";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import { useNavigate } from "react-router-dom";
 import LandPremiumStakeModal from "../../../../../components/StakeModal/LandPremiumModal";
+import Web3 from "web3";
 
 const LandDetailsPremium = ({
   coinbase,
@@ -59,8 +59,9 @@ const LandDetailsPremium = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stakeAdr = await window.config.nft_land_premiumstake_address;
+    let web3 = new Web3(window.ethereum);
 
-    if (address !== null) {
+    if (address !== null && web3.utils.isAddress(address)) {
       const result = await window.landnft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -79,6 +80,8 @@ const LandDetailsPremium = ({
   };
 
   const myNft = async () => {
+    let web3 = new Web3(window.ethereum);
+    if (coinbase !== null && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftLandListContract(coinbase);
 
     let nfts = myNft.map((nft) => window.getLandNft(nft));
@@ -88,6 +91,7 @@ const LandDetailsPremium = ({
     nfts.reverse();
 
     setMyNFTs(nfts);
+    }
   };
 
   const handleSecondTask = async (wallet) => {
@@ -102,7 +106,7 @@ const LandDetailsPremium = ({
   };
 
   const refreshStakes = () => {
-    handleSecondTask(coinbase)
+    handleSecondTask(coinbase);
 
     setnewStakes(newStakes + 1);
   };
@@ -112,17 +116,20 @@ const LandDetailsPremium = ({
     let staking_contract = await window.getContractLandPremiumNFT(
       "LANDPREMIUM"
     );
-    let stakenft = [];
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
+    let web3 = new Web3(window.ethereum);
+    if (address && web3.utils.isAddress(address)) {
+      let stakenft = [];
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
 
-    return myStakes;
+      return myStakes;
+    } else return [];
   };
 
   const myStakes = async () => {
@@ -239,7 +246,9 @@ const LandDetailsPremium = ({
     let staking_contract = await window.getContractLandPremiumNFT(
       "LANDPREMIUM"
     );
-    if (address !== null) {
+    let web3 = new Web3(window.ethereum);
+
+    if (address !== null && web3.utils.isAddress(address)) {
       let finalDay = await staking_contract.methods
         .stakingTime(address)
         .call()
@@ -486,11 +495,10 @@ const LandDetailsPremium = ({
               listType === "list" ? "row" : "d-flex flex-column"
             } w-100 justify-content-between gap-4 gap-lg-0`}
           >
-           
             <div
               className={`otherside-border  ${
                 listType === "list" ? "col-12 col-md-6 col-lg-4" : "px-0"
-              }  ${(expired === true) && "blurrypool"} `}
+              }  ${expired === true && "blurrypool"} `}
             >
               <div className="d-flex justify-content-between align-items-center gap-2">
                 <h6 className="m-0 deposit-txt">Deposit</h6>
@@ -582,7 +590,10 @@ const LandDetailsPremium = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -648,12 +659,14 @@ const LandDetailsPremium = ({
                     My Deposit
                   </h6>
                   <div className="info-pool-wrapper p-2 d-flex flex-column justify-content-between">
-                    <div className="d-flex align-items-center gap-2 justify-content-between" >
-                    <div className="d-flex flex-column w-100">
-                    <h6 className={"m-0 mybalance-text d-flex"}>Unlocks in</h6>
-                      <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
-                        Anytime
-                      </h6>
+                    <div className="d-flex align-items-center gap-2 justify-content-between">
+                      <div className="d-flex flex-column w-100">
+                        <h6 className={"m-0 mybalance-text d-flex"}>
+                          Unlocks in
+                        </h6>
+                        <h6 className="m-0 rewardstxtwod text-white d-flex align-items-center gap-2">
+                          Anytime
+                        </h6>
                       </div>
                       <button
                         disabled={false}
@@ -666,16 +679,20 @@ const LandDetailsPremium = ({
                       >
                         Withdraw
                       </button>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
-              <div
-              className={`info-pool-wrapper2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+            <div
+              className={`info-pool-wrapper2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+                width: mystakes.length > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();
@@ -685,7 +702,11 @@ const LandDetailsPremium = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>

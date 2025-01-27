@@ -91,7 +91,8 @@ const GoldenPassPopup = ({
   };
 
   const checkApproval = async () => {
-    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56) {
+      let web3 = new Web3(window.ethereum);
+    if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId === 56 && web3.utils.isAddress(wallet)) {
       await wod_token_abi.methods
         .allowance(coinbase, goldenPassAddress)
         .call()

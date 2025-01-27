@@ -11,6 +11,7 @@ import { formattedNum } from "../../functions/formatUSD";
 import getFormattedNumber from "../../functions/get-formatted-number";
 import CountDownTimerUnstake from "../../elements/CountDownUnstake";
 import './_nftStakeChecklistModal.scss'
+import Web3 from "web3";
 
 const NftStakeCheckListModal = ({
   nftItem,
@@ -89,9 +90,10 @@ const NftStakeCheckListModal = ({
 
   const checkApproval = async () => {
     const address =  connectedWallet
+         let web3 = new Web3(window.ethereum);
 
     const stakeApr50 = await window.config.nftstaking_address50;
-if(address)
+if(address && web3.utils.isAddress(address))
     {if (apr == 50) {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
