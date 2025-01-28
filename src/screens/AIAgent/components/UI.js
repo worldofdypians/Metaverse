@@ -3,6 +3,9 @@ import { useChat } from "../hooks/useChat";
 import "../_aiagent.scss";
 import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
+import Typist from 'react-typist';
+import Typewriter from 'typewriter-effect';
+
 
 export const UI = ({ onPlay, toggle }) => {
   const input = useRef();
@@ -25,6 +28,10 @@ export const UI = ({ onPlay, toggle }) => {
     "What is the best way to advance the leaderboards?",
   ];
 
+  const formatText = (text) => {
+    return text.replace(/\n/g, "<br />");
+  };
+
   const speechBoxRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -35,6 +42,7 @@ export const UI = ({ onPlay, toggle }) => {
   };
 
   const sendMessage = async (val) => {
+    setDefaultToggle(false);
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -53,10 +61,14 @@ export const UI = ({ onPlay, toggle }) => {
       .then((res) => {
         setLoadingMessage(false);
         console.log(res.data, "chat data");
+        const systemMessage =
+          res.data.messages && res.data.messages.length > 0
+            ? res.data.messages[0].text
+            : res.data.messages;
         setMessages((prevMessages) => [
           ...prevMessages,
           {
-            text: res.data.messages[0].text,
+            text: systemMessage,
             position: "start",
             type: "system-message",
           },
@@ -67,6 +79,15 @@ export const UI = ({ onPlay, toggle }) => {
         scrollToBottom();
       })
       .catch((err) => {
+        setLoadingMessage(false);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            text: "Something went wrong, please try again in a few minutes",
+            position: "start",
+            type: "system-message",
+          },
+        ]);
         console.log(err);
       });
   };
@@ -208,14 +229,21 @@ export const UI = ({ onPlay, toggle }) => {
               <div className={`message-item p-3  ${item.type}`}>
                 {/* <p className="message-text mb-0">{item.text}</p> */}
                 {item.type === "system-message" ? (
-                  <TypeAnimation
-                    sequence={[item.text]}
-                    wrapper="p"
-                    speed={50}
-                    className="message-text mb-0"
-                    repeat={0}
-                    cursor={false}
-                  />
+              <Typewriter
+              className="message-text mb-0"
+              options={{
+                strings: formatText(item.text),
+                autoStart: true,
+                loop: false,
+                delay: 10,
+              }}
+              // onInit={(typewriter) => {
+              //   typewriter
+              //     .typeString('<strong>Hello</strong>, <em>World</em>!')
+              //     .start();
+              // }}
+            />
+               
                 ) : (
                   <p className="message-text mb-0">{item.text}</p>
                 )}
