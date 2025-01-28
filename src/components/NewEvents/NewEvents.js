@@ -1556,8 +1556,8 @@ const NewEvents = ({
   };
 
   const checkWalletAddr = () => {
-    if (coinbase !== undefined && wallet !== undefined) {
-      if (coinbase?.toLowerCase() === wallet?.toLowerCase() && chainId !== 56) {
+    if (coinbase !== undefined && wallet !== undefined && chainId !== undefined) {
+      if (chainId !== 56) {
         setCheckWallet(false);
         setStatus(
           "Please make sure you're on BNB Chain in order to activate the event."

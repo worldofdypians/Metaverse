@@ -3213,18 +3213,22 @@ function App() {
     const anyWindow = window;
     const provider = anyWindow.phantom?.solana;
     if (provider) {
-      if (provider.isConnected === true) {
+       
         await provider
           .connect({ onlyIfTrusted: true })
-          .then((data) => {
-            if (data.publicKey) {
-              setCoinbase(data.publicKey.toString());
-            }
-          })
+          // .then((data) => {
+          //   if (data.publicKey) {
+          //     setCoinbase(data.publicKey.toString());
+          //   }
+          // })
           .catch((e) => {
             console.error(e);
           });
-      }
+
+          provider.on('connect', (publicKey) => {
+            setCoinbase(publicKey.toBase58())
+          });
+      
       setIsConnected(provider.isConnected);
     }
   };
