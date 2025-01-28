@@ -5418,7 +5418,7 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={handleShowWalletModal}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -5496,7 +5496,7 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={handleShowWalletModal}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -6243,7 +6243,7 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={handleShowWalletModal}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}

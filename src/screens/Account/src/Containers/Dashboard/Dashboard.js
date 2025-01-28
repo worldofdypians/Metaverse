@@ -10664,9 +10664,7 @@ function Dashboard({
                 setselectedEvent(value);
                 setshowEventPopup(true);
               }}
-              onConnectWallet={() => {
-                setshowWalletModal(true);
-              }}
+              onConnectWallet={handleConnect}
               wodBalance={wodBalance}
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
               greatCollectionData={greatCollectionData}
