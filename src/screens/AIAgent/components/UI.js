@@ -4,7 +4,7 @@ import "../_aiagent.scss";
 import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
 
-export const UI = ({ onPlay, toggle }) => {
+export const UI = ({ onPlay, toggle, email }) => {
   const input = useRef();
   // const { chat, loading, cameraZoomed, setCameraZoomed, message } = useChat();
   const [messages, setMessages] = useState([
@@ -47,7 +47,7 @@ export const UI = ({ onPlay, toggle }) => {
     setLoadingMessage(true);
     await axios
       .post(`https://api.worldofdypians.com/chat`, {
-        userId: "aldialinj0@gmail.com",
+        userId: email,
         message: val,
       })
       .then((res) => {
@@ -67,7 +67,16 @@ export const UI = ({ onPlay, toggle }) => {
         scrollToBottom();
       })
       .catch((err) => {
-        console.log(err);
+        setLoadingMessage(false);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            text: "Something went wrong. Please try again.",
+            position: "start",
+            type: "system-message",
+          },
+        ]);
+        console.error(err);
       });
   };
 
@@ -211,7 +220,7 @@ export const UI = ({ onPlay, toggle }) => {
                   <TypeAnimation
                     sequence={[item.text]}
                     wrapper="p"
-                    speed={50}
+                    speed={100}
                     className="message-text mb-0"
                     repeat={0}
                     cursor={false}
@@ -257,7 +266,7 @@ export const UI = ({ onPlay, toggle }) => {
               setTextMessage(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && textMessage !== "") {
                 handleClick(textMessage);
                 sendMessage(textMessage);
               }
@@ -265,6 +274,8 @@ export const UI = ({ onPlay, toggle }) => {
           />
           <button
             className="agent-button explore-btn d-flex align-items-center justify-content-center"
+            style={{pointerEvents: textMessage === "" ? "none" : "auto", opacity: textMessage === "" ? "0.7" : "1"}}
+            disabled={textMessage === "" ? true : false}
             onClick={() => {
               handleClick(textMessage);
               sendMessage(textMessage);
