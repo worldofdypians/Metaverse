@@ -5086,7 +5086,7 @@ function App() {
           />
           <Route exact path="/tokenomics" element={<Token />} />
           {/* <Route exact path="/agent" element={<AiAgent />} /> */}
-          <Route exact path="/agent" element={<Agent />} />
+          <Route exact path="/ai-agent" element={<Agent />} />
           <Route
             exact
             path="/notifications"

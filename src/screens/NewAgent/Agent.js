@@ -28,10 +28,10 @@ const Agent = () => {
             <div className="col-12 col-lg-6 mb-3">
               <div className="d-flex flex-column gap-2 align-items-center align-items-lg-start">
                 <h4 className="main-hero-title font-montserrat text-center text-lg-start">
-                  AI Agent Orion
+                  AI Agent Oryn
                 </h4>
                 <span className="market-banner-desc font-montserrat">
-                  Orion is an AI Agent in World of Dypians, offering strategic
+                  Oryn is an AI Agent in World of Dypians, offering strategic
                   insights, mission support, and deep lore from the tech-magic
                   world.
                 </span>
@@ -43,7 +43,7 @@ const Agent = () => {
                   className={`${!toggle ? "action-btn" : "red-btn"}`}
                   onClick={() => setToggle(!toggle)}
                 >
-                  {toggle ? "Hide Orion" : "Show Orion"}
+                  {toggle ? "Hide Oryn" : "Show Oryn"}
                 </button>
               </div>
             )}
