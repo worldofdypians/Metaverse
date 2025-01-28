@@ -33506,7 +33506,7 @@ async function connectWallet() {
     if ('phantom' in window) {
       const anyWindow= window;
       const provider = anyWindow.phantom?.solana;
-      const resp = await provider.connect({ onlyIfTrusted: true }); 
+      const resp = await provider.connect(); 
       window.coinbase_address = resp.publicKey.toString();
       onConnect();
       window.WALLET_TYPE = "phantom";
