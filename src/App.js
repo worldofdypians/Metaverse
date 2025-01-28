@@ -2258,6 +2258,8 @@ function App() {
   };
 
   const myNftBNB = async () => {
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftListContractCCIP(
       coinbase,
       window.config.nft_caws_bnb_address
@@ -2271,6 +2273,7 @@ function App() {
 
       setMyNFTSCawsBnb(nfts);
     } else setMyNFTSCawsBnb([]);
+  }
   };
 
   const myLandNftAVAX = async () => {
@@ -2290,6 +2293,8 @@ function App() {
   };
 
   const myNft2Avax = async () => {
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
     let myNft = await window.myNftListContractCCIP(
       coinbase,
       window.config.nft_caws_avax_address
@@ -2303,6 +2308,7 @@ function App() {
 
       setMyNFTSCawsAvax(nfts);
     } else setMyNFTSCawsAvax([]);
+  }
   };
 
   const myLandNftsBase = async () => {
