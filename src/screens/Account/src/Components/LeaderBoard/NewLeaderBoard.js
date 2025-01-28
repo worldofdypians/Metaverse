@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CircularProgress } from "@mui/material";
-import { Tooltip, styled, tooltipClasses } from "@mui/material"; 
+import { Tooltip, styled, tooltipClasses } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import OutsideClickHandler from "react-outside-click-handler";
 import Countdown from "react-countdown";
@@ -93,7 +93,6 @@ const NewLeaderBoard = ({
   onGoldenpassClick,
   allSeiData,
 }) => {
-
   const [slideIndex, setSlideIndex] = useState(0);
   const [updateCount, setUpdateCount] = useState(0);
   const [tooltip, setTooltip] = useState(false);
@@ -104,7 +103,7 @@ const NewLeaderBoard = ({
   const [inactiveBoard, setInactiveBoard] = useState(false);
   const [isactive, setisActive] = useState(false);
   const [countdown, setcountdown] = useState();
-  const [allData, setAllData] = useState([]); 
+  const [allData, setAllData] = useState([]);
   const sliderRef = useRef(null);
   const windowSize = useWindowSize();
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -120,8 +119,6 @@ const NewLeaderBoard = ({
   const handleOption = (item) => {
     setOptionText2(item);
   };
-
- 
 
   useEffect(() => {
     handleOption(optionText2);
@@ -189,10 +186,10 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "bnb"
-                              ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
+                              ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                               : optionText2 !== "bnb" && hoverState === "bnb"
-                              ? 'https://cdn.worldofdypians.com/wod/bnbWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/bnbInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/bnbWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/bnbInactive.svg"
                           }
                           className={`${
                             optionText2 === "bnb"
@@ -226,11 +223,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "taiko"
-                              ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
+                              ? "https://cdn.worldofdypians.com/wod/taiko.svg"
                               : optionText2 !== "taiko" &&
                                 hoverState === "taiko"
-                              ? 'https://cdn.worldofdypians.com/wod/taikoWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/taikoInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/taikoWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/taikoInactive.svg"
                           }
                           className={`${
                             optionText2 === "taiko"
@@ -268,8 +265,8 @@ const NewLeaderBoard = ({
                               ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                               : optionText2 !== "matchain" &&
                                 hoverState === "matchain"
-                              ? 'https://cdn.worldofdypians.com/wod/matchainWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/matchainInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/matchainWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/matchainInactive.svg"
                           }
                           className={`${
                             optionText2 === "matchain"
@@ -303,10 +300,10 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "sei"
-                              ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
+                              ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                               : optionText2 !== "sei" && hoverState === "sei"
-                              ? 'https://cdn.worldofdypians.com/wod/seiWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/seiInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/seiWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/seiInactive.svg"
                           }
                           className={`${
                             optionText2 === "sei"
@@ -341,11 +338,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "manta"
-                              ? 'https://cdn.worldofdypians.com/wod/manta.png'
+                              ? "https://cdn.worldofdypians.com/wod/manta.png"
                               : optionText2 !== "manta" &&
                                 hoverState === "manta"
-                              ? 'https://cdn.worldofdypians.com/wod/mantaWhite.png'
-                              : 'https://cdn.worldofdypians.com/wod/mantaInactive.png'
+                              ? "https://cdn.worldofdypians.com/wod/mantaWhite.png"
+                              : "https://cdn.worldofdypians.com/wod/mantaInactive.png"
                           }
                           className={`${
                             optionText2 === "manta"
@@ -380,10 +377,10 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "base"
-                              ? 'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'
+                              ? "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
                               : optionText2 !== "base" && hoverState === "base"
-                              ? 'https://cdn.worldofdypians.com/wod/baseWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/baseInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/baseWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/baseInactive.svg"
                           }
                           className={`${
                             optionText2 === "base"
@@ -417,10 +414,10 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "core"
-                              ? 'https://cdn.worldofdypians.com/wod/core.svg'
+                              ? "https://cdn.worldofdypians.com/wod/core.svg"
                               : optionText2 !== "core" && hoverState === "core"
-                              ? 'https://cdn.worldofdypians.com/wod/coreWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/coreInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/coreWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/coreInactive.svg"
                           }
                           className={`${
                             optionText2 === "core"
@@ -455,11 +452,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "viction"
-                              ? 'https://cdn.worldofdypians.com/wod/viction.svg'
+                              ? "https://cdn.worldofdypians.com/wod/viction.svg"
                               : optionText2 !== "viction" &&
                                 hoverState === "viction"
-                              ? 'https://cdn.worldofdypians.com/wod/victionWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/victionInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/victionWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/victionInactive.svg"
                           }
                           className={`${
                             optionText2 === "viction"
@@ -494,11 +491,11 @@ const NewLeaderBoard = ({
                         <img
                           src={
                             optionText2 === "skale"
-                              ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
+                              ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                               : optionText2 !== "skale" &&
                                 hoverState === "skale"
-                              ? 'https://cdn.worldofdypians.com/wod/skaleWhite.svg'
-                              : 'https://cdn.worldofdypians.com/wod/skaleInactive.svg'
+                              ? "https://cdn.worldofdypians.com/wod/skaleWhite.svg"
+                              : "https://cdn.worldofdypians.com/wod/skaleInactive.svg"
                           }
                           className={`${
                             optionText2 === "skale"
@@ -715,7 +712,9 @@ const NewLeaderBoard = ({
                                 >
                                   <div className="d-flex align-items-center gap-2 position-relative">
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/tooltip.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/tooltip.svg"
+                                      }
                                       alt=""
                                       className="tooltip-icon"
                                       style={{
@@ -749,7 +748,9 @@ const NewLeaderBoard = ({
                               </span>
 
                               <img
-                                src={'https://cdn.worldofdypians.com/wod/newLeaderboardBg.webp'}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/newLeaderboardBg.webp"
+                                }
                                 alt=""
                                 className="w-100"
                               />
@@ -820,56 +821,56 @@ const NewLeaderBoard = ({
                                                           }.png`
                                                         : index + 1 >= 11 &&
                                                           index + 1 <= 15
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                                         : index + 1 >= 16 &&
-                                                          index + 1 <= 20 
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                                          index + 1 <= 20
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                                         : index + 1 >= 21 &&
                                                           index + 1 <= 25
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                                         : index + 1 >= 26 &&
                                                           index + 1 <= 30
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
                                                         : index + 1 >= 31 &&
                                                           index + 1 <= 35
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar5.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar5.png"
                                                         : index + 1 >= 36 &&
                                                           index + 1 <= 40
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar6.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar6.png"
                                                         : index + 1 >= 41 &&
                                                           index + 1 <= 45
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar7.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar7.png"
                                                         : index + 1 >= 46 &&
                                                           index + 1 <= 50
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar8.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar8.png"
                                                         : index + 1 >= 51 &&
                                                           index + 1 <= 55
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar9.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar9.png"
                                                         : index + 1 >= 56 &&
                                                           index + 1 <= 60
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar10.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar10.png"
                                                         : index + 1 >= 61 &&
                                                           index + 1 <= 65
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar11.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar11.png"
                                                         : index + 1 >= 66 &&
                                                           index + 1 <= 70
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar12.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar12.png"
                                                         : index + 1 >= 71 &&
                                                           index + 1 <= 75
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar13.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar13.png"
                                                         : index + 1 >= 76 &&
                                                           index + 1 <= 80
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar14.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar14.png"
                                                         : index + 1 >= 81 &&
                                                           index + 1 <= 85
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar15.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
                                                         : index + 1 >= 86 &&
                                                           index + 1 <= 90
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar16.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
                                                         : index + 1 >= 91 &&
                                                           index + 1 <= 95
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar17.png'
-                                                        : 'https://cdn.worldofdypians.com/wod/playerAvatar18.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar17.png"
+                                                        : "https://cdn.worldofdypians.com/wod/playerAvatar18.png"
                                                       : optionText2 === "manta"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${
@@ -877,38 +878,38 @@ const NewLeaderBoard = ({
                                                           }.png`
                                                         : index + 1 >= 11 &&
                                                           index + 1 <= 15
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                                         : index + 1 >= 16 &&
                                                           index + 1 <= 20
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                                         : index + 1 >= 21 &&
                                                           index + 1 <= 25
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                                         : index + 1 >= 26 &&
                                                           index + 1 <= 30
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
                                                         : index + 1 >= 31 &&
                                                           index + 1 <= 35
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar5.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar5.png"
                                                         : index + 1 >= 36 &&
                                                           index + 1 <= 40
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar6.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar6.png"
                                                         : index + 1 >= 41 &&
                                                           index + 1 <= 45
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar7.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar7.png"
                                                         : index + 1 >= 46 &&
                                                           index + 1 <= 50
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar8.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar8.png"
                                                         : index + 1 >= 51 &&
                                                           index + 1 <= 55
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar9.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar9.png"
                                                         : index + 1 >= 56 &&
                                                           index + 1 <= 60
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar10.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar10.png"
                                                         : index + 1 >= 61 &&
                                                           index + 1 <= 65
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar11.png'
-                                                        : 'https://cdn.worldofdypians.com/wod/playerAvatar12.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar11.png"
+                                                        : "https://cdn.worldofdypians.com/wod/playerAvatar12.png"
                                                       : optionText2 === "taiko"
                                                       ? index + 1 <= 10
                                                         ? `https://cdn.worldofdypians.com/wod/globalRank${
@@ -916,50 +917,50 @@ const NewLeaderBoard = ({
                                                           }.png`
                                                         : index + 1 >= 11 &&
                                                           index + 1 <= 15
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                                         : index + 1 >= 16 &&
                                                           index + 1 <= 20
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                                         : index + 1 >= 21 &&
                                                           index + 1 <= 25
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                                         : index + 1 >= 26 &&
                                                           index + 1 <= 30
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
                                                         : index + 1 >= 31 &&
                                                           index + 1 <= 35
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar5.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar5.png"
                                                         : index + 1 >= 36 &&
                                                           index + 1 <= 40
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar6.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar6.png"
                                                         : index + 1 >= 41 &&
                                                           index + 1 <= 45
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar7.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar7.png"
                                                         : index + 1 >= 46 &&
                                                           index + 1 <= 50
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar8.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar8.png"
                                                         : index + 1 >= 51 &&
                                                           index + 1 <= 55
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar9.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar9.png"
                                                         : index + 1 >= 56 &&
                                                           index + 1 <= 60
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar10.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar10.png"
                                                         : index + 1 >= 61 &&
                                                           index + 1 <= 65
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar11.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar11.png"
                                                         : index + 1 >= 66 &&
                                                           index + 1 <= 70
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar12.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar12.png"
                                                         : index + 1 >= 71 &&
                                                           index + 1 <= 75
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar13.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar13.png"
                                                         : index + 1 >= 76 &&
                                                           index + 1 <= 80
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar14.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar14.png"
                                                         : index + 1 >= 81 &&
                                                           index + 1 <= 85
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar15.png'
-                                                        : 'https://cdn.worldofdypians.com/wod/playerAvatar16.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
+                                                        : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
                                                       : optionText2 ===
                                                           "matchain" ||
                                                         optionText2 === "sei"
@@ -969,85 +970,85 @@ const NewLeaderBoard = ({
                                                           }.png`
                                                         : index + 1 >= 11 &&
                                                           index + 1 <= 15
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                                         : index + 1 >= 16 &&
                                                           index + 1 <= 20
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                                         : index + 1 >= 21 &&
                                                           index + 1 <= 25
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                                         : index + 1 >= 26 &&
                                                           index + 1 <= 30
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
                                                         : index + 1 >= 31 &&
                                                           index + 1 <= 35
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar5.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar5.png"
                                                         : index + 1 >= 36 &&
                                                           index + 1 <= 40
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar6.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar6.png"
                                                         : index + 1 >= 41 &&
                                                           index + 1 <= 45
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar7.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar7.png"
                                                         : index + 1 >= 46 &&
                                                           index + 1 <= 50
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar8.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar8.png"
                                                         : index + 1 >= 51 &&
                                                           index + 1 <= 55
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar9.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar9.png"
                                                         : index + 1 >= 56 &&
                                                           index + 1 <= 60
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar10.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar10.png"
                                                         : index + 1 >= 61 &&
                                                           index + 1 <= 65
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar11.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar11.png"
                                                         : index + 1 >= 66 &&
                                                           index + 1 <= 70
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar12.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar12.png"
                                                         : index + 1 >= 71 &&
                                                           index + 1 <= 75
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar13.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar13.png"
                                                         : index + 1 >= 76 &&
                                                           index + 1 <= 80
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar14.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar14.png"
                                                         : index + 1 >= 81 &&
                                                           index + 1 <= 85
-                                                        ? 'https://cdn.worldofdypians.com/wod/playerAvatar15.png'
-                                                        : 'https://cdn.worldofdypians.com/wod/playerAvatar16.png'
+                                                        ? "https://cdn.worldofdypians.com/wod/playerAvatar15.png"
+                                                        : "https://cdn.worldofdypians.com/wod/playerAvatar16.png"
                                                       : index + 1 <= 10
                                                       ? `https://cdn.worldofdypians.com/wod/globalRank${
                                                           index + 1
                                                         }.png`
                                                       : index + 1 >= 11 &&
                                                         index + 1 <= 15
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                                       : index + 1 >= 16 &&
                                                         index + 1 <= 20
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                                       : index + 1 >= 21 &&
                                                         index + 1 <= 25
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                                       : index + 1 >= 26 &&
                                                         index + 1 <= 30
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
                                                       : index + 1 >= 31 &&
                                                         index + 1 <= 35
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar5.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar5.png"
                                                       : index + 1 >= 36 &&
                                                         index + 1 <= 40
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar6.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar6.png"
                                                       : index + 1 >= 41 &&
                                                         index + 1 <= 45
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar7.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar7.png"
                                                       : index + 1 >= 46 &&
                                                         index + 1 <= 50
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar8.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar8.png"
                                                       : index + 1 >= 51 &&
                                                         index + 1 <= 55
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar9.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar9.png"
                                                       : index + 1 >= 56 &&
                                                         index + 1 <= 60
-                                                      ? 'https://cdn.worldofdypians.com/wod/playerAvatar10.png'
-                                                      : 'https://cdn.worldofdypians.com/wod/playerAvatar11.png'
+                                                      ? "https://cdn.worldofdypians.com/wod/playerAvatar10.png"
+                                                      : "https://cdn.worldofdypians.com/wod/playerAvatar11.png"
                                                   }
                                                   alt=""
                                                   className="playerAvatar me-2"
@@ -1072,7 +1073,14 @@ const NewLeaderBoard = ({
                                                 }`}
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                  <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
+                                                  <img
+                                                    width={20}
+                                                    height={20}
+                                                    src={
+                                                      "https://cdn.worldofdypians.com/wod/lbStar.png"
+                                                    }
+                                                    alt=""
+                                                  />
                                                   <span
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
@@ -1137,7 +1145,9 @@ const NewLeaderBoard = ({
                                               {item.displayName === username ? (
                                                 <div className="position-relative d-flex align-items-center">
                                                   <img
-                                                    src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
+                                                    src={
+                                                      "https://cdn.worldofdypians.com/wod/premiumAvatar.png"
+                                                    }
                                                     alt=""
                                                     className="playerAvatar me-2"
                                                   />
@@ -1154,7 +1164,9 @@ const NewLeaderBoard = ({
                                               ) : (
                                                 <div className="position-relative d-flex align-items-center">
                                                   <img
-                                                    src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
+                                                    src={
+                                                      "https://cdn.worldofdypians.com/wod/userAvatar2.png"
+                                                    }
                                                     alt=""
                                                     className="playerAvatar me-2"
                                                   />{" "}
@@ -1182,7 +1194,14 @@ const NewLeaderBoard = ({
                                                 }`}
                                               >
                                                 <div className="d-flex align-items-center justify-content-start ms-2 ms-lg-4 gap-1">
-                                                  <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
+                                                  <img
+                                                    width={20}
+                                                    height={20}
+                                                    src={
+                                                      "https://cdn.worldofdypians.com/wod/lbStar.png"
+                                                    }
+                                                    alt=""
+                                                  />
                                                   <span
                                                     className="leaderboard-text"
                                                     style={{ color: "#fff" }}
@@ -1290,12 +1309,16 @@ const NewLeaderBoard = ({
                                           availableTime !== undefined ? (
                                             <div className="position-relative d-flex align-items-center">
                                               <img
-                                                src={'https://cdn.worldofdypians.com/wod/premiumAvatar.png'}
+                                                src={
+                                                  "https://cdn.worldofdypians.com/wod/premiumAvatar.png"
+                                                }
                                                 alt=""
                                                 className="playerAvatar"
                                               />
                                               <img
-                                                src={'https://cdn.worldofdypians.com/wod/premiumStar.png'}
+                                                src={
+                                                  "https://cdn.worldofdypians.com/wod/premiumStar.png"
+                                                }
                                                 alt=""
                                                 className="premium-star"
                                               />
@@ -1313,7 +1336,9 @@ const NewLeaderBoard = ({
                                           ) : (
                                             <>
                                               <img
-                                                src={'https://cdn.worldofdypians.com/wod/userAvatar2.png'}
+                                                src={
+                                                  "https://cdn.worldofdypians.com/wod/userAvatar2.png"
+                                                }
                                                 alt=""
                                                 className="playerAvatar"
                                                 style={{
@@ -1347,7 +1372,14 @@ const NewLeaderBoard = ({
                                           }`}
                                         >
                                           <div className="d-flex align-items-center justify-content-center ms-2 me-4 gap-1">
-                                            <img src={"https://cdn.worldofdypians.com/wod/lbStar.png"} width={20} height={20} alt="" />
+                                            <img
+                                              width={20}
+                                              height={20}
+                                              src={
+                                                "https://cdn.worldofdypians.com/wod/lbStar.png"
+                                              }
+                                              alt=""
+                                            />
                                             <span
                                               className="leaderboard-text"
                                               style={{ color: "#fff" }}
