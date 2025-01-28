@@ -61,7 +61,7 @@ const WalletModal = ({
                     Phantom
                     </span>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/metamaskConnect.svg"}
+                      src={"https://cdn.worldofdypians.com/wod/phantom.svg"}
                       className="wallet-item-icon"
                       alt="Icon"
                     />

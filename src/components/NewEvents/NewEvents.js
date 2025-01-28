@@ -80,7 +80,7 @@ const NewEvents = ({
   setPuzzleMadnessTimer,
   onConnectWallet,
   wodBalance,
-  genesisUsd
+  genesisUsd,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -256,29 +256,32 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownPuzzle = async () => {
-    const puzzleContract = new window.bscWeb3.eth.Contract(
-      PUZZLE_MADNESS_ABI,
-      puzzle_madness_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const puzzleContract = new window.bscWeb3.eth.Contract(
+        PUZZLE_MADNESS_ABI,
+        puzzle_madness_address
+      );
 
-    const purchaseTimestamp = await puzzleContract.methods
-      .getTimeOfExpireBuff(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtpuzzleMadness(false);
+      const purchaseTimestamp = await puzzleContract.methods
+        .getTimeOfExpireBuff(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtpuzzleMadness(false);
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          puzzleMadness: false,
+        }));
+        return;
+      }
+      setHasBoughtpuzzleMadness(true);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
         puzzleMadness: false,
       }));
-      return;
+      setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
+      setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
     }
-    setHasBoughtpuzzleMadness(true);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      puzzleMadness: false,
-    }));
-    setpuzzleMadnessCountdown(Number(purchaseTimestamp) * 1000); // Multiply by 1000 to convert to milliseconds
-    setPuzzleMadnessTimer(Number(purchaseTimestamp) * 1000);
   };
 
   const checkApprovalPuzzle = async () => {
@@ -426,44 +429,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownDragon = async () => {
-    const dragonRuinsContract = new window.bscWeb3.eth.Contract(
-      DRAGON_RUINS_ABI,
-      dragon_ruins_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const dragonRuinsContract = new window.bscWeb3.eth.Contract(
+        DRAGON_RUINS_ABI,
+        dragon_ruins_address
+      );
 
-    const purchaseTimestamp = await dragonRuinsContract.methods
-      .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtDragon(false);
+      const purchaseTimestamp = await dragonRuinsContract.methods
+        .getTimeOfDeposit(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtDragon(false);
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          dragon: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtDragon(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        dragon: false,
+        dragon: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtDragon(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      dragon: isToday,
-    }));
   };
 
   const checkApprovalDragon = async () => {
@@ -611,44 +617,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownBear = async () => {
-    const coldBiteContract = new window.bscWeb3.eth.Contract(
-      COLD_BITE_ABI,
-      cold_bite_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const coldBiteContract = new window.bscWeb3.eth.Contract(
+        COLD_BITE_ABI,
+        cold_bite_address
+      );
 
-    const purchaseTimestamp = await coldBiteContract.methods
-      .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtBear(false); // User hasn't bought it
+      const purchaseTimestamp = await coldBiteContract.methods
+        .getTimeOfDeposit(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtBear(false); // User hasn't bought it
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          bear: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtBear(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        bear: false,
+        bear: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtBear(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      bear: isToday,
-    }));
   };
 
   const checkApprovalBear = async () => {
@@ -815,44 +824,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownBeast = async () => {
-    const furyBeastContract = new window.bscWeb3.eth.Contract(
-      FURY_BEAST_ABI,
-      fury_beast_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const furyBeastContract = new window.bscWeb3.eth.Contract(
+        FURY_BEAST_ABI,
+        fury_beast_address
+      );
 
-    const purchaseTimestamp = await furyBeastContract.methods
-      .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtBeast(false); // User hasn't bought it
+      const purchaseTimestamp = await furyBeastContract.methods
+        .getTimeOfDeposit(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtBeast(false); // User hasn't bought it
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          beast: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtBeast(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        beast: false,
+        beast: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtBeast(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      beast: isToday,
-    }));
   };
 
   const checkApprovalBeast = async () => {
@@ -1000,44 +1012,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownEagle = async () => {
-    const wingStormContract = new window.bscWeb3.eth.Contract(
-      WING_STORM_ABI,
-      wing_storm_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const wingStormContract = new window.bscWeb3.eth.Contract(
+        WING_STORM_ABI,
+        wing_storm_address
+      );
 
-    const purchaseTimestamp = await wingStormContract.methods
-      .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtEagle(false); // User hasn't bought it
+      const purchaseTimestamp = await wingStormContract.methods
+        .getTimeOfDeposit(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtEagle(false); // User hasn't bought it
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          eagle: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtEagle(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        eagle: false,
+        eagle: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtEagle(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      eagle: isToday,
-    }));
   };
 
   const checkApprovalEagle = async () => {
@@ -1184,44 +1199,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownScorpion = async () => {
-    const scorpionKingContract = new window.bscWeb3.eth.Contract(
-      SCORPION_KING_ABI,
-      scorpion_king_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
+      const scorpionKingContract = new window.bscWeb3.eth.Contract(
+        SCORPION_KING_ABI,
+        scorpion_king_address
+      );
 
-    const purchaseTimestamp = await scorpionKingContract.methods
-      .getTimeOfDeposit(coinbase)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtScorpion(false); // User hasn't bought it
+      const purchaseTimestamp = await scorpionKingContract.methods
+        .getTimeOfDeposit(coinbase)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtScorpion(false); // User hasn't bought it
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          scorpion: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtScorpion(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        scorpion: false,
+        scorpion: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtScorpion(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      scorpion: isToday,
-    }));
   };
 
   const checkApprovalScorpion = async () => {
@@ -1369,44 +1387,47 @@ const NewEvents = ({
   };
 
   const handleRefreshCountdownCyclops = async () => {
-    const stoneEyeContract = new window.bscWeb3.eth.Contract(
-      STONE_EYE_ABI,
-      stone_eye_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (wallet && web3.utils.isAddress(wallet)) {
+      const stoneEyeContract = new window.bscWeb3.eth.Contract(
+        STONE_EYE_ABI,
+        stone_eye_address
+      );
 
-    const purchaseTimestamp = await stoneEyeContract.methods
-      .getTimeOfDeposit(wallet)
-      .call();
-    if (Number(purchaseTimestamp) === 0) {
-      setHasBoughtCyclops(false); // User hasn't bought it
+      const purchaseTimestamp = await stoneEyeContract.methods
+        .getTimeOfDeposit(wallet)
+        .call();
+      if (Number(purchaseTimestamp) === 0) {
+        setHasBoughtCyclops(false); // User hasn't bought it
+        setBeastSiegeStatus((prevStatus) => ({
+          ...prevStatus,
+          cyclops: false,
+        }));
+        return;
+      }
+      const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
+      const currentUTCDate = new Date();
+
+      // Get the UTC components
+      const purchaseYear = purchaseDate.getUTCFullYear();
+      const purchaseMonth = purchaseDate.getUTCMonth();
+      const purchaseDay = purchaseDate.getUTCDate();
+
+      const currentYear = currentUTCDate.getUTCFullYear();
+      const currentMonth = currentUTCDate.getUTCMonth();
+      const currentDay = currentUTCDate.getUTCDate();
+
+      // Check if the purchase was made on the same UTC day
+      const isToday =
+        purchaseYear === currentYear &&
+        purchaseMonth === currentMonth &&
+        purchaseDay === currentDay;
+      setHasBoughtCyclops(isToday);
       setBeastSiegeStatus((prevStatus) => ({
         ...prevStatus,
-        cyclops: false,
+        cyclops: isToday,
       }));
-      return;
     }
-    const purchaseDate = new Date(purchaseTimestamp * 1000); // Multiply by 1000 to convert to milliseconds
-    const currentUTCDate = new Date();
-
-    // Get the UTC components
-    const purchaseYear = purchaseDate.getUTCFullYear();
-    const purchaseMonth = purchaseDate.getUTCMonth();
-    const purchaseDay = purchaseDate.getUTCDate();
-
-    const currentYear = currentUTCDate.getUTCFullYear();
-    const currentMonth = currentUTCDate.getUTCMonth();
-    const currentDay = currentUTCDate.getUTCDate();
-
-    // Check if the purchase was made on the same UTC day
-    const isToday =
-      purchaseYear === currentYear &&
-      purchaseMonth === currentMonth &&
-      purchaseDay === currentDay;
-    setHasBoughtCyclops(isToday);
-    setBeastSiegeStatus((prevStatus) => ({
-      ...prevStatus,
-      cyclops: isToday,
-    }));
   };
 
   const checkApprovalCyclops = async () => {
@@ -3634,7 +3655,11 @@ const NewEvents = ({
                                         >
                                           <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
                                             <span className="beast-siege-wod-price">
-                                              ${getFormattedNumber(genesisUsd ?? 0,0)}
+                                              $
+                                              {getFormattedNumber(
+                                                genesisUsd ?? 0,
+                                                0
+                                              )}
                                             </span>
                                           </div>
                                           <span className="beast-siege-event-price">

@@ -2242,38 +2242,41 @@ function App() {
   };
 
   const myLandNftBNB = async () => {
-    let myNft = await window.myNftLandListContractCCIP(
-      coinbase,
-      window.config.nft_land_bnb_address
-    );
+    let web3 = new Web3(window.ethereum);
+    if (coinbase && web3.utils.isAddress(coinbase)) {
+      let myNft = await window.myNftLandListContractCCIP(
+        coinbase,
+        window.config.nft_land_bnb_address
+      );
 
-    if (myNft && myNft.length > 0) {
-      let nfts = myNft.map((nft) => window.getLandNft(nft));
-      nfts = await Promise.all(nfts);
+      if (myNft && myNft.length > 0) {
+        let nfts = myNft.map((nft) => window.getLandNft(nft));
+        nfts = await Promise.all(nfts);
 
-      nfts.reverse();
+        nfts.reverse();
 
-      setMyLandNFTsBnb(nfts);
-    } else setMyLandNFTsBnb([]);
+        setMyLandNFTsBnb(nfts);
+      } else setMyLandNFTsBnb([]);
+    }
   };
 
   const myNftBNB = async () => {
     let web3 = new Web3(window.ethereum);
     if (coinbase && web3.utils.isAddress(coinbase)) {
-    let myNft = await window.myNftListContractCCIP(
-      coinbase,
-      window.config.nft_caws_bnb_address
-    );
-    if (myNft && myNft.length > 0) {
-      let nfts = myNft.map((nft) => window.getNft(nft));
+      let myNft = await window.myNftListContractCCIP(
+        coinbase,
+        window.config.nft_caws_bnb_address
+      );
+      if (myNft && myNft.length > 0) {
+        let nfts = myNft.map((nft) => window.getNft(nft));
 
-      nfts = await Promise.all(nfts);
+        nfts = await Promise.all(nfts);
 
-      nfts.reverse();
+        nfts.reverse();
 
-      setMyNFTSCawsBnb(nfts);
-    } else setMyNFTSCawsBnb([]);
-  }
+        setMyNFTSCawsBnb(nfts);
+      } else setMyNFTSCawsBnb([]);
+    }
   };
 
   const myLandNftAVAX = async () => {
@@ -2295,20 +2298,20 @@ function App() {
   const myNft2Avax = async () => {
     let web3 = new Web3(window.ethereum);
     if (coinbase && web3.utils.isAddress(coinbase)) {
-    let myNft = await window.myNftListContractCCIP(
-      coinbase,
-      window.config.nft_caws_avax_address
-    );
-    if (myNft && myNft.length > 0) {
-      let nfts = myNft.map((nft) => window.getNft(nft));
+      let myNft = await window.myNftListContractCCIP(
+        coinbase,
+        window.config.nft_caws_avax_address
+      );
+      if (myNft && myNft.length > 0) {
+        let nfts = myNft.map((nft) => window.getNft(nft));
 
-      nfts = await Promise.all(nfts);
+        nfts = await Promise.all(nfts);
 
-      nfts.reverse();
+        nfts.reverse();
 
-      setMyNFTSCawsAvax(nfts);
-    } else setMyNFTSCawsAvax([]);
-  }
+        setMyNFTSCawsAvax(nfts);
+      } else setMyNFTSCawsAvax([]);
+    }
   };
 
   const myLandNftsBase = async () => {
@@ -3210,16 +3213,18 @@ function App() {
     const anyWindow = window;
     const provider = anyWindow.phantom?.solana;
     if (provider) {
-      await provider
-        .connect({ onlyIfTrusted: true })
-        .then((data) => {
-          if (data.publicKey) {
-            setCoinbase(data.publicKey.toString());
-          }
-        })
-        .catch((e) => {
-          console.error("errorrrr", e);
-        });
+      if (provider.isConnected === true) {
+        await provider
+          .connect({ onlyIfTrusted: true })
+          .then((data) => {
+            if (data.publicKey) {
+              setCoinbase(data.publicKey.toString());
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      }
       setIsConnected(provider.isConnected);
     }
   };
