@@ -654,9 +654,9 @@ class NFT {
           this.key === "NFTSTAKING" || this.key === "NFTSTAKING50"
             ? window.config.nftstaking_address
             : window.config.nft_caws_address,
-          {
-            from: await getCoinbase(),
-          }
+          // {
+          //   from: await getCoinbase(),
+          // }
         );
         return await contract.methods[fn_name](...args).call();
       };

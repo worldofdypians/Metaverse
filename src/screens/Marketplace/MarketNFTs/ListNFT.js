@@ -21,6 +21,7 @@ import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 import MakeOffer from "./MakeOffer";
 import Pagination from "@mui/material/Pagination";
 import { useQuery as useReactQuery } from "@tanstack/react-query";
+import Web3 from "web3";
 
 
 const fetchCurrentNft = async (nftId, nftAddress) => {
@@ -1048,12 +1049,15 @@ const ListNFT = ({
 
   // console.log(window)
   async function isApprovedNFT(nft, type, coinbase) {
+      let web3 = new Web3(window.ethereum); 
+    if (coinbase && web3.utils.isAddress(coinbase)) {
     const result = await window
       .isApprovedNFT(nft, type, coinbase)
       .catch((e) => {
         console.error(e);
       });
     return result;
+                  } else return false
   }
 
   const handleRefreshList = async (type, tokenId) => {
