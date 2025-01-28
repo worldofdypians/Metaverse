@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./_newevents.scss";
 import TreasureHunt from "../Challenges/TreasureHunt";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import ChallengePopup from "../ChallengePopup/ChallengePopup";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -149,6 +149,7 @@ const NewEvents = ({
   const sliderRef = useRef();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
+  const navigate = useNavigate();
 
   function hasNoMoreThanTwoDecimalPlaces(num) {
     // Check if the number has up to 2 decimal places
@@ -1580,6 +1581,9 @@ const NewEvents = ({
     } else if (wallet) {
       setCheckWallet(true);
       setStatus("Please connect your wallet in order to activate the event");
+    } else if (coinbase) {
+      setCheckWallet(true);
+      setStatus("Please sign in with your game account in order to activate the event");
     } else setCheckWallet(false);
   };
 
@@ -2861,10 +2865,10 @@ const NewEvents = ({
                                         {(!isConnected || !email) && (
                                           <button
                                             className="beast-siege-btn"
-                                            onClick={onConnectWallet}
+                                            onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
                                           >
-                                            {" "}
-                                            Connect Wallet
+                                            {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                           
                                           </button>
                                         )}
                                         {isConnected && email && (
@@ -2955,13 +2959,13 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
-                                          <button
-                                            className="beast-siege-btn"
-                                            onClick={onConnectWallet}
-                                          >
-                                            {" "}
-                                            Connect Wallet
-                                          </button>
+                                      <button
+                                      className="beast-siege-btn"
+                                      onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                    >
+                                      {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                     
+                                    </button>
                                         )}
                                         {isConnected && email && (
                                           <>
@@ -3046,13 +3050,13 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
-                                          <button
-                                            className="beast-siege-btn"
-                                            onClick={onConnectWallet}
-                                          >
-                                            {" "}
-                                            Connect Wallet
-                                          </button>
+                                         <button
+                                         className="beast-siege-btn"
+                                         onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                       >
+                                         {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                        
+                                       </button>
                                         )}
                                         {isConnected && email && (
                                           <>
@@ -3141,13 +3145,13 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
-                                          <button
-                                            className="beast-siege-btn"
-                                            onClick={onConnectWallet}
-                                          >
-                                            {" "}
-                                            Connect Wallet
-                                          </button>
+                                        <button
+                                        className="beast-siege-btn"
+                                        onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                      >
+                                        {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                       
+                                      </button>
                                         )}
                                         {isConnected && email && (
                                           <>
@@ -3236,13 +3240,13 @@ const NewEvents = ({
                                     ) : (
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
-                                          <button
-                                            className="beast-siege-btn"
-                                            onClick={onConnectWallet}
-                                          >
-                                            {" "}
-                                            Connect Wallet
-                                          </button>
+                                         <button
+                                         className="beast-siege-btn"
+                                         onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                       >
+                                         {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                        
+                                       </button>
                                         )}
                                         {isConnected && email && (
                                           <>
@@ -3332,12 +3336,12 @@ const NewEvents = ({
                                       <div className="d-flex align-items-center gap-2">
                                         {(!isConnected || !email) && (
                                           <button
-                                            className="beast-siege-btn"
-                                            onClick={onConnectWallet}
-                                          >
-                                            {" "}
-                                            Connect Wallet
-                                          </button>
+                                          className="beast-siege-btn"
+                                          onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                        >
+                                          {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                         
+                                        </button>
                                         )}
                                         {isConnected && email && (
                                           <>
@@ -3789,13 +3793,13 @@ const NewEvents = ({
                                         ) : (
                                           <div className="d-flex align-items-center gap-2">
                                             {(!isConnected || !email) && (
-                                              <button
-                                                className="beast-siege-btn"
-                                                onClick={onConnectWallet}
-                                              >
-                                                {" "}
-                                                Connect Wallet
-                                              </button>
+                                             <button
+                                             className="beast-siege-btn"
+                                             onClick={()=>{ !isConnected ?  onConnectWallet() : navigate('/auth') }}
+                                           >
+                                             {isConnected && !email ? "Sign in" : "Connect Wallet"}
+                                            
+                                           </button>
                                             )}
                                             {isConnected && email && (
                                               <>
