@@ -49,6 +49,11 @@
 
 .Typewriter__wrapper{
   color: #fff !important;
+
+  a{
+    color: blue;
+    text-decoration: underline;
+  }
 }
 
 .default-messages-holder {
