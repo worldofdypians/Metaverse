@@ -5904,19 +5904,19 @@ function Dashboard({
       window.LANDSTAKING_ABI,
       window.config.landnftstake_address
     );
-  let web3 = new Web3(window.ethereum); 
- if (address && web3.utils.isAddress(address)) {
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft_cawsWod.push(parseInt(result[i]));
-        return stakenft_cawsWod;
-      });
+    let web3 = new Web3(window.ethereum);
+    if (address && web3.utils.isAddress(address)) {
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft_cawsWod.push(parseInt(result[i]));
+          return stakenft_cawsWod;
+        });
 
-    return myStakes;
-  } else return [];
+      return myStakes;
+    } else return [];
   };
 
   const getmyWodStakes = async () => {
@@ -5940,18 +5940,18 @@ function Dashboard({
       window.WOD_CAWS_ABI,
       window.config.wod_caws_address
     );
-    let web3 = new Web3(window.ethereum); 
+    let web3 = new Web3(window.ethereum);
     if (address && web3.utils.isAddress(address)) {
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft_cawsWod.push(parseInt(result[i]));
-        return stakenft_cawsWod;
-      });
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft_cawsWod.push(parseInt(result[i]));
+          return stakenft_cawsWod;
+        });
 
-    return myStakes;
+      return myStakes;
     } else return [];
   };
 
@@ -5963,18 +5963,18 @@ function Dashboard({
       window.WOD_CAWS_ABI,
       window.config.wod_caws_address
     );
-    let web3 = new Web3(window.ethereum); 
+    let web3 = new Web3(window.ethereum);
     if (address && web3.utils.isAddress(address)) {
-    let myStakes = await staking_contract.methods
-      .depositsOfWoD(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft_cawsWod.push(parseInt(result[i]));
-        return stakenft_cawsWod;
-      });
+      let myStakes = await staking_contract.methods
+        .depositsOfWoD(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft_cawsWod.push(parseInt(result[i]));
+          return stakenft_cawsWod;
+        });
 
-    return myStakes;
+      return myStakes;
     } else return [];
   };
 
@@ -5985,18 +5985,18 @@ function Dashboard({
     );
 
     let stakenft = [];
-    let web3 = new Web3(window.ethereum); 
+    let web3 = new Web3(window.ethereum);
     if (address && web3.utils.isAddress(address)) {
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
 
-    return myStakes;
+      return myStakes;
     } else return [];
   };
 
@@ -6007,18 +6007,18 @@ function Dashboard({
     );
 
     let stakenft = [];
-    let web3 = new Web3(window.ethereum); 
+    let web3 = new Web3(window.ethereum);
     if (address && web3.utils.isAddress(address)) {
-    let myStakes = await staking_contract.methods
-      .depositsOf(address)
-      .call()
-      .then((result) => {
-        for (let i = 0; i < result.length; i++)
-          stakenft.push(parseInt(result[i]));
-        return stakenft;
-      });
+      let myStakes = await staking_contract.methods
+        .depositsOf(address)
+        .call()
+        .then((result) => {
+          for (let i = 0; i < result.length; i++)
+            stakenft.push(parseInt(result[i]));
+          return stakenft;
+        });
 
-    return myStakes;
+      return myStakes;
     } else return [];
   };
 
@@ -7237,7 +7237,12 @@ function Dashboard({
   };
 
   const handleShowSyncModal = () => {
-    setshowSyncModal(true);
+    let web3 = new Web3(window.ethereum);
+    if (account !== undefined && web3.utils.isAddress(account)) {
+      setshowSyncModal(true);
+    } else {
+      window.alertify.error("Please switch to an EVM wallet.");
+    }
   };
 
   const handleSync = async () => {
