@@ -140,6 +140,10 @@ const WodPartners = ({ full }) => {
       icon: "kapgames.svg",
     },
     {
+      name: "Bitpanda",
+      icon: "bitpandaLogo.svg",
+    },
+    {
       name: "Castrum Capital",
       icon: "castrumLogo.png",
     },
