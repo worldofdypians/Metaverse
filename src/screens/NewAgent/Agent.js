@@ -3,6 +3,7 @@ import { Experience } from "./components/Experience";
 import { UI } from "../AIAgent/components/UI";
 import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
+import { Loader } from "@react-three/drei";
 
 const Agent = () => {
   const [playAudio, setPlayAudio] = useState(false);
@@ -10,6 +11,7 @@ const Agent = () => {
   const [toggle, setToggle] = useState(true);
   const [audioFile, setAudioFile] = useState(null);
   const [jsonFile, setJsonFile] = useState(null);
+  const [audio, setAudio] = useState(true)
 
   const windowSize = useWindowSize();
 
@@ -22,6 +24,7 @@ const Agent = () => {
 
   return (
     <>
+      <Loader />
       <div className="container-fluid d-flex justify-content-center">
         <div className="custom-container" style={{ marginTop: "100px" }}>
           <div className="row">
@@ -49,7 +52,7 @@ const Agent = () => {
             )}
             {toggle && windowSize.width > 786 && (
               <div className="col-12 col-lg-4">
-                <div className="canvas-wrapper">
+                <div className="canvas-wrapper position-relative">
                   <Canvas
                     shadows
                     camera={{ position: [0, 0, 8], fov: 42 }}

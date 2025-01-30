@@ -36,19 +36,22 @@
 }
 
 .system-message {
-  background: #03536e;
+  max-width: 100% !important;
 }
 
 .user-message {
-  background: #3e036e;
+  background: rgba(50,50,50,.85);
 }
 
 .message-text {
-  color: #fff;
+  color: #ececec !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 .Typewriter__wrapper{
-  color: #fff !important;
+  color: #ececec !important;
+  font-family: 'Inter', sans-serif !important;
+
 
   a{
     color: blue;

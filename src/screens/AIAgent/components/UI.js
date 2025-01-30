@@ -123,12 +123,16 @@ export const UI = ({ onPlay, toggle }) => {
           ref={speechBoxRef}
         >
           {messages.map((item, index) => (
-            <div
+          <div className="d-flex align-items-start gap-2">
+            {item.type === "system-message" &&
+            <img src={"https://cdn.worldofdypians.com/wod/orynIcon.png"} width={30} height={30} className="mt-1" alt="" />
+            }
+              <div
               className={`w-100 d-flex justify-content-${item.position}`}
               key={index}
             >
               <div
-                className={`message-item p-3  ${item.type}`}
+                className={`message-item p-2  ${item.type}`}
                 ref={typewriterRef}
               >
                 {/* <p className="message-text mb-0">{item.text}</p> */}
@@ -161,6 +165,7 @@ export const UI = ({ onPlay, toggle }) => {
                 )}
               </div>
             </div>
+          </div>
           ))}
           {loadingMessage && (
             <div
@@ -199,7 +204,7 @@ export const UI = ({ onPlay, toggle }) => {
               setTextMessage(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && textMessage !== "") {
                 sendMessage(textMessage);
               }
             }}
