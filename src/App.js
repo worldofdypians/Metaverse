@@ -3215,22 +3215,21 @@ function App() {
     const anyWindow = window;
     const provider = anyWindow.phantom?.solana;
     if (provider) {
-       
-        await provider
-          .connect({ onlyIfTrusted: true })
-          // .then((data) => {
-          //   if (data.publicKey) {
-          //     setCoinbase(data.publicKey.toString());
-          //   }
-          // })
-          .catch((e) => {
-            console.error(e);
-          });
+      await provider
+        .connect({ onlyIfTrusted: true })
+        // .then((data) => {
+        //   if (data.publicKey) {
+        //     setCoinbase(data.publicKey.toString());
+        //   }
+        // })
+        .catch((e) => {
+          console.error(e);
+        });
 
-          provider.on('connect', (publicKey) => {
-            setCoinbase(publicKey.toBase58())
-          });
-      
+      provider.on("connect", (publicKey) => {
+        setCoinbase(publicKey.toBase58());
+      });
+
       setIsConnected(provider.isConnected);
     }
   };
@@ -4593,7 +4592,14 @@ function App() {
       setIsPremium(false);
     }
   };
-
+  const handleSynchState = async () => {
+    let web3 = new Web3(window.ethereum);
+    if (account !== undefined && web3.utils.isAddress(account)) {
+      setshowSync(true);
+    } else {
+      window.alertify.error("Please switch to an EVM wallet.");
+    }
+  };
   const handleSwitchNetwork = async (chain) => {
     if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
       setChainId(chain);
@@ -5070,7 +5076,7 @@ function App() {
           username={data?.getPlayer?.displayName}
           loginListener={loginListener}
           onSyncClick={() => {
-            setshowSync(true);
+            handleSynchState();
           }}
         />
         <MobileNavbar
