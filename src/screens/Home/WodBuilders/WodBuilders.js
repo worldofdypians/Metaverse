@@ -234,6 +234,12 @@ const WodBuilders = ({ page }) => {
       backer: false,
     },
     {
+      name: "Bitpanda",
+      icon: "bitpandaLogo.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
       name: "Micro3",
       icon: "micro3",
       banner: "kucoinBanner.png",
