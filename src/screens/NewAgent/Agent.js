@@ -11,7 +11,7 @@ const Agent = () => {
   const [toggle, setToggle] = useState(true);
   const [audioFile, setAudioFile] = useState(null);
   const [jsonFile, setJsonFile] = useState(null);
-  const [audio, setAudio] = useState(true)
+  const [sound, setSound] = useState(true);
 
   const windowSize = useWindowSize();
 
@@ -53,6 +53,18 @@ const Agent = () => {
             {toggle && windowSize.width > 786 && (
               <div className="col-12 col-lg-4">
                 <div className="canvas-wrapper position-relative">
+                <button
+                  className={`${!sound ? "action-btn" : "red-btn"} sound-button-position`}
+                  onClick={() => setSound(!sound)}
+                >
+                  {sound ? 
+            <img src={"https://cdn.worldofdypians.com/wod/soundOff.svg"} width={24} height={24}  alt="" />
+                  
+                  : 
+            <img src={"https://cdn.worldofdypians.com/wod/soundOn.svg"} width={24} height={24}  alt="" />
+                  
+                  }
+                </button>
                   <Canvas
                     shadows
                     camera={{ position: [0, 0, 8], fov: 42 }}
