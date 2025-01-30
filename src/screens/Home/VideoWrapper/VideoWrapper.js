@@ -63,7 +63,7 @@ const VideoWrapper = ({
     {
       title: "Bitpanda",
       logo: "bitpandaLogo.svg",
-      link: "",
+      link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
     },
     {
       title: "PancakeSwap",

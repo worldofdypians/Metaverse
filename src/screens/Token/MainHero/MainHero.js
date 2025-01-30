@@ -21,7 +21,7 @@ const MainHero = ({ scrollInto }) => {
     {
       title: "Bitpanda",
       logo: "bitPandaExchange.png",
-      link: "",
+      link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
     },
     {
       title: "PancakeSwap",

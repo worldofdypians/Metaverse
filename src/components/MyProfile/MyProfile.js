@@ -617,7 +617,7 @@ const MyProfile = ({
                                     </h6>
                                   </a>
                                   <a
-                                    href=""
+                                    href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={() => {
