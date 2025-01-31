@@ -42,29 +42,49 @@ const Agent = () => {
             </div>
             {windowSize.width > 786 && (
               <div className="col-12 col-lg-6 d-flex align-items-end justify-content-end mb-3">
-                <button
+                {/* <button
                   className={`${!toggle ? "action-btn" : "red-btn"}`}
                   onClick={() => setToggle(!toggle)}
                 >
                   {toggle ? "Hide Oryn" : "Show Oryn"}
-                </button>
+                </button> */}
+               <div className="d-flex align-items-center gap-2">
+               <label class="switch">
+                <input type="checkbox" checked={toggle} onChange={() => setToggle(!toggle)} />
+                <span class="slider round"></span>
+              </label>
+              <h6 className="oryn-toggle mb-0 text-white" style={{width: "90px"}}>
+              {toggle ? "Hide Oryn" : "Show Oryn"}
+              </h6>
+               </div>
               </div>
+            
             )}
             {toggle && windowSize.width > 786 && (
               <div className="col-12 col-lg-4">
                 <div className="canvas-wrapper position-relative">
-                <button
-                  className={`${!sound ? "action-btn" : "red-btn"} sound-button-position`}
-                  onClick={() => setSound(!sound)}
-                >
-                  {sound ? 
-            <img src={"https://cdn.worldofdypians.com/wod/soundOff.svg"} width={24} height={24}  alt="" />
-                  
-                  : 
-            <img src={"https://cdn.worldofdypians.com/wod/soundOn.svg"} width={24} height={24}  alt="" />
-                  
-                  }
-                </button>
+                  <button
+                    className={`${
+                      !sound ? "action-btn" : "red-btn"
+                    } sound-button-position`}
+                    onClick={() => setSound(!sound)}
+                  >
+                    {sound ? (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/soundOff.svg"}
+                        width={24}
+                        height={24}
+                        alt=""
+                      />
+                    ) : (
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/soundOn.svg"}
+                        width={24}
+                        height={24}
+                        alt=""
+                      />
+                    )}
+                  </button>
                   <Canvas
                     shadows
                     camera={{ position: [0, 0, 8], fov: 42 }}

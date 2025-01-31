@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useChat } from "../hooks/useChat";
 import "../_aiagent.scss";
-import { TypeAnimation } from "react-type-animation";
 import axios from "axios";
-import Typist from "react-typist";
 import Typewriter from "typewriter-effect";
 
 export const UI = ({ onPlay, toggle }) => {
