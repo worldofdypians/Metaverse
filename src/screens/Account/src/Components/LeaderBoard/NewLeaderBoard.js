@@ -77,9 +77,7 @@ const NewLeaderBoard = ({
   availableTime,
   email,
   isPremium,
-  dailyplayerData,
-  weeklyplayerData,
-  monthlyplayerData,
+  dailyplayerData, 
   genesisData,
   allBnbData,
   allCoreData,
@@ -1255,11 +1253,7 @@ const NewLeaderBoard = ({
 
                                   {inactiveBoard === true &&
                                     ((dailyplayerData.length === 0 &&
-                                      optionText === "daily") ||
-                                      (weeklyplayerData.length === 0 &&
-                                        optionText === "weekly") ||
-                                      (monthlyplayerData.length === 0 &&
-                                        optionText === "monthly")) &&
+                                      optionText === "daily")  ) &&
                                     optionText !== "genesis" && (
                                       <CircularProgress
                                         size={20}
