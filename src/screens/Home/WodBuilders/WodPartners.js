@@ -256,6 +256,10 @@ const WodPartners = ({ full }) => {
       name: "Xterio",
       icon: "xterio.svg", 
     },
+    {
+      name: "Layer3",
+      icon: "layer3.svg", 
+    },
   ];
 
   const [slice, setSlice] = useState(14);

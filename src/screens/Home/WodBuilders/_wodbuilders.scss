@@ -96,11 +96,11 @@ white-space: nowrap;
 .new-builders-second-half {
   // width: 80%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   gap: 20px 16px;
   overflow-x: auto;
   @media screen and (max-width: 991px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(14, 1fr);
     gap: 10px;
     width: 100%;
   }
