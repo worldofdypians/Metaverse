@@ -227,6 +227,12 @@ const NewBuilders = () => {
       backer: false,
     },
     {
+      name: "Bitpanda",
+      icon: "bitpandaLogo.svg",
+      banner: "kucoinBanner.png",
+      backer: false,
+    },
+    {
       name: "Micro3",
       icon: "micro3.svg",
       banner: "kucoinBanner.png",

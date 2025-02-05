@@ -132,6 +132,8 @@ const MyProfile = ({
   userMatStars,
   userSeiStars,
   wodBalance,
+  onShowRankPopup,
+  onCloseRankPopup,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -616,7 +618,25 @@ const MyProfile = ({
                                       MEXC Global
                                     </h6>
                                   </a>
-
+                                  <a
+                                    href="https://www.bitpanda.com/en/prices/world-of-dypians-wod"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/bitpandaLogo.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
+                                      Bitpanda
+                                    </h6>
+                                  </a>
                                   <a
                                     href="https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc"
                                     target="_blank"
@@ -737,6 +757,7 @@ const MyProfile = ({
                   className="wallet-address-wrapper2 p-2 w-100"
                   onClick={() => {
                     setRankDropdown(true);
+                    onShowRankPopup();
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between">
@@ -802,11 +823,14 @@ const MyProfile = ({
                   <OutsideClickHandler
                     onOutsideClick={() => {
                       setRankDropdown(false);
+                      onCloseRankPopup();
                     }}
                   >
                     <RankSmallPopup
                       onClose={() => {
                         setRankDropdown(false);
+                      onCloseRankPopup();
+
                       }}
                       onPrimeClick={() => {
                         html.classList.remove("hidescroll");

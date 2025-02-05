@@ -1,11 +1,7 @@
 import React from "react";
 import "./_mainhero.scss";
- 
- 
 
 const MainHero = ({ scrollInto }) => {
-
-
   const exchanges = [
     {
       title: "Kucoin",
@@ -23,6 +19,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
+      title: "Bitpanda",
+      logo: "bitPandaExchange.png",
+      link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
+    },
+    {
       title: "PancakeSwap",
       logo: "pancakeswap.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
@@ -33,7 +34,6 @@ const MainHero = ({ scrollInto }) => {
       link: "https://short.trustwallet.com/app-download",
     },
   ];
-
 
   return (
     <div className="px-3 mainhero-wrapper2 px-lg-5 d-flex flex-column justify-content-center align-items-center">
@@ -71,7 +71,11 @@ const MainHero = ({ scrollInto }) => {
               </div>
             </div>
             <div className="col-12 col-lg-5 pe-0">
-              <img src={'https://cdn.worldofdypians.com/wod/newToken.svg'} className="w-100" alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/newToken.svg"}
+                className="w-100"
+                alt=""
+              />
             </div>
           </div>
           <div className="d-flex flex-column gap-3 mb-4">
@@ -85,10 +89,14 @@ const MainHero = ({ scrollInto }) => {
                   key={index}
                 >
                   <img
-                    src={(`https://cdn.worldofdypians.com/wod/${item.logo}`)}
+                    src={`https://cdn.worldofdypians.com/wod/${item.logo}`}
                     className="w-auto"
                     alt=""
-                    style={{height: item.logo === 'unknown.svg' ? '74px' : ''}}
+                    style={{
+                      height:
+                        item.logo === "bitPandaExchange.png" ? "32px" : "",
+                      scale: item.logo === "bitPandaExchange.png" ? "1.5" : "",
+                    }}
                   />
                 </a>
               ))}

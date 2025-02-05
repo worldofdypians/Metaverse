@@ -61,6 +61,11 @@ const VideoWrapper = ({
       link: "https://www.mexc.com/exchange/WOD_USDT",
     },
     {
+      title: "Bitpanda",
+      logo: "bitpandaLogo.svg",
+      link: "https://www.bitpanda.com/en/prices/world-of-dypians-wod",
+    },
+    {
       title: "PancakeSwap",
       logo: "pancakeSwapBuyWod.svg",
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
