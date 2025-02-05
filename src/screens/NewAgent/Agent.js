@@ -65,20 +65,20 @@ const Agent = () => {
                 <div className="canvas-wrapper position-relative">
                   <button
                     className={`${
-                      !sound ? "action-btn" : "red-btn"
+                      sound ? "action-btn" : "red-btn"
                     } sound-button-position`}
                     onClick={() => setSound(!sound)}
                   >
                     {sound ? (
                       <img
-                        src={"https://cdn.worldofdypians.com/wod/soundOff.svg"}
+                        src={"https://cdn.worldofdypians.com/wod/soundOn.svg"}
                         width={24}
                         height={24}
                         alt=""
                       />
                     ) : (
                       <img
-                        src={"https://cdn.worldofdypians.com/wod/soundOn.svg"}
+                        src={"https://cdn.worldofdypians.com/wod/soundOff.svg"}
                         width={24}
                         height={24}
                         alt=""
@@ -96,6 +96,7 @@ const Agent = () => {
                       count={count}
                       audioFile={audioFile}
                       jsonFile={jsonFile}
+                      sound={sound}
                     />
                   </Canvas>
                 </div>
