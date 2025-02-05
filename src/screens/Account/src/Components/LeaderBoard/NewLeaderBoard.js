@@ -77,7 +77,7 @@ const NewLeaderBoard = ({
   availableTime,
   email,
   isPremium,
-  dailyplayerData, 
+  dailyplayerData,
   genesisData,
   allBnbData,
   allCoreData,
@@ -90,6 +90,7 @@ const NewLeaderBoard = ({
   onPremiumClick,
   onGoldenpassClick,
   allSeiData,
+  onFetchRecords,
 }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [updateCount, setUpdateCount] = useState(0);
@@ -116,28 +117,59 @@ const NewLeaderBoard = ({
 
   const handleOption = (item) => {
     setOptionText2(item);
+    onFetchRecords(item);
   };
 
   useEffect(() => {
     handleOption(optionText2);
-  }, [inactiveBoard]);
-
+  }, [optionText2]);
   useEffect(() => {
-    if (allBnbData && allBnbData.length > 0) {
-      setOptionText2("bnb");
+    if (allBnbData && allBnbData.length > 0 && optionText2 === "bnb") {
       setAllData(allBnbData);
     }
-  }, [allBnbData]);
+    if (allBaseData && allBaseData.length > 0 && optionText2 === "base") {
+      setAllData(allBaseData);
+    }
+    if (allCoreData && allCoreData.length > 0 && optionText2 === "core") {
+      setAllData(allCoreData);
+    }
+    if (allMantaData && allMantaData.length > 0 && optionText2 === "manta") {
+      setAllData(allMantaData);
+    }
+    if (allMatData && allMatData.length > 0 && optionText2 === "matchain") {
+      setAllData(allMatData);
+    }
+    if (allSeiData && allSeiData.length > 0 && optionText2 === "sei") {
+      setAllData(allSeiData);
+    }
+    if (allSkaleData && allSkaleData.length > 0 && optionText2 === "skale") {
+      setAllData(allSkaleData);
+    }
+    if (allTaikoData && allTaikoData.length > 0 && optionText2 === "taiko") {
+      setAllData(allTaikoData);
+    }
+    if (
+      allVictionData &&
+      allVictionData.length > 0 &&
+      optionText2 === "viction"
+    ) {
+      setAllData(allVictionData);
+    }
+  }, [
+    allBnbData,
+    allBaseData,
+    allCoreData,
+    allMantaData,
+    allMatData,
+    allSeiData,
+    allSkaleData,
+    allTaikoData,
+    allVictionData,
+  ]);
 
   // useEffect(() => {
-  //   if (countdown === null || countdown === undefined || countdown === "0") {
-  //     setisActive(false);
-  //   } else setisActive(true);
-  // }, [countdown]);
-
-  useEffect(() => {
-    setAllData(allBnbData);
-  }, []);
+  //   setAllData(allBnbData);
+  // }, []);
 
   return (
     <>
@@ -646,22 +678,15 @@ const NewLeaderBoard = ({
                     Top 100
                   </span>
                 </div>
-                {/* {optionText2 !==  "taiko" ? (
-                <></>
-              ) : (
-                <div className="coming-soon-position d-flex align-items-center justify-content-center">
-                  <h6 className="mb-0">Coming Soon</h6>
-                </div>
-              )} */}
                 {optionText !== "genesis" ? (
                   <div className="position-relative">
-                    {/* {optionText2 === "sei" ? (
-                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
-                        <h6 className="mb-0">Coming Soon</h6>
-                      </div>
-                    ) : (
+                    {allData[0]?.loading === false ? (
                       <></>
-                    )} */}
+                    ) : (
+                      <div className="coming-soon-position d-flex align-items-center justify-content-center">
+                        <CircularProgress size={20} />
+                      </div>
+                    )}
                     {/* <img
                       src={leftArrow}
                       onClick={prevSlide}
@@ -687,7 +712,9 @@ const NewLeaderBoard = ({
                         return (
                           <div
                             key={index}
-                            className={` leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
+                            className={`${
+                              leaderboard.loading === true && "comingsoon-new"
+                            } leaderboard-item2 monthly-skale d-flex flex-column gap-0 p-0`}
                           >
                             {/* <div className="d-flex w-100 justify-content-center position-relative leaderboard-title-wrapper p-2">
                               <h6 className="leaderboard-title  text-white font-oxanium mb-0">
@@ -1252,8 +1279,8 @@ const NewLeaderBoard = ({
                                     )}
 
                                   {inactiveBoard === true &&
-                                    ((dailyplayerData.length === 0 &&
-                                      optionText === "daily")  ) &&
+                                    dailyplayerData.length === 0 &&
+                                    optionText === "daily" &&
                                     optionText !== "genesis" && (
                                       <CircularProgress
                                         size={20}

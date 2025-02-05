@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
- 
+
 import getFormattedNumber from "../../screens/Caws/functions/get-formatted-number";
 import Switch from "@mui/material/Switch";
 import "./_leaderboard.scss";
 import OutsideClickHandler from "react-outside-click-handler";
 import { NavLink, useLocation } from "react-router-dom";
 import { Tooltip, styled, tooltipClasses } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 const renderer = ({ hours, minutes, seconds }) => {
   return (
@@ -45,55 +46,16 @@ const GlobalLeaderboard = ({
   screen,
   allStarData,
   availableTime,
-  monthlyPlayers,
-  percent,
   leaderboardBtn,
 }) => {
   const [tooltip, setTooltip] = useState(false);
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
-  const dummyPrizes = [
-    "200",
-    "100",
-    "60",
-    "30",
-    "20",
-    "20",
-    "20",
-    "20",
-    "20",
-    "20",
-  ];
-  const goldenRewards = [
-    "400",
-    "200",
-    "140",
-    "70",
-    "30",
-    "30",
-    "30",
-    "30",
-    "30",
-    "30",
-  ];
-
-  const location = useLocation();
-
   const [optionText2, setOptionText2] = useState("bnb");
   const [inactiveBoard, setInactiveBoard] = useState(false);
-  // const [genesisData, setgenesisData] = useState([]);
-  // const [previousgenesisData, setpreviousgenesisData] = useState([]);
+
   const [isactive, setisActive] = useState(false);
-  const [countdown, setcountdown] = useState();
-  // const [previousGenesisVersion, setpreviousGenesisVersion] = useState(0);
-
-  const backendApi =
-    "https://axf717szte.execute-api.eu-central-1.amazonaws.com/prod";
-
-  // useEffect(() => {
-  //   handleOption(optionText);
-  // }, [inactiveBoard]);
 
   useEffect(() => {
     if (
@@ -114,73 +76,11 @@ const GlobalLeaderboard = ({
       className={`d-flex flex-column gap-3 leaderboard-wrapper ${
         screen === "dash" && "global-leaderboard-wrapper"
       } mt-4 position-relative`}
-      style={
-        {
-          // alignSelf: !location.pathname.includes("account") && "baseline",
-          // minWidth: !location.pathname.includes("account") && "92%",
-          // maxWidth: !location.pathname.includes("account") && "92%",
-        }
-      }
     >
-      {/* {!location.pathname.includes("account") && (
-        <div className="nft-hover d">
-          <div className="d-flex flex-column align-items-center gap-2">
-            <div className="nft-hover-wrapper d-flex flex-column align-items-center">
-              <div className="d-flex align-items-center nft-badges-wrapper gap-4 gap-lg-0">
-                <a
-                  href="https://opensea.io/collection/catsandwatchessocietycaws"
-                  target="_blank"
-                >
-                  <img src={cawsBadge} alt="" className="opensea-badge" />
-                </a>
-                <a
-                  href="https://opensea.io/collection/worldofdypians"
-                  target="_blank"
-                >
-                  <img src={genesisBadge} alt="" className="opensea-badge" />
-                </a>
-              </div>
-              <span
-                className="nft-hover-desc"
-                style={{ position: "relative", top: "-22px" }}
-              >
-                CAWS and WOD owners are granted VIP access and also benefit from
-                appealing rewards.
-              </span>
-            </div>
-            <a
-              href="https://dappradar.com/dapp/world-of-dypians?range-ds=30d"
-              target={"_blank"}
-              rel="noreferrer"
-              className="w-100 global-total-wrapper p-3"
-            >
-              <div className="d-flex flex-column align-items-center justify-content-center">
-                <div className="position-relative d-flex align-items-center gap-1">
-                  <h6 className="global-total-players mb-0">
-                    {getFormattedNumber(monthlyPlayers, 0)}
-                  </h6>
-                  <span
-                    className="monthly-players-percent"
-                    style={{ right: "-35px", top: "-35px" }}
-                  >
-                    <img
-                      src={dappradar}
-                      alt=""
-                      style={{ width: 18, height: 18 }}
-                    />
-                  </span>
-                </div>
-                <span className="global-total-span">
-                  Monthly On-chain Players
-                </span>
-              </div>
-            </a>
-          </div>
-        </div>
-      )} */}
- 
       <div
-        className="leaderboard-item d-flex flex-column  w-100 p-0"
+        className={`${
+          allStarData.loading === true && "comingsoon-new"
+        } leaderboard-item d-flex flex-column  w-100 p-0`}
         style={{ background: "none" }}
       >
         <div className="global-leaderboard-banner d-flex align-items-center justify-content-between w-100 p-3 gap-3 position-relative">
@@ -250,11 +150,18 @@ const GlobalLeaderboard = ({
           )}
 
           <img
-            src={'https://cdn.worldofdypians.com/wod/globalIcon.png'}
+            src={"https://cdn.worldofdypians.com/wod/globalIcon.png"}
             alt=""
             className={screen === "dash" && "invisible"}
           />
         </div>
+        {allStarData?.loading === false || allStarData?.loading === undefined ? (
+          <></>
+        ) : (
+          <div className="coming-soon-position d-flex align-items-center justify-content-center">
+            <CircularProgress size={20} />
+          </div>
+        )}
         <div className={`table-outer-margin p-0`}>
           <table className="playerTable w-100" style={{ position: "relative" }}>
             <tbody>
@@ -316,14 +223,14 @@ const GlobalLeaderboard = ({
                                     index + 1
                                   }.png`
                                 : index + 1 >= 11 && index + 1 <= 20
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                 : index + 1 >= 21 && index + 1 <= 30
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                 : index + 1 >= 31 && index + 1 <= 70
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                 : index + 1 >= 71 && index + 1 <= 100
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
-                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
+                                : "https://cdn.worldofdypians.com/wod/userAvatar2.png"
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -341,7 +248,8 @@ const GlobalLeaderboard = ({
                             src={
                               "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
-                            width={20} height={20}
+                            width={20}
+                            height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -443,10 +351,10 @@ const GlobalLeaderboard = ({
                           <img
                             src={
                               index + 1 <= 10
-                                ?`https://cdn.worldofdypians.com/wod/globalRank${
+                                ? `https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
                                   }.png`
-                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
+                                : "https://cdn.worldofdypians.com/wod/userAvatar2.png"
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -464,7 +372,8 @@ const GlobalLeaderboard = ({
                             src={
                               "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
-                            width={20} height={20}
+                            width={20}
+                            height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -528,14 +437,14 @@ const GlobalLeaderboard = ({
                                     index + 1
                                   }.png`
                                 : index + 1 >= 11 && index + 1 <= 20
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar1.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar1.png"
                                 : index + 1 >= 21 && index + 1 <= 30
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar2.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar2.png"
                                 : index + 1 >= 31 && index + 1 <= 70
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar3.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar3.png"
                                 : index + 1 >= 71 && index + 1 <= 100
-                                ? 'https://cdn.worldofdypians.com/wod/playerAvatar4.png'
-                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
+                                ? "https://cdn.worldofdypians.com/wod/playerAvatar4.png"
+                                : "https://cdn.worldofdypians.com/wod/userAvatar2.png"
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -553,7 +462,8 @@ const GlobalLeaderboard = ({
                             src={
                               "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
-                            width={20} height={20}
+                            width={20}
+                            height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -662,7 +572,7 @@ const GlobalLeaderboard = ({
                                 ? `https://cdn.worldofdypians.com/wod/globalRank${
                                     index + 1
                                   }.png`
-                                : 'https://cdn.worldofdypians.com/wod/userAvatar2.png'
+                                : "https://cdn.worldofdypians.com/wod/userAvatar2.png"
                             }
                             alt=""
                             className="playerAvatar me-2"
@@ -680,7 +590,8 @@ const GlobalLeaderboard = ({
                             src={
                               "https://cdn.worldofdypians.com/wod/lbStar.png"
                             }
-                            width={20} height={20}
+                            width={20}
+                            height={20}
                             alt=""
                           />
                           {getFormattedNumber(item.statValue, 0)}
@@ -740,7 +651,9 @@ const GlobalLeaderboard = ({
                 <div className="playerName d-flex align-items-center font-montserrat gap-2">
                   {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
-                    src={'https://cdn.worldofdypians.com/wod/inactiveUserPfp.png'}
+                    src={
+                      "https://cdn.worldofdypians.com/wod/inactiveUserPfp.png"
+                    }
                     alt=""
                     className="playerAvatar me-2"
                   />
@@ -759,10 +672,9 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/lbStar.png"
-                      }
-                      width={20} height={20}
+                      src={"https://cdn.worldofdypians.com/wod/lbStar.png"}
+                      width={20}
+                      height={20}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />
@@ -788,7 +700,9 @@ const GlobalLeaderboard = ({
                 <div className="playerName d-flex align-items-center font-montserrat gap-2">
                   {item.statValue > 0 && <span> #{item.position + 1}</span>}
                   <img
-                    src={'https://cdn.worldofdypians.com/wod/inactiveUserPfp.png'}
+                    src={
+                      "https://cdn.worldofdypians.com/wod/inactiveUserPfp.png"
+                    }
                     alt=""
                     className="playerAvatar me-2"
                   />
@@ -807,10 +721,9 @@ const GlobalLeaderboard = ({
                     style={{ fontSize: 20 }}
                   >
                     <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/lbStar.png"
-                      }
-                      width={20} height={20}
+                      src={"https://cdn.worldofdypians.com/wod/lbStar.png"}
+                      width={20}
+                      height={20}
                       alt=""
                       style={{ width: 30, height: 30 }}
                     />
@@ -890,7 +803,12 @@ const GlobalLeaderboard = ({
                 alt=""
               />
             </div>
-            <img src={'https://cdn.worldofdypians.com/wod/yellowArrow.svg'} width={20} height={20} alt="" />
+            <img
+              src={"https://cdn.worldofdypians.com/wod/yellowArrow.svg"}
+              width={20}
+              height={20}
+              alt=""
+            />
           </div>
         </NavLink>
       )}
