@@ -132,6 +132,8 @@ const MyProfile = ({
   userMatStars,
   userSeiStars,
   wodBalance,
+  onShowRankPopup,
+  onCloseRankPopup,
 }) => {
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
@@ -755,6 +757,7 @@ const MyProfile = ({
                   className="wallet-address-wrapper2 p-2 w-100"
                   onClick={() => {
                     setRankDropdown(true);
+                    onShowRankPopup();
                   }}
                 >
                   <div className="d-flex align-items-center justify-content-between">
@@ -820,11 +823,14 @@ const MyProfile = ({
                   <OutsideClickHandler
                     onOutsideClick={() => {
                       setRankDropdown(false);
+                      onCloseRankPopup();
                     }}
                   >
                     <RankSmallPopup
                       onClose={() => {
                         setRankDropdown(false);
+                      onCloseRankPopup();
+
                       }}
                       onPrimeClick={() => {
                         html.classList.remove("hidescroll");
