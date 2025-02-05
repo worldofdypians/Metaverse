@@ -5,7 +5,7 @@ import { useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import { Loader } from "@react-three/drei";
 
-const Agent = () => {
+const Agent = ({email}) => {
   const [playAudio, setPlayAudio] = useState(false);
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(true);
@@ -103,7 +103,7 @@ const Agent = () => {
               </div>
             )}
             <div className={`col-12 ${toggle ? "col-lg-8" : "col-lg-12"}`}>
-              <UI onPlay={handlePlayMessage} toggle={toggle} />
+              <UI onPlay={handlePlayMessage} toggle={toggle} email={email} />
             </div>
           </div>
         </div>

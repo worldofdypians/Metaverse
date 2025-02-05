@@ -62,7 +62,7 @@ export function TestModel({
   talk[0].name = "talk";
   walksayHi[0].name = "walksayHi";
 
-  const [animation, setAnimation] = useState("idle2");
+  const [animation, setAnimation] = useState("idle3");
   const group = useRef();
   const headFollow = true;
   const smoothMorphTarget = true;
@@ -89,7 +89,7 @@ export function TestModel({
     // ] = 1;
     if (playAudio) {
       audio.play();
-      setAnimation("hi1");
+      setAnimation("talk");
     } else {
       setAnimation("idle3");
       audio.pause();

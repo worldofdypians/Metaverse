@@ -56,6 +56,8 @@ export const UI = ({ onPlay, toggle, email }) => {
 
   const sendMessage = async (val) => {
     setDefaultToggle(false);
+    console.log(email, "email");
+    
     setMessages((prevMessages) => [
       ...prevMessages,
       {

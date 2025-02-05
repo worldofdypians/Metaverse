@@ -20,7 +20,7 @@ export const Experience = ({
       {/* <OrbitControls /> */}
       {/* <Avatar position={[0, -2.7, 5]} scale={2} count={count} playAudio={playAudio} setPlayAudio={setPlayAudio} audioFile={audioFile} jsonDoc={jsonFile} /> */}
       <TestModel
-        position={[0, -2, 3]}
+        position={[0, -2.5, 4.5]}
         scale={2}
         count={count}
         playAudio={playAudio}
