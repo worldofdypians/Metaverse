@@ -336,7 +336,7 @@ const MyRewardsPopupNew = ({
     if (result && result.status === 200) {
       const leaderboard_earnings = result.data.userRewards;
       localStorage.setItem("cachedLeaderboardearnings", leaderboard_earnings);
-      setleaderboardTotalData(leaderboard_earnings);
+      setleaderboardTotalData(leaderboard_earnings ?? 0);
     } else {
       localStorage.setItem("cachedLeaderboardearnings", 0);
     }
@@ -597,7 +597,7 @@ const MyRewardsPopupNew = ({
 
       setGemRewards(Number(cachedGem_Rewards));
 
-      setleaderboardTotalData(Number(cachedLeaderboardearnings));
+      setleaderboardTotalData(Number(cachedLeaderboardearnings) ?? 0);
 
       setcoingeckoRewardsUSD(cachedCoingeckoRewards);
 

@@ -4347,17 +4347,17 @@ function Dashboard({
         fetchDailyRecordsSkale();
       }
     } else if (chain === "all") {
-      fetchDailyRecords();
-      fetchDailyRecordsViction();
-      fetchDailyRecordsCore();
-      fetchDailyRecordsBase();
-      fetchDailyRecordsManta();
-      fetchDailyRecordsSkale();
-      fetchDailyRecordsSei();
-      fetchDailyRecordsMat();
-      fetchDailyRecordsTaiko();
-      fetchRecordsStar();
-      fetchRecordsStarWeekly();
+      fetchDailyRecordsAroundPlayer([]);
+      fetchDailyRecordsAroundPlayerTaiko([]);
+      fetchDailyRecordsAroundPlayerMat([]);
+      fetchDailyRecordsAroundPlayerSei([]);
+      fetchDailyRecordsAroundPlayerManta([]);
+      fetchDailyRecordsAroundPlayerBase([]);
+      fetchDailyRecordsAroundPlayerCore([]);
+      fetchDailyRecordsAroundPlayerViction([]);
+      fetchDailyRecordsAroundPlayerSkale([]);
+      fetchDailyRecordsAroundPlayerStar([]);
+      fetchWeeklyRecordsAroundPlayerStar([]);
     }
   };
 
@@ -8481,7 +8481,7 @@ function Dashboard({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
-
+     
     window.scrollTo(0, 0);
     // if (username !== undefined && userId !== undefined) {
 
@@ -8850,6 +8850,7 @@ function Dashboard({
   useEffect(() => {
     if (userId && email && username) {
       fetchGenesisAroundPlayer(userId, username);
+      fetchDailyRecordsAroundPlayerStar([])
     }
   }, [userId, username, email]);
 
