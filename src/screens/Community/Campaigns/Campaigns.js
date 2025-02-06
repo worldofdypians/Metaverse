@@ -9,11 +9,54 @@ const Campaigns = () => {
 
   const dummyData = [
     {
+      title: "BNB Chain Red Envelope Carnival!",
+      status: "Expired",
+      start_date: "January 27, 2025",
+      end_date: "February 3, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wodredEnvelope.jpg",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
+      title: "KuCoin WOD GemSlot Campaign",
+      status: "Expired",
+      start_date: "January 08, 2025",
+      end_date: "January 22, 2025",
+      image:
+        "https://cdn.worldofdypians.com/wod/kucoin-gemslot-campaign.png",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
+      title: "PancakeSwap Trading Competition",
+      status: "Expired",
+      start_date: "January 02, 2025",
+      end_date: "January 21, 2025",
+      image:
+        "https://cdn.worldofdypians.com/wod/pancakeswap-trading-competition.png",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
       title: "Winter Wonderland Challenge",
       status: "Expired",
       start_date: "December 09, 2024",
       end_date: "December 23, 2024",
       image: "https://cdn.worldofdypians.com/wod/winterChallenge2.webp",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
+      title: "Trust Wallet WOD Swap Competition",
+      status: "Expired",
+      start_date: "December 06, 2024",
+      end_date: "December 13, 2024",
+      image:
+        "https://cdn.worldofdypians.com/wod/trust-wallet-swap-campaign.jpg",
+      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+    },
+    {
+      title: "WOD on Trust Wallet Launchpool",
+      status: "Expired",
+      start_date: "November 27, 2024",
+      end_date: "December 04, 2024",
+      image: "https://cdn.worldofdypians.com/wod/trust-launchpool.jpg",
       link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
     },
     {
@@ -68,7 +111,7 @@ const Campaigns = () => {
 
   const dummyBanner = {
     title: "World of Dypians x Binance Wallet",
-    status: "Live",
+    status: "Expired",
     start_date: "Jan 23, 2025",
     end_date: "Feb 06, 2025",
     image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
@@ -78,54 +121,6 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
    `,
     link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
   };
-
-  const dummyItems = [
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Live",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Coming Soon",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-    {
-      title: "Entry Campaign",
-      date: "February 27, 2024 - March 26, 2024",
-      status: "Expired",
-    },
-  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
