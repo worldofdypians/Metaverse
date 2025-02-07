@@ -60,6 +60,14 @@ const renderer4 = ({ hours, minutes, seconds }) => {
   );
 };
 
+const rendererdb = ({ hours, minutes, seconds }) => {
+  return (
+    <span className="beast-siege-timer-db">
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+    </span>
+  );
+};
+
 const MyProfile = ({
   greatCollectionData,
   explorerHuntData,
@@ -247,7 +255,7 @@ const MyProfile = ({
   ];
 
   let now = new Date().getTime();
-  const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
+  const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
 
   const [showBuyTooltip, setshowBuyTooltip] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -829,8 +837,7 @@ const MyProfile = ({
                     <RankSmallPopup
                       onClose={() => {
                         setRankDropdown(false);
-                      onCloseRankPopup();
-
+                        onCloseRankPopup();
                       }}
                       onPrimeClick={() => {
                         html.classList.remove("hidescroll");
@@ -1153,24 +1160,22 @@ const MyProfile = ({
                     className={`${"daily-rewards-img"}`}
                     alt=""
                   />
-                  <div className="progress-bar-group d-flex flex-column align-items-start">
+                  {/* <div className="progress-bar-group d-flex flex-column align-items-start">
                     {!finished && (
                       <span className="progress-bar-title">Progress</span>
                     )}
 
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
-                        {/* {claimedPremiumChests}/10 */}
                         {parseInt(chestPercentage)}%
                       </span>
                       <div
                         className="yellow-progress-inner"
                         style={{ width: `${chestPercentage}%` }}
-                        // style={{ width: `35%` }}
                       ></div>
                     </div>
-                  </div>
-                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                  </div> */}
+                  <div className="d-flex flex-column justify-content-between h-100 p-3 profile-banner-class-thing overflow-auto">
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
@@ -1185,8 +1190,18 @@ const MyProfile = ({
                         </h6>
                       </div>
                     </div>
-
-                    <div
+                    <>
+                      <div className="ready-circle-2-position ps-3 d-flex flex-column gap-1 align-items-start justify-content-center">
+                        <div className="ready-circle-2-db d-flex flex-column gap-1">
+                          <Countdown renderer={rendererdb} date={midnight} />
+                        </div>
+                        <span className="new-time-remaining">Reset Time</span>
+                      </div>
+                      {/* <div className="d-flex d-lg-none">
+                        <Countdown renderer={rendererdb} date={midnight} />
+                      </div> */}
+                    </>
+                    {/* <div
                       className="d-flex flex-column align-items-center"
                       style={{ width: "fit-content" }}
                     >
@@ -1218,7 +1233,7 @@ const MyProfile = ({
                         </span>
                       )}
                     </div>
-                    <div></div>
+                    <div></div> */}
                   </div>
                 </div>
               </div>
