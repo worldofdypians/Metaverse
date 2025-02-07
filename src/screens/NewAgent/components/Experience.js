@@ -4,6 +4,7 @@ import { Avatar } from "./Avatar";
 import { useState } from "react";
 import { Model } from "../../../components/Avatar";
 import { TestModel } from "../../../components/Avatar2";
+import { Model3 } from "../../../components/Avatar3";
 
 export const Experience = ({
   playAudio,
@@ -19,7 +20,7 @@ export const Experience = ({
     <>
       {/* <OrbitControls /> */}
       {/* <Avatar position={[0, -2.7, 5]} scale={2} count={count} playAudio={playAudio} setPlayAudio={setPlayAudio} audioFile={audioFile} jsonDoc={jsonFile} /> */}
-      <TestModel
+      <Model3
         position={[0, -2.5, 4.5]}
         scale={2}
         count={count}

@@ -90,6 +90,7 @@ import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
 import AiAgent from "./screens/AIAgent/AIAgent.js";
 import Agent from "./screens/NewAgent/Agent.js";
+import OrynFly from "./components/OrynFly/OrynFly.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -4946,6 +4947,9 @@ function App() {
           location.pathname.includes("map") && "px-0"
         } main-wrapper2 px-0 position-relative`}
       >
+       {!location.pathname.includes("ai-agent") &&
+       <OrynFly />
+       }
         <Header
           authToken={authToken}
           handleSignUp={handleShowWalletModal}

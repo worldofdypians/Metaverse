@@ -36,15 +36,22 @@ export const UI = ({ onPlay, toggle, email }) => {
       `<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>`
     );
 
-    // Convert plain URLs to clickable links (only if they are NOT already inside an <a> tag)
+    // Convert plain URLs to clickable links (removing trailing dots)
     text = text.replace(
-      /(?<!href=")(https?:\/\/[^\s<]+)/g,
-      `<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>`
+      /(?<!href=")(https?:\/\/[^\s<]+)\.?/g, // Matches links with possible trailing dot
+      (match, url) => {
+        return `<a href="${url.replace(
+          /\.+$/,
+          ""
+        )}" target="_blank" rel="noopener noreferrer">${url.replace(
+          /\.+$/,
+          ""
+        )}</a>`;
+      }
     );
 
     return text;
   };
-
   const speechBoxRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -57,7 +64,7 @@ export const UI = ({ onPlay, toggle, email }) => {
   const sendMessage = async (val) => {
     setDefaultToggle(false);
     console.log(email, "email");
-    
+
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -122,49 +129,55 @@ export const UI = ({ onPlay, toggle, email }) => {
           ref={speechBoxRef}
         >
           {messages.map((item, index) => (
-          <div className="d-flex align-items-start gap-2">
-            {item.type === "system-message" &&
-            <img src={"https://cdn.worldofdypians.com/wod/orynIcon.png"} width={30} height={30} className="mt-1" alt="" />
-            }
+            <div className="d-flex align-items-start gap-2">
+              {item.type === "system-message" && (
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/orynIcon.png"}
+                  width={30}
+                  height={30}
+                  className="mt-1"
+                  alt=""
+                />
+              )}
               <div
-              className={`w-100 d-flex justify-content-${item.position}`}
-              key={index}
-            >
-              <div
-                className={`message-item p-2  ${item.type}`}
-                ref={typewriterRef}
+                className={`w-100 d-flex justify-content-${item.position}`}
+                key={index}
               >
-                {/* <p className="message-text mb-0">{item.text}</p> */}
-                {item.type === "system-message" ? (
-                  <Typewriter
-                    className="message-text mb-0"
-                    options={{
-                      strings: formatText(item.text),
-                      autoStart: true,
-                      loop: false,
-                      delay: 10,
-                    }}
-                    onInit={(typewriter) => {
-                      setDisable(true);
-                      // const duration = item.text.length; // Estimated duration in m
-                      const interval = setInterval(() => {
-                        scrollToBottom();
-                      }, 100); // Run every 100ms (adjust as needed)
-                      typewriter
-                        .callFunction(() => {
-                          clearInterval(interval); // Stop after duration ends
-                          scrollToBottom(); // Scroll when done
-                          setDisable(false); // Enable input when typing ends
-                        })
-                        .start();
-                    }}
-                  />
-                ) : (
-                  <p className="message-text mb-0">{item.text}</p>
-                )}
+                <div
+                  className={`message-item p-2  ${item.type}`}
+                  ref={typewriterRef}
+                >
+                  {/* <p className="message-text mb-0">{item.text}</p> */}
+                  {item.type === "system-message" ? (
+                    <Typewriter
+                      className="message-text mb-0"
+                      options={{
+                        strings: formatText(item.text),
+                        autoStart: true,
+                        loop: false,
+                        delay: 10,
+                      }}
+                      onInit={(typewriter) => {
+                        setDisable(true);
+                        // const duration = item.text.length; // Estimated duration in m
+                        const interval = setInterval(() => {
+                          scrollToBottom();
+                        }, 100); // Run every 100ms (adjust as needed)
+                        typewriter
+                          .callFunction(() => {
+                            clearInterval(interval); // Stop after duration ends
+                            scrollToBottom(); // Scroll when done
+                            setDisable(false); // Enable input when typing ends
+                          })
+                          .start();
+                      }}
+                    />
+                  ) : (
+                    <p className="message-text mb-0">{item.text}</p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
           ))}
           {loadingMessage && (
             <div
@@ -210,11 +223,13 @@ export const UI = ({ onPlay, toggle, email }) => {
           />
           <button
             className="agent-button explore-btn d-flex align-items-center justify-content-center"
-            style={{ opacity: textMessage === "" || disable ? "0.7" : "1", pointerEvents: textMessage === "" || disable ? "none" : "auto" }}
+            style={{
+              opacity: textMessage === "" || disable ? "0.7" : "1",
+              pointerEvents: textMessage === "" || disable ? "none" : "auto",
+            }}
             onClick={() => {
               sendMessage(textMessage);
             }}
-            
             disabled={disable || textMessage === ""}
           >
             Enter
