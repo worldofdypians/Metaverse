@@ -367,6 +367,11 @@ const NewBuilders = () => {
       icon: "xterio.svg",
       backer: false,
     },
+    {
+      name: "Layer3",
+      icon: "layer3.svg",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
