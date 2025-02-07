@@ -1190,50 +1190,59 @@ const MyProfile = ({
                         </h6>
                       </div>
                     </div>
-                    <>
-                      <div className="ready-circle-2-position ps-3 d-flex flex-column gap-1 align-items-start justify-content-center">
-                        <div className="ready-circle-2-db d-flex flex-column gap-1">
-                          <Countdown renderer={rendererdb} date={midnight} />
-                        </div>
-                        <span className="new-time-remaining">Reset Time</span>
-                      </div>
-                      {/* <div className="d-flex d-lg-none">
-                        <Countdown renderer={rendererdb} date={midnight} />
-                      </div> */}
-                    </>
-                    {/* <div
-                      className="d-flex flex-column align-items-center"
-                      style={{ width: "fit-content" }}
-                    >
+                    <div className="d-flex pb-3 align-items-center gap-2">
                       <div
-                        className="position-relative"
-                        style={{
-                          width: "96px",
-                          height: "40px",
-                          right: "0px",
-                          bottom: "15px",
-                        }}
+                        className={`d-flex flex-column gap-1 infotips-holder`}
                       >
-                        <span className="ready-to-claim mb-0">
-                          {finished ? "Reset Time" : "Ready to Claim"}
-                        </span>
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/readyBorder2.svg"
-                          }
-                          alt=""
-                          className={`${
-                            finished ? "ready-border-2" : "ready-border"
-                          }`}
-                        />
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            180 Chests
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            10 Chains
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Up to $700
+                          </span>
+                        </div>
                       </div>
-                      {finished && (
-                        <span className="timer-text mb-0">
-                          <Countdown date={midnight} renderer={renderer2} />
-                        </span>
-                      )}
+                      <div>
+                        <div className="ready-circle-2-position d-flex flex-column gap-1 align-items-center justify-content-center">
+                          <div className="ready-circle-2-db d-flex flex-column gap-1">
+                            <Countdown renderer={rendererdb} date={midnight} />
+                          </div>
+                          <span className="new-time-remaining">Reset Time</span>
+                        </div>
+                      </div>
                     </div>
-                    <div></div> */}
                   </div>
                 </div>
               </div>
