@@ -156,14 +156,15 @@ const MyProfile = ({
   const utcMinutes = now2.getUTCMinutes();
   const isPastMidnightUTC = utcHours === 0 && utcMinutes >= 30;
 
- 
   let adjustedDay = isPastMidnightUTC
     ? utcDayIndex === 0
       ? 7
       : utcDayIndex
-    : utcDayIndex === 0
-    ? 7
-    : utcDayIndex-1;
+    : utcHours === 0
+    ? utcDayIndex === 0
+      ? 6
+      : utcDayIndex - 1
+    : utcDayIndex;
 
   const html = document.querySelector("html");
 
@@ -174,7 +175,7 @@ const MyProfile = ({
       html.classList.remove("hidescroll");
     }
   }, [rankDropdown]);
- 
+
   const dailyEvents = [
     {
       image: "https://cdn.worldofdypians.com/wod/stoneEyeProfile.png", // Sunday
@@ -1019,10 +1020,15 @@ const MyProfile = ({
                     </span>
                   </div>
                   <NavLink
-                    to={dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.link}
+                    to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.image} alt="" />
+                    <img
+                      src={
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.image
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {/* {userDailyBundles?.dragonRuinsCount
@@ -1030,14 +1036,19 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.active ? "1" : "Ready"}
+                        {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.active
+                          ? "1"
+                          : "Ready"}
                       </span>
                     </div>
 
                     <span className="bundle-title-bottom">
-                      {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.title === "BNB Chain Maze Day"
+                      {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                        ?.title === "BNB Chain Maze Day"
                         ? "Maze Day"
-                        : dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.title}
+                        : dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title}
                     </span>
                   </NavLink>
 
@@ -1560,11 +1571,13 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
-                  to={dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.link}
+                  to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
                 >
                   <div
-                    className={`${dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.class} profile-banner-class-thing position-relative p-3 d-flex`}
+                    className={`${
+                      dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.class
+                    } profile-banner-class-thing position-relative p-3 d-flex`}
                   >
                     <div
                       className=" d-flex flex-column justify-content-between gap-2 "
@@ -1573,9 +1586,16 @@ const MyProfile = ({
                       {/* <div className="d-flex flex-column gap-1" style={{zIndex: 1}}> */}
                       <span
                         className={`utcEventTitle`}
-                        style={{ color: dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.titleColor }}
+                        style={{
+                          color:
+                            dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                              ?.titleColor,
+                        }}
                       >
-                        {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.title}
+                        {
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title
+                        }
                       </span>
                       {/* <span
                           className={`utcEventContent`}
@@ -1585,8 +1605,8 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                      {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.title ===
-                      "BNB Chain Maze Day" ? (
+                      {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                        ?.title === "BNB Chain Maze Day" ? (
                         <>
                           <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
                             <div className="ready-circle-2 d-flex flex-column gap-1">
@@ -1602,7 +1622,8 @@ const MyProfile = ({
                         </>
                       ) : (
                         <>
-                          {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.active ? (
+                          {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.active ? (
                             //   <div className="d-flex flex-column gap-1">
                             //   <span className="beast-siege-ends-in">Available until:</span>
                             //   <Countdown renderer={renderer4} date={midnight} />
@@ -1640,42 +1661,51 @@ const MyProfile = ({
                       )}
                       <div
                         className={`d-flex flex-column gap-1 infotips-holder ${
-                          dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.title === "BNB Maze Day" &&
-                          "bnb-infotips-holder"
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title === "BNB Maze Day" && "bnb-infotips-holder"
                         }`}
                       >
-                        {dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.infoTips.map(
-                          (item, index) => (
-                            <div
-                              key={index}
-                              className="d-flex align-items-center gap-1"
+                        {dailyEvents[
+                          adjustedDay === 7 ? 0 : adjustedDay
+                        ]?.infoTips.map((item, index) => (
+                          <div
+                            key={index}
+                            className="d-flex align-items-center gap-1"
+                          >
+                            <div className="yellow-dot"></div>
+                            <span
+                              className="beast-siege-timer"
+                              style={{
+                                fontSize: "12px",
+                                fontWeight: 400,
+                                color: "#fff",
+                              }}
                             >
-                              <div className="yellow-dot"></div>
-                              <span
-                                className="beast-siege-timer"
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 400,
-                                  color: "#fff",
-                                }}
-                              >
-                                {item}
-                              </span>
-                            </div>
-                          )
-                        )}
+                              {item}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                       {/* </div> */}
                       <img
-                        src={dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.arrow}
+                        src={
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.arrow
+                        }
                         alt=""
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
                     <img
-                      src={dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.bannerImg}
+                      src={
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.bannerImg
+                      }
                       alt=""
-                      className={`eventbannerimg ${dailyEvents[adjustedDay === 7 ? 0 :adjustedDay]?.imageClass}`}
+                      className={`eventbannerimg ${
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.imageClass
+                      }`}
                     />
                   </div>
                 </NavLink>
