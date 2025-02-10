@@ -131,13 +131,16 @@ export const UI = ({ onPlay, toggle, email }) => {
           {messages.map((item, index) => (
             <div className="d-flex align-items-start gap-2">
               {item.type === "system-message" && (
+                <div className="oryn-icon-holder d-flex align-items-center justify-content-center">
+
                 <img
                   src={"https://cdn.worldofdypians.com/wod/orynIcon.png"}
-                  width={30}
-                  height={30}
+                  width={24}
+                  height={24}
                   className="mt-1"
                   alt=""
-                />
+                  />
+                  </div>
               )}
               <div
                 className={`w-100 d-flex justify-content-${item.position}`}

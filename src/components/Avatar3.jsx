@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useGraph } from "@react-three/fiber";
 import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export function Model3({
   position,
@@ -13,7 +13,7 @@ export function Model3({
   jsonDoc,
   sound,
 }) {
-  const { scene } = useGLTF("/models/avatarWEB2.glb");
+  const { scene } = useGLTF("/models/avatarWEB3.glb");
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
 
@@ -49,13 +49,11 @@ export function Model3({
   );
 
   // Modify materials for shine effect
-  materials.phongE1.emissive = new THREE.Color(0xFFD700);
-  materials.phongE1.emissiveIntensity = 0;
+  materials.glowBlue.emissive = new THREE.Color(0xffd700);
+  materials.glowBlue.emissiveIntensity = 0;
 
-  materials.Ga_Skin_Body1.emissive = new THREE.Color(0xFFD700);
+  materials.Ga_Skin_Body1.emissive = new THREE.Color(0xffd700);
   materials.Ga_Skin_Body1.emissiveIntensity = 0;
-
-  
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -63,23 +61,23 @@ export function Model3({
 
     if (audio.paused || audio.ended) {
       setAnimation("idle3");
-      materials.phongE1.emissiveIntensity = 0;
+      materials.glowBlue.emissiveIntensity = 0;
       materials.Ga_Skin_Body1.emissiveIntensity = 0;
     } else {
-      materials.phongE1.emissiveIntensity = intensity;
+      materials.glowBlue.emissiveIntensity = intensity;
       materials.Ga_Skin_Body1.emissiveIntensity = intensity;
     }
   });
 
   useEffect(() => {
-    if (playAudio) {
+    if (playAudio && sound) {
       audio.play();
       setAnimation("talk");
     } else {
       setAnimation("idle3");
       audio.pause();
     }
-  }, [playAudio, count]);
+  }, [playAudio, sound, count]);
 
   const { actions } = useAnimations(
     [
@@ -139,6 +137,11 @@ export function Model3({
         geometry={nodes.gloveR.geometry}
         material={materials.spymask1}
         skeleton={nodes.gloveR.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.glowBlue1.geometry}
+        material={materials.glowBlue}
+        skeleton={nodes.glowBlue1.skeleton}
       />
       <skinnedMesh
         geometry={nodes.Jacket.geometry}
@@ -204,4 +207,4 @@ export function Model3({
   );
 }
 
-useGLTF.preload("/models/avatarWEB2.glb");
+useGLTF.preload("/models/avatarWEB3.glb");

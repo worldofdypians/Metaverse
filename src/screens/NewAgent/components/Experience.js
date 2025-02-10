@@ -1,9 +1,5 @@
 import { Environment, OrbitControls, useTexture } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { Avatar } from "./Avatar";
-import { useState } from "react";
-import { Model } from "../../../components/Avatar";
-import { TestModel } from "../../../components/Avatar2";
 import { Model3 } from "../../../components/Avatar3";
 
 export const Experience = ({
@@ -14,12 +10,8 @@ export const Experience = ({
   sound,
   jsonFile,
 }) => {
-  const texture = useTexture("textures/youtubeBackground.jpg");
-  const viewport = useThree((state) => state.viewport);
   return (
     <>
-      {/* <OrbitControls /> */}
-      {/* <Avatar position={[0, -2.7, 5]} scale={2} count={count} playAudio={playAudio} setPlayAudio={setPlayAudio} audioFile={audioFile} jsonDoc={jsonFile} /> */}
       <Model3
         position={[0, -2.5, 4.5]}
         scale={2}
@@ -31,10 +23,6 @@ export const Experience = ({
         sound={sound}
       />
       <Environment preset="sunset" />
-      {/* <mesh>
-        <planeGeometry args={[viewport.width, viewport.height]} />
-        <meshBasicMaterial map={texture} />
-      </mesh> */}
     </>
   );
 };

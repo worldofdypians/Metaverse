@@ -54,7 +54,7 @@
 
 
   a{
-    color: blue;
+    color: #0ab5c9;
     text-decoration: underline;
   }
 }
@@ -151,4 +151,11 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.oryn-icon-holder{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #0ab5c9;
 }
