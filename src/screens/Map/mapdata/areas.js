@@ -4236,10 +4236,7 @@ const leaderboards = [
   },
 ];
 
-let midleLastDay = new Date("2024-09-10T13:00:00.000+02:00");
-let cookieLastDay = new Date("2024-10-01T14:00:00.000+02:00");
-let mantaLastDay = new Date("2024-11-18T14:00:00.000+02:00");
-let taikoLastDay = new Date("2024-11-17T14:00:00.000+02:00");
+
 
 // const dummyBetaPassData2 = [
 //   {
@@ -4818,7 +4815,7 @@ const challenges = [
       "Hold Genesis Land NFT to access the event.",
       "Earn 30,000-80,000 points by destroying the Gem",
       "Receive rewards ranging from $20 to $7,000 ",
-      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:30 UTC).",
     ],
     tips: [
       "Recommended Hero Level: Any",
@@ -4837,11 +4834,11 @@ const challenges = [
     popupImage: "https://cdn.worldofdypians.com/wod/dragonRuinsPopup.webp",
     day: 1,
     popupDesc:
-      "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
+      "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:30 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Mondays.",
-      "The Dragon must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Dragon must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 16,000 points and up to 200 stars.",
     ],
     tips: [
@@ -4863,11 +4860,11 @@ const challenges = [
     location: [-0.06136893052665028, 0.128016471862793],
     popupImage: "https://cdn.worldofdypians.com/wod/coldBitePopup.webp",
     popupDesc:
-      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+      "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:30 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Tuesdays.",
-      "The Polar Bear must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Polar Bear must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 30,000 points and up to 300 stars.",
     ],
     tips: [
@@ -4890,11 +4887,11 @@ const challenges = [
     popupImage: "https://cdn.worldofdypians.com/wod/furyBeastPopup.webp",
 
     popupDesc:
-      "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
+      "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:30 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Wednesdays.",
-      "The Gorilla must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Gorilla must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 60,000 points and up to 400 stars.",
     ],
     tips: [
@@ -4917,11 +4914,11 @@ const challenges = [
     popupImage: "https://cdn.worldofdypians.com/wod/wingStormPopup.webp",
 
     popupDesc:
-      "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
+      "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:30 UTC.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Thursdays.",
-      "The Eagle must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Eagle must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 70,000 points and up to 500 stars.",
     ],
     tips: [
@@ -4944,11 +4941,11 @@ const challenges = [
     day: 6,
 
     popupDesc:
-      "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
+      "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:30 UTC.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Saturdays.",
-      "The Scorpion must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Scorpion must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 120,000 points and up to 1,000 stars.",
     ],
     tips: [
@@ -4971,11 +4968,11 @@ const challenges = [
     popupImage: "https://cdn.worldofdypians.com/wod/stoneEyePopup.webp",
 
     popupDesc:
-      "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
+      "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:30 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
     workList: [
       "Purchase the bundle from the Challenge & Events.",
       "The event is available exclusively on Sundays.",
-      "The Cyclop must be defeated within the day, with the timer resetting at 00:00 UTC.",
+      "The Cyclop must be defeated within the day, with the timer resetting at 00:30 UTC.",
       "Rewards include 80,000 points and up to 600 stars.",
     ],
     tips: [
@@ -4997,7 +4994,7 @@ const challenges = [
     day: 5,
 
     popupDesc:
-      "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
+      "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:30 UTC.",
     workList: [
       "Hold at least 400 WOD tokens to participate.",
       "The event is available exclusively on Fridays.",
