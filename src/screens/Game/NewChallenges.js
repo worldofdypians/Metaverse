@@ -13,10 +13,23 @@ const NewChallenges = ({
 }) => {
   const [event, setEvent] = useState("beast");
   const [currentWeek, setCurrentWeek] = useState([]);
+  const now = new Date();
 
   const currentDate = new Date().getUTCDay();
-
-  const adjustedDay = currentDate === 0 ? 7 : currentDate;
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+  const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
+  function hasNoMoreThanTwoDecimalPlaces(num) {
+    // Check if the number has up to 2 decimal places
+    return Number.isInteger(num) || num.toFixed(2) == num.toString();
+  }
+  let adjustedDay = isAfterCutoff
+  ? currentDate === 0
+    ? 7
+    : currentDate
+  : currentDate === 0
+  ? 7
+  : currentDate;
 
   const getMonday = (date) => {
     const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6

@@ -146,9 +146,24 @@ const MyProfile = ({
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+  let now = new Date().getTime();
+  let now2 = new Date();
 
+  const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
   const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
+  const utcHours = now2.getUTCHours();
+  const utcMinutes = now2.getUTCMinutes();
+  const isPastMidnightUTC = utcHours === 0 && utcMinutes >= 30;
+
+ 
+  let adjustedDay = isPastMidnightUTC
+    ? utcDayIndex === 0
+      ? 7
+      : utcDayIndex
+    : utcDayIndex === 0
+    ? 7
+    : utcDayIndex;
 
   const html = document.querySelector("html");
 
@@ -159,7 +174,7 @@ const MyProfile = ({
       html.classList.remove("hidescroll");
     }
   }, [rankDropdown]);
-
+ 
   const dailyEvents = [
     {
       image: "https://cdn.worldofdypians.com/wod/stoneEyeProfile.png", // Sunday
@@ -253,9 +268,6 @@ const MyProfile = ({
       infoTips: ["120,000 points", "Up to 1000 stars."],
     },
   ];
-
-  let now = new Date().getTime();
-  const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
 
   const [showBuyTooltip, setshowBuyTooltip] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -1007,10 +1019,10 @@ const MyProfile = ({
                     </span>
                   </div>
                   <NavLink
-                    to={dailyEvents[utcDayIndex].link}
+                    to={dailyEvents[adjustedDay].link}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={dailyEvents[utcDayIndex].image} alt="" />
+                    <img src={dailyEvents[adjustedDay].image} alt="" />
                     <div className="daily-progress-value-golden">
                       <span>
                         {/* {userDailyBundles?.dragonRuinsCount
@@ -1018,14 +1030,14 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
+                        {dailyEvents[adjustedDay].active ? "1" : "Ready"}
                       </span>
                     </div>
 
                     <span className="bundle-title-bottom">
-                      {dailyEvents[utcDayIndex].title === "BNB Chain Maze Day"
+                      {dailyEvents[adjustedDay].title === "BNB Chain Maze Day"
                         ? "Maze Day"
-                        : dailyEvents[utcDayIndex].title}
+                        : dailyEvents[adjustedDay].title}
                     </span>
                   </NavLink>
 
@@ -1548,11 +1560,11 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
-                  to={dailyEvents[utcDayIndex].link}
+                  to={dailyEvents[adjustedDay].link}
                   onClick={onEventCardClick}
                 >
                   <div
-                    className={`${dailyEvents[utcDayIndex].class} profile-banner-class-thing position-relative p-3 d-flex`}
+                    className={`${dailyEvents[adjustedDay].class} profile-banner-class-thing position-relative p-3 d-flex`}
                   >
                     <div
                       className=" d-flex flex-column justify-content-between gap-2 "
@@ -1561,9 +1573,9 @@ const MyProfile = ({
                       {/* <div className="d-flex flex-column gap-1" style={{zIndex: 1}}> */}
                       <span
                         className={`utcEventTitle`}
-                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                        style={{ color: dailyEvents[adjustedDay].titleColor }}
                       >
-                        {dailyEvents[utcDayIndex].title}
+                        {dailyEvents[adjustedDay].title}
                       </span>
                       {/* <span
                           className={`utcEventContent`}
@@ -1573,7 +1585,7 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                      {dailyEvents[utcDayIndex].title ===
+                      {dailyEvents[adjustedDay].title ===
                       "BNB Chain Maze Day" ? (
                         <>
                           <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
@@ -1590,7 +1602,7 @@ const MyProfile = ({
                         </>
                       ) : (
                         <>
-                          {dailyEvents[utcDayIndex].active ? (
+                          {dailyEvents[adjustedDay].active ? (
                             //   <div className="d-flex flex-column gap-1">
                             //   <span className="beast-siege-ends-in">Available until:</span>
                             //   <Countdown renderer={renderer4} date={midnight} />
@@ -1628,11 +1640,11 @@ const MyProfile = ({
                       )}
                       <div
                         className={`d-flex flex-column gap-1 infotips-holder ${
-                          dailyEvents[utcDayIndex].title === "BNB Maze Day" &&
+                          dailyEvents[adjustedDay].title === "BNB Maze Day" &&
                           "bnb-infotips-holder"
                         }`}
                       >
-                        {dailyEvents[utcDayIndex].infoTips.map(
+                        {dailyEvents[adjustedDay].infoTips.map(
                           (item, index) => (
                             <div
                               key={index}
@@ -1655,15 +1667,15 @@ const MyProfile = ({
                       </div>
                       {/* </div> */}
                       <img
-                        src={dailyEvents[utcDayIndex].arrow}
+                        src={dailyEvents[adjustedDay].arrow}
                         alt=""
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
                     <img
-                      src={dailyEvents[utcDayIndex].bannerImg}
+                      src={dailyEvents[adjustedDay].bannerImg}
                       alt=""
-                      className={`eventbannerimg ${dailyEvents[utcDayIndex]?.imageClass}`}
+                      className={`eventbannerimg ${dailyEvents[adjustedDay]?.imageClass}`}
                     />
                   </div>
                 </NavLink>

@@ -80,7 +80,7 @@ const NewEvents = ({
   setPuzzleMadnessTimer,
   onConnectWallet,
   wodBalance,
-  genesisUsd
+  genesisUsd,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -147,9 +147,12 @@ const NewEvents = ({
   const [hasLand, setHasLand] = useState(false);
   const [page, setPage] = useState(1);
   const sliderRef = useRef();
+  const now = new Date();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
-
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+  const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
   function hasNoMoreThanTwoDecimalPlaces(num) {
     // Check if the number has up to 2 decimal places
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
@@ -158,11 +161,14 @@ const NewEvents = ({
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
 
-  const adjustedDay = currentDate === 0 ? 7 : currentDate;
-  // const isMonday = now.getDay() === 1;
-  const isMonday = true;
+  let adjustedDay = isAfterCutoff
+    ? utcDayIndex === 0
+      ? 7
+      : utcDayIndex
+    : utcDayIndex === 0
+    ? 7
+    : utcDayIndex;
 
-  const now = new Date();
   const midnightUTC = new Date(
     Date.UTC(
       now.getUTCFullYear(),
@@ -2028,24 +2034,24 @@ const NewEvents = ({
     setCurrentWeek(week);
     setActiveEvent(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) ?? eventinfos[0]
     );
     setActiveThumb(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) !== undefined
         ? eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }).id
         : eventinfos[0].id
     );
     setChallenge(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) !== undefined
         ? eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }).challange
         : eventinfos[0].challange
     );
@@ -2058,13 +2064,13 @@ const NewEvents = ({
   }, [selectedEvent]);
   useEffect(() => {
     if (eventId === undefined || eventId === "golden-pass") {
-      if (utcDayIndex === 5 && eventId === undefined) {
+      if (adjustedDay === 5 && eventId === undefined) {
         setActiveEvent(mazeGardenInfo);
         setChallenge("maze-day");
       } else {
         const filteredEvent =
           eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }) ?? eventinfos[0];
         setActiveEvent(filteredEvent);
         setActiveThumb(filteredEvent.id);
@@ -2151,7 +2157,7 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                      {utcDayIndex === 5 && (
+                      {adjustedDay === 5 && (
                         <div className="d-flex flex-column">
                           <NavLink to="/account/challenges/maze-day">
                             <div
@@ -2176,10 +2182,10 @@ const NewEvents = ({
                         <NavLink
                           to={
                             eventinfos.find((item) => {
-                              return item.day === utcDayIndex;
+                              return item.day === adjustedDay;
                             }) !== undefined
                               ? eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }).link
                               : eventinfos[0].link
                           }
@@ -2193,7 +2199,7 @@ const NewEvents = ({
                               eventId !== "critical-hit" &&
                               ((challenge !== "maze-day" &&
                                 eventId !== undefined) ||
-                                (eventId === undefined && utcDayIndex !== 5)) &&
+                                (eventId === undefined && adjustedDay !== 5)) &&
                               eventId !== "puzzle-madness"
                                 ? "active-challenge-item"
                                 : "challenge-item"
@@ -2201,16 +2207,16 @@ const NewEvents = ({
                             onClick={() => {
                               setChallenge(
                                 eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }) !== undefined
                                   ? eventinfos.find((item) => {
-                                      return item.day === utcDayIndex;
+                                      return item.day === adjustedDay;
                                     }).challange
                                   : eventinfos[0].challange
                               );
                               setActiveEvent(
                                 eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }) ?? eventinfos[0]
                               );
                             }}
@@ -2220,7 +2226,7 @@ const NewEvents = ({
                         </NavLink>
                         <div className="sidebar-separator2"></div>
                       </div>
-                      {utcDayIndex !== 5 && (
+                      {adjustedDay !== 5 && (
                         <div className="d-flex flex-column">
                           <NavLink to="/account/challenges/maze-day">
                             <div
@@ -3634,7 +3640,11 @@ const NewEvents = ({
                                         >
                                           <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
                                             <span className="beast-siege-wod-price">
-                                              ${getFormattedNumber(genesisUsd ?? 0,0)}
+                                              $
+                                              {getFormattedNumber(
+                                                genesisUsd ?? 0,
+                                                0
+                                              )}
                                             </span>
                                           </div>
                                           <span className="beast-siege-event-price">
