@@ -12,7 +12,7 @@ const Agent = ({ email }) => {
   const [audioFile, setAudioFile] = useState(null);
   const [jsonFile, setJsonFile] = useState(null);
   const [sound, setSound] = useState(true);
-
+  const [tries, setTries] = useState(0)
   const windowSize = useWindowSize();
 
   const handlePlayMessage = (audio, json) => {
@@ -33,6 +33,7 @@ const Agent = ({ email }) => {
       setSound(!sound);
     }
   };
+
 
   return (
     <>
@@ -121,7 +122,7 @@ const Agent = ({ email }) => {
               </div>
             )}
             <div className={`col-12 ${toggle ? "col-lg-8" : "col-lg-12"}`}>
-              <UI onPlay={handlePlayMessage} toggle={toggle} email={email} />
+              <UI onPlay={handlePlayMessage} toggle={toggle} email={email} sound={sound} setTries={setTries} />
             </div>
           </div>
         </div>

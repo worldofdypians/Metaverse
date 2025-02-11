@@ -3,7 +3,7 @@ import "../_aiagent.scss";
 import axios from "axios";
 import Typewriter from "typewriter-effect";
 
-export const UI = ({ onPlay, toggle, email }) => {
+export const UI = ({ onPlay, toggle, email, sound, setTries }) => {
   const input = useRef();
   // const { chat, loading, cameraZoomed, setCameraZoomed, message } = useChat();
   const [messages, setMessages] = useState([
@@ -79,10 +79,11 @@ export const UI = ({ onPlay, toggle, email }) => {
       .post(`https://api.worldofdypians.com/chat`, {
         userId: email,
         message: val,
+        voice: sound ? "on" : null
       })
       .then((res) => {
         setLoadingMessage(false);
-        console.log(res.data, "chat data");
+        setTries(res.data.tries)
         const systemMessage =
           res.data.messages && res.data.messages.length > 0
             ? res.data.messages[0].text

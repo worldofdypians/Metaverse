@@ -4940,8 +4940,7 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
-const [orynPop, setOrynPop] = useState(true)
-
+  const [orynPop, setOrynPop] = useState(true);
 
   return (
     <>
@@ -4950,9 +4949,9 @@ const [orynPop, setOrynPop] = useState(true)
           location.pathname.includes("map") && "px-0"
         } main-wrapper2 px-0 position-relative`}
       >
-       {!location.pathname.includes("ai-agent") && orynPop &&
-       <OrynFly onClose={() => setOrynPop(false)} />
-       }
+        {!location.pathname.includes("ai-agent") && orynPop && (
+          <OrynFly onClose={() => setOrynPop(false)} />
+        )}
         <Header
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
@@ -5093,7 +5092,11 @@ const [orynPop, setOrynPop] = useState(true)
           />
           <Route exact path="/tokenomics" element={<Token />} />
           {/* <Route exact path="/agent" element={<AiAgent />} /> */}
-          <Route exact path="/ai-agent" element={<Agent email={email} />} />
+          <Route
+            exact
+            path="/ai-agent"
+            element={<Agent email={email} isPremium={isPremium} />}
+          />
           <Route
             exact
             path="/notifications"
