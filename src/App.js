@@ -4940,6 +4940,9 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
+const [orynPop, setOrynPop] = useState(true)
+
+
   return (
     <>
       <div
@@ -4947,8 +4950,8 @@ function App() {
           location.pathname.includes("map") && "px-0"
         } main-wrapper2 px-0 position-relative`}
       >
-       {!location.pathname.includes("ai-agent") &&
-       <OrynFly />
+       {!location.pathname.includes("ai-agent") && orynPop &&
+       <OrynFly onClose={() => setOrynPop(false)} />
        }
         <Header
           authToken={authToken}

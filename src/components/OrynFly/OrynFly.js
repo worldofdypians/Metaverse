@@ -1,35 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./_orynfly.scss";
-import orynGif from "./orynGif.gif";
 import orynWebp from "./orynGif.webp";
+import { NavLink } from "react-router-dom";
 
-const OrynFly = () => {
-  const [isPaused, setIsPaused] = useState(false);
-  const videoRef = useRef(null);
+const OrynFly = ({onClose}) => {
+
+  const [chat, setChat] = useState(false)
 
  
-// useEffect(() => {
-//     setTimeout(() => {
-//         setIsPaused(true)
-//     }, 1000);
-//     if (videoRef.current) {
-//         isPaused ? videoRef.current.play() : videoRef.current.pause();
-//       }
-// }, [])
+
 
 
   return (
-    <div className="oryn-gif-holder d-flex align-items-center justify-content-end">
+    <div  className="oryn-gif-holder d-flex align-items-center justify-content-end">
+      <div className={`oryn-chat-title ${chat && "oryn-chat-active"} p-2 d-flex align-items-center justify-content-between`}>
+        <div className="chat-fang"></div>
+        <NavLink to={"/ai-agent"}>
+        <h6 className="oryn-chat-text mb-0">Hello, I am Oryn</h6>
+        </NavLink>
+        <img src={'https://cdn.worldofdypians.com/wod/xMark.svg'} width={20} height={20} style={{cursor: "pointer"}} alt="" onClick={onClose} />
+
+      </div>
+      <NavLink to={"/ai-agent"} className={"d-flex justify-content-end"}> 
       <img src={orynWebp} alt="" className='oryn-gif' />
-      {/* <video
-        // ref={videoRef}
-        src={orynWebp}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="oryn-gif"
-      /> */}
+      </NavLink>
+    
     </div>
   );
 };

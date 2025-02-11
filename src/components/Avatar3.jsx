@@ -57,15 +57,15 @@ export function Model3({
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    const intensity = Math.sin(time * 2) * 0.5 + 0.5; // Pulsating effect
+    const intensity = Math.sin(time * 7) * 0.5 + 0.5; // Pulsating effect
 
     if (audio.paused || audio.ended) {
       setAnimation("idle3");
       materials.glowBlue.emissiveIntensity = 0;
-      materials.Ga_Skin_Body1.emissiveIntensity = 0;
+      // materials.Ga_Skin_Body1.emissiveIntensity = 0;
     } else {
       materials.glowBlue.emissiveIntensity = intensity;
-      materials.Ga_Skin_Body1.emissiveIntensity = intensity;
+      // materials.Ga_Skin_Body1.emissiveIntensity = intensity;
     }
   });
 
