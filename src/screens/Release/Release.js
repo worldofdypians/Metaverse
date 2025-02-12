@@ -43,7 +43,6 @@ const Release = ({
   const [allUserCommitments, setAllUserCommitments] = useState([]);
   const [selectedRound, setselectedRound] = useState();
 
-  let expireDay = new Date("2024-10-16T14:00:00.000+02:00");
 
   const poolCap = 20000;
 

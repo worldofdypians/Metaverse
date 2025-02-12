@@ -1406,11 +1406,7 @@ const Portfolio = ({
     getTwonfts();
   }, [landStaked, myCawsWodStakes]);
 
-  let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
-  let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
-  let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
-  let baseLastDay = new Date("2024-02-01T16:00:00.000+02:00");
-  let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
+
 
   const [dummyEvent, setDummyEvent] = useState({});
   const [reqModal, setReqModal] = useState(false);

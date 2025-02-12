@@ -2676,7 +2676,7 @@ const MatchainDailyBonus = ({
                         Some of the rewards opened in the chests might require
                         an action, such as buying a CAWS or Genesis Land NFT, or
                         upgrading to Prime, in order to claim the reward. The
-                        deadline for taking the action is 00:00 UTC each day.
+                        deadline for taking the action is 00:30 UTC each day.
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">

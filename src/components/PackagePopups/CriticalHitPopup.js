@@ -56,7 +56,7 @@ const CriticalHitPopup = ({ onClosePopup }) => {
             </li>
             <li className="package-popup-desc">
               Rewards are distributed monthly, and you can destroy the Gem once
-              every 24 hours (00:00 UTC).
+              every 24 hours (00:30 UTC).
             </li>
           </ul>
         </div>

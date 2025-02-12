@@ -628,8 +628,7 @@ function App() {
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
 
-  const starPrizes = [200, 100, 60, 30, 20, 20, 20, 20, 20, 20];
-  const starPrizesGolden = [400, 200, 140, 70, 30, 30, 30, 30, 30, 30];
+
   const placeholderplayerData = [
     {
       position: "0",
