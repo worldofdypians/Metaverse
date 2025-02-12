@@ -88,7 +88,6 @@ import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
-import AiAgent from "./screens/AIAgent/AIAgent.js";
 import Agent from "./screens/NewAgent/Agent.js";
 import OrynFly from "./components/OrynFly/OrynFly.js";
 
