@@ -9,6 +9,8 @@ import soundOff from "./assets/soundOff.svg";
 import eyeClosed from "./assets/eyeClosed.svg";
 import { UI } from "./UI";
 import axios from "axios";
+import OutsideClickHandler from "react-outside-click-handler";
+import OrynPopup from "./components/OrynPopup";
 
 const Agent = ({ email }) => {
   const [playAudio, setPlayAudio] = useState(false);
@@ -19,6 +21,7 @@ const Agent = ({ email }) => {
   const [sound, setSound] = useState(false);
   const [tries, setTries] = useState(0);
   const windowSize = useWindowSize();
+  const [popup, setPopup] = useState(false);
 
   const handlePlayMessage = (audio, json) => {
     setPlayAudio(true);
@@ -26,6 +29,19 @@ const Agent = ({ email }) => {
     setAudioFile(audio);
     setJsonFile(json);
   };
+
+
+  const html = document.querySelector("html");
+
+  useEffect(() => {
+    if (popup === true) {
+      html.classList.add("hidescroll");
+    } else {
+      html.classList.remove("hidescroll");
+    }
+  }, [popup]);
+
+
 
   const fetchTries = async () => {
     await axios
@@ -63,7 +79,7 @@ const Agent = ({ email }) => {
       <Loader />
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
         <div className="d-flex flex-column w-100">
-          <AgentHero />
+          <AgentHero openPopup={() => setPopup(true)} />
           <div
             className="container-fluid d-flex justify-content-center"
             style={{ position: "relative", bottom: "30px" }}
@@ -129,6 +145,7 @@ const Agent = ({ email }) => {
                     setTries={setTries}
                     handleToggle={handleToggle}
                     tries={tries}
+                    openPopup={() => setPopup(true)}
                   />
                 </div>
               </div>
@@ -136,6 +153,11 @@ const Agent = ({ email }) => {
           </div>
         </div>
       </div>
+      {popup &&
+      <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
+        <OrynPopup onClose={() => setPopup(false)} />
+      </OutsideClickHandler>
+      }
     </>
   );
 };

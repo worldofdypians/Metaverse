@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AgentHero = () => {
+const AgentHero = ({openPopup}) => {
   return (
     <div className="bridge-hero-wrapper  position-relative d-flex align-items-center flex-column justify-content-center gap-5">
       <div className="custom-container  mt-5 mt-lg-0">
@@ -13,7 +13,7 @@ const AgentHero = () => {
                 Oryn is an AI Agent in World of Dypians, offering strategic insights, mission support, and deep lore from the tech-magic world.
 
                 </span>
-                <button className="getpremium-btn px-3 py-2">Get Premium</button>
+                <button className="getpremium-btn px-3 py-2" onClick={openPopup}>Get Premium</button>
               </div>
             </div>
             {/* <div className="col-12 col-lg-5 pe-0 d-flex justify-content-center">

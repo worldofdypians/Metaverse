@@ -14,6 +14,7 @@ export const UI = ({
   setTries,
   handleToggle,
   tries,
+  openPopup
 }) => {
   const input = useRef();
   const [messages, setMessages] = useState([
@@ -253,7 +254,7 @@ useEffect(() => {
           </div>
           {defaultToggle && tries < 20 && (
             <div
-              className="default-messages-holder  mb-3 d-flex flex-column flex-lg-row gap-3 gap-lg-4"
+              className="default-messages-holder  mb-3 d-flex  gap-3 gap-lg-4"
               ref={containerRef}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
@@ -276,7 +277,7 @@ useEffect(() => {
           )}
           <div className="d-flex w-100 flex-column gap-2">
           {tries >= 20 && (
-            <div className="premium-oryn-wrapper d-flex align-items-center justify-content-between p-3">
+            <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
               <div className="d-flex flex-column gap-2">
                 <span className="premium-oryn-title">
                   You have reached the free plan limit for Oryn
@@ -286,7 +287,7 @@ useEffect(() => {
                   after this time: 09:07 PM
                 </span>
               </div>
-              <button className="explore-btn px-3 py-2">Get Premium</button>
+              <button className="explore-btn px-3 py-2" onClick={openPopup}>Get Premium</button>
             </div>
           )}
 
