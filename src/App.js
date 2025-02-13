@@ -5094,7 +5094,7 @@ function App() {
           <Route
             exact
             path="/ai-agent"
-            element={<Agent email={email} isPremium={isPremium} />}
+            element={<Agent coinbase={coinbase} handleConnectWallet={handleConnectWallet} email={email} isPremium={isPremium} />}
           />
           <Route
             exact

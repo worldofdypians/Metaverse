@@ -12,7 +12,7 @@ import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import OrynPopup from "./components/OrynPopup";
 
-const Agent = ({ email }) => {
+const Agent = ({ email, coinbase, handleConnectWallet }) => {
   const [playAudio, setPlayAudio] = useState(false);
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(true);
@@ -30,7 +30,6 @@ const Agent = ({ email }) => {
     setJsonFile(json);
   };
 
-
   const html = document.querySelector("html");
 
   useEffect(() => {
@@ -41,13 +40,11 @@ const Agent = ({ email }) => {
     }
   }, [popup]);
 
-
-
   const fetchTries = async () => {
     await axios
       .get(`https://api.worldofdypians.com/user-tries/`, {
         params: {
-          userId: email,
+          userId: coinbase,
         },
       })
       .then((res) => {
@@ -60,7 +57,6 @@ const Agent = ({ email }) => {
   }, [email]);
 
   console.log(tries, "tries");
-  
 
   const handleToggle = () => {
     if (toggle && sound) {
@@ -145,6 +141,8 @@ const Agent = ({ email }) => {
                     setTries={setTries}
                     handleToggle={handleToggle}
                     tries={tries}
+                    coinbase={coinbase}
+                    handleConnectWallet={handleConnectWallet}
                     openPopup={() => setPopup(true)}
                   />
                 </div>
@@ -153,11 +151,11 @@ const Agent = ({ email }) => {
           </div>
         </div>
       </div>
-      {popup &&
-      <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
-        <OrynPopup onClose={() => setPopup(false)} />
-      </OutsideClickHandler>
-      }
+      {popup && (
+        <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
+          <OrynPopup onClose={() => setPopup(false)} />
+        </OutsideClickHandler>
+      )}
     </>
   );
 };

@@ -14,9 +14,10 @@ export const UI = ({
   setTries,
   handleToggle,
   tries,
-  openPopup
+  openPopup,
+  coinbase,
+  handleConnectWallet,
 }) => {
-  const input = useRef();
   const [messages, setMessages] = useState([
     // {
     //   text: "Hello, I am the World of Dypians AI Agent. How may I assist you today?",
@@ -89,7 +90,7 @@ export const UI = ({
     setLoadingMessage(true);
     await axios
       .post(`https://api.worldofdypians.com/chat`, {
-        userId: email,
+        userId: coinbase,
         message: val,
         voice: sound ? "on" : null,
       })
@@ -127,6 +128,17 @@ export const UI = ({
       });
   };
 
+  const [typewriterInstance, setTypewriterInstance] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const stopTypewriter = () => {
+    if (typewriterInstance) {
+      typewriterInstance.stop();
+      setDisable(false); // Re-enable input
+      setIsTyping(false);
+    }
+  };
+
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -154,14 +166,13 @@ export const UI = ({
     scrollToBottom(); // Scroll to the bottom when messages update
   }, [messages, loadingMessage, typewriterRef?.current?.offsetHeight]);
 
-
-useEffect(() => {
-  if(tries >= 20){
-    setDisable(true)
-  }
-}, [tries])
-
-
+  useEffect(() => {
+    if (tries >= 20 || !coinbase) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [tries, coinbase]);
 
   return (
     <>
@@ -213,29 +224,35 @@ useEffect(() => {
                   >
                     {/* <p className="message-text mb-0">{item.text}</p> */}
                     {item.type === "system-message" ? (
-                      <Typewriter
-                        className="message-text mb-0"
-                        options={{
-                          strings: formatText(item.text),
-                          autoStart: true,
-                          loop: false,
-                          delay: 10,
-                        }}
-                        onInit={(typewriter) => {
-                          setDisable(true);
-                          // const duration = item.text.length; // Estimated duration in m
-                          const interval = setInterval(() => {
-                            scrollToBottom();
-                          }, 100); // Run every 100ms (adjust as needed)
-                          typewriter
-                            .callFunction(() => {
-                              clearInterval(interval); // Stop after duration ends
-                              scrollToBottom(); // Scroll when done
-                              setDisable(false); // Enable input when typing ends
-                            })
-                            .start();
-                        }}
-                      />
+                      <div className="d-flex align-items-start gap-2">
+                        <Typewriter
+                          className="message-text mb-0"
+                          options={{
+                            strings: formatText(item.text),
+                            autoStart: true,
+                            loop: false,
+                            delay: 10,
+                          }}
+                          onInit={(typewriter) => {
+                            setTypewriterInstance(typewriter);
+                            setIsTyping(true);
+                            setDisable(true);
+                            const interval = setInterval(() => {
+                              scrollToBottom();
+                            }, 100);
+
+                            typewriter
+                              .callFunction(() => {
+                                setIsTyping(false);
+                                clearInterval(interval);
+                                scrollToBottom();
+                                setDisable(false);
+                              })
+                              .start();
+                          }}
+                        />
+                       
+                      </div>
                     ) : (
                       <p className="message-text mb-0">{item.text}</p>
                     )}
@@ -252,7 +269,7 @@ useEffect(() => {
               </div>
             )}
           </div>
-          {defaultToggle && tries < 20 && (
+          {defaultToggle && tries < 20 && coinbase && (
             <div
               className="default-messages-holder  mb-3 d-flex  gap-3 gap-lg-4"
               ref={containerRef}
@@ -276,52 +293,80 @@ useEffect(() => {
             </div>
           )}
           <div className="d-flex w-100 flex-column gap-2">
-          {tries >= 20 && (
-            <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
-              <div className="d-flex flex-column gap-2">
-                <span className="premium-oryn-title">
-                  You have reached the free plan limit for Oryn
-                </span>
-                <span className="premium-oryn-desc">
-                  Upgrade to premium model or wait until the limit is reset
-                  after this time: 09:07 PM
-                </span>
+            {tries >= 20 && (
+              <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
+                <div className="d-flex flex-column gap-2">
+                  <span className="premium-oryn-title">
+                    You have reached the free plan limit for Oryn
+                  </span>
+                  <span className="premium-oryn-desc">
+                    Upgrade to premium model or wait until the limit is reset
+                    after this time: 09:07 PM
+                  </span>
+                </div>
+                <button className="explore-btn px-3 py-2" onClick={openPopup}>
+                  Get Premium
+                </button>
               </div>
-              <button className="explore-btn px-3 py-2" onClick={openPopup}>Get Premium</button>
-            </div>
-          )}
+            )}
+            {!coinbase && (
+              <div className="connect-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
+                <div className="d-flex flex-column gap-2">
+                  <span className="premium-oryn-title">Connect Wallet</span>
+                  <span
+                    className="premium-oryn-desc"
+                    style={{ color: "#F3BF09" }}
+                  >
+                    Connect your wallet in order to interact with Oryn
+                  </span>
+                </div>
+                <button
+                  className="getpremium-btn px-3 py-2"
+                  onClick={handleConnectWallet}
+                >
+                  Connect Wallet
+                </button>
+              </div>
+            )}
 
-          <div className="d-flex align-items-center gap-3  oryn-input-holder position-relative">
-            <input
-              type="text"
-              className="agent-input"
-              placeholder="Ask a question..."
-              style={{ opacity: disable ? "0.7" : "1" }}
-              value={textMessage}
-              disabled={disable}
-              onChange={(e) => {
-                setTextMessage(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && textMessage !== "") {
-                  sendMessage(textMessage);
-                }
-              }}
-            />
+            <div className="d-flex align-items-center gap-3  oryn-input-holder position-relative">
+              <input
+                type="text"
+                className="agent-input"
+                placeholder="Ask a question..."
+                style={{ opacity: disable ? "0.7" : "1" }}
+                value={textMessage}
+                disabled={disable}
+                onChange={(e) => {
+                  setTextMessage(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && textMessage !== "") {
+                    sendMessage(textMessage);
+                  }
+                }}
+              />
+             {isTyping ? 
+            <div className="stop-message" onClick={stopTypewriter}>
+              <div className="stop-message-square"></div>
+            </div>
+            :
             <img
-              src={sendMessageIcon}
-              alt="sendMessage"
-              className="send-message-icon"
-              style={{
-                opacity: textMessage === "" || disable ? "0.7" : "1",
-                pointerEvents: textMessage === "" || disable ? "none" : "auto",
-              }}
-              onClick={() => {
-                sendMessage(textMessage);
-              }}
-              disabled={disable || textMessage === ""}
-            />
-            {/* <button
+            src={sendMessageIcon}
+            alt="sendMessage"
+            className="send-message-icon"
+            style={{
+              opacity: textMessage === "" || disable ? "0.7" : "1",
+              pointerEvents:
+                textMessage === "" || disable ? "none" : "auto",
+            }}
+            onClick={() => {
+              sendMessage(textMessage);
+            }}
+            disabled={disable || textMessage === ""}
+          /> 
+            }
+              {/* <button
             className="agent-button explore-btn d-flex align-items-center justify-content-center"
             style={{
               opacity: textMessage === "" || disable ? "0.7" : "1",
@@ -334,7 +379,7 @@ useEffect(() => {
           >
             Enter
           </button> */}
-          </div>
+            </div>
           </div>
         </div>
       </div>
