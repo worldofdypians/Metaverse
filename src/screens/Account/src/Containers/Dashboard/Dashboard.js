@@ -8851,8 +8851,9 @@ function Dashboard({
     if (userId && email && username) {
       fetchGenesisAroundPlayer(userId, username);
       fetchDailyRecordsAroundPlayerStar([])
+      fetchWeeklyRecordsAroundPlayerStar([])
     }
-  }, [userId, username, email]);
+  }, [userId, username, email, goldenPassRemainingTime]);
 
   return (
     <div
