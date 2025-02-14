@@ -60,6 +60,14 @@ const renderer4 = ({ hours, minutes, seconds }) => {
   );
 };
 
+const rendererdb = ({ hours, minutes, seconds }) => {
+  return (
+    <span className="beast-siege-timer-db">
+      {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+    </span>
+  );
+};
+
 const MyProfile = ({
   greatCollectionData,
   explorerHuntData,
@@ -138,9 +146,25 @@ const MyProfile = ({
   const totalClaimedChests = allClaimedChests;
   const [rankDropdown, setRankDropdown] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+  let now = new Date().getTime();
+  let now2 = new Date();
 
+  const midnight = new Date(now).setUTCHours(24, 30, 0, 0);
   const chestPercentage = (totalClaimedChests / 180) * 100;
   const utcDayIndex = new Date().getUTCDay();
+  const utcHours = now2.getUTCHours();
+  const utcMinutes = now2.getUTCMinutes();
+  const isPastMidnightUTC = utcHours === 0 && utcMinutes >= 30;
+
+  let adjustedDay = isPastMidnightUTC
+    ? utcDayIndex === 0
+      ? 7
+      : utcDayIndex
+    : utcHours === 0
+    ? utcDayIndex === 0
+      ? 6
+      : utcDayIndex - 1
+    : utcDayIndex;
 
   const html = document.querySelector("html");
 
@@ -245,9 +269,6 @@ const MyProfile = ({
       infoTips: ["120,000 points", "Up to 1000 stars."],
     },
   ];
-
-  let now = new Date().getTime();
-  const midnight = new Date(now).setUTCHours(24, 0, 0, 0);
 
   const [showBuyTooltip, setshowBuyTooltip] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -829,8 +850,7 @@ const MyProfile = ({
                     <RankSmallPopup
                       onClose={() => {
                         setRankDropdown(false);
-                      onCloseRankPopup();
-
+                        onCloseRankPopup();
                       }}
                       onPrimeClick={() => {
                         html.classList.remove("hidescroll");
@@ -1000,10 +1020,15 @@ const MyProfile = ({
                     </span>
                   </div>
                   <NavLink
-                    to={dailyEvents[utcDayIndex].link}
+                    to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                     className="daily-progress-item position-relative"
                   >
-                    <img src={dailyEvents[utcDayIndex].image} alt="" />
+                    <img
+                      src={
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.image
+                      }
+                      alt=""
+                    />
                     <div className="daily-progress-value-golden">
                       <span>
                         {/* {userDailyBundles?.dragonRuinsCount
@@ -1011,14 +1036,19 @@ const MyProfile = ({
                           ? "Ready"
                           : userDailyBundles?.dragonRuinsCount
                         : "Ready"} */}
-                        {dailyEvents[utcDayIndex].active ? "1" : "Ready"}
+                        {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.active
+                          ? "1"
+                          : "Ready"}
                       </span>
                     </div>
 
                     <span className="bundle-title-bottom">
-                      {dailyEvents[utcDayIndex].title === "BNB Chain Maze Day"
+                      {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                        ?.title === "BNB Chain Maze Day"
                         ? "Maze Day"
-                        : dailyEvents[utcDayIndex].title}
+                        : dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title}
                     </span>
                   </NavLink>
 
@@ -1153,24 +1183,22 @@ const MyProfile = ({
                     className={`${"daily-rewards-img"}`}
                     alt=""
                   />
-                  <div className="progress-bar-group d-flex flex-column align-items-start">
+                  {/* <div className="progress-bar-group d-flex flex-column align-items-start">
                     {!finished && (
                       <span className="progress-bar-title">Progress</span>
                     )}
 
                     <div className="yellow-progress-outer">
                       <span className="mb-0 chest-progress">
-                        {/* {claimedPremiumChests}/10 */}
                         {parseInt(chestPercentage)}%
                       </span>
                       <div
                         className="yellow-progress-inner"
                         style={{ width: `${chestPercentage}%` }}
-                        // style={{ width: `35%` }}
                       ></div>
                     </div>
-                  </div>
-                  <div className="d-flex flex-column justify-content-between h-100 p-3">
+                  </div> */}
+                  <div className="d-flex flex-column justify-content-between h-100 p-3 profile-banner-class-thing overflow-auto">
                     <div
                       className="d-flex align-items-center justify-content-between position-relative gap-1"
                       style={{ width: "fit-content" }}
@@ -1185,40 +1213,59 @@ const MyProfile = ({
                         </h6>
                       </div>
                     </div>
-
-                    <div
-                      className="d-flex flex-column align-items-center"
-                      style={{ width: "fit-content" }}
-                    >
+                    <div className="d-flex pb-3 align-items-center gap-2">
                       <div
-                        className="position-relative"
-                        style={{
-                          width: "96px",
-                          height: "40px",
-                          right: "0px",
-                          bottom: "15px",
-                        }}
+                        className={`d-flex flex-column gap-1 infotips-holder`}
                       >
-                        <span className="ready-to-claim mb-0">
-                          {finished ? "Reset Time" : "Ready to Claim"}
-                        </span>
-                        <img
-                          src={
-                            "https://cdn.worldofdypians.com/wod/readyBorder2.svg"
-                          }
-                          alt=""
-                          className={`${
-                            finished ? "ready-border-2" : "ready-border"
-                          }`}
-                        />
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            180 Chests
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            10 Chains
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center gap-1">
+                          <div className="yellow-dot"></div>
+                          <span
+                            className="beast-siege-timer"
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              color: "#fff",
+                            }}
+                          >
+                            Up to $700
+                          </span>
+                        </div>
                       </div>
-                      {finished && (
-                        <span className="timer-text mb-0">
-                          <Countdown date={midnight} renderer={renderer2} />
-                        </span>
-                      )}
+                      <div>
+                        <div className="ready-circle-2-position d-flex flex-column gap-1 align-items-center justify-content-center">
+                          <div className="ready-circle-2-db d-flex flex-column gap-1">
+                            <Countdown renderer={rendererdb} date={midnight} />
+                          </div>
+                          <span className="new-time-remaining">Reset Time</span>
+                        </div>
+                      </div>
                     </div>
-                    <div></div>
                   </div>
                 </div>
               </div>
@@ -1524,11 +1571,13 @@ const MyProfile = ({
               </div>
               <div className="col-12 col-lg-6 mt-3">
                 <NavLink
-                  to={dailyEvents[utcDayIndex].link}
+                  to={dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.link}
                   onClick={onEventCardClick}
                 >
                   <div
-                    className={`${dailyEvents[utcDayIndex].class} profile-banner-class-thing position-relative p-3 d-flex`}
+                    className={`${
+                      dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]?.class
+                    } profile-banner-class-thing position-relative p-3 d-flex`}
                   >
                     <div
                       className=" d-flex flex-column justify-content-between gap-2 "
@@ -1537,9 +1586,16 @@ const MyProfile = ({
                       {/* <div className="d-flex flex-column gap-1" style={{zIndex: 1}}> */}
                       <span
                         className={`utcEventTitle`}
-                        style={{ color: dailyEvents[utcDayIndex].titleColor }}
+                        style={{
+                          color:
+                            dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                              ?.titleColor,
+                        }}
                       >
-                        {dailyEvents[utcDayIndex].title}
+                        {
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title
+                        }
                       </span>
                       {/* <span
                           className={`utcEventContent`}
@@ -1549,8 +1605,8 @@ const MyProfile = ({
                         >
                           Coming Soon
                         </span> */}
-                      {dailyEvents[utcDayIndex].title ===
-                      "BNB Chain Maze Day" ? (
+                      {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                        ?.title === "BNB Chain Maze Day" ? (
                         <>
                           <div className="ready-circle-2-position d-none d-lg-flex flex-column gap-1 align-items-center justify-content-center">
                             <div className="ready-circle-2 d-flex flex-column gap-1">
@@ -1566,7 +1622,8 @@ const MyProfile = ({
                         </>
                       ) : (
                         <>
-                          {dailyEvents[utcDayIndex].active ? (
+                          {dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.active ? (
                             //   <div className="d-flex flex-column gap-1">
                             //   <span className="beast-siege-ends-in">Available until:</span>
                             //   <Countdown renderer={renderer4} date={midnight} />
@@ -1604,42 +1661,51 @@ const MyProfile = ({
                       )}
                       <div
                         className={`d-flex flex-column gap-1 infotips-holder ${
-                          dailyEvents[utcDayIndex].title === "BNB Maze Day" &&
-                          "bnb-infotips-holder"
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.title === "BNB Maze Day" && "bnb-infotips-holder"
                         }`}
                       >
-                        {dailyEvents[utcDayIndex].infoTips.map(
-                          (item, index) => (
-                            <div
-                              key={index}
-                              className="d-flex align-items-center gap-1"
+                        {dailyEvents[
+                          adjustedDay === 7 ? 0 : adjustedDay
+                        ]?.infoTips.map((item, index) => (
+                          <div
+                            key={index}
+                            className="d-flex align-items-center gap-1"
+                          >
+                            <div className="yellow-dot"></div>
+                            <span
+                              className="beast-siege-timer"
+                              style={{
+                                fontSize: "12px",
+                                fontWeight: 400,
+                                color: "#fff",
+                              }}
                             >
-                              <div className="yellow-dot"></div>
-                              <span
-                                className="beast-siege-timer"
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 400,
-                                  color: "#fff",
-                                }}
-                              >
-                                {item}
-                              </span>
-                            </div>
-                          )
-                        )}
+                              {item}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                       {/* </div> */}
                       <img
-                        src={dailyEvents[utcDayIndex].arrow}
+                        src={
+                          dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                            ?.arrow
+                        }
                         alt=""
                         style={{ height: 20, width: 20 }}
                       />
                     </div>
                     <img
-                      src={dailyEvents[utcDayIndex].bannerImg}
+                      src={
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.bannerImg
+                      }
                       alt=""
-                      className={`eventbannerimg ${dailyEvents[utcDayIndex]?.imageClass}`}
+                      className={`eventbannerimg ${
+                        dailyEvents[adjustedDay === 7 ? 0 : adjustedDay]
+                          ?.imageClass
+                      }`}
                     />
                   </div>
                 </NavLink>

@@ -80,7 +80,7 @@ const NewEvents = ({
   setPuzzleMadnessTimer,
   onConnectWallet,
   wodBalance,
-  genesisUsd
+  genesisUsd,
 }) => {
   const [activeThumb, setActiveThumb] = useState("");
   const [challenge, setChallenge] = useState("");
@@ -147,9 +147,12 @@ const NewEvents = ({
   const [hasLand, setHasLand] = useState(false);
   const [page, setPage] = useState(1);
   const sliderRef = useRef();
+  const now = new Date();
   const currentDate = new Date().getUTCDay();
   const utcDayIndex = new Date().getUTCDay();
-
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+  const isAfterCutoff = utcHours === 0 && utcMinutes >= 30;
   function hasNoMoreThanTwoDecimalPlaces(num) {
     // Check if the number has up to 2 decimal places
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
@@ -158,18 +161,23 @@ const NewEvents = ({
   let eventId = selectedEvent;
   const windowSize = useWindowSize();
 
-  const adjustedDay = currentDate === 0 ? 7 : currentDate;
-  // const isMonday = now.getDay() === 1;
-  const isMonday = true;
+  let adjustedDay = isAfterCutoff
+    ? utcDayIndex === 0
+      ? 7
+      : utcDayIndex
+      : utcHours === 0
+      ? utcDayIndex === 0
+        ? 6
+        : utcDayIndex - 1
+      : utcDayIndex;
 
-  const now = new Date();
   const midnightUTC = new Date(
     Date.UTC(
       now.getUTCFullYear(),
       now.getUTCMonth(),
       now.getUTCDate() + 1,
       0,
-      0,
+      30,
       0
     )
   );
@@ -1654,10 +1662,10 @@ const NewEvents = ({
       dayText: "MON",
       dayTextLong: "Monday",
       popupDesc:
-        "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:00 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
+        "The Dragon Ruins challenge invites players to summon and battle a fearsome dragon for exclusive rewards. This high-stakes event offers a chance to test your combat skills and teamwork. The dragon can only be summoned on Mondays and must be defeated before the end of the day at 00:30 UTC. Players can only purchase access once per day, giving you a single opportunity to emerge victorious.",
       workList: [
         "The event is available exclusively on Mondays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 16,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 200 stars added to the Global Leaderboards.",
@@ -1694,11 +1702,11 @@ const NewEvents = ({
       dayTextLong: "Tuesday",
       title: "Cold Bite",
       popupDesc:
-        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:00 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
+        "Cold Bite pits players against the ferocious Polar Bear, a frost-bound menace that rewards resilience and strategy. This chilling event is available on Tuesdays and runs until 00:30 UTC. Players can only buy access once per day, so make every move count as you battle this frosty foe.",
 
       workList: [
         "The event is available exclusively on Tuesdays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 30,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 300 stars added to the Global Leaderboards.",
@@ -1736,11 +1744,11 @@ const NewEvents = ({
 
       title: "Fury Beast",
       popupDesc:
-        "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:00 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
+        "Fury Beast throws you into a battle against the Gorilla, a relentless opponent that tests your endurance and tactical skills. Available only on Wednesdays, the event runs until 00:30 UTC. Access can be purchased once per day, so strategic preparation is key to claiming victory and rewards.",
 
       workList: [
         "The event is available exclusively on Wednesdays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 60,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 400 stars added to the Global Leaderboards.",
@@ -1778,11 +1786,11 @@ const NewEvents = ({
 
       title: "Wing Storm",
       popupDesc:
-        "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:00 UTC.",
+        "Take to the skies in Wing Storm, an exhilarating battle against a swift and deadly Eagle. Available exclusively on Thursdays, this event tests your precision and speed as you fight a high-flying adversary. Access can be purchased once per day, with the event running until 00:30 UTC.",
 
       workList: [
         "The event is available exclusively on Thursdays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 70,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 500 stars added to the Global Leaderboards.",
@@ -1820,11 +1828,11 @@ const NewEvents = ({
       dayTextLong: "Saturday",
       title: "Scorpion King",
       popupDesc:
-        "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:00 UTC.",
+        "Face off against the venomous Scorpion King in this thrilling event. Available only on Saturdays, this battle tests your resistance to poison and your ability to exploit the Scorpion King’s weaknesses. Access can be purchased once per day, with the event running until 00:30 UTC.",
 
       workList: [
         "The event is available exclusively on Saturdays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 120,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 1000 stars added to the Global Leaderboards.",
@@ -1861,10 +1869,10 @@ const NewEvents = ({
       dayTextLong: "Sunday",
       title: "Stone Eye",
       popupDesc:
-        "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:00 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
+        "Stone Eye challenges players to battle the Cyclops, a colossal enemy with devastating attacks. This event is available exclusively on Sundays and ends at 00:30 UTC. Only one access purchase is allowed per day, so prepare carefully for this epic showdown.",
       workList: [
         "The event is available exclusively on Sundays and needs to be activated.",
-        "You must defeat the bosses within the day, with the timer resetting at 00:00 UTC.",
+        "You must defeat the bosses within the day, with the timer resetting at 00:30 UTC.",
         "To access the event, go to the Teleport Station and find the right portal.",
         "Rewards: 80,000 points added to the BNB Chain leaderboard.",
         "Rewards: Up to 600 stars added to the Global Leaderboards.",
@@ -1891,7 +1899,7 @@ const NewEvents = ({
     class: "maze-garden-card",
     infoClass: "maze-garden-info",
     popupDesc:
-      "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:00 UTC.",
+      "Explore the enigmatic BNB Chain Maze, a labyrinth filled with twists and turns leading to the hidden gem at the center. This event is only accessible to WOD token holders and runs exclusively on Fridays. Navigate the maze carefully and claim your prize before 00:30 UTC.",
     workList: [
       "The event runs exclusively on Fridays and requires holding at least 400 WOD to participate.",
       "To access the event, go to the Teleport Station and find the right portal or go directly to the BNB Chain area.",
@@ -1982,7 +1990,7 @@ const NewEvents = ({
       "Hold Genesis Land NFT to access the event.",
       "Earn 30,000-80,000 points added to the BNB Chain leaderboard.",
       "Receive rewards ranging from $20 to $7,000 ",
-      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:00 UTC).",
+      "Rewards are distributed monthly, and you can destroy the Gem once every 24 hours (00:30 UTC).",
     ],
     tips: [
       "Recommended Hero Level: Any",
@@ -2028,24 +2036,24 @@ const NewEvents = ({
     setCurrentWeek(week);
     setActiveEvent(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) ?? eventinfos[0]
     );
     setActiveThumb(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) !== undefined
         ? eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }).id
         : eventinfos[0].id
     );
     setChallenge(
       eventinfos.find((item) => {
-        return item.day === utcDayIndex;
+        return item.day === adjustedDay;
       }) !== undefined
         ? eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }).challange
         : eventinfos[0].challange
     );
@@ -2058,13 +2066,13 @@ const NewEvents = ({
   }, [selectedEvent]);
   useEffect(() => {
     if (eventId === undefined || eventId === "golden-pass") {
-      if (utcDayIndex === 5 && eventId === undefined) {
+      if (adjustedDay === 5 && eventId === undefined) {
         setActiveEvent(mazeGardenInfo);
         setChallenge("maze-day");
       } else {
         const filteredEvent =
           eventinfos.find((item) => {
-            return item.day === utcDayIndex;
+            return item.day === adjustedDay;
           }) ?? eventinfos[0];
         setActiveEvent(filteredEvent);
         setActiveThumb(filteredEvent.id);
@@ -2151,7 +2159,7 @@ const NewEvents = ({
                 <div className="row gap-2 gap-lg-0">
                   <div className="col-12 col-lg-2">
                     <div className="challenges-list-wrapper py-3 px-1 px-lg-0 d-flex flex-column gap-2">
-                      {utcDayIndex === 5 && (
+                      {adjustedDay === 5 && (
                         <div className="d-flex flex-column">
                           <NavLink to="/account/challenges/maze-day">
                             <div
@@ -2176,10 +2184,10 @@ const NewEvents = ({
                         <NavLink
                           to={
                             eventinfos.find((item) => {
-                              return item.day === utcDayIndex;
+                              return item.day === adjustedDay;
                             }) !== undefined
                               ? eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }).link
                               : eventinfos[0].link
                           }
@@ -2193,7 +2201,7 @@ const NewEvents = ({
                               eventId !== "critical-hit" &&
                               ((challenge !== "maze-day" &&
                                 eventId !== undefined) ||
-                                (eventId === undefined && utcDayIndex !== 5)) &&
+                                (eventId === undefined && adjustedDay !== 5)) &&
                               eventId !== "puzzle-madness"
                                 ? "active-challenge-item"
                                 : "challenge-item"
@@ -2201,16 +2209,16 @@ const NewEvents = ({
                             onClick={() => {
                               setChallenge(
                                 eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }) !== undefined
                                   ? eventinfos.find((item) => {
-                                      return item.day === utcDayIndex;
+                                      return item.day === adjustedDay;
                                     }).challange
                                   : eventinfos[0].challange
                               );
                               setActiveEvent(
                                 eventinfos.find((item) => {
-                                  return item.day === utcDayIndex;
+                                  return item.day === adjustedDay;
                                 }) ?? eventinfos[0]
                               );
                             }}
@@ -2220,7 +2228,7 @@ const NewEvents = ({
                         </NavLink>
                         <div className="sidebar-separator2"></div>
                       </div>
-                      {utcDayIndex !== 5 && (
+                      {adjustedDay !== 5 && (
                         <div className="d-flex flex-column">
                           <NavLink to="/account/challenges/maze-day">
                             <div
@@ -3634,7 +3642,11 @@ const NewEvents = ({
                                         >
                                           <div className="brands-yellow-circle d-flex align-items-center justify-content-center">
                                             <span className="beast-siege-wod-price">
-                                              ${getFormattedNumber(genesisUsd ?? 0,0)}
+                                              $
+                                              {getFormattedNumber(
+                                                genesisUsd ?? 0,
+                                                0
+                                              )}
                                             </span>
                                           </div>
                                           <span className="beast-siege-event-price">

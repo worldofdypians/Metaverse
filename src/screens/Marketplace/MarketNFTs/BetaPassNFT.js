@@ -277,8 +277,7 @@ const BetaPassNFT = ({
 
   const html = document.querySelector("html");
   const bgmenu = document.querySelector("#terms");
-  const bgmenu2 = document.querySelector("#switch");
-  let skaleLiveDay = new Date("2024-04-10T11:00:00.000+02:00");
+  const bgmenu2 = document.querySelector("#switch"); 
 
   // useEffect(() => {
   //   if (
