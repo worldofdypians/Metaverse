@@ -17,6 +17,7 @@ export const UI = ({
   openPopup,
   coinbase,
   handleConnectWallet,
+  setPlayAudio,
 }) => {
   const [messages, setMessages] = useState([
     // {
@@ -132,10 +133,14 @@ export const UI = ({
   const [isTyping, setIsTyping] = useState(false);
 
   const stopTypewriter = () => {
-    if (typewriterInstance) {
-      typewriterInstance.stop();
+    setPlayAudio(false);
+    typewriterInstance.stop();
+    typewriterInstance.pause();
+    setIsTyping(false);
+    if (tries >= 20) {
+      setDisable(true);
+    } else {
       setDisable(false); // Re-enable input
-      setIsTyping(false);
     }
   };
 
@@ -234,6 +239,7 @@ export const UI = ({
                             delay: 10,
                           }}
                           onInit={(typewriter) => {
+                            console.log("Typewriter instance set:", typewriter);
                             setTypewriterInstance(typewriter);
                             setIsTyping(true);
                             setDisable(true);
@@ -251,7 +257,6 @@ export const UI = ({
                               .start();
                           }}
                         />
-                       
                       </div>
                     ) : (
                       <p className="message-text mb-0">{item.text}</p>
@@ -346,26 +351,26 @@ export const UI = ({
                   }
                 }}
               />
-             {isTyping ? 
-            <div className="stop-message" onClick={stopTypewriter}>
-              <div className="stop-message-square"></div>
-            </div>
-            :
-            <img
-            src={sendMessageIcon}
-            alt="sendMessage"
-            className="send-message-icon"
-            style={{
-              opacity: textMessage === "" || disable ? "0.7" : "1",
-              pointerEvents:
-                textMessage === "" || disable ? "none" : "auto",
-            }}
-            onClick={() => {
-              sendMessage(textMessage);
-            }}
-            disabled={disable || textMessage === ""}
-          /> 
-            }
+              {isTyping ? (
+                <div className="stop-message" onClick={stopTypewriter}>
+                  <div className="stop-message-square"></div>
+                </div>
+              ) : (
+                <img
+                  src={sendMessageIcon}
+                  alt="sendMessage"
+                  className="send-message-icon"
+                  style={{
+                    opacity: textMessage === "" || disable ? "0.7" : "1",
+                    pointerEvents:
+                      textMessage === "" || disable ? "none" : "auto",
+                  }}
+                  onClick={() => {
+                    sendMessage(textMessage);
+                  }}
+                  disabled={disable || textMessage === ""}
+                />
+              )}
               {/* <button
             className="agent-button explore-btn d-flex align-items-center justify-content-center"
             style={{

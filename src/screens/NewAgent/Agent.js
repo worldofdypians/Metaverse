@@ -56,7 +56,6 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
     fetchTries();
   }, [email]);
 
-  console.log(tries, "tries");
 
   const handleToggle = () => {
     if (toggle && sound) {
@@ -144,6 +143,7 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
                     coinbase={coinbase}
                     handleConnectWallet={handleConnectWallet}
                     openPopup={() => setPopup(true)}
+                    setPlayAudio={setPlayAudio}
                   />
                 </div>
               </div>
