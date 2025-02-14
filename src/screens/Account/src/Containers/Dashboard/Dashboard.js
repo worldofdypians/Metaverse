@@ -3806,6 +3806,7 @@ function Dashboard({
       activePlayerViction,
       activePlayerTaiko,
       activePlayerMat,
+      activePlayerSei,
     ];
     const allFalse = playerActiveArray.every((v) => v === false);
 
@@ -4091,6 +4092,7 @@ function Dashboard({
     activePlayerViction,
     activePlayerTaiko,
     activePlayerMat,
+    activePlayerSei
   ]);
 
   useEffect(() => {
