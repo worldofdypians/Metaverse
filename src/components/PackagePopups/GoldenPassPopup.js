@@ -87,7 +87,7 @@ const GoldenPassPopup = ({
       return;
     }
     setCountdown(purchaseTimestamp);
-    setHasBoughtGolden(true); 
+    setHasBoughtGolden(true);
   };
 
   const checkApproval = async () => {
@@ -251,7 +251,11 @@ const GoldenPassPopup = ({
           />
         </div>
         <div className="position-relative mb-3">
-          <img src={"https://cdn.worldofdypians.com/wod/goldenPassPopup.webp"} alt="" style={{ width: "100%" }} />
+          <img
+            src={"https://cdn.worldofdypians.com/wod/goldenPassPopup.webp"}
+            alt=""
+            style={{ width: "100%" }}
+          />
         </div>
 
         <div className="package-popup-content-2 p-1">
@@ -460,7 +464,12 @@ const GoldenPassPopup = ({
             <span className="event-price-span">Event Price</span>
             <div className="d-flex align-items-center gap-3">
               <div className="d-flex align-items-center gap-1">
-                <img src={"https://cdn.worldofdypians.com/wod/wodToken.png"} height={30} width={30} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/wodToken.png"}
+                  height={30}
+                  width={30}
+                  alt=""
+                />
                 <h6 className="event-price-coin mb-0">
                   {getFormattedNumber(goldenPassWodAmount)} WOD
                 </h6>
@@ -472,10 +481,16 @@ const GoldenPassPopup = ({
             </div>
           </div>
           <>
-            {(hasBoughtGolden && settimerFinished === false) ? (
+            {hasBoughtGolden && timerFinished === false ? (
               <div className="d-flex flex-column gap-1">
                 <span className="days3">Active Until:</span>
-                <Countdown renderer={renderer} date={Number(countdown)*1000} onComplete={()=>{settimerFinished(true)}}/>
+                <Countdown
+                  renderer={renderer}
+                  date={Number(countdown) * 1000}
+                  onComplete={() => {
+                    settimerFinished(true);
+                  }}
+                />
               </div>
             ) : (
               <div className="d-flex align-items-center gap-2">

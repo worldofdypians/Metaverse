@@ -3038,6 +3038,20 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
+                           <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
                             className={`chain-img ${
@@ -3353,20 +3367,7 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           } w-100`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
+                         
                           <img
                             src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
                             className={`chain-img ${
@@ -3937,6 +3938,20 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
+                            <HtmlTooltipGift
+                            placement="top"
+                            title={
+                              <span className="card-eth-chain-text">
+                                Extra Bonus
+                              </span>
+                            }
+                          >
+                            <img
+                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
+                              alt=""
+                              className="position-absolute manta-gift"
+                            />
+                          </HtmlTooltipGift>
                           <img
                             src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
                             className={`chain-img ${
@@ -4131,20 +4146,7 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           }  w-auto`}
                         >
-                          <HtmlTooltipGift
-                            placement="top"
-                            title={
-                              <span className="card-eth-chain-text">
-                                Extra Bonus
-                              </span>
-                            }
-                          >
-                            <img
-                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
-                              alt=""
-                              className="position-absolute manta-gift"
-                            />
-                          </HtmlTooltipGift>
+                        
                           <img
                             src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
                             className={`chain-img ${
