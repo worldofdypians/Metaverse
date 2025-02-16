@@ -24,14 +24,16 @@ const NewChallenges = ({
     return Number.isInteger(num) || num.toFixed(2) == num.toString();
   }
   let adjustedDay = isAfterCutoff
-    ? currentDate === 0
-      ? 7
-      : currentDate
-      : utcHours === 0
-      ? currentDate === 0
-        ? 6
-        : currentDate - 1
-      : currentDate;
+  ? utcDayIndex === 0
+  ? 7
+  : utcDayIndex
+  : utcHours === 0
+  ? utcDayIndex === 0
+    ? 6
+    : utcDayIndex - 1
+  : utcDayIndex === 0
+  ? 7
+  : utcDayIndex;
 
   const getMonday = (date) => {
     const day = date.getUTCDay(); // Sunday is 0, Monday is 1, ..., Saturday is 6
