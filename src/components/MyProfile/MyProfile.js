@@ -157,14 +157,16 @@ const MyProfile = ({
   const isPastMidnightUTC = utcHours === 0 && utcMinutes >= 30;
 
   let adjustedDay = isPastMidnightUTC
-    ? utcDayIndex === 0
-      ? 7
-      : utcDayIndex
-    : utcHours === 0
-    ? utcDayIndex === 0
-      ? 6
-      : utcDayIndex - 1
-    : utcDayIndex;
+  ? utcDayIndex === 0
+  ? 7
+  : utcDayIndex
+  : utcHours === 0
+  ? utcDayIndex === 0
+    ? 6
+    : utcDayIndex - 1
+  : utcDayIndex === 0
+  ? 7
+  : utcDayIndex;
 
   const html = document.querySelector("html");
 
