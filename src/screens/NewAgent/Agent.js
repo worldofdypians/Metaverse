@@ -12,7 +12,7 @@ import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import OrynPopup from "./components/OrynPopup";
 
-const Agent = ({ email, coinbase, handleConnectWallet }) => {
+const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
   const [playAudio, setPlayAudio] = useState(false);
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(true);
@@ -160,7 +160,7 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
       </div>
       {popup && (
         <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
-          <OrynPopup onClose={() => setPopup(false)} />
+          <OrynPopup onClose={() => setPopup(false)} isConnected={isConnected}/>
         </OutsideClickHandler>
       )}
     </>

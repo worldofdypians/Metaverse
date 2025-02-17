@@ -1,7 +1,7 @@
 import React from "react";
 import "../_aiagent.scss";
 
-const OrynPopup = ({ onClose }) => {
+const OrynPopup = ({ onClose,isConnected }) => {
   const benefits = [
     "No chat restrictions",
     "Faster responses and assistance",
@@ -47,7 +47,7 @@ const OrynPopup = ({ onClose }) => {
       </div>
       <div className="d-flex mt-3 w-100 justify-content-center">
         <button className="explore-btn px-3 py-2">
-            Connect Wallet
+            {isConnected ? 'Deposit' : 'Connect Wallet'}
         </button>
       </div>
     </div>
