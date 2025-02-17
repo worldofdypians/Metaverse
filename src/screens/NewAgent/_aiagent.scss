@@ -145,10 +145,11 @@
   white-space: nowrap;
   background: rgba(38, 40, 89, 0.4);
   cursor: pointer;
+  transition: all .25s;
 }
 
 .default-message-wrapper:hover {
-  opacity: 1;
+ background: #262859;
 }
 
 .default-message {

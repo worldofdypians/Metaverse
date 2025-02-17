@@ -285,14 +285,15 @@ export const UI = ({
               {defaultMessages.map((item, index) => (
                 <div
                   className="default-message-wrapper p-2"
-                  style={{background: index === 2 && "#765d04"}}
                   key={index}
                   onClick={() => {
                     sendMessage(item);
                     setDefaultToggle(false);
                   }}
                 >
-                  <h6 className="default-message mb-0">{item}</h6>
+                  <h6 className="default-message mb-0"
+                  style={{color: index === 2 && "#f3bf09"}}
+                  >{item}</h6>
                 </div>
               ))}
             </div>
