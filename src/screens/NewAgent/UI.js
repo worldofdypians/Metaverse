@@ -32,12 +32,13 @@ export const UI = ({
   const [defaultToggle, setDefaultToggle] = useState(true);
   const typewriterRef = useRef();
   const [disable, setDisable] = useState(false);
-
+  const [count, setCount] = useState(0)
   const defaultMessages = [
     "How can I create an account?",
     "Which event is available today?",
     "How can I maximize rewards in World or Dypians?",
   ];
+
 
   const formatText = (text) => {
     // Convert newlines to <br />
@@ -75,7 +76,10 @@ export const UI = ({
   };
 
   const sendMessage = async (val) => {
-    stopTypewriter()
+    setCount(count + 1)
+    if(count > 0){
+      stopTypewriter()
+    }
     setDefaultToggle(false);
     console.log(email, "email");
 
