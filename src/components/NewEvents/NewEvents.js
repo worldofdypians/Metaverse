@@ -169,7 +169,10 @@ const NewEvents = ({
       ? utcDayIndex === 0
         ? 6
         : utcDayIndex - 1
+      : utcDayIndex === 0
+      ? 7
       : utcDayIndex;
+
 
   const midnightUTC = new Date(
     Date.UTC(

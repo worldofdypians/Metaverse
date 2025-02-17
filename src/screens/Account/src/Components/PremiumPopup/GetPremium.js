@@ -445,9 +445,10 @@ const GetPremiumPopup = ({
   };
 
   const handleUpdatePremiumUser = async (wallet) => {
+    const userauthToken = localStorage.getItem("authToken");
     await axios
       .get(`https://api.worldofdypians.com/api/sub/${wallet}`, {
-        headers: { Authorization: `Bearer ${authToken}` },
+        headers: { Authorization: `Bearer ${userauthToken}` },
       })
       .catch((e) => {
         console.error(e);
