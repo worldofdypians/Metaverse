@@ -21,10 +21,10 @@ export function Model3({
   const { animations: hi1 } = useFBX("/newAnimations/hi1.fbx");
   const { animations: angry } = useFBX("/newAnimations/angry.fbx");
   const { animations: angry2 } = useFBX("/newAnimations/angry2.fbx");
-  const { animations: idle2 } = useFBX("/newAnimations/idle2.fbx");
+  // const { animations: idle2 } = useFBX("/newAnimations/idle2.fbx");
   const { animations: idle3 } = useFBX("/newAnimations/idle3.fbx");
-  const { animations: look } = useFBX("/newAnimations/look.fbx");
-  const { animations: looking2 } = useFBX("/newAnimations/looking2.fbx");
+  // const { animations: look } = useFBX("/newAnimations/look.fbx");
+  // const { animations: looking2 } = useFBX("/newAnimations/looking2.fbx");
   const { animations: talk } = useFBX("/newAnimations/talk.fbx");
   const { animations: walksayHi } = useFBX("/newAnimations/walksayHi.fbx");
   const { animations: salute } = useFBX("/newAnimations/salute.fbx");
@@ -32,10 +32,10 @@ export function Model3({
   hi1[0].name = "hi1";
   angry[0].name = "angry";
   angry2[0].name = "angry2";
-  idle2[0].name = "idle2";
+  // idle2[0].name = "idle2";
   idle3[0].name = "idle3";
-  look[0].name = "look";
-  looking2[0].name = "looking2";
+  // look[0].name = "look";
+  // looking2[0].name = "looking2";
   talk[0].name = "talk";
   walksayHi[0].name = "walksayHi";
   salute[0].name = "salute";
@@ -84,10 +84,10 @@ export function Model3({
       hi1[0],
       angry[0],
       angry2[0],
-      idle2[0],
+      // idle2[0],
       idle3[0],
-      look[0],
-      looking2[0],
+      // look[0],
+      // looking2[0],
       talk[0],
       walksayHi[0],
       salute[0],

@@ -12,7 +12,7 @@ import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import OrynPopup from "./components/OrynPopup";
 
-const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
+const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
   const [playAudio, setPlayAudio] = useState(false);
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(true);
@@ -22,6 +22,7 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
   const [tries, setTries] = useState(0);
   const windowSize = useWindowSize();
   const [popup, setPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handlePlayMessage = (audio, json) => {
     setPlayAudio(true);
@@ -40,6 +41,11 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
     }
   }, [popup]);
 
+
+
+
+
+
   const fetchTries = async () => {
     await axios
       .get(`https://api.worldofdypians.com/user-tries/`, {
@@ -56,6 +62,13 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
     fetchTries();
   }, [email]);
   const { progress } = useProgress();
+
+  useEffect(() => {
+  if(progress === 100){
+      setIsLoading(false);
+  }
+  }, [progress])
+
 
   const handleToggle = () => {
     if (toggle && sound) {
@@ -115,26 +128,27 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
                           className="sound-button-position"
                         />
                       )}
-                      <Canvas
-                        shadows
-                        camera={{ position: [0, 0, 8], fov: 42 }}
-                        style={{ height: "60vh", pointerEvents: "none" }}
-                      >
-                        <Experience
-                          playAudio={playAudio}
-                          setPlayAudio={setPlayAudio}
-                          count={count}
-                          audioFile={audioFile}
-                          jsonFile={jsonFile}
-                          sound={sound}
-                        />
-                      </Canvas>
-                      {progress < 100 &&
-                      <div className="custom-loader d-flex flex-column align-items-center justify-content-center gap-3">
-                        <span>{Math.round(progress)}%</span>
-                        <div className="loader-bar"></div>
-                      </div>
-                      }
+                      {isLoading ? (
+                        <div className="custom-loader d-flex flex-column align-items-center justify-content-center">
+                          <span>{Math.round(progress)}%</span>
+                          <div className="loader-bar"></div>
+                        </div>
+                      ) : (
+                        <Canvas
+                          shadows
+                          camera={{ position: [0, 0, 8], fov: 42 }}
+                          style={{ height: "60vh", pointerEvents: "none" }}
+                        >
+                          <Experience
+                            playAudio={playAudio}
+                            setPlayAudio={setPlayAudio}
+                            count={count}
+                            audioFile={audioFile}
+                            jsonFile={jsonFile}
+                            sound={sound}
+                          />
+                        </Canvas>
+                      )}
                     </div>
                   </div>
                 )}
@@ -160,7 +174,10 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected}) => {
       </div>
       {popup && (
         <OutsideClickHandler onOutsideClick={() => setPopup(false)}>
-          <OrynPopup onClose={() => setPopup(false)} isConnected={isConnected}/>
+          <OrynPopup
+            onClose={() => setPopup(false)}
+            isConnected={isConnected}
+          />
         </OutsideClickHandler>
       )}
     </>
