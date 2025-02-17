@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
 import { useEffect, useState } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
-import { Loader } from "@react-three/drei";
+import { Loader, useProgress } from "@react-three/drei";
 import AgentHero from "./AgentHero/AgentHero";
 import soundOn from "./assets/soundOn.svg";
 import soundOff from "./assets/soundOff.svg";
@@ -22,7 +22,6 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
   const [tries, setTries] = useState(0);
   const windowSize = useWindowSize();
   const [popup, setPopup] = useState(false);
-  const [loader, setLoader] = useState(true);
 
   const handlePlayMessage = (audio, json) => {
     setPlayAudio(true);
@@ -34,20 +33,12 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 2000);
-  }, []);
-
-  useEffect(() => {
-    if (popup === true || loader === true) {
+    if (popup === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-    console.log(loader);
-    
-  }, [popup, loader]);
+  }, [popup]);
 
   const fetchTries = async () => {
     await axios
@@ -64,6 +55,7 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
   useEffect(() => {
     fetchTries();
   }, [email]);
+  const { progress } = useProgress();
 
   const handleToggle = () => {
     if (toggle && sound) {
@@ -77,16 +69,10 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
     }
   };
 
+  console.log(progress, "progress");
+
   return (
     <>
-      {loader && (
-        <div className="custom-agent-loader d-flex align-items-center justify-content-center">
-          <div class="spinner-border text-light" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      )}
-      <Loader />
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
         <div className="d-flex flex-column w-100">
           <AgentHero openPopup={() => setPopup(true)} />
@@ -143,6 +129,12 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
                           sound={sound}
                         />
                       </Canvas>
+                      {progress < 100 &&
+                      <div className="custom-loader d-flex flex-column align-items-center justify-content-center gap-3">
+                        <span>{Math.round(progress)}%</span>
+                        <div className="loader-bar"></div>
+                      </div>
+                      }
                     </div>
                   </div>
                 )}

@@ -1,4 +1,4 @@
-import { Environment, OrbitControls, useTexture } from "@react-three/drei";
+import { Environment, Loader, OrbitControls, useTexture } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Model3 } from "../../../components/Avatar3";
 

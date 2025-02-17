@@ -75,6 +75,7 @@ export const UI = ({
   };
 
   const sendMessage = async (val) => {
+    stopTypewriter()
     setDefaultToggle(false);
     console.log(email, "email");
 
@@ -241,7 +242,7 @@ export const UI = ({
                             console.log("Typewriter instance set:", typewriter);
                             setTypewriterInstance(typewriter);
                             setIsTyping(true);
-                            setDisable(true);
+                            // setDisable(true);
                             const interval = setInterval(() => {
                               scrollToBottom();
                             }, 100);
@@ -251,7 +252,7 @@ export const UI = ({
                                 setIsTyping(false);
                                 clearInterval(interval);
                                 scrollToBottom();
-                                setDisable(false);
+                                // setDisable(false);
                               })
                               .start();
                           }}
