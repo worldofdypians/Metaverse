@@ -14,16 +14,15 @@ const Campaigns = () => {
       start_date: "January 27, 2025",
       end_date: "February 3, 2025",
       image: "https://cdn.worldofdypians.com/wod/wodredEnvelope.jpg",
-      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+      link: "https://dappbay.bnbchain.org/campaign/bnb-chain-red-envelope-carnival",
     },
     {
       title: "KuCoin WOD GemSlot Campaign",
       status: "Expired",
       start_date: "January 08, 2025",
       end_date: "January 22, 2025",
-      image:
-        "https://cdn.worldofdypians.com/wod/kucoin-gemslot-campaign.png",
-      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+      image: "https://cdn.worldofdypians.com/wod/kucoin-gemslot-campaign.png",
+      link: "https://www.kucoin.com/gemslot/detail/code/world-of-dypians-2",
     },
     {
       title: "PancakeSwap Trading Competition",
@@ -32,7 +31,7 @@ const Campaigns = () => {
       end_date: "January 21, 2025",
       image:
         "https://cdn.worldofdypians.com/wod/pancakeswap-trading-competition.png",
-      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+      link: "https://pancakeswap.finance/?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
     },
     {
       title: "Winter Wonderland Challenge",
@@ -49,7 +48,7 @@ const Campaigns = () => {
       end_date: "December 13, 2024",
       image:
         "https://cdn.worldofdypians.com/wod/trust-wallet-swap-campaign.jpg",
-      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+      link: "https://short.trustwallet.com/Swap-WOD",
     },
     {
       title: "WOD on Trust Wallet Launchpool",
@@ -57,7 +56,7 @@ const Campaigns = () => {
       start_date: "November 27, 2024",
       end_date: "December 04, 2024",
       image: "https://cdn.worldofdypians.com/wod/trust-launchpool.jpg",
-      link: "https://dappbay.bnbchain.org/campaign/352-winter-wonderland-challenge-to-share-a-50-000-prize-pool",
+      link: "https://short.trustwallet.com/launchpool3-blog",
     },
     {
       title: "Festive 4YA Celebration",
@@ -144,7 +143,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                 <h6 className="campaign-banner-title mb-0">
                   {dummyBanner.title}
                 </h6>
-                <div
+                {/* <div
                   className={`position-relative py-1 ${
                     dummyBanner.status === "Live"
                       ? "events-page-status-tag-live"
@@ -166,7 +165,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                   )}
 
                   <span>{dummyBanner.status}</span>
-                </div>
+                </div> */}
               </div>
               <hr className="campaign-banner-divider" />
               <div className="d-flex align-items-center gap-2">
@@ -190,7 +189,8 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                   className="explore-btn px-4 py-2 mt-4"
                   style={{ width: "fit-content" }}
                 >
-                  Explore
+                  {/* Explore */}
+                  Expired
                 </NavLink>
               </div>
             </div>
@@ -198,51 +198,56 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
         </div>
         <div className="campaign-items-grid mt-5">
           {dummyData.map((item, index) => (
-            <div className="campaign-item d-flex flex-column gap-2" key={index}>
-              <img
-                src={item.image}
-                alt="campaign image"
-                className="w-100 campaign-item-image"
-                style={{ opacity: item.status === "Expired" ? "0.5" : "1" }}
-              />
-              <div className="d-flex align-items-center gap-2">
-                <h6 className="campaign-item-title mb-0">{item.title}</h6>
-                <div
-                  className={`position-relative py-1 ${
-                    item.status === "Live"
-                      ? "events-page-status-tag-live"
-                      : item.status === "Coming Soon"
-                      ? "events-page-status-tag-upcoming"
-                      : "events-page-status-tag-expired"
-                  } px-2 d-flex align-items-center justify-content-center gap-0`}
-                  style={{ top: 0 }}
-                >
-                  {item.status === "Live" && (
-                    <div
-                      className="pulsatingDot"
-                      style={{
-                        width: 7,
-                        height: 7,
-                        marginRight: 5,
-                      }}
-                    ></div>
-                  )}
-
-                  <span>{item.status}</span>
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-2">
+            <a href={item.link} rel="noreferrer" target="_blank">
+              <div
+                className="campaign-item d-flex flex-column gap-2"
+                key={index}
+              >
                 <img
-                  src={"https://cdn.worldofdypians.com/wod/calendar.svg"}
-                  alt=""
-                  style={{ width: 24, height: 24 }}
+                  src={item.image}
+                  alt="campaign image"
+                  className="w-100 campaign-item-image"
+                  style={{ opacity: item.status === "Expired" ? "0.5" : "1" }}
                 />
-                <span className="campaign-item-date">
-                  {item.start_date} - {item.end_date}
-                </span>
+                <div className="d-flex align-items-center gap-2">
+                  <h6 className="campaign-item-title mb-0">{item.title}</h6>
+                  <div
+                    className={`position-relative py-1 ${
+                      item.status === "Live"
+                        ? "events-page-status-tag-live"
+                        : item.status === "Coming Soon"
+                        ? "events-page-status-tag-upcoming"
+                        : "events-page-status-tag-expired"
+                    } px-2 d-flex align-items-center justify-content-center gap-0`}
+                    style={{ top: 0 }}
+                  >
+                    {item.status === "Live" && (
+                      <div
+                        className="pulsatingDot"
+                        style={{
+                          width: 7,
+                          height: 7,
+                          marginRight: 5,
+                        }}
+                      ></div>
+                    )}
+
+                    <span>{item.status}</span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={"https://cdn.worldofdypians.com/wod/calendar.svg"}
+                    alt=""
+                    style={{ width: 24, height: 24 }}
+                  />
+                  <span className="campaign-item-date">
+                    {item.start_date} - {item.end_date}
+                  </span>
+                </div>
+                <hr className="campaign-banner-divider" />
               </div>
-              <hr className="campaign-banner-divider" />
-            </div>
+            </a>
           ))}
         </div>
       </div>
