@@ -6,10 +6,14 @@ import { NavLink } from "react-router-dom";
 
 const OrynFly = ({ onClose }) => {
   const [chat, setChat] = useState(false);
+  const [gif, setGif] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
       setChat(true);
+    }, 8000);
+    setTimeout(() => {
+      setGif(true);
     }, 9500);
   }, []);
 
@@ -34,7 +38,7 @@ const OrynFly = ({ onClose }) => {
         />
       </div>
       <NavLink to={"/ai-agent"} className={"d-flex justify-content-end"}>
-        <img src={chat ? orynGifIdle : orynGif} alt="" className="oryn-gif" />
+        <img src={gif ? orynGifIdle : orynGif} alt="" className="oryn-gif" />
       </NavLink>
     </div>
   );

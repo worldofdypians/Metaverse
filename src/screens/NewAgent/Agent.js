@@ -22,6 +22,7 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
   const [tries, setTries] = useState(0);
   const windowSize = useWindowSize();
   const [popup, setPopup] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   const handlePlayMessage = (audio, json) => {
     setPlayAudio(true);
@@ -33,12 +34,20 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
   const html = document.querySelector("html");
 
   useEffect(() => {
-    if (popup === true) {
+    setTimeout(() => {
+      setLoader(false);
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    if (popup === true || loader === true) {
       html.classList.add("hidescroll");
     } else {
       html.classList.remove("hidescroll");
     }
-  }, [popup]);
+    console.log(loader);
+    
+  }, [popup, loader]);
 
   const fetchTries = async () => {
     await axios
@@ -56,7 +65,6 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
     fetchTries();
   }, [email]);
 
-
   const handleToggle = () => {
     if (toggle && sound) {
       setToggle(!toggle);
@@ -71,6 +79,13 @@ const Agent = ({ email, coinbase, handleConnectWallet }) => {
 
   return (
     <>
+      {loader && (
+        <div className="custom-agent-loader d-flex align-items-center justify-content-center">
+          <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
       <Loader />
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
         <div className="d-flex flex-column w-100">

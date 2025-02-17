@@ -34,8 +34,7 @@ export const UI = ({
   const [disable, setDisable] = useState(false);
 
   const defaultMessages = [
-    "What is World of Dypians?",
-    "How many projects are building on World of Dypians?",
+    "How can I create an account?",
     "Which event is available today?",
     "How can I maximize rewards in World or Dypians?",
   ];
@@ -286,6 +285,7 @@ export const UI = ({
               {defaultMessages.map((item, index) => (
                 <div
                   className="default-message-wrapper p-2"
+                  style={{background: index === 2 && "#765d04"}}
                   key={index}
                   onClick={() => {
                     sendMessage(item);
@@ -337,7 +337,7 @@ export const UI = ({
             <div className="d-flex align-items-center gap-3  oryn-input-holder position-relative">
               <input
                 type="text"
-                className="agent-input"
+                className={`agent-input ${disable && "disabled-agent-input"}`}
                 placeholder="Ask a question..."
                 style={{ opacity: disable ? "0.7" : "1" }}
                 value={textMessage}

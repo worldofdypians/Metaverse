@@ -141,7 +141,7 @@
 .default-message-wrapper {
   transition: all 0.25s;
   border-radius: 12px;
-  width: 100%;
+  width: fit-content;
   white-space: nowrap;
   background: rgba(38, 40, 89, 0.4);
   cursor: pointer;
@@ -379,8 +379,21 @@ input:checked + .slider:before {
   background: rgba(38, 40, 89, 0.4);
 }
 
-.stop-message-square{
-width: 12px;
-height: 12px;
-background: #c0c9ff;
+.stop-message-square {
+  width: 12px;
+  height: 12px;
+  background: #c0c9ff;
+}
+
+.disabled-agent-input {
+  background: #595b87;
+}
+
+
+.custom-agent-loader{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+z-index: 9999;
+background: black;
 }
