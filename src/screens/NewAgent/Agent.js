@@ -65,7 +65,7 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
               <div className="row">
                 {windowSize.width > 786 && (
                   <div className={`col-12 col-lg-4 ${!toggle && "d-none"}`}>
-                    <div className="canvas-wrapper position-relative">
+                    <div className="canvas-wrapper position-relative" style={{border: !isLoaded && "0.5px solid #080b2a"}}>
                       {toggle && (
                         <div className="hide-oryn-btn d-flex align-items-center gap-2 p-2" onClick={() => setToggle(!toggle)}>
                           <img src={eyeClosed} alt="eye-closed" /> Hide Oryn
