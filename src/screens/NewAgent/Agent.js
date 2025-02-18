@@ -53,7 +53,7 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
 
   useEffect(() => {
     fetchTries();
-  }, [email]);
+  }, [coinbase]);
 
   return (
     <>
