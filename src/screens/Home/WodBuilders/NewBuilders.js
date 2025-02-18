@@ -372,6 +372,11 @@ const NewBuilders = () => {
       icon: "layer3.svg",
       backer: false,
     },
+    {
+      name: "Metacade",
+      icon: "metacade.png",
+      backer: false,
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
