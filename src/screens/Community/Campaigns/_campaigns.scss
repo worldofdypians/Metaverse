@@ -54,6 +54,19 @@
     }
 }
 
+.campaign-item {
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+
+
+}
+
+.campaign-item:hover {
+    border: 1px solid rgba(255, 255, 255, 0.54);
+    
+}
+
 .campaign-item-title{
     color: #EEEDFF;
     font-family: "Montserrat";
