@@ -260,6 +260,10 @@ const WodPartners = ({ full }) => {
       name: "Layer3",
       icon: "layer3.svg", 
     },
+    {
+      name: "Metacade",
+      icon: "metacade.png", 
+    },
   ];
 
   const [slice, setSlice] = useState(14);
