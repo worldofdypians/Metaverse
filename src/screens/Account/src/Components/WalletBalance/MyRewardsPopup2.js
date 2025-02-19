@@ -669,7 +669,7 @@ const MyRewardsPopupNew = ({
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
-                Number(cmcRewardsUSD) +
+                Number(cmcRewardsUSD) + Number(baseEarnUSD) +
                 Number(dypPremiumUSD),
               2
             )}
@@ -756,14 +756,14 @@ const MyRewardsPopupNew = ({
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
-                      Number(cookieEarnUsd),
+                      Number(cookieEarnUsd)+
+                      Number(baseEarnUSD) ,
                     2
                   )
                 : getFormattedNumber(
                     Number(treasureRewardMoneyCore) +
                       Number(treasureRewardMoneySei) +
                       Number(immutableEarnUsd) +
-                      Number(baseEarnUSD) +
                       Number(victionEarnUsd) +
                       Number(bnbEarnUsd) +
                       Number(coreEarnUsd) +
@@ -1062,7 +1062,8 @@ const MyRewardsPopupNew = ({
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
-                      Number(cookieEarnUsd),
+                      Number(cookieEarnUsd) +
+                      Number(baseEarnUSD),
                     2
                   )
                 : getFormattedNumber(
@@ -1074,7 +1075,6 @@ const MyRewardsPopupNew = ({
                       Number(mantaEarnUsd) +
                       Number(multiversEarnUsd) +
                       Number(immutableEarnUsd) +
-                      Number(baseEarnUSD) +
                       Number(easy2StakeEarnUsd) +
                       Number(chainlinkEarnUsd) +
                       Number(midleEarnUsd) +
@@ -1561,21 +1561,7 @@ const MyRewardsPopupNew = ({
             <div className="treasure-hunt-item-wrapper-active">
               {/* <div className="d-flex justify-content-between gap-4 align-items-start"> */}
               <div className="d-flex flex-column gap-2">
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Base
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(baseEarnUSD, 2)}
-                  </span>
-                </div>
+         
                 <div className="d-flex w-100 justify-content-between gap-2">
                   <span className="d-flex align-items-center gap-2 item-name-left">
                     <img
@@ -1633,6 +1619,21 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(seiEarnUsd, 2)}
                   </span>
                 </div>
+                <div className="d-flex gap-2 align-items-center justify-content-between">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Chainlink
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(chainlinkEarnUsd, 2)}
+                  </span>
+                </div>
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1687,21 +1688,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(bnbEarnUsd, 2)}
                   </span>
                 </div>
-                <div className="d-flex gap-2 align-items-center justify-content-between">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/chainlinkIcon.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Chainlink
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(chainlinkEarnUsd, 2)}
-                  </span>
-                </div>
+           
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1873,6 +1860,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(cmcRewardsUSD, 2)}
                   </span>
                 </div>
+                
               </div>
 
               <div className="d-flex flex-column gap-2">
@@ -1903,6 +1891,21 @@ const MyRewardsPopupNew = ({
                   </span>
                   <span className="item-name-right">
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
+                  </span>
+                </div>
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Base
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(baseEarnUSD, 2)}
                   </span>
                 </div>
               </div>
