@@ -1394,7 +1394,6 @@ function App() {
 
           if (baseEvent && baseEvent[0]) {
             if (baseEvent[0].reward.earn.totalPoints > 0) {
-              userActiveEvents = userActiveEvents + 1;
             }
 
             const basePoints = baseEvent[0].reward.earn.totalPoints;
@@ -3561,7 +3560,7 @@ function App() {
     {
       title: "Base",
       logo: "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg",
-      eventStatus: "Live",
+      eventStatus: "Expired",
       totalRewards: "$20,000 in ETH Rewards",
       location: [-0.06787060104021504, 0.08728981018066406],
       myEarnings: 0.0,
@@ -3579,7 +3578,7 @@ function App() {
         chain: "Base",
         linkState: "base",
         rewards: "ETH",
-        status: "Live",
+        status: "Expired",
         id: "event24",
         eventType: "Explore & Find",
         totalRewards: "$20,000 in ETH Rewards",
