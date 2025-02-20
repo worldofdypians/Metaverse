@@ -90,6 +90,8 @@ import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
 import AiAgent from "./screens/AIAgent/AIAgent.js";
 import Agent from "./screens/NewAgent/Agent.js";
+import "@matchain/matchid-sdk-react/index.css";
+import { Hooks } from "@matchain/matchid-sdk-react";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -451,6 +453,9 @@ function App() {
     },
   };
 
+  const { useUserInfo, useMatchEvents } = Hooks;
+  const { login, address, username, logout: logoutUser } = useUserInfo();
+
   const {
     data,
     refetch: refetchPlayer,
@@ -509,7 +514,7 @@ function App() {
   const [limit, setLimit] = useState(0);
   const [allCawsForTimepieceMint, setAllCawsForTimepieceMint] = useState([]);
   const [timepieceMetadata, settimepieceMetadata] = useState([]);
-  const [username, setUsername] = useState("");
+
   const [totalTimepieceCreated, setTotalTimepieceCreated] = useState(0);
   const [totalBaseNft, settotalBaseNft] = useState(0);
   const [totalMantaNft, setTotalMantaNft] = useState(0);
@@ -627,7 +632,6 @@ function App() {
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
-
 
   const placeholderplayerData = [
     {
@@ -2024,7 +2028,8 @@ function App() {
     if (
       window.ethereum &&
       !window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
     ) {
       window.ethereum
         .request({ method: "net_version" })
@@ -2180,36 +2185,16 @@ function App() {
     // const accounts = await provider.request({ method: "eth_requestAccounts" });
   };
 
-  const handleConnectWalletPassport = async () => {
-    setwalletModal(true);
-
-    const checkoutSDK_simple = new checkout.Checkout();
-
-    const widgets_simple = await checkoutSDK_simple.widgets({
-      config: { theme: checkout.WidgetTheme.DARK },
+  const handleConnectionMatchId = async (method) => {
+    await login(method).then(() => {
+      localStorage.setItem("logout", "false");
+      setwalletModal(false);
+      console.log("Logged in with method:", method);
+      window.WALLET_TYPE = "matchId";
+      setIsConnected(true);
+      setCoinbase(address);
     });
-
-    const connect_simple = widgets_simple.create(checkout.WidgetType.CONNECT, {
-      config: { theme: checkout.WidgetTheme.DARK },
-    });
-
-    if (!connect_simple) return;
-
-    connect_simple.mount("connect_simple");
-
-    connect_simple.addListener(checkout.ConnectEventType.SUCCESS, (data) => {
-      console.log("success_simple", data);
-      handleConnectWallet();
-    });
-    connect_simple.addListener(checkout.ConnectEventType.FAILURE, (data) => {
-      console.log("failure_simple", data);
-    });
-    connect_simple.addListener(checkout.ConnectEventType.CLOSE_WIDGET, () => {
-      connect_simple.unmount();
-    });
-    setSuccess(true);
   };
-
   const myNft = async () => {
     if (coinbase !== null && coinbase !== undefined) {
       const infura_web3 = window.infuraWeb3;
@@ -3172,7 +3157,8 @@ function App() {
       (window.ethereum.isMetaMask === true ||
         window.ethereum.isTrust === true) &&
       !window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
     ) {
       window.WALLET_TYPE = "metamask";
       if (
@@ -3190,7 +3176,8 @@ function App() {
         window.coinbase_address ===
           "0x0000000000000000000000000000000000000000" ||
         window.coin98) &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
     ) {
       checkConnection2();
     } else if (
@@ -3202,6 +3189,11 @@ function App() {
       if (account) {
         // fetchAvatar(account);
         setCoinbase(account);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (address) {
+        setIsConnected(true);
+        setCoinbase(address);
       }
     } else if (window.WALLET_TYPE !== "binance") {
       setIsConnected(false);
@@ -3223,7 +3215,7 @@ function App() {
       }
     }
     // checkNetworkId();
-  }, [coinbase, networkId, active, account]);
+  }, [coinbase, networkId, active, account, address]);
 
   // useEffect(() => {
   //   checkNetworkId();
@@ -4657,7 +4649,7 @@ function App() {
   const handleDisconnect = async () => {
     if (!window.gatewallet) {
       localStorage.removeItem("connect-session");
-
+      await logoutUser();
       setTimeout(() => {
         checkBinanceData();
         window.disconnectWallet();
@@ -4937,6 +4929,19 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
+  useEffect(() => {
+    if (address && address.length > 0) {
+      if (window.WALLET_TYPE === "matchId") {
+        setIsConnected(true);
+        setCoinbase(address);
+      }
+    } else {
+      setIsConnected(false);
+      setCoinbase();
+    }
+  }, [address, window.WALLET_TYPE]);
+
+  // console.log(address, username, window.WALLET_TYPE, window);
   return (
     <>
       <div
@@ -5329,7 +5334,7 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={()=>{setwalletModal(true);}}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -5342,7 +5347,8 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 isPremium={isPremium}
-                handleConnectionPassport={handleConnectPassport}
+                handleConnectionPassport={handleConnectPassport} 
+          handleConnectionMatchId={handleConnectionMatchId}
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
@@ -5407,7 +5413,9 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={()=>{setwalletModal(true);}}
+          handleConnectionMatchId={handleConnectionMatchId}
+
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -6154,7 +6162,9 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={handleConnectWallet}
+                handleConnect={()=>{setwalletModal(true);}}
+          handleConnectionMatchId={handleConnectionMatchId}
+
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -6953,6 +6963,7 @@ function App() {
           }}
           handleConnectionPassport={handleConnectPassport}
           handleConnectBinance={handleConnectBinance}
+          handleConnectionMatchId={handleConnectionMatchId}
         />
       )}
 

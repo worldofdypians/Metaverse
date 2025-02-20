@@ -54,6 +54,8 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
+import { Hooks } from '@matchain/matchid-sdk-react';
+
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -170,7 +172,17 @@ function Dashboard({
     margin: "auto",
     borderColor: "#554fd8",
   };
-
+  const { useWallet } = Hooks;
+  const {
+    initWallet,
+    generateWallet,
+    isRecovered,
+    recoveryWallet,
+    signMessage,
+    signTransaction,
+    address,
+    evmAccount,
+} = useWallet();
   const allBenefits = [
     {
       title: "Exclusive access to the game",
@@ -4092,7 +4104,7 @@ function Dashboard({
     activePlayerViction,
     activePlayerTaiko,
     activePlayerMat,
-    activePlayerSei
+    activePlayerSei,
   ]);
 
   useEffect(() => {
@@ -4761,7 +4773,7 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+    if (window.ethereum && window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
@@ -4770,6 +4782,45 @@ function Dashboard({
           `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
         );
 
+        verifyWallet({
+          variables: {
+            publicAddress: account,
+            signature: signature,
+          },
+        }).then(() => {
+          onManageLogin(
+            signature,
+            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+          );
+
+          setsyncStatus("success");
+          setTimeout(() => {
+            setshowSyncModal(false);
+            setsyncStatus("initial");
+            onCloseSync();
+          }, 1000);
+          onSubscribeSuccess(account);
+
+          if (isonlink) {
+            handleFirstTask(account);
+          }
+        });
+      } catch (error) {
+        setsyncStatus("error");
+        setTimeout(() => {
+          setsyncStatus("initial");
+          onCloseSync();
+        }, 3000);
+
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else  if (window.ethereum  && window.WALLET_TYPE === "matchId") {
+      try {
+        setshowSyncModal(false);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(account);
+       const signature =  await signMessage({ message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}` });
+   
         verifyWallet({
           variables: {
             publicAddress: account,
@@ -8485,7 +8536,6 @@ function Dashboard({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
-     
     window.scrollTo(0, 0);
     // if (username !== undefined && userId !== undefined) {
 
@@ -8854,8 +8904,8 @@ function Dashboard({
   useEffect(() => {
     if (userId && email && username) {
       fetchGenesisAroundPlayer(userId, username);
-      fetchDailyRecordsAroundPlayerStar([])
-      fetchWeeklyRecordsAroundPlayerStar([])
+      fetchDailyRecordsAroundPlayerStar([]);
+      fetchWeeklyRecordsAroundPlayerStar([]);
     }
   }, [userId, username, email, goldenPassRemainingTime]);
 
@@ -8971,7 +9021,8 @@ function Dashboard({
               userRankName={userRankName}
               isConnected={isConnected}
               onConnectWallet={() => {
-                setshowWalletModal(true);
+                // setshowWalletModal(true);
+                handleConnect();
               }}
               domainName={domainName}
               onDomainClick={() => {
@@ -9098,7 +9149,7 @@ function Dashboard({
                 setshowEventPopup(true);
               }}
               onConnectWallet={() => {
-                setshowWalletModal(true);
+                handleConnect();
               }}
               wodBalance={wodBalance}
               setPuzzleMadnessTimer={setPuzzleMadnessTimer}
@@ -9852,7 +9903,8 @@ function Dashboard({
                 idypBalanceavax={idypBalanceavax}
                 showNfts={showNfts}
                 handleShowWalletPopup={() => {
-                  setshowWalletModal(true);
+                  // setshowWalletModal(true);
+                  handleConnect();
                 }}
                 email={email}
                 userId={data?.getPlayer?.playerId}
@@ -11416,8 +11468,9 @@ function Dashboard({
                     <button
                       className="d-flex gap-2 px-3 py-1 align-items-center connectbtn"
                       onClick={() => {
-                        setshowWalletModal(true);
+                        // setshowWalletModal(true);
                         setgetPremiumPopup(false);
+                        handleConnect();
                       }}
                       style={{
                         width: "fit-content",
