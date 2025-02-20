@@ -5149,6 +5149,24 @@ function App() {
             }
           />
 
+
+<Route
+            exact
+            path="/wod-campaign"
+            element={
+              <Release
+                chainId={networkId}
+                isConnected={isConnected}
+                handleConnection={() => {
+                  setwalletModal(true);
+                }}
+                coinbase={coinbase}
+                isPremium={isPremium}
+                // userPools={userPools}
+              />
+            }
+          />
+
           <Route exact path="/roadmap" element={<Roadmap />} />
 
           <Route
