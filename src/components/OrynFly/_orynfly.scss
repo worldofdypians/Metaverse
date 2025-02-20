@@ -28,6 +28,7 @@
 
   h6{
     color: #ffffff;
+    font-size: 14px;
   }
 }
 
@@ -48,3 +49,22 @@
     margin: auto;
     clip-path: polygon(50% 0%, 100% 100%, 0 0);
   }
+
+  .oryn-gif {
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

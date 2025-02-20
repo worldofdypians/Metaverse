@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "./_orynfly.scss";
-import orynGif from "./orynGif.webp";
-import orynGifIdle from "./orynGifIdle.webp";
+import orynGif from "./orynGif.webp"; // Walking animation (~10s)
+import orynGifIdle from "./orynGifIdle.webp"; // Idle animation
 import { NavLink } from "react-router-dom";
 
 const OrynFly = ({ onClose }) => {
   const [chat, setChat] = useState(false);
-  const [gif, setGif] = useState(false)
+  const [showIdle, setShowIdle] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setChat(true);
-    }, 8000);
-    setTimeout(() => {
-      setGif(true);
-    }, 9500);
+    // Preload images
+    const img1 = new Image();
+    img1.src = orynGif;
+    const img2 = new Image();
+    img2.src = orynGifIdle;
+
+    // Show chat after 8s
+    const chatTimeout = setTimeout(() => setChat(true), 8000);
+    
+    // Switch GIF after 10s
+    const gifTimeout = setTimeout(() => setShowIdle(true), 10400);
+
+    return () => {
+      clearTimeout(chatTimeout);
+      clearTimeout(gifTimeout);
+    };
   }, []);
 
   return (
     <div className="oryn-gif-holder d-flex align-items-center justify-content-end">
       <div
         className={`oryn-chat-title ${
-          chat && "oryn-chat-active"
+          chat ? "oryn-chat-active" : ""
         } p-2 d-flex align-items-center justify-content-between`}
       >
         <div className="chat-fang"></div>
@@ -33,12 +43,16 @@ const OrynFly = ({ onClose }) => {
           width={20}
           height={20}
           style={{ cursor: "pointer" }}
-          alt=""
+          alt="Close"
           onClick={onClose}
         />
       </div>
-      <NavLink to={"/ai-agent"} className={"d-flex justify-content-end"}>
-        <img src={gif ? orynGifIdle : orynGif} alt="" className="oryn-gif" />
+      <NavLink to={"/ai-agent"} className="d-flex justify-content-end">
+        <img
+          src={showIdle ? orynGifIdle : orynGif}
+          alt="Oryn Animation"
+          className={`oryn-gif ${showIdle ? "fade-in" : ""}`}
+        />
       </NavLink>
     </div>
   );
