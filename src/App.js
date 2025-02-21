@@ -90,6 +90,7 @@ import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
 import AiAgent from "./screens/AIAgent/AIAgent.js";
 import Agent from "./screens/NewAgent/Agent.js";
+import WodCampaign from "./screens/WoDCampaign/WodCampaign.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -627,7 +628,6 @@ function App() {
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
-
 
   const placeholderplayerData = [
     {
@@ -5149,12 +5149,11 @@ function App() {
             }
           />
 
-
-<Route
+          <Route
             exact
             path="/wod-campaign"
             element={
-              <Release
+              <WodCampaign
                 chainId={networkId}
                 isConnected={isConnected}
                 handleConnection={() => {

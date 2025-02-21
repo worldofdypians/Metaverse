@@ -43,6 +43,102 @@
     font-weight: 700;
   }
   
+  
+  .wod-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(211.03deg, #2c2657 10.78%, rgba(43, 47, 54, 0) 54.07%, #2c2657 108.18%);
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .wod-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 800px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  
+  .wod-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #c6c6fb; /* Light purple text */
+    font-size: 14px;
+    position: relative;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .wod-step:not(:last-child)::after {
+    content: "";
+    width: 100px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 20px;
+    right: -23%;
+    @media only screen and (max-width: 600px) {
+      width: 45px;
+    }
+  }
+
+  .wod-step-active:not(:last-child)::after {
+    content: "";
+    width: 100px;
+    height: 2px;
+    background: #7157f6;
+    position: absolute;
+    top: 20px;
+    right: -23%;
+
+    @media only screen and (max-width: 600px) {
+      width: 45px;
+    }
+  }
+  
+  .wod-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    border: 2px solid #7157f6; /* Purple border */
+  }
+
+  .wod-icon-active {
+    background: #7157f6;
+  }
+  
+  .wod-button {
+    margin-top: 20px;
+    background: linear-gradient(90deg, #7157f6, #4e38d8);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .wod-button:hover {
+    box-shadow: 0px 0px 15px rgba(113, 87, 246, 0.8);
+  }
+  
+  
   .wodCampaign-wallet-btn {
     border-radius: 10px;
     background: none !important;
