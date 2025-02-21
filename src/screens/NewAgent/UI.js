@@ -43,29 +43,28 @@ export const UI = ({
   const formatText = (text) => {
     // Convert newlines to <br />
     text = text.replace(/\n/g, "<br />");
-
-    // Convert Markdown-style links [text](url) first
+  
+    // Convert Markdown-style bold (**text**) to <b>text</b>
+    text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+  
+    // Convert Markdown-style links [text](url)
     text = text.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g,
       `<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>`
     );
-
+  
     // Convert plain URLs to clickable links (removing trailing dots)
     text = text.replace(
-      /(?<!href=")(https?:\/\/[^\s<]+)\.?/g, // Matches links with possible trailing dot
+      /(?<!href=")(https?:\/\/[^\s<]+)\.?/g,
       (match, url) => {
-        return `<a href="${url.replace(
-          /\.+$/,
-          ""
-        )}" target="_blank" rel="noopener noreferrer">${url.replace(
-          /\.+$/,
-          ""
-        )}</a>`;
+        const cleanUrl = url.replace(/\.+$/, "");
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
       }
     );
-
+  
     return text;
   };
+  
   const speechBoxRef = useRef(null);
 
   const scrollToBottom = () => {

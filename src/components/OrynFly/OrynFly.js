@@ -42,7 +42,7 @@ const OrynFly = ({ onClose }) => {
           src={"https://cdn.worldofdypians.com/wod/xMark.svg"}
           width={20}
           height={20}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", opacity: 0.8, zIndex: 11 }}
           alt="Close"
           onClick={onClose}
         />

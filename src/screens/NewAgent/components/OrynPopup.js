@@ -12,7 +12,7 @@ const OrynPopup = ({ onClose,isConnected }) => {
   ];
 
   return (
-    <div className="challenge-popup-wrapper popup-active p-3">
+    <div className="oryn-popup-wrapper popup-active p-3">
       <div className="d-flex w-100 align-items-center justify-content-between">
         <h6 className="mb-0 oryn-popup-title">Oryn Premium</h6>
         <img
@@ -42,8 +42,8 @@ const OrynPopup = ({ onClose,isConnected }) => {
         </div>
       </div>
       <div className="oryn-lock-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
-        <span className="oryn-lock-title">You're about to unlock</span>
-        <h6 className="mb-0 oryn-lock-amount">10,000 $WOD</h6>
+        <span className="oryn-lock-title">You're about to lock</span>
+        <h6 className="mb-0 oryn-lock-amount">10,000 WOD</h6>
       </div>
       <div className="d-flex mt-3 w-100 justify-content-center">
         <button className="explore-btn px-3 py-2">
