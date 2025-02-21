@@ -377,6 +377,17 @@ const NewBuilders = () => {
       icon: "metacade.png",
       backer: false,
     },
+    {
+      name: "BGA",
+      icon: "bga.png",
+      backer: false,
+    },
+    {
+      name: "Veera Browser",
+      icon: "veera.svg",
+      backer: false,
+
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>
