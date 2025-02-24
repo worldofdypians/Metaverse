@@ -1039,7 +1039,7 @@ function App() {
             return obj.betapassId === "skale";
           });
           const bnbEvent = responseData.events.filter((obj) => {
-            return obj.betapassId === "bnb";
+            return obj.id === "bnbChainEvent10";
           });
 
           const coreEvent = responseData.events.filter((obj) => {

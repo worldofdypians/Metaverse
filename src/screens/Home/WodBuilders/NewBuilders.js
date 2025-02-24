@@ -386,7 +386,11 @@ const NewBuilders = () => {
       name: "Veera Browser",
       icon: "veera.svg",
       backer: false,
-
+    },
+    {
+      name: "Eragon",
+      icon: "eragon.svg",
+      backer: false,
     },
   ];
   return (

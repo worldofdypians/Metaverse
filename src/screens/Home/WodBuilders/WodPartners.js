@@ -272,6 +272,10 @@ const WodPartners = ({ full }) => {
       name: "Veera Browser",
       icon: "veera.svg",
     },
+    {
+      name: "Eragon",
+      icon: "eragon.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);

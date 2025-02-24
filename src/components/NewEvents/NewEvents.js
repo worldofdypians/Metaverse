@@ -474,6 +474,14 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+  
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
     const currentDay = currentUTCDate.getUTCDate();
@@ -491,11 +499,20 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtDragon(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
@@ -686,6 +703,13 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
     const currentDay = currentUTCDate.getUTCDate();
@@ -703,11 +727,20 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtBear(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
@@ -916,6 +949,14 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
     const currentDay = currentUTCDate.getUTCDate();
@@ -931,11 +972,22 @@ const NewEvents = ({
         : utcDayIndex === 0
         ? 7
         : utcDayIndex;
+
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
+
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtBeast(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
@@ -1126,6 +1178,13 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
 
@@ -1142,11 +1201,22 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
+
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtEagle(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
@@ -1336,6 +1406,14 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
     const currentDay = currentUTCDate.getUTCDate();
@@ -1353,11 +1431,21 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
     // Check if the purchase was made on the same UTC day
+    
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtScorpion(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
@@ -1548,6 +1636,15 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedPurchaseDate =
+        purchaseDate.getUTCHours() === 0 && purchaseDate.getUTCMinutes() >= 30
+          ? purchaseDate.getUTCDate()
+          : utcHours === 0
+          ? purchaseDate.getUTCDate() -1
+          :purchaseDate.getUTCDate();
+
+
+
     const currentYear = currentUTCDate.getUTCFullYear();
     const currentMonth = currentUTCDate.getUTCMonth();
     const currentDay = currentUTCDate.getUTCDate();
@@ -1565,11 +1662,21 @@ const NewEvents = ({
         ? 7
         : utcDayIndex;
 
+        const adjustedCurrentDate =
+        currentUTCDate.getUTCHours() === 0 && currentUTCDate.getUTCMinutes() >= 30
+          ? currentUTCDate.getUTCDate()
+          : utcHours === 0
+          ? currentUTCDate.getUTCDate() -1
+          :currentUTCDate.getUTCDate();
+
+
     // Check if the purchase was made on the same UTC day
     const isToday =
       purchaseYear === currentYear &&
       purchaseMonth === currentMonth &&
-      adjustedPurchaseDay === adjustedCurrentDay;
+      adjustedPurchaseDay === adjustedCurrentDay
+      &&
+      adjustedPurchaseDate === adjustedCurrentDate;
     setHasBoughtCyclops(isToday);
     setBeastSiegeStatus((prevStatus) => ({
       ...prevStatus,
