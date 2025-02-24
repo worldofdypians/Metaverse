@@ -264,6 +264,18 @@ const WodPartners = ({ full }) => {
       name: "Metacade",
       icon: "metacade.png", 
     },
+    {
+      name: "BGA",
+      icon: "bga.png",
+    },
+    {
+      name: "Veera Browser",
+      icon: "veera.svg",
+    },
+    {
+      name: "Eragon",
+      icon: "eragon.svg",
+    },
   ];
 
   const [slice, setSlice] = useState(14);
