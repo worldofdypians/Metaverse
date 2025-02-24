@@ -2076,9 +2076,9 @@ const NewEvents = ({
       image:
         "https://cdn.worldofdypians.com/wod/scorpionKingBannerNewEvents.webp",
       thumbImage:
-        "https://cdn.worldofdypians.com/wod/scorpionKingThumbNewEvents.webp",
+        "https://cdn.worldofdypians.com/wod/scorpionKingNewThumbNewEvents.webp",
       thumbImageActive:
-        "https://cdn.worldofdypians.com/wod/scorpionKingActiveThumbNewEvents.webp",
+        "https://cdn.worldofdypians.com/wod/scorpionKingActiveNewThumbNewEvents.webp",
       mobileThumbImage:
         "https://cdn.worldofdypians.com/wod/scorpionKingThumbMobileNewEvents.webp",
       mobileThumbImageActive:
