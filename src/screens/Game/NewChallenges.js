@@ -309,7 +309,7 @@ const NewChallenges = ({
       link: "/account/challenges/wing-storm",
     },
     {
-      image: "https://cdn.worldofdypians.com/wod/scorpionKingCard.png",
+      image: "https://cdn.worldofdypians.com/wod/scorpionKingCardNew.png",
       popupImage: "https://cdn.worldofdypians.com/wod/scorpionKingPopup.webp",
       desc: "Cross the scorching desert to challenge the Scorpion King. Brave the heat, avoid traps, and unlock the secrets of the sands to claim the riches waiting for you.",
       day: 6,
