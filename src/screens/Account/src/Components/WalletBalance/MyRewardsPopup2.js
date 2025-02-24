@@ -669,7 +669,7 @@ const MyRewardsPopupNew = ({
                 Number(gateRewardsUSD) +
                 Number(confluxRewardsUSD) +
                 Number(dogeRewardsUSD) +
-                Number(cmcRewardsUSD) + Number(baseEarnUSD) +
+                Number(cmcRewardsUSD)  +
                 Number(dypPremiumUSD),
               2
             )}
@@ -756,8 +756,7 @@ const MyRewardsPopupNew = ({
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
-                      Number(cookieEarnUsd)+
-                      Number(baseEarnUSD) ,
+                      Number(cookieEarnUsd) ,
                     2
                   )
                 : getFormattedNumber(
@@ -782,6 +781,7 @@ const MyRewardsPopupNew = ({
                       Number(skaleEarnUsd) +
                       Number(coingeckoEarnUsd) +
                       Number(mantaEarnUsd) +
+                      Number(baseEarnUSD)+
                       // Number(dailyplayerData) +
                       // Number(dailyDataAmountCore) +
                       // Number(weeklyDataAmountCore) +
@@ -1062,8 +1062,7 @@ const MyRewardsPopupNew = ({
                       Number(dogeRewardsUSD) +
                       Number(cmcRewardsUSD) +
                       Number(dypPremiumUSD) +
-                      Number(cookieEarnUsd) +
-                      Number(baseEarnUSD),
+                      Number(cookieEarnUsd) ,
                     2
                   )
                 : getFormattedNumber(
@@ -1080,7 +1079,8 @@ const MyRewardsPopupNew = ({
                       Number(midleEarnUsd) +
                       Number(skaleEarnUsd) +
                       Number(taikoEarnUsd) +
-                      Number(coingeckoEarnUsd),
+                      Number(coingeckoEarnUsd)+
+                      Number(baseEarnUSD),
                     2
                   )}
             </span>
@@ -1688,7 +1688,21 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(bnbEarnUsd, 2)}
                   </span>
                 </div>
-           
+                <div className="d-flex w-100 justify-content-between gap-2">
+                  <span className="d-flex align-items-center gap-2 item-name-left">
+                    <img
+                      src={
+                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                      }
+                      alt=""
+                      style={{ width: 16, height: 16 }}
+                    />
+                    Base
+                  </span>
+                  <span className="item-name-right">
+                    ${getFormattedNumber(baseEarnUSD, 2)}
+                  </span>
+                </div>
               </div>
               <div className="d-flex flex-column gap-2">
                 <div className="d-flex w-100 justify-content-between gap-2">
@@ -1893,21 +1907,7 @@ const MyRewardsPopupNew = ({
                     ${getFormattedNumber(dogeRewardsUSD, 2)}
                   </span>
                 </div>
-                <div className="d-flex w-100 justify-content-between gap-2">
-                  <span className="d-flex align-items-center gap-2 item-name-left">
-                    <img
-                      src={
-                        "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
-                      }
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    Base
-                  </span>
-                  <span className="item-name-right">
-                    ${getFormattedNumber(baseEarnUSD, 2)}
-                  </span>
-                </div>
+               
               </div>
             </div>
           </div>

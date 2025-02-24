@@ -4092,7 +4092,7 @@ function Dashboard({
     activePlayerViction,
     activePlayerTaiko,
     activePlayerMat,
-    activePlayerSei
+    activePlayerSei,
   ]);
 
   useEffect(() => {
@@ -8485,7 +8485,8 @@ function Dashboard({
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     setDummyPremiumChests(shuffle(dummyPremiums));
-     
+    document.title = "WOD Account";
+
     window.scrollTo(0, 0);
     // if (username !== undefined && userId !== undefined) {
 
@@ -8854,8 +8855,8 @@ function Dashboard({
   useEffect(() => {
     if (userId && email && username) {
       fetchGenesisAroundPlayer(userId, username);
-      fetchDailyRecordsAroundPlayerStar([])
-      fetchWeeklyRecordsAroundPlayerStar([])
+      fetchDailyRecordsAroundPlayerStar([]);
+      fetchWeeklyRecordsAroundPlayerStar([]);
     }
   }, [userId, username, email, goldenPassRemainingTime]);
 
