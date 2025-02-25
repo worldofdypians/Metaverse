@@ -85,7 +85,7 @@ const Release = ({
           return 0;
         });
     }
-    console.log(tokensToClaimAmount, "tokensToClaimAmounttokensToClaimAmount");
+    
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
     ).toFixed(6);
@@ -131,7 +131,7 @@ const Release = ({
         });
       const totalClaimedTokensByUser_formatted = new window.BigNumber(
         totalVestedTokensPerUser / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokens(totalClaimedTokensByUser_formatted);
     }
