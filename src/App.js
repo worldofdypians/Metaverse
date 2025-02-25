@@ -575,6 +575,8 @@ function App() {
   const [binanceData, setbinanceData] = useState();
 
   const [isPremium, setIsPremium] = useState(false);
+  const [premiumOryn, setPremiumOryn] = useState(false);
+
   const [domainPopup, setDomainPopup] = useState(false);
   const [showSync, setshowSync] = useState(false);
 
@@ -627,7 +629,6 @@ function App() {
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
-
 
   const placeholderplayerData = [
     {
@@ -2897,6 +2898,7 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     } else if (
       data &&
       data.getPlayer &&
@@ -2908,8 +2910,10 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     } else if (coinbase && isConnected && !data) {
       refreshSubscription(coinbase);
+      checkPremiumOryn(coinbase);
     } else if (
       data &&
       data.getPlayer &&
@@ -2918,6 +2922,7 @@ function App() {
       !isConnected
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     }
   }, [data, coinbase, isConnected, count55]);
 
@@ -4480,6 +4485,22 @@ function App() {
     }
   };
 
+  const checkPremiumOryn = async (addr) => {
+    const oryn_premium_contract = new window.bscWeb3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+
+    const result = await oryn_premium_contract.methods
+      .hasLocked(addr)
+      .call()
+      .catch((err) => {
+        return false;
+      });
+
+    setPremiumOryn(result);
+  };
+
   const handleSwitchNetwork = async (chain) => {
     if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
       setChainId(chain);
@@ -5092,7 +5113,18 @@ function App() {
           <Route
             exact
             path="/ai-agent"
-            element={<Agent isConnected={isConnected} coinbase={coinbase} handleConnectWallet={handleConnectWallet} email={email} isPremium={isPremium} />}
+            element={
+              <Agent
+                isConnected={isConnected}
+                coinbase={coinbase}
+                handleConnectWallet={handleConnectWallet}
+                email={email}
+                premiumOryn={premiumOryn}
+                chainId={networkId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                
+              />
+            }
           />
           <Route
             exact

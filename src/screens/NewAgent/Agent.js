@@ -11,8 +11,18 @@ import { UI } from "./UI";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
 import OrynPopup from "./components/OrynPopup";
+import Web3 from "web3";
 
-const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
+const Agent = ({
+  email,
+  coinbase,
+  handleConnectWallet,
+  isConnected,
+  premiumOryn,
+  chainId,
+  handleSwitchNetwork,
+}) => {
+  let { reward_token_wod, BigNumber } = window;
   const [playAudio, setPlayAudio] = useState(false);
   const [count, setCount] = useState(0);
   const [toggle, setToggle] = useState(true);
@@ -22,15 +32,197 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
   const [tries, setTries] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [depositLoading, setdepositLoading] = useState(false);
+  const [depositStatus, setdepositStatus] = useState("initial");
+  const [depositAmount, setdepositAmount] = useState("");
+  const [errorMsg, seterrorMsg] = useState("");
+  const [withdrawTimer, setWithdrawTimer] = useState(0);
+  const [approvedAmount, setapprovedAmount] = useState("0.00");
+  const [withdrawLoading, setwithdrawLoading] = useState(false);
+  const [withdrawStatus, setwithdrawStatus] = useState("initial");
+  const [errorMsg3, seterrorMsg3] = useState("");
+
   const windowSize = useWindowSize();
+
   const { progress, active } = useProgress();
+
+  const checkApproval = async (amount) => {
+    const result = await window
+      .checkapproveStakePool(
+        coinbase,
+        reward_token_wod._address,
+        window.config.oryn_premium_address
+      )
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+
+    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+
+    console.log(Number(result_formatted), Number(amount), "numbers");
+
+    if (
+      Number(result_formatted) >= Number(amount) &&
+      Number(result_formatted) !== 0
+    ) {
+      setdepositStatus("deposit");
+      console.log("works");
+      
+    } else {
+      setdepositStatus("initial");
+    }
+  };
+
+  const getApprovedAmount = async () => {
+    const result = await window
+      .checkapproveStakePool(
+        coinbase,
+        reward_token_wod._address,
+        window.config.oryn_premium_address
+      )
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+
+    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+    setapprovedAmount(result_formatted);
+  };
+
+  const handleApprove = async () => {
+    setdepositLoading(true);
+    window.web3 = new Web3(window.ethereum);
+    let amount = new BigNumber(100).times(1e18).toFixed(0);
+    await reward_token_wod
+      .approve(window.config.oryn_premium_address, amount)
+      .then(() => {
+        setdepositLoading(false);
+        setdepositStatus("deposit");
+        getApprovedAmount();
+      })
+      .catch((e) => {
+        setdepositLoading(false);
+        setdepositStatus("fail");
+        seterrorMsg(e?.message);
+        setTimeout(() => {
+          setdepositAmount("");
+          setdepositStatus("initial");
+          seterrorMsg("");
+        }, 10000);
+      });
+  };
+
+  const handleDeposit = async (e) => {
+    window.web3 = new Web3(window.ethereum);
+
+    const oryn_premium_contract = new window.web3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+
+    setdepositLoading(true);
+
+    let amount = new BigNumber(100).times(1e18).toFixed(0);
+
+    await oryn_premium_contract.methods
+      .deposit(amount)
+      .send({
+        from: coinbase,
+      })
+      .then(() => {
+        setdepositLoading(false);
+        setdepositStatus("success");
+        getApprovedAmount();
+        setTimeout(() => {
+          setdepositStatus("initial");
+          setdepositAmount("");
+        }, 5000);
+      })
+      .catch((e) => {
+        setdepositLoading(false);
+        setdepositStatus("fail");
+        seterrorMsg(e?.message);
+        setTimeout(() => {
+          setdepositAmount("");
+          setdepositStatus("fail");
+          seterrorMsg("");
+        }, 5000);
+      });
+  };
+
+  const startWithdrawTimer = async () => {
+    window.web3 = new Web3(window.ethereum);
+
+    const oryn_premium_contract = new window.web3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+    await oryn_premium_contract.methods
+      .startUnlock()
+      .send({
+        from: coinbase,
+      })
+      .then(() => {
+        console.log("sent");
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
+  const getWithdrawTimer = async () => {
+    const oryn_premium_contract = new window.bscWeb3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+    const result = await oryn_premium_contract.methods
+      .getRemainingTime(coinbase)
+      .call()
+      .catch((err) => {
+        return 0;
+      });
+
+    setWithdrawTimer(result);
+  };
+
+  const handleWithdraw = async (e) => {
+    window.web3 = new Web3(window.ethereum);
+
+    const oryn_premium_contract = new window.web3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+    // e.preventDefault();
+    setwithdrawLoading(true);
+
+    oryn_premium_contract.methods
+      .withdraw()
+      .then(() => {
+        setwithdrawLoading(false);
+        setwithdrawStatus("success");
+        setTimeout(() => {
+          setwithdrawStatus("initial");
+        }, 5000);
+      })
+      .catch((e) => {
+        setwithdrawLoading(false);
+        setwithdrawStatus("failed");
+        seterrorMsg3(e?.message);
+
+        setTimeout(() => {
+          setwithdrawStatus("initial");
+          seterrorMsg3("");
+        }, 10000);
+      });
+  };
 
   useEffect(() => {
     if (progress === 100 && !active) {
       setTimeout(() => setIsLoaded(true), 500); // Short delay to ensure stability
     }
     console.log(active, "progress");
-    
   }, [progress, active]);
 
   useEffect(() => {
@@ -57,14 +249,22 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
   };
 
   useEffect(() => {
+    checkApproval(100);
+  }, [popup]);
+
+  useEffect(() => {
     fetchTries();
+    getWithdrawTimer();
   }, [coinbase]);
 
   return (
     <>
       <div className="container-fluid d-flex bridge-mainhero-wrapper token-wrapper justify-content-center">
         <div className="d-flex flex-column w-100">
-          <AgentHero openPopup={() => setPopup(true)} />
+          <AgentHero
+            openPopup={() => setPopup(true)}
+            premiumOryn={premiumOryn}
+          />
           <div
             className="container-fluid d-flex justify-content-center"
             style={{ position: "relative", bottom: "30px" }}
@@ -79,10 +279,22 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
                     >
                       {toggle && (
                         <div
-                          className={`hide-oryn-btn d-flex align-items-center gap-2 p-2 ${!isLoaded && "d-none"} `}
-                          onClick={() => setToggle(!toggle)}
+                          className="d-flex align-items-center gap-2 oryn-tags-holder
+                       "
                         >
-                          <img src={eyeClosed} alt="eye-closed" /> Hide Oryn
+                          {premiumOryn && (
+                            <div className="premium-oryn-tag d-flex align-items-center justify-content-center p-2">
+                              Premium
+                            </div>
+                          )}
+                          <div
+                            className={`hide-oryn-btn d-flex align-items-center gap-2 p-2 ${
+                              !isLoaded && "d-none"
+                            } `}
+                            onClick={() => setToggle(!toggle)}
+                          >
+                            <img src={eyeClosed} alt="eye-closed" /> Hide Oryn
+                          </div>
                         </div>
                       )}
                       {sound ? (
@@ -93,7 +305,9 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
                           alt=""
                           onClick={() => setSound(!sound)}
                           style={{ cursor: "pointer" }}
-                          className={`sound-button-position ${!isLoaded && "d-none"}`}
+                          className={`sound-button-position ${
+                            !isLoaded && "d-none"
+                          }`}
                         />
                       ) : (
                         <img
@@ -103,7 +317,9 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
                           alt=""
                           onClick={() => setSound(!sound)}
                           style={{ cursor: "pointer" }}
-                          className={`sound-button-position ${!isLoaded && "d-none"}`}
+                          className={`sound-button-position ${
+                            !isLoaded && "d-none"
+                          }`}
                         />
                       )}
                       {!isLoaded ? (
@@ -161,6 +377,21 @@ const Agent = ({ email, coinbase, handleConnectWallet, isConnected }) => {
           <OrynPopup
             onClose={() => setPopup(false)}
             isConnected={isConnected}
+            handleApprove={handleApprove}
+            handleDeposit={handleDeposit}
+            startWithdrawTimer={startWithdrawTimer}
+            depositLoading={depositLoading}
+            depositStatus={depositStatus}
+            depositAmount={depositAmount}
+            errorMsg={errorMsg}
+            withdrawTimer={withdrawTimer}
+            approvedAmount={approvedAmount}
+            withdrawLoading={withdrawLoading}
+            withdrawStatus={withdrawStatus}
+            errorMsg3={errorMsg3}
+            handleConnectWallet={handleConnectWallet}
+            chainId={chainId}
+            handleSwitchNetwork={handleSwitchNetwork}
           />
         </OutsideClickHandler>
       )}

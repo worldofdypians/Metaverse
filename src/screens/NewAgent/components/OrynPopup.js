@@ -1,7 +1,26 @@
 import React from "react";
 import "../_aiagent.scss";
+import { handleSwitchNetworkhook } from "../../../hooks/hooks";
 
-const OrynPopup = ({ onClose,isConnected }) => {
+const OrynPopup = ({
+  onClose,
+  isConnected,
+  handleApprove,
+  handleDeposit,
+  startWithdrawTimer,
+  depositLoading,
+  depositStatus,
+  depositAmount,
+  errorMsg,
+  withdrawTimer,
+  approvedAmount,
+  withdrawLoading,
+  withdrawStatus,
+  errorMsg3,
+  handleConnectWallet,
+  chainId,
+  handleSwitchNetwork,
+}) => {
   const benefits = [
     "No chat restrictions",
     "Faster responses and assistance",
@@ -10,6 +29,20 @@ const OrynPopup = ({ onClose,isConnected }) => {
     "Insights beyond World of Dypians",
     "Smarter and more interactive",
   ];
+
+  const handleEthPool = async () => {
+    await handleSwitchNetworkhook("0x38")
+      .then(() => {
+        handleSwitchNetwork(56);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
+  console.log(depositStatus, "chainId");
+  
 
   return (
     <div className="oryn-popup-wrapper popup-active p-3">
@@ -46,8 +79,43 @@ const OrynPopup = ({ onClose,isConnected }) => {
         <h6 className="mb-0 oryn-lock-amount">10,000 WOD</h6>
       </div>
       <div className="d-flex mt-3 w-100 justify-content-center">
-        <button className="explore-btn px-3 py-2">
-            {isConnected ? 'Deposit' : 'Connect Wallet'}
+        <button
+          className="explore-btn px-3 py-2"
+          onClick={() => {
+            !isConnected
+              ? handleConnectWallet()
+              : isConnected && chainId !== 56
+              ? handleEthPool()
+              : depositStatus === "deposit"
+              ? handleDeposit()
+              : depositStatus === "initial"
+              ? handleApprove()
+              : console.log("");
+          }}
+        >
+          {!isConnected ? (
+            <>Connect Wallet</>
+          ) : isConnected && chainId !== 56 ? (
+            <>Switch to BNB Chain</>
+          ) : depositLoading ? (
+            <div
+              class="spinner-border spinner-border-sm text-light"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          ) : depositStatus === "initial" ? (
+            <>Approve</>
+          ) : depositStatus === "deposit" ? (
+            <>Deposit</>
+          ) : depositStatus === "success" ? (
+            <>Success</>
+          ) : (
+            <>
+            
+              Failed
+            </>
+          )}
         </button>
       </div>
     </div>
