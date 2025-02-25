@@ -43,7 +43,6 @@ const Release = ({
   const [allUserCommitments, setAllUserCommitments] = useState([]);
   const [selectedRound, setselectedRound] = useState();
 
-
   const poolCap = 20000;
 
   const getInfo = async () => {
@@ -86,10 +85,10 @@ const Release = ({
           return 0;
         });
     }
-
+    
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     setcanClaim(tokensToClaimAmount_formatted > 0);
     setpendingTokens(tokensToClaimAmount_formatted);
 
@@ -115,7 +114,7 @@ const Release = ({
         });
       const totalClaimedTokensByUser_formatted = new window.BigNumber(
         totalClaimedTokensByUser / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserClaimedTokens(totalClaimedTokensByUser_formatted);
     }
@@ -132,7 +131,7 @@ const Release = ({
         });
       const totalClaimedTokensByUser_formatted = new window.BigNumber(
         totalVestedTokensPerUser / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokens(totalClaimedTokensByUser_formatted);
     }
