@@ -162,7 +162,7 @@ window.config = {
 
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
   ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
-  oryn_premium_address: "0x67Df1902012d27b188b98b87149cf9627D1C980b",
+  oryn_premium_address: "0x6861AD654027Bd2d668e8708E6a7Db4F54BeC44e",
   commitmenteth_tokens: [
     {
       symbol: "USDT",

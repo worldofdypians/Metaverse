@@ -5122,6 +5122,7 @@ function App() {
                 premiumOryn={premiumOryn}
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
+                checkPremiumOryn={checkPremiumOryn}
                 
               />
             }

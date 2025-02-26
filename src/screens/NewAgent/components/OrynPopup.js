@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../_aiagent.scss";
 import { handleSwitchNetworkhook } from "../../../hooks/hooks";
+import Countdown from "react-countdown";
+
+const renderer = ({ days, hours, minutes, seconds }) => {
+  return (
+    <h6
+      className="mb-0 oryn-lock-amount"
+      style={{ color: "#F3BF09", fontSize: "18px" }}
+    >
+      {days}D : {hours}H : {minutes}M
+    </h6>
+  );
+};
 
 const OrynPopup = ({
   onClose,
   isConnected,
   handleApprove,
   handleDeposit,
+  handleWithdraw,
   startWithdrawTimer,
   depositLoading,
   depositStatus,
@@ -20,6 +33,10 @@ const OrynPopup = ({
   handleConnectWallet,
   chainId,
   handleSwitchNetwork,
+  premiumOryn,
+  hasStartedTimer,
+  checkTimer,
+  getWithdrawTimer
 }) => {
   const benefits = [
     "No chat restrictions",
@@ -40,8 +57,15 @@ const OrynPopup = ({
       });
   };
 
+  const [timer, setTimer] = useState(false);
 
-  console.log(depositStatus, "chainId");
+  useEffect(() => {
+    if(Number(withdrawTimer) !== Number(0)){
+      setTimer(true)
+    }
+  }, [withdrawTimer])
+    
+  console.log(withdrawTimer, "timer");
   
 
   return (
@@ -74,49 +98,128 @@ const OrynPopup = ({
           </div>
         </div>
       </div>
-      <div className="oryn-lock-wrapper mt-3 p-3 d-flex align-items-center justify-content-between">
-        <span className="oryn-lock-title">You're about to lock</span>
-        <h6 className="mb-0 oryn-lock-amount">10,000 WOD</h6>
+      <div
+        className="oryn-lock-wrapper mt-3 p-3 d-flex align-items-center justify-content-between"
+        style={{ background: premiumOryn && "rgba(113, 127, 255, 0.1)" }}
+      >
+        <span className="oryn-lock-title">
+          {premiumOryn ? "Locked" : "You're about to lock"}
+        </span>
+        <h6
+          className="mb-0 oryn-lock-amount"
+          style={{ color: premiumOryn && "#F3BF09" }}
+        >
+          10,000 WOD
+        </h6>
       </div>
       <div className="d-flex mt-3 w-100 justify-content-center">
-        <button
-          className="explore-btn px-3 py-2"
-          onClick={() => {
-            !isConnected
-              ? handleConnectWallet()
-              : isConnected && chainId !== 56
-              ? handleEthPool()
-              : depositStatus === "deposit"
-              ? handleDeposit()
-              : depositStatus === "initial"
-              ? handleApprove()
-              : console.log("");
-          }}
-        >
-          {!isConnected ? (
-            <>Connect Wallet</>
-          ) : isConnected && chainId !== 56 ? (
-            <>Switch to BNB Chain</>
-          ) : depositLoading ? (
-            <div
-              class="spinner-border spinner-border-sm text-light"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          ) : depositStatus === "initial" ? (
-            <>Approve</>
-          ) : depositStatus === "deposit" ? (
-            <>Deposit</>
-          ) : depositStatus === "success" ? (
-            <>Success</>
-          ) : (
-            <>
-            
-              Failed
-            </>
-          )}
-        </button>
+        {premiumOryn && Number(withdrawTimer) === Number(0) && !hasStartedTimer ? (
+          <button
+            className="explore-btn px-3 py-2"
+            onClick={() => {
+              startWithdrawTimer();
+              checkTimer();
+            }}
+          >
+            Unlock
+          </button>
+        )
+        : premiumOryn && Number(withdrawTimer) === Number(0) && hasStartedTimer ? (
+          <button
+            className={`${
+              withdrawStatus === "failed"
+                ? "reverse-btn"
+                : withdrawStatus === "success"
+                ? "action-btn"
+                : "explore-btn"
+            } px-3 py-2`}
+            disabled={
+              withdrawLoading ||
+              withdrawStatus === "failed" ||
+              withdrawStatus === "success"
+            }
+            onClick={() => {
+              handleWithdraw();
+            }}
+          >
+            {withdrawLoading ? (
+              <div
+                class="spinner-border spinner-border-sm text-light"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            ) : withdrawStatus === "failed" ? (
+              <>
+                <img alt="" />
+                Failed
+              </>
+            ) : withdrawStatus === "success" ? (
+              <>Success</>
+            ) : (
+              <>Withdraw</>
+            )}
+          </button>
+        )
+        : premiumOryn && Number(withdrawTimer) !== Number(0) || hasStartedTimer ? (
+          <div
+            className="oryn-lock-wrapper  p-3 d-flex align-items-center justify-content-between w-100"
+            style={{ background: "rgba(113, 127, 255, 0.1)" }}
+          >
+            <span className="oryn-lock-title">You can withdaw in</span>
+            <Countdown
+              renderer={renderer}
+              date={Date.now() + withdrawTimer * 1000}
+              onComplete={() => {
+                checkTimer();
+                getWithdrawTimer();
+              }}
+            />
+          </div>
+        )  : (
+          <button
+            className={`${
+              !isConnected || chainId !== 56 || depositStatus === "fail"
+                ? "reverse-btn"
+                : depositStatus === "success"
+                ? "action-btn"
+                : "explore-btn"
+            } px-3 py-2`}
+            onClick={() => {
+              !isConnected
+                ? handleConnectWallet()
+                : isConnected && chainId !== 56
+                ? handleEthPool()
+                : depositStatus === "deposit"
+                ? handleDeposit()
+                : depositStatus === "initial"
+                ? handleApprove()
+                : console.log("");
+            }}
+            disabled={depositLoading || depositStatus === "fail" || depositStatus === "success"}
+          >
+            {!isConnected ? (
+              <>Connect Wallet</>
+            ) : isConnected && chainId !== 56 ? (
+              <>Switch to BNB Chain</>
+            ) : depositLoading ? (
+              <div
+                class="spinner-border spinner-border-sm text-light"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            ) : depositStatus === "initial" ? (
+              <>Approve</>
+            ) : depositStatus === "deposit" ? (
+              <>Deposit</>
+            ) : depositStatus === "success" ? (
+              <>Success</>
+            ) : (
+              <>Failed</>
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

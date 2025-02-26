@@ -21,6 +21,7 @@ const Agent = ({
   premiumOryn,
   chainId,
   handleSwitchNetwork,
+  checkPremiumOryn
 }) => {
   let { reward_token_wod, BigNumber } = window;
   const [playAudio, setPlayAudio] = useState(false);
@@ -41,6 +42,7 @@ const Agent = ({
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
   const [errorMsg3, seterrorMsg3] = useState("");
+  const [hasStartedTimer, setHasStartedTimer] = useState(false);
 
   const windowSize = useWindowSize();
 
@@ -54,21 +56,17 @@ const Agent = ({
         window.config.oryn_premium_address
       )
       .then((data) => {
-        console.log(data);
         return data;
       });
 
     let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
 
-    console.log(Number(result_formatted), Number(amount), "numbers");
 
     if (
       Number(result_formatted) >= Number(amount) &&
       Number(result_formatted) !== 0
     ) {
       setdepositStatus("deposit");
-      console.log("works");
       
     } else {
       setdepositStatus("initial");
@@ -135,6 +133,7 @@ const Agent = ({
         setdepositLoading(false);
         setdepositStatus("success");
         getApprovedAmount();
+        checkPremiumOryn(coinbase)
         setTimeout(() => {
           setdepositStatus("initial");
           setdepositAmount("");
@@ -166,6 +165,7 @@ const Agent = ({
       })
       .then(() => {
         console.log("sent");
+        checkTimer()
       })
       .catch((err) => {
         return err;
@@ -186,6 +186,21 @@ const Agent = ({
 
     setWithdrawTimer(result);
   };
+  const checkTimer = async () => {
+      const oryn_premium_contract = new window.bscWeb3.eth.Contract(
+        window.ORYN_PREMIUM_ABI,
+        window.config.oryn_premium_address
+      );
+  
+      const result = await oryn_premium_contract.methods
+        .locks(coinbase)
+        .call()
+        .catch((err) => {
+          return false;
+        });
+  
+      setHasStartedTimer(result.isUnlockStarted)
+    };
 
   const handleWithdraw = async (e) => {
     window.web3 = new Web3(window.ethereum);
@@ -194,16 +209,21 @@ const Agent = ({
       window.ORYN_PREMIUM_ABI,
       window.config.oryn_premium_address
     );
+    
     // e.preventDefault();
     setwithdrawLoading(true);
 
     oryn_premium_contract.methods
-      .withdraw()
+      .withdraw().send({
+        from: coinbase
+      })
       .then(() => {
         setwithdrawLoading(false);
         setwithdrawStatus("success");
         setTimeout(() => {
+          checkPremiumOryn(coinbase);
           setwithdrawStatus("initial");
+          setPopup(false);
         }, 5000);
       })
       .catch((e) => {
@@ -222,7 +242,6 @@ const Agent = ({
     if (progress === 100 && !active) {
       setTimeout(() => setIsLoaded(true), 500); // Short delay to ensure stability
     }
-    console.log(active, "progress");
   }, [progress, active]);
 
   useEffect(() => {
@@ -255,7 +274,14 @@ const Agent = ({
   useEffect(() => {
     fetchTries();
     getWithdrawTimer();
-  }, [coinbase]);
+  }, [coinbase, startWithdrawTimer]);
+
+  useEffect(() => {
+    
+  checkTimer()
+   
+  }, [coinbase, startWithdrawTimer, getWithdrawTimer])
+  
 
   return (
     <>
@@ -392,6 +418,12 @@ const Agent = ({
             handleConnectWallet={handleConnectWallet}
             chainId={chainId}
             handleSwitchNetwork={handleSwitchNetwork}
+            premiumOryn={premiumOryn}
+            handleWithdraw={handleWithdraw}
+            hasStartedTimer={hasStartedTimer}
+            checkTimer={checkTimer}
+            getWithdrawTimer={getWithdrawTimer}
+
           />
         </OutsideClickHandler>
       )}
