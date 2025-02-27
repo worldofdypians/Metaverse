@@ -36,7 +36,9 @@ const OrynPopup = ({
   premiumOryn,
   hasStartedTimer,
   checkTimer,
-  getWithdrawTimer
+  getWithdrawTimer,
+  unlockLoading,
+  unlockStatus
 }) => {
   const benefits = [
     "No chat restrictions",
@@ -115,13 +117,40 @@ const OrynPopup = ({
       <div className="d-flex mt-3 w-100 justify-content-center">
         {premiumOryn && Number(withdrawTimer) === Number(0) && !hasStartedTimer ? (
           <button
-            className="explore-btn px-3 py-2"
+          className={`${
+            unlockStatus === "fail"
+              ? "reverse-btn"
+              : unlockStatus === "success"
+              ? "action-btn"
+              : "explore-btn"
+          } px-3 py-2`}
+          disabled={
+            unlockLoading ||
+            unlockStatus === "fail" ||
+            unlockStatus === "success"
+          }
             onClick={() => {
               startWithdrawTimer();
               checkTimer();
             }}
           >
-            Unlock
+             {unlockLoading ? (
+              <div
+                class="spinner-border spinner-border-sm text-light"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            ) : unlockStatus === "fail" ? (
+              <>
+                <img alt="" />
+                Failed
+              </>
+            ) : unlockStatus === "success" ? (
+              <>Success</>
+            ) : (
+              <>Unlock</>
+            )}
           </button>
         )
         : premiumOryn && Number(withdrawTimer) === Number(0) && hasStartedTimer ? (

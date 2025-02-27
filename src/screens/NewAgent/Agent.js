@@ -41,6 +41,8 @@ const Agent = ({
   const [approvedAmount, setapprovedAmount] = useState("0.00");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
+  const [unlockLoading, setUnlockLoading] = useState(false);
+  const [unlockStatus, setUnlockStatus] = useState("initial")
   const [errorMsg3, seterrorMsg3] = useState("");
   const [hasStartedTimer, setHasStartedTimer] = useState(false);
 
@@ -152,8 +154,8 @@ const Agent = ({
   };
 
   const startWithdrawTimer = async () => {
+    setUnlockLoading(true);
     window.web3 = new Web3(window.ethereum);
-
     const oryn_premium_contract = new window.web3.eth.Contract(
       window.ORYN_PREMIUM_ABI,
       window.config.oryn_premium_address
@@ -164,10 +166,21 @@ const Agent = ({
         from: coinbase,
       })
       .then(() => {
-        console.log("sent");
+       setUnlockLoading(false);
+       setUnlockStatus("success")
         checkTimer()
+        setTimeout(() => {
+          setUnlockStatus("initial")
+          seterrorMsg("");
+        }, 5000);
       })
       .catch((err) => {
+        setUnlockLoading(false)
+        setUnlockStatus("fail")
+        setTimeout(() => {
+          setUnlockStatus("initial")
+          seterrorMsg("");
+        }, 5000);
         return err;
       });
   };
@@ -423,6 +436,8 @@ const Agent = ({
             hasStartedTimer={hasStartedTimer}
             checkTimer={checkTimer}
             getWithdrawTimer={getWithdrawTimer}
+            unlockLoading={unlockLoading}
+            unlockStatus={unlockStatus}
 
           />
         </OutsideClickHandler>
