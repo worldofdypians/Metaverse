@@ -418,7 +418,7 @@ const Whitelist = ({
     }
     const totalClaimedTokensByUserKol_formatted = new window.BigNumber(
       totalClaimedTokensByUserKol / 1e18
-    ).toFixed(6)(0);
+    ).toFixed(6);
     setuserClaimedTokensKOL(totalClaimedTokensByUserKol_formatted);
 
     let totalClaimedTokensByUserAdvisors = 0;
