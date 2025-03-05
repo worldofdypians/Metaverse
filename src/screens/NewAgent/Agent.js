@@ -386,7 +386,7 @@ const Agent = ({
                     </div>
                   </div>
                 )}
-                <div className={`col-12 ${toggle ? "col-lg-8" : "col-lg-12"}`}>
+                <div className={`col-12 ${toggle ? "col-lg-8" : "col-lg-12"} px-0 px-lg-2`}>
                   <UI
                     onPlay={(audio, json) => {
                       setPlayAudio(true);
