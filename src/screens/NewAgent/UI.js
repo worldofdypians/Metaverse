@@ -18,7 +18,7 @@ export const UI = ({
   coinbase,
   handleConnectWallet,
   setPlayAudio,
-  premiumOryn
+  premiumOryn,
 }) => {
   const [messages, setMessages] = useState([
     // {
@@ -33,39 +33,35 @@ export const UI = ({
   const [defaultToggle, setDefaultToggle] = useState(true);
   const typewriterRef = useRef();
   const [disable, setDisable] = useState(false);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const defaultMessages = [
     "How can I create an account?",
     "Which event is available today?",
     "How can I maximize rewards in World or Dypians?",
   ];
 
-
   const formatText = (text) => {
     // Convert newlines to <br />
     text = text.replace(/\n/g, "<br />");
-  
+
     // Convert Markdown-style bold (**text**) to <b>text</b>
     text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
-  
+
     // Convert Markdown-style links [text](url)
     text = text.replace(
       /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g,
       `<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>`
     );
-  
+
     // Convert plain URLs to clickable links (removing trailing dots)
-    text = text.replace(
-      /(?<!href=")(https?:\/\/[^\s<]+)\.?/g,
-      (match, url) => {
-        const cleanUrl = url.replace(/\.+$/, "");
-        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
-      }
-    );
-  
+    text = text.replace(/(?<!href=")(https?:\/\/[^\s<]+)\.?/g, (match, url) => {
+      const cleanUrl = url.replace(/\.+$/, "");
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl}</a>`;
+    });
+
     return text;
   };
-  
+
   const speechBoxRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -76,9 +72,9 @@ export const UI = ({
   };
 
   const sendMessage = async (val) => {
-    setCount(count + 1)
-    if(count > 0){
-      stopTypewriter()
+    setCount(count + 1);
+    if (count > 0) {
+      stopTypewriter();
     }
     setDefaultToggle(false);
     console.log(email, "email");
@@ -141,19 +137,18 @@ export const UI = ({
     typewriterInstance.stop();
     typewriterInstance.pause();
     setIsTyping(false);
-  
+
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current);
       scrollIntervalRef.current = null; // Reset ref
     }
-  
-    if (tries >= 20 && !premiumOryn) {
+
+    if (tries >= 10 && !premiumOryn) {
       setDisable(true);
     } else {
       setDisable(false);
     }
   };
-  
 
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -184,7 +179,7 @@ export const UI = ({
   }, [messages, loadingMessage, typewriterRef?.current?.offsetHeight]);
 
   useEffect(() => {
-    if (tries >= 20 && !premiumOryn || !coinbase) {
+    if ((tries >= 10 && !premiumOryn) || !coinbase) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -209,7 +204,7 @@ export const UI = ({
           )}
 
           {defaultToggle && (
-            <div className="help-stamp p-3 d-flex flex-column gap-4 align-items-center">
+            <div className="help-stamp p-3 d-flex flex-column gap-2 gap-lg-4 align-items-center">
               <img src={vectorD} alt="dypians" />
               <h6 className="mb-0 help-stamp-text">What can I help with?</h6>
             </div>
@@ -254,16 +249,16 @@ export const UI = ({
                             console.log("Typewriter instance set:", typewriter);
                             setTypewriterInstance(typewriter);
                             setIsTyping(true);
-                          
+
                             // Clear any existing interval before setting a new one
                             if (scrollIntervalRef.current) {
                               clearInterval(scrollIntervalRef.current);
                             }
-                          
+
                             scrollIntervalRef.current = setInterval(() => {
                               scrollToBottom();
                             }, 100);
-                          
+
                             typewriter
                               .callFunction(() => {
                                 setIsTyping(false);
@@ -273,7 +268,6 @@ export const UI = ({
                               })
                               .start();
                           }}
-                          
                         />
                       </div>
                     ) : (
@@ -292,7 +286,7 @@ export const UI = ({
               </div>
             )}
           </div>
-          {defaultToggle && tries < 20 && coinbase && (
+          {defaultToggle && tries < 10 && coinbase && (
             <div
               className="default-messages-holder  mb-3 d-flex  gap-3 gap-lg-4"
               ref={containerRef}
@@ -310,15 +304,18 @@ export const UI = ({
                     setDefaultToggle(false);
                   }}
                 >
-                  <h6 className="default-message mb-0"
-                  style={{color: index === 2 && "#f3bf09"}}
-                  >{item}</h6>
+                  <h6
+                    className="default-message mb-0"
+                    style={{ color: index === 2 && "#f3bf09" }}
+                  >
+                    {item}
+                  </h6>
                 </div>
               ))}
             </div>
           )}
           <div className="d-flex w-100 flex-column gap-2">
-            {tries >= 20 && !premiumOryn && (
+            {tries >= 10 && !premiumOryn && (
               <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
                 <div className="d-flex flex-column gap-2">
                   <span className="premium-oryn-title">
@@ -326,7 +323,7 @@ export const UI = ({
                   </span>
                   <span className="premium-oryn-desc">
                     Upgrade to premium model or wait until the limit is reset
-                    after this time: 09:07 PM
+                    after 00:00 UTC
                   </span>
                 </div>
                 <button className="explore-btn px-3 py-2" onClick={openPopup}>
@@ -335,21 +332,21 @@ export const UI = ({
               </div>
             )}
             {!coinbase && (
-              <div className="connect-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
-                <div className="d-flex flex-column gap-2">
-                  <span className="premium-oryn-title">Connect Wallet</span>
+              <div className="connect-oryn-wrapper d-flex  gap-2 gap-lg-0 align-items-center justify-content-between p-3">
+                <div className="d-flex flex-column gap-2 w-100">
+                  {/* <span className="premium-oryn-title">Connect Wallet</span> */}
                   <span
-                    className="premium-oryn-desc"
-                    style={{ color: "#F3BF09" }}
+                    className="premium-oryn-title"
+                    style={{ color: "#FFFFFF" }}
                   >
-                    Connect your wallet in order to interact with Oryn
+                    Connect wallet to interact with Oryn
                   </span>
                 </div>
                 <button
                   className="getpremium-btn px-3 py-2"
                   onClick={handleConnectWallet}
                 >
-                  Connect Wallet
+                  Connect 
                 </button>
               </div>
             )}
