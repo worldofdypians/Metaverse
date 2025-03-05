@@ -299,20 +299,25 @@ input:checked + .slider:before {
   left: 0;
   margin: auto;
   height: fit-content;
-  width: 33%;
+  width: 25%;
   pointer-events: none;
   @media screen and (max-width: 786px) {
-    width: 90%;
+    width: 65%;
+  bottom: 50%;
+
   }
 }
 
 .help-stamp-text {
   color: #c0c9ff;
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 20px; /* 90.909% */
+  @media screen and (max-width: 786px) {
+  font-size: 15px;
+  }
 }
 
 .oryn-popup-title {
