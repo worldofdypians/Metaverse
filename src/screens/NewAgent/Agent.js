@@ -94,7 +94,7 @@ const Agent = ({
   const handleApprove = async () => {
     setdepositLoading(true);
     window.web3 = new Web3(window.ethereum);
-    let amount = new BigNumber(100).times(1e18).toFixed(0);
+    let amount = new BigNumber(10000).times(1e18).toFixed(0);
     await reward_token_wod
       .approve(window.config.oryn_premium_address, amount)
       .then(() => {
@@ -124,7 +124,7 @@ const Agent = ({
 
     setdepositLoading(true);
 
-    let amount = new BigNumber(100).times(1e18).toFixed(0);
+    let amount = new BigNumber(10000).times(1e18).toFixed(0);
 
     await oryn_premium_contract.methods
       .deposit(amount)
@@ -281,7 +281,7 @@ const Agent = ({
   };
 
   useEffect(() => {
-    checkApproval(100);
+    checkApproval(10000);
   }, [popup]);
 
   useEffect(() => {
