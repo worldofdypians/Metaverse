@@ -154,7 +154,7 @@ window.config = {
   wod_token_testnet_address: "0x7FcDfeCeE90c6A428FE13fE48641D58807B74873",
   vesting_address: "0xD62FC589701C1FC54675124C42fe1D7fF4e0204C",
   vesting_special_address: "0x89e17d1b7dd50dea02f082c88bd0a3e380f338b8",
-  otc_address: '0x9e366d29486b042b09bbabd3dd5e09271453275d',
+  otc_address: "0x9e366d29486b042b09bbabd3dd5e09271453275d",
 
   private_address: "0x0A3C5eE8F6F7b552E436f922e4F3a28E24343f7b",
   kol_address: "0xaD07ef12F836409FF0d7206860Fd0174F7Bda342",
@@ -162,7 +162,7 @@ window.config = {
 
   advisors_address: "0x255b1C2e3f2FF180d45f1e055224d97b23079513",
   ido_address: "0x9f149D2d422a12Ba34bee11473863625B9793B66",
-
+  oryn_premium_address: "0xFBDe5e66C39823A965a236605816226D656ebafB",
   commitmenteth_tokens: [
     {
       symbol: "USDT",
@@ -368,7 +368,6 @@ window.config = {
   constant_staking_wod4_address: "0x0675B497f52a0426874151c1e3267801fAA15C18",
   constant_staking_wod5_address: "0x5d35E4fC8624453A539eB261728aF5CDAbF4F652",
 
-
   reward_token_wod_address: "0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   reward_token_wod_test_address: "0x810C42A71358dc1e0Ecc32815DadD90c586AfD1c",
 
@@ -380,7 +379,6 @@ window.config = {
   // governance_address: "0xdb2E1287AAC9974AB28a66fABF9bCB34C5f37712",
 
   vote_duration_in_seconds: 259200, // 3 days
-
 };
 
 window.infuraWeb3 = new Web3(window.config.infura_endpoint);
@@ -608,7 +606,6 @@ window.constant_staking_wod4 = new CONSTANT_STAKING_WOD(
 window.constant_staking_wod5 = new CONSTANT_STAKING_WOD(
   "CONSTANT_STAKING_WOD5"
 );
-
 
 /**
  *
@@ -1761,8 +1758,6 @@ class MAT_NFT {
 
 window.mat_nft = new MAT_NFT();
 
-
-
 /**
  *
  * @param {"TOKEN" | "SEI_NFT" } key
@@ -1862,7 +1857,6 @@ class SEI_NFT {
 }
 
 window.sei_nft = new SEI_NFT();
-
 
 /**
  *
@@ -14011,6 +14005,202 @@ window.DAILY_BONUS_SEI_ABI = [
     name: "removePremiumUser",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+window.ORYN_PREMIUM_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_wodToken",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_minimumLockAmount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "deposit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getRemainingTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "hasLocked",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "locks",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "unlockStart",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "isUnlockStarted",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "minimumLockAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_token",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "ownerWithdrawERC20",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newMinimum",
+        type: "uint256",
+      },
+    ],
+    name: "setMinimumLockAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "startUnlock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "wodToken",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
@@ -33798,10 +33988,10 @@ async function getEstimatedTokenSubscriptionAmountSei(tokenAddress) {
     window.config.subscription_sei_address
   );
   if (seiContract) {
- 
     return await seiContract.methods
-      .getEstimatedTokenSubscriptionAmount(tokenAddress,0)
-      .call().catch((e) => {
+      .getEstimatedTokenSubscriptionAmount(tokenAddress, 0)
+      .call()
+      .catch((e) => {
         return 100000000;
       });
   }
@@ -34000,7 +34190,6 @@ Object.keys(window.config)
       k.startsWith("token_") ||
       k.startsWith("reward_token_wod") ||
       k.startsWith("reward_token_wod_test") ||
-
       k.startsWith("constant_staking_wod") ||
       k.startsWith("constant_staking_wod1") ||
       k.startsWith("constant_staking_wod2") ||
