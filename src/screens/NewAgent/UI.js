@@ -18,6 +18,7 @@ export const UI = ({
   coinbase,
   handleConnectWallet,
   setPlayAudio,
+  premiumOryn
 }) => {
   const [messages, setMessages] = useState([
     // {
@@ -140,17 +141,25 @@ export const UI = ({
     typewriterInstance.stop();
     typewriterInstance.pause();
     setIsTyping(false);
-    if (tries >= 20) {
+  
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+      scrollIntervalRef.current = null; // Reset ref
+    }
+  
+    if (tries >= 20 && !premiumOryn) {
       setDisable(true);
     } else {
-      setDisable(false); // Re-enable input
+      setDisable(false);
     }
   };
+  
 
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const scrollIntervalRef = useRef(null);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -175,7 +184,7 @@ export const UI = ({
   }, [messages, loadingMessage, typewriterRef?.current?.offsetHeight]);
 
   useEffect(() => {
-    if (tries >= 20 || !coinbase) {
+    if (tries >= 20 && !premiumOryn || !coinbase) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -245,20 +254,26 @@ export const UI = ({
                             console.log("Typewriter instance set:", typewriter);
                             setTypewriterInstance(typewriter);
                             setIsTyping(true);
-                            // setDisable(true);
-                            const interval = setInterval(() => {
+                          
+                            // Clear any existing interval before setting a new one
+                            if (scrollIntervalRef.current) {
+                              clearInterval(scrollIntervalRef.current);
+                            }
+                          
+                            scrollIntervalRef.current = setInterval(() => {
                               scrollToBottom();
                             }, 100);
-
+                          
                             typewriter
                               .callFunction(() => {
                                 setIsTyping(false);
-                                clearInterval(interval);
+                                clearInterval(scrollIntervalRef.current);
+                                scrollIntervalRef.current = null; // Reset ref
                                 scrollToBottom();
-                                // setDisable(false);
                               })
                               .start();
                           }}
+                          
                         />
                       </div>
                     ) : (
@@ -303,7 +318,7 @@ export const UI = ({
             </div>
           )}
           <div className="d-flex w-100 flex-column gap-2">
-            {tries >= 20 && (
+            {tries >= 20 && !premiumOryn && (
               <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
                 <div className="d-flex flex-column gap-2">
                   <span className="premium-oryn-title">

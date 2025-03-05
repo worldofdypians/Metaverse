@@ -67,7 +67,6 @@ const OrynPopup = ({
     }
   }, [withdrawTimer])
     
-  console.log(withdrawTimer, "timer");
   
 
   return (

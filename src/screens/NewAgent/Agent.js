@@ -404,6 +404,7 @@ const Agent = ({
                     handleConnectWallet={handleConnectWallet}
                     openPopup={() => setPopup(true)}
                     setPlayAudio={setPlayAudio}
+                    premiumOryn={premiumOryn}
                   />
                 </div>
               </div>
