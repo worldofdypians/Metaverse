@@ -315,7 +315,7 @@ export const UI = ({
             </div>
           )}
           <div className="d-flex w-100 flex-column gap-2">
-            {tries >= 10 && !premiumOryn && (
+            {tries >= 10 && !premiumOryn && coinbase && (
               <div className="premium-oryn-wrapper d-flex flex-column flex-lg-row gap-2 gap-lg-0 align-items-center justify-content-between p-3">
                 <div className="d-flex flex-column gap-2">
                   <span className="premium-oryn-title">
