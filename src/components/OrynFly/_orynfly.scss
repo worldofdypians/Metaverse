@@ -1,0 +1,70 @@
+.oryn-gif-holder {
+  // height: 400px;w
+  // width: 200px;
+  position: fixed;
+  bottom: 10%;
+  right: 0;
+  z-index: 10;
+}
+
+.oryn-gif {
+  width: 50%;
+  @media screen and (max-width: 1000px) {
+    width: 60%;
+  }
+}
+
+.oryn-chat-title {
+  width: 55%;
+  background: rgba(8, 11, 42, 0.8);
+  border: 1px solid #525469;
+  border-radius: 30px;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s;
+
+  h6{
+    color: #ffffff;
+    font-size: 14px;
+  }
+}
+
+.oryn-chat-active{
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+
+.chat-fang {
+    width: 20px;
+    height: 25px;
+    background-color: rgba(8, 11, 42, 0.8);
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    clip-path: polygon(50% 0%, 100% 100%, 0 0);
+  }
+
+  .oryn-gif {
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

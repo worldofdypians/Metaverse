@@ -116,6 +116,34 @@
   background-position: 100% 0 !important;
 }
 
+.reverse-btn {
+  border-radius: 12px;
+  background: linear-gradient(270deg, #f8845b, #f0603a, #f0603a, #f8845b);
+  background-size: 300%;
+  background-position: 0 0;
+  font-family: Open Sans, Arial, Helvetica, sans-serif !important;
+  color: #eeedff !important;
+  color: #eeedff !important;
+  padding: 12px 30px !important;
+  text-align: center;
+  font-size: 17.28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: none;
+  transition: all 0.25s;
+  width: fit-content;
+  text-transform: uppercase;
+  @media screen and (max-width: 786px) {
+    font-size: 13px;
+  }
+}
+
+.reverse-btn:hover {
+  background-position: 100% 0 !important;
+}
+
+
 .disabled-btn-gov {
   color: #c0c9ff !important;
   background: transparent;
