@@ -10,7 +10,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { handleSwitchNetworkhook } from "../../hooks/hooks";
 import { useAuth } from "../../screens/Account/src/Utils.js/Auth/AuthDetails";
 import axios from "axios";
- 
 
 const Header = ({
   handleSignUp,
@@ -922,7 +921,7 @@ const Header = ({
                   />
 
                   <div
-                    className={`header-dropdown p-4 d-flex flex-column gap-2 ${
+                    className={`header-dropdown  p-4 d-flex flex-column gap-2 ${
                       dropdown.account === "account"
                         ? "header-dropdown-active"
                         : ""
@@ -1039,7 +1038,13 @@ const Header = ({
                                   className="d-flex align-items-center gap-1 syncbtn px-2 py-1"
                                   onClick={onSyncClick}
                                 >
-                                  <img src={'https://cdn.worldofdypians.com/wod/sync.svg'} alt="" /> Sync
+                                  <img
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/sync.svg"
+                                    }
+                                    alt=""
+                                  />{" "}
+                                  Sync
                                 </button>
                               )}
                             </div>
@@ -1049,6 +1054,25 @@ const Header = ({
                       ) : (
                         <></>
                       )}
+                      <NavLink
+                        to={"/ai-agent"}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdown-nav nav-active p-2 d-flex align-items-center gap-2"
+                            : "dropdown-nav p-2 d-flex align-items-center gap-2"
+                        }
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/oryn-transparent.png"
+                          }
+                          alt=""
+                        />
+                        Oryn AI Agent
+                      </NavLink>
+                      <hr className="header-divider my-0" />
                       <NavLink
                         to={"/account/prime"}
                         className={({ isActive }) =>
@@ -1173,7 +1197,6 @@ const Header = ({
                 </div>
               </div>
             </div>
-       
 
             {!coinbase ? (
               // <div className="linearborder2">
@@ -1443,33 +1466,33 @@ const Header = ({
                               <img
                                 src={
                                   ethState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/eth.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/eth.svg"
                                     : bnbState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                                     : opbnbState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/bnbIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                                     : avaxState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/avaxIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
                                     : baseState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/base.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/base.svg"
                                     : confluxState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/confluxIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
                                     : skaleState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/skaleIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
                                     : coreState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/core.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/core.svg"
                                     : victionState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/viction.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/viction.svg"
                                     : immutableState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/immutable.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/immutable.svg"
                                     : mantaState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/manta.png'
+                                    ? "https://cdn.worldofdypians.com/wod/manta.png"
                                     : taikoState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/taiko.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/taiko.svg"
                                     : matState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/matchainIcon.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
                                     : seiState === true
-                                    ? 'https://cdn.worldofdypians.com/wod/seiLogo.svg'
+                                    ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                                     : "https://cdn.worldofdypians.com/wod/error.svg"
                                 }
                                 width={20}
@@ -1507,19 +1530,40 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x1", 1)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/eth.svg'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/eth.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               Ethereum
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x38", 56)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               BNB Chain
                             </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xcc", 204)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               opBNB Chain
                             </Dropdown.Item>
                             {window.WALLET_TYPE !== "binance" &&
@@ -1528,7 +1572,9 @@ const Header = ({
                                   onClick={() => switchNetwork("0x2ba", 698)}
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1540,7 +1586,14 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa9", 169)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/manta.png'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/manta.png"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               Manta
                             </Dropdown.Item>
                             {window.WALLET_TYPE !== "binance" &&
@@ -1551,7 +1604,9 @@ const Header = ({
                                   }
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1566,7 +1621,9 @@ const Header = ({
                                   onClick={() => switchNetwork("0x45c", 1116)}
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/core.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/core.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1577,7 +1634,14 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0x2105", 8453)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/base.svg'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/base.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               Base
                             </Dropdown.Item>
                             {window.WALLET_TYPE !== "binance" &&
@@ -1586,7 +1650,9 @@ const Header = ({
                                   onClick={() => switchNetwork("0x531", 1329)}
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1601,7 +1667,9 @@ const Header = ({
                                   onClick={() => switchNetwork("0x58", 88)}
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/viction.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/viction.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1612,7 +1680,14 @@ const Header = ({
                             <Dropdown.Item
                               onClick={() => switchNetwork("0xa86a", 43114)}
                             >
-                              <img src={'https://cdn.worldofdypians.com/wod/avaxIcon.svg'} alt="" width={20} height={20} />
+                              <img
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
+                                }
+                                alt=""
+                                width={20}
+                                height={20}
+                              />
                               Avalanche
                             </Dropdown.Item>
                             {window.WALLET_TYPE !== "binance" &&
@@ -1623,7 +1698,9 @@ const Header = ({
                                   }
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                    }
                                     alt=""
                                     width={20}
                                     height={20}
@@ -1637,7 +1714,9 @@ const Header = ({
                                   onClick={() => switchNetwork("0x343b", 13371)}
                                 >
                                   <img
-                                    src={'https://cdn.worldofdypians.com/wod/immutable.svg'}
+                                    src={
+                                      "https://cdn.worldofdypians.com/wod/immutable.svg"
+                                    }
                                     width={20}
                                     height={20}
                                     alt=""
@@ -1649,7 +1728,9 @@ const Header = ({
                               onClick={() => switchNetwork("0x406", 1030)}
                             >
                               <img
-                                src={'https://cdn.worldofdypians.com/wod/confluxIcon.svg'}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                }
                                 alt=""
                                 width={20}
                                 height={20}

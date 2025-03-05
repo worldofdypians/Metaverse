@@ -5117,13 +5117,14 @@ function App() {
               <Agent
                 isConnected={isConnected}
                 coinbase={coinbase}
-                handleConnectWallet={handleConnectWallet}
+                handleConnectWallet={() => {
+                  setwalletModal(true);
+                }}
                 email={email}
                 premiumOryn={premiumOryn}
                 chainId={networkId}
                 handleSwitchNetwork={handleSwitchNetwork}
                 checkPremiumOryn={checkPremiumOryn}
-                
               />
             }
           />
