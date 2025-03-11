@@ -4967,9 +4967,9 @@ function App() {
           location.pathname.includes("map") && "px-0"
         } main-wrapper2 px-0 position-relative`}
       >
-        {!location.pathname.includes("ai-agent") && orynPop && (
-          <OrynFly onClose={() => setOrynPop(false)} />
-        )}
+        {!location.pathname.includes("ai-agent") &&
+          !location.pathname.includes("staking") &&
+          orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
           handleSignUp={handleShowWalletModal}

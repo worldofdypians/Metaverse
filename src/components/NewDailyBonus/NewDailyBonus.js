@@ -12,7 +12,6 @@ import { styled } from "@mui/material";
 import useWindowSize from "../../hooks/useWindowSize";
 import Slider from "react-slick";
 import successSound from "./assets/success.mp3";
-   
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -76,7 +75,7 @@ const NewDailyBonus = ({
   onChestClaimed,
   onSkaleChestClaimed,
   listedNFTS,
-  dypTokenData, 
+  dypTokenData,
   ethTokenData,
   handleSwitchChain,
   openedSkaleChests,
@@ -134,6 +133,7 @@ const NewDailyBonus = ({
   openedMatChests,
   onMatChestClaimed,
   allMatChests,
+  onConnectWallet,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -237,25 +237,25 @@ const NewDailyBonus = ({
 
   const winDangerItems = [
     {
-      image: 'https://cdn.worldofdypians.com/wod/wodRound.png',
+      image: "https://cdn.worldofdypians.com/wod/wodRound.png",
       holder: false,
       message: "Hold >1 CAWS NFT",
       required: true,
     },
     {
-      image: 'https://cdn.worldofdypians.com/wod/wodRound.png',
+      image: "https://cdn.worldofdypians.com/wod/wodRound.png",
       holder: true,
       message: "Hold Genesis NFT",
       required: true,
     },
     {
-      image: 'https://cdn.worldofdypians.com/wod/premiumIcon.webp',
+      image: "https://cdn.worldofdypians.com/wod/premiumIcon.webp",
       holder: false,
       message: "Prime Users",
       required: true,
     },
     {
-      image: 'https://cdn.worldofdypians.com/wod/dypius.svg',
+      image: "https://cdn.worldofdypians.com/wod/dypius.svg",
       holder: true,
       message: "Hold >$1,000 in DYP v2",
       required: false,
@@ -298,7 +298,7 @@ const NewDailyBonus = ({
       title: "Stars",
       title2: "",
       amount: "Stars",
-      img: 'star',
+      img: "star",
       error: true,
       threshold: [],
       min: 10,
@@ -320,11 +320,10 @@ const NewDailyBonus = ({
       amount: "$350-$700",
       img: 1500,
       error: false,
-      threshold: [350,700],
+      threshold: [350, 700],
       min: 350,
       max: 700,
     },
-
   ];
 
   const [chain, setChain] = useState("bnb");
@@ -726,7 +725,7 @@ const NewDailyBonus = ({
           }
         }
       });
-      settotalSeiStars(resultstars)
+      settotalSeiStars(resultstars);
 
       settotalSeiPoints(resultSeiPoints);
       settotalSeiUsd(resultSeiUsd);
@@ -887,9 +886,7 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
@@ -913,9 +910,7 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
@@ -948,9 +943,7 @@ const NewDailyBonus = ({
         );
       }
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     } else {
       window.alertify.error("No web3 detected. Please install Metamask!");
     }
@@ -976,9 +969,7 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
   const handleVictionPool = async () => {
@@ -1001,9 +992,7 @@ const NewDailyBonus = ({
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
     } else {
-      window.alertify.error(
-        "This network is not available on Binance Wallet"
-      );
+      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
@@ -1078,10 +1067,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1106,8 +1095,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1116,17 +1106,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1139,7 +1128,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1155,10 +1144,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1183,8 +1172,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1193,17 +1183,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1216,7 +1205,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1233,10 +1222,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1261,8 +1250,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1271,17 +1261,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1294,7 +1283,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1315,10 +1304,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1343,8 +1332,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1353,17 +1343,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1376,7 +1365,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1395,10 +1384,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1423,8 +1412,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1433,17 +1423,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1456,10 +1445,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    }  else {
+    } else {
       setLiveRewardData([]);
     }
   };
@@ -1476,10 +1465,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1504,8 +1493,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1514,17 +1504,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1537,10 +1526,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    }  else {
+    } else {
       setLiveRewardData([]);
     }
   };
@@ -1557,10 +1546,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1585,8 +1574,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1595,17 +1585,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1618,7 +1607,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1637,10 +1626,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1665,8 +1654,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1675,17 +1665,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1698,10 +1687,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    }  else {
+    } else {
       setLiveRewardData([]);
     }
   };
@@ -1718,10 +1707,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1746,8 +1735,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1756,17 +1746,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1779,10 +1768,10 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
-    }  else {
+    } else {
       setLiveRewardData([]);
     }
   };
@@ -1798,10 +1787,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1826,8 +1815,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1836,17 +1826,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1859,7 +1848,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1878,10 +1867,10 @@ const NewDailyBonus = ({
       const resultPointsStars =
         filteredResult.rewards.length === 2 &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Stars" || obj.rewardType === "Points"
+          return obj.rewardType === "Stars" || obj.rewardType === "Points";
         }) !== undefined &&
         filteredResult.rewards.find((obj) => {
-          return obj.rewardType === "Money"
+          return obj.rewardType === "Money";
         }) === undefined;
 
       const resultPointsMoney =
@@ -1906,8 +1895,9 @@ const NewDailyBonus = ({
           );
         }) !== undefined;
 
-        const resultWonMoneyNoCaws = 
-        filteredResult.rewards.length === 3 &&  filteredResult.rewards.find((obj) => {
+      const resultWonMoneyNoCaws =
+        filteredResult.rewards.length === 3 &&
+        filteredResult.rewards.find((obj) => {
           return (
             obj.rewardType === "Stars" ||
             (obj.rewardType === "Money" &&
@@ -1916,17 +1906,16 @@ const NewDailyBonus = ({
                 "Unfortunately, you are unable to claim this reward since you do not hold any CAWS NFTs") ||
             obj.rewardType === "Points"
           );
-        }) !== undefined 
-      
-        const resultPremium = filteredResult.rewards.find((obj) => {
-          return (
-            obj.rewardType === "Money" &&
-            obj.status === "Unclaimed" &&
-            obj.claimType === "PREMIUM"
-          );
-        });
-  
-        
+        }) !== undefined;
+
+      const resultPremium = filteredResult.rewards.find((obj) => {
+        return (
+          obj.rewardType === "Money" &&
+          obj.status === "Unclaimed" &&
+          obj.claimType === "PREMIUM"
+        );
+      });
+
       if (resultPoints) {
         setMessage("wonPoints");
       } else if (resultPointsStars) {
@@ -1939,7 +1928,7 @@ const NewDailyBonus = ({
         setMessage("winDangerCaws");
       } else if (resultPremium) {
         setMessage("needPremium");
-      } 
+      }
       setLiveRewardData(filteredResult);
       setRewardData(filteredResult);
     } else {
@@ -1959,7 +1948,6 @@ const NewDailyBonus = ({
     allMatChests,
     allCoreChests,
     allSeiChests,
-
   ]);
 
   // useEffect(() => {
@@ -1973,7 +1961,10 @@ const NewDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (email && coinbase && address) {
+      if (!email) {
+        setMessage("login");
+        setDisable(true);
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2032,12 +2023,15 @@ const NewDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "skale") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2095,7 +2089,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2106,7 +2100,10 @@ const NewDailyBonus = ({
       }
     } else if (chain === "core") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2164,7 +2161,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2175,7 +2172,10 @@ const NewDailyBonus = ({
       }
     } else if (chain === "viction") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2233,7 +2233,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2243,7 +2243,10 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-      if (email && coinbase && address) {
+      if (!email) {
+        setMessage("login");
+        setDisable(true);
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2301,11 +2304,14 @@ const NewDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "base") {
-      if (email && coinbase && address) {
+      if (!email) {
+        setMessage("login");
+        setDisable(true);
+      } else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2363,12 +2369,15 @@ const NewDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "taiko") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2426,7 +2435,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2437,7 +2446,10 @@ const NewDailyBonus = ({
       }
     } else if (chain === "matchain") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2495,7 +2507,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2506,7 +2518,10 @@ const NewDailyBonus = ({
       }
     } else if (chain === "sei") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2564,7 +2579,7 @@ const NewDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2626,7 +2641,12 @@ const NewDailyBonus = ({
                 className="close-daily-btn d-flex align-items-center justify-content-center"
                 onClick={onclose}
               >
-                <img src={'https://cdn.worldofdypians.com/wod/emptyXmark.svg'} width={20} height={20} alt="" />
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/emptyXmark.svg"}
+                  width={20}
+                  height={20}
+                  alt=""
+                />
               </div>
               <h6 className="rewards-upper-title mb-9 font-organetto">
                 Rewards
@@ -2665,7 +2685,14 @@ const NewDailyBonus = ({
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/warning.svg"
+                            }
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
                           <span
                             className="db-tooltip-desc"
                             style={{ color: "#F08526" }}
@@ -2680,7 +2707,14 @@ const NewDailyBonus = ({
                         <br />
                         <br />
                         <div className="d-flex align-items-center gap-2">
-                          <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/danger.svg"
+                            }
+                            alt=""
+                            width={20}
+                            height={20}
+                          />
                           <span
                             className="db-tooltip-desc"
                             style={{ color: "#C92422" }}
@@ -2705,7 +2739,7 @@ const NewDailyBonus = ({
                   >
                     <img
                       onClick={() => setTooltip(true)}
-                      src={'https://cdn.worldofdypians.com/wod/infoIcon.svg'}
+                      src={"https://cdn.worldofdypians.com/wod/infoIcon.svg"}
                       width={35}
                       height={35}
                       style={{ cursor: "pointer" }}
@@ -2738,7 +2772,7 @@ const NewDailyBonus = ({
                   )}{" "}
                 </h6>
                 <span className="new-total-points-type d-none d-lg-flex mb-0">
-                   Points
+                  Points
                 </span>
                 <h6 className="new-total-points  mb-0">
                   {getFormattedNumber(
@@ -2812,7 +2846,7 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/bnbBg.png'}
+                            src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
@@ -2846,7 +2880,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2862,7 +2898,9 @@ const NewDailyBonus = ({
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2875,8 +2913,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2885,8 +2923,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2895,8 +2933,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2905,8 +2943,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     bnbPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2915,8 +2953,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     bnbPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2935,7 +2973,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
                             className={`chain-img ${
                               chain === "matchain" && "chain-img-active"
                             }`}
@@ -2967,7 +3007,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -2980,8 +3022,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     matPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -2990,8 +3032,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     matPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3000,8 +3042,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     matPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3010,8 +3052,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     matPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3020,8 +3062,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     matPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3038,7 +3080,7 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
-                           <HtmlTooltipGift
+                          <HtmlTooltipGift
                             placement="top"
                             title={
                               <span className="card-eth-chain-text">
@@ -3047,13 +3089,17 @@ const NewDailyBonus = ({
                             }
                           >
                             <img
-                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
                               alt=""
                               className="position-absolute manta-gift"
                             />
                           </HtmlTooltipGift>
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
+                            }
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
@@ -3084,7 +3130,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3097,8 +3145,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3107,8 +3155,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3117,8 +3165,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3127,8 +3175,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     seiPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3137,16 +3185,15 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     seiPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
                                 />
                               </div>
                               <span className="percentage-span">
-                                {parseInt(seiPercentage)}%
-                                {/* Coming Soon */}
+                                {parseInt(seiPercentage)}%{/* Coming Soon */}
                               </span>
                             </div>
                           </div>
@@ -3157,7 +3204,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/mantaBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/mantaBg.png"
+                            }
                             className={`chain-img ${
                               chain === "manta" && "chain-img-active"
                             }`}
@@ -3188,7 +3237,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/manta.png'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/manta.png"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3201,8 +3252,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3211,8 +3262,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3221,8 +3272,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3231,8 +3282,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     mantaPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3241,8 +3292,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     mantaPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3261,7 +3312,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/taikoBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
                             className={`chain-img ${
                               chain === "taiko" && "chain-img-active"
                             }`}
@@ -3295,7 +3348,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3308,8 +3363,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3318,8 +3373,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3328,8 +3383,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3338,8 +3393,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     taikoPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3348,8 +3403,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     taikoPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3367,9 +3422,10 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           } w-100`}
                         >
-                         
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/coreBg.png"
+                            }
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
@@ -3402,7 +3458,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/core.svg"
+                                  }
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -3415,8 +3473,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     corePercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3425,8 +3483,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     corePercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3435,8 +3493,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     corePercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3445,8 +3503,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     corePercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3455,17 +3513,14 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     corePercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
                                 />
                               </div>
-                              <span
-                                className="percentage-span"
-                               
-                              >
+                              <span className="percentage-span">
                                 {parseInt(corePercentage)}%
                               </span>
                             </div>
@@ -3477,7 +3532,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon4.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
+                            }
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -3508,7 +3565,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3521,8 +3580,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     basePercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3531,8 +3590,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     basePercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3541,8 +3600,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     basePercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3551,8 +3610,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     basePercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3561,8 +3620,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     basePercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3580,7 +3639,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/skaleBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/skaleBg.png"
+                            }
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
@@ -3613,7 +3674,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3626,8 +3689,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3636,8 +3699,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3646,8 +3709,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3656,8 +3719,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     skalePercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3666,8 +3729,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     skalePercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3686,7 +3749,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/victionBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
@@ -3714,7 +3779,9 @@ const NewDailyBonus = ({
                             >
                               {" "}
                               <img
-                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
                                 width={20}
                                 height={20}
                                 alt=""
@@ -3727,8 +3794,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 20
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3737,8 +3804,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 40
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3747,8 +3814,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 60
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3757,8 +3824,8 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     victionPercentage >= 80
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
@@ -3767,17 +3834,14 @@ const NewDailyBonus = ({
                                   className="percent-img"
                                   src={
                                     victionPercentage === 100
-                                      ? 'https://cdn.worldofdypians.com/wod/percentageFilled.svg'
-                                      : 'https://cdn.worldofdypians.com/wod/percentageEmpty.svg'
+                                      ? "https://cdn.worldofdypians.com/wod/percentageFilled.svg"
+                                      : "https://cdn.worldofdypians.com/wod/percentageEmpty.svg"
                                   }
                                   height={8}
                                   alt=""
                                 />
                               </div>
-                              <span
-                                className="percentage-span"
-                                
-                              >
+                              <span className="percentage-span">
                                 {parseInt(victionPercentage)}%
                               </span>
                             </div>
@@ -3801,10 +3865,11 @@ const NewDailyBonus = ({
                           </div>
                         </div> */}
 
-                  
                         <div className={`position-relative chain-item w-100`}>
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon3.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon3.png"
+                            }
                             className={`chain-img`}
                             alt=""
                           />
@@ -3827,7 +3892,7 @@ const NewDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/bnbBg.png'}
+                            src={"https://cdn.worldofdypians.com/wod/bnbBg.png"}
                             className={`chain-img ${
                               chain === "bnb" && "chain-img-active"
                             }`}
@@ -3861,7 +3926,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3877,7 +3944,9 @@ const NewDailyBonus = ({
                                 onClick={handleOpBnbPool}
                               >
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/bnbIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3892,7 +3961,9 @@ const NewDailyBonus = ({
                           } w-100`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon.png"
+                            }
                             className={`chain-img ${
                               chain === "matchain" && "chain-img-active"
                             }`}
@@ -3924,7 +3995,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/matchainIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -3938,7 +4011,7 @@ const NewDailyBonus = ({
                             chain === "sei" && "chain-item-active"
                           } w-100`}
                         >
-                            <HtmlTooltipGift
+                          <HtmlTooltipGift
                             placement="top"
                             title={
                               <span className="card-eth-chain-text">
@@ -3947,13 +4020,17 @@ const NewDailyBonus = ({
                             }
                           >
                             <img
-                              src={"https://cdn.worldofdypians.com/wod/gift.png"}
+                              src={
+                                "https://cdn.worldofdypians.com/wod/gift.png"
+                              }
                               alt=""
                               className="position-absolute manta-gift"
                             />
                           </HtmlTooltipGift>
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon2.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon2.png"
+                            }
                             className={`chain-img ${
                               chain === "sei" && "chain-img-active"
                             }`}
@@ -3961,8 +4038,7 @@ const NewDailyBonus = ({
                           />
                           <div
                             className={`chain-title-wrapper ${
-                              chain === "sei" &&
-                              "chain-title-wrapper-active"
+                              chain === "sei" && "chain-title-wrapper-active"
                             } p-2 d-flex align-items-center flex-lg-column justify-content-between`}
                             onClick={() => {
                               setChain("sei");
@@ -3985,7 +4061,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/seiLogo.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/seiLogo.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4000,7 +4078,9 @@ const NewDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/mantaBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/mantaBg.png"
+                            }
                             className={`chain-img ${
                               chain === "manta" && "chain-img-active"
                             }`}
@@ -4034,7 +4114,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/manta.png'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/manta.png"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4050,7 +4132,9 @@ const NewDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/taikoBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/taikoBg.png"
+                            }
                             className={`chain-img ${
                               chain === "taiko" && "chain-img-active"
                             }`}
@@ -4084,7 +4168,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/taiko.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/taiko.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4100,7 +4186,9 @@ const NewDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/skaleBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/skaleBg.png"
+                            }
                             className={`chain-img ${
                               chain === "skale" && "chain-img-active"
                             }`}
@@ -4132,7 +4220,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/skaleIcon.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4146,9 +4236,10 @@ const NewDailyBonus = ({
                             chain === "core" && "chain-item-active"
                           }  w-auto`}
                         >
-                        
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/coreBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/coreBg.png"
+                            }
                             className={`chain-img ${
                               chain === "core" && "chain-img-active"
                             }`}
@@ -4181,7 +4272,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/core.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/core.svg"
+                                  }
                                   style={{ width: 20, height: 20 }}
                                   alt=""
                                 />{" "}
@@ -4197,7 +4290,9 @@ const NewDailyBonus = ({
                           }  w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/comingSoon4.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/comingSoon4.png"
+                            }
                             className={`chain-img ${
                               chain === "base" && "chain-img-active"
                             }`}
@@ -4231,7 +4326,9 @@ const NewDailyBonus = ({
                               >
                                 {" "}
                                 <img
-                                  src={'https://cdn.worldofdypians.com/wod/baseBlueLogo.svg'}
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/baseBlueLogo.svg"
+                                  }
                                   alt=""
                                   style={{ width: 20, height: 20 }}
                                 />{" "}
@@ -4247,7 +4344,9 @@ const NewDailyBonus = ({
                           } w-auto`}
                         >
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/victionBg.png'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/victionBg.png"
+                            }
                             className={`chain-img ${
                               chain === "viction" && "chain-img-active"
                             }`}
@@ -4275,7 +4374,9 @@ const NewDailyBonus = ({
                             >
                               {" "}
                               <img
-                                src={'https://cdn.worldofdypians.com/wod/viction.svg'}
+                                src={
+                                  "https://cdn.worldofdypians.com/wod/viction.svg"
+                                }
                                 style={{ width: 20, height: 20 }}
                                 alt=""
                               />{" "}
@@ -5413,26 +5514,25 @@ const NewDailyBonus = ({
                               BASE Network
                             </span>
                           </h6>
-                        ) 
-                          : chain === "sei" ? (
-                            <h6
-                              className="loader-text mb-0"
-                              style={{ color: "#ce5d1b" }}
+                        ) : chain === "sei" ? (
+                          <h6
+                            className="loader-text mb-0"
+                            style={{ color: "#ce5d1b" }}
+                          >
+                            Switch to{" "}
+                            <span
+                              style={{
+                                textDecoration: "underline",
+                                cursor: "pointer",
+                              }}
+                              onClick={handleSeiPool}
                             >
-                              Switch to{" "}
-                              <span
-                                style={{
-                                  textDecoration: "underline",
-                                  cursor: "pointer",
-                                }}
-                                onClick={handleSeiPool}
-                              >
-                                Sei Network
-                              </span>
-                            </h6>
-                          ) :
+                              Sei Network
+                            </span>
+                          </h6>
+                        ) : (
                           <></>
-                        }
+                        )}
                         <div className="loader red-loader">
                           <div className="dot" style={{ "--i": 0 }}></div>
                           <div className="dot" style={{ "--i": 1 }}></div>
@@ -5582,7 +5682,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/warning.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -5638,7 +5745,9 @@ const NewDailyBonus = ({
                         <div className="d-flex align-items-center gap-5 me-0 me-lg-3 px-3 px-lg-0">
                           <img
                             className="d-none d-lg-flex"
-                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                            }
                             style={{ width: 70, height: 70 }}
                             alt=""
                           />
@@ -5661,7 +5770,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/warning.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span
                               className="win-desc mb-0"
                               style={{ fontSize: 10 }}
@@ -5793,7 +5909,9 @@ const NewDailyBonus = ({
                         </div>
 
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                          }
                           alt=""
                           className="win-confetti"
                         />
@@ -5828,7 +5946,9 @@ const NewDailyBonus = ({
                         </div>
 
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                          }
                           alt=""
                           className="win-confetti"
                         />
@@ -5878,7 +5998,9 @@ const NewDailyBonus = ({
                         </div>
 
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/winConfetti.png'}
+                          src={
+                            "https://cdn.worldofdypians.com/wod/winConfetti.png"
+                          }
                           alt=""
                           className="win-confetti"
                         />
@@ -5912,7 +6034,9 @@ const NewDailyBonus = ({
                         </div>
                         <div className="d-flex align-items-center justify-content-between get-premium-wrapper p-3 p-lg-0">
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/premiumIcon.webp'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
+                            }
                             style={{ width: 60, height: 60 }}
                             alt=""
                           />
@@ -5963,6 +6087,44 @@ const NewDailyBonus = ({
                           </NavLink>
                         </div>
                       </div>
+                    ) : message === "connect" ? (
+                      <div
+                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        style={{
+                          border: "1px solid #8262D0",
+                          background:
+                            "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                        }}
+                      >
+                        <div
+                          className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6
+                            className="desc-title mb-0"
+                            style={{ color: "#fff" }}
+                          >
+                            Connect wallet
+                          </h6>
+                          <span className="chain-desc mb-0">
+                            Connect wallet in order to access Daily Bonus and
+                            earn tailored rewards!
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                          <button
+                            className="sign-in-btn px-4 py-1"
+                            onClick={() => {
+                              onConnectWallet();
+                            }}
+                          >
+                            Connect Wallet
+                          </button>
+                        </div>
+                      </div>
                     ) : message === "winDanger" ? (
                       <div className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper">
                         <div
@@ -5974,7 +6136,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6060,7 +6229,11 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={item.holder ? 'https://cdn.worldofdypians.com/wod/greenCheck.svg' : 'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                      src={
+                                        item.holder
+                                          ? "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                          : "https://cdn.worldofdypians.com/wod/redX.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6083,7 +6256,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6130,9 +6310,7 @@ const NewDailyBonus = ({
                                 0
                               )}
                             </h6>
-                            <span className="win-amount-desc">
-                           Stars
-                            </span>
+                            <span className="win-amount-desc">Stars</span>
                           </div>
                           <div className="d-flex flex-column align-items-center danger-border p-1">
                             <h6 className="win-amount mb-0">
@@ -6167,12 +6345,12 @@ const NewDailyBonus = ({
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                           : item.type === "CAWS"
-                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                           : item.type === "LAND"
-                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                       }
                                       alt=""
                                       width={70}
@@ -6182,7 +6360,9 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6233,12 +6413,12 @@ const NewDailyBonus = ({
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                             : item.type === "LAND"
-                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -6249,7 +6429,9 @@ const NewDailyBonus = ({
                                         }}
                                       />
                                       <img
-                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                        }
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6291,7 +6473,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6345,7 +6534,8 @@ const NewDailyBonus = ({
                           <h6 className="win-amount mb-0">+</h6>
                           <div className="d-flex flex-column align-items-center danger-border p-1">
                             <h6 className="win-amount mb-0">
-                              ${getFormattedNumber(
+                              $
+                              {getFormattedNumber(
                                 rewardData.rewards
                                   ? rewardData.rewards.find((obj) => {
                                       return obj.rewardType === "Money";
@@ -6375,12 +6565,12 @@ const NewDailyBonus = ({
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                           : item.type === "CAWS"
-                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                           : item.type === "LAND"
-                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                       }
                                       alt=""
                                       width={70}
@@ -6390,7 +6580,9 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6441,12 +6633,12 @@ const NewDailyBonus = ({
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                             : item.type === "LAND"
-                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -6457,7 +6649,9 @@ const NewDailyBonus = ({
                                         }}
                                       />
                                       <img
-                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                        }
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6499,7 +6693,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6568,12 +6769,12 @@ const NewDailyBonus = ({
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                           : item.type === "CAWS"
-                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                           : item.type === "LAND"
-                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                       }
                                       alt=""
                                       width={70}
@@ -6583,7 +6784,9 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6634,12 +6837,12 @@ const NewDailyBonus = ({
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                             : item.type === "LAND"
-                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -6650,7 +6853,9 @@ const NewDailyBonus = ({
                                         }}
                                       />
                                       <img
-                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                        }
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6692,7 +6897,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6761,12 +6973,12 @@ const NewDailyBonus = ({
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                           : item.type === "CAWS"
-                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                           : item.type === "LAND"
-                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                       }
                                       alt=""
                                       width={70}
@@ -6776,7 +6988,9 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -6827,12 +7041,12 @@ const NewDailyBonus = ({
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                             : item.type === "LAND"
-                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -6843,7 +7057,9 @@ const NewDailyBonus = ({
                                         }}
                                       />
                                       <img
-                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                        }
                                         alt=""
                                         className="holder-check"
                                       />
@@ -6885,7 +7101,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/danger.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/danger.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span className="win-desc mb-0">
                               The{" "}
                               <span style={{ color: "#F2C624" }}>
@@ -6954,12 +7177,12 @@ const NewDailyBonus = ({
                                       className="nft-reward-img"
                                       src={
                                         item.type === "PREMIUM"
-                                          ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                          ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                           : item.type === "CAWS"
-                                          ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                          ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                           : item.type === "LAND"
-                                          ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                          : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                          ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                          : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                       }
                                       alt=""
                                       width={70}
@@ -6969,7 +7192,9 @@ const NewDailyBonus = ({
                                       }}
                                     />
                                     <img
-                                      src={'https://cdn.worldofdypians.com/wod/greenCheck.svg'}
+                                      src={
+                                        "https://cdn.worldofdypians.com/wod/greenCheck.svg"
+                                      }
                                       alt=""
                                       className="holder-check"
                                     />
@@ -7020,12 +7245,12 @@ const NewDailyBonus = ({
                                         className="nft-reward-img"
                                         src={
                                           item.type === "PREMIUM"
-                                            ? 'https://cdn.worldofdypians.com/wod/premiumIcon.webp'
+                                            ? "https://cdn.worldofdypians.com/wod/premiumIcon.webp"
                                             : item.type === "CAWS"
-                                            ? 'https://cdn.worldofdypians.com/wod/cawsRound.png'
+                                            ? "https://cdn.worldofdypians.com/wod/cawsRound.png"
                                             : item.type === "LAND"
-                                            ? 'https://cdn.worldofdypians.com/wod/wodRound.png'
-                                            : 'https://cdn.worldofdypians.com/wod/dypius.svg'
+                                            ? "https://cdn.worldofdypians.com/wod/wodRound.png"
+                                            : "https://cdn.worldofdypians.com/wod/dypius.svg"
                                         }
                                         alt=""
                                         width={70}
@@ -7036,7 +7261,9 @@ const NewDailyBonus = ({
                                         }}
                                       />
                                       <img
-                                        src={'https://cdn.worldofdypians.com/wod/redX.svg'}
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/redX.svg"
+                                        }
                                         alt=""
                                         className="holder-check"
                                       />
@@ -7078,7 +7305,14 @@ const NewDailyBonus = ({
                         >
                           <h6 className="win-text mb-0">You won</h6>
                           <div className="d-flex align-items-center gap-2">
-                            <img src={'https://cdn.worldofdypians.com/wod/warning.svg'} alt="" width={20} height={20} />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/warning.svg"
+                              }
+                              alt=""
+                              width={20}
+                              height={20}
+                            />
                             <span
                               className="win-desc mb-0"
                               style={{ fontSize: 10 }}
@@ -7234,11 +7468,11 @@ const NewDailyBonus = ({
                                 return (
                                   obj.rewardType !== "Points" &&
                                   Number(obj.reward) > item.min &&
-                                  Number(obj.reward) <= item.max && item.title === obj.rewardType
+                                  Number(obj.reward) <= item.max &&
+                                  item.title === obj.rewardType
                                 );
                               }) &&
-                              message != "needPremium")
-                              ||
+                              message != "needPremium") ||
                             (rewardData &&
                               rewardData.rewards?.find((obj) => {
                                 return (
@@ -7285,21 +7519,19 @@ const NewDailyBonus = ({
                                   return (
                                     obj.rewardType !== "Points" &&
                                     Number(obj.reward) > item.min &&
-                                    Number(obj.reward) <= item.max && item.title === obj.rewardType
+                                    Number(obj.reward) <= item.max &&
+                                    item.title === obj.rewardType
                                   );
-                                })
-                                 &&
+                                }) &&
+                                message != "needPremium") ||
+                              (rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === "Stars" &&
+                                    obj.rewardType === item.title
+                                  );
+                                }) &&
                                 message != "needPremium")
-                                ||
-                                (rewardData &&
-                                  rewardData.rewards?.find((obj) => {
-                                    return (
-                                      obj.rewardType === "Stars" &&
-                                      obj.rewardType === item.title
-                                    );
-                                  }) &&
-                                  message != "needPremium")
-                                  
                               ? "Active"
                               : ""
                             : (rewardData &&
@@ -7341,7 +7573,9 @@ const NewDailyBonus = ({
                         }) &&
                         message !== "needPremium" ? (
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/warning.svg'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/warning.svg"
+                            }
                             width={20}
                             height={20}
                             className="reward-warning"
@@ -7362,7 +7596,9 @@ const NewDailyBonus = ({
                           }) &&
                           message !== "needPremium" ? (
                           <img
-                            src={'https://cdn.worldofdypians.com/wod/danger.svg'}
+                            src={
+                              "https://cdn.worldofdypians.com/wod/danger.svg"
+                            }
                             width={20}
                             height={20}
                             className="reward-warning"
@@ -7386,7 +7622,7 @@ const NewDailyBonus = ({
                         }) &&
                         message === "needPremium" ? (
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/warning.svg'}
+                          src={"https://cdn.worldofdypians.com/wod/warning.svg"}
                           width={20}
                           height={20}
                           className="reward-warning"
@@ -7407,7 +7643,7 @@ const NewDailyBonus = ({
                         }) &&
                         message === "needPremium" ? (
                         <img
-                          src={'https://cdn.worldofdypians.com/wod/danger.svg'}
+                          src={"https://cdn.worldofdypians.com/wod/danger.svg"}
                           width={20}
                           height={20}
                           className="reward-warning"
@@ -7430,14 +7666,14 @@ const NewDailyBonus = ({
                               );
                             })
                               ? "#F2C624"
-                             : rewardData &&
-                              rewardData.rewards?.find((obj) => {
-                                return (
-                                  obj.rewardType === "Stars" &&
-                                obj.rewardType === item.title
-                                );
-                              })
-                                ? "#F2C624"
+                              : rewardData &&
+                                rewardData.rewards?.find((obj) => {
+                                  return (
+                                    obj.rewardType === "Stars" &&
+                                    obj.rewardType === item.title
+                                  );
+                                })
+                              ? "#F2C624"
                               : item.title2 !== "needPremium"
                               ? rewardData.rewards?.find((obj) => {
                                   return (
@@ -7708,7 +7944,7 @@ const NewDailyBonus = ({
         <BuyNftPopup
           nft={nft}
           onClose={() => setBuyNftPopup(false)}
-          dypTokenData={dypTokenData} 
+          dypTokenData={dypTokenData}
           ethTokenData={ethTokenData}
           handleSwitchChain={handleSwitchChain}
           chestIndex={isActiveIndex}
