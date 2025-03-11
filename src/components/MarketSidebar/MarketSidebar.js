@@ -43,7 +43,6 @@ const MarketSidebar = () => {
         style={{ height: "90%" }}
       >
         <div className="d-flex flex-column  gap-2">
-   
           {/* <div className="sidebar-separator my-2"></div> */}
           <div className="accordion" id="accordionExample">
             <div className="">
@@ -64,7 +63,9 @@ const MarketSidebar = () => {
                       <h6 className="sidebar-title mb-0">Collections</h6>
                     </div>
                     <img
-                      src={"https://cdn.worldofdypians.com/wod/sidebarArrow.svg"}
+                      src={
+                        "https://cdn.worldofdypians.com/wod/sidebarArrow.svg"
+                      }
                       style={{ position: "relative", right: "5px" }}
                       alt=""
                     />
@@ -216,7 +217,10 @@ const MarketSidebar = () => {
                 : "d-flex p-2 align-items-center gap-2 sidebar-item"
             }
             children={({ isActive }) => {
-              const icon = isActive  || location.pathname.includes("mint/timepiece")? "mintIconActive" : "mintIcon";
+              const icon =
+                isActive || location.pathname.includes("mint/timepiece")
+                  ? "mintIconActive"
+                  : "mintIcon";
               return (
                 <>
                   <img
@@ -229,7 +233,7 @@ const MarketSidebar = () => {
               );
             }}
           />
-       
+
           {email && (
             //  &&
             //   data &&
@@ -261,6 +265,27 @@ const MarketSidebar = () => {
               }}
             />
           )}
+          <NavLink
+            to="/ai-agent"
+            end
+            className={({ isActive }) =>
+              isActive
+                ? "d-flex p-2 align-items-center gap-2 sidebar-item sidebar-item-active"
+                : "d-flex p-2 align-items-center gap-2 sidebar-item"
+            }
+            children={({ isActive }) => {
+              return (
+                <>
+                  <img
+                    src={`https://cdn.worldofdypians.com/wod/oryn-transparent.png`}
+                    style={{ width: "20px", height: "20px" }}
+                    alt=""
+                  />
+                  <span className={`sidebar-title`}>Oryn AI Agent</span>
+                </>
+              );
+            }}
+          />
         </div>
       </div>
     </div>

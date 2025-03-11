@@ -14,7 +14,6 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
-import { ChatProvider } from "./screens/AIAgent/hooks/useChat";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 const queryClient = new QueryClient({
   defaultOptions: {

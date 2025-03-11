@@ -251,7 +251,7 @@ const Whitelist = ({
 
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     setcanClaim(tokensToClaimAmount_formatted > 0);
     setpendingTokens(tokensToClaimAmount_formatted);
 
@@ -268,7 +268,7 @@ const Whitelist = ({
 
     const tokensToClaimAmountOTC_formatted = new window.BigNumber(
       tokensToClaimAmountOTC / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     setcanClaimOTC(tokensToClaimAmountOTC_formatted > 0);
     setpendingTokensOTC(tokensToClaimAmountOTC_formatted);
 
@@ -285,7 +285,7 @@ const Whitelist = ({
 
     const tokensToClaimAmountPrivate_formatted = new window.BigNumber(
       tokensToClaimAmountPrivate / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     // setcanClaim(tokensToClaimAmountPrivate_formatted > 0);
     setpendingTokensPrivate(tokensToClaimAmountPrivate_formatted);
 
@@ -314,7 +314,7 @@ const Whitelist = ({
 
     const tokensToClaimAmountKol_formatted = new window.BigNumber(
       tokensToClaimAmountKol / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     // setcanClaim(tokensToClaimAmountKol_formatted > 0);
     setpendingTokensKOL(tokensToClaimAmountKol_formatted);
 
@@ -331,7 +331,7 @@ const Whitelist = ({
 
     const tokensToClaimAmountAdvisors_formatted = new window.BigNumber(
       tokensToClaimAmountAdvisors / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     // setcanClaim(tokensToClaimAmountAdvisors_formatted > 0);
     setpendingTokensAdvisors(tokensToClaimAmountAdvisors_formatted);
 
@@ -357,7 +357,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUser_formatted = new window.BigNumber(
         totalClaimedTokensByUser / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserClaimedTokens(totalClaimedTokensByUser_formatted);
     }
@@ -373,7 +373,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUserOTC_formatted = new window.BigNumber(
         totalClaimedTokensByUserOTC / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserClaimedTokensOTC(totalClaimedTokensByUserOTC_formatted);
     }
@@ -389,7 +389,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUserPrivate_formatted = new window.BigNumber(
         totalClaimedTokensByUserPrivate / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserClaimedTokensPrivate(totalClaimedTokensByUserPrivate_formatted);
     }
@@ -418,7 +418,7 @@ const Whitelist = ({
     }
     const totalClaimedTokensByUserKol_formatted = new window.BigNumber(
       totalClaimedTokensByUserKol / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     setuserClaimedTokensKOL(totalClaimedTokensByUserKol_formatted);
 
     let totalClaimedTokensByUserAdvisors = 0;
@@ -432,7 +432,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUserAdvisors_formatted = new window.BigNumber(
         totalClaimedTokensByUserAdvisors / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserClaimedTokensAdvisors(totalClaimedTokensByUserAdvisors_formatted);
     }
@@ -449,7 +449,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUser_formatted = new window.BigNumber(
         totalVestedTokensPerUser / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokens(totalClaimedTokensByUser_formatted);
     }
@@ -465,7 +465,7 @@ const Whitelist = ({
         });
       const totalClaimedTokensByUserOTC_formatted = new window.BigNumber(
         totalVestedTokensPerUserOTC / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokensOTC(totalClaimedTokensByUserOTC_formatted);
     }
@@ -481,7 +481,7 @@ const Whitelist = ({
         });
       const totalVestedTokensPerUserPrivate_formatted = new window.BigNumber(
         totalVestedTokensPerUserPrivate / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokensPrivate(totalVestedTokensPerUserPrivate_formatted);
     }
@@ -510,7 +510,7 @@ const Whitelist = ({
     }
     const totalVestedTokensPerUserKol_formatted = new window.BigNumber(
       totalVestedTokensPerUserKol / 1e18
-    ).toFixed(0);
+    ).toFixed(6);
     setuserVestedTokensKOL(totalVestedTokensPerUserKol_formatted);
 
     let totalVestedTokensPerUserAdvisors = 0;
@@ -524,7 +524,7 @@ const Whitelist = ({
         });
       const totalVestedTokensPerUserAdvisors_formatted = new window.BigNumber(
         totalVestedTokensPerUserAdvisors / 1e18
-      ).toFixed(0);
+      ).toFixed(6);
 
       setuserVestedTokensAdvisors(totalVestedTokensPerUserAdvisors_formatted);
     }

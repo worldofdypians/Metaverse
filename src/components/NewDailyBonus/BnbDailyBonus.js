@@ -133,6 +133,7 @@ const BnbDailyBonus = ({
   openedMatChests,
   onMatChestClaimed,
   allMatChests,
+  onConnectWallet
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,
@@ -1961,7 +1962,11 @@ const BnbDailyBonus = ({
 
   useEffect(() => {
     if (chain === "bnb") {
-      if (email && coinbase && address) {
+      if(!email) {
+        setMessage("login");
+        setDisable(true);
+      }
+      else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2020,12 +2025,16 @@ const BnbDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "skale") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if(!email) {
+          setMessage("login");
+          setDisable(true);
+        }
+        else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2083,7 +2092,7 @@ const BnbDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2094,7 +2103,11 @@ const BnbDailyBonus = ({
       }
     } else if (chain === "core") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if(!email) {
+          setMessage("login");
+          setDisable(true);
+        }
+        else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2152,7 +2165,7 @@ const BnbDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2163,7 +2176,11 @@ const BnbDailyBonus = ({
       }
     } else if (chain === "viction") {
       if (window.WALLET_TYPE !== "binance") {
-        if (email && coinbase && address) {
+        if(!email) {
+          setMessage("login");
+          setDisable(true);
+        }
+        else if (email && coinbase && address) {
           if (coinbase.toLowerCase() === address.toLowerCase()) {
             if (isPremium) {
               if (
@@ -2221,7 +2238,7 @@ const BnbDailyBonus = ({
             setDisable(true);
           }
         } else {
-          setMessage("login");
+          setMessage("connect");
           setDisable(true);
         }
       } else if (
@@ -2231,7 +2248,11 @@ const BnbDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-      if (email && coinbase && address) {
+      if(!email) {
+        setMessage("login");
+        setDisable(true);
+      }
+      else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2289,11 +2310,15 @@ const BnbDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "base") {
-      if (email && coinbase && address) {
+      if(!email) {
+        setMessage("login");
+        setDisable(true);
+      }
+      else if (email && coinbase && address) {
         if (coinbase.toLowerCase() === address.toLowerCase()) {
           if (isPremium) {
             if (
@@ -2351,7 +2376,7 @@ const BnbDailyBonus = ({
           setDisable(true);
         }
       } else {
-        setMessage("login");
+        setMessage("connect");
         setDisable(true);
       }
     } else if (chain === "taiko") {
@@ -4879,6 +4904,44 @@ const BnbDailyBonus = ({
                           >
                             Sign In
                           </NavLink>
+                        </div>
+                      </div>
+                    ) : message === "connect" ? (
+                      <div
+                        className="d-flex align-items-center flex-column flex-lg-row justify-content-between p-0 p-lg-2 w-100 chest-progress-wrapper"
+                        style={{
+                          border: "1px solid #8262D0",
+                          background:
+                            "linear-gradient(180deg, #8262D0 0%, #482293 100%)",
+                        }}
+                      >
+                        <div
+                          className="chain-desc-wrapper w-100 p-2 d-flex flex-column"
+                          style={{
+                            filter: "brightness(1)",
+                            position: "relative",
+                          }}
+                        >
+                          <h6
+                            className="desc-title mb-0"
+                            style={{ color: "#fff" }}
+                          >
+                            Connect wallet
+                          </h6>
+                          <span className="chain-desc mb-0">
+                            Connect wallet in order to access Daily Bonus and
+                            earn tailored rewards!
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-end get-premium-wrapper p-3 p-lg-0">
+                          <button
+                            className="sign-in-btn px-4 py-1"
+                            onClick={() => {
+                              onConnectWallet();
+                            }}
+                          >
+                            Connect Wallet
+                          </button>
                         </div>
                       </div>
                     ) : message === "winDanger" ? (

@@ -15,7 +15,6 @@ const MobileNav = () => {
   const location = useLocation();
   const { email } = useAuth();
 
-
   useEffect(() => {
     if (openNav === true || openMint === true) {
       html.classList.add("hidescroll");
@@ -46,6 +45,8 @@ const MobileNav = () => {
                 <img
                   src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
+                  width={22}
+                  height={22}
                 />
               </>
             );
@@ -87,6 +88,27 @@ const MobileNav = () => {
                 <img
                   src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
+                  width={22}
+                  height={22}
+                />
+              </>
+            );
+          }}
+        />
+        <NavLink
+          to="/ai-agent"
+          end
+          className={({ isActive }) =>
+            isActive ? "active-mobile-link" : "mobile-link"
+          }
+          children={({ isActive }) => {
+            return (
+              <>
+                <img
+                  src={`https://cdn.worldofdypians.com/wod/oryn-transparent.png`}
+                  alt=""
+                  width={30}
+                  height={30}
                 />
               </>
             );
@@ -105,6 +127,8 @@ const MobileNav = () => {
                 <img
                   src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
+                  width={22}
+                  height={22}
                 />
               </>
             );
@@ -123,31 +147,34 @@ const MobileNav = () => {
                 <img
                   src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
                   alt=""
+                  width={22}
+                  height={22}
                 />
               </>
             );
           }}
         />
-    
-        {email && <NavLink
-          to="/loyalty-program"
-          end
-          className={({ isActive }) =>
-            isActive ? "active-mobile-link" : "mobile-link"
-          }
-          children={({ isActive }) => {
-            const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
-            return (
-              <>
-                <img
-                  src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
-                  alt=""
-                />
-              </>
-            );
-          }}
-        />}
-    
+
+        {email && (
+          <NavLink
+            to="/loyalty-program"
+            end
+            className={({ isActive }) =>
+              isActive ? "active-mobile-link" : "mobile-link"
+            }
+            children={({ isActive }) => {
+              const icon = isActive ? "loyaltyIconActive" : "loyaltyIcon";
+              return (
+                <>
+                  <img
+                    src={`https://cdn.worldofdypians.com/wod/${icon}.svg`}
+                    alt=""
+                  />
+                </>
+              );
+            }}
+          />
+        )}
       </div>
       {/* <OutsideClickHandler onOutsideClick={() => setOpenMint(false)}>
         <div id="bgmenu1" className={` ${openMint && 'comming-soon-mint-active'} d-flex align-items-center justify-content-center px-3 py-2 comming-soon-mint`}>
