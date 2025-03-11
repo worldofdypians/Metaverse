@@ -540,7 +540,7 @@ const CawsDetailsPremium = ({
                         : "connectbtn"
                     } d-flex justify-content-center align-items-center`}
                     disabled={
-                     isConnected && (!isPremium || mystakes.length === 4 || totalStakes === 200)
+                     isConnected && (mystakes.length === 4 || totalStakes === 200)
                     }
                     onClick={() => {
                       manageState();
