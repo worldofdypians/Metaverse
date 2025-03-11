@@ -47,14 +47,12 @@ root.render(
             persistOptions={{ persister }}
           >
             <AuthProvider>
-              <ChatProvider>
-                <MatchProvider
-                  appid="ipgjm4nszcr36mcz"
-                  wallet={{ type: "UserPasscode" }}
-                >
-                  <App />
-                </MatchProvider>
-              </ChatProvider>
+              <MatchProvider
+                appid="ipgjm4nszcr36mcz"
+                wallet={{ type: "UserPasscode" }}
+              >
+                <App />
+              </MatchProvider>
             </AuthProvider>
           </PersistQueryClientProvider>
         </ApolloProvider>

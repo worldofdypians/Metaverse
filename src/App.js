@@ -2031,7 +2031,7 @@ function App() {
       window.ethereum &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
-      window.WALLET_TYPE !== "matchId"
+      window.WALLET_TYPE !== ""
     ) {
       window.ethereum
         .request({ method: "net_version" })
@@ -3164,7 +3164,9 @@ function App() {
         window.ethereum.isTrust === true) &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
-      window.WALLET_TYPE !== "matchId"
+      window.WALLET_TYPE !== "matchId" &&
+      window.WALLET_TYPE !== "" &&
+      !address
     ) {
       window.WALLET_TYPE = "metamask";
       if (
@@ -3183,7 +3185,8 @@ function App() {
           "0x0000000000000000000000000000000000000000" ||
         window.coin98) &&
       window.WALLET_TYPE !== "binance" &&
-      window.WALLET_TYPE !== "matchId"
+      window.WALLET_TYPE !== "matchId" &&
+      window.WALLET_TYPE !== ""
     ) {
       checkConnection2();
     } else if (
@@ -3196,11 +3199,10 @@ function App() {
         // fetchAvatar(account);
         setCoinbase(account);
       }
-    } else if (window.WALLET_TYPE === "matchId") {
-      if (address) {
-        setIsConnected(true);
-        setCoinbase(address);
-      }
+    } else if (address) {
+      setIsConnected(true);
+      setCoinbase(address);
+      window.WALLET_TYPE = "matchId";
     } else if (window.WALLET_TYPE !== "binance") {
       setIsConnected(false);
       setCoinbase();
@@ -4953,17 +4955,17 @@ function App() {
 
   const [orynPop, setOrynPop] = useState(true);
 
-  useEffect(() => {
-    if (address && address.length > 0) {
-      if (window.WALLET_TYPE === "matchId") {
-        setIsConnected(true);
-        setCoinbase(address);
-      }
-    } else {
-      setIsConnected(false);
-      setCoinbase();
-    }
-  }, [address, window.WALLET_TYPE]);
+  // useEffect(() => {
+  //   if (address && address.length > 0) {
+  //     if (window.WALLET_TYPE === "matchId") {
+  //       setIsConnected(true);
+  //       setCoinbase(address);
+  //     }
+  //   } else {
+  //     setIsConnected(false);
+  //     setCoinbase();
+  //   }
+  // }, [address, window.WALLET_TYPE]);
 
   // console.log(address, username, window.WALLET_TYPE, window);
   return (
@@ -5378,7 +5380,9 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={()=>{setwalletModal(true);}}
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -5391,8 +5395,8 @@ function App() {
                   setCount55(count55 + 1);
                 }}
                 isPremium={isPremium}
-                handleConnectionPassport={handleConnectPassport} 
-          handleConnectionMatchId={handleConnectionMatchId}
+                handleConnectionPassport={handleConnectPassport}
+                handleConnectionMatchId={handleConnectionMatchId}
                 handleConnectBinance={handleConnectBinance}
                 handleSwitchChainGateWallet={handleSwitchNetwork}
                 handleSwitchChainBinanceWallet={handleSwitchNetwork}
@@ -5457,9 +5461,10 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={()=>{setwalletModal(true);}}
-          handleConnectionMatchId={handleConnectionMatchId}
-
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
@@ -6206,9 +6211,10 @@ function App() {
                 binanceWallet={coinbase}
                 isConnected={isConnected}
                 chainId={networkId}
-                handleConnect={()=>{setwalletModal(true);}}
-          handleConnectionMatchId={handleConnectionMatchId}
-
+                handleConnect={() => {
+                  setwalletModal(true);
+                }}
+                handleConnectionMatchId={handleConnectionMatchId}
                 onSigninClick={checkData}
                 success={success}
                 availableTime={availTime}
