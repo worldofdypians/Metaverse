@@ -33721,6 +33721,7 @@ async function getCoinbase() {
   if (
     window.ethereum &&
     window.WALLET_TYPE !== "binance" &&
+    window.WALLET_TYPE !== "matchId" &&
     window.WALLET_TYPE !== ""
   ) {
     if (window.WALLET_TYPE == "coin98") {
