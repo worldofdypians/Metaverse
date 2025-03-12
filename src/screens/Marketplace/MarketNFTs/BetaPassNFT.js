@@ -3198,7 +3198,7 @@ const BetaPassNFT = ({
                                         alt=""
                                       />
                                       <span className="white-events-text mb-0">
-                                        Start: Oct. 07, 2024
+                                        Start: Mar. 12, 2025
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
@@ -3209,7 +3209,7 @@ const BetaPassNFT = ({
                                         alt=""
                                       />
                                       <span className="white-events-text mb-0">
-                                        End: Feb. 18, 2025
+                                        End: Jul. 10, 2025
                                       </span>
                                     </div>
                                   </div>

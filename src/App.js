@@ -612,7 +612,7 @@ function App() {
   let coingeckoLastDay = new Date("2023-12-24T16:00:00.000+02:00");
   let confluxLastDay = new Date("2023-11-06T16:00:00.000+02:00");
   let gateLastDay = new Date("2023-11-20T16:00:00.000+02:00");
-  let baseLastDay = new Date("2025-06-24T16:00:00.000+02:00");
+  let baseLastDay = new Date("2025-07-10T16:00:00.000+02:00");
   let dypiusLastDay = new Date("2023-12-20T13:00:00.000+02:00");
   let dogeLastDay = new Date("2024-03-21T13:00:00.000+02:00");
   let cmcLastDay = new Date("2024-04-11T13:00:00.000+02:00");
@@ -3571,7 +3571,7 @@ function App() {
       location: [-0.06787060104021504, 0.08728981018066406],
       myEarnings: 0.0,
       eventType: "Explore & Find",
-      eventDate: "Feb 24, 2025",
+      eventDate: "Jul 10, 2025",
       type: "Treasure Hunt",
       infoType: "Treasure Hunt",
       backgroundImage: "https://cdn.worldofdypians.com/wod/upcomingBase2.webp",
@@ -3594,7 +3594,7 @@ function App() {
         minPoints: "5,000",
         maxPoints: "50,000",
         learnMore: "",
-        eventDate: "Feb 24, 2025",
+        eventDate: "Mar 12, 2025",
       },
     },
     {
