@@ -12,7 +12,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@fancyapps/ui": "^5.0.36",
     "@floating-ui/react-dom": "^2.1.2",
-    "@matchain/matchid-sdk-react": "^0.1.54",
+    "@matchain/matchid-sdk-react": "^0.1.47",
     "@material-ui/core": "^4.12.3",
     "@mui/icons-material": "^6.1.1",
     "@mui/lab": "^5.0.0-alpha.122",
