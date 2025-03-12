@@ -9204,6 +9204,9 @@ function Dashboard({
               setdailyBonusPopup(false);
               window.location.hash = "";
             }}
+            onConnectWallet={() => {
+              setshowWalletModal(true);
+            }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}
             claimedChests={claimedChests}
@@ -9314,6 +9317,9 @@ function Dashboard({
               setBnbBonusPopup(false);
               window.location.hash = "";
             }}
+            onConnectWallet={() => {
+              setshowWalletModal(true);
+            }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}
             claimedChests={claimedChests}
@@ -9423,6 +9429,9 @@ function Dashboard({
             onclose={() => {
               setMatBonusPopup(false);
               window.location.hash = "";
+            }}
+            onConnectWallet={() => {
+              setshowWalletModal(true);
             }}
             binanceW3WProvider={binanceW3WProvider}
             coinbase={coinbase}

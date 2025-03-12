@@ -88,8 +88,8 @@ import BinanceCampaignRules from "./screens/TermsConditions/BinanceCampaignRules
 import Launchpool from "./screens/Launchpool/Launchpool.js";
 import ListNFT from "./screens/Marketplace/MarketNFTs/ListNFT";
 import NFTBridge from "./screens/NFTBridge/NftBridge";
-import AiAgent from "./screens/AIAgent/AIAgent.js";
 import Agent from "./screens/NewAgent/Agent.js";
+import OrynFly from "./components/OrynFly/OrynFly.js";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -575,6 +575,8 @@ function App() {
   const [binanceData, setbinanceData] = useState();
 
   const [isPremium, setIsPremium] = useState(false);
+  const [premiumOryn, setPremiumOryn] = useState(false);
+
   const [domainPopup, setDomainPopup] = useState(false);
   const [showSync, setshowSync] = useState(false);
 
@@ -627,7 +629,6 @@ function App() {
   let cookieLastDay = new Date("2024-11-24T14:00:00.000+02:00");
   let chainlinkLastDay = new Date("2025-04-06T14:00:00.000+02:00");
   let seiLastDay = new Date("2025-04-05T14:00:00.000+02:00");
-
 
   const placeholderplayerData = [
     {
@@ -2898,6 +2899,7 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     } else if (
       data &&
       data.getPlayer &&
@@ -2909,8 +2911,10 @@ function App() {
         data.getPlayer.wallet.publicAddress.toLowerCase()
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     } else if (coinbase && isConnected && !data) {
       refreshSubscription(coinbase);
+      checkPremiumOryn(coinbase);
     } else if (
       data &&
       data.getPlayer &&
@@ -2919,6 +2923,7 @@ function App() {
       !isConnected
     ) {
       refreshSubscription(data.getPlayer.wallet.publicAddress);
+      checkPremiumOryn(data.getPlayer.wallet.publicAddress);
     }
   }, [data, coinbase, isConnected, count55]);
 
@@ -4481,6 +4486,22 @@ function App() {
     }
   };
 
+  const checkPremiumOryn = async (addr) => {
+    const oryn_premium_contract = new window.bscWeb3.eth.Contract(
+      window.ORYN_PREMIUM_ABI,
+      window.config.oryn_premium_address
+    );
+
+    const result = await oryn_premium_contract.methods
+      .hasLocked(addr)
+      .call()
+      .catch((err) => {
+        return false;
+      });
+
+    setPremiumOryn(result);
+  };
+
   const handleSwitchNetwork = async (chain) => {
     if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
       setChainId(chain);
@@ -4938,6 +4959,8 @@ function App() {
     }
   }, [allTimepieceNfts]);
 
+  const [orynPop, setOrynPop] = useState(true);
+
   return (
     <>
       <div
@@ -4945,6 +4968,9 @@ function App() {
           location.pathname.includes("map") && "px-0"
         } main-wrapper2 px-0 position-relative`}
       >
+        {!location.pathname.includes("ai-agent") &&
+          !location.pathname.includes("staking") &&
+          orynPop && <OrynFly onClose={() => setOrynPop(false)} />}
         <Header
           authToken={authToken}
           handleSignUp={handleShowWalletModal}
@@ -5085,7 +5111,24 @@ function App() {
           />
           <Route exact path="/tokenomics" element={<Token />} />
           {/* <Route exact path="/agent" element={<AiAgent />} /> */}
-          <Route exact path="/ai-agent" element={<Agent email={email} />} />
+          <Route
+            exact
+            path="/ai-agent"
+            element={
+              <Agent
+                isConnected={isConnected}
+                coinbase={coinbase}
+                handleConnectWallet={() => {
+                  setwalletModal(true);
+                }}
+                email={email}
+                premiumOryn={premiumOryn}
+                chainId={networkId}
+                handleSwitchNetwork={handleSwitchNetwork}
+                checkPremiumOryn={checkPremiumOryn}
+              />
+            }
+          />
           <Route
             exact
             path="/notifications"
