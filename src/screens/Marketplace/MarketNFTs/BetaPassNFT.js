@@ -3133,10 +3133,19 @@ const BetaPassNFT = ({
                                 Base Treasure Hunt
                               </h6>{" "}
                               <div
-                                className={`position-relative  events-page-status-tag-expired px-2 d-flex align-items-center justify-content-center gap-0`}
+                                className={`position-relative  events-page-status-tag-live px-2 d-flex align-items-center justify-content-center gap-0`}
                                 style={{ top: 0 }}
                               >
-                                <span>Expired</span>
+                                <div
+                                  className="pulsatingDot"
+                                  style={{
+                                    width: 7,
+                                    height: 7,
+                                    marginRight: 5,
+                                  }}
+                                ></div>
+
+                                <span>Live</span>
                               </div>
                             </div>
                             <div className="base-eventwrapper p-3">
@@ -3189,7 +3198,7 @@ const BetaPassNFT = ({
                                         alt=""
                                       />
                                       <span className="white-events-text mb-0">
-                                        Start: Oct. 07, 2024
+                                        Start: Mar. 12, 2025
                                       </span>
                                     </div>
                                     <div className="d-flex gap-1 align-items-center">
@@ -3200,7 +3209,7 @@ const BetaPassNFT = ({
                                         alt=""
                                       />
                                       <span className="white-events-text mb-0">
-                                        End: Feb. 18, 2025
+                                        End: Jul. 10, 2025
                                       </span>
                                     </div>
                                   </div>
