@@ -1,5 +1,13 @@
 const webpack = require("webpack");
+const path = require("path");
 module.exports = function override(config, env) {
+  config.resolve = {
+    ...config.resolve,
+    alias: {
+      ...config.resolve.alias,
+      "lodash/last": path.resolve(__dirname, "node_modules/lodash/last.js"),
+    },
+  };
   config.resolve.fallback = {
     url: require.resolve("url"),
     assert: require.resolve("assert"),
