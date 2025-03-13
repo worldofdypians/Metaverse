@@ -9,6 +9,14 @@ const Campaigns = () => {
 
   const dummyData = [
     {
+      title: "World of Dypians x Binance Wallet",
+      status: "Expired",
+      start_date: "Jan 23, 2025",
+      end_date: "Feb 06, 2025",
+      image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
+      link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
+    },
+    {
       title: "BNB Chain Red Envelope Carnival!",
       status: "Expired",
       start_date: "January 27, 2025",
@@ -109,16 +117,16 @@ const Campaigns = () => {
   ];
 
   const dummyBanner = {
-    title: "World of Dypians x Binance Wallet",
-    status: "Expired",
-    start_date: "Jan 23, 2025",
-    end_date: "Feb 06, 2025",
-    image: "https://cdn.worldofdypians.com/wod/wodxbinanceBanner.webp",
-    desc: `Win $50,000 in WOD Token Rewards with World of Dypians. <br/>
-
-Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on BNB Chain as outlined in the campaign rules. 2,000 winners will share $50,000 worth of WOD tokens, each receiving $25 in a raffle-based selection.
+    title: " $25,000 WOD Trading Competition",
+    status: "Live",
+    start_date: "Mar 13, 2025",
+    end_date: "Mar 20, 2025",
+    image: "https://cdn.worldofdypians.com/wod/trading-competition.webp",
+    desc: `Get ready to trade and win big in the World of Dypians $25,000 Trading Competition! <br/>
+    <ul><li>Daily Lucky Winners - Trade at least $200 in WOD pairs daily for a chance to be 1 of 7 winners to receive $50 in WOD each day.</li>
+    <li>Top Trader Leaderboard – The top 30 traders with the highest cumulative trading volume will split $22,500 in WOD.</li>  </ul>
    `,
-    link: "https://www.binance.com/en/web3-campaign/airdrop/4343337326001918209",
+    link: "https://pancakeswap.finance/?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xb994882a1b9bd98A71Dd6ea5F61577c42848B0E8",
   };
 
   useEffect(() => {
@@ -189,8 +197,7 @@ Swap at least 10 USDC <> WOD and complete both off-chain and on-chain tasks on B
                   className="explore-btn px-4 py-2 mt-4"
                   style={{ width: "fit-content" }}
                 >
-                  {/* Explore */}
-                  Expired
+                  TRADE NOW
                 </NavLink>
               </div>
             </div>
