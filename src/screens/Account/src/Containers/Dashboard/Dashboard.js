@@ -54,8 +54,7 @@ import {
 import GetPremiumPopup from "../../Components/PremiumPopup/GetPremium";
 import BnbDailyBonus from "../../../../../components/NewDailyBonus/BnbDailyBonus";
 import MatchainDailyBonus from "../../../../../components/NewDailyBonus/MatchainDailyBonus";
-import { Hooks } from '@matchain/matchid-sdk-react';
-
+import { Hooks } from "@matchain/matchid-sdk-react";
 
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -173,16 +172,7 @@ function Dashboard({
     borderColor: "#554fd8",
   };
   const { useWallet } = Hooks;
-  const {
-    initWallet,
-    generateWallet,
-    isRecovered,
-    recoveryWallet,
-    signMessage,
-    signTransaction,
-    address,
-    evmAccount,
-} = useWallet();
+  const { signMessage } = useWallet();
   const allBenefits = [
     {
       title: "Exclusive access to the game",
@@ -484,13 +474,9 @@ function Dashboard({
   const [loading, setLoading] = useState(false);
 
   const [userRankRewards, setUserRankRewards] = useState(0);
-  const [dypBalance, setDypBalance] = useState();
-  const [dypBalancebnb, setDypBalanceBnb] = useState();
-  const [dypBalanceavax, setDypBalanceAvax] = useState();
-  const [idypBalance, setiDypBalance] = useState();
+
   const [errors, setErrors] = useState({});
-  const [idypBalancebnb, setiDypBalanceBnb] = useState();
-  const [idypBalanceavax, setiDypBalanceAvax] = useState();
+
   const [showNfts, setShowNfts] = useState(false);
   const [showWalletModal, setshowWalletModal] = useState(false);
   const [goldenPassRemainingTime, setGoldenPassRemainingTime] = useState();
@@ -4773,7 +4759,11 @@ function Dashboard({
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+    if (
+      window.ethereum &&
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
+    ) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(account);
@@ -4814,13 +4804,15 @@ function Dashboard({
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
       }
-    } else  if (window.ethereum  && window.WALLET_TYPE === "matchId") {
+    } else if (window.ethereum && window.WALLET_TYPE === "matchId") {
       try {
         setshowSyncModal(false);
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner(account);
-       const signature =  await signMessage({ message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}` });
-   
+
+        const signature = await signMessage({
+          message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
+        });
+
         verifyWallet({
           variables: {
             publicAddress: account,
@@ -5895,94 +5887,94 @@ function Dashboard({
 
   const windowSize = useWindowSize();
 
-  const getDypBalance = async (account) => {
-    const web3eth = new Web3(
-      "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
-    );
+  // const getDypBalance = async (account) => {
+  //   const web3eth = new Web3(
+  //     "https://mainnet.infura.io/v3/94608dc6ddba490697ec4f9b723b586e"
+  //   );
 
-    const web3bsc = new Web3("https://bsc-dataseed.binance.org/");
+  //   const web3bsc = new Web3("https://bsc-dataseed.binance.org/");
 
-    const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
+  //   const web3avax = new Web3("https://api.avax.network/ext/bc/C/rpc");
 
-    if (account !== undefined) {
-      const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
-      const token_address_bsc = "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4";
+  //   if (account !== undefined) {
+  //     const token_address = "0x39b46b212bdf15b42b166779b9d1787a68b9d0c3";
+  //     const token_address_bsc = "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4";
 
-      const token_addressIDYP = "0xbd100d061e120b2c67a24453cf6368e63f1be056";
+  //     const token_addressIDYP = "0xbd100d061e120b2c67a24453cf6368e63f1be056";
 
-      const contract1 = new web3eth.eth.Contract(ERC20_ABI, token_address);
-      const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address_bsc);
-      const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address_bsc);
+  //     const contract1 = new web3eth.eth.Contract(ERC20_ABI, token_address);
+  //     const contract2 = new web3bsc.eth.Contract(ERC20_ABI, token_address_bsc);
+  //     const contract3 = new web3avax.eth.Contract(ERC20_ABI, token_address_bsc);
 
-      const contract1_idyp = new web3eth.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
-      const contract2_idyp = new web3bsc.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
-      const contract3_idyp = new web3avax.eth.Contract(
-        ERC20_ABI,
-        token_addressIDYP
-      );
+  //     const contract1_idyp = new web3eth.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
+  //     const contract2_idyp = new web3bsc.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
+  //     const contract3_idyp = new web3avax.eth.Contract(
+  //       ERC20_ABI,
+  //       token_addressIDYP
+  //     );
 
-      const bal1 = await contract1.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setDypBalance(bal1);
+  //     const bal1 = await contract1.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3eth.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalance(bal1);
 
-      const bal2 = await contract2.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setDypBalanceBnb(bal2);
+  //     const bal2 = await contract2.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3bsc.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalanceBnb(bal2);
 
-      const bal3 = await contract3.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setDypBalanceAvax(bal3);
+  //     const bal3 = await contract3.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3avax.utils.fromWei(data, "ether");
+  //       });
+  //     setDypBalanceAvax(bal3);
 
-      const bal1_idyp = await contract1_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3eth.utils.fromWei(data, "ether");
-        });
-      setiDypBalance(bal1_idyp);
+  //     const bal1_idyp = await contract1_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3eth.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalance(bal1_idyp);
 
-      const bal2_idyp = await contract2_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3bsc.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceBnb(bal2_idyp);
+  //     const bal2_idyp = await contract2_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3bsc.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalanceBnb(bal2_idyp);
 
-      const bal3_idyp = await contract3_idyp.methods
-        .balanceOf(account)
-        .call()
-        .then((data) => {
-          return web3avax.utils.fromWei(data, "ether");
-        });
-      setiDypBalanceAvax(bal3_idyp);
-    } else {
-      setDypBalance(0);
-      setDypBalanceBnb(0);
-      setDypBalanceAvax(0);
-      setiDypBalance(0);
-      setiDypBalanceBnb(0);
-      setiDypBalanceAvax(0);
-    }
-  };
+  //     const bal3_idyp = await contract3_idyp.methods
+  //       .balanceOf(account)
+  //       .call()
+  //       .then((data) => {
+  //         return web3avax.utils.fromWei(data, "ether");
+  //       });
+  //     setiDypBalanceAvax(bal3_idyp);
+  //   } else {
+  //     setDypBalance(0);
+  //     setDypBalanceBnb(0);
+  //     setDypBalanceAvax(0);
+  //     setiDypBalance(0);
+  //     setiDypBalanceBnb(0);
+  //     setiDypBalanceAvax(0);
+  //   }
+  // };
 
   async function fetchUserFavorites(userId) {
     if (userId !== undefined && userId !== null) {
@@ -8803,9 +8795,9 @@ function Dashboard({
     }
   }, [userWallet, isConnected, coinbase]);
 
-  useEffect(() => {
-    getDypBalance(userWallet ? userWallet : coinbase);
-  }, [account, userWallet, isConnected]);
+  // useEffect(() => {
+  //   getDypBalance(userWallet ? userWallet : coinbase);
+  // }, [account, userWallet, isConnected]);
 
   useEffect(() => {
     if (authToken && email && isConnected && !isTokenExpired) {
@@ -9602,7 +9594,6 @@ function Dashboard({
               <NewLeaderBoard
                 username={username}
                 userId={userId}
-                dypBalancebnb={dypBalancebnb}
                 address={userWallet}
                 availableTime={goldenPassRemainingTime}
                 email={email}
@@ -9904,12 +9895,6 @@ function Dashboard({
                 coinbase={account}
                 isVerified={data?.getPlayer?.wallet}
                 favoritesArray={favorites}
-                dypBalance={dypBalance}
-                dypBalancebnb={dypBalancebnb}
-                dypBalanceavax={dypBalanceavax}
-                idypBalance={idypBalance}
-                idypBalancebnb={idypBalancebnb}
-                idypBalanceavax={idypBalanceavax}
                 showNfts={showNfts}
                 handleShowWalletPopup={() => {
                   // setshowWalletModal(true);
@@ -11557,41 +11542,6 @@ function Dashboard({
           </OutsideClickHandler>
         )}
 
-        {balancePopup && (
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              setBalancePopup(false);
-            }}
-          >
-            <div
-              className="popup-wrapper popup-active p-4"
-              id="subscribe"
-              style={{ width: "40%", pointerEvents: "auto" }}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <h2
-                  className={`mb-0 d-flex flex-column flex-lg-row gap-1 align-items-start align-items-lg-center  leaderboardTitle gap-2`}
-                >
-                  My Balance
-                </h2>
-                <img
-                  src={"https://cdn.worldofdypians.com/wod/popupXmark.svg"}
-                  onClick={() => setBalancePopup(false)}
-                  alt=""
-                  style={{ cursor: "pointer" }}
-                />
-              </div>
-              <MyBalance
-                dypBalance={dypBalance}
-                dypBalancebnb={dypBalancebnb}
-                dypBalanceavax={dypBalanceavax}
-                idypBalance={idypBalance}
-                idypBalancebnb={idypBalancebnb}
-                idypBalanceavax={idypBalanceavax}
-              />
-            </div>
-          </OutsideClickHandler>
-        )}
         {specialRewardsPopup && (
           <OutsideClickHandler
             onOutsideClick={() => setSpecialRewardsPopup(false)}

@@ -35,6 +35,7 @@ const Header = ({
   username,
   loginListener,
   onSyncClick,
+  network_matchain,
 }) => {
   const [tooltip, setTooltip] = useState(false);
   const [showmenu, setShowMenu] = useState(false);
@@ -43,20 +44,7 @@ const Header = ({
 
   const [isUnread, setisUnread] = useState(false);
   const [unreadNotifications, setunreadNotifications] = useState(0);
-  const [ethState, setEthState] = useState(true);
-  const [bnbState, setBnbState] = useState(false);
-  const [opbnbState, setopBnbState] = useState(false);
-  const [coreState, setCoreState] = useState(false);
-  const [avaxState, setAvaxState] = useState(false);
-  const [baseState, setBaseState] = useState(false);
-  const [confluxState, setConfluxState] = useState(false);
-  const [skaleState, setSkaleState] = useState(false);
-  const [victionState, setVictionState] = useState(false);
-  const [mantaState, setMantaState] = useState(false);
-  const [seiState, setSeiState] = useState(false);
-  const [immutableState, setImmutableState] = useState(false);
-  const [taikoState, setTaikoState] = useState(false);
-  const [matState, setMatState] = useState(false);
+  const [chainState, setchainState] = useState("");
 
   const [account, setAccount] = useState({
     logged: false,
@@ -92,222 +80,35 @@ const Header = ({
   const setActiveChain = () => {
     if (chainId) {
       if (chainId === 1) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(true);
-        setCoreState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("eth");
       } else if (chainId === 43114) {
-        setMatState(false);
-        setAvaxState(true);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("avax");
       } else if (chainId === 8453) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(true);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("base");
       } else if (chainId === 56) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(true);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("bnb");
       } else if (chainId === 698) {
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
-        setMatState(true);
+        setchainState("mat");
       } else if (chainId === 204) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setopBnbState(true);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("opbnb");
       } else if (chainId === 1030) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(true);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setMantaState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("conflux");
       } else if (chainId === 1482601649) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(true);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setMantaState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("skale");
       } else if (chainId === 1116) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(true);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("core");
       } else if (chainId === 88) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(true);
-        setSeiState(false);
-        setImmutableState(false);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("viciton");
       } else if (chainId === 13371) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(true);
-        setMantaState(false);
-        setTaikoState(false);
+        setchainState("immutable");
       } else if (chainId === 169) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(true);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("manta");
       } else if (chainId === 167000) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(true);
+        setchainState("taiko");
       } else if (chainId === 1329) {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setMantaState(false);
-        setEthState(false);
-        setBaseState(false);
-        setConfluxState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(true);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("sei");
       } else {
-        setMatState(false);
-        setAvaxState(false);
-        setBnbState(false);
-        setBaseState(false);
-        setEthState(false);
-        setopBnbState(false);
-        setSkaleState(false);
-        setCoreState(false);
-        setVictionState(false);
-        setSeiState(false);
-        setImmutableState(false);
-        setTaikoState(false);
+        setchainState("");
       }
     }
   };
@@ -323,7 +124,11 @@ const Header = ({
 
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+      if (
+        !window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
             handleSwitchNetwork(chain);
@@ -331,11 +136,23 @@ const Header = ({
           .catch((e) => {
             console.log(e);
           });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+      } else if (
+        window.gatewallet &&
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         handleSwitchChainGateWallet(chain);
+      } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+        network_matchain?.showChangeNetwork().then(() => {
+          handleSwitchNetwork(chain);
+        });
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(chain);
       }
+    } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork().then(() => {
+        handleSwitchNetwork(chain);
+      });
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
       handleSwitchChainBinanceWallet(chain);
     } else {
@@ -405,7 +222,7 @@ const Header = ({
 
   useEffect(() => {
     setActiveChain();
-  }, [chainId, ethState]);
+  }, [chainId]);
 
   useEffect(() => {
     checkRead();
@@ -1465,33 +1282,33 @@ const Header = ({
                             <div className="d-flex align-items-center gap-1">
                               <img
                                 src={
-                                  ethState === true
+                                  chainState === "eth"
                                     ? "https://cdn.worldofdypians.com/wod/eth.svg"
-                                    : bnbState === true
+                                    : chainState === "bnb"
                                     ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                    : opbnbState === true
+                                    : chainState === "opbnb"
                                     ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                    : avaxState === true
+                                    : chainState === "avax"
                                     ? "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                                    : baseState === true
+                                    : chainState === "base"
                                     ? "https://cdn.worldofdypians.com/wod/base.svg"
-                                    : confluxState === true
+                                    : chainState === "conflux"
                                     ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                    : skaleState === true
+                                    : chainState === "skale"
                                     ? "https://cdn.worldofdypians.com/wod/skaleIcon.svg"
-                                    : coreState === true
+                                    : chainState === "core"
                                     ? "https://cdn.worldofdypians.com/wod/core.svg"
-                                    : victionState === true
+                                    : chainState === "viction"
                                     ? "https://cdn.worldofdypians.com/wod/viction.svg"
-                                    : immutableState === true
+                                    : chainState === "immutable"
                                     ? "https://cdn.worldofdypians.com/wod/immutable.svg"
-                                    : mantaState === true
+                                    : chainState === "manta"
                                     ? "https://cdn.worldofdypians.com/wod/manta.png"
-                                    : taikoState === true
+                                    : chainState === "taiko"
                                     ? "https://cdn.worldofdypians.com/wod/taiko.svg"
-                                    : matState === true
+                                    : chainState === "mat"
                                     ? "https://cdn.worldofdypians.com/wod/matchainIcon.svg"
-                                    : seiState === true
+                                    : chainState === "sei"
                                     ? "https://cdn.worldofdypians.com/wod/seiLogo.svg"
                                     : "https://cdn.worldofdypians.com/wod/error.svg"
                                 }
@@ -1527,21 +1344,26 @@ const Header = ({
                           </span>
                           <hr className="header-divider my-0" />
                           <div className="header-chain-grid">
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x1", 1)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/eth.svg"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Ethereum
+                              </Dropdown.Item>
+                            )}
+
                             <Dropdown.Item
-                              onClick={() => switchNetwork("0x1", 1)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/eth.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Ethereum
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0x38", 56)}
+                              onClick={() => {
+                                switchNetwork("0x38", 56);
+                              }}
                             >
                               <img
                                 src={
@@ -1553,19 +1375,21 @@ const Header = ({
                               />
                               BNB Chain
                             </Dropdown.Item>
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0xcc", 204)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              opBNB Chain
-                            </Dropdown.Item>
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xcc", 204)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                opBNB Chain
+                              </Dropdown.Item>
+                            )}
                             {window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
@@ -1583,21 +1407,24 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0xa9", 169)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/manta.png"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Manta
-                            </Dropdown.Item>
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xa9", 169)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/manta.png"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Manta
+                              </Dropdown.Item>
+                            )}
                             {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                              !window.ethereum?.isBinance &&
+                              window.WALLET_TYPE !== "matchId" && (
                                 <Dropdown.Item
                                   onClick={() =>
                                     switchNetwork("0x28c58", 167000)
@@ -1616,7 +1443,8 @@ const Header = ({
                               )}
 
                             {window.WALLET_TYPE !== "binance" &&
-                              !window.ethereum?.isBinance && (
+                              !window.ethereum?.isBinance &&
+                              window.WALLET_TYPE !== "matchId" && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x45c", 1116)}
                                 >
@@ -1631,20 +1459,23 @@ const Header = ({
                                   CORE
                                 </Dropdown.Item>
                               )}
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0x2105", 8453)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/base.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Base
-                            </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x2105", 8453)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/base.svg"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Base
+                              </Dropdown.Item>
+                            )}
+                            {window.WALLET_TYPE !== "matchId" &&
+                              window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x531", 1329)}
@@ -1661,7 +1492,8 @@ const Header = ({
                                 </Dropdown.Item>
                               )}
 
-                            {window.WALLET_TYPE !== "binance" &&
+                            {window.WALLET_TYPE !== "matchId" &&
+                              window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x58", 88)}
@@ -1677,20 +1509,23 @@ const Header = ({
                                   Viction
                                 </Dropdown.Item>
                               )}
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0xa86a", 43114)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Avalanche
-                            </Dropdown.Item>
-                            {window.WALLET_TYPE !== "binance" &&
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0xa86a", 43114)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/avaxIcon.svg"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Avalanche
+                              </Dropdown.Item>
+                            )}
+                            {window.WALLET_TYPE !== "matchId" &&
+                              window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() =>
@@ -1708,7 +1543,8 @@ const Header = ({
                                   SKALE
                                 </Dropdown.Item>
                               )}
-                            {window.WALLET_TYPE !== "binance" &&
+                            {window.WALLET_TYPE !== "matchId" &&
+                              window.WALLET_TYPE !== "binance" &&
                               !window.ethereum?.isBinance && (
                                 <Dropdown.Item
                                   onClick={() => switchNetwork("0x343b", 13371)}
@@ -1724,19 +1560,21 @@ const Header = ({
                                   Immutable
                                 </Dropdown.Item>
                               )}
-                            <Dropdown.Item
-                              onClick={() => switchNetwork("0x406", 1030)}
-                            >
-                              <img
-                                src={
-                                  "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
-                                }
-                                alt=""
-                                width={20}
-                                height={20}
-                              />
-                              Conflux
-                            </Dropdown.Item>
+                            {window.WALLET_TYPE !== "matchId" && (
+                              <Dropdown.Item
+                                onClick={() => switchNetwork("0x406", 1030)}
+                              >
+                                <img
+                                  src={
+                                    "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
+                                  }
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                />
+                                Conflux
+                              </Dropdown.Item>
+                            )}
                           </div>
                           <hr className="header-divider my-0" />
                           <a

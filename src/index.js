@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./app.scss";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MatchProvider } from "@matchain/matchid-sdk-react";
+import { MatchProvider, wagmiConfig } from "@matchain/matchid-sdk-react";
 
 import AuthProvider from "./screens/Account/src/Utils.js/Auth/AuthDetails";
 import { ApolloProvider } from "@apollo/client";
@@ -15,6 +15,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { WagmiProvider } from "wagmi";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -47,12 +48,14 @@ root.render(
             persistOptions={{ persister }}
           >
             <AuthProvider>
-              <MatchProvider
-                appid="ipgjm4nszcr36mcz"
-                wallet={{ type: "UserPasscode" }}
-              >
-                <App />
-              </MatchProvider>
+              <WagmiProvider config={wagmiConfig}>
+                <MatchProvider
+                  appid="ipgjm4nszcr36mcz"
+                  wallet={{ type: "UserPasscode" }}
+                >
+                  <App />
+                </MatchProvider>
+              </WagmiProvider>
             </AuthProvider>
           </PersistQueryClientProvider>
         </ApolloProvider>

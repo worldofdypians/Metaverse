@@ -92,7 +92,7 @@ import Agent from "./screens/NewAgent/Agent.js";
 import OrynFly from "./components/OrynFly/OrynFly.js";
 import "@matchain/matchid-sdk-react/index.css";
 import { Hooks } from "@matchain/matchid-sdk-react";
-// import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
+import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -454,9 +454,9 @@ function App() {
     },
   };
 
-  const { useUserInfo, useMatchEvents } = Hooks;
+  const { useUserInfo, useWallet } = Hooks;
   const { login, address, username, logout: logoutUser } = useUserInfo();
-
+  const { signMessage } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
@@ -472,7 +472,7 @@ function App() {
   const [showWalletModal, setShowWalletModal] = useState(false);
 
   const [betaModal, setBetaModal] = useState(false);
-  const [donwloadSelected, setdownloadSelected] = useState(false);
+
   const [totalSupply, setTotalSupply] = useState(0);
 
   const [isConnected, setIsConnected] = useState(false);
@@ -527,15 +527,13 @@ function App() {
   const [mantaMintAllowed, setMantaMintAllowed] = useState(1);
 
   const [fireAppcontent, setFireAppContent] = useState(false);
-  const [activeUser, setactiveUser] = useState(false);
+
   const [listedNFTSCount, setListedNFTSCount] = useState(0);
   const [latest20RecentListedNFTS, setLatest20RecentListedNFTS] = useState([]);
   const [dyptokenDatabnb, setDypTokenDatabnb] = useState([]);
   const [socials, setSocials] = useState([]);
 
   const [idyptokenDatabnb, setIDypTokenDatabnb] = useState([]);
-
-  const [totalBoughtNFTSCount, setTotalBoughtNFTSCount] = useState(0);
 
   const [availTime, setavailTime] = useState();
 
@@ -828,6 +826,7 @@ function App() {
 
   const userId = data?.getPlayer?.playerId;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
+  const chain = useMatchChain();
 
   const fetchEthStaking = async () => {
     const eth_result = await axios
@@ -2028,10 +2027,15 @@ function App() {
   };
 
   const checkNetworkId = async () => {
-    if (
+    if (window.WALLET_TYPE === "matchId") {
+      if (chain && chain?.chainId !== null) {
+        setChainId(chain.chainId);
+      }
+    } else if (
       window.ethereum &&
       !window.gatewallet &&
       window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId" &&
       window.WALLET_TYPE !== ""
     ) {
       window.ethereum
@@ -2043,7 +2047,8 @@ function App() {
     } else if (
       window.ethereum &&
       window.gatewallet &&
-      window.WALLET_TYPE !== "binance"
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
     ) {
       await provider
         ?.detectNetwork()
@@ -3076,7 +3081,11 @@ function App() {
   };
 
   const signWalletPublicAddress = async () => {
-    if (window.ethereum && window.WALLET_TYPE !== "binance") {
+    if (
+      window.ethereum &&
+      window.WALLET_TYPE !== "binance" &&
+      window.WALLET_TYPE !== "matchId"
+    ) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner(coinbase);
@@ -3093,6 +3102,22 @@ function App() {
               `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
             );
           });
+      } catch (error) {
+        console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      try {
+        let signatureData = "";
+        await signMessage({
+          message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
+        }).then((data) => {
+          signatureData = data;
+
+          handleManageLogin(
+            signatureData,
+            `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`
+          );
+        });
       } catch (error) {
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
       }
@@ -3223,12 +3248,7 @@ function App() {
         setIsConnected(false);
       }
     }
-    // checkNetworkId();
   }, [coinbase, networkId, active, account, address]);
-
-  // useEffect(() => {
-  //   checkNetworkId();
-  // }, [isConnected, coinbase, networkId, provider]);
 
   useEffect(() => {
     if (isConnected === true && coinbase && networkId === 1) {
@@ -4928,9 +4948,14 @@ function App() {
     getPriceDYP();
     fetchDogeCoinPrice();
     fetchWodPrice();
-
     checkNetworkId();
   }, []);
+
+  useEffect(() => {
+    if (window.WALLET_TYPE === "matchId") {
+      checkNetworkId();
+    }
+  }, [chain?.chainId]);
 
   useEffect(() => {
     fetchEthStaking();
@@ -5010,6 +5035,7 @@ function App() {
           onSyncClick={() => {
             setshowSync(true);
           }}
+          network_matchain={chain}
         />
         <MobileNavbar
           isConnected={isConnected}
@@ -5033,6 +5059,7 @@ function App() {
           handleSwitchChainBinanceWallet={handleSwitchNetwork}
           binanceWallet={coinbase}
           username={data?.getPlayer?.displayName}
+          network_matchain={chain}
         />
 
         <Routes>

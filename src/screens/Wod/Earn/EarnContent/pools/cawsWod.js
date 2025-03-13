@@ -84,7 +84,7 @@ const CawsWodDetails = ({
     const address = coinbase;
     const stakeApr50 = await window.config.wod_caws_address;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.nft
         .checkapproveStake(address, stakeApr50)
         .then((data) => {
@@ -213,7 +213,7 @@ const CawsWodDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       await window.wod_caws
         .claimRewardsWodCaws(myStakes)
@@ -265,6 +265,8 @@ const CawsWodDetails = ({
           setclaimStatus("initial");
         }, 5000);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -300,6 +302,7 @@ const CawsWodDetails = ({
   };
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE !== "matchId") {
     await handleSwitchNetworkhook("0x1")
       .then(() => {
         handleSwitchNetwork("1");
@@ -307,6 +310,9 @@ const CawsWodDetails = ({
       .catch((e) => {
         console.log(e);
       });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   useEffect(() => {

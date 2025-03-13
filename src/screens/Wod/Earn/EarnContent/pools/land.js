@@ -13,7 +13,6 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { ethers } from "ethers";
 import Modal from "../../../../../components/General/Modal";
 
-
 const LandDetails = ({
   coinbase,
   isConnected,
@@ -25,7 +24,7 @@ const LandDetails = ({
   apr,
   binanceW3WProvider,
   expired,
-  tvl_usd
+  tvl_usd,
 }) => {
   const [myNFTs, setMyNFTs] = useState([]);
   const [amountToStake, setamountToStake] = useState("");
@@ -57,7 +56,7 @@ const LandDetails = ({
   const checkApproval = async () => {
     const address = coinbase;
     const stake25 = await window.config.landnftstake_address;
-    if (address) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.landnft
         .checkapproveStake(address, stake25)
         .then((data) => {
@@ -136,7 +135,7 @@ const LandDetails = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractLandNFT("LANDNFTSTAKING");
       // setclaimAllStatus("Claiming all rewards, please wait...");
@@ -192,6 +191,8 @@ const LandDetails = ({
         }, 5000);
         window.alertify.message("Claimed All Rewards!");
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
   const convertEthToUsd = async () => {
@@ -209,13 +210,17 @@ const LandDetails = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x1")
-      .then(() => {
-        handleSwitchNetwork("1");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE !== "matchId") {
+      await handleSwitchNetworkhook("0x1")
+        .then(() => {
+          handleSwitchNetwork("1");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const getApprovedNfts = (data) => {
@@ -484,7 +489,7 @@ const LandDetails = ({
                 Connect Wallet
               </button>
             )}
-            {isConnected && chainId !=='1' && (
+            {isConnected && chainId !== "1" && (
               <button
                 className={`btn w-100 fail-button  d-flex justify-content-center align-items-center`}
                 onClick={() => {
@@ -494,9 +499,7 @@ const LandDetails = ({
                 Switch to Ethereum
               </button>
             )}
-            {mystakes.length > 0 && 
-            <div className="stake-separator"></div>
-            }
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
             {mystakes.length > 0 && (
               <div
                 className={`otherside-border ${
@@ -517,7 +520,9 @@ const LandDetails = ({
                       style={{ textTransform: "capitalize" }}
                     >
                       NFTs Staked:{" "}
-                      <b>{isConnected === false ? 0 : mystakes.length} Genesis</b>
+                      <b>
+                        {isConnected === false ? 0 : mystakes.length} Genesis
+                      </b>
                     </h6>
                   </h6>
                   <h6 className="m-0 withdraw-littletxt d-flex align-items-center gap-2">
@@ -531,7 +536,10 @@ const LandDetails = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -585,9 +593,7 @@ const LandDetails = ({
                 </div>
               </div>
             )}
-            {mystakes.length > 0 && 
-            <div className="stake-separator"></div>
-            }
+            {mystakes.length > 0 && <div className="stake-separator"></div>}
 
             {mystakes.length > 0 && (
               <div
@@ -621,10 +627,14 @@ const LandDetails = ({
               </div>
             )}
             <div
-              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${ mystakes.length > 0 ?  'justify-content-center' : 'justify-content-center'} `}
+              className={`info-pool-wrapper2 mt-2 p-1 d-flex ${
+                mystakes.length > 0
+                  ? "justify-content-center"
+                  : "justify-content-center"
+              } `}
               style={{
                 cursor: "pointer",
-                width: mystakes.length > 0 ? 'auto' : 'fit-content'
+                width: mystakes.length > 0 ? "auto" : "fit-content",
               }}
               onClick={() => {
                 showPopup();
@@ -634,7 +644,11 @@ const LandDetails = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>
@@ -661,7 +675,7 @@ const LandDetails = ({
         />
       )}
 
-{popup && (
+      {popup && (
         <Modal
           visible={popup}
           modalId="tymodal"
@@ -683,7 +697,9 @@ const LandDetails = ({
                   </div> */}
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">
                     <span className="stats-card-title">Total NFTs staked</span>
-                    <h6 className="stats-card-content">{totalStakes} Genesis</h6>
+                    <h6 className="stats-card-content">
+                      {totalStakes} Genesis
+                    </h6>
                   </div>
 
                   <div className="stats-card p-2 d-flex flex-column mx-auto w-100">

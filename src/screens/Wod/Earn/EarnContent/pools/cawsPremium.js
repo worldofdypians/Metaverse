@@ -80,7 +80,7 @@ const CawsDetailsPremium = ({
     const address = coinbase;
     const stakeAdr = await window.config.nft_caws_premiumstake_address;
 
-    if (address !== null) {
+    if (address !== null && window.WALLET_TYPE !== "matchId") {
       const result = await window.nft
         .checkapproveStake(address, stakeAdr)
         .then((data) => {
@@ -170,7 +170,7 @@ const CawsDetailsPremium = ({
   const claimRewards = async () => {
     setclaimLoading(true);
 
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let myStakes = await getStakesIds();
       let staking_contract = await window.getContractCawsPremiumNFT(
         "CAWSPREMIUM"
@@ -226,6 +226,8 @@ const CawsDetailsPremium = ({
         setEthRewards(0);
         window.alertify.message("Claimed All Rewards!");
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     }
   };
 
@@ -277,6 +279,7 @@ const CawsDetailsPremium = ({
   };
 
   const handleEthPool = async () => {
+    if (window.WALLET_TYPE !== "matchId") {
     await handleSwitchNetworkhook("0x1")
       .then(() => {
         handleSwitchNetwork("1");
@@ -284,6 +287,9 @@ const CawsDetailsPremium = ({
       .catch((e) => {
         console.log(e);
       });
+    } else if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    }
   };
 
   const handleNavigateToPlans = () => {
@@ -312,11 +318,11 @@ const CawsDetailsPremium = ({
       setHide("staked");
     } else if (!isConnected) {
       handleConnection();
-    } else if (isConnected && chainId !== "1") {
-      handleEthPool();
     } else if (isConnected && !isPremium && chainId === "1") {
       handleNavigateToPlans();
-    }
+    } else if (isConnected && chainId !== "1") {
+      handleEthPool();
+    } 
   };
 
   useEffect(() => {
@@ -550,7 +556,7 @@ const CawsDetailsPremium = ({
                       ? "Select NFTs"
                       : !isConnected
                       ? "Connect Wallet"
-                      : isConnected && isPremium && chainId !== "1"
+                      : isConnected && chainId !== "1"
                       ? "Switch to Ethereum"
                       : "Become Prime"}
                   </button>
