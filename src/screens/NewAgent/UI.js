@@ -71,13 +71,23 @@ export const UI = ({
     }
   };
 
+
+  const replaceTodayWithDay = (text) => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDay = days[new Date().getDay()];
+    
+    return text.replace(/\btoday\b/gi, currentDay);
+  };
+
   const sendMessage = async (val) => {
+
+    const updatedVal = replaceTodayWithDay(val)
+
     setCount(count + 1);
     if (count > 0) {
       stopTypewriter();
     }
     setDefaultToggle(false);
-    console.log(email, "email");
 
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -92,7 +102,7 @@ export const UI = ({
     await axios
       .post(`https://api.worldofdypians.com/chat`, {
         userId: coinbase,
-        message: val,
+        message: updatedVal,
         voice: sound ? "on" : null,
       })
       .then((res) => {
@@ -246,7 +256,6 @@ export const UI = ({
                             delay: 10,
                           }}
                           onInit={(typewriter) => {
-                            console.log("Typewriter instance set:", typewriter);
                             setTypewriterInstance(typewriter);
                             setIsTyping(true);
 
