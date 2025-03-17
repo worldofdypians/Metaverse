@@ -823,6 +823,19 @@ function App() {
   const userId = data?.getPlayer?.playerId;
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
 
+  const handleFirstTask = async (wallet) => {
+    if (wallet) {
+      const result2 = await axios
+        .get(`https://api.worldofdypians.com/api/dappbay/task1/${wallet}`)
+        .catch((e) => {
+          console.error(e);
+        });
+      if (result2 && result2.status === 200) {
+        console.log(result2);
+      }
+    }
+  };
+
   const fetchEthStaking = async () => {
     const eth_result = await axios
       .get(`https://api.dyp.finance/api/get_staking_info_wod_nft`)
@@ -4958,6 +4971,12 @@ function App() {
       fetchTimepieceNfts();
     }
   }, [allTimepieceNfts]);
+
+  useEffect(() => {
+    if (loginListener !== 0 && userWallet !== undefined) {
+      handleFirstTask(userWallet);
+    }
+  }, [loginListener, userWallet]);
 
   const [orynPop, setOrynPop] = useState(true);
 
