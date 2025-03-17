@@ -143,16 +143,12 @@ const Header = ({
       ) {
         handleSwitchChainGateWallet(chain);
       } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-        network_matchain?.showChangeNetwork().then(() => {
-          handleSwitchNetwork(chain);
-        });
+        network_matchain?.showChangeNetwork();
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(chain);
       }
     } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork().then(() => {
-        handleSwitchNetwork(chain);
-      });
+      network_matchain?.showChangeNetwork();
     } else if (binanceWallet && window.WALLET_TYPE === "binance") {
       handleSwitchChainBinanceWallet(chain);
     } else {

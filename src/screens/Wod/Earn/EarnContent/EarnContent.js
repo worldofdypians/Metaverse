@@ -34,7 +34,8 @@ const EarnContent = ({
   userPools,
   onSuccessfulStake,
   walletClient,
-  publicClient
+  publicClient,
+  network_matchain
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -642,7 +643,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
-                            walletClient={walletClient}
+                            
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -660,6 +661,8 @@ const EarnContent = ({
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
                               publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
                             />
                           </div>
                         )}
@@ -690,6 +693,9 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
                             />
                           </div>
                         )}
@@ -720,6 +726,9 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
                             />
                           </div>
                         )}
@@ -750,6 +759,9 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
                             />
                           </div>
                         )}
@@ -780,6 +792,9 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
+                              walletClient={walletClient}
+                              network_matchain={network_matchain}
 
                             />
                           </div>

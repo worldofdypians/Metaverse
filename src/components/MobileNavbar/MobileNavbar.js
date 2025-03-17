@@ -26,7 +26,7 @@ const MobileNavbar = ({
   email,
   username,
   isConnected,
-  network_matchain
+  network_matchain,
 }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const [chainState, setchainState] = useState("");
@@ -83,9 +83,7 @@ const MobileNavbar = ({
   const switchNetwork = async (hexChainId, chain) => {
     if (window.ethereum) {
       if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-        network_matchain?.showChangeNetwork().then(() => {
-          handleSwitchNetwork(chain);
-        });
+        network_matchain?.showChangeNetwork();
       } else if (!window.gatewallet && window.WALLET_TYPE !== "matchId") {
         await handleSwitchNetworkhook(hexChainId)
           .then(() => {
@@ -110,9 +108,7 @@ const MobileNavbar = ({
         );
       }
     } else if (!window.gatewallet && window.WALLET_TYPE === "matchId") {
-      network_matchain?.showChangeNetwork().then(() => {
-        handleSwitchNetwork(chain);
-      });
+      network_matchain?.showChangeNetwork();
     } else if (window.ethereum?.isBinance || window.WALLET_TYPE === "binance") {
       window.alertify.error("This network is not available on Binance Wallet");
     } else {

@@ -61,6 +61,7 @@ const StakeWodDetails2 = ({
   binanceW3WProvider,
   walletClient,
   publicClient,
+  network_matchain
 }) => {
   let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
@@ -101,25 +102,14 @@ const StakeWodDetails2 = ({
     queryFunc,
     publicClient
   ) => {
-    if (!publicClient) {
-      console.log("publicClient is not initialized");
-      return;
+    if (publicClient) {
+      return await publicClient.readContract({
+        abi: window.CONSTANT_STAKING_WOD_ABI,
+        address: staking._address,
+        functionName: queryFunc,
+        args: wallet ? [wallet] : [],
+      });
     }
-    if (!wallet) {
-      console.log("Coinbase is not available");
-      return;
-    }
-    if (!window.CONSTANT_STAKING_WOD_ABI) {
-      console.log("TOKEN_ABI is missing");
-      return;
-    }
-
-    return await publicClient.readContract({
-      abi: window.CONSTANT_STAKING_WOD_ABI,
-      address: staking._address,
-      functionName: queryFunc,
-      args: [wallet],
-    });
   };
 
   function download(filename, text) {
@@ -178,7 +168,7 @@ const StakeWodDetails2 = ({
 
   const [token_balance, settoken_balance] = useState(0);
   const [pendingDivs, setpendingDivs] = useState("");
-  const [totalEarnedTokens, settotalEarnedTokens] = useState("");
+
   const [cliffTime, setcliffTime] = useState("");
   const [stakingTime, setstakingTime] = useState("");
   const [depositedTokens, setdepositedTokens] = useState("");
@@ -204,7 +194,7 @@ const StakeWodDetails2 = ({
   const [errorMsg2, seterrorMsg2] = useState("");
   const [errorMsg3, seterrorMsg3] = useState("");
 
-  const [settotal_stakers, setsettotal_stakers] = useState("");
+  // const [settotal_stakers, setsettotal_stakers] = useState("");
 
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
@@ -247,51 +237,45 @@ const StakeWodDetails2 = ({
           coinbase,
           staking,
           "getTotalPendingDivs",
-          publicClient,
-          false
+          publicClient
         );
 
-        let _tEarned = refreshBalanceQuery(
-          coinbase,
-          staking,
-          "totalEarnedTokens",
-          publicClient,
-          false
-        );
+        // let _tEarned = refreshBalanceQuery(
+        //   coinbase,
+        //   staking,
+        //   "totalEarnedTokens",
+        //   publicClient,
+        //   false
+        // );
         let _stakingTime = refreshBalanceQuery(
           coinbase,
           staking,
           "stakingTime",
-          publicClient,
-          false
+          publicClient
         );
         let _dTokens = refreshBalanceQuery(
           coinbase,
           staking,
           "depositedTokens",
-          publicClient,
-          false
+          publicClient
         );
         let _lClaimTime = refreshBalanceQuery(
           coinbase,
           staking,
           "lastClaimedTime",
-          publicClient,
-          false
+          publicClient
         );
         let _rFeeEarned = refreshBalanceQuery(
           coinbase,
           staking,
           "totalReferralFeeEarned",
-          publicClient,
-          false
+          publicClient
         );
-        let tStakers = refreshBalanceQuery(
-          coinbase,
+        let _cliffTime = refreshBalanceQuery(
+          undefined,
           staking,
-          "getNumberOfHolders",
-          publicClient,
-          false
+          "LOCKUP_TIME",
+          publicClient
         );
 
         let _tvl = await reward_token_wod_sc.methods
@@ -303,23 +287,25 @@ const StakeWodDetails2 = ({
         let [
           token_balance,
           pendingDivs,
-          totalEarnedTokens,
+          // totalEarnedTokens,
           stakingTime,
           depositedTokens,
           lastClaimedTime,
           tvl,
           referralFeeEarned,
-          total_stakers,
+          clifftime,
+          // total_stakers,
         ] = await Promise.all([
           _bal,
           _pDivs,
-          _tEarned,
+          // _tEarned,
           _stakingTime,
           _dTokens,
           _lClaimTime,
           _tvl,
           _rFeeEarned,
-          tStakers,
+          _cliffTime,
+          // tStakers,
         ]);
 
         let balance_formatted = new BigNumber(token_balance ?? 0)
@@ -330,12 +316,12 @@ const StakeWodDetails2 = ({
         let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
         setpendingDivs(divs_formatted);
 
-        let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
-          .div(1e18)
-          .toFixed(6);
-        settotalEarnedTokens(earnedTokens_formatted);
-
-        setstakingTime(stakingTime);
+        // let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+        //   .div(1e18)
+        //   .toFixed(6);
+        // settotalEarnedTokens(earnedTokens_formatted);
+        setcliffTime(Number(clifftime));
+        setstakingTime(Number(stakingTime));
 
         let depositedTokens_formatted = new BigNumber(depositedTokens)
           .div(1e18)
@@ -349,7 +335,7 @@ const StakeWodDetails2 = ({
         settvl(tvl_formatted);
 
         setreferralFeeEarned(referralFeeEarned);
-        setsettotal_stakers(total_stakers);
+        // setsettotal_stakers(total_stakers);
       }
     } catch (e) {
       console.error(e);
@@ -414,9 +400,9 @@ const StakeWodDetails2 = ({
             console.error(e);
           });
 
-          let _tEarned = staking.totalEarnedTokens(coinbase).catch((e) => {
-            console.error(e);
-          });
+          // let _tEarned = staking.totalEarnedTokens(coinbase).catch((e) => {
+          //   console.error(e);
+          // });
           let _stakingTime = staking.stakingTime(coinbase).catch((e) => {
             console.error(e);
           });
@@ -445,17 +431,17 @@ const StakeWodDetails2 = ({
           let [
             token_balance,
             pendingDivs,
-            totalEarnedTokens,
+            // totalEarnedTokens,
             stakingTime,
             depositedTokens,
             lastClaimedTime,
             tvl,
             referralFeeEarned,
-            total_stakers,
+            // total_stakers,
           ] = await Promise.all([
             _bal,
             _pDivs,
-            _tEarned,
+            // _tEarned,
             _stakingTime,
             _dTokens,
             _lClaimTime,
@@ -472,12 +458,12 @@ const StakeWodDetails2 = ({
           let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
           setpendingDivs(divs_formatted);
 
-          let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
-            .div(1e18)
-            .toFixed(6);
-          settotalEarnedTokens(earnedTokens_formatted);
+          // let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+          //   .div(1e18)
+          //   .toFixed(6);
+          // settotalEarnedTokens(earnedTokens_formatted);
 
-          setstakingTime(stakingTime);
+          setstakingTime(Number(stakingTime));
 
           let depositedTokens_formatted = new BigNumber(depositedTokens)
             .div(1e18)
@@ -491,7 +477,7 @@ const StakeWodDetails2 = ({
           settvl(tvl_formatted);
 
           setreferralFeeEarned(referralFeeEarned);
-          setsettotal_stakers(total_stakers);
+          // setsettotal_stakers(total_stakers);
 
           //console.log({tvlUSD})
 
@@ -540,7 +526,7 @@ const StakeWodDetails2 = ({
   const handleApprove = async (e) => {
     // e.preventDefault();
     setdepositLoading(true);
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       let amount = depositAmount;
       amount = new BigNumber(amount).times(1e18).toFixed(0);
       await reward_token_wod
@@ -591,6 +577,35 @@ const StakeWodDetails2 = ({
         refreshBalance();
         getApprovedAmount();
         fetchAllowanceQuery();
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = depositAmount;
+        amount = new BigNumber(amount).times(1e18).toFixed(0);
+        await walletClient
+          .writeContract({
+            address: reward_token_wod._address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [staking._address, amount],
+          })
+          .then(() => {
+            setdepositLoading(false);
+            setdepositStatus("deposit");
+            refreshBalance();
+            getApprovedAmount();
+            fetchAllowanceQuery();
+          })
+          .catch((e) => {
+            setdepositLoading(false);
+            setdepositStatus("fail");
+            seterrorMsg(e?.message);
+            setTimeout(() => {
+              setdepositAmount("");
+              setdepositStatus("initial");
+              seterrorMsg("");
+            }, 10000);
+          });
       }
     }
   };
@@ -922,13 +937,17 @@ const StakeWodDetails2 = ({
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork("56");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork("56");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   let cliffTimeInWords = "lockup period";

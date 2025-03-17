@@ -6475,6 +6475,7 @@ function App() {
                 }}
                 walletClient={walletClient}
                 publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
