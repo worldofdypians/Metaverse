@@ -9,9 +9,8 @@ import { shortAddress } from "../../../../Caws/functions/shortAddress";
 import { handleSwitchNetworkhook } from "../../../../../hooks/hooks";
 import axios from "axios";
 import Countdown from "react-countdown";
-import { ClickAwayListener } from "@material-ui/core";
-import { abbreviateNumber } from "js-abbreviation-number";
 import { ethers } from "ethers";
+import { useQuery } from "@tanstack/react-query";
 
 const renderer = ({ days, hours, minutes, seconds }) => {
   return (
@@ -60,13 +59,68 @@ const StakeWodDetails2 = ({
   start_date,
   onSuccessfulStake,
   binanceW3WProvider,
+  walletClient,
+  publicClient,
 }) => {
-  let { reward_token_wod, BigNumber, alertify, reward_token_idyp, token_dyps } =
-    window;
+  let { reward_token_wod, BigNumber } = window;
   let token_symbol = "WOD";
-  const today = new Date();
 
   // 8% apr 1M Cap in DYP, locktime 30days, dyp deposit & dyp rewards
+  const allowanceQuery = useQuery({
+    queryKey: [
+      "erc20allowance",
+      coinbase,
+      reward_token_wod._address,
+      staking._address,
+    ],
+    queryFn: async () => {
+      if (!publicClient) console.log("publicClient is not initialized");
+      if (!window.TOKEN_ABI) console.log("TOKEN_ABI is missing");
+      if (!reward_token_wod?._address || !staking?._address)
+        console.log("Contract addresses are missing");
+      if (!coinbase) console.log("Coinbase is not available");
+
+      // console.log("Fetching allowance for:", coinbase, staking._address);
+      return await publicClient.readContract({
+        abi: window.TOKEN_ABI,
+        address: reward_token_wod._address,
+        functionName: "allowance",
+        args: [coinbase, staking._address],
+      });
+    },
+    enabled:
+      !!coinbase &&
+      !!publicClient &&
+      !!reward_token_wod?._address &&
+      !!staking?._address,
+  });
+
+  const refreshBalanceQuery = async (
+    wallet,
+    staking,
+    queryFunc,
+    publicClient
+  ) => {
+    if (!publicClient) {
+      console.log("publicClient is not initialized");
+      return;
+    }
+    if (!wallet) {
+      console.log("Coinbase is not available");
+      return;
+    }
+    if (!window.CONSTANT_STAKING_WOD_ABI) {
+      console.log("TOKEN_ABI is missing");
+      return;
+    }
+
+    return await publicClient.readContract({
+      abi: window.CONSTANT_STAKING_WOD_ABI,
+      address: staking._address,
+      functionName: queryFunc,
+      args: [wallet],
+    });
+  };
 
   function download(filename, text) {
     var element = document.createElement("a");
@@ -83,7 +137,7 @@ const StakeWodDetails2 = ({
 
     document.body.removeChild(element);
   }
-
+  // console.log(publicClient);
   function jsonToCsv(items) {
     const replacer = (key, value) => (value === null ? "" : value); // specify how you want to handle null values here
     const header = Object.keys(items[0]);
@@ -139,58 +193,168 @@ const StakeWodDetails2 = ({
   const [claimStatus, setclaimStatus] = useState("initial");
   const [withdrawLoading, setwithdrawLoading] = useState(false);
   const [withdrawStatus, setwithdrawStatus] = useState("initial");
- 
+
   const [tvl, settvl] = useState("");
   const [tvlusd, settvlusd] = useState("");
 
   const [referralFeeEarned, setreferralFeeEarned] = useState("");
-  const [stakingOwner, setstakingOwner] = useState(null);
+  // const [stakingOwner, setstakingOwner] = useState(null);
   const [usdPerToken, setusdPerToken] = useState("");
   const [errorMsg, seterrorMsg] = useState("");
   const [errorMsg2, seterrorMsg2] = useState("");
   const [errorMsg3, seterrorMsg3] = useState("");
-  const [contractDeployTime, setcontractDeployTime] = useState("");
-  const [disburseDuration, setdisburseDuration] = useState("");
+
   const [settotal_stakers, setsettotal_stakers] = useState("");
 
   const [show, setshow] = useState(false);
   const [showWithdrawModal, setshowWithdrawModal] = useState(false);
   const [popup, setpopup] = useState(false);
- 
 
   const [approvedAmount, setapprovedAmount] = useState("0.00");
-  const [availableQuota, setavailableQuota] = useState(0);
+
   const [totalDeposited, settotalDeposited] = useState(0);
   const [canDeposit, setCanDeposit] = useState(true);
 
-  const [poolCapTooltip, setPoolCapTooltip] = useState(false);
-  const [quotaTooltip, setQuotaTooltip] = useState(false);
-  const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
+  // const [poolCapTooltip, setPoolCapTooltip] = useState(false);
+  // const [quotaTooltip, setQuotaTooltip] = useState(false);
+  // const [maxDepositTooltip, setMaxDepositTooltip] = useState(false);
 
-  const poolCapClose = () => {
-    setPoolCapTooltip(false);
+  const fetchAllowanceQuery = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      await allowanceQuery.refetch();
+    }
   };
 
-  const poolCapOpen = () => {
-    setPoolCapTooltip(true);
-  };
+  const refreshBalanceMatchId = async () => {
+    try {
+      let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+        window.TOKEN_ABI,
+        reward_token_wod._address
+      );
 
-  const quotaClose = () => {
-    setQuotaTooltip(false);
-  };
+      let _bal;
+      if (chainId === "56" && coinbase && isConnected) {
+        _bal = await reward_token_wod_sc.methods
+          .balanceOf(coinbase)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+      }
 
-  const quotaOpen = () => {
-    setQuotaTooltip(true);
-  };
+      if (staking && coinbase !== undefined && coinbase !== null) {
+        let _pDivs = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "getTotalPendingDivs",
+          publicClient,
+          false
+        );
 
-  const maxDepositClose = () => {
-    setMaxDepositTooltip(false);
-  };
+        let _tEarned = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "totalEarnedTokens",
+          publicClient,
+          false
+        );
+        let _stakingTime = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "stakingTime",
+          publicClient,
+          false
+        );
+        let _dTokens = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "depositedTokens",
+          publicClient,
+          false
+        );
+        let _lClaimTime = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "lastClaimedTime",
+          publicClient,
+          false
+        );
+        let _rFeeEarned = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "totalReferralFeeEarned",
+          publicClient,
+          false
+        );
+        let tStakers = refreshBalanceQuery(
+          coinbase,
+          staking,
+          "getNumberOfHolders",
+          publicClient,
+          false
+        );
 
-  const maxDepositOpen = () => {
-    setMaxDepositTooltip(true);
-  };
+        let _tvl = await reward_token_wod_sc.methods
+          .balanceOf(staking._address)
+          .call()
+          .catch((e) => {
+            console.error(e);
+          });
+        let [
+          token_balance,
+          pendingDivs,
+          totalEarnedTokens,
+          stakingTime,
+          depositedTokens,
+          lastClaimedTime,
+          tvl,
+          referralFeeEarned,
+          total_stakers,
+        ] = await Promise.all([
+          _bal,
+          _pDivs,
+          _tEarned,
+          _stakingTime,
+          _dTokens,
+          _lClaimTime,
+          _tvl,
+          _rFeeEarned,
+          tStakers,
+        ]);
 
+        let balance_formatted = new BigNumber(token_balance ?? 0)
+          .div(1e18)
+          .toString(10);
+        settoken_balance(balance_formatted);
+
+        let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
+        setpendingDivs(divs_formatted);
+
+        let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+          .div(1e18)
+          .toFixed(6);
+        settotalEarnedTokens(earnedTokens_formatted);
+
+        setstakingTime(stakingTime);
+
+        let depositedTokens_formatted = new BigNumber(depositedTokens)
+          .div(1e18)
+          .toString(10);
+
+        setdepositedTokens(depositedTokens_formatted);
+
+        setlastClaimedTime(lastClaimedTime);
+
+        let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
+        settvl(tvl_formatted);
+
+        setreferralFeeEarned(referralFeeEarned);
+        setsettotal_stakers(total_stakers);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const showPopup = () => {
     setpopup(true);
   };
@@ -227,175 +391,126 @@ const StakeWodDetails2 = ({
   };
 
   const refreshBalance = async () => {
-    
+    if (window.WALLET_TYPE === "matchId") {
+      refreshBalanceMatchId();
+    } else {
+      try {
+        let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
+          window.TOKEN_ABI,
+          reward_token_wod._address
+        );
 
-    //console.log({lp_data})
-    //Calculate APY
-
-    try {
-      // let amount = new BigNumber(1000000000000000000).toFixed(0);
-      // let router = await window.getUniswapRouterContract();
-      // let WETH = await router.methods.WETH().call();
-      // let platformTokenAddress = window.config.USDC_address;
-      // let rewardTokenAddress = window.config.reward_token_wod_address;
-      // let path = [
-      //   ...new Set(
-      //     [rewardTokenAddress, WETH, platformTokenAddress].map((a) =>
-      //       a.toLowerCase()
-      //     )
-      //   ),
-      // ];
-      // let _amountOutMin = await router.methods
-      //   .getAmountsOut(amount, path)
-      //   .call();
-      // _amountOutMin = _amountOutMin[_amountOutMin.length - 1];
-      // _amountOutMin = new BigNumber(_amountOutMin).div(1e6).toFixed(18);
-      let reward_token_wod_sc = new window.bscWeb3.eth.Contract(
-        window.TOKEN_ABI,
-        reward_token_wod._address
-      );
-
-      let _bal;
-      if (chainId === "56" && coinbase && isConnected) {
-        _bal = await reward_token_wod_sc.methods
-          .balanceOf(coinbase)
-          .call()
-          .catch((e) => {
+        let _bal;
+        if (chainId === "56" && coinbase && isConnected) {
+          _bal = await reward_token_wod_sc.methods
+            .balanceOf(coinbase)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+        }
+        if (staking && coinbase !== undefined && coinbase !== null) {
+          let _pDivs = staking.getTotalPendingDivs(coinbase).catch((e) => {
             console.error(e);
           });
+
+          let _tEarned = staking.totalEarnedTokens(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _stakingTime = staking.stakingTime(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _dTokens = staking.depositedTokens(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _lClaimTime = staking.lastClaimedTime(coinbase).catch((e) => {
+            console.error(e);
+          });
+          let _tvl = await reward_token_wod_sc.methods
+            .balanceOf(staking._address)
+            .call()
+            .catch((e) => {
+              console.error(e);
+            });
+
+          let _rFeeEarned = staking
+            .totalReferralFeeEarned(coinbase)
+            .catch((e) => {
+              console.error(e);
+            });
+          let tStakers = staking.getNumberOfHolders().catch((e) => {
+            console.error(e);
+          });
+
+          let [
+            token_balance,
+            pendingDivs,
+            totalEarnedTokens,
+            stakingTime,
+            depositedTokens,
+            lastClaimedTime,
+            tvl,
+            referralFeeEarned,
+            total_stakers,
+          ] = await Promise.all([
+            _bal,
+            _pDivs,
+            _tEarned,
+            _stakingTime,
+            _dTokens,
+            _lClaimTime,
+            _tvl,
+            _rFeeEarned,
+            tStakers,
+          ]);
+
+          let balance_formatted = new BigNumber(token_balance ?? 0)
+            .div(1e18)
+            .toString(10);
+          settoken_balance(balance_formatted);
+
+          let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
+          setpendingDivs(divs_formatted);
+
+          let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
+            .div(1e18)
+            .toFixed(6);
+          settotalEarnedTokens(earnedTokens_formatted);
+
+          setstakingTime(stakingTime);
+
+          let depositedTokens_formatted = new BigNumber(depositedTokens)
+            .div(1e18)
+            .toString(10);
+
+          setdepositedTokens(depositedTokens_formatted);
+
+          setlastClaimedTime(lastClaimedTime);
+
+          let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
+          settvl(tvl_formatted);
+
+          setreferralFeeEarned(referralFeeEarned);
+          setsettotal_stakers(total_stakers);
+
+          //console.log({tvlUSD})
+
+          // let stakingOwner = await staking.owner();
+          // setstakingOwner(stakingOwner);
+        }
+      } catch (e) {
+        console.error(e);
       }
-      if (staking && coinbase !== undefined && coinbase !== null) {
-        let _pDivs = staking.getTotalPendingDivs(coinbase);
-
-        let _tEarned = staking.totalEarnedTokens(coinbase);
-        let _stakingTime = staking.stakingTime(coinbase);
-        let _dTokens = staking.depositedTokens(coinbase);
-        let _lClaimTime = staking.lastClaimedTime(coinbase);
-        let _tvl = await reward_token_wod_sc.methods
-          .balanceOf(staking._address)
-          .call()
-          .catch((e) => {
-            console.error(e);
-          });
-        // console.log('tvl', _tvl)
-        let _rFeeEarned = staking.totalReferralFeeEarned(coinbase);
-        let tStakers = staking.getNumberOfHolders();
-
-        //Take iDYP Balance on Staking
-        // let _tvlConstantiDYP = reward_token_idyp.balanceOf(
-        //   staking._address
-        // );
-        /* TVL of iDYP on Staking */
-
-        //Take DYPS Balance
-        // let _tvlDYPS = token_dyps.balanceOf(staking._address); /* TVL of DYPS */
-
-        let [
-          token_balance,
-          pendingDivs,
-          totalEarnedTokens,
-          stakingTime,
-          depositedTokens,
-          lastClaimedTime,
-          tvl,
-          referralFeeEarned,
-          total_stakers,
-          tvlConstantiDYP,
-          //   tvlDYPS,
-        ] = await Promise.all([
-          _bal,
-          _pDivs,
-          _tEarned,
-          _stakingTime,
-          _dTokens,
-          _lClaimTime,
-          _tvl,
-          _rFeeEarned,
-          tStakers,
-          // _tvlConstantiDYP,
-          //   _tvlDYPS,
-        ]);
-
-        //console.log({tvl, tvlConstantiDYP, _amountOutMin})
-        const dypprice = await axios
-          .get(
-            "https://api.geckoterminal.com/api/v2/networks/eth/pools/0x7c81087310a228470db28c1068f0663d6bf88679"
-          )
-          .then((res) => {
-            return res.data.data.attributes.base_token_price_usd;
+      if (staking) {
+        staking
+          .LOCKUP_TIME()
+          .then((cliffTime) => {
+            setcliffTime(Number(cliffTime));
           })
-          .catch((e) => {
-            console.log(e);
-          });
-
-        // let usdValueiDYP = new BigNumber(tvlConstantiDYP)
-        //   .times(_amountOutMin)
-        //   .toFixed(18);
-        // let usdValueDYPS = 0;
-        // let usd_per_lp = dypprice;
-        // let tvlUSD = new BigNumber(tvl)
-        //   .times(usd_per_lp)
-        //   .plus(usdValueiDYP)
-        //   .plus(usdValueDYPS)
-        //   .toFixed(18);
-        // settvlusd(tvlUSD);
-
-        let balance_formatted = new BigNumber(token_balance ?? 0)
-          .div(1e18)
-          .toString(10);
-        settoken_balance(balance_formatted);
-
-        let divs_formatted = new BigNumber(pendingDivs).div(1e18).toFixed(6);
-        setpendingDivs(divs_formatted);
-
-        let earnedTokens_formatted = new BigNumber(totalEarnedTokens)
-          .div(1e18)
-          .toFixed(6);
-        settotalEarnedTokens(earnedTokens_formatted);
-
-        setstakingTime(stakingTime);
-
-        let depositedTokens_formatted = new BigNumber(depositedTokens)
-          .div(1e18)
-          .toString(10);
-
-        setdepositedTokens(depositedTokens_formatted);
-
-        setlastClaimedTime(lastClaimedTime);
-
-        let tvl_formatted = new BigNumber(tvl).div(1e18).toFixed(6);
-        settvl(tvl_formatted);
-
-        setreferralFeeEarned(referralFeeEarned);
-        setsettotal_stakers(total_stakers);
-
-        //console.log({tvlUSD})
-
-        let stakingOwner = await staking.owner();
-        setstakingOwner(stakingOwner);
+          .catch(console.error);
       }
-    } catch (e) {
-      console.error(e);
-    }
-    if (staking) {
-      staking
-        .LOCKUP_TIME()
-        .then((cliffTime) => {
-          setcliffTime(Number(cliffTime));
-        })
-        .catch(console.error);
-
-      staking.contractStartTime().then((contractDeployTime) => {
-        setcontractDeployTime(contractDeployTime);
-      });
-
-      staking.REWARD_INTERVAL().then((disburseDuration) => {
-        setdisburseDuration(disburseDuration);
-      });
     }
   };
-
- 
 
   useEffect(() => {
     getPriceDYP();
@@ -410,6 +525,12 @@ const StakeWodDetails2 = ({
       getApprovedAmount();
     }
   }, [coinbase, staking, isConnected, chainId]);
+
+  useEffect(() => {
+    if (chainId === "56" && publicClient) {
+      fetchAllowanceQuery();
+    }
+  }, [publicClient, staking, coinbase, isConnected, chainId]);
 
   useEffect(() => {
     setdepositAmount("");
@@ -429,6 +550,7 @@ const StakeWodDetails2 = ({
           setdepositStatus("deposit");
           refreshBalance();
           getApprovedAmount();
+          fetchAllowanceQuery();
         })
         .catch((e) => {
           setdepositLoading(false);
@@ -468,6 +590,7 @@ const StakeWodDetails2 = ({
         setdepositStatus("deposit");
         refreshBalance();
         getApprovedAmount();
+        fetchAllowanceQuery();
       }
     }
   };
@@ -475,7 +598,10 @@ const StakeWodDetails2 = ({
   const handleStake = async (e) => {
     setdepositLoading(true);
     if (window.WALLET_TYPE !== "binance") {
-      if(staking._address.toLowerCase() === window.config.constant_staking_wod5_address.toLowerCase()) {
+      if (
+        staking._address.toLowerCase() ===
+        window.config.constant_staking_wod5_address.toLowerCase()
+      ) {
         window.alertify.error("You must be connected to Binance Wallet!");
         setdepositLoading(false);
         return;
@@ -500,6 +626,7 @@ const StakeWodDetails2 = ({
           setdepositStatus("success");
           refreshBalance();
           getApprovedAmount();
+          fetchAllowanceQuery();
           onSuccessfulStake();
           setTimeout(() => {
             setdepositStatus("initial");
@@ -550,6 +677,7 @@ const StakeWodDetails2 = ({
         setdepositStatus("success");
         refreshBalance();
         getApprovedAmount();
+        fetchAllowanceQuery();
         onSuccessfulStake();
         setTimeout(() => {
           setdepositStatus("initial");
@@ -713,19 +841,28 @@ const StakeWodDetails2 = ({
   };
 
   const getApprovedAmount = async () => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    if (coinbase) {
+      if (window.WALLET_TYPE !== "matchId") {
+        const result = await window
+          .checkapproveStakePool(
+            coinbase,
+            reward_token_wod._address,
+            staking._address
+          )
+          .then((data) => {
+            console.log(data);
+            return data;
+          });
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    setapprovedAmount(result_formatted);
+        let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+        setapprovedAmount(result_formatted);
+      } else if (window.WALLET_TYPE === "matchId") {
+        let result_formatted = new BigNumber(allowanceQuery?.data ?? 0)
+          .div(1e18)
+          .toFixed(6);
+        setapprovedAmount(result_formatted);
+      }
+    }
   };
 
   const handleReinvest = async (e) => {
@@ -794,21 +931,6 @@ const StakeWodDetails2 = ({
       });
   };
 
-  let id = Math.random().toString(36);
-
-  let showDeposit = true;
-
-  if (!isNaN(disburseDuration) && !isNaN(contractDeployTime)) {
-    let lastDay = parseInt(disburseDuration) + parseInt(contractDeployTime);
-    let lockTimeExpire = parseInt(Date.now()) + parseInt(cliffTime);
-    lockTimeExpire = lockTimeExpire.toString().substr(0, 10);
-    //console.log("now " + lockTimeExpire)
-    //console.log('last ' + lastDay)
-    if (lockTimeExpire > lastDay) {
-      showDeposit = false;
-    }
-  }
-
   let cliffTimeInWords = "lockup period";
 
   const focusInput = (field) => {
@@ -838,19 +960,37 @@ const StakeWodDetails2 = ({
   tvl_usd = getFormattedNumber(tvl_usd, 2);
 
   const checkApproval = async (amount) => {
-    const result = await window
-      .checkapproveStakePool(
-        coinbase,
-        reward_token_wod._address,
-        staking._address
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      checkApprovalMatchId(amount);
+    } else {
+      const result = await window
+        .checkapproveStakePool(
+          coinbase,
+          reward_token_wod._address,
+          staking._address
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        });
 
-    let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
-    let result_formatted2 = new BigNumber(result).div(1e18).toFixed(2);
+      let result_formatted = new BigNumber(result).div(1e18).toFixed(6);
+
+      if (
+        Number(result_formatted) >= Number(amount) &&
+        Number(result_formatted) !== 0
+      ) {
+        setdepositStatus("deposit");
+      } else {
+        setdepositStatus("initial");
+      }
+    }
+  };
+
+  const checkApprovalMatchId = async (amount) => {
+    let result_formatted = new BigNumber(allowanceQuery?.data ?? 0)
+      .div(1e18)
+      .toFixed(6);
 
     if (
       Number(result_formatted) >= Number(amount) &&
@@ -862,7 +1002,6 @@ const StakeWodDetails2 = ({
     }
   };
 
- 
   const getAvailableQuota = async () => {
     if (staking && staking._address) {
       const stakingSc = new window.bscWeb3.eth.Contract(
@@ -879,8 +1018,7 @@ const StakeWodDetails2 = ({
       const totalDeposited_formatted = new BigNumber(totalDeposited)
         .div(1e18)
         .toFixed(6);
-      const quotaLeft = poolCap - totalDeposited_formatted;
-      setavailableQuota(quotaLeft);
+
       settotalDeposited(totalDeposited_formatted);
     }
   };
@@ -898,7 +1036,7 @@ const StakeWodDetails2 = ({
     }
   }, [depositAmount, totalDeposited, poolCap]);
 
-  useEffect(() => { 
+  useEffect(() => {
     getAvailableQuota();
   }, [staking, poolCap]);
 
@@ -1170,7 +1308,10 @@ const StakeWodDetails2 = ({
                     <>Success</>
                   ) : (
                     <>
-                      <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/failMark.svg"}
+                        alt=""
+                      />
                       Failed
                     </>
                   )}
@@ -1214,7 +1355,10 @@ const StakeWodDetails2 = ({
                         </div>
                       }
                     >
-                      <img src={"https://cdn.worldofdypians.com/wod/more-info.svg"} alt="" />
+                      <img
+                        src={"https://cdn.worldofdypians.com/wod/more-info.svg"}
+                        alt=""
+                      />
                     </Tooltip>
                   </h6>
                 </div>
@@ -1266,7 +1410,12 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : claimStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : claimStatus === "success" ? (
@@ -1298,7 +1447,12 @@ const StakeWodDetails2 = ({
                           </div>
                         ) : reInvestStatus === "failed" ? (
                           <>
-                            <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                            <img
+                              src={
+                                "https://cdn.worldofdypians.com/wod/failMark.svg"
+                              }
+                              alt=""
+                            />
                             Failed
                           </>
                         ) : reInvestStatus === "success" ? (
@@ -1389,7 +1543,11 @@ const StakeWodDetails2 = ({
                 className="m-0 mybalance-text d-flex align-items-center gap-1"
                 style={{ color: "#4ed5d2" }}
               >
-                <img src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"} alt="" /> Details
+                <img
+                  src={"https://cdn.worldofdypians.com/wod/statsIcon.svg"}
+                  alt=""
+                />{" "}
+                Details
               </h6>
             </div>
           </div>
@@ -1595,7 +1753,12 @@ const StakeWodDetails2 = ({
                         </div>
                       ) : withdrawStatus === "failed" ? (
                         <>
-                          <img src={"https://cdn.worldofdypians.com/wod/failMark.svg"} alt="" />
+                          <img
+                            src={
+                              "https://cdn.worldofdypians.com/wod/failMark.svg"
+                            }
+                            alt=""
+                          />
                           Failed
                         </>
                       ) : withdrawStatus === "success" ? (

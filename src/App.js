@@ -93,6 +93,7 @@ import OrynFly from "./components/OrynFly/OrynFly.js";
 import "@matchain/matchid-sdk-react/index.css";
 import { Hooks } from "@matchain/matchid-sdk-react";
 import { useMatchChain } from "@matchain/matchid-sdk-react/hooks";
+import { http, createPublicClient } from "viem";
 
 const PUBLISHABLE_KEY = "pk_imapik-BnvsuBkVmRGTztAch9VH"; // Replace with your Publishable Key from the Immutable Hub
 const CLIENT_ID = "FgRdX0vu86mtKw02PuPpIbRUWDN3NpoE"; // Replace with your passport client ID
@@ -456,7 +457,7 @@ function App() {
 
   const { useUserInfo, useWallet } = Hooks;
   const { login, address, username, logout: logoutUser } = useUserInfo();
-  const { signMessage } = useWallet();
+  const { signMessage, createWalletClient } = useWallet();
   const {
     data,
     refetch: refetchPlayer,
@@ -828,6 +829,16 @@ function App() {
   const userWallet = data?.getPlayer?.wallet?.publicAddress;
   const chain = useMatchChain();
 
+  const walletClient = createWalletClient({
+    chain: chain?.chain,
+    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
+  });
+
+  const publicClient = createPublicClient({
+    chain: chain?.chain,
+    transport: http(`${chain?.chain?.rpcUrls?.default?.http[0]}`),
+  });
+  // console.log(publicClient);
   const fetchEthStaking = async () => {
     const eth_result = await axios
       .get(`https://api.dyp.finance/api/get_staking_info_wod_nft`)
@@ -4993,7 +5004,6 @@ function App() {
   //   }
   // }, [address, window.WALLET_TYPE]);
 
-  // console.log(address, username, window.WALLET_TYPE, window);
   return (
     <>
       <div
@@ -6463,6 +6473,8 @@ function App() {
                 onSuccessfulStake={() => {
                   setstakeCount(stakeCount + 1);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
               />
             }
           />

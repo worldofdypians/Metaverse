@@ -19,6 +19,8 @@ const Earn = ({
   tokenPools,
   userPools,
   onSuccessfulStake,
+  walletClient,
+  publicClient
 }) => {
   // const nftPools = [
   //   {
@@ -168,6 +170,8 @@ const Earn = ({
             wodBalance={wodBalance}
             userPools={userPools}
             onSuccessfulStake={onSuccessfulStake}
+            walletClient={walletClient}
+            publicClient={publicClient}
           />
         </div>
       </div>

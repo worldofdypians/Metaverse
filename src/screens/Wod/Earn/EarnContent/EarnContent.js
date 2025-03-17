@@ -33,6 +33,8 @@ const EarnContent = ({
   wodBalance,
   userPools,
   onSuccessfulStake,
+  walletClient,
+  publicClient
 }) => {
   const [sorting, setSorting] = useState("");
   const [selectedPool, setselectedPool] = useState([]);
@@ -640,6 +642,7 @@ const EarnContent = ({
                             }}
                           >
                             <StakeWodDetails2
+                            walletClient={walletClient}
                               coinbase={coinbase}
                               isConnected={isConnected}
                               chainId={chainId?.toString()}
@@ -656,6 +659,7 @@ const EarnContent = ({
                               listType={selectedViewStyle}
                               lockTime={item.lock_time}
                               onSuccessfulStake={onSuccessfulStake}
+                              publicClient={publicClient}
                             />
                           </div>
                         )}
