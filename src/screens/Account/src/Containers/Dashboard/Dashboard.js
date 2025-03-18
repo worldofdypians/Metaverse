@@ -163,6 +163,9 @@ function Dashboard({
   chainlinkEarnUsd,
   isTokenExpired,
   listedNFTS,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -4804,11 +4807,9 @@ function Dashboard({
 
         console.log("🚀 ~ file: Dashboard.js:30 ~ getTokens ~ error", error);
       }
-    } else if (window.ethereum && window.WALLET_TYPE === "matchId") {
+    } else if (window.WALLET_TYPE === "matchId") {
       try {
         setshowSyncModal(false);
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
         const signature = await signMessage({
           message: `Signing one-time nonce: ${dataNonce?.generateWalletNonce?.nonce}`,
         });
@@ -9159,6 +9160,9 @@ function Dashboard({
               isConnected={isConnected}
               setBeastSiegeStatus={setBeastSiegeStatus}
               genesisUsd={genesisRank2}
+              walletClient={walletClient}
+              publicClient={publicClient}
+              network_matchain={network_matchain}
             />
           </>
         ) : location.pathname === "/account/my-rewards" ? (
@@ -9329,6 +9333,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -9442,6 +9449,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}
@@ -9555,6 +9565,9 @@ function Dashboard({
             handleSwitchChainBinanceWallet={handleSwitchChainBinanceWallet}
             handleSwitchChainGateWallet={handleSwitchChainGateWallet}
             binanceWallet={binanceWallet}
+            walletClient={walletClient}
+            publicClient={publicClient}
+            network_matchain={network_matchain}
           />
           // </OutsideClickHandler>
         )}

@@ -6,6 +6,7 @@ import { IDO_ABI } from "./abis";
 import ReleaseHero from "./ReleaseHero/ReleaseHero";
 import ReleaseContent from "./ReleaseContent/ReleaseContent";
 import StakingBanner from "./StakingBanner/StakingBanner";
+import { ethers } from "ethers";
 
 const renderer2 = ({ hours, minutes }) => {
   return (
@@ -21,10 +22,9 @@ const Release = ({
   handleConnection,
   coinbase,
   handleSwitchNetwork,
-  isPremium,
-  userPools,
-  hasDypBalance,
-  hasiDypBalance,
+  network_matchain,
+  walletClient,
+  binanceW3WProvider,
 }) => {
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
@@ -85,7 +85,7 @@ const Release = ({
           return 0;
         });
     }
-    
+
     const tokensToClaimAmount_formatted = new window.BigNumber(
       tokensToClaimAmount / 1e18
     ).toFixed(6);
@@ -186,37 +186,72 @@ const Release = ({
   const handleClaim = async () => {
     console.log("seed");
     setclaimLoading(true);
-    let web3 = new Web3(window.ethereum);
-    const vestingSc = new web3.eth.Contract(
-      IDO_ABI,
-      window.config.ido_address,
-      { from: await window.getCoinbase() }
-    );
+    if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        await walletClient
+          .writeContract({
+            address: window.config.ido_address,
+            abi: IDO_ABI,
+            functionName: "claim",
+            args: [],
+          })
+          .then(() => {
+            setclaimStatus("success");
+            setclaimLoading(false);
 
-    const gasPrice = await window.bscWeb3.eth.getGasPrice();
-    console.log("gasPrice", gasPrice);
-    const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
-    // const increasedGwei = parseInt(currentGwei) + 2;
-    // console.log("increasedGwei", increasedGwei);
+            setTimeout(() => {
+              setclaimStatus("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          })
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
 
-    const transactionParameters = {
-      gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
-    };
+            setclaimStatus("failed");
+            setclaimLoading(false);
+            setTimeout(() => {
+              setclaimStatus("initial");
+            }, 5000);
+          });
+      }
+    } else if (window.WALLET_TYPE === "binance") {
+      const vestingSc = new ethers.Contract(
+        window.config.ido_address,
+        IDO_ABI,
+        binanceW3WProvider.getSigner()
+      );
+      const gasPrice = await binanceW3WProvider.getGasPrice();
+      console.log("gasPrice", gasPrice.toString());
+      const currentGwei = ethers.utils.formatUnits(gasPrice, "gwei");
+      const increasedGwei = parseFloat(currentGwei) + 1.5;
+      console.log("increasedGwei", increasedGwei);
 
-    await vestingSc.methods
-      .claim()
-      .estimateGas({ from: await window.getCoinbase() })
-      .then((gas) => {
-        transactionParameters.gas = web3.utils.toHex(gas);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      // Convert increased Gwei to Wei
+      const gasPriceInWei = ethers.utils.parseUnits(
+        currentGwei.toString().slice(0, 16),
+        "gwei"
+      );
 
-    await vestingSc.methods
-      .claim()
-      .send({ from: await window.getCoinbase(), ...transactionParameters })
-      .then(() => {
+      const transactionParameters = {
+        gasPrice: gasPriceInWei,
+      };
+
+      const txResponse = await vestingSc
+        .claim({ from: coinbase, ...transactionParameters })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
+      const txReceipt = await txResponse.wait();
+      if (txReceipt) {
         setclaimStatus("success");
         setclaimLoading(false);
 
@@ -225,33 +260,79 @@ const Release = ({
           getInfo();
           getInfoTimer();
         }, 5000);
-      })
-      .catch((e) => {
-        console.error(e);
-        window.alertify.error(e?.message);
+      }
+    } else {
+      let web3 = new Web3(window.ethereum);
+      const vestingSc = new web3.eth.Contract(
+        IDO_ABI,
+        window.config.ido_address,
+        { from: await window.getCoinbase() }
+      );
 
-        setclaimStatus("failed");
-        setclaimLoading(false);
-        setTimeout(() => {
-          setclaimStatus("initial");
-        }, 5000);
-      });
+      const gasPrice = await window.bscWeb3.eth.getGasPrice();
+      console.log("gasPrice", gasPrice);
+      const currentGwei = web3.utils.fromWei(gasPrice, "gwei");
+
+      const transactionParameters = {
+        gasPrice: web3.utils.toWei(currentGwei.toString(), "gwei"),
+      };
+
+      await vestingSc.methods
+        .claim()
+        .estimateGas({ from: await window.getCoinbase() })
+        .then((gas) => {
+          transactionParameters.gas = web3.utils.toHex(gas);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+      await vestingSc.methods
+        .claim()
+        .send({ from: await window.getCoinbase(), ...transactionParameters })
+        .then(() => {
+          setclaimStatus("success");
+          setclaimLoading(false);
+
+          setTimeout(() => {
+            setclaimStatus("initial");
+            getInfo();
+            getInfoTimer();
+          }, 5000);
+        })
+        .catch((e) => {
+          console.error(e);
+          window.alertify.error(e?.message);
+
+          setclaimStatus("failed");
+          setclaimLoading(false);
+          setTimeout(() => {
+            setclaimStatus("initial");
+          }, 5000);
+        });
+    }
   };
 
   const handleEthPool = async () => {
-    await handleSwitchNetworkhook("0x38")
-      .then(() => {
-        handleSwitchNetwork("56");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else {
+      await handleSwitchNetworkhook("0x38")
+        .then(() => {
+          handleSwitchNetwork("56");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   useEffect(() => {
     getInfo();
-    getInfoTimer();
-  }, [coinbase]);
+    if (coinbase && isConnected) {
+      getInfoTimer();
+    }
+  }, [coinbase, isConnected]);
 
   return (
     <div className="container-fluid release-mainhero-wrapper token-wrapper px-0">

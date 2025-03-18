@@ -320,24 +320,26 @@ const LandDetailsPremium = ({
   };
 
   useEffect(() => {
-    totalStakedNft();
-  }, [count, newStakes]);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       myNft();
       myStakes();
       checkApproval();
       handleClaimAll();
     }
-  }, [isConnected, chainId, count, newStakes]);
+  }, [isConnected, chainId, count, newStakes, window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       checkApproval();
       calculateCountdown();
     }
-  }, [isConnected, chainId, count2]);
+  }, [isConnected, chainId, count2, window.WALLET_TYPE]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);

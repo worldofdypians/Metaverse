@@ -326,18 +326,20 @@ const CawsDetails = ({
   };
 
   useEffect(() => {
-    totalStakedNft().then();
-  }, []);
+    if (window.WALLET_TYPE !== "matchId") {
+      totalStakedNft();
+    }
+  }, [window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
       myNft().then();
       myStakes().then();
       checkApproval().then();
       handleClaimAll();
       calculateCountdown().then();
     }
-  }, [isConnected, chainId]);
+  }, [isConnected, chainId, window.WALLET_TYPE, coinbase]);
 
   const getApprovedNfts = (data) => {
     setApprovedNfts(data);

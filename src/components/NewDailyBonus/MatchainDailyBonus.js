@@ -133,7 +133,10 @@ const MatchainDailyBonus = ({
   openedMatChests,
   onMatChestClaimed,
   allMatChests,
-  onConnectWallet
+  onConnectWallet,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
   const numberArray = Array.from({ length: 20 }, (_, index) => ({
     id: index + 1,

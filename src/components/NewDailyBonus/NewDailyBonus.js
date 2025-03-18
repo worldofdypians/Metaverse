@@ -134,18 +134,10 @@ const NewDailyBonus = ({
   onMatChestClaimed,
   allMatChests,
   onConnectWallet,
+  walletClient,
+  publicClient,
+  network_matchain,
 }) => {
-  const numberArray = Array.from({ length: 20 }, (_, index) => ({
-    id: index + 1,
-    opened: false,
-    premium: index + 1 > 10 && !isPremium ? true : false,
-  }));
-  const cawsArray = Array.from({ length: 4 }, (_, index) => ({
-    id: index + 1,
-  }));
-
-  const rewardsRef = useRef();
-
   const html = document.querySelector("html");
 
   const bnbClaimed = claimedChests + claimedPremiumChests;
@@ -733,24 +725,28 @@ const NewDailyBonus = ({
   };
 
   const handleOpBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xcc")
-          .then(() => {
-            handleSwitchNetwork(204);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(204);
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0xcc")
+            .then(() => {
+              handleSwitchNetwork(204);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(204);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(204);
+        }
       } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         handleSwitchChainBinanceWallet(204);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(204);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
@@ -802,96 +798,116 @@ const NewDailyBonus = ({
   }, [premiumTxHash, selectedChainforPremium]);
 
   const handleBnbPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x38")
-          .then(() => {
-            handleSwitchNetwork(56);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(56);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(56);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(56);
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-  const handleMantaPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0xa9")
-          .then(() => {
-            handleSwitchNetwork(169);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(169);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(169);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(169);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleBasePool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
-        await handleSwitchNetworkhook("0x2105")
-          .then(() => {
-            handleSwitchNetwork(8453);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
-        handleSwitchChainGateWallet(8453);
-      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-        handleSwitchChainBinanceWallet(8453);
-      }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      handleSwitchChainBinanceWallet(8453);
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
-    }
-  };
-
-  const handleTaikoPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x28c58")
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x38")
             .then(() => {
-              handleSwitchNetwork(167000);
+              handleSwitchNetwork(56);
             })
             .catch((e) => {
               console.log(e);
             });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(56);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(56);
         }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(56);
       } else {
         window.alertify.error("No web3 detected. Please install Metamask!");
       }
+    }
+  };
+  const handleMantaPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     } else {
-      window.alertify.error("This network is not available on Binance Wallet");
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0xa9")
+            .then(() => {
+              handleSwitchNetwork(169);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(169);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(169);
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(169);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    }
+  };
+
+  const handleBasePool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (!window.gatewallet && window.WALLET_TYPE !== "binance") {
+          await handleSwitchNetworkhook("0x2105")
+            .then(() => {
+              handleSwitchNetwork(8453);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (window.gatewallet && window.WALLET_TYPE !== "binance") {
+          handleSwitchChainGateWallet(8453);
+        } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+          handleSwitchChainBinanceWallet(8453);
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
+        handleSwitchChainBinanceWallet(8453);
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
+    }
+  };
+
+  const handleTaikoPool = async () => {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x28c58")
+              .then(() => {
+                handleSwitchNetwork(167000);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
+        }
+      } else {
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
+      }
     }
   };
 
   const handleMatPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE === "matchId") {
+      network_matchain?.showChangeNetwork();
+    } else if (window.WALLET_TYPE !== "binance") {
       if (window.ethereum) {
         if (!window.gatewallet) {
           await handleSwitchNetworkhook("0x2ba")
@@ -915,100 +931,122 @@ const NewDailyBonus = ({
   };
 
   const handleSkalePool = async () => {
-    if (window.ethereum) {
-      if (
-        !window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        await handleSwitchNetworkhook("0x585eb4b1")
-          .then(() => {
-            handleSwitchNetwork(1482601649);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (
-        window.gatewallet &&
-        window.WALLET_TYPE !== "binance" &&
-        !window.ethereum?.isBinance
-      ) {
-        handleSwitchChainGateWallet(1482601649);
-      } else if (
-        window.ethereum?.isBinance ||
-        window.WALLET_TYPE === "binance"
-      ) {
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.ethereum) {
+        if (
+          !window.gatewallet &&
+          window.WALLET_TYPE !== "binance" &&
+          !window.ethereum?.isBinance
+        ) {
+          await handleSwitchNetworkhook("0x585eb4b1")
+            .then(() => {
+              handleSwitchNetwork(1482601649);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        } else if (
+          window.gatewallet &&
+          window.WALLET_TYPE !== "binance" &&
+          !window.ethereum?.isBinance
+        ) {
+          handleSwitchChainGateWallet(1482601649);
+        } else if (
+          window.ethereum?.isBinance ||
+          window.WALLET_TYPE === "binance"
+        ) {
+          window.alertify.error(
+            "This network is not available on Binance Wallet"
+          );
+        }
+      } else if (binanceWallet && window.WALLET_TYPE === "binance") {
         window.alertify.error(
           "This network is not available on Binance Wallet"
         );
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
       }
-    } else if (binanceWallet && window.WALLET_TYPE === "binance") {
-      window.alertify.error("This network is not available on Binance Wallet");
-    } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
     }
   };
 
   const handleCorePool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x45c")
-            .then(() => {
-              handleSwitchNetwork(1116);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x45c")
+              .then(() => {
+                handleSwitchNetwork(1116);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
         }
       } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
       }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
   const handleVictionPool = async () => {
-    if (window.WALLET_TYPE !== "binance") {
-      if (window.ethereum) {
-        if (!window.gatewallet) {
-          await handleSwitchNetworkhook("0x58")
-            .then(() => {
-              handleSwitchNetwork(88);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        } else if (window.ethereum?.isBinance) {
-          window.alertify.error(
-            "This network is not available on Binance Wallet"
-          );
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
+    } else {
+      if (window.WALLET_TYPE !== "binance") {
+        if (window.ethereum) {
+          if (!window.gatewallet) {
+            await handleSwitchNetworkhook("0x58")
+              .then(() => {
+                handleSwitchNetwork(88);
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          } else if (window.ethereum?.isBinance) {
+            window.alertify.error(
+              "This network is not available on Binance Wallet"
+            );
+          }
+        } else {
+          window.alertify.error("No web3 detected. Please install Metamask!");
         }
       } else {
-        window.alertify.error("No web3 detected. Please install Metamask!");
+        window.alertify.error(
+          "This network is not available on Binance Wallet"
+        );
       }
-    } else {
-      window.alertify.error("This network is not available on Binance Wallet");
     }
   };
 
   const handleSeiPool = async () => {
-    if (window.ethereum) {
-      if (!window.gatewallet) {
-        await handleSwitchNetworkhook("0x531")
-          .then(() => {
-            handleSwitchNetwork(1329);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
+    if (window.WALLET_TYPE === "matchId") {
+      window.alertify.error("Please connect to another EVM wallet.");
     } else {
-      window.alertify.error("No web3 detected. Please install Metamask!");
+      if (window.ethereum) {
+        if (!window.gatewallet) {
+          await handleSwitchNetworkhook("0x531")
+            .then(() => {
+              handleSwitchNetwork(1329);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      } else {
+        window.alertify.error("No web3 detected. Please install Metamask!");
+      }
     }
   };
 
@@ -2027,7 +2065,10 @@ const NewDailyBonus = ({
         setDisable(true);
       }
     } else if (chain === "skale") {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2094,12 +2135,16 @@ const NewDailyBonus = ({
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "core") {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2166,12 +2211,16 @@ const NewDailyBonus = ({
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "viction") {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2238,142 +2287,154 @@ const NewDailyBonus = ({
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
       }
     } else if (chain === "manta") {
-      if (!email) {
-        setMessage("login");
-        setDisable(true);
-      } else if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedMantaChests + claimedMantaPremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedMantaChests + claimedMantaPremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 169
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedMantaChests + claimedMantaPremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 169
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE === "matchId") {
+        setMessage("notsupported");
+      } else {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedMantaChests + claimedMantaPremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedMantaChests + claimedMantaPremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 169
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedMantaChests + claimedMantaPremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 169
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedMantaChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 169
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedMantaChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 169
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedMantaChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 169
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedMantaChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 169
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedMantaChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 169
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedMantaChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 169
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("connect");
           setDisable(true);
         }
-      } else {
-        setMessage("connect");
-        setDisable(true);
       }
     } else if (chain === "base") {
-      if (!email) {
-        setMessage("login");
-        setDisable(true);
-      } else if (email && coinbase && address) {
-        if (coinbase.toLowerCase() === address.toLowerCase()) {
-          if (isPremium) {
-            if (
-              claimedBaseChests + claimedBasePremiumChests === 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase()
-            ) {
-              setMessage("complete");
-            } else if (
-              claimedBaseChests + claimedBasePremiumChests < 20 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 8453
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedBaseChests + claimedBasePremiumChests < 20 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 8453
-            ) {
-              setMessage("switch");
-              setDisable(true);
+      if (window.WALLET_TYPE === "matchId") {
+        setMessage("notsupported");
+      } else {
+        if (!email) {
+          setMessage("login");
+          setDisable(true);
+        } else if (email && coinbase && address) {
+          if (coinbase.toLowerCase() === address.toLowerCase()) {
+            if (isPremium) {
+              if (
+                claimedBaseChests + claimedBasePremiumChests === 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase()
+              ) {
+                setMessage("complete");
+              } else if (
+                claimedBaseChests + claimedBasePremiumChests < 20 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 8453
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedBaseChests + claimedBasePremiumChests < 20 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 8453
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
+            } else if (!isPremium) {
+              if (
+                claimedBaseChests === 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 8453
+              ) {
+                setMessage("premium");
+                setDisable(true);
+              } else if (
+                claimedBaseChests < 10 &&
+                rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId === 8453
+              ) {
+                setMessage("");
+                setDisable(false);
+              } else if (
+                claimedBaseChests < 10 &&
+                // rewardData.length === 0 &&
+                address.toLowerCase() === coinbase.toLowerCase() &&
+                chainId !== 8453
+              ) {
+                setMessage("switch");
+                setDisable(true);
+              }
             }
-          } else if (!isPremium) {
-            if (
-              claimedBaseChests === 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 8453
-            ) {
-              setMessage("premium");
-              setDisable(true);
-            } else if (
-              claimedBaseChests < 10 &&
-              rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId === 8453
-            ) {
-              setMessage("");
-              setDisable(false);
-            } else if (
-              claimedBaseChests < 10 &&
-              // rewardData.length === 0 &&
-              address.toLowerCase() === coinbase.toLowerCase() &&
-              chainId !== 8453
-            ) {
-              setMessage("switch");
-              setDisable(true);
-            }
+          } else {
+            setMessage("switchAccount");
+            setDisable(true);
           }
         } else {
-          setMessage("switchAccount");
+          setMessage("connect");
           setDisable(true);
         }
-      } else {
-        setMessage("connect");
-        setDisable(true);
       }
     } else if (chain === "taiko") {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2440,6 +2501,7 @@ const NewDailyBonus = ({
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
@@ -2517,7 +2579,10 @@ const NewDailyBonus = ({
         setMessage("notsupported");
       }
     } else if (chain === "sei") {
-      if (window.WALLET_TYPE !== "binance") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (!email) {
           setMessage("login");
           setDisable(true);
@@ -2584,6 +2649,7 @@ const NewDailyBonus = ({
         }
       } else if (
         window.WALLET_TYPE === "binance" ||
+        window.WALLET_TYPE === "matchId" ||
         window.ethereum?.isBinance
       ) {
         setMessage("notsupported");
@@ -4440,6 +4506,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4492,6 +4559,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "core"
@@ -4542,6 +4610,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4594,6 +4663,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "manta"
@@ -4644,6 +4714,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4696,6 +4767,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "base"
@@ -4745,6 +4817,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4796,6 +4869,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "taiko"
@@ -4845,6 +4919,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4896,6 +4971,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "matchain"
@@ -4945,6 +5021,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4996,6 +5073,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "sei"
@@ -5045,6 +5123,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5096,6 +5175,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests={
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "viction"
@@ -5146,6 +5226,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5198,6 +5279,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
+                                  walletClient={walletClient}
                                 />
                               ))
                           : chain === "skale" &&
@@ -5248,6 +5330,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
                                 binanceW3WProvider={binanceW3WProvider}
+                                walletClient={walletClient}
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
@@ -5299,6 +5382,7 @@ const NewDailyBonus = ({
                                   dummypremiumChests[index - 10]?.closedImg
                                 }
                                 binanceW3WProvider={binanceW3WProvider}
+                                walletClient={walletClient}
                               />
                             ))}
                       </div>

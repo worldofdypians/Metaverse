@@ -248,21 +248,23 @@ const LandDetails = ({
   };
 
   useEffect(() => {
-    totalStakedNft().then();
-  }, []);
+    if (window.WALLET_TYPE !== "matchId") {
+    totalStakedNft()
+    }
+  }, [window.WALLET_TYPE]);
 
   useEffect(() => {
-    if (isConnected && chainId === "1") {
-      myNft().then();
-      myStakes().then();
-      checkApproval().then();
+    if (isConnected && chainId === "1" && window.WALLET_TYPE !== "matchId") {
+      myNft();
+      myStakes();
+      checkApproval();
       handleClaimAll();
     }
-  }, [isConnected]);
+  }, [isConnected, chainId, window.WALLET_TYPE, coinbase]);
 
   useEffect(() => {
     if (isConnected) {
-      setUSDPrice().then();
+      setUSDPrice();
     }
   }, [isConnected, EthRewards]);
 
