@@ -25,6 +25,7 @@ const Release = ({
   network_matchain,
   walletClient,
   binanceW3WProvider,
+  publicClient
 }) => {
   const [cliffTime, setcliffTime] = useState(0);
   const [releaseProcent, setreleaseProcent] = useState(0);
@@ -188,14 +189,33 @@ const Release = ({
     setclaimLoading(true);
     if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.ido_address,
             abi: IDO_ABI,
             functionName: "claim",
             args: [],
           })
-          .then(() => {
+          .catch((e) => {
+            console.error(e);
+            window.alertify.error(e?.message);
+            setclaimStatus("failed");
+            setclaimLoading(false);
+            setTimeout(() => {
+              setclaimStatus("initial");
+            }, 5000);
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
             setclaimStatus("success");
             setclaimLoading(false);
 
@@ -204,17 +224,8 @@ const Release = ({
               getInfo();
               getInfoTimer();
             }, 5000);
-          })
-          .catch((e) => {
-            console.error(e);
-            window.alertify.error(e?.message);
-
-            setclaimStatus("failed");
-            setclaimLoading(false);
-            setTimeout(() => {
-              setclaimStatus("initial");
-            }, 5000);
-          });
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const vestingSc = new ethers.Contract(

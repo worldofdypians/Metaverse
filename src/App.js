@@ -5210,6 +5210,7 @@ function App() {
                 network_matchain={chain}
                 walletClient={walletClient}
                 binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />
@@ -5229,6 +5230,7 @@ function App() {
                 network_matchain={chain}
                 walletClient={walletClient}
                 binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />
@@ -5248,6 +5250,7 @@ function App() {
                 network_matchain={chain}
                 walletClient={walletClient}
                 binanceW3WProvider={library}
+                publicClient={publicClient}
               />
             }
           />

@@ -540,18 +540,12 @@ const StakeWodDetails2 = ({
       if (walletClient) {
         let amount = depositAmount;
         amount = new BigNumber(amount).times(1e18).toFixed(0);
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: reward_token_wod._address,
             abi: window.TOKEN_ABI,
             functionName: "approve",
             args: [staking._address, amount],
-          })
-          .then(() => {
-            setdepositLoading(false);
-            setdepositStatus("deposit");
-            refreshBalance();
-            getApprovedAmount();
           })
           .catch((e) => {
             setdepositLoading(false);
@@ -563,6 +557,23 @@ const StakeWodDetails2 = ({
               seterrorMsg("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("deposit");
+            refreshBalance();
+            getApprovedAmount();
+          }
+        }
       }
     }
   };
@@ -661,24 +672,12 @@ const StakeWodDetails2 = ({
 
         let referrer = window.config.ZERO_ADDRESS;
 
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: staking._address,
             abi: window.CONSTANT_STAKING_WOD_ABI,
             functionName: "stake",
             args: [amount, referrer],
-          })
-          .then(() => {
-            handleSecondTask(coinbase);
-            setdepositLoading(false);
-            setdepositStatus("success");
-            refreshBalance();
-            getApprovedAmount();
-            onSuccessfulStake();
-            setTimeout(() => {
-              setdepositStatus("initial");
-              setdepositAmount("");
-            }, 5000);
           })
           .catch((e) => {
             setdepositLoading(false);
@@ -690,6 +689,29 @@ const StakeWodDetails2 = ({
               seterrorMsg("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            handleSecondTask(coinbase);
+            setdepositLoading(false);
+            setdepositStatus("success");
+            refreshBalance();
+            getApprovedAmount();
+            onSuccessfulStake();
+            setTimeout(() => {
+              setdepositStatus("initial");
+              setdepositAmount("");
+            }, 5000);
+          }
+        }
       }
     }
   };
@@ -760,22 +782,12 @@ const StakeWodDetails2 = ({
         let amount = new BigNumber(withdrawAmount).times(1e18).toFixed(0);
         setwithdrawLoading(true);
 
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: staking._address,
             abi: window.CONSTANT_STAKING_WOD_ABI,
             functionName: "unstake",
             args: [amount],
-          })
-          .then(() => {
-            setwithdrawLoading(false);
-            setwithdrawStatus("success");
-            refreshBalance();
-            onSuccessfulStake();
-            setTimeout(() => {
-              setwithdrawStatus("initial");
-              setwithdrawAmount("");
-            }, 5000);
           })
           .catch((e) => {
             setwithdrawLoading(false);
@@ -788,6 +800,27 @@ const StakeWodDetails2 = ({
               setwithdrawAmount("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setwithdrawLoading(false);
+            setwithdrawStatus("success");
+            refreshBalance();
+            onSuccessfulStake();
+            setTimeout(() => {
+              setwithdrawStatus("initial");
+              setwithdrawAmount("");
+            }, 5000);
+          }
+        }
       }
     }
   };
@@ -846,21 +879,12 @@ const StakeWodDetails2 = ({
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: staking._address,
             abi: window.CONSTANT_STAKING_WOD_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatus("success");
-            setclaimLoading(false);
-            setpendingDivs(getFormattedNumber(0, 6));
-            refreshBalance();
-            setTimeout(() => {
-              setclaimStatus("initial");
-            }, 5000);
           })
           .catch((e) => {
             setclaimStatus("failed");
@@ -872,6 +896,26 @@ const StakeWodDetails2 = ({
               seterrorMsg2("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatus("success");
+            setclaimLoading(false);
+            setpendingDivs(getFormattedNumber(0, 6));
+            refreshBalance();
+            setTimeout(() => {
+              setclaimStatus("initial");
+            }, 5000);
+          }
+        }
       }
     }
   };
@@ -1020,21 +1064,12 @@ const StakeWodDetails2 = ({
       }
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: staking._address,
             abi: window.CONSTANT_STAKING_WOD_ABI,
             functionName: "reInvest",
             args: [],
-          })
-          .then(() => {
-            setreInvestStatus("success");
-            setreInvestLoading(false);
-            setpendingDivs(getFormattedNumber(0, 6));
-            refreshBalance();
-            setTimeout(() => {
-              setreInvestStatus("initial");
-            }, 10000);
           })
           .catch((e) => {
             setreInvestStatus("failed");
@@ -1046,6 +1081,26 @@ const StakeWodDetails2 = ({
               seterrorMsg2("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setreInvestStatus("success");
+            setreInvestLoading(false);
+            setpendingDivs(getFormattedNumber(0, 6));
+            refreshBalance();
+            setTimeout(() => {
+              setreInvestStatus("initial");
+            }, 10000);
+          }
+        }
       }
     }
   };

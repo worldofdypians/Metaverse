@@ -198,17 +198,12 @@ const Agent = ({
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
         let amount = new BigNumber(10000).times(1e18).toFixed(0);
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: reward_token_wod._address,
             abi: window.TOKEN_ABI,
             functionName: "approve",
             args: [window.config.oryn_premium_address, amount],
-          })
-          .then(() => {
-            setdepositLoading(false);
-            setdepositStatus("deposit");
-            getApprovedAmount();
           })
           .catch((e) => {
             setdepositLoading(false);
@@ -221,6 +216,22 @@ const Agent = ({
               seterrorMsg("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("deposit");
+            getApprovedAmount();
+          }
+        }
       }
     }
   };
@@ -309,22 +320,12 @@ const Agent = ({
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
         let amount = new BigNumber(10000).times(1e18).toFixed(0);
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.oryn_premium_address,
             abi: window.ORYN_PREMIUM_ABI,
             functionName: "deposit",
             args: [amount],
-          })
-          .then(() => {
-            setdepositLoading(false);
-            setdepositStatus("success");
-            getApprovedAmount();
-            checkPremiumOryn(coinbase);
-            setTimeout(() => {
-              setdepositStatus("initial");
-              setdepositAmount("");
-            }, 5000);
           })
           .catch((e) => {
             setdepositLoading(false);
@@ -336,6 +337,27 @@ const Agent = ({
               seterrorMsg("");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setdepositLoading(false);
+            setdepositStatus("success");
+            getApprovedAmount();
+            checkPremiumOryn(coinbase);
+            setTimeout(() => {
+              setdepositStatus("initial");
+              setdepositAmount("");
+            }, 5000);
+          }
+        }
       }
     }
   };
@@ -373,21 +395,12 @@ const Agent = ({
         });
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.oryn_premium_address,
             abi: window.ORYN_PREMIUM_ABI,
             functionName: "startUnlock",
             args: [],
-          })
-          .then(() => {
-            setUnlockLoading(false);
-            setUnlockStatus("success");
-            checkTimer();
-            setTimeout(() => {
-              setUnlockStatus("initial");
-              seterrorMsg("");
-            }, 5000);
           })
           .catch((err) => {
             setUnlockLoading(false);
@@ -398,6 +411,26 @@ const Agent = ({
             }, 5000);
             return err;
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setUnlockLoading(false);
+            setUnlockStatus("success");
+            checkTimer();
+            setTimeout(() => {
+              setUnlockStatus("initial");
+              seterrorMsg("");
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const oryn_premium_contract = new ethers.Contract(
@@ -511,21 +544,12 @@ const Agent = ({
         });
     } else if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.oryn_premium_address,
             abi: window.ORYN_PREMIUM_ABI,
             functionName: "withdraw",
             args: [],
-          })
-          .then(() => {
-            setwithdrawLoading(false);
-            setwithdrawStatus("success");
-            setTimeout(() => {
-              checkPremiumOryn(coinbase);
-              setwithdrawStatus("initial");
-              setPopup(false);
-            }, 5000);
           })
           .catch((e) => {
             setwithdrawLoading(false);
@@ -537,6 +561,26 @@ const Agent = ({
               seterrorMsg3("");
             }, 10000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setwithdrawLoading(false);
+            setwithdrawStatus("success");
+            setTimeout(() => {
+              checkPremiumOryn(coinbase);
+              setwithdrawStatus("initial");
+              setPopup(false);
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const oryn_premium_contract = new ethers.Contract(

@@ -39,6 +39,7 @@ const Whitelist = ({
   network_matchain,
   walletClient,
   binanceW3WProvider,
+  publicClient,
 }) => {
   const [cliffTime, setcliffTime] = useState(0);
   const [cliffTimePrivate, setcliffTimePrivate] = useState(0);
@@ -695,7 +696,7 @@ const Whitelist = ({
             isSpecialSeed = true;
           } else isSpecialSeed = false;
         }
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: isSpecialSeed
               ? window.config.vesting_special_address
@@ -703,16 +704,6 @@ const Whitelist = ({
             abi: isSpecialSeed ? VESTING_SPECIAL_ABI : VESTING_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatus("success");
-            setclaimLoading(false);
-
-            setTimeout(() => {
-              setclaimStatus("initial");
-              getInfo();
-              getInfoTimer();
-            }, 5000);
           })
           .catch((e) => {
             console.error(e);
@@ -724,6 +715,27 @@ const Whitelist = ({
               setclaimStatus("initial");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatus("success");
+            setclaimLoading(false);
+
+            setTimeout(() => {
+              setclaimStatus("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       let isSpecialSeed = false;
@@ -845,22 +857,12 @@ const Whitelist = ({
     setclaimLoadingOTC(true);
     if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.otc_address,
             abi: OTC_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatusOTC("success");
-            setclaimLoadingOTC(false);
-
-            setTimeout(() => {
-              setclaimStatusOTC("initial");
-              getInfo();
-              getInfoTimer();
-            }, 5000);
           })
           .catch((e) => {
             console.error(e);
@@ -872,6 +874,27 @@ const Whitelist = ({
               setclaimStatusOTC("initial");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusOTC("success");
+            setclaimLoadingOTC(false);
+
+            setTimeout(() => {
+              setclaimStatusOTC("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const otcSc = new ethers.Contract(
@@ -975,22 +998,12 @@ const Whitelist = ({
     setclaimLoadingPrivate(true);
     if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.private_address,
             abi: PRIVATE_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatusPrivate("success");
-            setclaimLoadingPrivate(false);
-
-            setTimeout(() => {
-              setclaimStatusPrivate("initial");
-              getInfo();
-              getInfoTimer();
-            }, 5000);
           })
           .catch((e) => {
             console.error(e);
@@ -1002,6 +1015,27 @@ const Whitelist = ({
               setclaimStatusPrivate("initial");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusPrivate("success");
+            setclaimLoadingPrivate(false);
+
+            setTimeout(() => {
+              setclaimStatusPrivate("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const privateSc = new ethers.Contract(
@@ -1096,7 +1130,7 @@ const Whitelist = ({
           } else isSpecial = false;
         }
 
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: isSpecial
               ? window.config.kol2_address
@@ -1104,16 +1138,6 @@ const Whitelist = ({
             abi: KOL_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatusKol("success");
-            setclaimLoadingKol(false);
-
-            setTimeout(() => {
-              setclaimStatusKol("initial");
-              getInfo();
-              getInfoTimer();
-            }, 5000);
           })
           .catch((e) => {
             console.error(e);
@@ -1125,6 +1149,27 @@ const Whitelist = ({
               setclaimStatusKol("initial");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusKol("success");
+            setclaimLoadingKol(false);
+
+            setTimeout(() => {
+              setclaimStatusKol("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       let isSpecial = false;
@@ -1226,22 +1271,12 @@ const Whitelist = ({
     setclaimLoadingAdvisors(true);
     if (window.WALLET_TYPE === "matchId") {
       if (walletClient) {
-        await walletClient
+        const result = await walletClient
           .writeContract({
             address: window.config.advisors_address,
             abi: ADVISORS_ABI,
             functionName: "claim",
             args: [],
-          })
-          .then(() => {
-            setclaimStatusAdvisors("success");
-            setclaimLoadingAdvisors(false);
-
-            setTimeout(() => {
-              setclaimStatusAdvisors("initial");
-              getInfo();
-              getInfoTimer();
-            }, 5000);
           })
           .catch((e) => {
             console.error(e);
@@ -1253,6 +1288,27 @@ const Whitelist = ({
               setclaimStatusAdvisors("initial");
             }, 5000);
           });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setclaimStatusAdvisors("success");
+            setclaimLoadingAdvisors(false);
+
+            setTimeout(() => {
+              setclaimStatusAdvisors("initial");
+              getInfo();
+              getInfoTimer();
+            }, 5000);
+          }
+        }
       }
     } else if (window.WALLET_TYPE === "binance") {
       const advisorsSc = new ethers.Contract(

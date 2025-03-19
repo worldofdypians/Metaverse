@@ -298,10 +298,9 @@ const NewChestItem = ({
       }
       count = count + 1;
     } else if (window.WALLET_TYPE === "matchId") {
+      console.log(txHash);
       const txResult_matchain = await publicClient
-        .getTransaction({
-          hash: txHash,
-        })
+        .getTransaction({ hash: txHash })
         .catch((e) => {
           console.error(e);
         });
@@ -1384,21 +1383,13 @@ const NewChestItem = ({
       if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
           if (rewardTypes === "premium" && isPremium) {
-            await walletClient
+            const result = await walletClient
               .writeContract({
                 address: window.config.daily_bonus_mat_address,
                 abi: window.DAILY_BONUS_MAT_ABI,
                 functionName: "openPremiumChest",
                 args: [],
               })
-              .then((data) => {
-                handleCheckIfTxExists(
-                  email,
-                  data,
-                  chestIndex - 1,
-                  "matchain"
-                );
-              })
               .catch((e) => {
                 window.alertify.error(e?.message);
                 onChestStatus("error");
@@ -1410,23 +1401,33 @@ const NewChestItem = ({
                 setClaimingChest(false);
                 console.error(e);
               });
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                console.log("Transaction confirmed:", receipt);
+                handleCheckIfTxExists(
+                  email,
+                  result,
+                  chestIndex - 1,
+                  "matchain"
+                );
+              }
+            }
           } else if (rewardTypes === "standard") {
-            await walletClient
+            const result = await walletClient
               .writeContract({
                 address: window.config.daily_bonus_mat_address,
                 abi: window.DAILY_BONUS_MAT_ABI,
                 functionName: "openChest",
                 args: [],
               })
-              .then((data) => {
-                console.log('datadatadata',data)
-                handleCheckIfTxExists(
-                  email,
-                  data,
-                  chestIndex - 1,
-                  "matchain"
-                );
-              })
               .catch((e) => {
                 window.alertify.error(e?.message);
                 onChestStatus("error");
@@ -1438,6 +1439,25 @@ const NewChestItem = ({
                 setClaimingChest(false);
                 console.error(e);
               });
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                console.log("Transaction confirmed:", receipt);
+                handleCheckIfTxExists(
+                  email,
+                  result,
+                  chestIndex - 1,
+                  "matchain"
+                );
+              }
+            }
           }
         }
       } else {
@@ -1658,21 +1678,13 @@ const NewChestItem = ({
       } else if (window.WALLET_TYPE === "matchId") {
         if (walletClient) {
           if (rewardTypes === "premium" && isPremium) {
-            await walletClient
+            const result = await walletClient
               .writeContract({
                 address: window.config.daily_bonus_bnb_address,
                 abi: window.DAILY_BONUS_BNB_ABI,
                 functionName: "openPremiumChest",
                 args: [],
               })
-              .then((data) => {
-                handleCheckIfTxExists(
-                  email,
-                  data,
-                  chestIndex - 1,
-                  "bnb"
-                );
-              })
               .catch((e) => {
                 window.alertify.error(e?.message);
                 onChestStatus("error");
@@ -1684,22 +1696,28 @@ const NewChestItem = ({
                 setClaimingChest(false);
                 console.error(e);
               });
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                console.log("Transaction confirmed:", receipt);
+                handleCheckIfTxExists(email, result, chestIndex - 1, "bnb");
+              }
+            }
           } else if (rewardTypes === "standard") {
-            await walletClient
+            const result = await walletClient
               .writeContract({
                 address: window.config.daily_bonus_bnb_address,
                 abi: window.DAILY_BONUS_BNB_ABI,
                 functionName: "openChest",
                 args: [],
               })
-              .then((data) => {
-                handleCheckIfTxExists(
-                  email,
-                  data,
-                  chestIndex - 1,
-                  "bnb"
-                );
-              })
               .catch((e) => {
                 window.alertify.error(e?.message);
                 onChestStatus("error");
@@ -1711,6 +1729,20 @@ const NewChestItem = ({
                 setClaimingChest(false);
                 console.error(e);
               });
+            if (result) {
+              const receipt = await publicClient
+                .waitForTransactionReceipt({
+                  hash: result,
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+
+              if (receipt) {
+                console.log("Transaction confirmed:", receipt);
+                handleCheckIfTxExists(email, result, chestIndex - 1, "bnb");
+              }
+            }
           }
         }
       } else if (window.WALLET_TYPE === "binance") {
