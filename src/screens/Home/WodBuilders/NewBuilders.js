@@ -392,6 +392,14 @@ const NewBuilders = () => {
       icon: "eragon.svg",
       backer: false,
     },
+    {
+      name: "THENA",
+      icon: "thenalogo.svg",
+    },
+    {
+      name: "Gaimin",
+      icon: "gaimin.svg",
+    },
   ];
   return (
     <div className={`w-100  mx-0 `}>

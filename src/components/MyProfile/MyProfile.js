@@ -157,16 +157,16 @@ const MyProfile = ({
   const isPastMidnightUTC = utcHours === 0 && utcMinutes >= 30;
 
   let adjustedDay = isPastMidnightUTC
-  ? utcDayIndex === 0
-  ? 7
-  : utcDayIndex
-  : utcHours === 0
-  ? utcDayIndex === 0
-    ? 6
-    : utcDayIndex - 1
-  : utcDayIndex === 0
-  ? 7
-  : utcDayIndex;
+    ? utcDayIndex === 0
+      ? 7
+      : utcDayIndex
+    : utcHours === 0
+    ? utcDayIndex === 0
+      ? 6
+      : utcDayIndex - 1
+    : utcDayIndex === 0
+    ? 7
+    : utcDayIndex;
 
   const html = document.querySelector("html");
 
@@ -599,7 +599,7 @@ const MyProfile = ({
                                         }
                                         className="buywodimg"
                                       />
-                                      Kucoin
+                                      KuCoin
                                     </h6>
                                   </a>
                                   <a
@@ -677,6 +677,25 @@ const MyProfile = ({
                                         className="buywodimg"
                                       />
                                       PancakeSwap
+                                    </h6>
+                                  </a>
+                                  <a
+                                    href="https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={() => {
+                                      setshowBuyTooltip(false);
+                                    }}
+                                    className="getwod-item"
+                                  >
+                                    <h6 className="bottomitems mb-0">
+                                      <img
+                                        src={
+                                          "https://cdn.worldofdypians.com/wod/thenaBuyWod.svg"
+                                        }
+                                        className="buywodimg"
+                                      />
+                                      THENA
                                     </h6>
                                   </a>
                                   <a
