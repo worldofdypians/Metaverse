@@ -53,7 +53,7 @@ const getLatest20BoughtNFTS = async (nftAddress, tokenId) => {
   let boughtItems = [];
   let finalboughtItems = [];
 
-  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+  const URL = `https://graphql.worldofdypians.com/subgraphs/name/wod`;
 
   const itemBoughtQuery = `
       {
@@ -920,7 +920,7 @@ const SingleNft = ({
     let boughtItems = [];
     let finalboughtItems = [];
 
-    const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+    const URL = `https://graphql.worldofdypians.com/subgraphs/name/wod`;
 
     const itemBoughtQuery = `
         {
