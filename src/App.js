@@ -172,7 +172,7 @@ const useSharedDataListedNfts = () => {
 };
 
 const fetchLatest20BoughtNFTs = async () => {
-  const URL = `https://gateway.thegraph.com/api/${process.env.REACT_APP_GRAPH_KEY}/subgraphs/id/AygorFQWYATaA8igPToLCQb9AVhubszGHGFApXjqToaX`;
+  const URL = `https://graphql.worldofdypians.com/subgraphs/name/wod`;
   const itemBoughtQuery = `
     {
       itemBoughts(first: 20, orderBy: blockTimestamp, orderDirection: desc) {
@@ -2966,7 +2966,6 @@ function App() {
 
   const { data: recentListedNFTS2 } = useSharedDataListedNfts();
   const { data: allNfts } = useSharedData();
-
   const getOtherNfts = async () => {
     let finalboughtItems1 = [];
     setLoadingRecentListings(true);
