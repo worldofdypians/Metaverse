@@ -31,6 +31,7 @@ const NewChestItem = ({
   coinbase,
   binanceW3WProvider,
   walletClient,
+  publicClient,
 }) => {
   const [shake, setShake] = useState(false);
   const [ischestOpen, setIsChestOpen] = useState(false);
@@ -229,14 +230,13 @@ const NewChestItem = ({
   };
 
   let count = 1;
-
   const handleCheckIfTxExists = async (
     email,
     txHash,
     chestIndex,
     chainText
   ) => {
-    if (window.WALLET_TYPE !== "binance") {
+    if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
       const txResult = await window.web3.eth
         .getTransaction(txHash)
         .catch((e) => {
@@ -276,6 +276,38 @@ const NewChestItem = ({
       console.log(txResult_binance);
 
       if (txResult_binance) {
+        getUserRewardsByChest(email, txHash, chestIndex, chainText);
+      } else {
+        if (count < 10) {
+          setTimeout(
+            () => {
+              handleCheckIfTxExists(txHash);
+            },
+            count === 9 ? 5000 : 2000
+          );
+        } else {
+          window.alertify.error("Something went wrong.");
+          onChestStatus("error");
+          onLoadingChest(false);
+          setLoading(false);
+          setClaimingChest(false);
+          setTimeout(() => {
+            onChestStatus("initial");
+          }, 3000);
+        }
+      }
+      count = count + 1;
+    } else if (window.WALLET_TYPE === "matchId") {
+      const txResult_matchain = await publicClient
+        .getTransaction({
+          hash: txHash,
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      console.log(txResult_matchain, txHash);
+
+      if (txResult_matchain) {
         getUserRewardsByChest(email, txHash, chestIndex, chainText);
       } else {
         if (count < 10) {
@@ -1362,7 +1394,7 @@ const NewChestItem = ({
               .then((data) => {
                 handleCheckIfTxExists(
                   email,
-                  data.transactionHash,
+                  data,
                   chestIndex - 1,
                   "matchain"
                 );
@@ -1387,9 +1419,10 @@ const NewChestItem = ({
                 args: [],
               })
               .then((data) => {
+                console.log('datadatadata',data)
                 handleCheckIfTxExists(
                   email,
-                  data.transactionHash,
+                  data,
                   chestIndex - 1,
                   "matchain"
                 );
@@ -1507,7 +1540,10 @@ const NewChestItem = ({
         }
       }
     } else if (chainId === 56) {
-      if (window.WALLET_TYPE !== "binance" && window.WALLET_TYPE !== "matchId") {
+      if (
+        window.WALLET_TYPE !== "binance" &&
+        window.WALLET_TYPE !== "matchId"
+      ) {
         if (rewardTypes === "premium" && isPremium) {
           const web3 = new Web3(window.ethereum);
           const gasPrice = await web3.eth.getGasPrice();
@@ -1632,7 +1668,7 @@ const NewChestItem = ({
               .then((data) => {
                 handleCheckIfTxExists(
                   email,
-                  data.transactionHash,
+                  data,
                   chestIndex - 1,
                   "bnb"
                 );
@@ -1659,7 +1695,7 @@ const NewChestItem = ({
               .then((data) => {
                 handleCheckIfTxExists(
                   email,
-                  data.transactionHash,
+                  data,
                   chestIndex - 1,
                   "bnb"
                 );

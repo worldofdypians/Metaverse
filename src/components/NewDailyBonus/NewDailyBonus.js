@@ -4507,6 +4507,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4560,6 +4561,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "core"
@@ -4611,6 +4613,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4664,6 +4667,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "manta"
@@ -4715,6 +4719,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4768,6 +4773,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "base"
@@ -4818,6 +4824,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4870,6 +4877,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "taiko"
@@ -4920,6 +4928,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -4972,6 +4981,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "matchain"
@@ -5022,6 +5032,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5074,6 +5085,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "sei"
@@ -5124,6 +5136,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5176,6 +5189,7 @@ const NewDailyBonus = ({
                                     dummypremiumChests[index - 10]?.closedImg
                                   }
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "viction"
@@ -5227,6 +5241,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                             : window.range(0, 19).map((item, index) => (
@@ -5280,6 +5295,7 @@ const NewDailyBonus = ({
                                   }
                                   binanceW3WProvider={binanceW3WProvider}
                                   walletClient={walletClient}
+                                  publicClient={publicClient}
                                 />
                               ))
                           : chain === "skale" &&
@@ -5331,6 +5347,7 @@ const NewDailyBonus = ({
                                 }
                                 binanceW3WProvider={binanceW3WProvider}
                                 walletClient={walletClient}
+                                publicClient={publicClient}
                               />
                             ))
                           : window.range(0, 19).map((item, index) => (
@@ -5383,6 +5400,7 @@ const NewDailyBonus = ({
                                 }
                                 binanceW3WProvider={binanceW3WProvider}
                                 walletClient={walletClient}
+                                publicClient={publicClient}
                               />
                             ))}
                       </div>
