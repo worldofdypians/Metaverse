@@ -14,14 +14,16 @@ import { Web3Provider } from "@ethersproject/providers";
 import { Web3ReactProvider } from "@web3-react/core";
 import { getWeb3ReactContext } from "@web3-react/core";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 30 * 60 * 1000,
-      cacheTime: 31 * 60 * 1000,
-    },
-  },
-});
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       staleTime: 30 * 60 * 1000,
+//       cacheTime: 31 * 60 * 1000,
+//     },
+//   },
+// });
+
+const queryClient = new QueryClient();
 
 const persister = createSyncStoragePersister({
   storage: window.localStorage,
