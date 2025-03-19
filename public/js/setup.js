@@ -3298,26 +3298,9 @@ window.updateOffer = async (
 window.approveOffer = async (amount, priceType, tokenType) => {
   console.log(amount, priceType, tokenType);
   const web3 = new Web3(window.ethereum);
-  // if (priceType === 1) {
-  //   const contract = new web3.eth.Contract(
-  //     window.DYP_ABI,
-  //     tokenType === "dypv2"
-  //       ? window.config.token_dypius_new_address
-  //       : window.config.dyp_token_address
-  //   );
 
-  //   console.log("amount", amount);
-  //   console.log(
-  //     "window.config.nft_marketplace_address",
-  //     window.config.nft_marketplace_address
-  //   );
-
-  //   await contract.methods
-  //     .approve(window.config.nft_marketplace_address, amount)
-  //     .send({ from: await getCoinbase() });
-  // } else
   if (priceType === 0) {
-    const contract = new window.web3.eth.Contract(
+    const contract = new web3.eth.Contract(
       window.TOKEN_ABI,
       window.config.weth2_address
     );
@@ -3367,28 +3350,7 @@ window.acceptOffer = async (nftAddress, tokenId, offerIndex) => {
 window.isApprovedOffer = async (amount, priceType, tokenType) => {
   window.web3 = new Web3(window.config.infura_endpoint);
   console.log(amount, priceType, tokenType);
-  // if (priceType === 1) {
-  //   const contract = new window.web3.eth.Contract(
-  //     window.DYP_ABI,
-  //     tokenType === "dypv2"
-  //       ? window.config.token_dypius_new_address
-  //       : window.config.dyp_token_address
-  //   );
-
-  //   const coinbase = await getCoinbase();
-
-  //   const allowance = await contract.methods
-  //     .allowance(coinbase, window.config.nft_marketplace_address)
-  //     .call({ from: await getCoinbase() });
-  //   console.log(
-  //     "appr makeoffer",
-  //     Number(allowance) >= Number(amount),
-  //     Number(allowance),
-  //     Number(amount)
-  //   );
-
-  //   return Number(allowance) >= Number(amount);
-  // } else
+   
   if (priceType === 0) {
     const contract = new window.web3.eth.Contract(
       window.TOKEN_ABI,
