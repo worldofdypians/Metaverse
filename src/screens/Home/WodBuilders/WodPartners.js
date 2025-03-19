@@ -224,7 +224,8 @@ const WodPartners = ({ full }) => {
     {
       name: "Dypius",
       icon: "dypius.svg",
-    },    {
+    },
+    {
       name: "OpenFlux",
       icon: "openflux.svg",
     },
@@ -254,15 +255,15 @@ const WodPartners = ({ full }) => {
     },
     {
       name: "Xterio",
-      icon: "xterio.svg", 
+      icon: "xterio.svg",
     },
     {
       name: "Layer3",
-      icon: "layer3.svg", 
+      icon: "layer3.svg",
     },
     {
       name: "Metacade",
-      icon: "metacade.png", 
+      icon: "metacade.png",
     },
     {
       name: "BGA",
@@ -275,6 +276,14 @@ const WodPartners = ({ full }) => {
     {
       name: "Eragon",
       icon: "eragon.svg",
+    },
+    {
+      name: "THENA",
+      icon: "thenalogo.svg",
+    },
+    {
+      name: "Gaimin",
+      icon: "gaimin.svg",
     },
   ];
 
@@ -313,12 +322,11 @@ const WodPartners = ({ full }) => {
                 >
                   <div className="partner-logo-container">
                     <img
-                      src={(`https://cdn.worldofdypians.com/wod/${partner.icon}`)}
+                      src={`https://cdn.worldofdypians.com/wod/${partner.icon}`}
                       alt=""
                       style={{
                         width: "60px",
                         height: "60px",
-                       
                       }}
                     />
                   </div>
@@ -337,7 +345,12 @@ const WodPartners = ({ full }) => {
               onClick={() => setSlice(partners.length)}
             >
               <span className="view-all-partners ">View All</span>
-              <img src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"} width={20} height={20} alt="" />
+              <img
+                src={"https://cdn.worldofdypians.com/wod/partnersDropdown.svg"}
+                width={20}
+                height={20}
+                alt=""
+              />
             </div>
           ) : (
             <div

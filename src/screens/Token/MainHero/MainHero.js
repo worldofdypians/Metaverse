@@ -29,6 +29,11 @@ const MainHero = ({ scrollInto }) => {
       link: "https://pancakeswap.finance/info/v3/pairs/0xb89a15524ca1cc8810e12880af927b319273d1dc",
     },
     {
+      title: "THENA",
+      logo: "thena.svg",
+      link: "https://thena.fi/swap?inputCurrency=BNB&outputCurrency=0xb994882a1b9bd98a71dd6ea5f61577c42848b0e8&swapType=1",
+    },
+    {
       title: "TrustWallet",
       logo: "trustwallet.svg",
       link: "https://short.trustwallet.com/app-download",
@@ -94,7 +99,10 @@ const MainHero = ({ scrollInto }) => {
                     alt=""
                     style={{
                       height:
-                        item.logo === "bitPandaExchange.png" ? "32px" : "",
+                        item.logo === "bitPandaExchange.png" ||
+                        item.logo === "thena.svg"
+                          ? "32px"
+                          : "",
                       scale: item.logo === "bitPandaExchange.png" ? "1.5" : "",
                     }}
                   />
