@@ -6522,6 +6522,9 @@ function App() {
                 handleConnection={() => {
                   setwalletModal(true);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
               />
             }
           />
@@ -6541,6 +6544,10 @@ function App() {
                 refreshBalance={() => {
                   setcountBalance(countBalance + 1);
                 }}
+                walletClient={walletClient}
+                publicClient={publicClient}
+                network_matchain={chain}
+                binanceW3WProvider={library}
               />
             }
           />
