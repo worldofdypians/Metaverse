@@ -376,6 +376,39 @@ const NewEvents = ({
         setStatusColor("#00FECF");
         setpuzzleMadnessShowApproval(false);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [puzzleMadnessAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setpuzzleMadnessBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setpuzzleMadnessBundleState("deposit");
+            setStatusColor("#00FECF");
+            setpuzzleMadnessShowApproval(false);
+          }
+        }
+      }
     }
   };
 
@@ -681,6 +714,39 @@ const NewEvents = ({
         setDragonBundleState("deposit");
         setStatusColor("#00FECF");
         setDragonShowApproval(false);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [dragonRuinsAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setDragonBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setDragonBundleState("deposit");
+            setStatusColor("#00FECF");
+            setDragonShowApproval(false);
+          }
+        }
       }
     }
   };
@@ -988,6 +1054,39 @@ const NewEvents = ({
         setStatusColor("#00FECF");
         setBearShowApproval(false);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [coldBiteAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBearBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setBearBundleState("deposit");
+            setStatusColor("#00FECF");
+            setBearShowApproval(false);
+          }
+        }
+      }
     }
   };
 
@@ -1292,6 +1391,39 @@ const NewEvents = ({
         setStatusColor("#00FECF");
         setBeastShowApproval(false);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [furyBeastAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setBeastBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setBeastBundleState("deposit");
+            setStatusColor("#00FECF");
+            setBeastShowApproval(false);
+          }
+        }
+      }
     }
   };
 
@@ -1595,6 +1727,39 @@ const NewEvents = ({
         setEagleBundleState("deposit");
         setStatusColor("#00FECF");
         setEagleShowApproval(false);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [wingStormAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setEagleBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setEagleBundleState("deposit");
+            setStatusColor("#00FECF");
+            setEagleShowApproval(false);
+          }
+        }
       }
     }
   };
@@ -1902,6 +2067,39 @@ const NewEvents = ({
         setStatusColor("#00FECF");
         setScorpionShowApproval(false);
       }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [scorpionKingAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setScorpionBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setScorpionBundleState("deposit");
+            setStatusColor("#00FECF");
+            setScorpionShowApproval(false);
+          }
+        }
+      }
     }
   };
 
@@ -2207,6 +2405,39 @@ const NewEvents = ({
         setCyclopsBundleState("deposit");
         setStatusColor("#00FECF");
         setCyclopsShowApproval(false);
+      }
+    } else if (window.WALLET_TYPE === "matchId") {
+      if (walletClient) {
+        let amount = new window.BigNumber(500000000).times(1e18).toFixed(0);
+        const result = await walletClient
+          .writeContract({
+            address: window.config.wod_token_address,
+            abi: window.TOKEN_ABI,
+            functionName: "approve",
+            args: [stoneEyeAddress, amount],
+          })
+          .catch((e) => {
+            setStatusColor("#FE7A00");
+            setStatus(e?.message);
+            setCyclopsBundleState("fail");
+          });
+
+        if (result) {
+          const receipt = await publicClient
+            .waitForTransactionReceipt({
+              hash: result,
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+
+          if (receipt) {
+            setStatus("Succesfully approved!");
+            setCyclopsBundleState("deposit");
+            setStatusColor("#00FECF");
+            setCyclopsShowApproval(false);
+          }
+        }
       }
     }
   };

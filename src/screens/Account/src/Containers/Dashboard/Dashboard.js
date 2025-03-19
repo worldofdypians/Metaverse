@@ -9807,6 +9807,8 @@ function Dashboard({
             wodPrice={wodPrice}
             binanceW3WProvider={binanceW3WProvider}
             wallet={data?.getPlayer?.wallet?.publicAddress}
+            walletClient={walletClient}
+              publicClient={publicClient}
           />
         )}
 
