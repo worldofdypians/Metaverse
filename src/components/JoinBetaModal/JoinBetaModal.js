@@ -487,7 +487,7 @@ const JoinBetaModal = ({
                     // placeholder={"User#1234"}
                   />
                 </div>
-                <div className="mt-3">
+                {/* <div className="mt-3">
                   <span className="checkbox-title mt-3">
                     What Dypius products do you use?
                   </span>
@@ -541,7 +541,7 @@ const JoinBetaModal = ({
                       <span className="checkbox-title">Earn products</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
              
               <div className="d-flex w-100 justify-content-center mt-2">
@@ -590,7 +590,7 @@ const JoinBetaModal = ({
             <img src={"https://cdn.worldofdypians.com/wod/successLogo.svg"} alt="" />
             <p className="text-white m-0">
               Congratulations, your World of Dypians Beta Tester application is
-              successful. Please visit the Dypius Discord Server for more
+              successful. Please visit the World of Dypians Discord Server for more
               information.
             </p>
             <div
@@ -693,7 +693,7 @@ const JoinBetaModal = ({
             </div>
             <img src={"https://cdn.worldofdypians.com/wod/waitlistLogo.svg"} alt="" />
             <p className="text-white m-0">
-              Thank you for your application as a World of Dypius Beta Tester.
+              Thank you for your application as a World of Dypians Beta Tester.
               Unfortunately, all current reservations are full and your
               application has been added to the next waiting list.
             </p>
@@ -745,7 +745,7 @@ const JoinBetaModal = ({
             </div>
             <img src={"https://cdn.worldofdypians.com/wod/failed.svg"} alt="" />
             <p className="text-white m-0">
-              Unable to join the World of Dypius Beta Tester. Please try again.
+              Unable to join the World of Dypians Beta Tester. Please try again.
             </p>
             <button className="btn simple-btn px-5" onClick={onClose}>
               Close

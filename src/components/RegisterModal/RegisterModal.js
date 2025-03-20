@@ -463,7 +463,7 @@ const RegisterModal = ({
             <img src={"https://cdn.worldofdypians.com/wod/successLogo.svg"} alt="" />
             <p className="text-white m-0">
               Congratulations, your World of Dypians whitelist registration is
-              successful. Please visit the Dypius Discord for more information.
+              successful. Please visit the World of Dypians Discord for more information.
             </p>
             <div
               className={"linear-border m-auto"}
