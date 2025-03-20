@@ -204,7 +204,7 @@ const OurTeam = () => {
       photo: 'https://cdn.worldofdypians.com/wod/bogdan.jpg',
       link: "https://www.linkedin.com/in/bogdan-constantin-1105b7201/",
       content:
-        "Constantin Bogdan graduated from the University of Bucharest in 2007 and he holds a Master in Human Resource Psychology. Bogdan has ten years of experience in enterprise in a variety of roles at startups, private companies, and ANOFM Bucharest including product management, product marketing, and sales management, and is the Marketing Manager for Dypius.",
+        "Constantin Bogdan graduated from the University of Bucharest in 2007 and he holds a Master in Human Resource Psychology. Bogdan has ten years of experience in enterprise in a variety of roles at startups, private companies, and ANOFM Bucharest including product management, product marketing, and sales management, and is the Marketing Manager for World of Dypians.",
     },
   ];
 

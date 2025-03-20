@@ -17,7 +17,7 @@ const TimePieceSticker = () => {
           </div>
           <p className="caws-hero-content text-white">
             The CAWS Timepiece NFT collection is the second official NFT
-            collection created and produced by Dypius. Holders of the original
+            collection created and produced by World of Dypians. Holders of the original
             CAWS NFT will be able to mint a Timepiece NFT for FREE for each
             original CAWS NFT held. In Addition, the Timepiece NFTs will provide
             users additional utility and perks in the World of Dypians Metaverse
