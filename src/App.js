@@ -5629,23 +5629,26 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
+              />
+            }
+          />
+
+          <Route
+            exact
+            path="/shop/beta-pass/kucoin"
+            element={
+              <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
               />
             }
           />
@@ -5658,23 +5661,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
-                cawsArray={allCawsForTimepieceMint}
               />
             }
           />
@@ -5687,23 +5677,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5716,23 +5693,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5745,23 +5709,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5794,23 +5745,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5823,23 +5761,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5852,23 +5777,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5881,23 +5793,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5910,23 +5809,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5939,23 +5825,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5968,23 +5841,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -5997,23 +5857,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -6026,23 +5873,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -6051,36 +5885,15 @@ function App() {
                 exact
                 path="/shop/beta-pass/avalanche"
                 element={
-                  <BetaPassNFT
-                    type={"avalanche"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    isConnected={isConnected}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    chainId={networkId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    totalCookieNft={totalCookieNft}
-                myCookieNfts={myCookieNfts}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                  />
+                 <BetaPassNFT
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
                 }
               /> */}
           {/* <Route
@@ -6088,35 +5901,14 @@ function App() {
                 path="/shop/beta-pass/coin98"
                 element={
                   <BetaPassNFT
-                    type={"coin98"}
-                    ethTokenData={ethTokenData}
-                    dypTokenData={dypTokenData}
-                    cawsArray={allCawsForTimepieceMint}
-                    mintloading={mintloading}
-                    isConnected={isConnected}
-                    chainId={networkId}
-                    handleMint={handleTimepieceMint}
-                    mintStatus={mintStatus}
-                    textColor={textColor}
-                    calculateCaws={calculateCaws}
-                    totalCreated={totalTimepieceCreated}
-                    totalCoingeckoNft={totalCoingeckoNft}
-                    myNFTSCoingecko={MyNFTSCoingecko}
-                    myGateNfts={myGateNfts}
-                    totalGateNft={totalGateNft}
-                    totalConfluxNft={totalConfluxNft}
-                    myConfluxNfts={myConfluxNfts}
-                    timepieceMetadata={timepieceMetadata}
-                    handleConnect={handleShowWalletModal}
-                    listedNFTS={listedNFTS}
-                    coinbase={coinbase}
-                    timepieceBought={timepieceBought}
-                    handleRefreshListing={handleRefreshList}
-                    nftCount={nftCount}
-                    handleSwitchNetwork={handleSwitchNetwork}
-                    totalCookieNft={totalCookieNft}
-                myCookieNfts={myCookieNfts}
-                  />
+                isConnected={isConnected}
+                coinbase={coinbase}
+                chainId={networkId}
+                success={success}
+                showWalletConnect={() => {
+                  setwalletModal(true);
+                }}
+              />
                 }
               /> */}
           <Route
@@ -6127,23 +5919,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
@@ -6155,23 +5934,10 @@ function App() {
                 isConnected={isConnected}
                 coinbase={coinbase}
                 chainId={networkId}
-                handleMint={handleTimepieceMint}
-                mintStatus={mintStatus}
-                textColor={textColor}
-                calculateCaws={calculateCaws}
-                totalCreated={totalTimepieceCreated}
-                myseiNfts={myseiNfts}
-                totalseiNft={totalseiNft}
-                handleSwitchNetwork={handleSwitchNetwork}
                 success={success}
                 showWalletConnect={() => {
                   setwalletModal(true);
                 }}
-                totalBaseNft={totalBaseNft}
-                myBaseNFTs={myBaseNFTs}
-                cawsArray={allCawsForTimepieceMint}
-                myMatNFTs={myMatNFTs}
-                totalMatNfts={myMatNFTs.length}
               />
             }
           />
