@@ -681,7 +681,23 @@ const SingleNft = ({
 
       setowner(owner);
       return owner;
-    } else if (nftType === "skale") {
+    } else if (nftType === "kucoin") {
+      const nft_contract = new window.opBnbWeb3.eth.Contract(
+        window.OPBNB_NFT_ABI,
+        window.config.nft_kucoin_address
+      );
+      const owner = await nft_contract.methods
+        .ownerOf(Id)
+        .call()
+        .catch((e) => {
+          console.log(e);
+        });
+
+      console.log(owner);
+
+      setowner(owner);
+      return owner;
+    }  else if (nftType === "skale") {
       const nft_contract = new window.skaleWeb3.eth.Contract(
         window.SKALE_NFT_ABI,
         window.config.nft_skale_address
@@ -2611,6 +2627,11 @@ const SingleNft = ({
       setType("landavax");
     } else if (
       nftAddress.toLowerCase() ===
+      window.config.nft_kucoin_address.toLowerCase()
+    ) {
+      setType("kucoin");
+    }else if (
+      nftAddress.toLowerCase() ===
       window.config.nft_land_base_address.toLowerCase()
     ) {
       setType("landbase");
@@ -2629,6 +2650,9 @@ const SingleNft = ({
         : nftAddress.toLowerCase() ===
           window.config.nft_opbnb_address.toLowerCase()
         ? "opbnb"
+        : nftAddress.toLowerCase() ===
+          window.config.nft_kucoin_address.toLowerCase()
+        ? "kucoin"
         : nftAddress.toLowerCase() ===
           window.config.nft_gate_address.toLowerCase()
         ? "gate"
@@ -2910,6 +2934,18 @@ const SingleNft = ({
                   </h6>
                 </h6>
               </>
+            )  : type === "kucoin" ? (
+              <>
+                <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
+                  KuCoin{" "}
+                  <h6
+                    className="market-banner-title m-0"
+                    style={{ color: "#8C56FF", lineHeight: "80%" }}
+                  >
+                    Beta Pass
+                  </h6>
+                </h6>
+              </>
             ) : type === "immutable" ? (
               <>
                 <h6 className="market-banner-title d-flex flex-column flex-xxl-row flex-lg-row align-items-xxl-center align-items-lg-center gap-2 px-3">
@@ -3058,6 +3094,8 @@ const SingleNft = ({
                         ? `https://dypmeta.s3.us-east-2.amazonaws.com/immutable+400.png`
                         : type === "sei"
                         ? `https://cdn.worldofdypians.com/media/seibp400x400.png`
+                        : type === "kucoin"
+                        ? `https://cdn.worldofdypians.com/wod/kucoin-bp-400.png`
                         : `https://dypmeta.s3.us-east-2.amazonaws.com/timepiece_400x400/${nftId}.png`
                     }
                     alt=""
@@ -3082,7 +3120,8 @@ const SingleNft = ({
                         type === "opbnb" ||
                         type === "cawsbnb" ||
                         type === "landbnb" ||
-                        type === "cookie3"
+                        type === "cookie3"||
+                        type === "kucoin"
                           ? "https://cdn.worldofdypians.com/wod/bnbIcon.svg"
                           : type === "conflux"
                           ? "https://cdn.worldofdypians.com/wod/confluxIcon.svg"
@@ -3146,7 +3185,8 @@ const SingleNft = ({
                       ? "Matchain"
                       : type === "taiko"
                       ? "Taiko"
-                      : type === "opbnb"
+                      : type === "opbnb"||
+                    type === "kucoin"
                       ? "opBNB Chain"
                       : type === "immutable"
                       ? "Immutable"
@@ -3220,6 +3260,8 @@ const SingleNft = ({
                         ? "opBNB Chain Beta Pass"
                         : type === "sei"
                         ? "SEI Beta Pass"
+                        : type === "kucoin"
+                        ? "KuCoin Beta Pass"
                         : "CAWS Timepiece"}{" "}
                       {type === "immutable" ? "" : ` #${nftId}`}
                       <img
@@ -3359,6 +3401,7 @@ const SingleNft = ({
                       type !== "immutable" &&
                       type !== "mat" &&
                       type !== "sei" &&
+                      type !== "kucoin" &&
                       loadingNft === false && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
@@ -3529,7 +3572,8 @@ const SingleNft = ({
                       type !== "skale" &&
                       type !== "immutable" &&
                       type !== "mat" &&
-                      type !== "sei" && (
+                      type !== "sei" &&
+                      type !== "kucoin" && (
                         <div className="d-flex flex-column flex-xxl-row flex-lg-row align-items-center gap-2 justify-content-between">
                           <div className="price-wrapper p-3 col-xxl-6 col-lg-6">
                             <div className="d-flex w-100 justify-content-between flex-column ">
@@ -3731,7 +3775,8 @@ const SingleNft = ({
                         type === "landbnb" ||
                         type === "landbase" ||
                         type === "mat" ||
-                        type === "sei") && (
+                        type === "sei"||
+                        type === "kucoin") && (
                         <div className="price-wrapper p-3">
                           <div className="d-flex w-100 justify-content-between flex-column flex-xxl-row flex-lg-row gap-2 align-items-center">
                             <span className="currentprice-txt">
@@ -3775,7 +3820,7 @@ const SingleNft = ({
                                   ? `https://pacific-explorer.manta.network/address/${owner}`
                                   : type === "taiko"
                                   ? `https://taikoscan.io/address/${owner}`
-                                  : type === "opbnb"
+                                  : type === "opbnb"||type === "kucoin"
                                   ? `https://opbnbscan.com/address/${owner}`
                                   : type === "mat"
                                   ? `https://matchscan.io/address/${owner}`
@@ -3982,7 +4027,8 @@ const SingleNft = ({
                         type !== "landbnb" &&
                         type !== "landbase" &&
                         type !== "mat" &&
-                        type !== "sei" && (
+                        type !== "sei" &&
+                        type !== "kucoin" && (
                           <button
                             disabled={
                               sellLoading === true || sellStatus === "failed"
@@ -4062,7 +4108,8 @@ const SingleNft = ({
                         type !== "immutable" &&
                         type !== "landbase" &&
                         type !== "mat" &&
-                        type !== "sei" && (
+                        type !== "sei" &&
+                        type !== "kucoin" && (
                           <button
                             className="btn mint-now-btn gap-2"
                             onClick={() => {
@@ -4105,7 +4152,8 @@ const SingleNft = ({
                         type !== "landbnb" &&
                         type !== "landbase" &&
                         type !== "mat" &&
-                        type !== "sei" && (
+                        type !== "sei" &&
+                        type !== "kucoin" && (
                           <button
                             className={`btn  buyNftbtn d-flex justify-content-center align-items-center gap-2`}
                             onClick={() => {
@@ -4153,7 +4201,8 @@ const SingleNft = ({
             type !== "multivers" &&
             type !== "immutable" &&
             type !== "mat" &&
-            type !== "sei" && (
+            type !== "sei"&&
+            type !== "kucoin" && (
               <div className="px-2">
                 <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                   <div className="position-relative d-flex flex-column gap-3 px-3 col-12">
@@ -4428,7 +4477,8 @@ const SingleNft = ({
             type === "multivers" ||
             type === "immutable" ||
             type === "mat" ||
-            type === "sei") && (
+            type === "sei"||
+            type === "kucoin") && (
             <div className="px-2">
               <div className="d-flex align-items-center flex-column nft-outer-wrapper p-4 gap-2 my-4 single-item-info">
                 <div className="position-relative d-flex flex-column gap-3 px-3 col-12">

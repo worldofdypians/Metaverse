@@ -149,7 +149,7 @@ const NewBuilders = () => {
 
     {
       name: "KuCoin",
-      icon: "kucoinIcon.svg",
+      icon: "kucoinLogoRound.svg",
       banner: "kucoinBanner.png",
       backer: false,
     },

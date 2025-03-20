@@ -162,6 +162,7 @@ function Dashboard({
   chainlinkEarnUsd,
   isTokenExpired,
   listedNFTS,
+  mykucoinNFTs
 }) {
   const { email, logout } = useAuth();
   const { eventId } = useParams();
@@ -9883,6 +9884,7 @@ function Dashboard({
                 myCmcNfts={myCmcNfts}
                 myCoreNfts={myCoreNfts}
                 myVictionNfts={myVictionNfts}
+                mykucoinNFTs={mykucoinNFTs}
                 myMultiversNfts={myMultiversNfts}
                 myImmutableNfts={myImmutableNfts}
                 myMantaNfts={myMantaNfts}

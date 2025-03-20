@@ -46,7 +46,7 @@ const iconData = [
   { name: "gateMarker", url: "https://cdn.worldofdypians.com/wod/gateIcon.svg", size: 24, chain: true,  },
   { name: "mexcMarker", url: "https://cdn.worldofdypians.com/wod/mexcIcon.svg", size: 24, chain: true,  },
   { name: "easy2stakeMarker", url: "https://cdn.worldofdypians.com/wod/easy2stakeIcon.svg", size: 24, chain: true,  },
-  { name: "kucoinMarker", url: "https://cdn.worldofdypians.com/wod/kucoinIcon.svg", size: 24, chain: true,  },
+  { name: "kucoinMarker", url: "https://cdn.worldofdypians.com/wod/kucoinLogoRound.svg", size: 24, chain: true,  },
   { name: "seiMarker", url: "https://cdn.worldofdypians.com/wod/seiLogo.svg", size: 24, chain: true,  },
   { name: "immutableMarker", url: "https://cdn.worldofdypians.com/wod/immutable.svg", size: 24 , chain: true, },
   { name: "baseMarker", url: "https://cdn.worldofdypians.com/wod/base.svg", size: 24, chain: true,  },

@@ -149,7 +149,7 @@ const WodBuilders = ({ page }) => {
 
     {
       name: "KuCoin",
-      icon: "kucoinIcon",
+      icon: "kucoinLogoRound",
       banner: "kucoinBanner.png",
       backer: false,
     },

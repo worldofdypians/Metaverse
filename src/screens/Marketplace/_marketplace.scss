@@ -4562,6 +4562,11 @@
   border-radius: 20px;
   background: linear-gradient(90deg, #181b38 0%, #be2cb0 168.67%) !important;
 }
+
+.upcoming-kucoin-event {
+  border-radius: 20px;
+  background: linear-gradient(90deg, #181B38 0%, rgba(11, 212, 165, 0.5) 168.67%) !important;
+}
 .upcoming-base-event {
   border-radius: 20px;
   background: linear-gradient(
@@ -4596,10 +4601,6 @@
     #181b38 0%,
     rgba(44, 102, 190, 1) 168.67%
   ) !important;
-}
-.upcoming-manta-event {
-  border-radius: 20px;
-  background: linear-gradient(90deg, #181b38 0%, #be2cb0 168.67%) !important;
 }
 
 .upcoming-taiko-event {
